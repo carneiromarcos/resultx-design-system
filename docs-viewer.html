@@ -1650,9 +1650,9 @@
          COMPOSITE: VIEW TOGGLE
          ============================================================ -->
     <section class="ds-section" id="view-toggle">
-      <h2>View Toggle</h2>
-      <p class="ds-description">Segmented control to switch between table, kanban, and grid views.</p>
-      <div class="ds-preview">
+      <h2 class="ds-section-title">View Toggle</h2>
+      <p class="ds-section-desc">Segmented control to switch between table, kanban, and grid views.</p>
+      <div class="showcase">
         <div class="view-toggle">
           <button class="view-toggle-btn active" aria-pressed="true">&#9638; Tabela</button>
           <button class="view-toggle-btn" aria-pressed="false">&#9744; Kanban</button>
@@ -1665,10 +1665,10 @@
          COMPOSITE: DATA TABLE
          ============================================================ -->
     <section class="ds-section" id="data-table">
-      <h2>Data Table (Enhanced)</h2>
-      <p class="ds-description">Sortable columns, row selection, color-coded cells, and bulk actions.</p>
-      <div class="ds-preview">
-        <div class="table-card">
+      <h2 class="ds-section-title">Data Table (Enhanced)</h2>
+      <p class="ds-section-desc">Sortable columns, row selection, color-coded cells, and bulk actions.</p>
+      <div class="showcase">
+        <div class="table-card" style="margin-bottom: var(--space-4);">
           <table>
             <thead>
               <tr>
@@ -1712,9 +1712,9 @@
          COMPOSITE: FILTER BAR
          ============================================================ -->
     <section class="ds-section" id="filter-bar">
-      <h2>Filter Bar</h2>
-      <p class="ds-description">Active filter pills with remove buttons.</p>
-      <div class="ds-preview">
+      <h2 class="ds-section-title">Filter Bar</h2>
+      <p class="ds-section-desc">Active filter pills with remove buttons. Each pill shows the filter category and value, with a remove button.</p>
+      <div class="showcase">
         <div class="filter-bar">
           <div class="filter-pill">
             <span class="filter-pill-label">Cargo:</span>
@@ -1740,9 +1740,9 @@
          COMPOSITE: STEPPER
          ============================================================ -->
     <section class="ds-section" id="stepper">
-      <h2>Stepper / Wizard</h2>
-      <p class="ds-description">Multi-step progress indicator for forms or pipeline stages.</p>
-      <div class="ds-preview">
+      <h2 class="ds-section-title">Stepper / Wizard</h2>
+      <p class="ds-section-desc">Multi-step progress indicator for forms or pipeline stages. Shows completed, active, and pending steps.</p>
+      <div class="showcase">
         <div class="stepper">
           <div class="stepper-step completed">
             <div class="stepper-step-number">&#10003;</div>
@@ -1771,14 +1771,14 @@
          COMPOSITE: PIPELINE KANBAN
          ============================================================ -->
     <section class="ds-section" id="pipeline">
-      <h2>Pipeline Kanban</h2>
-      <p class="ds-description">HR pipeline stages with color-coded columns.</p>
-      <div class="ds-preview" style="overflow-x: auto;">
+      <h2 class="ds-section-title">Pipeline Kanban</h2>
+      <p class="ds-section-desc">HR pipeline stages with color-coded columns. Extends the base kanban component with stage-specific colors.</p>
+      <div class="showcase" style="overflow-x: auto;">
         <div class="kanban pipeline">
           <div class="kanban-column pipeline-stage-triagem">
             <div class="kanban-column-header">
               <div class="kanban-column-title"><span class="kanban-column-dot"></span> Triagem</div>
-              <span class="kanban-column-count">3</span>
+              <span class="kanban-column-count">2</span>
             </div>
             <div class="kanban-column-body">
               <div class="kanban-card">
@@ -1823,21 +1823,21 @@
          COMPOSITE: SEARCH AUTOCOMPLETE
          ============================================================ -->
     <section class="ds-section" id="search-auto">
-      <h2>Search Autocomplete</h2>
-      <p class="ds-description">Search input with dropdown results.</p>
-      <div class="ds-preview">
+      <h2 class="ds-section-title">Search Autocomplete</h2>
+      <p class="ds-section-desc">Search input with dropdown results. Shows avatar, name, and meta information for each result.</p>
+      <div class="showcase">
         <div class="search-container" style="max-width: 400px;">
           <input type="text" class="form-input" placeholder="Buscar candidato..." value="Joa" aria-label="Buscar">
           <div class="search-results" style="position: relative; display: block;">
             <div class="search-result-item highlighted">
-              <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:linear-gradient(135deg, var(--accent-primary), var(--theory-enneagram));">JP</div>
+              <div class="avatar avatar-sm" style="background: linear-gradient(135deg, var(--accent-primary), var(--theory-enneagram));">JP</div>
               <div>
                 <div class="search-result-name">Joao Pereira</div>
                 <div class="search-result-meta">Backend Dev &middot; INTJ</div>
               </div>
             </div>
             <div class="search-result-item">
-              <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:linear-gradient(135deg, var(--color-warning), var(--theory-disc));">JF</div>
+              <div class="avatar avatar-sm" style="background: linear-gradient(135deg, var(--color-warning), var(--theory-disc));">JF</div>
               <div>
                 <div class="search-result-name">Joana Farias</div>
                 <div class="search-result-meta">Product Manager &middot; ENFJ</div>
