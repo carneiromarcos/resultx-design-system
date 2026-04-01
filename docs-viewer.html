@@ -532,6 +532,21 @@
     <a class="viewer-sidebar-link" href="#progress" onclick="closeSidebarMobile()">Progress &amp; Charts</a>
     <a class="viewer-sidebar-link" href="#stats" onclick="closeSidebarMobile()">Stats</a>
     <a class="viewer-sidebar-link" href="#layout" onclick="closeSidebarMobile()">Layout Patterns</a>
+
+    <div class="viewer-sidebar-section">Composite</div>
+    <a class="viewer-sidebar-link" href="#view-toggle" onclick="closeSidebarMobile()">View Toggle</a>
+    <a class="viewer-sidebar-link" href="#data-table" onclick="closeSidebarMobile()">Data Table</a>
+    <a class="viewer-sidebar-link" href="#filter-bar" onclick="closeSidebarMobile()">Filter Bar</a>
+    <a class="viewer-sidebar-link" href="#stepper" onclick="closeSidebarMobile()">Stepper</a>
+    <a class="viewer-sidebar-link" href="#pipeline" onclick="closeSidebarMobile()">Pipeline Kanban</a>
+    <a class="viewer-sidebar-link" href="#search-auto" onclick="closeSidebarMobile()">Search Autocomplete</a>
+
+    <div class="viewer-sidebar-section">Templates</div>
+    <a class="viewer-sidebar-link" href="pages/login.html" onclick="closeSidebarMobile()">Login</a>
+    <a class="viewer-sidebar-link" href="pages/dashboard.html" onclick="closeSidebarMobile()">Dashboard</a>
+    <a class="viewer-sidebar-link" href="pages/candidatos.html" onclick="closeSidebarMobile()">Candidatos</a>
+    <a class="viewer-sidebar-link" href="pages/triagem.html" onclick="closeSidebarMobile()">Triagem ★</a>
+    <a class="viewer-sidebar-link" href="pages/404.html" onclick="closeSidebarMobile()">404</a>
   </nav>
 
   <!-- ================================================================
@@ -1627,6 +1642,208 @@
         <div class="ds-footer" style="margin-top: 0;">
           <div class="ds-footer-title">ResultX Design System v2.0</div>
           <div class="ds-footer-sub">Emprega+ App DS &mdash; Unified Tokens &amp; Components</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         COMPOSITE: VIEW TOGGLE
+         ============================================================ -->
+    <section class="ds-section" id="view-toggle">
+      <h2>View Toggle</h2>
+      <p class="ds-description">Segmented control to switch between table, kanban, and grid views.</p>
+      <div class="ds-preview">
+        <div class="view-toggle">
+          <button class="view-toggle-btn active" aria-pressed="true">&#9638; Tabela</button>
+          <button class="view-toggle-btn" aria-pressed="false">&#9744; Kanban</button>
+          <button class="view-toggle-btn" aria-pressed="false">&#9641; Grid</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         COMPOSITE: DATA TABLE
+         ============================================================ -->
+    <section class="ds-section" id="data-table">
+      <h2>Data Table (Enhanced)</h2>
+      <p class="ds-description">Sortable columns, row selection, color-coded cells, and bulk actions.</p>
+      <div class="ds-preview">
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th class="td-checkbox"><input type="checkbox"></th>
+                <th class="th-sortable">Nome</th>
+                <th class="th-sortable desc">Score</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="tr-selected">
+                <td class="td-checkbox"><input type="checkbox" checked></td>
+                <td class="td-name">Ana Costa</td>
+                <td class="td-success">95</td>
+                <td><span class="badge badge-success badge-table">Aprovado</span></td>
+              </tr>
+              <tr>
+                <td class="td-checkbox"><input type="checkbox"></td>
+                <td class="td-name">Carlos Lima</td>
+                <td class="td-warning">73</td>
+                <td><span class="badge badge-warning badge-table">Em analise</span></td>
+              </tr>
+              <tr>
+                <td class="td-checkbox"><input type="checkbox"></td>
+                <td class="td-name">Rafael Souza</td>
+                <td class="td-error">45</td>
+                <td><span class="badge badge-error badge-table">Rejeitado</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bulk-toolbar" style="position: relative;">
+          <span class="bulk-toolbar-count">1 selecionado</span>
+          <button class="btn btn-primary btn-sm">Mover</button>
+          <button class="btn btn-danger btn-sm">Rejeitar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         COMPOSITE: FILTER BAR
+         ============================================================ -->
+    <section class="ds-section" id="filter-bar">
+      <h2>Filter Bar</h2>
+      <p class="ds-description">Active filter pills with remove buttons.</p>
+      <div class="ds-preview">
+        <div class="filter-bar">
+          <div class="filter-pill">
+            <span class="filter-pill-label">Cargo:</span>
+            <span class="filter-pill-value">Backend Dev</span>
+            <button class="filter-pill-remove" aria-label="Remover filtro">&times;</button>
+          </div>
+          <div class="filter-pill">
+            <span class="filter-pill-label">DISC:</span>
+            <span class="filter-pill-value">CS</span>
+            <button class="filter-pill-remove" aria-label="Remover filtro">&times;</button>
+          </div>
+          <div class="filter-pill">
+            <span class="filter-pill-label">Status:</span>
+            <span class="filter-pill-value">Em analise</span>
+            <button class="filter-pill-remove" aria-label="Remover filtro">&times;</button>
+          </div>
+          <button class="filter-bar-clear">Limpar filtros</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         COMPOSITE: STEPPER
+         ============================================================ -->
+    <section class="ds-section" id="stepper">
+      <h2>Stepper / Wizard</h2>
+      <p class="ds-description">Multi-step progress indicator for forms or pipeline stages.</p>
+      <div class="ds-preview">
+        <div class="stepper">
+          <div class="stepper-step completed">
+            <div class="stepper-step-number">&#10003;</div>
+            <div class="stepper-step-label">Triagem</div>
+          </div>
+          <div class="stepper-connector completed"></div>
+          <div class="stepper-step active">
+            <div class="stepper-step-number">2</div>
+            <div class="stepper-step-label">Entrevista</div>
+          </div>
+          <div class="stepper-connector"></div>
+          <div class="stepper-step">
+            <div class="stepper-step-number">3</div>
+            <div class="stepper-step-label">Oferta</div>
+          </div>
+          <div class="stepper-connector"></div>
+          <div class="stepper-step">
+            <div class="stepper-step-number">4</div>
+            <div class="stepper-step-label">Contratado</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         COMPOSITE: PIPELINE KANBAN
+         ============================================================ -->
+    <section class="ds-section" id="pipeline">
+      <h2>Pipeline Kanban</h2>
+      <p class="ds-description">HR pipeline stages with color-coded columns.</p>
+      <div class="ds-preview" style="overflow-x: auto;">
+        <div class="kanban pipeline">
+          <div class="kanban-column pipeline-stage-triagem">
+            <div class="kanban-column-header">
+              <div class="kanban-column-title"><span class="kanban-column-dot"></span> Triagem</div>
+              <span class="kanban-column-count">3</span>
+            </div>
+            <div class="kanban-column-body">
+              <div class="kanban-card">
+                <div class="kanban-card-title">Ana Costa</div>
+                <div class="kanban-card-meta"><span class="badge badge-disc badge-table">DI</span> <span class="pipeline-card-score">95</span></div>
+              </div>
+              <div class="kanban-card">
+                <div class="kanban-card-title">Carlos Lima</div>
+                <div class="kanban-card-meta"><span class="badge badge-disc badge-table">CS</span> <span class="pipeline-card-score">81</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="kanban-column pipeline-stage-entrevista">
+            <div class="kanban-column-header">
+              <div class="kanban-column-title"><span class="kanban-column-dot"></span> Entrevista</div>
+              <span class="kanban-column-count">1</span>
+            </div>
+            <div class="kanban-column-body">
+              <div class="kanban-card">
+                <div class="kanban-card-title">Julia Ferreira</div>
+                <div class="kanban-card-meta"><span class="badge badge-disc badge-table">IS</span> <span class="pipeline-card-score">73</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="kanban-column pipeline-stage-oferta">
+            <div class="kanban-column-header">
+              <div class="kanban-column-title"><span class="kanban-column-dot"></span> Oferta</div>
+              <span class="kanban-column-count">1</span>
+            </div>
+            <div class="kanban-column-body">
+              <div class="kanban-card">
+                <div class="kanban-card-title">Joao Pereira</div>
+                <div class="kanban-card-meta"><span class="badge badge-disc badge-table">CD</span> <span class="pipeline-card-score">78</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         COMPOSITE: SEARCH AUTOCOMPLETE
+         ============================================================ -->
+    <section class="ds-section" id="search-auto">
+      <h2>Search Autocomplete</h2>
+      <p class="ds-description">Search input with dropdown results.</p>
+      <div class="ds-preview">
+        <div class="search-container" style="max-width: 400px;">
+          <input type="text" class="form-input" placeholder="Buscar candidato..." value="Joa" aria-label="Buscar">
+          <div class="search-results" style="position: relative; display: block;">
+            <div class="search-result-item highlighted">
+              <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:linear-gradient(135deg, var(--accent-primary), var(--theory-enneagram));">JP</div>
+              <div>
+                <div class="search-result-name">Joao Pereira</div>
+                <div class="search-result-meta">Backend Dev &middot; INTJ</div>
+              </div>
+            </div>
+            <div class="search-result-item">
+              <div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:linear-gradient(135deg, var(--color-warning), var(--theory-disc));">JF</div>
+              <div>
+                <div class="search-result-name">Joana Farias</div>
+                <div class="search-result-meta">Product Manager &middot; ENFJ</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
