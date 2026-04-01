@@ -18,7 +18,7 @@
      tokens.css       → this file: App DS colors (dark + light) + overrides
    ========================================================================== */
 
-@import url('../../emprega-mais/tokens-base/tokens-base.css');
+@import url('./base/tokens-base.css');
 
 /* ══════════════════════════════════════════════════════════════════════════
    SHARED TOKENS (theme-independent, App DS-specific)

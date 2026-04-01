@@ -1,0 +1,125 @@
+/* ============================================================================
+   EMPREGA+ — Shared Base Tokens
+   v1.0.0 | Consumed by: PdV (B2C), App DS (SaaS), Sites (B2B/B2G)
+
+   RULES:
+   - This file contains ONLY tokens shared across all 3 design systems
+   - Colors are NOT here (each DS has its own palette)
+   - Import this BEFORE your DS-specific tokens
+   ============================================================================ */
+
+:root {
+  /* ── Typography — Families ─────────────────────────────────────────────── */
+  --font-heading: 'Sora', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-sans: 'Inter', sans-serif;      /* alias for Tailwind compat (Sites) */
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* ── Typography — Sizes ────────────────────────────────────────────────── */
+  --text-xs: 0.6875rem;     /* 11px — micro labels, badges */
+  --text-sm: 0.8125rem;     /* 13px — metadata, captions */
+  --text-base: 1rem;        /* 16px — body */
+  --text-lg: 1.25rem;       /* 20px — body large, card titles */
+  --text-xl: 1.5rem;        /* 24px — section headings */
+  --text-2xl: 1.75rem;      /* 28px — H2 mobile */
+  --text-3xl: 2.25rem;      /* 36px — H1 mobile / H2 desktop */
+  --text-4xl: 2.75rem;      /* 44px — H2 desktop */
+  --text-5xl: 3rem;         /* 48px — display numbers */
+  --text-hero: 4.75rem;     /* 76px — H1 PdV desktop */
+
+  /* ── Typography — Weights ──────────────────────────────────────────────── */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+
+  /* ── Typography — Line Heights ─────────────────────────────────────────── */
+  --leading-none: 1;
+  --leading-tight: 1.1;
+  --leading-snug: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.6;
+  --leading-loose: 1.7;     /* dark mode body text */
+
+  /* ── Typography — Letter Spacing ───────────────────────────────────────── */
+  --tracking-tighter: -0.03em;   /* hero display */
+  --tracking-tight: -0.02em;     /* headings */
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;       /* labels, badges */
+  --tracking-wider: 0.1em;       /* eyebrows */
+  --tracking-widest: 0.15em;     /* eyebrows PdV */
+
+  /* ── Spacing (4px base) ────────────────────────────────────────────────── */
+  --space-0: 0;
+  --space-1: 0.25rem;    /* 4px  */
+  --space-1-5: 0.375rem; /* 6px  */
+  --space-2: 0.5rem;     /* 8px  */
+  --space-3: 0.75rem;    /* 12px */
+  --space-4: 1rem;       /* 16px */
+  --space-5: 1.25rem;    /* 20px */
+  --space-6: 1.5rem;     /* 24px */
+  --space-8: 2rem;       /* 32px */
+  --space-10: 2.5rem;    /* 40px */
+  --space-12: 3rem;      /* 48px */
+  --space-16: 4rem;      /* 64px */
+  --space-20: 5rem;      /* 80px */
+  --space-24: 6rem;      /* 96px */
+
+  /* ── Border Radius ─────────────────────────────────────────────────────── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* ── Transitions ───────────────────────────────────────────────────────── */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease-out;
+  --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── Z-Index Scale ─────────────────────────────────────────────────────── */
+  --z-base: 0;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-sidebar: 30;
+  --z-overlay: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+  --z-tooltip: 70;
+
+  /* ── Breakpoints (reference — use in @media) ───────────────────────────── */
+  /* --bp-sm: 640px;   */
+  /* --bp-md: 768px;   */
+  /* --bp-lg: 1024px;  */
+  /* --bp-xl: 1280px;  */
+  /* --bp-2xl: 1536px; */
+}
+
+/* ============================================================================
+   BASE LAYER — Typography defaults
+   Import in each DS to ensure consistent heading/body treatment
+   ============================================================================ */
+
+@layer emprega-base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-snug);
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-weight: var(--weight-regular);
+    line-height: var(--leading-normal);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  code, kbd, pre, samp {
+    font-family: var(--font-mono);
+  }
+}
