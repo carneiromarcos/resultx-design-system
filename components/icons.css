@@ -1,0 +1,118 @@
+/* ==========================================================================
+   ResultX Design System — Icon Utilities
+   v2.1.0 | Compatible with Lucide, Phosphor, Heroicons (inline SVG)
+
+   Usage:
+     <svg class="icon icon-md" ...>...</svg>
+     <span class="icon-wrapper icon-wrapper-accent">
+       <svg class="icon icon-sm" ...>...</svg>
+     </span>
+   ========================================================================== */
+
+/* ══════════════════════════════════════════════════════════════════
+   BASE ICON
+   ══════════════════════════════════════════════════════════════════ */
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* Filled icon variant (for solid icons) */
+.icon-filled {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SIZES
+   ══════════════════════════════════════════════════════════════════ */
+.icon-xs  { width: 12px; height: 12px; }
+.icon-sm  { width: 16px; height: 16px; }
+.icon-md  { width: 20px; height: 20px; }
+.icon-lg  { width: 24px; height: 24px; }
+.icon-xl  { width: 32px; height: 32px; }
+.icon-2xl { width: 40px; height: 40px; }
+
+/* ══════════════════════════════════════════════════════════════════
+   COLORS
+   ══════════════════════════════════════════════════════════════════ */
+.icon-primary   { color: var(--text-primary); }
+.icon-secondary { color: var(--text-secondary); }
+.icon-muted     { color: var(--text-muted); }
+.icon-accent    { color: var(--accent-primary); }
+.icon-success   { color: var(--color-success); }
+.icon-warning   { color: var(--color-warning); }
+.icon-error     { color: var(--color-error); }
+.icon-info      { color: var(--color-info); }
+
+/* ══════════════════════════════════════════════════════════════════
+   ICON WRAPPERS (circular/rounded background)
+   ══════════════════════════════════════════════════════════════════ */
+.icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+/* Wrapper sizes (includes padding for visual balance) */
+.icon-wrapper-sm { width: 28px; height: 28px; }
+.icon-wrapper-md { width: 36px; height: 36px; }
+.icon-wrapper-lg { width: 44px; height: 44px; }
+.icon-wrapper-xl { width: 56px; height: 56px; }
+
+/* Wrapper color variants */
+.icon-wrapper-accent  { background: var(--accent-primary-muted); color: var(--accent-primary); }
+.icon-wrapper-success { background: var(--color-success-bg); color: var(--color-success); }
+.icon-wrapper-warning { background: var(--color-warning-bg); color: var(--color-warning); }
+.icon-wrapper-error   { background: var(--color-error-bg); color: var(--color-error); }
+.icon-wrapper-info    { background: var(--color-info-bg); color: var(--color-info); }
+.icon-wrapper-surface { background: var(--bg-surface-2); color: var(--text-secondary); }
+
+/* Circular variant */
+.icon-wrapper-round { border-radius: var(--radius-full); }
+
+/* ══════════════════════════════════════════════════════════════════
+   ICON IN BUTTONS
+   ══════════════════════════════════════════════════════════════════ */
+.btn .icon { margin-right: var(--space-1); }
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.btn-icon:hover { background: var(--bg-surface-2); color: var(--text-primary); }
+.btn-icon:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SPINNER (icon-based)
+   ══════════════════════════════════════════════════════════════════ */
+.icon-spin { animation: spin 0.7s linear infinite; }
+
+/* ══════════════════════════════════════════════════════════════════
+   PRINT
+   ══════════════════════════════════════════════════════════════════ */
+@media print {
+  .icon { stroke-width: 2.5; }
+  .icon-wrapper { border: 1px solid currentColor; background: transparent !important; }
+  .btn-icon { display: none; }
+}

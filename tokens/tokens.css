@@ -1,0 +1,497 @@
+/* ==========================================================================
+   ResultX Design System — Unified Tokens
+   v2.0.0 | Multi-product: Electia (B2B2C), IMO (B2G), Editais (B2G)
+
+   Usage:
+     <link rel="stylesheet" href="tokens/tokens.css">
+     <html data-theme="dark">  ← or "light"
+
+   Theme switching (JS):
+     document.documentElement.dataset.theme = 'dark' | 'light';
+
+   Auto-detect:
+     If no data-theme is set, falls back to prefers-color-scheme.
+     Dark is the default when system has no preference.
+
+   Architecture:
+     tokens-base.css  → shared across ALL ResultX design systems
+     tokens.css       → this file: App DS colors (dark + light) + overrides
+   ========================================================================== */
+
+@import url('../../emprega-mais/tokens-base/tokens-base.css');
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SHARED TOKENS (theme-independent, App DS-specific)
+   Overrides tokens-base where data-dense UI requires different values.
+   ══════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* ── Typography — Size Overrides (data-dense UI: smaller than base) ──── */
+  --text-2xs: 0.625rem;    /* 10px — micro labels */
+  --text-base: 0.9375rem;  /* 15px (base: 16px) */
+  --text-lg: 1.0625rem;    /* 17px (base: 20px) */
+  --text-xl: 1.25rem;      /* 20px (base: 24px) */
+  --text-2xl: 1.5rem;      /* 24px (base: 28px) */
+  --text-3xl: 1.875rem;    /* 30px (base: 36px) */
+  --text-4xl: 2.25rem;     /* 36px (base: 44px) */
+  --text-display: 3rem;    /* 48px (App-specific) */
+
+  /* ── Typography — Weight Aliases (backward compat: 50+ refs in components) */
+  --font-light: 300;
+  --font-regular: var(--weight-regular);
+  --font-medium: var(--weight-medium);
+  --font-semibold: var(--weight-semibold);
+  --font-bold: var(--weight-bold);
+
+  /* ── Layout ────────────────────────────────────────────────────────────── */
+  --sidebar-width: 240px;
+  --sidebar-collapsed: 64px;
+  --header-height: 56px;
+  --content-max-width: 1280px;
+  --grid-gap: 20px;
+  --card-min-width: 300px;
+
+  /* ── Accessibility ─────────────────────────────────────────────────────── */
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 2px;
+
+  /* ── Text on colored backgrounds ─────────────────────────────────────── */
+  --text-on-color: #FFF;
+
+  /* ── Text on specific semantic backgrounds (per-color contrast fix) ──── */
+  --text-on-accent: #0B0E14;
+  --text-on-success: #0B0E14;
+  --text-on-warning: #0B0E14;
+  --text-on-error: #FFF;
+  --text-on-info: #FFF;
+
+  /* ── Accent secondary muted ──────────────────────────────────────── */
+  --accent-secondary-muted: rgba(196, 154, 60, 0.12);
+
+  /* ── Avatar gradient ────────────────────────────────────────────────── */
+  --avatar-gradient-start: #6366F1;
+  --avatar-gradient-end: #8B5CF6;
+
+  /* ── Spring Curves (physics-based motion) ───────────────────────────── */
+  --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --spring-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+  --stagger-delay: 50ms;
+
+  /* ── Elevation System (shadow + z-index convention) ────────────────── */
+  --elevation-0: none;
+  /* elevation-1 through 4 defined per-theme (different opacity) */
+
+  /* ── DISC gradient end stops ────────────────────────────────────────── */
+  --disc-d-light: #f87171;
+  --disc-i-light: #fbbf24;
+  --disc-s-light: #4ade80;
+  --disc-c-light: #60a5fa;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   DARK THEME (default)
+   Applied when: data-theme="dark" OR no data-theme + system prefers dark
+   ══════════════════════════════════════════════════════════════════════════ */
+[data-theme="dark"] {
+  /* ── Backgrounds ───────────────────────────────────────────────────────── */
+  --bg-base: #0B0E14;
+  --bg-surface-1: #111620;
+  --bg-surface-2: #161B26;
+  --bg-surface-3: #1C2333;
+  --bg-overlay: rgba(11, 14, 20, 0.85);
+
+  /* ── Sidebar ───────────────────────────────────────────────────────────── */
+  --sidebar-bg: #080B12;
+  --sidebar-bg-hover: #0F1420;
+  --sidebar-active-bg: rgba(45, 212, 191, 0.15);
+  --sidebar-text: rgba(255, 255, 255, 0.50);
+  --sidebar-text-label: rgba(255, 255, 255, 0.30);
+  --sidebar-text-active: #2DD4BF;
+  --sidebar-divider: rgba(255, 255, 255, 0.06);
+  --sidebar-text-bright: #FFF;
+  --sidebar-badge-bg: rgba(255, 255, 255, 0.15);
+  --sidebar-badge-active-bg: rgba(255, 255, 255, 0.25);
+
+  /* ── Borders ───────────────────────────────────────────────────────────── */
+  --border-subtle: #1E2736;
+  --border-default: #2A3444;
+  --border-strong: #3D4A5C;
+  --border-accent: rgba(45, 212, 191, 0.20);
+
+  /* ── Text ──────────────────────────────────────────────────────────────── */
+  --text-primary: #E6EDF3;
+  --text-secondary: #8B949E;
+  --text-muted: #6E7681;
+  --text-inverse: #0B0E14;
+
+  /* ── Accent ────────────────────────────────────────────────────────────── */
+  --accent-primary: #2DD4BF;
+  --accent-primary-hover: #5EEAD4;
+  --accent-primary-muted: rgba(45, 212, 191, 0.15);
+  --accent-secondary: #C49A3C;
+
+  /* ── Semantic ──────────────────────────────────────────────────────────── */
+  --color-success: #22C55E;
+  --color-success-bg: rgba(34, 197, 94, 0.12);
+  --color-warning: #F59E0B;
+  --color-warning-bg: rgba(245, 158, 11, 0.12);
+  --color-error: #EF4444;
+  --color-error-bg: rgba(239, 68, 68, 0.12);
+  --color-info: #3B82F6;
+  --color-info-bg: rgba(59, 130, 246, 0.12);
+
+  /* ── Theory Colors (Assessment-Specific) ───────────────────────────────── */
+  --theory-mbti: #22D3EE;
+  --theory-mbti-bg: rgba(34, 211, 238, 0.15);
+  --theory-enneagram: #A78BFA;
+  --theory-enneagram-bg: rgba(167, 139, 250, 0.15);
+  --theory-bigfive: #60A5FA;
+  --theory-bigfive-bg: rgba(96, 165, 250, 0.15);
+  --theory-disc: #FB923C;
+  --theory-disc-bg: rgba(251, 146, 60, 0.15);
+  --theory-lesenne: #F472B6;
+  --theory-lesenne-bg: rgba(244, 114, 182, 0.15);
+  --theory-jung: #FBBF24;
+  --theory-jung-bg: rgba(251, 191, 36, 0.15);
+
+  /* ── DISC Dimensions ───────────────────────────────────────────────────── */
+  --disc-d: #EF4444;
+  --disc-i: #F59E0B;
+  --disc-s: #22C55E;
+  --disc-c: #3B82F6;
+
+  /* ── MBTI Axes ─────────────────────────────────────────────────────────── */
+  --mbti-ei: #F59E0B;
+  --mbti-sn: #6366F1;
+  --mbti-tf: #0EA5E9;
+  --mbti-jp: #10B981;
+
+  /* ── Big Five Dimensions ───────────────────────────────────────────────── */
+  --bigfive-o: #6366F1;
+  --bigfive-c: #0EA5E9;
+  --bigfive-e: #F59E0B;
+  --bigfive-a: #10B981;
+  --bigfive-n: #EF4444;
+
+  /* ── Shadows ───────────────────────────────────────────────────────────── */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(45, 212, 191, 0.15);
+  --shadow-glow-lg: 0 0 40px rgba(45, 212, 191, 0.2), 0 0 80px rgba(45, 212, 191, 0.08);
+
+  /* ── Glassmorphism ─────────────────────────────────────────────────────── */
+  --glass-subtle-bg: rgba(22, 27, 38, 0.4);
+  --glass-subtle-blur: 12px;
+  --glass-subtle-border: rgba(255, 255, 255, 0.04);
+
+  --glass-standard-bg: rgba(22, 27, 38, 0.6);
+  --glass-standard-blur: 16px;
+  --glass-standard-border: rgba(255, 255, 255, 0.06);
+
+  --glass-strong-bg: rgba(22, 27, 38, 0.85);
+  --glass-strong-blur: 24px;
+  --glass-strong-border: rgba(255, 255, 255, 0.08);
+
+  /* ── Elevation (dark: stronger shadows for contrast) ────────────────── */
+  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --elevation-2: 0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --elevation-3: 0 12px 32px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.3);
+  --elevation-4: 0 24px 64px rgba(0, 0, 0, 0.7), 0 8px 16px rgba(0, 0, 0, 0.4);
+
+  /* ── Chart ─────────────────────────────────────────────────────────────── */
+  --chart-gradient-start: rgba(45, 212, 191, 0.25);
+  --chart-gradient-end: rgba(45, 212, 191, 0.02);
+  --chart-line: #2DD4BF;
+  --chart-grid: #1E2736;
+
+  /* ── Accessibility ─────────────────────────────────────────────────────── */
+  --focus-ring-color: rgba(45, 212, 191, 0.5);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LIGHT THEME
+   Applied when: data-theme="light" OR no data-theme + system prefers light
+   ══════════════════════════════════════════════════════════════════════════ */
+[data-theme="light"] {
+  /* ── Backgrounds ───────────────────────────────────────────────────────── */
+  --bg-base: #FFF;
+  --bg-surface-1: #F8FAFB;
+  --bg-surface-2: #F0F3F5;
+  --bg-surface-3: #E8ECF0;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+
+  /* ── Sidebar (stays dark for contrast) ─────────────────────────────────── */
+  --sidebar-bg: #0F1A2E;
+  --sidebar-bg-hover: #162240;
+  --sidebar-active-bg: #1D4ED8;
+  --sidebar-text: rgba(255, 255, 255, 0.65);
+  --sidebar-text-label: rgba(255, 255, 255, 0.30);
+  --sidebar-text-active: #FFF;
+  --sidebar-divider: rgba(255, 255, 255, 0.08);
+  --sidebar-text-bright: #FFF;
+  --sidebar-badge-bg: rgba(255, 255, 255, 0.15);
+  --sidebar-badge-active-bg: rgba(255, 255, 255, 0.25);
+
+  /* ── Borders ───────────────────────────────────────────────────────────── */
+  --border-subtle: #E8ECF0;
+  --border-default: #D1D9E0;
+  --border-strong: #B0BAC5;
+  --border-accent: rgba(29, 78, 216, 0.25);
+
+  /* ── Text (contrast-corrected for WCAG AA on all surfaces) ──────────── */
+  --text-primary: #0F1729;
+  --text-secondary: #4B5563;
+  --text-muted: #6B7280;
+  --text-inverse: #FFF;
+
+  /* ── Accent ────────────────────────────────────────────────────────────── */
+  --accent-primary: #1D4ED8;
+  --accent-primary-hover: #1E40AF;
+  --accent-primary-muted: rgba(29, 78, 216, 0.12);
+  --accent-secondary: #C49A3C;
+
+  /* ── Semantic ──────────────────────────────────────────────────────────── */
+  --color-success: #16A34A;
+  --color-success-bg: rgba(22, 163, 74, 0.12);
+  --color-warning: #D97706;
+  --color-warning-bg: rgba(217, 119, 6, 0.12);
+  --color-error: #DC2626;
+  --color-error-bg: rgba(220, 38, 38, 0.12);
+  --color-info: #2563EB;
+  --color-info-bg: rgba(37, 99, 235, 0.12);
+
+  /* ── Theory Colors (600-700 shades for light bg contrast) ──────────────── */
+  --theory-mbti: #0891B2;
+  --theory-mbti-bg: rgba(8, 145, 178, 0.15);
+  --theory-enneagram: #7C3AED;
+  --theory-enneagram-bg: rgba(124, 58, 237, 0.15);
+  --theory-bigfive: #2563EB;
+  --theory-bigfive-bg: rgba(37, 99, 235, 0.15);
+  --theory-disc: #EA580C;
+  --theory-disc-bg: rgba(234, 88, 12, 0.15);
+  --theory-lesenne: #DB2777;
+  --theory-lesenne-bg: rgba(219, 39, 119, 0.15);
+  --theory-jung: #D97706;
+  --theory-jung-bg: rgba(217, 119, 6, 0.15);
+
+  /* ── DISC Dimensions ───────────────────────────────────────────────────── */
+  --disc-d: #DC2626;
+  --disc-i: #D97706;
+  --disc-s: #16A34A;
+  --disc-c: #2563EB;
+
+  /* ── MBTI Axes ─────────────────────────────────────────────────────────── */
+  --mbti-ei: #D97706;
+  --mbti-sn: #4F46E5;
+  --mbti-tf: #0284C7;
+  --mbti-jp: #059669;
+
+  /* ── Big Five Dimensions ───────────────────────────────────────────────── */
+  --bigfive-o: #4F46E5;
+  --bigfive-c: #0284C7;
+  --bigfive-e: #D97706;
+  --bigfive-a: #059669;
+  --bigfive-n: #DC2626;
+
+  /* ── Shadows (lighter opacity for white backgrounds) ───────────────────── */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+  --shadow-glow: 0 0 20px rgba(29, 78, 216, 0.18);
+  --shadow-glow-lg: 0 0 40px rgba(29, 78, 216, 0.20), 0 0 80px rgba(29, 78, 216, 0.08);
+
+  /* ── Glassmorphism (inverted for light: white glass) ───────────────────── */
+  --glass-subtle-bg: rgba(255, 255, 255, 0.6);
+  --glass-subtle-blur: 12px;
+  --glass-subtle-border: rgba(0, 0, 0, 0.06);
+
+  --glass-standard-bg: rgba(255, 255, 255, 0.75);
+  --glass-standard-blur: 16px;
+  --glass-standard-border: rgba(0, 0, 0, 0.08);
+
+  --glass-strong-bg: rgba(255, 255, 255, 0.92);
+  --glass-strong-blur: 24px;
+  --glass-strong-border: rgba(0, 0, 0, 0.1);
+
+  /* ── Elevation (light: softer shadows) ──────────────────────────────── */
+  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --elevation-2: 0 4px 12px rgba(0, 0, 0, 0.10), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --elevation-3: 0 12px 32px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.04);
+  --elevation-4: 0 24px 64px rgba(0, 0, 0, 0.16), 0 8px 16px rgba(0, 0, 0, 0.06);
+
+  /* ── Chart ─────────────────────────────────────────────────────────────── */
+  --chart-gradient-start: rgba(29, 78, 216, 0.25);
+  --chart-gradient-end: rgba(29, 78, 216, 0.02);
+  --chart-line: #1D4ED8;
+  --chart-grid: #E8ECF0;
+
+  /* ── Accessibility ─────────────────────────────────────────────────────── */
+  --focus-ring-color: rgba(29, 78, 216, 0.5);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   AUTO-DETECT: prefers-color-scheme fallback
+   When no data-theme is set, respect system preference.
+   Dark is the default when system has no preference.
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg-base: #0B0E14; --bg-surface-1: #111620; --bg-surface-2: #161B26;
+    --bg-surface-3: #1C2333; --bg-overlay: rgba(11, 14, 20, 0.85);
+    --sidebar-bg: #080B12; --sidebar-bg-hover: #0F1420;
+    --sidebar-active-bg: rgba(45, 212, 191, 0.15);
+    --sidebar-text: rgba(255, 255, 255, 0.50); --sidebar-text-label: rgba(255, 255, 255, 0.30); --sidebar-text-active: #2DD4BF;
+    --sidebar-divider: rgba(255, 255, 255, 0.06); --sidebar-text-bright: #FFF;
+    --sidebar-badge-bg: rgba(255, 255, 255, 0.15); --sidebar-badge-active-bg: rgba(255, 255, 255, 0.25);
+    --border-subtle: #1E2736; --border-default: #2A3444;
+    --border-strong: #3D4A5C; --border-accent: rgba(45, 212, 191, 0.20);
+    --text-primary: #E6EDF3; --text-secondary: #8B949E;
+    --text-muted: #6E7681; --text-inverse: #0B0E14;
+    --accent-primary: #2DD4BF; --accent-primary-hover: #5EEAD4;
+    --accent-primary-muted: rgba(45, 212, 191, 0.15); --accent-secondary: #C49A3C;
+    --color-success: #22C55E; --color-success-bg: rgba(34, 197, 94, 0.12);
+    --color-warning: #F59E0B; --color-warning-bg: rgba(245, 158, 11, 0.12);
+    --color-error: #EF4444; --color-error-bg: rgba(239, 68, 68, 0.12);
+    --color-info: #3B82F6; --color-info-bg: rgba(59, 130, 246, 0.12);
+    --theory-mbti: #22D3EE; --theory-mbti-bg: rgba(34, 211, 238, 0.15);
+    --theory-enneagram: #A78BFA; --theory-enneagram-bg: rgba(167, 139, 250, 0.15);
+    --theory-bigfive: #60A5FA; --theory-bigfive-bg: rgba(96, 165, 250, 0.15);
+    --theory-disc: #FB923C; --theory-disc-bg: rgba(251, 146, 60, 0.15);
+    --theory-lesenne: #F472B6; --theory-lesenne-bg: rgba(244, 114, 182, 0.15);
+    --theory-jung: #FBBF24; --theory-jung-bg: rgba(251, 191, 36, 0.15);
+    --disc-d: #EF4444; --disc-i: #F59E0B; --disc-s: #22C55E; --disc-c: #3B82F6;
+    --mbti-ei: #F59E0B; --mbti-sn: #6366F1; --mbti-tf: #0EA5E9; --mbti-jp: #10B981;
+    --bigfive-o: #6366F1; --bigfive-c: #0EA5E9; --bigfive-e: #F59E0B;
+    --bigfive-a: #10B981; --bigfive-n: #EF4444;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 20px rgba(45, 212, 191, 0.15);
+    --shadow-glow-lg: 0 0 40px rgba(45, 212, 191, 0.2), 0 0 80px rgba(45, 212, 191, 0.08);
+    --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --elevation-2: 0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+    --elevation-3: 0 12px 32px rgba(0, 0, 0, 0.6), 0 4px 8px rgba(0, 0, 0, 0.3);
+    --elevation-4: 0 24px 64px rgba(0, 0, 0, 0.7), 0 8px 16px rgba(0, 0, 0, 0.4);
+    --glass-subtle-bg: rgba(22, 27, 38, 0.4); --glass-subtle-blur: 12px;
+    --glass-subtle-border: rgba(255, 255, 255, 0.04);
+    --glass-standard-bg: rgba(22, 27, 38, 0.6); --glass-standard-blur: 16px;
+    --glass-standard-border: rgba(255, 255, 255, 0.06);
+    --glass-strong-bg: rgba(22, 27, 38, 0.85); --glass-strong-blur: 24px;
+    --glass-strong-border: rgba(255, 255, 255, 0.08);
+    --chart-gradient-start: rgba(45, 212, 191, 0.25);
+    --chart-gradient-end: rgba(45, 212, 191, 0.02);
+    --chart-line: #2DD4BF; --chart-grid: #1E2736;
+    --focus-ring-color: rgba(45, 212, 191, 0.5);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg-base: #FFF; --bg-surface-1: #F8FAFB; --bg-surface-2: #F0F3F5;
+    --bg-surface-3: #E8ECF0; --bg-overlay: rgba(0, 0, 0, 0.5);
+    --sidebar-bg: #0F1A2E; --sidebar-bg-hover: #162240;
+    --sidebar-active-bg: #1D4ED8;
+    --sidebar-text: rgba(255, 255, 255, 0.65); --sidebar-text-label: rgba(255, 255, 255, 0.30); --sidebar-text-active: #FFF;
+    --sidebar-divider: rgba(255, 255, 255, 0.08); --sidebar-text-bright: #FFF;
+    --sidebar-badge-bg: rgba(255, 255, 255, 0.15); --sidebar-badge-active-bg: rgba(255, 255, 255, 0.25);
+    --border-subtle: #E8ECF0; --border-default: #D1D9E0;
+    --border-strong: #B0BAC5; --border-accent: rgba(29, 78, 216, 0.25);
+    --text-primary: #0F1729; --text-secondary: #4B5563;
+    --text-muted: #6B7280; --text-inverse: #FFF;
+    --accent-primary: #1D4ED8; --accent-primary-hover: #1E40AF;
+    --accent-primary-muted: rgba(29, 78, 216, 0.12); --accent-secondary: #C49A3C;
+    --color-success: #16A34A; --color-success-bg: rgba(22, 163, 74, 0.12);
+    --color-warning: #D97706; --color-warning-bg: rgba(217, 119, 6, 0.12);
+    --color-error: #DC2626; --color-error-bg: rgba(220, 38, 38, 0.12);
+    --color-info: #2563EB; --color-info-bg: rgba(37, 99, 235, 0.12);
+    --theory-mbti: #0891B2; --theory-mbti-bg: rgba(8, 145, 178, 0.15);
+    --theory-enneagram: #7C3AED; --theory-enneagram-bg: rgba(124, 58, 237, 0.15);
+    --theory-bigfive: #2563EB; --theory-bigfive-bg: rgba(37, 99, 235, 0.15);
+    --theory-disc: #EA580C; --theory-disc-bg: rgba(234, 88, 12, 0.15);
+    --theory-lesenne: #DB2777; --theory-lesenne-bg: rgba(219, 39, 119, 0.15);
+    --theory-jung: #D97706; --theory-jung-bg: rgba(217, 119, 6, 0.15);
+    --disc-d: #DC2626; --disc-i: #D97706; --disc-s: #16A34A; --disc-c: #2563EB;
+    --mbti-ei: #D97706; --mbti-sn: #4F46E5; --mbti-tf: #0284C7; --mbti-jp: #059669;
+    --bigfive-o: #4F46E5; --bigfive-c: #0284C7; --bigfive-e: #D97706;
+    --bigfive-a: #059669; --bigfive-n: #DC2626;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10), 0 2px 4px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+    --shadow-glow: 0 0 20px rgba(29, 78, 216, 0.18);
+    --shadow-glow-lg: 0 0 40px rgba(29, 78, 216, 0.20), 0 0 80px rgba(29, 78, 216, 0.08);
+    --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --elevation-2: 0 4px 12px rgba(0, 0, 0, 0.10), 0 2px 4px rgba(0, 0, 0, 0.04);
+    --elevation-3: 0 12px 32px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.04);
+    --elevation-4: 0 24px 64px rgba(0, 0, 0, 0.16), 0 8px 16px rgba(0, 0, 0, 0.06);
+    --glass-subtle-bg: rgba(255, 255, 255, 0.6); --glass-subtle-blur: 12px;
+    --glass-subtle-border: rgba(0, 0, 0, 0.06);
+    --glass-standard-bg: rgba(255, 255, 255, 0.75); --glass-standard-blur: 16px;
+    --glass-standard-border: rgba(0, 0, 0, 0.08);
+    --glass-strong-bg: rgba(255, 255, 255, 0.92); --glass-strong-blur: 24px;
+    --glass-strong-border: rgba(0, 0, 0, 0.1);
+    --chart-gradient-start: rgba(29, 78, 216, 0.25);
+    --chart-gradient-end: rgba(29, 78, 216, 0.02);
+    --chart-line: #1D4ED8; --chart-grid: #E8ECF0;
+    --focus-ring-color: rgba(29, 78, 216, 0.5);
+  }
+}
+
+/* ==========================================================================
+   Utility Classes — Glassmorphism
+   ========================================================================== */
+
+.glass-subtle {
+  background: var(--glass-subtle-bg);
+  backdrop-filter: blur(var(--glass-subtle-blur));
+  -webkit-backdrop-filter: blur(var(--glass-subtle-blur));
+  border: 1px solid var(--glass-subtle-border);
+}
+
+.glass-standard {
+  background: var(--glass-standard-bg);
+  backdrop-filter: blur(var(--glass-standard-blur));
+  -webkit-backdrop-filter: blur(var(--glass-standard-blur));
+  border: 1px solid var(--glass-standard-border);
+}
+
+.glass-strong {
+  background: var(--glass-strong-bg);
+  backdrop-filter: blur(var(--glass-strong-blur));
+  -webkit-backdrop-filter: blur(var(--glass-strong-blur));
+  border: 1px solid var(--glass-strong-border);
+}
+
+/* ==========================================================================
+   Keyframe Animations
+   ========================================================================== */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(45, 212, 191, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(45, 212, 191, 0.4); }
+}
+
+@keyframes progress-fill {
+  from { width: 0%; }
+  to { width: var(--progress-value, 0%); }
+}

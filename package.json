@@ -1,0 +1,85 @@
+{
+  "name": "resultx-design-system",
+  "version": "2.0.0",
+  "description": "ResultX Design System — Multi-product (Electia, IMO, Editais) with dark + light themes, spring physics, elevation system, and WCAG AA accessibility.",
+  "main": "dist/tokens.min.css",
+  "exports": {
+    "./tokens": "./dist/tokens.min.css",
+    "./components": "./dist/components.min.css",
+    "./icons": "./dist/icons.min.css",
+    "./theme": "./dist/theme-toggle.js",
+    "./tokens/source": "./tokens/tokens.css",
+    "./components/source": "./components/components.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "tokens/tokens.css",
+    "tokens/tokens.json",
+    "components/components.css",
+    "components/icons.css",
+    "docs/",
+    "DESIGN-SYSTEM.md",
+    "CONTRIBUTING.md",
+    "CHANGELOG.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carneiromarcos/resultx-design-system.git"
+  },
+  "homepage": "https://carneiromarcos.github.io/resultx-design-system",
+  "bugs": {
+    "url": "https://github.com/carneiromarcos/resultx-design-system/issues"
+  },
+  "author": "Marcos Carneiro <marcos@resultx.com.br>",
+  "keywords": [
+    "design-system",
+    "css",
+    "tokens",
+    "dark-theme",
+    "light-theme",
+    "wcag",
+    "accessibility",
+    "glassmorphism",
+    "assessment",
+    "resultx"
+  ],
+  "scripts": {
+    "build:tokens": "postcss tokens/tokens.css -o dist/tokens.min.css",
+    "build:components": "postcss components/components.css -o dist/components.min.css",
+    "build:icons": "postcss components/icons.css -o dist/icons.min.css",
+    "build:all": "npm run build:tokens && npm run build:components && npm run build:icons",
+    "build": "npm run build:all",
+    "lint": "stylelint 'components/**/*.css'",
+    "lint:fix": "stylelint 'components/**/*.css' --fix",
+    "lint:tokens": "stylelint 'tokens/**/*.css'",
+    "analyze": "node scripts/bundle-analysis.js",
+    "test": "jest",
+    "release": "commit-and-tag-version",
+    "release:minor": "commit-and-tag-version --release-as minor",
+    "release:major": "commit-and-tag-version --release-as major",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "components/**/*.css": "stylelint --fix",
+    "tokens/**/*.css": "stylelint --fix"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "autoprefixer": "^10.4.27",
+    "commit-and-tag-version": "^12.7.1",
+    "cssnano": "^7.1.3",
+    "husky": "^9.1.7",
+    "jest": "^30.3.0",
+    "lint-staged": "^15.5.1",
+    "playwright": "^1.58.2",
+    "postcss": "^8.5.8",
+    "postcss-cli": "^11.0.1",
+    "postcss-import": "^16.1.1",
+    "stylelint": "^17.6.0",
+    "stylelint-config-standard": "^40.0.0"
+  }
+}

@@ -1,0 +1,16 @@
+# Source & dev files (not needed by consumers)
+tests/
+scripts/
+pages/
+social-media-png/
+assets/
+render-templates.mjs
+docs-viewer.html
+postcss.config.js
+commitlint.config.js
+.versionrc.json
+.stylelintrc.json
+.github/
+.DS_Store
+*.log
+node_modules/

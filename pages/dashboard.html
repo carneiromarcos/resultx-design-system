@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Electia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens/tokens-light.css">
+  <link rel="stylesheet" href="../components/components.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>.icon { width: 18px; height: 18px; stroke-width: 1.8; }</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Pular para o conteúdo</a>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">E+</div>
+    <div class="sidebar-brand-text"><span>Electia</span></div>
+  </div>
+
+  <nav aria-label="Sidebar">
+  <div class="sidebar-section-label">Principal</div>
+  <div class="sidebar-item active" aria-current="page"><i data-lucide="layout-dashboard" class="icon" aria-hidden="true"></i> Dashboard <span class="badge-count">3</span></div>
+  <div class="sidebar-item"><i data-lucide="users" class="icon" aria-hidden="true"></i> Candidatos</div>
+  <div class="sidebar-item"><i data-lucide="briefcase" class="icon" aria-hidden="true"></i> Cargos</div>
+  <div class="sidebar-item"><i data-lucide="user-check" class="icon" aria-hidden="true"></i> Colaboradores</div>
+
+  <div class="sidebar-section-label">Assessments</div>
+  <div class="sidebar-item"><i data-lucide="clipboard-check" class="icon" aria-hidden="true"></i> Testes</div>
+  <div class="sidebar-item"><i data-lucide="bar-chart-3" class="icon" aria-hidden="true"></i> Resultados</div>
+
+  <div class="sidebar-section-label">Comunicacao</div>
+  <div class="sidebar-item"><i data-lucide="message-circle" class="icon" aria-hidden="true"></i> Conversas <span class="badge-count">12</span></div>
+  <div class="sidebar-item"><i data-lucide="mail" class="icon" aria-hidden="true"></i> Emails</div>
+
+  <hr class="sidebar-divider">
+  <div class="sidebar-item"><i data-lucide="settings" class="icon" aria-hidden="true"></i> Configuracoes</div>
+  <div class="sidebar-item"><i data-lucide="help-circle" class="icon" aria-hidden="true"></i> Ajuda</div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar">MC</div>
+      <div>
+        <div class="sidebar-user-name">Marcos C.</div>
+        <div class="sidebar-user-role">Admin</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main" id="main-content">
+  <header class="header">
+    <h1 class="header-title">Dashboard</h1>
+    <div class="header-actions">
+      <button class="btn btn-secondary btn-sm"><i data-lucide="filter" style="width:14px;height:14px;" aria-hidden="true"></i> Filtros</button>
+      <button class="btn btn-secondary btn-sm"><i data-lucide="download" style="width:14px;height:14px;" aria-hidden="true"></i> Exportar</button>
+      <button class="btn btn-primary btn-sm"><i data-lucide="plus" style="width:14px;height:14px;" aria-hidden="true"></i> Novo Candidato</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <nav class="breadcrumb">
+      <span class="breadcrumb-item active">Dashboard</span>
+    </nav>
+
+    <!-- STAT CARDS -->
+    <div class="section">
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-label">Total Candidatos</div>
+            <div class="icon-badge icon-badge-sm icon-badge-blue" aria-label="Candidatos"><i data-lucide="users" style="width:16px;height:16px;" aria-hidden="true"></i></div>
+          </div>
+          <div class="stat-number">1,247</div>
+          <div class="stat-variation up"><i data-lucide="trending-up" style="width:14px;height:14px;" aria-hidden="true"></i> 12.5% <span class="vs">vs mes anterior</span></div>
+          <div class="stat-progress"><div class="stat-progress-fill" style="width: 75%; background: var(--accent-primary);"></div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-label">Assessments Ativos</div>
+            <div class="icon-badge icon-badge-sm icon-badge-green" aria-label="Assessments"><i data-lucide="clipboard-check" style="width:16px;height:16px;" aria-hidden="true"></i></div>
+          </div>
+          <div class="stat-number">856</div>
+          <div class="stat-variation up"><i data-lucide="trending-up" style="width:14px;height:14px;" aria-hidden="true"></i> 8.3% <span class="vs">vs mes anterior</span></div>
+          <div class="stat-progress"><div class="stat-progress-fill" style="width: 68%; background: var(--color-success);"></div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-label">Taxa de Conversao</div>
+            <div class="icon-badge icon-badge-sm icon-badge-purple" aria-label="Conversao"><i data-lucide="percent" style="width:16px;height:16px;" aria-hidden="true"></i></div>
+          </div>
+          <div class="stat-number">68.6%</div>
+          <div class="stat-variation down"><i data-lucide="trending-down" style="width:14px;height:14px;" aria-hidden="true"></i> 2.1% <span class="vs">vs mes anterior</span></div>
+          <div class="stat-progress"><div class="stat-progress-fill" style="width: 68%; background: var(--theory-enneagram);"></div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-header">
+            <div class="stat-label">Vagas Abertas</div>
+            <div class="icon-badge icon-badge-sm icon-badge-orange" aria-label="Vagas"><i data-lucide="briefcase" style="width:16px;height:16px;" aria-hidden="true"></i></div>
+          </div>
+          <div class="stat-number">42</div>
+          <div class="stat-variation up"><i data-lucide="trending-up" style="width:14px;height:14px;" aria-hidden="true"></i> 5 <span class="vs">novas esta semana</span></div>
+          <div class="stat-progress"><div class="stat-progress-fill" style="width: 42%; background: var(--theory-disc);"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="grid-2 mb-8">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Candidatos por semana</div>
+          <div class="chart-period" role="group" aria-label="Período do gráfico">
+            <button class="chart-period-btn">1m</button>
+            <button class="chart-period-btn active" aria-pressed="true">3m</button>
+            <button class="chart-period-btn">6m</button>
+            <button class="chart-period-btn">1a</button>
+          </div>
+        </div>
+        <svg class="chart-svg" viewBox="0 0 800 200" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(29,78,216,0.25)" />
+              <stop offset="100%" stop-color="rgba(29,78,216,0.02)" />
+            </linearGradient>
+          </defs>
+          <line x1="0" y1="50" x2="800" y2="50" stroke="#E8ECF0" stroke-width="1"/>
+          <line x1="0" y1="100" x2="800" y2="100" stroke="#E8ECF0" stroke-width="1"/>
+          <line x1="0" y1="150" x2="800" y2="150" stroke="#E8ECF0" stroke-width="1"/>
+          <path d="M0,180 C50,175 100,170 150,165 C200,160 250,155 300,148 C350,140 400,130 450,110 C500,95 550,70 600,55 C650,45 700,38 750,30 L800,25 L800,200 L0,200 Z" fill="url(#chartGrad)" />
+          <path d="M0,180 C50,175 100,170 150,165 C200,160 250,155 300,148 C350,140 400,130 450,110 C500,95 550,70 600,55 C650,45 700,38 750,30 L800,25" fill="none" stroke="#1D4ED8" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="800" cy="25" r="5" fill="#1D4ED8" stroke="#fff" stroke-width="2"/>
+        </svg>
+        <div class="chart-months">
+          <span>Jan</span><span>Fev</span><span>Mar</span><span>Abr</span><span>Mai</span><span>Jun</span><span>Jul</span><span>Ago</span><span>Set</span><span>Out</span><span>Nov</span><span>Dez</span>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Assessments por teoria</div>
+        </div>
+        <div class="progress-list">
+          <div class="progress-item">
+            <span class="progress-label">MBTI</span>
+            <div class="progress-track"><div class="progress-fill" style="width: 42%; background: var(--theory-mbti);"></div></div>
+            <span class="progress-score" style="color: var(--theory-mbti);">42%</span>
+          </div>
+          <div class="progress-item">
+            <span class="progress-label">DISC</span>
+            <div class="progress-track"><div class="progress-fill" style="width: 28%; background: var(--theory-disc);"></div></div>
+            <span class="progress-score" style="color: var(--theory-disc);">28%</span>
+          </div>
+          <div class="progress-item">
+            <span class="progress-label">Big Five</span>
+            <div class="progress-track"><div class="progress-fill" style="width: 18%; background: var(--theory-bigfive);"></div></div>
+            <span class="progress-score" style="color: var(--theory-bigfive);">18%</span>
+          </div>
+          <div class="progress-item">
+            <span class="progress-label">Eneagrama</span>
+            <div class="progress-track"><div class="progress-fill" style="width: 12%; background: var(--theory-enneagram);"></div></div>
+            <span class="progress-score" style="color: var(--theory-enneagram);">12%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="section">
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-header-title">Candidatos Recentes</div>
+          <button class="btn btn-secondary btn-sm">Ver todos</button>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Candidato</th><th>Cargo</th><th>DISC</th><th>Score</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="td-avatar" style="background: linear-gradient(135deg, #1D4ED8, #6366F1);">AH</span><span class="td-name">Alex Hormozi</span></td>
+              <td>Business Strategy</td>
+              <td><span class="badge badge-disc badge-table">DI</span></td>
+              <td><span class="td-score">92</span><span class="td-score-total">/100</span></td>
+              <td><span class="badge badge-success badge-table">Aprovado</span></td>
+            </tr>
+            <tr>
+              <td><span class="td-avatar" style="background: linear-gradient(135deg, #7C3AED, #A78BFA);">MS</span><span class="td-name">Maria Santos</span></td>
+              <td>UX Designer</td>
+              <td><span class="badge badge-disc badge-table">IS</span></td>
+              <td><span class="td-score">87</span><span class="td-score-total">/100</span></td>
+              <td><span class="badge badge-warning badge-table">Pendente</span></td>
+            </tr>
+            <tr>
+              <td><span class="td-avatar" style="background: linear-gradient(135deg, #EA580C, #FB923C);">JP</span><span class="td-name">Joao Pereira</span></td>
+              <td>Backend Developer</td>
+              <td><span class="badge badge-disc badge-table">CS</span></td>
+              <td><span class="td-score">78</span><span class="td-score-total">/100</span></td>
+              <td><span class="badge badge-success badge-table">Aprovado</span></td>
+            </tr>
+            <tr>
+              <td><span class="td-avatar" style="background: linear-gradient(135deg, #DB2777, #F472B6);">AC</span><span class="td-name">Ana Costa</span></td>
+              <td>Product Manager</td>
+              <td><span class="badge badge-disc badge-table">DI</span></td>
+              <td><span class="td-score">95</span><span class="td-score-total">/100</span></td>
+              <td><span class="badge badge-error badge-table">Rejeitado</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ATIVIDADE + VAGAS -->
+    <div class="grid-2 mb-8">
+      <div class="card">
+        <div class="card-eyebrow">Atividade Recente</div>
+        <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+          <div class="flex-row">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-success); flex-shrink: 0;"></span>
+            <span class="card-text" style="flex: 1;">Alex Hormozi completou assessment DISC</span>
+            <span class="card-text" style="color: var(--text-muted); white-space: nowrap;">2 min</span>
+          </div>
+          <div class="flex-row">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-info); flex-shrink: 0;"></span>
+            <span class="card-text" style="flex: 1;">Maria Santos iniciou assessment MBTI</span>
+            <span class="card-text" style="color: var(--text-muted); white-space: nowrap;">15 min</span>
+          </div>
+          <div class="flex-row">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-warning); flex-shrink: 0;"></span>
+            <span class="card-text" style="flex: 1;">Novo candidato Joao Pereira adicionado</span>
+            <span class="card-text" style="color: var(--text-muted); white-space: nowrap;">1h</span>
+          </div>
+          <div class="flex-row">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-error); flex-shrink: 0;"></span>
+            <span class="card-text" style="flex: 1;">Assessment de Ana Costa expirou</span>
+            <span class="card-text" style="color: var(--text-muted); white-space: nowrap;">3h</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-eyebrow">Vagas em Destaque</div>
+        <div style="display: flex; flex-direction: column;">
+          <div class="flex-between" style="padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle);">
+            <div>
+              <div class="td-name">Desenvolvedor Full Stack</div>
+              <div class="card-text">12 candidatos</div>
+            </div>
+            <span class="badge badge-success badge-table">Ativa</span>
+          </div>
+          <div class="flex-between" style="padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle);">
+            <div>
+              <div class="td-name">Product Designer</div>
+              <div class="card-text">8 candidatos</div>
+            </div>
+            <span class="badge badge-warning badge-table">Revisao</span>
+          </div>
+          <div class="flex-between" style="padding: var(--space-3) 0;">
+            <div>
+              <div class="td-name">Data Analyst</div>
+              <div class="card-text">3 candidatos</div>
+            </div>
+            <span class="badge badge-success badge-table">Ativa</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

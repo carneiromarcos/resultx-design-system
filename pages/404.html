@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Pagina nao encontrada | Electia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tokens/tokens-light.css">
+  <link rel="stylesheet" href="../components/components.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>body { display: block; }</style>
+</head>
+<body>
+
+  <main class="layout-centered">
+    <div style="text-align: center;">
+      <!-- Large 404 number -->
+      <div style="font-family: var(--font-heading); font-size: 120px; font-weight: var(--font-bold); line-height: 1; color: var(--bg-surface-3); letter-spacing: var(--tracking-tight); margin-bottom: var(--space-4);" role="img" aria-label="Erro 404">404</div>
+
+      <!-- Icon -->
+      <div class="empty-state-icon" style="margin: 0 auto var(--space-5);" aria-hidden="true"><i data-lucide="search-x" style="width:36px;height:36px;"></i></div>
+
+      <!-- Title -->
+      <h1 class="empty-state-title">Pagina nao encontrada</h1>
+
+      <!-- Text -->
+      <div class="empty-state-text" style="margin: 0 auto var(--space-6);">A pagina que voce esta procurando nao existe ou foi movida. Verifique o endereco ou volte para o dashboard.</div>
+
+      <!-- Buttons -->
+      <div style="display: flex; gap: var(--space-3); justify-content: center;">
+        <button class="btn btn-primary btn-lg"><i data-lucide="arrow-left" style="width:16px;height:16px;" aria-hidden="true"></i> Voltar ao Dashboard</button>
+        <button class="btn btn-secondary btn-lg"><i data-lucide="undo-2" style="width:16px;height:16px;" aria-hidden="true"></i> Pagina Anterior</button>
+      </div>
+
+      <!-- Footer link -->
+      <div style="margin-top: var(--space-8); font-size: var(--text-sm); color: var(--text-muted);">
+        Precisa de ajuda? <a class="form-link" href="#">Fale com o suporte</a>
+      </div>
+    </div>
+  </main>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

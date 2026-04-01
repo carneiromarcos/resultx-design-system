@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResultX Design System</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- DS Tokens & Components (dist = inlined, works offline) -->
+  <link rel="stylesheet" href="dist/tokens.min.css">
+  <link rel="stylesheet" href="dist/components.min.css">
+
+  <style>
+    /* ================================================================
+       VIEWER-SPECIFIC LAYOUT
+       Uses DS tokens for consistent theming.
+       ================================================================ */
+
+    /* Override body flex from components.css for viewer layout */
+    body {
+      display: block;
+      background: var(--bg-base);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* -- Viewer Header (fixed) ---------------------------------------- */
+    .viewer-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--glass-strong-bg);
+      backdrop-filter: blur(var(--glass-strong-blur));
+      -webkit-backdrop-filter: blur(var(--glass-strong-blur));
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-6);
+      z-index: 100;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .viewer-header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .viewer-header-logo {
+      width: 36px;
+      height: 36px;
+      background: var(--accent-primary);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-weight: var(--weight-bold);
+      font-size: var(--text-sm);
+      color: var(--text-inverse);
+    }
+    .viewer-header-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      font-weight: var(--weight-bold);
+      letter-spacing: var(--tracking-tight);
+      color: var(--text-primary);
+    }
+    .viewer-header-title span {
+      color: var(--accent-secondary);
+    }
+    .viewer-header-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .theme-indicator {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: var(--tracking-wider);
+    }
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1-5) var(--space-4);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-default);
+      background: var(--bg-surface-2);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .theme-toggle:hover {
+      border-color: var(--accent-primary);
+      background: var(--accent-primary-muted);
+    }
+    .hamburger {
+      display: none;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      background: var(--bg-surface-2);
+      color: var(--text-primary);
+      font-size: 18px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* -- Sidebar (navigation) ---------------------------------------- */
+    .viewer-sidebar {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 260px;
+      height: calc(100vh - 60px);
+      background: var(--bg-surface-1);
+      border-right: 1px solid var(--border-subtle);
+      overflow-y: auto;
+      padding: var(--space-4) 0;
+      z-index: 90;
+      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    }
+    .viewer-sidebar-section {
+      padding: var(--space-3) var(--space-5) var(--space-1);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: var(--weight-medium);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .viewer-sidebar-link {
+      display: block;
+      padding: var(--space-2) var(--space-5);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-medium);
+      color: var(--text-secondary);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      border-left: 3px solid transparent;
+    }
+    .viewer-sidebar-link:hover {
+      color: var(--text-primary);
+      background: var(--bg-surface-2);
+    }
+    .viewer-sidebar-link.active {
+      color: var(--accent-primary);
+      border-left-color: var(--accent-primary);
+      background: var(--accent-primary-muted);
+    }
+
+    /* -- Main content area -------------------------------------------- */
+    .viewer-main {
+      margin-left: 260px;
+      margin-top: 60px;
+      padding: var(--space-8);
+      max-width: 1100px;
+      transition: margin 0.3s ease;
+    }
+
+    /* -- Section layout ----------------------------------------------- */
+    .ds-section {
+      margin-bottom: var(--space-16);
+      scroll-margin-top: 80px;
+    }
+    .ds-section-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-bold);
+      letter-spacing: var(--tracking-tight);
+      color: var(--text-primary);
+      margin-bottom: var(--space-2);
+    }
+    .ds-section-desc {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-6);
+      max-width: 640px;
+      line-height: var(--leading-relaxed);
+    }
+    .ds-subsection {
+      margin-bottom: var(--space-8);
+    }
+    .ds-subsection-title {
+      font-family: var(--font-heading);
+      font-size: var(--text-lg);
+      font-weight: var(--weight-semibold);
+      color: var(--text-primary);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    /* -- Swatch grids ------------------------------------------------- */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: var(--space-4);
+    }
+    .swatch {
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+    .swatch:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .swatch-color {
+      height: 64px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: var(--space-2);
+    }
+    .swatch-info {
+      padding: var(--space-3);
+      background: var(--bg-surface-1);
+    }
+    .swatch-name {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-primary);
+      font-weight: var(--weight-medium);
+      margin-bottom: 2px;
+      word-break: break-all;
+    }
+    .swatch-value {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* -- Component showcase containers -------------------------------- */
+    .showcase {
+      background: var(--bg-surface-1);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .showcase-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-4);
+    }
+    .showcase-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    /* -- Typography samples ------------------------------------------- */
+    .type-sample {
+      margin-bottom: var(--space-5);
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-6);
+    }
+    .type-sample-text {
+      color: var(--text-primary);
+      flex: 1;
+      min-width: 0;
+    }
+    .type-sample-meta {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      white-space: nowrap;
+      min-width: 140px;
+      text-align: right;
+    }
+
+    /* -- Spacing bars ------------------------------------------------- */
+    .spacing-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-bottom: var(--space-3);
+    }
+    .spacing-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      min-width: 90px;
+      text-align: right;
+    }
+    .spacing-bar {
+      height: 20px;
+      background: var(--accent-primary-muted);
+      border: 1px solid var(--accent-primary);
+      border-radius: var(--radius-sm);
+      transition: width 0.3s ease;
+    }
+    .spacing-value {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      min-width: 48px;
+    }
+
+    /* -- Radius samples ----------------------------------------------- */
+    .radius-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: var(--space-4);
+    }
+    .radius-sample {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .radius-box {
+      width: 72px;
+      height: 72px;
+      background: var(--accent-primary-muted);
+      border: 2px solid var(--accent-primary);
+    }
+    .radius-name {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-primary);
+      font-weight: var(--weight-medium);
+    }
+    .radius-px {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* -- Shadow samples ----------------------------------------------- */
+    .shadow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-6);
+    }
+    .shadow-sample {
+      text-align: center;
+    }
+    .shadow-box {
+      width: 100%;
+      height: 80px;
+      background: var(--bg-base);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-3);
+    }
+    .shadow-name {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-primary);
+      font-weight: var(--weight-medium);
+    }
+
+    /* -- Glass samples ------------------------------------------------ */
+    .glass-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--space-6);
+      position: relative;
+      padding: var(--space-8) var(--space-4);
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      border-radius: var(--radius-lg);
+    }
+    .glass-sample {
+      text-align: center;
+    }
+    .glass-box {
+      width: 100%;
+      height: 100px;
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-3);
+      color: var(--text-primary);
+      font-family: var(--font-heading);
+      font-weight: var(--weight-semibold);
+      font-size: var(--text-sm);
+    }
+    .glass-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: white;
+      font-weight: var(--weight-medium);
+    }
+
+    /* -- Card grid ----------------------------------------------------- */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: var(--space-5);
+    }
+
+    /* -- Form showcase ------------------------------------------------- */
+    .form-showcase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+
+    /* -- Modal demo (inline, not overlay) ------------------------------ */
+    .modal-demo {
+      position: relative;
+      display: block;
+    }
+    .modal-demo .modal-overlay {
+      position: relative;
+      border-radius: var(--radius-lg);
+      min-height: 320px;
+    }
+    .modal-demo .modal {
+      position: relative;
+      animation: none;
+    }
+
+    /* -- Token code snippet -------------------------------------------- */
+    .token-code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent-primary);
+      background: var(--bg-surface-2);
+      padding: 1px 6px;
+      border-radius: var(--radius-sm);
+      user-select: all;
+    }
+
+    /* -- Responsive ---------------------------------------------------- */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+      .viewer-sidebar {
+        transform: translateX(-100%);
+      }
+      .viewer-sidebar.open {
+        transform: translateX(0);
+      }
+      .viewer-main {
+        margin-left: 0;
+      }
+      .swatch-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      }
+      .form-showcase-grid {
+        grid-template-columns: 1fr;
+      }
+      .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .theory-grid {
+        grid-template-columns: 1fr;
+      }
+      .type-sample {
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+      .type-sample-meta {
+        text-align: left;
+      }
+    }
+
+    /* -- Smooth theme transitions -------------------------------------- */
+    *, *::before, *::after {
+      transition-property: background-color, border-color, color, box-shadow;
+      transition-duration: 0.3s;
+      transition-timing-function: ease;
+    }
+    /* Exclude properties that shouldn't transition */
+    .btn, .btn *, .badge, .tag, .tab,
+    .sidebar-item, .viewer-sidebar-link,
+    .dropdown-trigger, .pagination-btn, .modal-close,
+    .theme-toggle, .toggle-track, .toggle-thumb {
+      transition: all var(--transition-fast);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================================
+       HEADER
+       ================================================================ -->
+  <header class="viewer-header">
+    <div class="viewer-header-left">
+      <button class="hamburger" onclick="toggleSidebar()" aria-label="Toggle navigation">&#9776;</button>
+      <div class="viewer-header-logo">Rx</div>
+      <div class="viewer-header-title">ResultX <span>Design System</span></div>
+    </div>
+    <div class="viewer-header-right">
+      <span class="theme-indicator" id="themeIndicator">Dark Mode</span>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span id="themeIcon">&#9790;</span>
+        <span id="themeLabel">Switch to Light</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================================================================
+       SIDEBAR
+       ================================================================ -->
+  <nav class="viewer-sidebar" id="sidebar">
+    <div class="viewer-sidebar-section">Foundations</div>
+    <a class="viewer-sidebar-link" href="#colors" onclick="closeSidebarMobile()">Colors</a>
+    <a class="viewer-sidebar-link" href="#typography" onclick="closeSidebarMobile()">Typography</a>
+    <a class="viewer-sidebar-link" href="#spacing" onclick="closeSidebarMobile()">Spacing</a>
+    <a class="viewer-sidebar-link" href="#radius" onclick="closeSidebarMobile()">Border Radius</a>
+    <a class="viewer-sidebar-link" href="#shadows" onclick="closeSidebarMobile()">Shadows &amp; Glass</a>
+
+    <div class="viewer-sidebar-section">Components</div>
+    <a class="viewer-sidebar-link" href="#buttons" onclick="closeSidebarMobile()">Buttons</a>
+    <a class="viewer-sidebar-link" href="#cards" onclick="closeSidebarMobile()">Cards</a>
+    <a class="viewer-sidebar-link" href="#forms" onclick="closeSidebarMobile()">Forms</a>
+    <a class="viewer-sidebar-link" href="#modals" onclick="closeSidebarMobile()">Modals</a>
+    <a class="viewer-sidebar-link" href="#tables" onclick="closeSidebarMobile()">Tables</a>
+    <a class="viewer-sidebar-link" href="#navigation" onclick="closeSidebarMobile()">Navigation</a>
+    <a class="viewer-sidebar-link" href="#badges" onclick="closeSidebarMobile()">Badges &amp; Tags</a>
+    <a class="viewer-sidebar-link" href="#progress" onclick="closeSidebarMobile()">Progress &amp; Charts</a>
+    <a class="viewer-sidebar-link" href="#stats" onclick="closeSidebarMobile()">Stats</a>
+    <a class="viewer-sidebar-link" href="#layout" onclick="closeSidebarMobile()">Layout Patterns</a>
+  </nav>
+
+  <!-- ================================================================
+       MAIN CONTENT
+       ================================================================ -->
+  <main class="viewer-main">
+
+    <!-- ============================================================
+         COLORS
+         ============================================================ -->
+    <section class="ds-section" id="colors">
+      <h2 class="ds-section-title">Colors</h2>
+      <p class="ds-section-desc">
+        All colors are defined as CSS custom properties and adapt automatically when the theme changes.
+        The accent shifts from teal (dark) to blue (light).
+      </p>
+
+      <!-- Backgrounds -->
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Backgrounds</h3>
+        <div class="swatch-grid" id="swatchBg"></div>
+      </div>
+
+      <!-- Text -->
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Text</h3>
+        <div class="swatch-grid" id="swatchText"></div>
+      </div>
+
+      <!-- Borders -->
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Borders</h3>
+        <div class="swatch-grid" id="swatchBorder"></div>
+      </div>
+
+      <!-- Accent -->
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Accent</h3>
+        <div class="swatch-grid" id="swatchAccent"></div>
+      </div>
+
+      <!-- Semantic -->
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Semantic</h3>
+        <div class="swatch-grid" id="swatchSemantic"></div>
+      </div>
+
+      <!-- Theory Colors -->
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Theory Colors (Assessment)</h3>
+        <div class="swatch-grid" id="swatchTheory"></div>
+      </div>
+
+      <!-- DISC -->
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">DISC Dimensions</h3>
+        <div class="swatch-grid" id="swatchDisc"></div>
+      </div>
+
+      <!-- MBTI -->
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">MBTI Axes</h3>
+        <div class="swatch-grid" id="swatchMbti"></div>
+      </div>
+
+      <!-- Big Five -->
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Big Five</h3>
+        <div class="swatch-grid" id="swatchBigfive"></div>
+      </div>
+
+      <!-- Sidebar Colors -->
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Sidebar</h3>
+        <div class="swatch-grid" id="swatchSidebar"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TYPOGRAPHY
+         ============================================================ -->
+    <section class="ds-section" id="typography">
+      <h2 class="ds-section-title">Typography</h2>
+      <p class="ds-section-desc">
+        Three font families: <strong>Sora</strong> for headings, <strong>Inter</strong> for body,
+        and <strong>JetBrains Mono</strong> for code and data.
+      </p>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Font Families</h3>
+        <div class="showcase showcase-stack">
+          <div>
+            <div style="font-family: var(--font-heading); font-size: var(--text-2xl); font-weight: var(--weight-bold); color: var(--text-primary);">
+              The quick brown fox jumps over the lazy dog
+            </div>
+            <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-1);">
+              --font-heading: Sora
+            </div>
+          </div>
+          <div>
+            <div style="font-family: var(--font-body); font-size: var(--text-base); color: var(--text-primary);">
+              The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs.
+            </div>
+            <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-1);">
+              --font-body: Inter
+            </div>
+          </div>
+          <div>
+            <div style="font-family: var(--font-mono); font-size: var(--text-sm); color: var(--text-primary);">
+              const DS = { version: '2.0.0', theme: 'dark' };
+            </div>
+            <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-1);">
+              --font-mono: JetBrains Mono
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Type Scale</h3>
+        <div class="showcase showcase-stack">
+          <div class="type-sample">
+            <div class="type-sample-text" style="font-family: var(--font-heading); font-size: var(--text-display); font-weight: var(--weight-bold); line-height: var(--leading-tight);">Display</div>
+            <div class="type-sample-meta">--text-display: 3rem / 48px</div>
+          </div>
+          <div class="type-sample">
+            <div class="type-sample-text" style="font-family: var(--font-heading); font-size: var(--text-4xl); font-weight: var(--weight-bold); line-height: var(--leading-tight);">Heading 4XL</div>
+            <div class="type-sample-meta">--text-4xl: 2.25rem / 36px</div>
+          </div>
+          <div class="type-sample">
+            <div class="type-sample-text" style="font-family: var(--font-heading); font-size: var(--text-3xl); font-weight: var(--weight-bold); line-height: var(--leading-snug);">Heading 3XL</div>
+            <div class="type-sample-meta">--text-3xl: 1.875rem / 30px</div>
+          </div>
+          <div class="type-sample">
+            <div class="type-sample-text" style="font-family: var(--font-heading); font-size: var(--text-2xl); font-weight: var(--weight-semibold); line-height: var(--leading-snug);">Heading 2XL</div>
+            <div class="type-sample-meta">--text-2xl: 1.5rem / 24px</div>
+          </div>
+          <div class="type-sample">
+            <div class="type-sample-text" style="font-family: var(--font-heading); font-size: var(--text-xl); font-weight: var(--weight-semibold);">Heading XL</div>
+            <div class="type-sample-meta">--text-xl: 1.25rem / 20px</div>
+          </div>
+          <div class="type-sample">
+            <div class="type-sample-text" style="font-family: var(--font-heading); font-size: var(--text-lg); font-weight: var(--weight-semibold);">Heading LG</div>
+            <div class="type-sample-meta">--text-lg: 1.0625rem / 17px</div>
+          </div>
+          <div class="type-sample">
+            <div class="type-sample-text" style="font-family: var(--font-body); font-size: var(--text-base);">Body Base</div>
+            <div class="type-sample-meta">--text-base: 0.9375rem / 15px</div>
+          </div>
+          <div class="type-sample">
+            <div class="type-sample-text" style="font-family: var(--font-body); font-size: var(--text-sm);">Body Small</div>
+            <div class="type-sample-meta">--text-sm: 0.8125rem / 13px</div>
+          </div>
+          <div class="type-sample">
+            <div class="type-sample-text" style="font-family: var(--font-body); font-size: var(--text-xs);">Body Extra Small</div>
+            <div class="type-sample-meta">--text-xs: 0.6875rem / 11px</div>
+          </div>
+          <div class="type-sample">
+            <div class="type-sample-text" style="font-family: var(--font-body); font-size: var(--text-2xs);">Micro Label</div>
+            <div class="type-sample-meta">--text-2xs: 0.625rem / 10px</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Font Weights</h3>
+        <div class="showcase showcase-stack">
+          <div style="font-family: var(--font-body); font-size: var(--text-lg); font-weight: 300; color: var(--text-primary);">
+            Light (300)
+          </div>
+          <div style="font-family: var(--font-body); font-size: var(--text-lg); font-weight: var(--weight-regular); color: var(--text-primary);">
+            Regular (400)
+          </div>
+          <div style="font-family: var(--font-body); font-size: var(--text-lg); font-weight: var(--weight-medium); color: var(--text-primary);">
+            Medium (500)
+          </div>
+          <div style="font-family: var(--font-body); font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--text-primary);">
+            Semibold (600)
+          </div>
+          <div style="font-family: var(--font-body); font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--text-primary);">
+            Bold (700)
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SPACING
+         ============================================================ -->
+    <section class="ds-section" id="spacing">
+      <h2 class="ds-section-title">Spacing</h2>
+      <p class="ds-section-desc">
+        Based on a 4px grid system. All spacing tokens are defined in rem units.
+      </p>
+
+      <div class="showcase" id="spacingShowcase"></div>
+    </section>
+
+    <!-- ============================================================
+         BORDER RADIUS
+         ============================================================ -->
+    <section class="ds-section" id="radius">
+      <h2 class="ds-section-title">Border Radius</h2>
+      <p class="ds-section-desc">
+        Six radius values from subtle rounding to fully rounded pill shapes.
+      </p>
+
+      <div class="showcase">
+        <div class="radius-grid">
+          <div class="radius-sample">
+            <div class="radius-box" style="border-radius: var(--radius-sm);"></div>
+            <div class="radius-name">--radius-sm</div>
+            <div class="radius-px">4px</div>
+          </div>
+          <div class="radius-sample">
+            <div class="radius-box" style="border-radius: var(--radius-md);"></div>
+            <div class="radius-name">--radius-md</div>
+            <div class="radius-px">8px</div>
+          </div>
+          <div class="radius-sample">
+            <div class="radius-box" style="border-radius: var(--radius-lg);"></div>
+            <div class="radius-name">--radius-lg</div>
+            <div class="radius-px">12px</div>
+          </div>
+          <div class="radius-sample">
+            <div class="radius-box" style="border-radius: var(--radius-xl);"></div>
+            <div class="radius-name">--radius-xl</div>
+            <div class="radius-px">16px</div>
+          </div>
+          <div class="radius-sample">
+            <div class="radius-box" style="border-radius: var(--radius-2xl);"></div>
+            <div class="radius-name">--radius-2xl</div>
+            <div class="radius-px">24px</div>
+          </div>
+          <div class="radius-sample">
+            <div class="radius-box" style="border-radius: var(--radius-full);"></div>
+            <div class="radius-name">--radius-full</div>
+            <div class="radius-px">9999px</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SHADOWS & GLASS
+         ============================================================ -->
+    <section class="ds-section" id="shadows">
+      <h2 class="ds-section-title">Shadows &amp; Glassmorphism</h2>
+      <p class="ds-section-desc">
+        Elevation system with standard shadows and accent glows. Glassmorphism utilities
+        provide frosted-glass effects at three intensity levels.
+      </p>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Shadows</h3>
+        <div class="shadow-grid">
+          <div class="shadow-sample">
+            <div class="shadow-box" style="box-shadow: var(--shadow-sm);"></div>
+            <div class="shadow-name">--shadow-sm</div>
+          </div>
+          <div class="shadow-sample">
+            <div class="shadow-box" style="box-shadow: var(--shadow-md);"></div>
+            <div class="shadow-name">--shadow-md</div>
+          </div>
+          <div class="shadow-sample">
+            <div class="shadow-box" style="box-shadow: var(--shadow-lg);"></div>
+            <div class="shadow-name">--shadow-lg</div>
+          </div>
+          <div class="shadow-sample">
+            <div class="shadow-box" style="box-shadow: var(--shadow-glow);"></div>
+            <div class="shadow-name">--shadow-glow</div>
+          </div>
+          <div class="shadow-sample">
+            <div class="shadow-box" style="box-shadow: var(--shadow-glow-lg);"></div>
+            <div class="shadow-name">--shadow-glow-lg</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Glassmorphism</h3>
+        <div class="glass-grid">
+          <div class="glass-sample">
+            <div class="glass-box glass-subtle">Subtle</div>
+            <div class="glass-label">.glass-subtle</div>
+          </div>
+          <div class="glass-sample">
+            <div class="glass-box glass-standard">Standard</div>
+            <div class="glass-label">.glass-standard</div>
+          </div>
+          <div class="glass-sample">
+            <div class="glass-box glass-strong">Strong</div>
+            <div class="glass-label">.glass-strong</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BUTTONS
+         ============================================================ -->
+    <section class="ds-section" id="buttons">
+      <h2 class="ds-section-title">Buttons</h2>
+      <p class="ds-section-desc">
+        Pill-shaped buttons with multiple variants. All use <span class="token-code">.btn</span> as base class.
+      </p>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Variants</h3>
+        <div class="showcase">
+          <div class="showcase-row">
+            <button class="btn btn-primary">Primary</button>
+            <button class="btn btn-secondary">Secondary</button>
+            <button class="btn btn-ghost">Ghost</button>
+            <button class="btn btn-danger">Danger</button>
+            <button class="btn btn-success">Success</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Sizes</h3>
+        <div class="showcase">
+          <div class="showcase-row">
+            <button class="btn btn-primary btn-sm">Small</button>
+            <button class="btn btn-primary">Default</button>
+            <button class="btn btn-primary btn-lg">Large</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">With Icons</h3>
+        <div class="showcase">
+          <div class="showcase-row">
+            <button class="btn btn-primary">&#43; New Assessment</button>
+            <button class="btn btn-secondary">&#8599; Export</button>
+            <button class="btn btn-ghost">&#8635; Refresh</button>
+            <button class="btn btn-danger">&#10005; Delete</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CARDS
+         ============================================================ -->
+    <section class="ds-section" id="cards">
+      <h2 class="ds-section-title">Cards</h2>
+      <p class="ds-section-desc">
+        Cards are the primary content container. Available in default and accent variants.
+      </p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-eyebrow">Default Card</div>
+          <div class="card-title">Assessment Results</div>
+          <div class="card-text">
+            Standard card with subtle border and elevation on hover. Uses <span class="token-code">.card</span> class.
+          </div>
+        </div>
+
+        <div class="card card-accent">
+          <div class="card-eyebrow">Accent Card</div>
+          <div class="card-title">DISC Profile</div>
+          <div class="card-text">
+            Accent variant with colored border and glow effect on hover.
+            Uses <span class="token-code">.card-accent</span>.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-eyebrow">Rich Content</div>
+          <div class="card-title">Team Analysis</div>
+          <div class="card-text">
+            Cards can contain any combination of eyebrow, title, text, badges, and action buttons.
+          </div>
+          <div style="margin-top: var(--space-4); display: flex; gap: var(--space-2);">
+            <span class="badge badge-mbti">MBTI</span>
+            <span class="badge badge-disc">DISC</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FORMS
+         ============================================================ -->
+    <section class="ds-section" id="forms">
+      <h2 class="ds-section-title">Forms</h2>
+      <p class="ds-section-desc">
+        Form inputs, toggles, and controls that adapt to both themes.
+      </p>
+
+      <div class="showcase">
+        <div class="form-showcase-grid">
+          <div>
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-input" placeholder="Enter your name">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" placeholder="name@company.com">
+              <div class="form-hint">We will never share your email with anyone.</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Department</label>
+              <input type="text" class="form-input" value="Engineering" readonly>
+            </div>
+          </div>
+
+          <div>
+            <div class="form-group">
+              <label class="form-label">Bio</label>
+              <textarea class="form-input" rows="3" placeholder="Tell us about yourself..." style="resize: vertical;"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Settings</label>
+              <div class="settings-card" style="gap: var(--space-4);">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <span class="settings-item-label" style="color: var(--text-primary); font-size: var(--text-sm);">Email Notifications</span>
+                  <label class="toggle">
+                    <input type="checkbox" checked>
+                    <div class="toggle-track"></div>
+                    <div class="toggle-thumb"></div>
+                  </label>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <span class="settings-item-label" style="color: var(--text-primary); font-size: var(--text-sm);">Dark Mode</span>
+                  <label class="toggle">
+                    <input type="checkbox" checked>
+                    <div class="toggle-track"></div>
+                    <div class="toggle-thumb"></div>
+                  </label>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <span class="settings-item-label" style="color: var(--text-primary); font-size: var(--text-sm);">Two-Factor Auth</span>
+                  <label class="toggle">
+                    <input type="checkbox">
+                    <div class="toggle-track"></div>
+                    <div class="toggle-thumb"></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         MODALS
+         ============================================================ -->
+    <section class="ds-section" id="modals">
+      <h2 class="ds-section-title">Modals</h2>
+      <p class="ds-section-desc">
+        Dialog overlays for confirmations, forms, and alerts. Three sizes available: small, default, and large.
+      </p>
+
+      <div class="modal-demo">
+        <div class="modal-overlay" style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle);">
+          <div class="modal">
+            <div class="modal-header">
+              <div class="modal-title">Confirm Action</div>
+              <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+              <p style="color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-relaxed);">
+                Are you sure you want to reassign this assessment? The candidate will receive a new notification
+                and the previous results will be archived.
+              </p>
+              <div style="margin-top: var(--space-4);">
+                <div class="form-group">
+                  <label class="form-label">Reason (optional)</label>
+                  <input type="text" class="form-input" placeholder="Why is this being reassigned?">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary">Cancel</button>
+              <button class="btn btn-primary">Confirm Reassign</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection" style="margin-top: var(--space-6);">
+        <h3 class="ds-subsection-title">Toast Notifications</h3>
+        <div class="showcase">
+          <div class="toast-container" style="max-width: 500px;">
+            <div class="toast toast-success">&#10003; Assessment completed successfully</div>
+            <div class="toast toast-warning">&#9888; Session expires in 5 minutes</div>
+            <div class="toast toast-error">&#10005; Failed to load candidate profile</div>
+            <div class="toast toast-info">&#8505; New assessment template available</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TABLES
+         ============================================================ -->
+    <section class="ds-section" id="tables">
+      <h2 class="ds-section-title">Tables</h2>
+      <p class="ds-section-desc">
+        Data tables with hover states, avatar cells, score highlighting, and sortable headers.
+      </p>
+
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-header-title">Recent Assessments</div>
+          <button class="btn btn-sm btn-secondary">&#8599; Export</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Candidate</th>
+              <th>Assessment</th>
+              <th>Score</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span class="td-avatar" style="background: linear-gradient(135deg, #6366F1, #8B5CF6);">AS</span>
+                <span class="td-name">Ana Silva</span>
+              </td>
+              <td><span class="badge badge-disc">DISC</span></td>
+              <td><span class="td-score">87</span><span class="td-score-total">/100</span></td>
+              <td><span class="badge badge-success">Complete</span></td>
+              <td>27 Mar 2026</td>
+            </tr>
+            <tr>
+              <td>
+                <span class="td-avatar" style="background: linear-gradient(135deg, #2DD4BF, #14B8A6);">CO</span>
+                <span class="td-name">Carlos Oliveira</span>
+              </td>
+              <td><span class="badge badge-mbti">MBTI</span></td>
+              <td><span class="td-score">92</span><span class="td-score-total">/100</span></td>
+              <td><span class="badge badge-success">Complete</span></td>
+              <td>26 Mar 2026</td>
+            </tr>
+            <tr>
+              <td>
+                <span class="td-avatar" style="background: linear-gradient(135deg, #F59E0B, #EAB308);">MR</span>
+                <span class="td-name">Maria Rodrigues</span>
+              </td>
+              <td><span class="badge badge-enneagram">Enneagram</span></td>
+              <td><span class="td-score">--</span></td>
+              <td><span class="badge badge-warning">In Progress</span></td>
+              <td>25 Mar 2026</td>
+            </tr>
+            <tr>
+              <td>
+                <span class="td-avatar" style="background: linear-gradient(135deg, #EF4444, #DC2626);">PF</span>
+                <span class="td-name">Pedro Ferreira</span>
+              </td>
+              <td><span class="badge badge-bigfive">Big Five</span></td>
+              <td><span class="td-score">--</span></td>
+              <td><span class="badge badge-error">Expired</span></td>
+              <td>20 Mar 2026</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top: var(--space-5);">
+        <div class="pagination">
+          <button class="pagination-btn" disabled>&laquo;</button>
+          <button class="pagination-btn active">1</button>
+          <button class="pagination-btn">2</button>
+          <button class="pagination-btn">3</button>
+          <span class="pagination-ellipsis">&hellip;</span>
+          <button class="pagination-btn">12</button>
+          <button class="pagination-btn">&raquo;</button>
+          <span class="pagination-info">Showing 1-10 of 117</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         NAVIGATION
+         ============================================================ -->
+    <section class="ds-section" id="navigation">
+      <h2 class="ds-section-title">Navigation</h2>
+      <p class="ds-section-desc">
+        Tabs, breadcrumbs, sidebar items, and dropdown menus.
+      </p>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Tabs</h3>
+        <div class="showcase">
+          <div class="tabs">
+            <div class="tab active">&#9679; Overview</div>
+            <div class="tab">&#9733; Results</div>
+            <div class="tab">&#9881; Settings</div>
+            <div class="tab">&#8505; History</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Breadcrumbs</h3>
+        <div class="showcase">
+          <div class="breadcrumb">
+            <span class="breadcrumb-item">Home</span>
+            <span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-item">Assessments</span>
+            <span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-item">DISC</span>
+            <span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-item active">Ana Silva</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Dropdown</h3>
+        <div class="showcase">
+          <div class="dropdown open" style="position: relative;">
+            <button class="dropdown-trigger">
+              Select Theory <span class="arrow">&#9660;</span>
+            </button>
+            <div class="dropdown-menu" style="display: block; position: relative; top: var(--space-2); animation: none;">
+              <div class="dropdown-label">Personality</div>
+              <div class="dropdown-item active">&#9679; MBTI</div>
+              <div class="dropdown-item">&#9679; Enneagram</div>
+              <div class="dropdown-item">&#9679; Big Five</div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-label">Behavioral</div>
+              <div class="dropdown-item">&#9679; DISC</div>
+              <div class="dropdown-item">&#9679; Lesenne</div>
+              <div class="dropdown-item">&#9679; Jung</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Sidebar (component preview)</h3>
+        <div class="showcase" style="max-width: 260px; padding: 0; overflow: hidden; border-radius: var(--radius-lg);">
+          <div style="background: var(--sidebar-bg); padding: var(--space-4) 0;">
+            <div class="sidebar-brand" style="padding: 0 var(--space-5); margin-bottom: var(--space-5);">
+              <div class="sidebar-logo">E+</div>
+              <div class="sidebar-brand-text">Emprega<span>+</span></div>
+            </div>
+            <div class="sidebar-section-label" style="padding: var(--space-2) var(--space-5);">Main</div>
+            <div class="sidebar-item active" style="margin: 1px var(--space-3);">
+              <span class="icon">&#9679;</span> Dashboard
+            </div>
+            <div class="sidebar-item" style="margin: 1px var(--space-3);">
+              <span class="icon">&#9734;</span> Assessments
+              <span class="badge-count">24</span>
+            </div>
+            <div class="sidebar-item" style="margin: 1px var(--space-3);">
+              <span class="icon">&#9775;</span> Candidates
+            </div>
+            <hr class="sidebar-divider" style="margin: var(--space-3) var(--space-5);">
+            <div class="sidebar-item" style="margin: 1px var(--space-3);">
+              <span class="icon">&#9881;</span> Settings
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BADGES & TAGS
+         ============================================================ -->
+    <section class="ds-section" id="badges">
+      <h2 class="ds-section-title">Badges &amp; Tags</h2>
+      <p class="ds-section-desc">
+        Theory badges with colored dots, status badges, and tag pills.
+      </p>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Theory Badges</h3>
+        <div class="showcase">
+          <div class="showcase-row">
+            <span class="badge badge-mbti">MBTI</span>
+            <span class="badge badge-enneagram">Enneagram</span>
+            <span class="badge badge-bigfive">Big Five</span>
+            <span class="badge badge-disc">DISC</span>
+            <span class="badge badge-lesenne">Lesenne</span>
+            <span class="badge badge-jung">Jung</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Status Badges</h3>
+        <div class="showcase">
+          <div class="showcase-row">
+            <span class="badge badge-success">Complete</span>
+            <span class="badge badge-warning">In Progress</span>
+            <span class="badge badge-error">Expired</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Table Size Badges</h3>
+        <div class="showcase">
+          <div class="showcase-row">
+            <span class="badge badge-table badge-mbti">MBTI</span>
+            <span class="badge badge-table badge-success">Active</span>
+            <span class="badge badge-table badge-warning">Pending</span>
+            <span class="badge badge-table badge-error">Failed</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Tags (no dot, colored pill)</h3>
+        <div class="showcase">
+          <div class="showcase-row">
+            <span class="tag tag-blue">Technology</span>
+            <span class="tag tag-purple">Design</span>
+            <span class="tag tag-green">Approved</span>
+            <span class="tag tag-orange">Review</span>
+            <span class="tag tag-pink">Creative</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Icon Badges</h3>
+        <div class="showcase">
+          <div class="showcase-row">
+            <div class="icon-badge icon-badge-blue">&#9733;</div>
+            <div class="icon-badge icon-badge-purple">&#9830;</div>
+            <div class="icon-badge icon-badge-green">&#10003;</div>
+            <div class="icon-badge icon-badge-orange">&#9888;</div>
+            <div class="icon-badge icon-badge-pink">&#9829;</div>
+            <div class="icon-badge icon-badge-cyan">&#9741;</div>
+            <div class="icon-badge icon-badge-gold">&#9733;</div>
+          </div>
+          <div class="showcase-row" style="margin-top: var(--space-3);">
+            <div class="icon-badge icon-badge-sm icon-badge-blue">&#9733;</div>
+            <div class="icon-badge icon-badge-sm icon-badge-purple">&#9830;</div>
+            <div class="icon-badge icon-badge-sm icon-badge-green">&#10003;</div>
+            <div class="icon-badge icon-badge-sm icon-badge-orange">&#9888;</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PROGRESS & CHARTS
+         ============================================================ -->
+    <section class="ds-section" id="progress">
+      <h2 class="ds-section-title">Progress &amp; Charts</h2>
+      <p class="ds-section-desc">
+        Progress bars for scores, DISC profiles, MBTI axes, and chart containers.
+      </p>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">DISC Profile Bars</h3>
+        <div class="showcase">
+          <div class="progress-list">
+            <div class="progress-item">
+              <div class="progress-label">Dominance (D)</div>
+              <div class="progress-track">
+                <div class="progress-fill disc-d" style="width: 78%;"></div>
+              </div>
+              <div class="progress-score" style="color: var(--disc-d);">78%</div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label">Influence (I)</div>
+              <div class="progress-track">
+                <div class="progress-fill disc-i" style="width: 65%;"></div>
+              </div>
+              <div class="progress-score" style="color: var(--disc-i);">65%</div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label">Steadiness (S)</div>
+              <div class="progress-track">
+                <div class="progress-fill disc-s" style="width: 42%;"></div>
+              </div>
+              <div class="progress-score" style="color: var(--disc-s);">42%</div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label">Compliance (C)</div>
+              <div class="progress-track">
+                <div class="progress-fill disc-c" style="width: 90%;"></div>
+              </div>
+              <div class="progress-score" style="color: var(--disc-c);">90%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Generic Progress Bars</h3>
+        <div class="showcase">
+          <div class="progress-list">
+            <div class="progress-item">
+              <div class="progress-label">Completion</div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 72%; background: var(--accent-primary);"></div>
+              </div>
+              <div class="progress-score">72%</div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label">Success Rate</div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 95%; background: var(--color-success);"></div>
+              </div>
+              <div class="progress-score" style="color: var(--color-success);">95%</div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label">Risk Level</div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 35%; background: var(--color-warning);"></div>
+              </div>
+              <div class="progress-score" style="color: var(--color-warning);">35%</div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label">Error Rate</div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 12%; background: var(--color-error);"></div>
+              </div>
+              <div class="progress-score" style="color: var(--color-error);">12%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Chart Card</h3>
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">Assessment Completion Trend</div>
+            <div class="chart-period">
+              <button class="chart-period-btn">7D</button>
+              <button class="chart-period-btn active">30D</button>
+              <button class="chart-period-btn">90D</button>
+            </div>
+          </div>
+          <svg class="chart-svg" viewBox="0 0 800 200" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" style="stop-color: var(--chart-gradient-start);" />
+                <stop offset="100%" style="stop-color: var(--chart-gradient-end);" />
+              </linearGradient>
+            </defs>
+            <!-- Grid lines -->
+            <line x1="0" y1="50" x2="800" y2="50" stroke="var(--chart-grid)" stroke-width="1" />
+            <line x1="0" y1="100" x2="800" y2="100" stroke="var(--chart-grid)" stroke-width="1" />
+            <line x1="0" y1="150" x2="800" y2="150" stroke="var(--chart-grid)" stroke-width="1" />
+            <!-- Area fill -->
+            <path d="M0,180 C100,160 150,120 250,100 C350,80 400,60 500,70 C600,80 650,40 750,30 L800,25 L800,200 L0,200 Z" fill="url(#chartGrad)" />
+            <!-- Line -->
+            <path d="M0,180 C100,160 150,120 250,100 C350,80 400,60 500,70 C600,80 650,40 750,30 L800,25" fill="none" stroke="var(--chart-line)" stroke-width="2.5" stroke-linecap="round" />
+            <!-- Dots -->
+            <circle cx="250" cy="100" r="4" fill="var(--chart-line)" />
+            <circle cx="500" cy="70" r="4" fill="var(--chart-line)" />
+            <circle cx="750" cy="30" r="4" fill="var(--chart-line)" />
+          </svg>
+          <div class="chart-months">
+            <span>1 Mar</span>
+            <span>5 Mar</span>
+            <span>10 Mar</span>
+            <span>15 Mar</span>
+            <span>20 Mar</span>
+            <span>25 Mar</span>
+            <span>27 Mar</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         STATS
+         ============================================================ -->
+    <section class="ds-section" id="stats">
+      <h2 class="ds-section-title">Stats</h2>
+      <p class="ds-section-desc">
+        Stat cards with variation indicators, progress bars, and mini metric displays.
+      </p>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Stat Cards Grid</h3>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-label">Total Assessments</div>
+              <div class="icon-badge icon-badge-sm icon-badge-blue">&#9733;</div>
+            </div>
+            <div class="stat-number">2,847</div>
+            <div class="stat-variation up">
+              &#9650; +12.5% <span class="vs">vs last month</span>
+            </div>
+            <div class="stat-progress">
+              <div class="stat-progress-fill" style="width: 72%; background: var(--accent-primary);"></div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-label">Active Candidates</div>
+              <div class="icon-badge icon-badge-sm icon-badge-green">&#9775;</div>
+            </div>
+            <div class="stat-number">438</div>
+            <div class="stat-variation up">
+              &#9650; +8.3% <span class="vs">vs last month</span>
+            </div>
+            <div class="stat-progress">
+              <div class="stat-progress-fill" style="width: 58%; background: var(--color-success);"></div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-label">Completion Rate</div>
+              <div class="icon-badge icon-badge-sm icon-badge-purple">&#10003;</div>
+            </div>
+            <div class="stat-number">94.2%</div>
+            <div class="stat-variation up">
+              &#9650; +2.1% <span class="vs">vs last month</span>
+            </div>
+            <div class="stat-progress">
+              <div class="stat-progress-fill" style="width: 94%; background: var(--theory-enneagram);"></div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <div class="stat-label">Error Rate</div>
+              <div class="icon-badge icon-badge-sm icon-badge-orange">&#9888;</div>
+            </div>
+            <div class="stat-number">1.3%</div>
+            <div class="stat-variation down">
+              &#9660; -0.4% <span class="vs">vs last month</span>
+            </div>
+            <div class="stat-progress">
+              <div class="stat-progress-fill" style="width: 13%; background: var(--color-error);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Mini Stat Cards</h3>
+        <div class="showcase">
+          <div class="showcase-row">
+            <div class="stat-card stat-card-mini" style="min-width: 120px;">
+              <div class="stat-card-mini-label">NPS</div>
+              <div class="stat-card-mini-value" style="color: var(--color-success);">72</div>
+            </div>
+            <div class="stat-card stat-card-mini" style="min-width: 120px;">
+              <div class="stat-card-mini-label">Avg Score</div>
+              <div class="stat-card-mini-value" style="color: var(--accent-primary);">8.4</div>
+            </div>
+            <div class="stat-card stat-card-mini" style="min-width: 120px;">
+              <div class="stat-card-mini-label">Avg Time</div>
+              <div class="stat-card-mini-value" style="color: var(--theory-disc);">14m</div>
+            </div>
+            <div class="stat-card stat-card-mini" style="min-width: 120px;">
+              <div class="stat-card-mini-label">Theories</div>
+              <div class="stat-card-mini-value" style="color: var(--theory-enneagram);">6</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         LAYOUT PATTERNS
+         ============================================================ -->
+    <section class="ds-section" id="layout">
+      <h2 class="ds-section-title">Layout Patterns</h2>
+      <p class="ds-section-desc">
+        Common layout compositions: profile headers, theory cards, comparison banners, and enneagram mini-cards.
+      </p>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Profile Header</h3>
+        <div class="profile-header">
+          <div class="profile-avatar" style="background: linear-gradient(135deg, #6366F1, #8B5CF6);">AS</div>
+          <div class="profile-info">
+            <div class="profile-name">Ana Silva</div>
+            <div class="profile-role">Senior Product Designer</div>
+            <div class="profile-tag">3 assessments completed</div>
+          </div>
+          <div class="profile-scores">
+            <div class="stat-card stat-card-mini">
+              <div class="stat-card-mini-label">DISC</div>
+              <div class="stat-card-mini-value" style="color: var(--theory-disc);">Di</div>
+            </div>
+            <div class="stat-card stat-card-mini">
+              <div class="stat-card-mini-label">MBTI</div>
+              <div class="stat-card-mini-value" style="color: var(--theory-mbti);">ENFP</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">DNA Badges Row</h3>
+        <div class="showcase">
+          <div class="dna-badges" style="justify-content: flex-start;">
+            <span class="badge badge-mbti">ENFP</span>
+            <span class="badge badge-disc">Di</span>
+            <span class="badge badge-enneagram">Type 7</span>
+            <span class="badge badge-bigfive">OCEAN</span>
+            <span class="badge badge-jung">ENFJ</span>
+            <span class="badge badge-lesenne">EAS</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Comparison Banner</h3>
+        <div class="compare-banner" style="background: var(--accent-primary-muted);">
+          <div class="compare-title">Team Compatibility Score</div>
+          <div class="compare-sub">Based on DISC profiles across 12 team members</div>
+          <div style="margin-top: var(--space-4); display: flex; justify-content: center; gap: var(--space-3);">
+            <button class="btn btn-primary">View Report</button>
+            <button class="btn btn-secondary">Compare Members</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Enneagram Mini Cards</h3>
+        <div class="showcase">
+          <div class="enneagram-grid" style="max-width: 400px;">
+            <div class="enneagram-mini-card enneagram-mini-card-fear">
+              <div class="enneagram-mini-label enneagram-mini-label-fear">Core Fear</div>
+              <div class="enneagram-mini-text">Being controlled or harmed by others</div>
+            </div>
+            <div class="enneagram-mini-card enneagram-mini-card-desire">
+              <div class="enneagram-mini-label enneagram-mini-label-desire">Core Desire</div>
+              <div class="enneagram-mini-text">Self-protection and autonomy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Theory Card (MBTI Axes)</h3>
+        <div class="showcase" style="max-width: 400px;">
+          <div class="theory-card" style="box-shadow: none; border: none; padding: 0; background: transparent;">
+            <div class="theory-header">
+              <span class="badge badge-mbti">MBTI</span>
+              <div class="theory-name">16 Personalities</div>
+            </div>
+            <div class="theory-type" style="color: var(--theory-mbti);">ENFP</div>
+            <div class="theory-description">The Campaigner - Enthusiastic, creative, and sociable.</div>
+            <div>
+              <div class="mbti-bar-track">
+                <div class="mbti-axis-label" style="color: var(--mbti-ei);">E</div>
+                <div class="mbti-bar-bg">
+                  <div class="mbti-bar-fill" style="width: 72%; background: var(--mbti-ei);"></div>
+                </div>
+                <div class="mbti-bar-pct">72%</div>
+              </div>
+              <div class="mbti-bar-track">
+                <div class="mbti-axis-label" style="color: var(--mbti-sn);">N</div>
+                <div class="mbti-bar-bg">
+                  <div class="mbti-bar-fill" style="width: 85%; background: var(--mbti-sn);"></div>
+                </div>
+                <div class="mbti-bar-pct">85%</div>
+              </div>
+              <div class="mbti-bar-track">
+                <div class="mbti-axis-label" style="color: var(--mbti-tf);">F</div>
+                <div class="mbti-bar-bg">
+                  <div class="mbti-bar-fill" style="width: 63%; background: var(--mbti-tf);"></div>
+                </div>
+                <div class="mbti-bar-pct">63%</div>
+              </div>
+              <div class="mbti-bar-track">
+                <div class="mbti-axis-label" style="color: var(--mbti-jp);">P</div>
+                <div class="mbti-bar-bg">
+                  <div class="mbti-bar-fill" style="width: 78%; background: var(--mbti-jp);"></div>
+                </div>
+                <div class="mbti-bar-pct">78%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-subsection">
+        <h3 class="ds-subsection-title">Footer</h3>
+        <div class="ds-footer" style="margin-top: 0;">
+          <div class="ds-footer-title">ResultX Design System v2.0</div>
+          <div class="ds-footer-sub">Emprega+ App DS &mdash; Unified Tokens &amp; Components</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================================================================
+       JAVASCRIPT
+       ================================================================ -->
+  <script>
+    // ---- Theme Toggle ------------------------------------------------
+    function getTheme() {
+      return document.documentElement.getAttribute('data-theme') || 'dark';
+    }
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('ds-viewer-theme', theme);
+      updateThemeUI(theme);
+      // Re-render color swatches since computed values change
+      renderAllSwatches();
+    }
+
+    function updateThemeUI(theme) {
+      document.getElementById('themeIndicator').textContent = theme === 'dark' ? 'Dark Mode' : 'Light Mode';
+      document.getElementById('themeIcon').textContent = theme === 'dark' ? '\u263E' : '\u2600';
+      document.getElementById('themeLabel').textContent = theme === 'dark' ? 'Switch to Light' : 'Switch to Dark';
+    }
+
+    function toggleTheme() {
+      var current = getTheme();
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    }
+
+    // Restore saved preference
+    (function() {
+      var saved = localStorage.getItem('ds-viewer-theme');
+      if (saved) {
+        setTheme(saved);
+      } else {
+        updateThemeUI('dark');
+      }
+    })();
+
+    // ---- Mobile Sidebar Toggle ----------------------------------------
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+    }
+
+    function closeSidebarMobile() {
+      if (window.innerWidth <= 768) {
+        document.getElementById('sidebar').classList.remove('open');
+      }
+    }
+
+    // ---- Active Sidebar Link (scroll spy) -----------------------------
+    (function() {
+      var links = document.querySelectorAll('.viewer-sidebar-link');
+      var sections = [];
+      links.forEach(function(link) {
+        var href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          var el = document.getElementById(href.substring(1));
+          if (el) sections.push({ link: link, el: el });
+        }
+      });
+
+      function onScroll() {
+        var scrollY = window.scrollY + 120;
+        var active = null;
+        for (var i = sections.length - 1; i >= 0; i--) {
+          if (sections[i].el.offsetTop <= scrollY) {
+            active = sections[i];
+            break;
+          }
+        }
+        links.forEach(function(l) { l.classList.remove('active'); });
+        if (active) active.link.classList.add('active');
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    // ---- Color Swatch Rendering ---------------------------------------
+    function getComputedValue(prop) {
+      return getComputedStyle(document.documentElement).getPropertyValue(prop).trim();
+    }
+
+    function createSwatch(container, name, varName) {
+      var value = getComputedValue(varName);
+      var div = document.createElement('div');
+      div.className = 'swatch';
+      div.innerHTML =
+        '<div class="swatch-color" style="background:' + (value || 'transparent') + ';">' +
+        '</div>' +
+        '<div class="swatch-info">' +
+          '<div class="swatch-name">' + varName + '</div>' +
+          '<div class="swatch-value">' + value + '</div>' +
+        '</div>';
+      container.appendChild(div);
+    }
+
+    function renderSwatchGroup(containerId, items) {
+      var container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = '';
+      items.forEach(function(item) {
+        createSwatch(container, item[0], item[1]);
+      });
+    }
+
+    function renderAllSwatches() {
+      renderSwatchGroup('swatchBg', [
+        ['Base', '--bg-base'],
+        ['Surface 1', '--bg-surface-1'],
+        ['Surface 2', '--bg-surface-2'],
+        ['Surface 3', '--bg-surface-3'],
+        ['Overlay', '--bg-overlay'],
+      ]);
+
+      renderSwatchGroup('swatchText', [
+        ['Primary', '--text-primary'],
+        ['Secondary', '--text-secondary'],
+        ['Muted', '--text-muted'],
+        ['Inverse', '--text-inverse'],
+        ['On Color', '--text-on-color'],
+      ]);
+
+      renderSwatchGroup('swatchBorder', [
+        ['Subtle', '--border-subtle'],
+        ['Default', '--border-default'],
+        ['Strong', '--border-strong'],
+        ['Accent', '--border-accent'],
+      ]);
+
+      renderSwatchGroup('swatchAccent', [
+        ['Primary', '--accent-primary'],
+        ['Primary Hover', '--accent-primary-hover'],
+        ['Primary Muted', '--accent-primary-muted'],
+        ['Secondary', '--accent-secondary'],
+      ]);
+
+      renderSwatchGroup('swatchSemantic', [
+        ['Success', '--color-success'],
+        ['Success BG', '--color-success-bg'],
+        ['Warning', '--color-warning'],
+        ['Warning BG', '--color-warning-bg'],
+        ['Error', '--color-error'],
+        ['Error BG', '--color-error-bg'],
+        ['Info', '--color-info'],
+        ['Info BG', '--color-info-bg'],
+      ]);
+
+      renderSwatchGroup('swatchTheory', [
+        ['MBTI', '--theory-mbti'],
+        ['MBTI BG', '--theory-mbti-bg'],
+        ['Enneagram', '--theory-enneagram'],
+        ['Enneagram BG', '--theory-enneagram-bg'],
+        ['Big Five', '--theory-bigfive'],
+        ['Big Five BG', '--theory-bigfive-bg'],
+        ['DISC', '--theory-disc'],
+        ['DISC BG', '--theory-disc-bg'],
+        ['Lesenne', '--theory-lesenne'],
+        ['Lesenne BG', '--theory-lesenne-bg'],
+        ['Jung', '--theory-jung'],
+        ['Jung BG', '--theory-jung-bg'],
+      ]);
+
+      renderSwatchGroup('swatchDisc', [
+        ['Dominance (D)', '--disc-d'],
+        ['Influence (I)', '--disc-i'],
+        ['Steadiness (S)', '--disc-s'],
+        ['Compliance (C)', '--disc-c'],
+      ]);
+
+      renderSwatchGroup('swatchMbti', [
+        ['E/I Axis', '--mbti-ei'],
+        ['S/N Axis', '--mbti-sn'],
+        ['T/F Axis', '--mbti-tf'],
+        ['J/P Axis', '--mbti-jp'],
+      ]);
+
+      renderSwatchGroup('swatchBigfive', [
+        ['Openness', '--bigfive-o'],
+        ['Conscientiousness', '--bigfive-c'],
+        ['Extraversion', '--bigfive-e'],
+        ['Agreeableness', '--bigfive-a'],
+        ['Neuroticism', '--bigfive-n'],
+      ]);
+
+      renderSwatchGroup('swatchSidebar', [
+        ['BG', '--sidebar-bg'],
+        ['BG Hover', '--sidebar-bg-hover'],
+        ['Active BG', '--sidebar-active-bg'],
+        ['Text', '--sidebar-text'],
+        ['Text Active', '--sidebar-text-active'],
+        ['Divider', '--sidebar-divider'],
+      ]);
+    }
+
+    // ---- Spacing Bars -------------------------------------------------
+    (function() {
+      var spacings = [
+        ['--space-1', '4px', '0.25rem'],
+        ['--space-1-5', '6px', '0.375rem'],
+        ['--space-2', '8px', '0.5rem'],
+        ['--space-3', '12px', '0.75rem'],
+        ['--space-4', '16px', '1rem'],
+        ['--space-5', '20px', '1.25rem'],
+        ['--space-6', '24px', '1.5rem'],
+        ['--space-8', '32px', '2rem'],
+        ['--space-10', '40px', '2.5rem'],
+        ['--space-12', '48px', '3rem'],
+        ['--space-16', '64px', '4rem'],
+        ['--space-20', '80px', '5rem'],
+        ['--space-24', '96px', '6rem'],
+      ];
+
+      var container = document.getElementById('spacingShowcase');
+      if (container) {
+        spacings.forEach(function(s) {
+          var row = document.createElement('div');
+          row.className = 'spacing-row';
+          row.innerHTML =
+            '<div class="spacing-label">' + s[0] + '</div>' +
+            '<div class="spacing-bar" style="width: ' + s[1] + ';"></div>' +
+            '<div class="spacing-value">' + s[2] + ' / ' + s[1] + '</div>';
+          container.appendChild(row);
+        });
+      }
+    })();
+
+    // ---- Initial render -----------------------------------------------
+    renderAllSwatches();
+  </script>
+</body>
+</html>

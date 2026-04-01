@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Electia</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../tokens/tokens-light.css">
+  <link rel="stylesheet" href="../components/components.css">
+
+  <style>body { display: block; }</style>
+</head>
+<body>
+
+<main class="layout-split">
+  <!-- Left: Form -->
+  <div class="layout-split-left">
+    <div class="layout-split-form">
+      <!-- Logo -->
+      <div class="layout-centered-logo">
+        <div class="sidebar-logo" style="width:40px;height:40px;font-size:var(--text-lg);" aria-hidden="true">E+</div>
+        <span style="font-family:var(--font-heading);font-size:var(--text-xl);font-weight:var(--font-bold);color:var(--text-primary);">Electia</span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="layout-centered-title">Bem-vindo de volta</h1>
+      <div class="layout-centered-subtitle">Entre com sua conta para acessar o sistema</div>
+
+      <!-- Social buttons -->
+      <button class="btn-social" aria-label="Continuar com Google"><i data-lucide="chrome" style="width:16px;height:16px;" aria-hidden="true"></i> Continuar com Google</button>
+      <button class="btn-social" aria-label="Continuar com Microsoft"><i data-lucide="monitor" style="width:16px;height:16px;" aria-hidden="true"></i> Continuar com Microsoft</button>
+
+      <!-- Divider -->
+      <div class="form-divider" role="separator">ou continue com email</div>
+
+      <!-- Form -->
+      <form role="form" aria-label="Formulario de login">
+        <div class="form-group">
+          <label class="form-label" for="login-email">Email</label>
+          <input type="email" id="login-email" class="form-input" placeholder="voce@empresa.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-password">Senha</label>
+          <input type="password" id="login-password" class="form-input" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;">
+        </div>
+
+        <!-- Remember + Forgot -->
+        <div class="form-checkbox-row">
+          <label class="form-checkbox-label" for="login-remember">
+            <input type="checkbox" id="login-remember"> Lembrar de mim
+          </label>
+          <a class="form-link" href="#">Esqueci a senha</a>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary btn-block btn-lg">Entrar</button>
+      </form>
+
+      <!-- Footer -->
+      <div class="layout-centered-footer">
+        Nao tem uma conta? <a href="#">Criar conta gratuita</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Hero/Brand (decorative) -->
+  <div class="layout-split-right" aria-hidden="true">
+    <div class="layout-split-hero">
+      <div style="width:80px;height:80px;background:var(--accent-primary);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:var(--font-bold);font-size:var(--text-3xl);color:#fff;margin:0 auto var(--space-6);">E+</div>
+      <div class="layout-split-hero-title">Assessments inteligentes para recrutamento</div>
+      <div class="layout-split-hero-text">Identifique os melhores candidatos com assessments comportamentais baseados em MBTI, DISC, Big Five e mais.</div>
+      <!-- Feature badges -->
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-2);margin-top:var(--space-6);">
+        <span class="badge badge-mbti">MBTI</span>
+        <span class="badge badge-disc">DISC</span>
+        <span class="badge badge-bigfive">Big Five</span>
+        <span class="badge badge-enneagram">Eneagrama</span>
+        <span class="badge badge-jung">Jung</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

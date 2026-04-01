@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Candidatos — Electia</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>.icon { width: 18px; height: 18px; stroke-width: 1.8; }</style>
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../tokens/tokens-light.css">
+  <link rel="stylesheet" href="../components/components.css">
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Pular para o conteúdo</a>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     SIDEBAR
+     ════════════════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">E+</div>
+    <div class="sidebar-brand-text"><span>Electia</span></div>
+  </div>
+
+  <nav aria-label="Sidebar">
+  <div class="sidebar-section-label">Principal</div>
+  <div class="sidebar-item"><i data-lucide="layout-dashboard" class="icon" aria-hidden="true"></i> Dashboard <span class="badge-count">3</span></div>
+  <div class="sidebar-item active" aria-current="page"><i data-lucide="users" class="icon" aria-hidden="true"></i> Candidatos</div>
+  <div class="sidebar-item"><i data-lucide="briefcase" class="icon" aria-hidden="true"></i> Cargos</div>
+  <div class="sidebar-item"><i data-lucide="user-check" class="icon" aria-hidden="true"></i> Colaboradores</div>
+
+  <div class="sidebar-section-label">Assessments</div>
+  <div class="sidebar-item"><i data-lucide="clipboard-check" class="icon" aria-hidden="true"></i> Testes</div>
+  <div class="sidebar-item"><i data-lucide="bar-chart-3" class="icon" aria-hidden="true"></i> Resultados</div>
+
+  <div class="sidebar-section-label">Comunicacao</div>
+  <div class="sidebar-item"><i data-lucide="message-circle" class="icon" aria-hidden="true"></i> Conversas <span class="badge-count">12</span></div>
+  <div class="sidebar-item"><i data-lucide="mail" class="icon" aria-hidden="true"></i> Emails</div>
+
+  <hr class="sidebar-divider">
+  <div class="sidebar-item"><i data-lucide="settings" class="icon" aria-hidden="true"></i> Configuracoes</div>
+  <div class="sidebar-item"><i data-lucide="help-circle" class="icon" aria-hidden="true"></i> Ajuda</div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar">MC</div>
+      <div>
+        <div class="sidebar-user-name">Marcos C.</div>
+        <div class="sidebar-user-role">Admin</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     MAIN
+     ════════════════════════════════════════════════════════════════════ -->
+<main class="main" id="main-content">
+
+  <!-- Header -->
+  <header class="header">
+    <h1 class="header-title">Candidatos</h1>
+    <div class="header-actions">
+      <div class="dropdown">
+        <button class="dropdown-trigger" aria-expanded="false" aria-haspopup="true"><i data-lucide="filter" style="width:14px;height:14px;" aria-hidden="true"></i> Filtros <i data-lucide="chevron-down" style="width:14px;height:14px;" aria-hidden="true"></i></button>
+      </div>
+      <button class="btn btn-secondary btn-sm"><i data-lucide="download" style="width:14px;height:14px;" aria-hidden="true"></i> Exportar</button>
+      <button class="btn btn-primary btn-sm"><i data-lucide="plus" style="width:14px;height:14px;" aria-hidden="true"></i> Novo Candidato</button>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SPLIT CONTENT: List + Detail
+       ════════════════════════════════════════════════════════════════ -->
+  <div class="layout-split-content">
+
+    <!-- ── LEFT PANEL: Candidate List ────────────────────────────── -->
+    <div class="layout-list">
+
+      <!-- List Header: Search + Filter -->
+      <div class="layout-list-header">
+        <div class="flex-row">
+          <input type="text" class="form-input" aria-label="Buscar candidato" placeholder="Buscar candidato...">
+          <div class="dropdown">
+            <button class="dropdown-trigger" aria-expanded="false" aria-haspopup="true">Todos <i data-lucide="chevron-down" style="width:14px;height:14px;" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Item 1: Alex Hormozi -->
+      <div class="layout-list-item">
+        <div class="avatar avatar-sm" style="background: linear-gradient(135deg, #1D4ED8, #6366F1);">AH</div>
+        <div class="layout-list-item-info">
+          <div class="layout-list-item-name">Alex Hormozi</div>
+          <div class="layout-list-item-meta">Business Strategy · ENTJ</div>
+        </div>
+        <span class="badge badge-success badge-table">92</span>
+      </div>
+
+      <!-- Item 2: Maria Santos -->
+      <div class="layout-list-item">
+        <div class="avatar avatar-sm" style="background: linear-gradient(135deg, #7C3AED, #A78BFA);">MS</div>
+        <div class="layout-list-item-info">
+          <div class="layout-list-item-name">Maria Santos</div>
+          <div class="layout-list-item-meta">UX Designer · ISFJ</div>
+        </div>
+        <span class="badge badge-warning badge-table">87</span>
+      </div>
+
+      <!-- Item 3: Joao Pereira (ACTIVE) -->
+      <div class="layout-list-item active">
+        <div class="avatar avatar-sm" style="background: linear-gradient(135deg, #EA580C, #FB923C);">JP</div>
+        <div class="layout-list-item-info">
+          <div class="layout-list-item-name">Joao Pereira</div>
+          <div class="layout-list-item-meta">Backend Dev · INTJ</div>
+        </div>
+        <span class="badge badge-success badge-table">78</span>
+      </div>
+
+      <!-- Item 4: Ana Costa -->
+      <div class="layout-list-item">
+        <div class="avatar avatar-sm" style="background: linear-gradient(135deg, #DB2777, #F472B6);">AC</div>
+        <div class="layout-list-item-info">
+          <div class="layout-list-item-name">Ana Costa</div>
+          <div class="layout-list-item-meta">Product Manager · ENTJ</div>
+        </div>
+        <span class="badge badge-error badge-table">95</span>
+      </div>
+
+      <!-- Item 5: Carlos Lima -->
+      <div class="layout-list-item">
+        <div class="avatar avatar-sm" style="background: linear-gradient(135deg, #16A34A, #4ade80);">CL</div>
+        <div class="layout-list-item-info">
+          <div class="layout-list-item-name">Carlos Lima</div>
+          <div class="layout-list-item-meta">Data Analyst · ISTP</div>
+        </div>
+        <span class="badge badge-success badge-table">81</span>
+      </div>
+
+      <!-- Item 6: Julia Ferreira -->
+      <div class="layout-list-item">
+        <div class="avatar avatar-sm" style="background: linear-gradient(135deg, #0891B2, #22D3EE);">JF</div>
+        <div class="layout-list-item-info">
+          <div class="layout-list-item-name">Julia Ferreira</div>
+          <div class="layout-list-item-meta">Frontend Dev · ENFP</div>
+        </div>
+        <span class="badge badge-warning badge-table">73</span>
+      </div>
+
+      <!-- Item 7: Rafael Souza -->
+      <div class="layout-list-item">
+        <div class="avatar avatar-sm" style="background: linear-gradient(135deg, #B45309, #F59E0B);">RF</div>
+        <div class="layout-list-item-info">
+          <div class="layout-list-item-name">Rafael Souza</div>
+          <div class="layout-list-item-meta">DevOps · ISTJ</div>
+        </div>
+        <span class="badge badge-success badge-table">88</span>
+      </div>
+
+      <!-- Item 8: Lucia Silva -->
+      <div class="layout-list-item">
+        <div class="avatar avatar-sm" style="background: linear-gradient(135deg, #4338CA, #818CF8);">LS</div>
+        <div class="layout-list-item-info">
+          <div class="layout-list-item-name">Lucia Silva</div>
+          <div class="layout-list-item-meta">HR Manager · ESFJ</div>
+        </div>
+        <span class="badge badge-success badge-table">91</span>
+      </div>
+
+    </div>
+
+    <!-- ── RIGHT PANEL: Candidate Detail ─────────────────────────── -->
+    <div class="layout-detail">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb mb-4" aria-label="Breadcrumb">
+        <span class="breadcrumb-item">Dashboard</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item">Candidatos</span>
+        <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-item active">Joao Pereira</span>
+      </nav>
+
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-avatar" style="background: linear-gradient(135deg, #EA580C, #FB923C);">JP</div>
+        <div class="profile-info">
+          <div class="profile-name">Joao Pereira</div>
+          <div class="profile-role">Backend Developer</div>
+          <div class="profile-tag">Arquitetura de sistemas distribuidos</div>
+        </div>
+        <div class="profile-scores">
+          <div class="stat-card stat-card-mini">
+            <div class="stat-card-mini-label">APEX</div>
+            <div class="stat-card-mini-value">7.8</div>
+          </div>
+          <div class="stat-card stat-card-mini">
+            <div class="stat-card-mini-label">DATA</div>
+            <div class="stat-card-mini-value">6</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs" role="tablist" aria-label="Detalhes do candidato">
+        <button class="tab active" role="tab" aria-selected="true"><i data-lucide="layout-grid" style="width:14px;height:14px;" aria-hidden="true"></i> Geral</button>
+        <button class="tab" role="tab" aria-selected="false"><i data-lucide="dna" style="width:14px;height:14px;" aria-hidden="true"></i> DNA</button>
+        <button class="tab" role="tab" aria-selected="false"><i data-lucide="message-circle" style="width:14px;height:14px;" aria-hidden="true"></i> Comunicacao</button>
+        <button class="tab" role="tab" aria-selected="false"><i data-lucide="history" style="width:14px;height:14px;" aria-hidden="true"></i> Historia</button>
+        <button class="tab" role="tab" aria-selected="false"><i data-lucide="file-text" style="width:14px;height:14px;" aria-hidden="true"></i> Artefatos (9)</button>
+      </div>
+
+      <!-- Grid: Sobre + Proficiencias -->
+      <div class="grid-2 mb-6">
+
+        <!-- Card: Sobre -->
+        <div class="card">
+          <div class="card-eyebrow">Sobre</div>
+          <div class="card-text">Desenvolvedor backend com 8 anos de experiencia em sistemas distribuidos. Expertise em Go, Python e arquitetura de microsservicos. Contribuidor open source.</div>
+        </div>
+
+        <!-- Card: Proficiencias (accent) -->
+        <div class="card card-accent">
+          <div class="card-eyebrow">Proficiencias</div>
+          <div class="progress-list">
+            <div class="progress-item">
+              <span class="progress-label progress-label-sm">Go</span>
+              <div class="progress-track"><div class="progress-fill" style="width: 90%; background: linear-gradient(90deg, var(--accent-primary), #6366F1);"></div></div>
+              <span class="progress-score progress-score-sm">90%</span>
+            </div>
+            <div class="progress-item">
+              <span class="progress-label progress-label-sm">Python</span>
+              <div class="progress-track"><div class="progress-fill" style="width: 85%; background: linear-gradient(90deg, var(--accent-primary), #6366F1);"></div></div>
+              <span class="progress-score progress-score-sm">85%</span>
+            </div>
+            <div class="progress-item">
+              <span class="progress-label progress-label-sm">Distributed Systems</span>
+              <div class="progress-track"><div class="progress-fill" style="width: 95%; background: linear-gradient(90deg, var(--accent-primary), #6366F1);"></div></div>
+              <span class="progress-score progress-score-sm">95%</span>
+            </div>
+            <div class="progress-item">
+              <span class="progress-label progress-label-sm">Docker/K8s</span>
+              <div class="progress-track"><div class="progress-fill" style="width: 80%; background: linear-gradient(90deg, var(--accent-primary), #6366F1);"></div></div>
+              <span class="progress-score progress-score-sm">80%</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- DNA Badges -->
+      <div class="dna-badges mb-6">
+        <span class="badge badge-mbti">INTJ</span>
+        <span class="badge badge-enneagram">5w6</span>
+        <span class="badge badge-disc">CS</span>
+      </div>
+
+      <!-- Theory Grid -->
+      <div class="theory-grid">
+
+        <!-- MBTI Card -->
+        <div class="theory-card">
+          <div class="theory-header">
+            <div>
+              <div class="theory-name">MYERS-BRIGGS</div>
+              <div class="theory-type" style="color: var(--theory-mbti);">INTJ</div>
+            </div>
+            <span class="badge badge-mbti badge-table">THE ARCHITECT</span>
+          </div>
+          <div class="mbti-bar-track"><span class="mbti-axis-label" style="color: #D97706;">E</span><div class="mbti-bar-bg"><div class="mbti-bar-fill" style="width: 78%; background: #D97706;"></div></div><span class="mbti-axis-label" style="color: #D97706;">I</span><span class="mbti-bar-pct">78%</span></div>
+          <div class="mbti-bar-track"><span class="mbti-axis-label" style="color: #4F46E5;">S</span><div class="mbti-bar-bg"><div class="mbti-bar-fill" style="width: 85%; background: #4F46E5;"></div></div><span class="mbti-axis-label" style="color: #4F46E5;">N</span><span class="mbti-bar-pct">85%</span></div>
+          <div class="mbti-bar-track"><span class="mbti-axis-label" style="color: #0284C7;">F</span><div class="mbti-bar-bg"><div class="mbti-bar-fill" style="width: 90%; background: #0284C7;"></div></div><span class="mbti-axis-label" style="color: #0284C7;">T</span><span class="mbti-bar-pct">90%</span></div>
+          <div class="mbti-bar-track"><span class="mbti-axis-label" style="color: #059669;">P</span><div class="mbti-bar-bg"><div class="mbti-bar-fill" style="width: 72%; background: #059669;"></div></div><span class="mbti-axis-label" style="color: #059669;">J</span><span class="mbti-bar-pct">72%</span></div>
+        </div>
+
+        <!-- Enneagram Card -->
+        <div class="theory-card">
+          <div class="theory-header">
+            <div>
+              <div class="theory-name">ENNEAGRAM</div>
+              <div class="theory-type" style="color: var(--theory-enneagram);">Tipo 5w6</div>
+            </div>
+            <span class="badge badge-enneagram badge-table">HEAD</span>
+          </div>
+          <div class="theory-description">O Investigador</div>
+          <div class="enneagram-grid">
+            <div class="enneagram-mini-card enneagram-mini-card-fear">
+              <div class="enneagram-mini-label enneagram-mini-label-fear">MEDO</div>
+              <div class="enneagram-mini-text">Ser incompetente</div>
+            </div>
+            <div class="enneagram-mini-card enneagram-mini-card-desire">
+              <div class="enneagram-mini-label enneagram-mini-label-desire">DESEJO</div>
+              <div class="enneagram-mini-text">Entender o mundo</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DISC Card -->
+        <div class="theory-card">
+          <div class="theory-header">
+            <div>
+              <div class="theory-name">DISC</div>
+              <div class="theory-type" style="color: var(--theory-disc);">CS</div>
+            </div>
+            <span class="badge badge-disc badge-table">O ANALISTA</span>
+          </div>
+          <div class="progress-list">
+            <div class="progress-item"><span class="progress-label progress-label-sm">D - Dominancia</span><div class="progress-track"><div class="progress-fill disc-d" style="width: 35%;"></div></div><span class="progress-score progress-score-sm" style="color: var(--disc-d);">35</span></div>
+            <div class="progress-item"><span class="progress-label progress-label-sm">I - Influencia</span><div class="progress-track"><div class="progress-fill disc-i" style="width: 20%;"></div></div><span class="progress-score progress-score-sm" style="color: var(--disc-i);">20</span></div>
+            <div class="progress-item"><span class="progress-label progress-label-sm">S - Estabilidade</span><div class="progress-track"><div class="progress-fill disc-s" style="width: 65%;"></div></div><span class="progress-score progress-score-sm" style="color: var(--disc-s);">65</span></div>
+            <div class="progress-item"><span class="progress-label progress-label-sm">C - Conformidade</span><div class="progress-track"><div class="progress-fill disc-c" style="width: 92%;"></div></div><span class="progress-score progress-score-sm" style="color: var(--disc-c);">92</span></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>
