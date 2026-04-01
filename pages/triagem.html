@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triagem de Candidatos — Electia</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>.icon { width: 18px; height: 18px; stroke-width: 1.8; }</style>
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../tokens/tokens.css">
+  <link rel="stylesheet" href="../components/components.css">
+
+  <!-- Page-specific styles -->
+  <style>
+    /* ── Top Bar ─────────────────────────────────────────────── */
+    .top-bar {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      padding: var(--space-5) var(--space-6);
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-6);
+    }
+    .top-bar-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 240px;
+    }
+    .search-input-wrapper .icon-search {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      width: 16px;
+      height: 16px;
+      pointer-events: none;
+    }
+    .search-input-wrapper .form-input {
+      padding-left: 36px;
+    }
+
+    /* Filter pills */
+    .filter-pills {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+    }
+    .filter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-3);
+      background: var(--accent-primary-muted);
+      color: var(--accent-primary);
+      border: 1px solid rgba(29, 78, 216, 0.2);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+    }
+    .filter-pill-remove {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: var(--accent-primary);
+      font-size: 14px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0;
+      transition: background 150ms;
+    }
+    .filter-pill-remove:hover {
+      background: rgba(29, 78, 216, 0.15);
+    }
+    .clear-filters {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-body);
+      transition: color 150ms;
+    }
+    .clear-filters:hover {
+      color: var(--color-error);
+      text-decoration: underline;
+    }
+
+    /* View toggle */
+    .view-toggle {
+      display: flex;
+      background: var(--bg-surface-2);
+      border-radius: var(--radius-md);
+      padding: 2px;
+      margin-left: auto;
+    }
+    .view-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-1) var(--space-3);
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: var(--text-xs);
+      font-weight: var(--font-medium);
+      font-family: var(--font-body);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 150ms var(--spring-snappy);
+    }
+    .view-toggle-btn.active {
+      background: var(--bg-base);
+      color: var(--accent-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ── Stepper ─────────────────────────────────────────────── */
+    .stepper {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      margin-bottom: var(--space-6);
+      padding: var(--space-5) var(--space-6);
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+    }
+    .stepper-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      position: relative;
+      text-align: center;
+    }
+    .stepper-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 16px;
+      left: calc(50% + 20px);
+      width: calc(100% - 40px);
+      height: 2px;
+      background: var(--border-default);
+    }
+    .stepper-step.active:not(:last-child)::after {
+      background: var(--accent-primary);
+    }
+    .stepper-step.completed:not(:last-child)::after {
+      background: var(--color-success);
+    }
+    .stepper-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-xs);
+      font-weight: var(--font-bold);
+      font-family: var(--font-mono);
+      border: 2px solid var(--border-default);
+      background: var(--bg-base);
+      color: var(--text-muted);
+      position: relative;
+      z-index: 1;
+      margin-bottom: var(--space-2);
+    }
+    .stepper-step.active .stepper-dot {
+      border-color: var(--accent-primary);
+      background: var(--accent-primary);
+      color: var(--text-inverse);
+    }
+    .stepper-step.completed .stepper-dot {
+      border-color: var(--color-success);
+      background: var(--color-success);
+      color: var(--text-inverse);
+    }
+    .stepper-label {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--text-muted);
+    }
+    .stepper-step.active .stepper-label {
+      color: var(--accent-primary);
+      font-weight: var(--font-semibold);
+    }
+    .stepper-step.completed .stepper-label {
+      color: var(--color-success);
+    }
+    .stepper-count {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin-top: var(--space-1);
+    }
+
+    /* ── Table enhancements ──────────────────────────────────── */
+    .tr-selected td {
+      background: var(--accent-primary-muted) !important;
+    }
+    td input[type="checkbox"],
+    th input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent-primary);
+      cursor: pointer;
+    }
+    .th-sortable {
+      cursor: pointer;
+      user-select: none;
+    }
+    .th-sortable:hover {
+      color: var(--text-primary);
+    }
+    .sort-icon {
+      display: inline-flex;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+    .td-score-high { color: var(--color-success); font-family: var(--font-mono); font-weight: var(--font-bold); }
+    .td-score-mid { color: var(--color-warning); font-family: var(--font-mono); font-weight: var(--font-bold); }
+    .td-score-low { color: var(--color-error); font-family: var(--font-mono); font-weight: var(--font-bold); }
+
+    .row-actions-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 150ms;
+    }
+    .row-actions-btn:hover {
+      background: var(--bg-surface-2);
+      color: var(--text-primary);
+    }
+
+    /* ── Bulk Toolbar ────────────────────────────────────────── */
+    .bulk-toolbar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-3) var(--space-6);
+      background: var(--accent-primary-muted);
+      border-top: 1px solid rgba(29, 78, 216, 0.15);
+    }
+    .bulk-toolbar-count {
+      font-size: var(--text-sm);
+      font-weight: var(--font-semibold);
+      color: var(--accent-primary);
+      white-space: nowrap;
+    }
+    .bulk-toolbar-actions {
+      display: flex;
+      gap: var(--space-2);
+      margin-left: auto;
+    }
+
+    /* ── Kanban enhancements ─────────────────────────────────── */
+    .kanban-card-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-2);
+    }
+    .kanban-card-avatar {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      font-weight: var(--font-bold);
+      color: var(--text-primary);
+      flex-shrink: 0;
+    }
+    .kanban-card-name {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--text-primary);
+    }
+    .kanban-card-role {
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      margin-bottom: var(--space-2);
+    }
+    .kanban-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: var(--space-2);
+    }
+    .kanban-card-score {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: var(--font-bold);
+    }
+
+    /* Pipeline stage dot colors */
+    .pipeline-stage-triagem { background: var(--accent-primary); }
+    .pipeline-stage-entrevista { background: var(--color-warning); }
+    .pipeline-stage-oferta { background: var(--color-success); }
+    .pipeline-stage-contratado { background: #0891B2; }
+
+    /* ── Pagination wrapper ──────────────────────────────────── */
+    .pagination-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-5) var(--space-6);
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Pular para o conteudo</a>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     SIDEBAR
+     ════════════════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">E+</div>
+    <div class="sidebar-brand-text"><span>Electia</span></div>
+  </div>
+
+  <nav aria-label="Sidebar">
+  <div class="sidebar-section-label">Principal</div>
+  <div class="sidebar-item"><i data-lucide="layout-dashboard" class="icon" aria-hidden="true"></i> Dashboard <span class="badge-count">3</span></div>
+  <div class="sidebar-item active" aria-current="page"><i data-lucide="users" class="icon" aria-hidden="true"></i> Candidatos</div>
+  <div class="sidebar-item"><i data-lucide="briefcase" class="icon" aria-hidden="true"></i> Cargos</div>
+  <div class="sidebar-item"><i data-lucide="user-check" class="icon" aria-hidden="true"></i> Colaboradores</div>
+
+  <div class="sidebar-section-label">Assessments</div>
+  <div class="sidebar-item"><i data-lucide="clipboard-check" class="icon" aria-hidden="true"></i> Testes</div>
+  <div class="sidebar-item"><i data-lucide="bar-chart-3" class="icon" aria-hidden="true"></i> Resultados</div>
+
+  <div class="sidebar-section-label">Comunicacao</div>
+  <div class="sidebar-item"><i data-lucide="message-circle" class="icon" aria-hidden="true"></i> Conversas <span class="badge-count">12</span></div>
+  <div class="sidebar-item"><i data-lucide="mail" class="icon" aria-hidden="true"></i> Emails</div>
+
+  <hr class="sidebar-divider">
+  <div class="sidebar-item"><i data-lucide="settings" class="icon" aria-hidden="true"></i> Configuracoes</div>
+  <div class="sidebar-item"><i data-lucide="help-circle" class="icon" aria-hidden="true"></i> Ajuda</div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar">MC</div>
+      <div>
+        <div class="sidebar-user-name">Marcos C.</div>
+        <div class="sidebar-user-role">Admin</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     MAIN
+     ════════════════════════════════════════════════════════════════════ -->
+<main class="main" id="main-content">
+
+  <!-- Header -->
+  <header class="header">
+    <h1 class="header-title">Triagem de Candidatos</h1>
+    <div class="header-actions">
+      <button class="btn btn-secondary btn-sm"><i data-lucide="download" style="width:14px;height:14px;" aria-hidden="true"></i> Exportar</button>
+      <button class="btn btn-primary btn-sm"><i data-lucide="plus" style="width:14px;height:14px;" aria-hidden="true"></i> Novo Candidato</button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <span class="breadcrumb-item">Dashboard</span>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-item">Candidatos</span>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-item active">Triagem</span>
+    </nav>
+
+    <!-- ════════════════════════════════════════════════════════════
+         TOP BAR: Search + Filters + View Toggle
+         ════════════════════════════════════════════════════════════ -->
+    <div class="top-bar">
+      <div class="top-bar-row">
+        <!-- Search -->
+        <div class="search-input-wrapper">
+          <i data-lucide="search" class="icon-search" aria-hidden="true"></i>
+          <input type="text" class="form-input" aria-label="Buscar candidato" placeholder="Buscar por nome, cargo ou perfil...">
+        </div>
+
+        <!-- View Toggle -->
+        <div class="view-toggle" role="group" aria-label="Alternar visualizacao">
+          <button class="view-toggle-btn active" aria-pressed="true">
+            <i data-lucide="table-2" style="width:14px;height:14px;" aria-hidden="true"></i> Tabela
+          </button>
+          <button class="view-toggle-btn" aria-pressed="false">
+            <i data-lucide="kanban" style="width:14px;height:14px;" aria-hidden="true"></i> Kanban
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter pills -->
+      <div class="top-bar-row">
+        <div class="filter-pills">
+          <span class="filter-pill">
+            Cargo: Backend Dev
+            <button class="filter-pill-remove" aria-label="Remover filtro Cargo">&times;</button>
+          </span>
+          <span class="filter-pill">
+            Status: Em analise
+            <button class="filter-pill-remove" aria-label="Remover filtro Status">&times;</button>
+          </span>
+          <span class="filter-pill">
+            DISC: CS
+            <button class="filter-pill-remove" aria-label="Remover filtro DISC">&times;</button>
+          </span>
+        </div>
+        <button class="clear-filters">Limpar filtros</button>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════
+         STEPPER: Pipeline Stages
+         ════════════════════════════════════════════════════════════ -->
+    <div class="stepper" role="list" aria-label="Etapas do pipeline">
+      <div class="stepper-step active" role="listitem">
+        <div class="stepper-dot">1</div>
+        <div class="stepper-label">Triagem</div>
+        <div class="stepper-count">8 candidatos</div>
+      </div>
+      <div class="stepper-step" role="listitem">
+        <div class="stepper-dot">2</div>
+        <div class="stepper-label">Entrevista</div>
+        <div class="stepper-count">3 candidatos</div>
+      </div>
+      <div class="stepper-step" role="listitem">
+        <div class="stepper-dot">3</div>
+        <div class="stepper-label">Oferta</div>
+        <div class="stepper-count">1 candidato</div>
+      </div>
+      <div class="stepper-step" role="listitem">
+        <div class="stepper-dot">4</div>
+        <div class="stepper-label">Contratado</div>
+        <div class="stepper-count">2 candidatos</div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════
+         TABLE VIEW (visible by default)
+         ════════════════════════════════════════════════════════════ -->
+    <div class="section" id="table-view">
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-header-title">Candidatos em Triagem</div>
+          <span style="font-size: var(--text-sm); color: var(--text-muted);">Mostrando 6 de 14 resultados</span>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 40px;"><input type="checkbox" aria-label="Selecionar todos"></th>
+              <th>Candidato</th>
+              <th>Cargo</th>
+              <th>DISC</th>
+              <th>MBTI</th>
+              <th class="th-sortable">
+                Score
+                <span class="sort-icon"><i data-lucide="arrow-down" style="width:12px;height:12px;" aria-hidden="true"></i></span>
+              </th>
+              <th>Status</th>
+              <th style="width: 48px;">Acoes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Row 1 — Selected -->
+            <tr class="tr-selected">
+              <td><input type="checkbox" checked aria-label="Selecionar Joao Pereira"></td>
+              <td>
+                <span class="td-avatar" style="background: linear-gradient(135deg, #EA580C, #FB923C);">JP</span>
+                <span class="td-name">Joao Pereira</span>
+              </td>
+              <td>Backend Developer</td>
+              <td><span class="badge badge-disc badge-table">CS</span></td>
+              <td><span class="badge badge-mbti badge-table">INTJ</span></td>
+              <td><span class="td-score-high">92</span><span class="td-score-total">/100</span></td>
+              <td><span class="badge badge-success badge-table">Aprovado</span></td>
+              <td>
+                <button class="row-actions-btn" aria-label="Acoes para Joao Pereira">
+                  <i data-lucide="more-vertical" style="width:16px;height:16px;" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+
+            <!-- Row 2 -->
+            <tr>
+              <td><input type="checkbox" aria-label="Selecionar Camila Rodrigues"></td>
+              <td>
+                <span class="td-avatar" style="background: linear-gradient(135deg, #7C3AED, #A78BFA);">CR</span>
+                <span class="td-name">Camila Rodrigues</span>
+              </td>
+              <td>Backend Developer</td>
+              <td><span class="badge badge-disc badge-table">DI</span></td>
+              <td><span class="badge badge-mbti badge-table">ENTP</span></td>
+              <td><span class="td-score-high">88</span><span class="td-score-total">/100</span></td>
+              <td><span class="badge badge-warning badge-table">Em analise</span></td>
+              <td>
+                <button class="row-actions-btn" aria-label="Acoes para Camila Rodrigues">
+                  <i data-lucide="more-vertical" style="width:16px;height:16px;" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+
+            <!-- Row 3 — Selected -->
+            <tr class="tr-selected">
+              <td><input type="checkbox" checked aria-label="Selecionar Rafael Mendes"></td>
+              <td>
+                <span class="td-avatar" style="background: linear-gradient(135deg, #0891B2, #22D3EE);">RM</span>
+                <span class="td-name">Rafael Mendes</span>
+              </td>
+              <td>Backend Developer</td>
+              <td><span class="badge badge-disc badge-table">CS</span></td>
+              <td><span class="badge badge-mbti badge-table">ISTJ</span></td>
+              <td><span class="td-score-mid">76</span><span class="td-score-total">/100</span></td>
+              <td><span class="badge badge-warning badge-table">Em analise</span></td>
+              <td>
+                <button class="row-actions-btn" aria-label="Acoes para Rafael Mendes">
+                  <i data-lucide="more-vertical" style="width:16px;height:16px;" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+
+            <!-- Row 4 -->
+            <tr>
+              <td><input type="checkbox" aria-label="Selecionar Fernanda Oliveira"></td>
+              <td>
+                <span class="td-avatar" style="background: linear-gradient(135deg, #DB2777, #F472B6);">FO</span>
+                <span class="td-name">Fernanda Oliveira</span>
+              </td>
+              <td>Backend Developer</td>
+              <td><span class="badge badge-disc badge-table">IS</span></td>
+              <td><span class="badge badge-mbti badge-table">INFJ</span></td>
+              <td><span class="td-score-mid">71</span><span class="td-score-total">/100</span></td>
+              <td><span class="badge badge-warning badge-table">Em analise</span></td>
+              <td>
+                <button class="row-actions-btn" aria-label="Acoes para Fernanda Oliveira">
+                  <i data-lucide="more-vertical" style="width:16px;height:16px;" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+
+            <!-- Row 5 -->
+            <tr>
+              <td><input type="checkbox" aria-label="Selecionar Bruno Almeida"></td>
+              <td>
+                <span class="td-avatar" style="background: linear-gradient(135deg, #16A34A, #4ADE80);">BA</span>
+                <span class="td-name">Bruno Almeida</span>
+              </td>
+              <td>Backend Developer</td>
+              <td><span class="badge badge-disc badge-table">DC</span></td>
+              <td><span class="badge badge-mbti badge-table">ENTJ</span></td>
+              <td><span class="td-score-low">63</span><span class="td-score-total">/100</span></td>
+              <td><span class="badge badge-error badge-table">Rejeitado</span></td>
+              <td>
+                <button class="row-actions-btn" aria-label="Acoes para Bruno Almeida">
+                  <i data-lucide="more-vertical" style="width:16px;height:16px;" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+
+            <!-- Row 6 -->
+            <tr>
+              <td><input type="checkbox" aria-label="Selecionar Larissa Martins"></td>
+              <td>
+                <span class="td-avatar" style="background: linear-gradient(135deg, #B45309, #F59E0B);">LM</span>
+                <span class="td-name">Larissa Martins</span>
+              </td>
+              <td>Backend Developer</td>
+              <td><span class="badge badge-disc badge-table">SI</span></td>
+              <td><span class="badge badge-mbti badge-table">ESFJ</span></td>
+              <td><span class="td-score-high">85</span><span class="td-score-total">/100</span></td>
+              <td><span class="badge badge-success badge-table">Aprovado</span></td>
+              <td>
+                <button class="row-actions-btn" aria-label="Acoes para Larissa Martins">
+                  <i data-lucide="more-vertical" style="width:16px;height:16px;" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Bulk Toolbar -->
+        <div class="bulk-toolbar">
+          <span class="bulk-toolbar-count">2 selecionados</span>
+          <div class="bulk-toolbar-actions">
+            <button class="btn btn-primary btn-sm">
+              <i data-lucide="arrow-right" style="width:14px;height:14px;" aria-hidden="true"></i> Mover para Entrevista
+            </button>
+            <button class="btn btn-danger btn-sm">
+              <i data-lucide="x" style="width:14px;height:14px;" aria-hidden="true"></i> Rejeitar
+            </button>
+            <button class="btn btn-secondary btn-sm">
+              <i data-lucide="download" style="width:14px;height:14px;" aria-hidden="true"></i> Exportar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════
+         KANBAN VIEW (hidden — toggle via JS)
+         ════════════════════════════════════════════════════════════ -->
+    <div class="section" id="kanban-view" style="display:none">
+      <div class="kanban">
+
+        <!-- Column: Triagem -->
+        <div class="kanban-column">
+          <div class="kanban-column-header">
+            <div class="kanban-column-title">
+              <span class="kanban-column-dot pipeline-stage-triagem"></span>
+              Triagem
+            </div>
+            <span class="kanban-column-count">8</span>
+          </div>
+          <div class="kanban-column-body">
+            <!-- Card 1 -->
+            <div class="kanban-card">
+              <div class="kanban-card-header">
+                <div class="kanban-card-avatar" style="background: linear-gradient(135deg, #EA580C, #FB923C);">JP</div>
+                <div class="kanban-card-name">Joao Pereira</div>
+              </div>
+              <div class="kanban-card-role">Backend Developer</div>
+              <div class="kanban-card-footer">
+                <span class="badge badge-disc badge-table">CS</span>
+                <span class="kanban-card-score td-score-high">92</span>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="kanban-card">
+              <div class="kanban-card-header">
+                <div class="kanban-card-avatar" style="background: linear-gradient(135deg, #7C3AED, #A78BFA);">CR</div>
+                <div class="kanban-card-name">Camila Rodrigues</div>
+              </div>
+              <div class="kanban-card-role">Backend Developer</div>
+              <div class="kanban-card-footer">
+                <span class="badge badge-disc badge-table">DI</span>
+                <span class="kanban-card-score td-score-high">88</span>
+              </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="kanban-card">
+              <div class="kanban-card-header">
+                <div class="kanban-card-avatar" style="background: linear-gradient(135deg, #0891B2, #22D3EE);">RM</div>
+                <div class="kanban-card-name">Rafael Mendes</div>
+              </div>
+              <div class="kanban-card-role">Backend Developer</div>
+              <div class="kanban-card-footer">
+                <span class="badge badge-disc badge-table">CS</span>
+                <span class="kanban-card-score td-score-mid">76</span>
+              </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="kanban-card">
+              <div class="kanban-card-header">
+                <div class="kanban-card-avatar" style="background: linear-gradient(135deg, #DB2777, #F472B6);">FO</div>
+                <div class="kanban-card-name">Fernanda Oliveira</div>
+              </div>
+              <div class="kanban-card-role">Backend Developer</div>
+              <div class="kanban-card-footer">
+                <span class="badge badge-disc badge-table">IS</span>
+                <span class="kanban-card-score td-score-mid">71</span>
+              </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="kanban-card">
+              <div class="kanban-card-header">
+                <div class="kanban-card-avatar" style="background: linear-gradient(135deg, #16A34A, #4ADE80);">BA</div>
+                <div class="kanban-card-name">Bruno Almeida</div>
+              </div>
+              <div class="kanban-card-role">Backend Developer</div>
+              <div class="kanban-card-footer">
+                <span class="badge badge-disc badge-table">DC</span>
+                <span class="kanban-card-score td-score-low">63</span>
+              </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="kanban-card">
+              <div class="kanban-card-header">
+                <div class="kanban-card-avatar" style="background: linear-gradient(135deg, #B45309, #F59E0B);">LM</div>
+                <div class="kanban-card-name">Larissa Martins</div>
+              </div>
+              <div class="kanban-card-role">Backend Developer</div>
+              <div class="kanban-card-footer">
+                <span class="badge badge-disc badge-table">SI</span>
+                <span class="kanban-card-score td-score-high">85</span>
+              </div>
+            </div>
+            <!-- Card 7 -->
+            <div class="kanban-card">
+              <div class="kanban-card-header">
+                <div class="kanban-card-avatar" style="background: linear-gradient(135deg, #4338CA, #818CF8);">TS</div>
+                <div class="kanban-card-name">Thiago Santos</div>
+              </div>
+              <div class="kanban-card-role">Backend Developer</div>
+              <div class="kanban-card-footer">
+                <span class="badge badge-disc badge-table">CD</span>
+                <span class="kanban-card-score td-score-mid">74</span>
+              </div>
+            </div>
+            <!-- Card 8 -->
+            <div class="kanban-card">
+              <div class="kanban-card-header">
+                <div class="kanban-card-avatar" style="background: linear-gradient(135deg, #1D4ED8, #6366F1);">PC</div>
+                <div class="kanban-card-name">Patricia Costa</div>
+              </div>
+              <div class="kanban-card-role">Backend Developer</div>
+              <div class="kanban-card-footer">
+                <span class="badge badge-disc badge-table">SC</span>
+                <span class="kanban-card-score td-score-mid">79</span>
+              </div>
+            </div>
+          </div>
+          <button class="kanban-add">
+            <i data-lucide="plus" style="width:14px;height:14px;" aria-hidden="true"></i> Adicionar
+          </button>
+        </div>
+
+        <!-- Column: Entrevista -->
+        <div class="kanban-column">
+          <div class="kanban-column-header">
+            <div class="kanban-column-title">
+              <span class="kanban-column-dot pipeline-stage-entrevista"></span>
+              Entrevista
+            </div>
+            <span class="kanban-column-count">3</span>
+          </div>
+          <div class="kanban-column-body">
+            <!-- Card 1 -->
+            <div class="kanban-card">
+              <div class="kanban-card-header">
+                <div class="kanban-card-avatar" style="background: linear-gradient(135deg, #059669, #34D399);">AS</div>
+                <div class="kanban-card-name">Andre Silva</div>
+              </div>
+              <div class="kanban-card-role">Backend Developer</div>
+              <div class="kanban-card-footer">
+                <span class="badge badge-disc badge-table">DI</span>
+                <span class="kanban-card-score td-score-high">91</span>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="kanban-card">
+              <div class="kanban-card-header">
+                <div class="kanban-card-avatar" style="background: linear-gradient(135deg, #C026D3, #E879F9);">JN</div>
+                <div class="kanban-card-name">Julia Nascimento</div>
+              </div>
+              <div class="kanban-card-role">Backend Developer</div>
+              <div class="kanban-card-footer">
+                <span class="badge badge-disc badge-table">CS</span>
+                <span class="kanban-card-score td-score-high">87</span>
+              </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="kanban-card">
+              <div class="kanban-card-header">
+                <div class="kanban-card-avatar" style="background: linear-gradient(135deg, #D97706, #FBBF24);">MF</div>
+                <div class="kanban-card-name">Marcos Ferreira</div>
+              </div>
+              <div class="kanban-card-role">Backend Developer</div>
+              <div class="kanban-card-footer">
+                <span class="badge badge-disc badge-table">SC</span>
+                <span class="kanban-card-score td-score-mid">78</span>
+              </div>
+            </div>
+          </div>
+          <button class="kanban-add">
+            <i data-lucide="plus" style="width:14px;height:14px;" aria-hidden="true"></i> Adicionar
+          </button>
+        </div>
+
+        <!-- Column: Oferta -->
+        <div class="kanban-column">
+          <div class="kanban-column-header">
+            <div class="kanban-column-title">
+              <span class="kanban-column-dot pipeline-stage-oferta"></span>
+              Oferta
+            </div>
+            <span class="kanban-column-count">1</span>
+          </div>
+          <div class="kanban-column-body">
+            <!-- Card 1 -->
+            <div class="kanban-card">
+              <div class="kanban-card-header">
+                <div class="kanban-card-avatar" style="background: linear-gradient(135deg, #1D4ED8, #60A5FA);">DF</div>
+                <div class="kanban-card-name">Diego Farias</div>
+              </div>
+              <div class="kanban-card-role">Backend Developer</div>
+              <div class="kanban-card-footer">
+                <span class="badge badge-disc badge-table">CS</span>
+                <span class="kanban-card-score td-score-high">94</span>
+              </div>
+            </div>
+          </div>
+          <button class="kanban-add">
+            <i data-lucide="plus" style="width:14px;height:14px;" aria-hidden="true"></i> Adicionar
+          </button>
+        </div>
+
+        <!-- Column: Contratado -->
+        <div class="kanban-column">
+          <div class="kanban-column-header">
+            <div class="kanban-column-title">
+              <span class="kanban-column-dot pipeline-stage-contratado"></span>
+              Contratado
+            </div>
+            <span class="kanban-column-count">2</span>
+          </div>
+          <div class="kanban-column-body">
+            <!-- Card 1 -->
+            <div class="kanban-card">
+              <div class="kanban-card-header">
+                <div class="kanban-card-avatar" style="background: linear-gradient(135deg, #0F766E, #2DD4BF);">RL</div>
+                <div class="kanban-card-name">Renata Lima</div>
+              </div>
+              <div class="kanban-card-role">Backend Developer</div>
+              <div class="kanban-card-footer">
+                <span class="badge badge-disc badge-table">DI</span>
+                <span class="kanban-card-score td-score-high">96</span>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="kanban-card">
+              <div class="kanban-card-header">
+                <div class="kanban-card-avatar" style="background: linear-gradient(135deg, #9333EA, #C084FC);">GB</div>
+                <div class="kanban-card-name">Gustavo Barbosa</div>
+              </div>
+              <div class="kanban-card-role">Backend Developer</div>
+              <div class="kanban-card-footer">
+                <span class="badge badge-disc badge-table">CS</span>
+                <span class="kanban-card-score td-score-high">89</span>
+              </div>
+            </div>
+          </div>
+          <button class="kanban-add">
+            <i data-lucide="plus" style="width:14px;height:14px;" aria-hidden="true"></i> Adicionar
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════════
+         PAGINATION
+         ════════════════════════════════════════════════════════════ -->
+    <div class="pagination-wrapper">
+      <nav class="pagination" aria-label="Paginacao">
+        <button class="pagination-btn" disabled aria-label="Pagina anterior">
+          <i data-lucide="chevron-left" style="width:14px;height:14px;" aria-hidden="true"></i>
+        </button>
+        <button class="pagination-btn active" aria-current="page">1</button>
+        <button class="pagination-btn">2</button>
+        <button class="pagination-btn">3</button>
+        <span class="pagination-ellipsis">...</span>
+        <button class="pagination-btn">12</button>
+        <button class="pagination-btn" aria-label="Proxima pagina">
+          <i data-lucide="chevron-right" style="width:14px;height:14px;" aria-hidden="true"></i>
+        </button>
+      </nav>
+    </div>
+
+  </div>
+</main>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>
