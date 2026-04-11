@@ -1,7 +1,71 @@
-# Changelog — App Design System (Electia/SaaS)
+# Changelog — ResultX Design System
 
-Todas as mudancas notaveis neste design system serao documentadas aqui.
-Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
+Todas as mudanças notáveis neste design system são documentadas aqui.
+Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e [Semantic Versioning](https://semver.org/lang/pt-BR/).
+
+## [Unreleased]
+
+### Fixed
+- `.gitignore` — ignora `social-media-png/` (artefatos gerados) e `.claude/` (estado local)
+
+## [2.0.0] - 2026-04-01
+
+Primeira release do design system como repositório standalone (`carneiromarcos/resultx-design-system`), reposicionado como DS multi-produto (Electia, IMO, Editais).
+
+### Added
+- **Repositório próprio** — publicado em `github.com/carneiromarcos/resultx-design-system`, site live em `carneiromarcos.github.io/resultx-design-system`
+- **Tema unificado** — `tokens.css` com `[data-theme="dark"]`, `[data-theme="light"]` e auto-detect via `prefers-color-scheme`
+- **8 componentes compostos** — View Toggle, Data Table Enhanced (sort/bulk/color cells), Filter Bar, Stepper/Wizard, Pipeline Kanban (5 stages HR), Search Autocomplete, Date Range, Sparkline
+- **Apple-level polish** — spring physics curves (`--spring-bounce/smooth/snappy`), elevation system (`--elevation-0..4`), crossfade transition em dark/light toggle, stagger animations
+- **Icon system** — `components/icons.css` + docs
+- **Print styles** — `@media print` completo
+- **Template `triagem.html`** — adicionado aos 4 existentes (login, dashboard, candidatos, 404)
+- **Bundle analysis** — `scripts/bundle-analysis.js`
+- **Test suite** — Jest com 19 testes (token parity dark/light, fallback parity, build output, hardcoded color detection)
+- **Theme toggle runtime** — `dist/theme-toggle.js` (`ResultXTheme.toggle()/set()/get()`, localStorage + system preference)
+- **Composite docs** — `docs/components/composite.md` + nav dedicada no docs-viewer
+- **CONTRIBUTING.md** — checklists para tokens e componentes
+- **CI/CD** — 3 workflows GitHub Actions (CI lint+build+test, Pages deploy, npm publish on release)
+- **Versionamento semântico** — `commit-and-tag-version` + `@commitlint/config-conventional`
+- **Husky + lint-staged** — formatação e lint automáticos
+- **W3C DTCG tokens** — `tokens.json` canonical
+- **tokens-base.css** — bundled para builds standalone
+- **LICENSE MIT**, exports map em `package.json`
+- **Componentes**: 492 regras CSS cobrindo atoms, molecules, organisms + 8 compostos
+
+### Changed
+- Todos os templates referenciam `dist/*.min.css` (não source)
+- `.tab` com reset de button defaults (background/border/font) para suportar `<button>` semântico
+- Touch targets elevados para `min-height: 44px` (48px em mobile)
+- Focus states igualados a hover em sidebar, dropdown-item, tab, breadcrumb
+- Contraste light mode ajustado: `--text-secondary: #4B5563`, `--text-muted: #6B7280`
+- Novos tokens: `--accent-secondary-muted`, `--sidebar-text-label`, `--sidebar-badge-bg`, `--sidebar-badge-active-bg`
+
+### Fixed
+- **A11y audit** (WCAG AA) — 9 fixes: focus-visible em 16 componentes, toggle a11y, skip-link, form-error, `prefers-reduced-motion`, hex → tokens migration, `--text-on-*` tokens
+- **Disabled states** — `btn`, `form-input`, `dropdown`, `tab`
+- **ARIA** — templates login, 404, candidatos corrigidos
+- **Responsive** — `layout-split` colapse, btn 48px mobile
+- **Loading states** — `.btn-loading`, `.card-loading`
+- **Glassmorphism** — `.card-glass` modifier isolado
+- **Hardcoded rgba** — header glassmorphism, 7 icon-badges, 6 theory badges, 5 tags, 3 sidebar rgba migrados para tokens
+- **Lint fixes** — `#FFFFFF` → `#FFF`, `@import` notation (14 erros eliminados)
+- **CI Node 20** — `package-lock.json` regenerado, `npm install` restaurado após sync
+
+### Removed
+- `tokens-dark.css`, `tokens-light.css`, `tokens-unified.css` (superseded pelo `tokens.css` unificado)
+- 7 HTMLs legacy (`index`, `light`, `dark`, `components-showcase`, `social-media-templates`)
+
+### Metrics
+- **Source:** 106 KB (tokens 25.8 + components 80.8)
+- **Minified:** 65 KB (39% reduction)
+- **Testes:** 19 (build + tokens parity)
+- **Docs:** 13 componentes + 8 tokens + api-reference + a11y-audit + roi-report
+- **A11y score:** 90/100 (melhorado de 74)
+
+---
+
+> **Nota histórica:** as versões `1.0.0` e `1.0.1` abaixo referem-se ao período em que o design system vivia dentro do monorepo `meus-projetos/` como `app-design-system`. A v2.0.0 marca a primeira release como repositório standalone multi-produto.
 
 ## [1.0.1] - 2026-03-26
 

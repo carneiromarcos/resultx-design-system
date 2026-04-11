@@ -1,3 +1,10 @@
 node_modules/
 .DS_Store
 *.log
+
+# Generated artifacts (exported from docs-viewer / Canva)
+social-media-png/
+
+# Claude Code local state
+.claude/
+**/.claude/
