@@ -156,6 +156,43 @@ describe('Token Integrity', () => {
     });
   });
 
+  describe('Generated outputs (dist/tokens.theme.css + tokens.ts)', () => {
+    let themeCSS;
+    let tokensTS;
+
+    beforeAll(() => {
+      const themePath = path.resolve(__dirname, '..', 'dist', 'tokens.theme.css');
+      const tsPath = path.resolve(__dirname, '..', 'dist', 'tokens.ts');
+      themeCSS = fs.existsSync(themePath) ? fs.readFileSync(themePath, 'utf-8') : '';
+      tokensTS = fs.existsSync(tsPath) ? fs.readFileSync(tsPath, 'utf-8') : '';
+    });
+
+    test('dist/tokens.theme.css exists and contains @theme inline block', () => {
+      expect(themeCSS.length).toBeGreaterThan(0);
+      expect(themeCSS).toMatch(/@theme inline\s*\{/);
+    });
+
+    test('dist/tokens.theme.css preserves dark/light theme parity', () => {
+      const darkProps = extractPropertiesFromBlock(themeCSS, '[data-theme="dark"]');
+      const lightProps = extractPropertiesFromBlock(themeCSS, '[data-theme="light"]');
+      expect(darkProps.length).toBeGreaterThan(0);
+      expect(darkProps.length).toBe(lightProps.length);
+    });
+
+    test('dist/tokens.theme.css preserves token count from source tokens.css', () => {
+      const sourceDark = extractPropertiesFromBlock(css, '[data-theme="dark"]');
+      const generatedDark = extractPropertiesFromBlock(themeCSS, '[data-theme="dark"]');
+      expect(generatedDark.length).toBe(sourceDark.length);
+    });
+
+    test('dist/tokens.ts exists and exports expected consts', () => {
+      expect(tokensTS.length).toBeGreaterThan(0);
+      expect(tokensTS).toMatch(/export const sharedTokens/);
+      expect(tokensTS).toMatch(/export const darkTokens/);
+      expect(tokensTS).toMatch(/export const lightTokens/);
+    });
+  });
+
   describe('prefers-color-scheme fallback parity', () => {
     let darkProps;
     let fallbackDarkProps;

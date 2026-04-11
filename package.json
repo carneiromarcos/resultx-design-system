@@ -5,6 +5,8 @@
   "main": "dist/tokens.min.css",
   "exports": {
     "./tokens": "./dist/tokens.min.css",
+    "./tokens/theme": "./dist/tokens.theme.css",
+    "./tokens/ts": "./dist/tokens.ts",
     "./components": "./dist/components.min.css",
     "./icons": "./dist/icons.min.css",
     "./theme": "./dist/theme-toggle.js",
@@ -15,6 +17,7 @@
   "files": [
     "dist/",
     "tokens/tokens.css",
+    "tokens/base/tokens-base.css",
     "tokens/tokens.json",
     "components/components.css",
     "components/icons.css",
@@ -45,7 +48,7 @@
     "resultx"
   ],
   "scripts": {
-    "build:tokens": "postcss tokens/tokens.css -o dist/tokens.min.css",
+    "build:tokens": "node scripts/build-tokens.js && postcss tokens/tokens.css -o dist/tokens.min.css",
     "build:components": "postcss components/components.css -o dist/components.min.css",
     "build:icons": "postcss components/icons.css -o dist/icons.min.css",
     "build:all": "npm run build:tokens && npm run build:components && npm run build:icons",

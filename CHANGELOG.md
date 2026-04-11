@@ -5,8 +5,25 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Added
+- **`scripts/build-tokens.js`** — pipeline de build Node que lê `tokens/tokens.css` + `tokens/base/tokens-base.css` e gera outputs Tailwind v4 + TypeScript sem alterar o source CSS
+- **`dist/tokens.theme.css`** — saída Tailwind v4 com bloco `@theme inline` expondo tokens como utility classes (bg-*, text-*, font-*, p-*, rounded-*, shadow-*), preservando runtime theme switching via `[data-theme]`
+- **`dist/tokens.ts`** — exports TypeScript (`sharedTokens`, `darkTokens`, `lightTokens`, `TokenName`) para consumo em JS/charts/tests
+- **`package.json` exports** — `./tokens/theme` e `./tokens/ts` disponíveis para consumers
+- **9 categorias classificadas** no @theme inline: 84 cores, 4 font families, 5 font weights, 12 text sizes, 6 line heights, 6 letter spacings, 14 spacing, 6 radius, 5 shadow (142 tokens expostos)
+- **4 novos testes Jest** — validação das saídas geradas (presença do `@theme inline`, parity dark/light, contagem vs. source, exports TS)
+
+### Changed
+- `scripts.build:tokens` — agora roda `node scripts/build-tokens.js && postcss` (postcss preservado para compat do `tokens.min.css` atual)
+- `files` array — inclui `tokens/base/tokens-base.css` para garantir que consumers via npm recebam o source completo
+
 ### Fixed
 - `.gitignore` — ignora `social-media-png/` (artefatos gerados) e `.claude/` (estado local)
+
+### Notes
+- **`tokens/tokens.css` continua sendo o source autoritativo** — edite sempre lá, rode `npm run build:tokens`
+- **`tokens/tokens.json` continua desatualizado** (formato v1.0, namespace `emprega-app`) — reconstrução fica para fase futura se necessário
+- **Zero impacto em consumers atuais**: Editais (Laravel), Sites (React+CSS) continuam usando `dist/tokens.min.css` inalterado. Novos outputs só são consumidos quando explicitamente referenciados.
 
 ## [2.0.0] - 2026-04-01
 
