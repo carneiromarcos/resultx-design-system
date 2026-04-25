@@ -5,7 +5,36 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
-### Added
+## [2.1.0] - 2026-04-25
+
+Adiciona **camada Data Layer** ao DS: 3 themes opt-in (premium-light, sober-dark, vibrant-dark) e 10 componentes essenciais para dashboards/visualização de dados, inspirados em TalentaSync, Tivo e AdminDASH.
+
+### Added — Data Layer (v2.1.0)
+- **3 themes opt-in via `data-theme="..."`** — backwards compat 100%, `dark` e `light` v2.0 intactos:
+  - `premium-light` — green forest #0E2C24 + cream #F2F5F0 (TalentaSync vibe, premium SaaS)
+  - `sober-dark` — navy #1A1F2E + violet #8B5CF6 (Tivo vibe, enterprise)
+  - `vibrant-dark` — deep navy #1A1F36 + cyan #18C4FF + magenta #FF4789 (AdminDASH vibe, high-tech)
+- **Gradient palette compartilhado** — 5 gradients neutros (cyan, magenta, green, amber, purple) reutilizáveis nos 3 themes via `--gradient-*` e stops `--grad-*-start/end`
+- **Delta semantics per-theme** — `--delta-positive-fg/bg`, `--delta-negative-fg/bg`, `--delta-neutral-fg/bg` calibrados por contexto
+- **Surface accents per-theme** — `--surface-accent-cyan/magenta/green/amber/purple` para variants soft de Coin
+- **Heatmap dot scale** — `--heatmap-dot-0..4` para visualização de atividade estilo GitHub contributions
+- **Tokens de dimensionamento** — `--coin-size-sm/md/lg`, `--donut-size-sm/md/lg`, `--statcard-min-height`, `--heatmap-dot-size/gap`
+- **`components/data-cards.css`** — 10 componentes essenciais (prefix `dl-`):
+  1. `.dl-statcard` — bloco de métrica com header/value/footer
+  2. `.dl-coin` — ícone arredondado com 5 variants gradient + 5 soft + neutral
+  3. `.dl-delta` — pílula direcional positive/negative/neutral
+  4. `.dl-chart` — shell para line/area chart (works com SVG inline)
+  5. `.dl-donut` — donut conic-gradient com center value + legend categórica
+  6. `.dl-table` — compact data table com header semântico
+  7. `.dl-sparkline` — micro CSS bar chart inline (variants positive/negative)
+  8. `.dl-avatar-stack` — avatares overlapping com `+N` more
+  9. `.dl-status` — pílula semântica (in-progress/done/need-review/pending/blocked)
+  10. `.dl-tooltip-callout` — tooltip flutuante para data-points em charts
+- **`tokens/themes/preview.html`** — preview standalone com 3 dashboards mockup densos (browser frame + sidebar + 3 stats + donut + chart + table) para validação visual
+- **`tests/data-layer.test.js`** — 24 testes Jest validando file presence, gradient palette, theme parity (3 themes têm os mesmos 32 tokens essenciais), e presença das 10 classes + variants
+- **`./components/data-cards` export** — exposed via `package.json` exports map
+
+### Added — Build infra (introduzido neste ciclo, integrado na release)
 - **`scripts/build-tokens.js`** — pipeline de build Node que lê `tokens/tokens.css` + `tokens/base/tokens-base.css` e gera outputs Tailwind v4 + TypeScript sem alterar o source CSS
 - **`dist/tokens.theme.css`** — saída Tailwind v4 com bloco `@theme inline` expondo tokens como utility classes (bg-*, text-*, font-*, p-*, rounded-*, shadow-*), preservando runtime theme switching via `[data-theme]`
 - **`dist/tokens.ts`** — exports TypeScript (`sharedTokens`, `darkTokens`, `lightTokens`, `TokenName`) para consumo em JS/charts/tests

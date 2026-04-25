@@ -1,6 +1,6 @@
 {
   "name": "resultx-design-system",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "ResultX Design System — Multi-product (Electia, IMO, Editais) with dark + light themes, spring physics, elevation system, and WCAG AA accessibility.",
   "main": "dist/tokens.min.css",
   "exports": {
@@ -8,6 +8,7 @@
     "./tokens/theme": "./dist/tokens.theme.css",
     "./tokens/ts": "./dist/tokens.ts",
     "./components": "./dist/components.min.css",
+    "./components/data-cards": "./components/data-cards.css",
     "./icons": "./dist/icons.min.css",
     "./theme": "./dist/theme-toggle.js",
     "./tokens/source": "./tokens/tokens.css",
@@ -18,6 +19,7 @@
     "dist/",
     "tokens/tokens.css",
     "tokens/base/tokens-base.css",
+    "tokens/themes/",
     "tokens/tokens.json",
     "components/components.css",
     "components/icons.css",

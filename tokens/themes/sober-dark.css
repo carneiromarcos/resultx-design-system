@@ -1,0 +1,112 @@
+/* ============================================================================
+   ResultX Design System — SOBER DARK theme
+   v2.1.0 | Inspired by Tivo enterprise dashboard
+
+   Mood: enterprise pro, low fatigue, sustained-use admin surfaces
+   Use:  Electia admin, IMO admin, Tetra internal dashboard,
+         long-session analytics views
+   ============================================================================ */
+
+[data-theme="sober-dark"] {
+  /* ── Backgrounds ─────────────────────────────────────────────────────── */
+  --bg-base: #1A1F2E;
+  --bg-surface-1: #222837;
+  --bg-surface-2: #2A3145;
+  --bg-surface-3: #323A52;
+  --bg-overlay: rgba(15, 18, 28, 0.85);
+
+  /* ── Sidebar ─────────────────────────────────────────────────────────── */
+  --sidebar-bg: #15192A;
+  --sidebar-bg-hover: #1C2138;
+  --sidebar-active-bg: rgba(139, 92, 246, 0.18);
+  --sidebar-text: rgba(255, 255, 255, 0.55);
+  --sidebar-text-label: rgba(255, 255, 255, 0.30);
+  --sidebar-text-active: #A78BFA;
+  --sidebar-divider: rgba(255, 255, 255, 0.06);
+  --sidebar-text-bright: #FFFFFF;
+  --sidebar-badge-bg: rgba(255, 255, 255, 0.14);
+  --sidebar-badge-active-bg: rgba(139, 92, 246, 0.30);
+
+  /* ── Borders ─────────────────────────────────────────────────────────── */
+  --border-subtle: #2A3145;
+  --border-default: #3A4258;
+  --border-strong: #4D5876;
+  --border-accent: rgba(139, 92, 246, 0.25);
+
+  /* ── Text ────────────────────────────────────────────────────────────── */
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-inverse: #15192A;
+
+  /* ── Accent ──────────────────────────────────────────────────────────── */
+  --accent-primary: #8B5CF6;
+  --accent-primary-hover: #A78BFA;
+  --accent-primary-muted: rgba(139, 92, 246, 0.16);
+  --accent-secondary: #06B6D4;
+
+  /* ── Semantic ────────────────────────────────────────────────────────── */
+  --color-success: #10B981;
+  --color-success-bg: rgba(16, 185, 129, 0.14);
+  --color-warning: #F59E0B;
+  --color-warning-bg: rgba(245, 158, 11, 0.14);
+  --color-error: #EF4444;
+  --color-error-bg: rgba(239, 68, 68, 0.14);
+  --color-info: #06B6D4;
+  --color-info-bg: rgba(6, 182, 212, 0.14);
+
+  /* ── Delta pill semantics ────────────────────────────────────────────── */
+  --delta-positive-fg: #34D399;
+  --delta-positive-bg: rgba(16, 185, 129, 0.16);
+  --delta-negative-fg: #FBBF24;
+  --delta-negative-bg: rgba(245, 158, 11, 0.16);
+  --delta-neutral-fg: #94A3B8;
+  --delta-neutral-bg: rgba(148, 163, 184, 0.12);
+
+  /* ── Shadows ─────────────────────────────────────────────────────────── */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.30);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.40);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.50);
+  --shadow-glow: 0 0 24px rgba(139, 92, 246, 0.18);
+  --shadow-glow-lg: 0 0 48px rgba(139, 92, 246, 0.22), 0 0 96px rgba(139, 92, 246, 0.10);
+
+  /* ── Elevation ────────────────────────────────────────────────────────── */
+  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.40), 0 1px 2px rgba(0, 0, 0, 0.30);
+  --elevation-2: 0 4px 12px rgba(0, 0, 0, 0.50), 0 2px 4px rgba(0, 0, 0, 0.30);
+  --elevation-3: 0 12px 32px rgba(0, 0, 0, 0.60), 0 4px 8px rgba(0, 0, 0, 0.30);
+  --elevation-4: 0 24px 64px rgba(0, 0, 0, 0.70), 0 8px 16px rgba(0, 0, 0, 0.40);
+
+  /* ── Glassmorphism ────────────────────────────────────────────────────── */
+  --glass-subtle-bg: rgba(34, 40, 55, 0.45);
+  --glass-subtle-blur: 12px;
+  --glass-subtle-border: rgba(255, 255, 255, 0.05);
+  --glass-standard-bg: rgba(34, 40, 55, 0.65);
+  --glass-standard-blur: 16px;
+  --glass-standard-border: rgba(255, 255, 255, 0.07);
+  --glass-strong-bg: rgba(34, 40, 55, 0.88);
+  --glass-strong-blur: 24px;
+  --glass-strong-border: rgba(255, 255, 255, 0.09);
+
+  /* ── Chart ───────────────────────────────────────────────────────────── */
+  --chart-gradient-start: rgba(139, 92, 246, 0.30);
+  --chart-gradient-end: rgba(139, 92, 246, 0.02);
+  --chart-line: #A78BFA;
+  --chart-grid: #2A3145;
+
+  /* ── Heatmap dot scale ───────────────────────────────────────────────── */
+  --heatmap-dot-0: #2A3145;
+  --heatmap-dot-1: rgba(139, 92, 246, 0.30);
+  --heatmap-dot-2: rgba(139, 92, 246, 0.55);
+  --heatmap-dot-3: rgba(167, 139, 250, 0.80);
+  --heatmap-dot-4: #A78BFA;
+
+  /* ── Accessibility ───────────────────────────────────────────────────── */
+  --focus-ring-color: rgba(167, 139, 250, 0.50);
+
+  /* ── Surface accents for StatCard headers (subtle on dark) ───────────── */
+  --surface-accent-cyan: rgba(24, 196, 255, 0.10);
+  --surface-accent-magenta: rgba(255, 71, 137, 0.10);
+  --surface-accent-green: rgba(40, 199, 111, 0.12);
+  --surface-accent-amber: rgba(255, 159, 67, 0.12);
+  --surface-accent-purple: rgba(165, 94, 234, 0.14);
+}

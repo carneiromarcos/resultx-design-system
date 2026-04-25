@@ -1,0 +1,50 @@
+/* ============================================================================
+   ResultX Design System — Data Layer SHARED tokens
+   v2.1.0 | Tokens common to all 3 dashboard themes
+   (premium-light, sober-dark, vibrant-dark)
+
+   Why shared:
+   - Gradient palette: same hex stops across themes
+   - Component sizing: coin/donut/heatmap dimensions
+
+   Theme-specific tokens (delta pills, surface accents, glow shadows)
+   live in each theme file.
+   ============================================================================ */
+
+:root {
+  /* ── Gradient Palette (5 brand-neutral gradients) ──────────────────────── */
+  --gradient-cyan:    linear-gradient(135deg, #18C4FF 0%, #4A6CF7 100%);
+  --gradient-magenta: linear-gradient(135deg, #FF4789 0%, #E91E63 100%);
+  --gradient-green:   linear-gradient(135deg, #28C76F 0%, #1FCB8B 100%);
+  --gradient-amber:   linear-gradient(135deg, #FF9F43 0%, #F08C2D 100%);
+  --gradient-purple:  linear-gradient(135deg, #A55EEA 0%, #7367F0 100%);
+
+  /* ── Gradient stops (single colors, for chart gradients & solid fills) ─── */
+  --grad-cyan-start: #18C4FF;
+  --grad-cyan-end: #4A6CF7;
+  --grad-magenta-start: #FF4789;
+  --grad-magenta-end: #E91E63;
+  --grad-green-start: #28C76F;
+  --grad-green-end: #1FCB8B;
+  --grad-amber-start: #FF9F43;
+  --grad-amber-end: #F08C2D;
+  --grad-purple-start: #A55EEA;
+  --grad-purple-end: #7367F0;
+
+  /* ── Coin (MetricCoin) sizes ───────────────────────────────────────────── */
+  --coin-size-sm: 32px;
+  --coin-size-md: 40px;
+  --coin-size-lg: 48px;
+
+  /* ── Donut/Gauge sizes ─────────────────────────────────────────────────── */
+  --donut-size-sm: 96px;
+  --donut-size-md: 140px;
+  --donut-size-lg: 200px;
+
+  /* ── Stat card heights ─────────────────────────────────────────────────── */
+  --statcard-min-height: 112px;
+
+  /* ── Heatmap dot grid ──────────────────────────────────────────────────── */
+  --heatmap-dot-size: 10px;
+  --heatmap-dot-gap: 3px;
+}
