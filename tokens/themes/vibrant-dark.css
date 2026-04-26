@@ -23,7 +23,7 @@
   --sidebar-text-label: rgba(255, 255, 255, 0.30);
   --sidebar-text-active: #18C4FF;
   --sidebar-divider: rgba(255, 255, 255, 0.06);
-  --sidebar-text-bright: #FFFFFF;
+  --sidebar-text-bright: #FFF;
   --sidebar-badge-bg: rgba(255, 255, 255, 0.14);
   --sidebar-badge-active-bg: rgba(24, 196, 255, 0.30);
 
@@ -34,7 +34,7 @@
   --border-accent: rgba(24, 196, 255, 0.30);
 
   /* ── Text ────────────────────────────────────────────────────────────── */
-  --text-primary: #FFFFFF;
+  --text-primary: #FFF;
   --text-secondary: #B4B7C9;
   --text-muted: #7E83A2;
   --text-inverse: #161A2E;

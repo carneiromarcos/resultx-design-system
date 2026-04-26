@@ -10,7 +10,7 @@
 [data-theme="premium-light"] {
   /* ── Backgrounds ─────────────────────────────────────────────────────── */
   --bg-base: #F2F5F0;          /* sage cream — page bg */
-  --bg-surface-1: #FFFFFF;     /* card */
+  --bg-surface-1: #FFF;     /* card */
   --bg-surface-2: #F8FAF7;     /* nested surface */
   --bg-surface-3: #EEF1EC;     /* elevated nested */
   --bg-overlay: rgba(14, 44, 36, 0.45);
@@ -21,9 +21,9 @@
   --sidebar-active-bg: rgba(115, 176, 164, 0.18);
   --sidebar-text: rgba(255, 255, 255, 0.65);
   --sidebar-text-label: rgba(255, 255, 255, 0.32);
-  --sidebar-text-active: #FFFFFF;
+  --sidebar-text-active: #FFF;
   --sidebar-divider: rgba(255, 255, 255, 0.08);
-  --sidebar-text-bright: #FFFFFF;
+  --sidebar-text-bright: #FFF;
   --sidebar-badge-bg: rgba(255, 255, 255, 0.14);
   --sidebar-badge-active-bg: rgba(255, 255, 255, 0.28);
 
@@ -37,7 +37,7 @@
   --text-primary: #0E2C24;
   --text-secondary: #3F5A52;
   --text-muted: #7A8B85;
-  --text-inverse: #FFFFFF;
+  --text-inverse: #FFF;
 
   /* ── Accent ──────────────────────────────────────────────────────────── */
   --accent-primary: #0E2C24;
