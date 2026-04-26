@@ -84,7 +84,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
+  color: var(--text-on-color);
   font-weight: var(--font-semibold);
   font-size: var(--text-base);
   flex-shrink: 0;
@@ -189,7 +189,7 @@
   stroke-linejoin: round;
 }
 .dl-chart-area {
-  fill: url(#dl-chart-gradient);
+  fill: url("#dl-chart-gradient");
 }
 .dl-chart-grid line {
   stroke: var(--chart-grid);
@@ -205,9 +205,7 @@
   stroke: var(--bg-surface-1);
   stroke-width: 2;
 }
-.dl-chart-point--active {
-  r: 6;
-}
+/* Active variant: enlarged radius set on SVG element via r="6" attribute */
 
 /* ══════════════════════════════════════════════════════════════════════════
    5. DONUT (CSS conic-gradient)
@@ -231,8 +229,8 @@
       var(--grad-amber-end)   var(--donut-seg-2, 67%) var(--donut-seg-3, 80%),
       var(--border-subtle)    var(--donut-seg-3, 80%) 100%
     );
-  -webkit-mask: radial-gradient(circle at center, transparent 56%, #000 58%);
-          mask: radial-gradient(circle at center, transparent 56%, #000 58%);
+  -webkit-mask: radial-gradient(circle at center, transparent 56%, black 58%);
+          mask: radial-gradient(circle at center, transparent 56%, black 58%);
 }
 .dl-donut-inner {
   position: relative;
@@ -386,8 +384,8 @@
   color: var(--accent-primary);
 }
 .dl-avatar-stack--sm .dl-avatar { width: 22px; height: 22px; font-size: 10px; }
-.dl-avatar-stack--sm .dl-avatar:not(:first-child) { margin-left: -6px; }
 .dl-avatar-stack--lg .dl-avatar { width: 36px; height: 36px; font-size: var(--text-sm); }
+.dl-avatar-stack--sm .dl-avatar:not(:first-child) { margin-left: -6px; }
 .dl-avatar-stack--lg .dl-avatar:not(:first-child) { margin-left: -10px; }
 
 .dl-avatar-stack-label {
