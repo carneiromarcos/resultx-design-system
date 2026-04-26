@@ -20,6 +20,12 @@
 
 @import url('./base/tokens-base.css');
 
+/* ── Data Layer themes (v2.1.0 — opt-in via data-theme attr) ──────────── */
+@import url('./themes/_data-layer-shared.css');
+@import url('./themes/premium-light.css');
+@import url('./themes/sober-dark.css');
+@import url('./themes/vibrant-dark.css');
+
 /* ══════════════════════════════════════════════════════════════════════════
    SHARED TOKENS (theme-independent, App DS-specific)
    Overrides tokens-base where data-dense UI requires different values.

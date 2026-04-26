@@ -1,0 +1,112 @@
+/* ============================================================================
+   ResultX Design System — VIBRANT DARK theme
+   v2.1.0 | Inspired by AdminDASH (Rikon Rahman) dashboard
+
+   Mood: high-tech, energetic, attention-grabbing
+   Use:  PdV consumer surfaces, marketing showcase sections,
+         "see it in action" mockup frames on resultx.app
+   ============================================================================ */
+
+[data-theme="vibrant-dark"] {
+  /* ── Backgrounds (deep navy, slight purple tint) ─────────────────────── */
+  --bg-base: #1A1F36;
+  --bg-surface-1: #232842;
+  --bg-surface-2: #2A2F4F;
+  --bg-surface-3: #363B5C;
+  --bg-overlay: rgba(15, 18, 36, 0.85);
+
+  /* ── Sidebar ─────────────────────────────────────────────────────────── */
+  --sidebar-bg: #161A2E;
+  --sidebar-bg-hover: #1F243D;
+  --sidebar-active-bg: rgba(24, 196, 255, 0.18);
+  --sidebar-text: rgba(255, 255, 255, 0.55);
+  --sidebar-text-label: rgba(255, 255, 255, 0.30);
+  --sidebar-text-active: #18C4FF;
+  --sidebar-divider: rgba(255, 255, 255, 0.06);
+  --sidebar-text-bright: #FFF;
+  --sidebar-badge-bg: rgba(255, 255, 255, 0.14);
+  --sidebar-badge-active-bg: rgba(24, 196, 255, 0.30);
+
+  /* ── Borders ─────────────────────────────────────────────────────────── */
+  --border-subtle: #2A2F4F;
+  --border-default: #363B5C;
+  --border-strong: #4A507A;
+  --border-accent: rgba(24, 196, 255, 0.30);
+
+  /* ── Text ────────────────────────────────────────────────────────────── */
+  --text-primary: #FFF;
+  --text-secondary: #B4B7C9;
+  --text-muted: #7E83A2;
+  --text-inverse: #161A2E;
+
+  /* ── Accent ──────────────────────────────────────────────────────────── */
+  --accent-primary: #18C4FF;
+  --accent-primary-hover: #4A6CF7;
+  --accent-primary-muted: rgba(24, 196, 255, 0.18);
+  --accent-secondary: #FF4789;
+
+  /* ── Semantic ────────────────────────────────────────────────────────── */
+  --color-success: #28C76F;
+  --color-success-bg: rgba(40, 199, 111, 0.16);
+  --color-warning: #FF9F43;
+  --color-warning-bg: rgba(255, 159, 67, 0.16);
+  --color-error: #EA5455;
+  --color-error-bg: rgba(234, 84, 85, 0.16);
+  --color-info: #18C4FF;
+  --color-info-bg: rgba(24, 196, 255, 0.16);
+
+  /* ── Delta pill semantics ────────────────────────────────────────────── */
+  --delta-positive-fg: #28C76F;
+  --delta-positive-bg: rgba(40, 199, 111, 0.18);
+  --delta-negative-fg: #FF9F43;
+  --delta-negative-bg: rgba(255, 159, 67, 0.18);
+  --delta-neutral-fg: #B4B7C9;
+  --delta-neutral-bg: rgba(180, 183, 201, 0.12);
+
+  /* ── Shadows (deep + glow primary) ──────────────────────────────────── */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.30);
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 10px 28px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 0 28px rgba(24, 196, 255, 0.30);
+  --shadow-glow-lg: 0 0 56px rgba(24, 196, 255, 0.30), 0 0 112px rgba(255, 71, 137, 0.18);
+
+  /* ── Elevation ────────────────────────────────────────────────────────── */
+  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.45), 0 1px 2px rgba(0, 0, 0, 0.30);
+  --elevation-2: 0 4px 14px rgba(0, 0, 0, 0.55), 0 2px 4px rgba(0, 0, 0, 0.30);
+  --elevation-3: 0 14px 36px rgba(0, 0, 0, 0.65), 0 4px 8px rgba(0, 0, 0, 0.35);
+  --elevation-4: 0 28px 72px rgba(0, 0, 0, 0.75), 0 8px 18px rgba(0, 0, 0, 0.40);
+
+  /* ── Glassmorphism ────────────────────────────────────────────────────── */
+  --glass-subtle-bg: rgba(35, 40, 66, 0.45);
+  --glass-subtle-blur: 12px;
+  --glass-subtle-border: rgba(255, 255, 255, 0.05);
+  --glass-standard-bg: rgba(35, 40, 66, 0.65);
+  --glass-standard-blur: 16px;
+  --glass-standard-border: rgba(255, 255, 255, 0.07);
+  --glass-strong-bg: rgba(35, 40, 66, 0.88);
+  --glass-strong-blur: 24px;
+  --glass-strong-border: rgba(255, 255, 255, 0.10);
+
+  /* ── Chart (gradient cyan→blue) ───────────────────────────────────────── */
+  --chart-gradient-start: rgba(24, 196, 255, 0.45);
+  --chart-gradient-end: rgba(24, 196, 255, 0.02);
+  --chart-line: #18C4FF;
+  --chart-grid: #2A2F4F;
+
+  /* ── Heatmap dot scale ───────────────────────────────────────────────── */
+  --heatmap-dot-0: #2A2F4F;
+  --heatmap-dot-1: rgba(24, 196, 255, 0.30);
+  --heatmap-dot-2: rgba(24, 196, 255, 0.55);
+  --heatmap-dot-3: rgba(24, 196, 255, 0.80);
+  --heatmap-dot-4: #18C4FF;
+
+  /* ── Accessibility ───────────────────────────────────────────────────── */
+  --focus-ring-color: rgba(24, 196, 255, 0.55);
+
+  /* ── Surface accents for StatCard headers (saturated on vibrant) ─────── */
+  --surface-accent-cyan: rgba(24, 196, 255, 0.16);
+  --surface-accent-magenta: rgba(255, 71, 137, 0.16);
+  --surface-accent-green: rgba(40, 199, 111, 0.18);
+  --surface-accent-amber: rgba(255, 159, 67, 0.18);
+  --surface-accent-purple: rgba(165, 94, 234, 0.18);
+}
