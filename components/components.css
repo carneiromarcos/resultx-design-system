@@ -1983,6 +1983,9 @@ tr:hover td { background: var(--bg-surface-1); }
 /* ══════════════════════════════════════════════════════════════════
    PRINT STYLES
    ══════════════════════════════════════════════════════════════════ */
+/* stylelint-disable declaration-no-important
+   -- Print overrides intentionally use !important to force black/white
+      output regardless of which theme is active at print time. */
 @media print {
 
   /* ── Layout ─────────────────────────────────────────────────── */
@@ -2071,10 +2074,13 @@ tr:hover td { background: var(--bg-surface-1); }
     transform: none !important;
   }
 }
+/* stylelint-enable declaration-no-important */
 
 /* ══════════════════════════════════════════════════════════════════
    ACCESSIBILITY — Reduced Motion
    ══════════════════════════════════════════════════════════════════ */
+/* stylelint-disable declaration-no-important
+   -- Reduced-motion overrides must beat any inline/utility animation. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -2083,3 +2089,4 @@ tr:hover td { background: var(--bg-surface-1); }
     scroll-behavior: auto !important;
   }
 }
+/* stylelint-enable declaration-no-important */

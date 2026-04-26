@@ -111,8 +111,12 @@
 /* ══════════════════════════════════════════════════════════════════
    PRINT
    ══════════════════════════════════════════════════════════════════ */
+/* stylelint-disable declaration-no-important
+   -- Print override: ensures icon-wrapper background is cleared
+      regardless of theme accent. */
 @media print {
   .icon { stroke-width: 2.5; }
   .icon-wrapper { border: 1px solid currentColor; background: transparent !important; }
   .btn-icon { display: none; }
 }
+/* stylelint-enable declaration-no-important */
