@@ -5,6 +5,32 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+## [2.1.1] - 2026-04-26
+
+Hotfix release com correções de distribution + cleanup de lint, e expansão da documentação para refletir o estado real do DS (5 themes + Data Layer).
+
+### Fixed
+- **`package.json` files array** — adicionado `components/data-cards.css` à allowlist. Sem este entry, `npm install github:carneiromarcos/resultx-design-system#v2.1.0` não trazia o data-cards.css aos consumers via git tag.
+- **`components/data-cards.css` stylelint** — 7 errors corrigidos:
+  - `#FFFFFF` → `var(--text-on-color)`
+  - `url(#dl-chart-gradient)` → `url("#dl-chart-gradient")`
+  - removida regra inválida `.dl-chart-point--active { r: 6 }` (atributo SVG, não propriedade CSS — set via attribute no markup)
+  - `mask: ... #000` → `black` (named color)
+  - reordenação de regras avatar-stack para corrigir `no-descending-specificity`
+- **Tokens themes** — `#FFFFFF` → `#FFF` em premium-light, sober-dark, vibrant-dark (color-hex-length).
+
+### Added — Documentation
+- **`DESIGN-SYSTEM.md`** rebrand completo:
+  - Título: "Emprega+ App Design System v1.0" → "ResultX Design System v2.1.1"
+  - Filosofia atualizada: princípios v2.1 (Theme-aware, WCAG AA, Backward compatible, Multi-product) substituem antigos (Dark-first, Glassmorphism controlado, etc)
+  - Seção "O que mudou da v2.0" com 4 bullets das adições da v2.1
+  - Links para docs novas (`data-cards.md`, `gradients.md`, `preview.html`)
+- **`docs/components/data-cards.md`** — novo. Documentação completa dos 10 componentes Data Layer (StatCard, Coin, Delta, Chart, Donut, Table, Sparkline, AvatarStack, StatusPill, TooltipCallout) com markup, variants, theme awareness, accessibility, e adoção atual (resultx.app + Electia).
+- **`docs/tokens/gradients.md`** — novo. Documentação da gradient palette (5 brand gradients), gradient stops, delta semantics per-theme, surface accents per-theme, heatmap dot scale, dimensões compartilhadas, e guia "quando usar cada gradient".
+
+### Changed
+- **Versão local** alinhada com tag remote: `2.1.0` → `2.1.1`.
+
 ## [2.1.0] - 2026-04-25
 
 Adiciona **camada Data Layer** ao DS: 3 themes opt-in (premium-light, sober-dark, vibrant-dark) e 10 componentes essenciais para dashboards/visualização de dados, inspirados em TalentaSync, Tivo e AdminDASH.

@@ -1,19 +1,32 @@
-# Emprega+ App Design System v1.0
+# ResultX Design System v2.1.1
 
-> Design System unificado para **sistemas e aplicações** do ecossistema Emprega+.
-> Escopo: Electia (assessments SaaS B2B), C&S, IMO, e futuros produtos.
+> Design System multi-produto e multi-theme para o ecossistema **ResultX**.
+> Em produção: **resultx.app** (site comercial), **Electia** (assessments SaaS), **IMO** (B2G), **Editais**.
 
 ## Filosofia
 
-Este DS é para **aplicações de produto** — dashboards, CRUDs, perfis, formulários, testes, charts — não para sites institucionais ou landing pages. Inspirado no [Mentes Sintéticas / Cognitive Core](referência visual) e no protótipo do Electia.
+Este DS atende **dois universos** com a mesma fundação de tokens:
+- **Aplicações de produto** — dashboards, CRUDs, perfis, formulários, testes, charts
+- **Surfaces comerciais** — landing sections com mockups dashboard, showcases visuais
 
-**Princípios:**
-1. **Dark-first** — fundo escuro como padrão, reduz fadiga em uso prolongado
-2. **Data-dense** — UI otimizada para exibir muitos dados sem sobrecarregar
-3. **Theory-colored** — cada teoria comportamental tem sua cor semântica
-4. **Glassmorphism controlado** — transparência e blur como hierarquia visual, não decoração
-5. **Token-driven** — zero valores hardcoded; tudo via tokens
-6. **Atomic Design** — Atoms → Molecules → Organisms → Templates → Pages
+**Princípios v2.1:**
+1. **Theme-aware** — 5 identidades opt-in via `data-theme` (`dark`, `light`, `premium-light`, `sober-dark`, `vibrant-dark`); zero refactor pra trocar visual
+2. **Token-driven** — zero valores hardcoded; cores, espaços, tipografia, sombras, motion tudo via custom properties
+3. **Data-dense** — UI otimizada para exibir muitos dados sem sobrecarregar (data-cards layer com 10 componentes)
+4. **WCAG AA** — todo theme novo é validado em contraste antes de produção
+5. **Backward compatible** — token names preservados entre versões; consumidores não precisam refactor para upgrade
+6. **Multi-product** — uma fonte de verdade para visual cross-projetos
+
+**O que mudou da v2.0:**
+- 3 themes adicionais (premium-light, sober-dark, vibrant-dark) opt-in
+- Layer Data Layer (`.dl-*`) com 10 componentes para dashboards/visualização
+- Gradient palette compartilhada (5 brand gradients) + delta semantics
+- Heatmap dot scale para visualização de atividade
+
+**Documentação detalhada:**
+- `docs/components/data-cards.md` — os 10 componentes Data Layer
+- `docs/tokens/gradients.md` — gradient palette + delta tokens
+- `tokens/themes/preview.html` — preview standalone dos 5 themes side-by-side
 
 ---
 
