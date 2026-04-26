@@ -61,10 +61,18 @@
     "lint:tokens": "stylelint 'tokens/**/*.css'",
     "analyze": "node scripts/bundle-analysis.js",
     "test": "jest",
+    "test:visual": "playwright test",
+    "test:visual:update": "playwright test -u",
     "release": "commit-and-tag-version",
     "release:minor": "commit-and-tag-version --release-as minor",
     "release:major": "commit-and-tag-version --release-as major",
     "prepare": "husky"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/tests/visual/"
+    ]
   },
   "lint-staged": {
     "components/**/*.css": "stylelint --fix",
@@ -75,6 +83,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
+    "@playwright/test": "^1.59.1",
     "autoprefixer": "^10.4.27",
     "commit-and-tag-version": "^12.7.1",
     "cssnano": "^7.1.3",
