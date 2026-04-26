@@ -8,3 +8,8 @@ social-media-png/
 # Claude Code local state
 .claude/
 **/.claude/
+.aiox/
+
+# Playwright Test artifacts (snapshots in tests/visual/*-snapshots/ ARE committed)
+test-results/
+playwright-report/
