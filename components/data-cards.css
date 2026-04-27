@@ -490,3 +490,253 @@
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   11. POSITIONING WHEEL (v2.2)
+   ══════════════════════════════════════════════════════════════════════════
+   Generic radial chart with N colored segments + plotted points (e.g. team
+   members on a DISC/Profil4 wheel). Non-interactive — read-only data viz.
+
+   Primary use: Electia <DISCWheel> with 8 DISC styles
+   (Conductor, Motivator, Promoter, Facilitator, Supporter, Coordinator,
+    Analyzer, Organizer).
+
+   The primitive is DOM-agnostic: segments and points are rendered by the
+   consumer (React/inline SVG). These classes style the container, hover
+   states, labels, and tooltip. Adaptive sizing via --pwheel-* custom props.
+   ══════════════════════════════════════════════════════════════════════════ */
+.dl-pwheel {
+  --pwheel-size: 480px;
+  --pwheel-marker-size: 10px;
+  --pwheel-marker-stroke: 2px;
+  --pwheel-label-size: 11px;
+  --pwheel-segment-label-size: 13px;
+  --pwheel-line-width: 1.25px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+}
+
+.dl-pwheel-svg {
+  width: 100%;
+  max-width: var(--pwheel-size);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  display: block;
+  font-family: var(--font-body);
+}
+
+/* ── Disc background (continuous HSL ring via conic-gradient) ──────────── */
+.dl-pwheel-disc {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  /* 4 main quadrants (Conductor red, Promoter yellow, Supporter green, Analyzer blue)
+     with 4 transitional styles (Motivator orange, Facilitator yellow-green,
+     Coordinator teal, Organizer purple) blending smoothly. */
+  background:
+    radial-gradient(circle at center,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0) 55%),
+    conic-gradient(from -90deg,
+      #E85B3A 0deg,    /* Conductor (top) */
+      #F89B3A 45deg,   /* Motivator */
+      #F6D63A 90deg,   /* Promoter */
+      #B4D14F 135deg,  /* Facilitator */
+      #5BBF5C 180deg,  /* Supporter */
+      #3DAACE 225deg,  /* Coordinator */
+      #3D6CCE 270deg,  /* Analyzer */
+      #9C42C4 315deg,  /* Organizer */
+      #E85B3A 360deg);
+}
+
+[data-theme="dark"] .dl-pwheel-disc,
+[data-theme="sober-dark"] .dl-pwheel-disc,
+[data-theme="vibrant-dark"] .dl-pwheel-disc {
+  background:
+    radial-gradient(circle at center,
+      rgba(255, 255, 255, 0.45) 0%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(0, 0, 0, 0.10) 100%),
+    conic-gradient(from -90deg,
+      #E85B3A 0deg,
+      #F89B3A 45deg,
+      #F6D63A 90deg,
+      #B4D14F 135deg,
+      #5BBF5C 180deg,
+      #3DAACE 225deg,
+      #3D6CCE 270deg,
+      #9C42C4 315deg,
+      #E85B3A 360deg);
+}
+
+/* Subtle dividing lines between the 8 octants (stylistic only) */
+.dl-pwheel-divisions {
+  pointer-events: none;
+}
+
+.dl-pwheel-divisions line {
+  stroke: rgba(255, 255, 255, 0.35);
+  stroke-width: 0.75px;
+}
+
+[data-theme="premium-light"] .dl-pwheel-divisions line,
+[data-theme="light"] .dl-pwheel-divisions line {
+  stroke: rgba(255, 255, 255, 0.55);
+}
+
+/* Legacy class kept for back-compat (8-discrete-segment markup) */
+.dl-pwheel-segment {
+  stroke: var(--bg-surface-1);
+  stroke-width: 1px;
+}
+
+.dl-pwheel-segment-label {
+  font-size: var(--pwheel-segment-label-size);
+  font-weight: var(--font-bold);
+  font-family: var(--font-heading);
+  fill: var(--text-primary);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  /* Slight halo for legibility against bright segments */
+  paint-order: stroke;
+  stroke: var(--bg-surface-1);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+/* ── Reference rings (optional grid) ────────────────────────────────────── */
+.dl-pwheel-ring {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 0.75px;
+  stroke-dasharray: 3 4;
+  pointer-events: none;
+}
+
+[data-theme="premium-light"] .dl-pwheel-ring,
+[data-theme="light"] .dl-pwheel-ring {
+  stroke: rgba(0, 0, 0, 0.10);
+}
+
+/* Empty hub at center */
+.dl-pwheel-hub {
+  fill: var(--bg-surface-1);
+  stroke: var(--border-default);
+  stroke-width: 1px;
+}
+
+/* ── Points (people markers) ────────────────────────────────────────────── */
+.dl-pwheel-point {
+  outline: none;
+  cursor: default;
+  transition: transform var(--transition-fast);
+}
+
+.dl-pwheel-point-line {
+  stroke: var(--text-primary);
+  stroke-width: var(--pwheel-line-width);
+  fill: none;
+}
+
+.dl-pwheel-point-circle {
+  fill: #0B0E14;
+  stroke: var(--bg-surface-1);
+  stroke-width: var(--pwheel-marker-stroke);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+}
+
+.dl-pwheel-point-initial {
+  fill: #FFFFFF;
+  font-size: var(--pwheel-marker-size);
+  font-weight: var(--font-bold);
+  font-family: var(--font-body);
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+.dl-pwheel-point-name {
+  fill: var(--text-primary);
+  font-size: var(--pwheel-label-size);
+  font-weight: var(--font-semibold);
+  font-family: var(--font-body);
+  /* Halo for legibility on top of colored segments */
+  paint-order: stroke;
+  stroke: var(--bg-surface-1);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+/* Focus / hover state for keyboard a11y (point is tabbable but read-only) */
+.dl-pwheel-point:focus-visible .dl-pwheel-point-circle,
+.dl-pwheel-point:hover .dl-pwheel-point-circle {
+  fill: var(--accent-primary);
+}
+
+/* ── Adaptive sizing variants ───────────────────────────────────────────── */
+.dl-pwheel--xs {
+  --pwheel-size: 320px;
+  --pwheel-marker-size: 8px;
+  --pwheel-label-size: 9px;
+  --pwheel-segment-label-size: 11px;
+}
+.dl-pwheel--sm {
+  --pwheel-size: 400px;
+  --pwheel-marker-size: 9px;
+  --pwheel-label-size: 10px;
+  --pwheel-segment-label-size: 12px;
+}
+.dl-pwheel--lg {
+  --pwheel-size: 560px;
+  --pwheel-marker-size: 11px;
+  --pwheel-label-size: 12px;
+  --pwheel-segment-label-size: 14px;
+}
+
+/* Density modifier: applied by the consumer when count > 30 */
+.dl-pwheel--dense .dl-pwheel-point-name {
+  font-size: calc(var(--pwheel-label-size) * 0.85);
+}
+.dl-pwheel--very-dense .dl-pwheel-point-name {
+  display: none;
+}
+.dl-pwheel--very-dense .dl-pwheel-point-line {
+  display: none;
+}
+
+/* ── Table fallback (collapsible, screen-reader friendly) ───────────────── */
+.dl-pwheel-fallback {
+  width: 100%;
+  max-width: var(--pwheel-size);
+  font-size: var(--text-sm);
+}
+
+.dl-pwheel-fallback summary {
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: var(--space-2) 0;
+  user-select: none;
+}
+
+.dl-pwheel-fallback summary:hover {
+  color: var(--text-primary);
+}
+
+.dl-pwheel-fallback summary:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .dl-pwheel-point {
+    transition: none;
+  }
+}

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DISC Wheel — DS v2.2 demo</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 2rem;
+    background: #ECECEC;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: #111;
+  }
+  .header {
+    max-width: 1400px;
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+  .header h1 { font-size: 1.75rem; margin: 0 0 0.5rem; }
+  .header p  { margin: 0; color: #555; font-size: 0.95rem; }
+  .stages {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 1100px) {
+    .stages { grid-template-columns: 1fr; }
+  }
+  .stage {
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .stage-light { background: #FAFAFA; color: #1a1a1a; }
+  .stage-dark  { background: #0B0E14; color: #E6EDF3; }
+  .stage-tag {
+    align-self: flex-end;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background: rgba(127, 127, 127, 0.18);
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+  }
+  .stage h2 {
+    font-size: 1.15rem;
+    margin: 0.5rem 0 1.5rem;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <h1>Roda DISC — modelo Profil4 (8 perfis)</h1>
+  <p>SVG vetorial puro com gradient radial 3-stop por setor (white → light → saturated). Modos claro e escuro side-by-side.</p>
+</header>
+
+<div class="stages">
+  <section class="stage stage-light">
+    <span class="stage-tag">light · labelColor=#1a1a1a</span>
+    <h2>Modo claro</h2>
+    <div id="wheel-light"></div>
+  </section>
+
+  <section class="stage stage-dark">
+    <span class="stage-tag">dark · labelColor=#fff</span>
+    <h2>Modo escuro</h2>
+    <div id="wheel-dark"></div>
+  </section>
+</div>
+
+<script>
+/**
+ * DISCWheel — implementação fiel ao componente React em HTML/SVG vanilla.
+ */
+const cx = 250;
+const cy = 250;
+const innerRadius = 32;
+const outerRadius = 195;
+const labelRadius = 210;
+
+const sectors = [
+  { id: "motivador",   label: "MOTIVADOR",   center: 270, light: "#FBD8B6", saturated: "#F36F22" },
+  { id: "promotor",    label: "PROMOTOR",    center: 315, light: "#FCEEB0", saturated: "#F8C800" },
+  { id: "facilitador", label: "FACILITADOR", center: 0,   light: "#DBE5B0", saturated: "#A4C73E" },
+  { id: "apoiador",    label: "APOIADOR",    center: 45,  light: "#C0DEB0", saturated: "#4FAE3F" },
+  { id: "coordenador", label: "COORDENADOR", center: 90,  light: "#B8DDDD", saturated: "#29A6A8" },
+  { id: "analisador",  label: "ANALISADOR",  center: 135, light: "#B5C7DC", saturated: "#1E5BA8" },
+  { id: "organizador", label: "ORGANIZADOR", center: 180, light: "#C8B0D2", saturated: "#6F2C91" },
+  { id: "condutor",    label: "CONDUTOR",    center: 225, light: "#FACDD0", saturated: "#E73032" },
+];
+
+const SECTOR_WIDTH = 45;
+
+function polarToCartesian(angleDeg, r) {
+  const rad = (angleDeg * Math.PI) / 180;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+function describeSector(centerAngle, innerR, outerR) {
+  const half = SECTOR_WIDTH / 2;
+  const startAngle = centerAngle - half;
+  const endAngle = centerAngle + half;
+  const so = polarToCartesian(startAngle, outerR);
+  const eo = polarToCartesian(endAngle, outerR);
+  const ei = polarToCartesian(endAngle, innerR);
+  const si = polarToCartesian(startAngle, innerR);
+  return [
+    `M ${so.x.toFixed(2)} ${so.y.toFixed(2)}`,
+    `A ${outerR} ${outerR} 0 0 1 ${eo.x.toFixed(2)} ${eo.y.toFixed(2)}`,
+    `L ${ei.x.toFixed(2)} ${ei.y.toFixed(2)}`,
+    `A ${innerR} ${innerR} 0 0 0 ${si.x.toFixed(2)} ${si.y.toFixed(2)}`,
+    "Z",
+  ].join(" ");
+}
+
+function getLabelRotation(centerAngle) {
+  if (centerAngle === 0 || centerAngle >= 180) {
+    return centerAngle + 90;
+  }
+  return centerAngle - 90;
+}
+
+/**
+ * Arc path for a label that follows the circumference of the wheel.
+ * Bottom-half labels (centerAngle > 0 && < 180) need the path direction
+ * reversed (CCW) so the text doesn't render upside-down.
+ */
+function describeArcForLabel(centerAngle, r) {
+  // Slightly wider than sector so longest words still fit on the curve.
+  const half = SECTOR_WIDTH / 2 + 2;
+  const isBottom = centerAngle > 0 && centerAngle < 180;
+  const startAngle = isBottom ? centerAngle + half : centerAngle - half;
+  const endAngle   = isBottom ? centerAngle - half : centerAngle + half;
+  const sweepFlag  = isBottom ? 0 : 1;
+  const start = polarToCartesian(startAngle, r);
+  const end   = polarToCartesian(endAngle, r);
+  return `M ${start.x.toFixed(2)} ${start.y.toFixed(2)} A ${r} ${r} 0 0 ${sweepFlag} ${end.x.toFixed(2)} ${end.y.toFixed(2)}`;
+}
+
+function renderWheel({ size = 500, labelColor = "#1a1a1a", showShadow = true, idPrefix = "wheel" }) {
+  let defsContent = sectors.map(s => `
+    <radialGradient id="${idPrefix}-grad-${s.id}" cx="${cx}" cy="${cy}" r="${outerRadius}" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="${s.light}"/>
+      <stop offset="100%" stop-color="${s.saturated}"/>
+    </radialGradient>
+  `).join("");
+
+  if (showShadow) {
+    defsContent += `
+      <filter id="${idPrefix}-shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="3" stdDeviation="6" flood-opacity="0.18"/>
+      </filter>
+    `;
+  }
+
+  // Invisible arc paths for curved labels (textPath targets)
+  defsContent += sectors.map(s => `
+    <path id="${idPrefix}-labelpath-${s.id}" d="${describeArcForLabel(s.center, labelRadius)}" fill="none"/>
+  `).join("");
+
+  const sectorsContent = sectors.map(s => `
+    <path d="${describeSector(s.center, innerRadius, outerRadius)}" fill="url(#${idPrefix}-grad-${s.id})"/>
+  `).join("");
+
+  const labelsContent = sectors.map(s => `
+    <text
+      fill="${labelColor}"
+      font-size="14"
+      font-weight="700"
+      font-family="system-ui, -apple-system, 'Segoe UI', sans-serif"
+      letter-spacing="2"
+      dominant-baseline="central"
+    >
+      <textPath href="#${idPrefix}-labelpath-${s.id}" startOffset="50%" text-anchor="middle">${s.label}</textPath>
+    </text>
+  `).join("");
+
+  return `
+    <svg
+      viewBox="0 0 500 500"
+      width="${size}"
+      height="${size}"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="Roda comportamental DISC com oito perfis"
+      style="display:block; max-width:100%; height:auto;"
+    >
+      <defs>${defsContent}</defs>
+      <g${showShadow ? ` filter="url(#${idPrefix}-shadow)"` : ""}>
+        ${sectorsContent}
+        <circle cx="${cx}" cy="${cy}" r="${innerRadius}" fill="#FFFFFF"/>
+      </g>
+      ${labelsContent}
+    </svg>
+  `;
+}
+
+document.getElementById("wheel-light").innerHTML = renderWheel({
+  size: 460,
+  labelColor: "#1a1a1a",
+  showShadow: true,
+  idPrefix: "light",
+});
+
+document.getElementById("wheel-dark").innerHTML = renderWheel({
+  size: 460,
+  labelColor: "#FFFFFF",
+  showShadow: true,
+  idPrefix: "dark",
+});
+</script>
+
+</body>
+</html>
