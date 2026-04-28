@@ -1,0 +1,60 @@
+# Squad Flow v2 — Dependabot bootstrap
+# Cobertura mínima: GitHub Actions (todos os repos) + npm (quando houver package.json) + composer (Laravel).
+# Repo sem o eco-sistema correspondente ignora silenciosamente — não causa erro.
+# Janelas semanais às segundas 09:00 America/Sao_Paulo para concentrar review.
+
+version: 2
+
+updates:
+  # GitHub Actions — universal, sem custo de runtime.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "github-actions"
+
+  # npm / pnpm — ativado quando houver package.json na raiz.
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "npm"
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  # composer — ativado quando houver composer.json (Laravel).
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "composer"

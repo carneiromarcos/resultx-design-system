@@ -1,0 +1,68 @@
+# Squad Flow v2 — Release Gate
+#
+# Gate mínimo, não-bloqueante na origem: roda em PR contra main e marca
+# verificações de higiene (PR title conventional, body preenchido, tamanho).
+# Quando o repo amadurecer, basta promover este workflow a required check
+# em branch protection.
+
+name: Release Gate
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  pr-shape:
+    name: PR shape (title + body + size)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify PR title is conventional
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          set -eu
+          echo "PR title: $PR_TITLE"
+          if echo "$PR_TITLE" | grep -Eq '^(feat|fix|refactor|docs|test|chore|perf|ci|build|style|revert)(\([^)]+\))?: .+'; then
+            echo "OK: conventional commit prefix detected."
+          else
+            echo "::warning::PR title is not conventional commit format. Expected '<type>: <description>'."
+          fi
+
+      - name: Verify PR body is not empty
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          set -eu
+          if [ -z "${PR_BODY:-}" ] || [ "$(echo "$PR_BODY" | tr -d '[:space:]' | wc -c)" -lt 30 ]; then
+            echo "::warning::PR body is empty or too short. Fill in the template."
+          else
+            echo "OK: PR body has content."
+          fi
+
+      - name: Report PR size
+        run: |
+          set -eu
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+          ADDED=$(git diff --shortstat "$BASE_SHA...$HEAD_SHA" | grep -oE '[0-9]+ insertion' | grep -oE '[0-9]+' || echo 0)
+          REMOVED=$(git diff --shortstat "$BASE_SHA...$HEAD_SHA" | grep -oE '[0-9]+ deletion' | grep -oE '[0-9]+' || echo 0)
+          NET=$((ADDED + REMOVED))
+          echo "PR size — added: $ADDED, removed: $REMOVED, total churn: $NET"
+          if [ "$NET" -gt 800 ]; then
+            echo "::warning::PR has $NET lines of churn (>800). Consider splitting."
+          fi
