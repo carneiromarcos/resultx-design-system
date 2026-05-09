@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Candidatos na Vaga — Emprega+ IMO</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>.icon { width: 18px; height: 18px; stroke-width: 1.8; }</style>
+
+  <link rel="stylesheet" href="../dist/tokens.min.css">
+  <link rel="stylesheet" href="../dist/components.min.css">
+
+  <style>
+    .sidebar-logo { background: linear-gradient(135deg, #1D4ED8, #6366F1); color: #fff; }
+
+    /* Job summary banner */
+    .job-banner {
+      display: flex; align-items: center; gap: var(--space-4);
+      background: var(--bg-surface-2); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5);
+      margin-bottom: var(--space-5);
+    }
+    .job-banner-icon {
+      width: 44px; height: 44px; border-radius: var(--radius-md); flex-shrink: 0;
+      background: var(--accent-primary-muted); color: var(--accent-primary);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .job-banner-title { font-size: var(--text-base); font-weight: var(--font-semibold); color: var(--text-primary); }
+    .job-banner-meta { font-size: var(--text-xs); color: var(--text-muted); display: flex; align-items: center; gap: var(--space-3); margin-top: 3px; }
+    .job-banner-actions { margin-left: auto; display: flex; align-items: center; gap: var(--space-2); }
+
+    /* Stage tabs in list panel */
+    .stage-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border-subtle); overflow-x: auto; }
+    .stage-tab {
+      padding: var(--space-2) var(--space-3); font-size: var(--text-xs); font-weight: var(--font-medium);
+      color: var(--text-muted); border-bottom: 2px solid transparent; cursor: pointer; transition: all 150ms;
+      white-space: nowrap;
+    }
+    .stage-tab:hover { color: var(--text-secondary); }
+    .stage-tab.active { color: var(--accent-primary); border-bottom-color: var(--accent-primary); }
+    .stage-tab .count {
+      display: inline-block; background: var(--bg-surface-3); color: var(--text-muted);
+      font-size: 10px; padding: 1px 5px; border-radius: var(--radius-full); margin-left: 3px;
+    }
+    .stage-tab.active .count { background: var(--accent-primary-muted); color: var(--accent-primary); }
+
+    /* Applicant list item */
+    .applicant-item {
+      display: flex; align-items: center; gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--border-subtle);
+      cursor: pointer; transition: background 120ms;
+    }
+    .applicant-item:hover { background: var(--bg-surface-3); }
+    .applicant-item.active {
+      background: var(--accent-primary-muted);
+      border-left: 2px solid var(--accent-primary);
+      padding-left: calc(var(--space-4) - 2px);
+    }
+    .applicant-item-info { flex: 1; min-width: 0; }
+    .applicant-name { font-size: var(--text-sm); font-weight: var(--font-semibold); color: var(--text-primary); }
+    .applicant-meta { font-size: var(--text-xs); color: var(--text-muted); display: flex; align-items: center; gap: var(--space-2); margin-top: 2px; flex-wrap: wrap; }
+    .applicant-date { font-size: 10px; color: var(--text-muted); white-space: nowrap; }
+
+    /* Stage badges */
+    .stage-badge {
+      display: inline-flex; align-items: center;
+      padding: 2px 7px; border-radius: var(--radius-full); font-size: 10px; font-weight: var(--font-semibold);
+      text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap;
+    }
+    .stage-nova      { background: rgba(45,212,191,0.12); color: var(--accent-primary); border: 1px solid rgba(45,212,191,0.2); }
+    .stage-analise   { background: var(--color-warning-bg); color: var(--color-warning); border: 1px solid rgba(217,119,6,0.2); }
+    .stage-entrevista { background: rgba(59,130,246,0.12); color: #60A5FA; border: 1px solid rgba(59,130,246,0.2); }
+    .stage-aprovado  { background: var(--color-success-bg); color: var(--color-success); border: 1px solid rgba(22,163,74,0.2); }
+    .stage-reprovado { background: var(--color-error-bg); color: var(--color-error); border: 1px solid rgba(220,38,38,0.2); }
+
+    /* Detail sections */
+    .detail-section { margin-bottom: var(--space-5); }
+    .detail-section-title {
+      font-family: var(--font-mono); font-size: var(--text-xs); font-weight: var(--font-semibold);
+      text-transform: uppercase; letter-spacing: var(--tracking-wider); color: var(--text-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    /* Info grid */
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3) var(--space-4); }
+    .info-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+    .info-value { font-size: var(--text-sm); color: var(--text-secondary); }
+
+    /* Stage selector */
+    .stage-selector { display: flex; flex-direction: column; gap: var(--space-2); }
+    .stage-option {
+      display: flex; align-items: center; gap: var(--space-3);
+      padding: var(--space-2) var(--space-3); border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle); cursor: pointer; transition: all 120ms;
+      font-size: var(--text-sm); color: var(--text-secondary);
+    }
+    .stage-option:hover { border-color: var(--accent-primary); color: var(--text-primary); }
+    .stage-option.current { border-color: #60A5FA; background: rgba(59,130,246,0.08); color: #60A5FA; font-weight: var(--font-medium); }
+    .stage-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Timeline */
+    .timeline { display: flex; flex-direction: column; }
+    .timeline-item { display: flex; gap: var(--space-3); }
+    .timeline-track { display: flex; flex-direction: column; align-items: center; }
+    .timeline-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-primary); flex-shrink: 0; margin-top: 5px; }
+    .timeline-dot.muted { background: var(--border-default); }
+    .timeline-line { width: 1px; flex: 1; background: var(--border-subtle); margin: 3px 0; min-height: 20px; }
+    .timeline-content { flex: 1; padding-bottom: var(--space-4); }
+    .timeline-event { font-size: var(--text-sm); color: var(--text-secondary); }
+    .timeline-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Pular para o conteúdo</a>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     SIDEBAR — Empregador
+     ════════════════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">E+</div>
+    <div class="sidebar-brand-text">
+      <span>Emprega+</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--font-mono);">EMPREGADOR</span>
+    </div>
+  </div>
+
+  <nav aria-label="Sidebar">
+    <div class="sidebar-section-label">Principal</div>
+    <div class="sidebar-item"><i data-lucide="layout-dashboard" class="icon" aria-hidden="true"></i> Dashboard</div>
+    <div class="sidebar-item active" aria-current="page"><i data-lucide="briefcase" class="icon" aria-hidden="true"></i> Vagas <span class="badge-count">8</span></div>
+    <div class="sidebar-item"><i data-lucide="users" class="icon" aria-hidden="true"></i> Candidaturas <span class="badge-count">23</span></div>
+    <div class="sidebar-item"><i data-lucide="calendar" class="icon" aria-hidden="true"></i> Entrevistas</div>
+
+    <div class="sidebar-section-label">Empresa</div>
+    <div class="sidebar-item"><i data-lucide="building-2" class="icon" aria-hidden="true"></i> Perfil da Empresa</div>
+    <div class="sidebar-item"><i data-lucide="heart" class="icon" aria-hidden="true"></i> Seguidores</div>
+
+    <div class="sidebar-section-label">Financeiro</div>
+    <div class="sidebar-item"><i data-lucide="credit-card" class="icon" aria-hidden="true"></i> Assinatura</div>
+    <div class="sidebar-item"><i data-lucide="file-text" class="icon" aria-hidden="true"></i> Transações</div>
+
+    <hr class="sidebar-divider">
+    <div class="sidebar-item"><i data-lucide="settings" class="icon" aria-hidden="true"></i> Configurações</div>
+    <div class="sidebar-item"><i data-lucide="help-circle" class="icon" aria-hidden="true"></i> Ajuda</div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div style="background:var(--bg-surface-3);border-radius:var(--radius-md);padding:var(--space-3);margin-bottom:var(--space-3);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-2);">
+        <span style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:var(--tracking-wide);">Plano Pro</span>
+        <span style="font-size:10px;color:var(--accent-primary);font-weight:var(--font-semibold);">8 / 15 vagas</span>
+      </div>
+      <div class="progress-track" style="height:4px;">
+        <div class="progress-fill" style="width:53%;background:linear-gradient(90deg,var(--accent-primary),#6366F1);"></div>
+      </div>
+    </div>
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar">PM</div>
+      <div>
+        <div class="sidebar-user-name">Prefeitura de Macaé</div>
+        <div class="sidebar-user-role">Administrador</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     MAIN
+     ════════════════════════════════════════════════════════════════════ -->
+<main class="main" id="main-content">
+
+  <!-- Header -->
+  <header class="header">
+    <h1 class="header-title">Candidatos na Vaga</h1>
+    <div class="header-actions">
+      <button class="btn btn-secondary btn-sm"><i data-lucide="download" style="width:14px;height:14px;" aria-hidden="true"></i> Exportar</button>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb mb-4" aria-label="Breadcrumb">
+    <span class="breadcrumb-item">Dashboard</span>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-item">Vagas</span>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-item">Desenvolvedor React Jr</span>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-item active">Candidatos</span>
+  </nav>
+
+  <!-- Job Summary Banner -->
+  <div class="job-banner" role="region" aria-label="Detalhes da vaga">
+    <div class="job-banner-icon"><i data-lucide="code-2" aria-hidden="true"></i></div>
+    <div>
+      <div class="job-banner-title">Desenvolvedor React Jr</div>
+      <div class="job-banner-meta">
+        <span><i data-lucide="tag" style="width:11px;height:11px;display:inline;" aria-hidden="true"></i> TI &amp; Tecnologia</span>
+        <span>·</span>
+        <span><i data-lucide="map-pin" style="width:11px;height:11px;display:inline;" aria-hidden="true"></i> Macaé, RJ</span>
+        <span>·</span>
+        <span>CLT · Publicada em 05/05/2026</span>
+      </div>
+    </div>
+    <div class="job-banner-actions">
+      <span class="badge badge-success badge-table">Ativa</span>
+      <button class="btn btn-secondary btn-sm"><i data-lucide="external-link" style="width:13px;height:13px;" aria-hidden="true"></i> Ver vaga</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SPLIT CONTENT: List + Detail
+       ════════════════════════════════════════════════════════════════ -->
+  <div class="layout-split-content">
+
+    <!-- ── LEFT PANEL: Applicant List ────────────────────────────── -->
+    <div class="layout-list">
+
+      <!-- Search + Sort -->
+      <div class="layout-list-header">
+        <div class="flex-row">
+          <input type="text" class="form-input" aria-label="Buscar candidato" placeholder="Buscar candidato...">
+          <div class="dropdown">
+            <button class="dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+              Ordenar <i data-lucide="chevron-down" style="width:13px;height:13px;" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stage Tabs -->
+      <div class="stage-tabs" role="tablist" aria-label="Filtrar por etapa">
+        <div class="stage-tab active" role="tab" aria-selected="true">Todas <span class="count">34</span></div>
+        <div class="stage-tab" role="tab" aria-selected="false">Novas <span class="count">5</span></div>
+        <div class="stage-tab" role="tab" aria-selected="false">Em Análise <span class="count">18</span></div>
+        <div class="stage-tab" role="tab" aria-selected="false">Entrevista <span class="count">7</span></div>
+        <div class="stage-tab" role="tab" aria-selected="false">Aprovadas <span class="count">2</span></div>
+        <div class="stage-tab" role="tab" aria-selected="false">Reprovadas <span class="count">2</span></div>
+      </div>
+
+      <!-- Ana Costa (ACTIVE) -->
+      <div class="applicant-item active" role="button" tabindex="0" aria-label="Ver candidatura de Ana Costa — selecionada">
+        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#DB2777,#F472B6);">AC</div>
+        <div class="applicant-item-info">
+          <div class="applicant-name">Ana Costa</div>
+          <div class="applicant-meta">
+            <i data-lucide="map-pin" style="width:10px;height:10px;" aria-hidden="true"></i> Macaé, RJ
+            <span class="stage-badge stage-entrevista">Entrevista</span>
+          </div>
+        </div>
+        <div class="applicant-date">Hoje</div>
+      </div>
+
+      <!-- Carlos Lima -->
+      <div class="applicant-item" role="button" tabindex="0" aria-label="Ver candidatura de Carlos Lima">
+        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#16A34A,#4ade80);">CL</div>
+        <div class="applicant-item-info">
+          <div class="applicant-name">Carlos Lima</div>
+          <div class="applicant-meta">
+            <i data-lucide="map-pin" style="width:10px;height:10px;" aria-hidden="true"></i> Rio de Janeiro, RJ
+            <span class="stage-badge stage-nova">Nova</span>
+          </div>
+        </div>
+        <div class="applicant-date">Hoje</div>
+      </div>
+
+      <!-- João Pereira -->
+      <div class="applicant-item" role="button" tabindex="0" aria-label="Ver candidatura de João Pereira">
+        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#EA580C,#FB923C);">JP</div>
+        <div class="applicant-item-info">
+          <div class="applicant-name">João Pereira</div>
+          <div class="applicant-meta">
+            <i data-lucide="map-pin" style="width:10px;height:10px;" aria-hidden="true"></i> Campos, RJ
+            <span class="stage-badge stage-analise">Em Análise</span>
+          </div>
+        </div>
+        <div class="applicant-date">Ontem</div>
+      </div>
+
+      <!-- Maria Santos -->
+      <div class="applicant-item" role="button" tabindex="0" aria-label="Ver candidatura de Maria Santos">
+        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#7C3AED,#A78BFA);">MS</div>
+        <div class="applicant-item-info">
+          <div class="applicant-name">Maria Santos</div>
+          <div class="applicant-meta">
+            <i data-lucide="map-pin" style="width:10px;height:10px;" aria-hidden="true"></i> Macaé, RJ
+            <span class="stage-badge stage-analise">Em Análise</span>
+          </div>
+        </div>
+        <div class="applicant-date">2 dias</div>
+      </div>
+
+      <!-- Rafael Souza -->
+      <div class="applicant-item" role="button" tabindex="0" aria-label="Ver candidatura de Rafael Souza">
+        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#B45309,#F59E0B);">RS</div>
+        <div class="applicant-item-info">
+          <div class="applicant-name">Rafael Souza</div>
+          <div class="applicant-meta">
+            <i data-lucide="map-pin" style="width:10px;height:10px;" aria-hidden="true"></i> Niterói, RJ
+            <span class="stage-badge stage-aprovado">Aprovado</span>
+          </div>
+        </div>
+        <div class="applicant-date">3 dias</div>
+      </div>
+
+      <!-- Lúcia Silva -->
+      <div class="applicant-item" role="button" tabindex="0" aria-label="Ver candidatura de Lúcia Silva">
+        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#4338CA,#818CF8);">LS</div>
+        <div class="applicant-item-info">
+          <div class="applicant-name">Lúcia Silva</div>
+          <div class="applicant-meta">
+            <i data-lucide="map-pin" style="width:10px;height:10px;" aria-hidden="true"></i> Macaé, RJ
+            <span class="stage-badge stage-reprovado">Reprovada</span>
+          </div>
+        </div>
+        <div class="applicant-date">5 dias</div>
+      </div>
+
+      <!-- Alex Hormozi -->
+      <div class="applicant-item" role="button" tabindex="0" aria-label="Ver candidatura de Alex Hormozi">
+        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#1D4ED8,#6366F1);">AH</div>
+        <div class="applicant-item-info">
+          <div class="applicant-name">Alex Hormozi</div>
+          <div class="applicant-meta">
+            <i data-lucide="map-pin" style="width:10px;height:10px;" aria-hidden="true"></i> Búzios, RJ
+            <span class="stage-badge stage-entrevista">Entrevista</span>
+          </div>
+        </div>
+        <div class="applicant-date">6 dias</div>
+      </div>
+
+      <!-- Júlia Ferreira -->
+      <div class="applicant-item" role="button" tabindex="0" aria-label="Ver candidatura de Júlia Ferreira">
+        <div class="avatar avatar-sm" style="background:linear-gradient(135deg,#0891B2,#22D3EE);">JF</div>
+        <div class="applicant-item-info">
+          <div class="applicant-name">Júlia Ferreira</div>
+          <div class="applicant-meta">
+            <i data-lucide="map-pin" style="width:10px;height:10px;" aria-hidden="true"></i> Rio de Janeiro, RJ
+            <span class="stage-badge stage-nova">Nova</span>
+          </div>
+        </div>
+        <div class="applicant-date">1 sem</div>
+      </div>
+
+    </div>
+
+    <!-- ── RIGHT PANEL: Applicant Detail ─────────────────────────── -->
+    <div class="layout-detail">
+
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-avatar" style="background:linear-gradient(135deg,#DB2777,#F472B6);">AC</div>
+        <div class="profile-info">
+          <div class="profile-name">Ana Costa</div>
+          <div class="profile-role">Desenvolvedora Frontend</div>
+          <div class="profile-tag">React · TypeScript · Tailwind CSS</div>
+        </div>
+        <div style="display:flex;gap:var(--space-2);margin-left:auto;align-self:flex-start;">
+          <button class="btn btn-secondary btn-sm" aria-label="Ver currículo de Ana Costa"><i data-lucide="file-text" style="width:13px;height:13px;" aria-hidden="true"></i> CV</button>
+          <button class="btn btn-primary btn-sm" aria-label="Agendar entrevista com Ana Costa"><i data-lucide="calendar-plus" style="width:13px;height:13px;" aria-hidden="true"></i> Agendar</button>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs" role="tablist" aria-label="Candidatura de Ana Costa">
+        <button class="tab active" role="tab" aria-selected="true"><i data-lucide="user" style="width:14px;height:14px;" aria-hidden="true"></i> Perfil</button>
+        <button class="tab" role="tab" aria-selected="false"><i data-lucide="file-text" style="width:14px;height:14px;" aria-hidden="true"></i> Currículo</button>
+        <button class="tab" role="tab" aria-selected="false"><i data-lucide="git-branch" style="width:14px;height:14px;" aria-hidden="true"></i> Etapas</button>
+        <button class="tab" role="tab" aria-selected="false"><i data-lucide="message-square" style="width:14px;height:14px;" aria-hidden="true"></i> Notas</button>
+      </div>
+
+      <!-- Info Grid -->
+      <div class="detail-section">
+        <div class="detail-section-title">Informações da Candidatura</div>
+        <div class="info-grid">
+          <div>
+            <div class="info-label">Data de candidatura</div>
+            <div class="info-value">09/05/2026 — 09h14</div>
+          </div>
+          <div>
+            <div class="info-label">Origem</div>
+            <div class="info-value">Busca de vagas</div>
+          </div>
+          <div>
+            <div class="info-label">Localização</div>
+            <div class="info-value">Macaé, RJ</div>
+          </div>
+          <div>
+            <div class="info-label">Disponibilidade</div>
+            <div class="info-value">Imediata</div>
+          </div>
+          <div>
+            <div class="info-label">Pretensão salarial</div>
+            <div class="info-value">R$ 4.500 / mês</div>
+          </div>
+          <div>
+            <div class="info-label">Escolaridade</div>
+            <div class="info-value">Superior Completo</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Habilidades -->
+      <div class="detail-section">
+        <div class="detail-section-title">Habilidades Declaradas</div>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">
+          <span class="tag tag-blue">React</span>
+          <span class="tag tag-blue">TypeScript</span>
+          <span class="tag tag-blue">Tailwind CSS</span>
+          <span class="tag tag-purple">Next.js</span>
+          <span class="tag tag-green">Git / GitHub</span>
+          <span class="tag tag-green">Node.js</span>
+        </div>
+      </div>
+
+      <!-- Stage Selector -->
+      <div class="detail-section">
+        <div class="detail-section-title">Mover para etapa</div>
+        <div class="stage-selector" role="group" aria-label="Etapas do processo seletivo">
+          <div class="stage-option" role="button" tabindex="0">
+            <div class="stage-dot" style="background:var(--accent-primary);"></div>
+            Nova candidatura
+          </div>
+          <div class="stage-option" role="button" tabindex="0">
+            <div class="stage-dot" style="background:var(--color-warning);"></div>
+            Em Análise
+          </div>
+          <div class="stage-option current" role="button" tabindex="0" aria-pressed="true">
+            <div class="stage-dot" style="background:#60A5FA;"></div>
+            Entrevista Agendada — atual
+          </div>
+          <div class="stage-option" role="button" tabindex="0">
+            <div class="stage-dot" style="background:var(--color-success);"></div>
+            Aprovado(a)
+          </div>
+          <div class="stage-option" role="button" tabindex="0">
+            <div class="stage-dot" style="background:var(--color-error);"></div>
+            Reprovado(a)
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="detail-section">
+        <div class="detail-section-title">Histórico</div>
+        <div class="timeline" role="list">
+
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-track">
+              <div class="timeline-dot"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-event">Entrevista agendada para 14/05/2026 às 10h</div>
+              <div class="timeline-time">Hoje, 10h32 — por Marcos C.</div>
+            </div>
+          </div>
+
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-track">
+              <div class="timeline-dot"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-event">Movida para <strong>Entrevista</strong></div>
+              <div class="timeline-time">Hoje, 09h58 — por Marcos C.</div>
+            </div>
+          </div>
+
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-track">
+              <div class="timeline-dot"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-event">Nota: "Portfólio muito bom, projetos com React e Vite"</div>
+              <div class="timeline-time">Ontem, 15h20 — por Marcos C.</div>
+            </div>
+          </div>
+
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-track">
+              <div class="timeline-dot muted"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-event">Movida para <strong>Em Análise</strong></div>
+              <div class="timeline-time">Ontem, 11h05 — por Marcos C.</div>
+            </div>
+          </div>
+
+          <div class="timeline-item" role="listitem">
+            <div class="timeline-track">
+              <div class="timeline-dot muted"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-event">Candidatura recebida</div>
+              <div class="timeline-time">09/05/2026, 09h14 — candidata</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>
