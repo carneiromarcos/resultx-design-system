@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emprega+ Sites — Design System v2 Preview (PDV-inspired)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Brand Colors — Gold (shared with PdV) */
+    --brand-dark: #C49A3C;
+    --brand-light: #D4AD55;
+
+    /* Legacy named */
+    --navy: #1B2A4A;
+    --gold: #D4AF37;
+    --navy-dark: #0F1A2E;
+    --green: #34A853;
+
+    /* Background Scale — Light */
+    --background: #FFFFFF;
+    --surface-1: #F5F7F9;
+    --surface-2: #FFFFFF;
+    --surface-3: #EEF1F4;
+
+    /* Text */
+    --foreground: #1B2A4A;
+    --muted-foreground: #5A6B7D;
+    --gray: #8899AA;
+
+    /* Border */
+    --border: #E2E6EB;
+    --border-hover: #CDD3DA;
+
+    /* Gradients */
+    --gradient-brand: linear-gradient(135deg, #C49A3C 0%, #D4AD55 100%);
+    --gradient-brand-subtle: linear-gradient(135deg, rgba(196,154,60,0.08) 0%, rgba(212,173,85,0.08) 100%);
+
+    /* Glassmorphism — Light */
+    --glass-bg: rgba(255,255,255,0.7);
+    --glass-border: rgba(27,42,74,0.08);
+    --glass-border-hover: rgba(27,42,74,0.15);
+
+    /* Glow */
+    --glow-brand: 0 0 20px rgba(196,154,60,0.20);
+    --glow-brand-lg: 0 0 40px rgba(196,154,60,0.25), 0 0 80px rgba(196,154,60,0.10);
+
+    /* Destructive */
+    --destructive: #EF4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  /* ─── Layout ─── */
+  .preview-header {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 24px 40px;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .preview-header h1 { font-size: 24px; font-weight: 700; color: var(--foreground); }
+  .preview-header p { font-size: 14px; color: var(--muted-foreground); margin-top: 4px; font-family: 'Inter', sans-serif; }
+  .preview-header .badge-v2 {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 600;
+    background: rgba(196,154,60,0.1); color: var(--brand-dark); border: 1px solid rgba(196,154,60,0.2);
+    text-transform: uppercase; letter-spacing: 0.05em; margin-left: 12px; vertical-align: middle;
+  }
+
+  .content { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+  .section { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 16px; font-weight: 700; color: var(--foreground);
+    margin: 56px 0 8px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    font-family: 'Sora', sans-serif;
+    letter-spacing: -0.01em;
+  }
+  .section-subtitle {
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.15em; color: var(--brand-dark); margin: 28px 0 14px;
+    font-family: 'Inter', sans-serif;
+  }
+  .note {
+    font-size: 12px; color: var(--gray); margin-top: 8px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ─── Comparison blocks ─── */
+  .comparison {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    margin: 20px 0;
+  }
+  .comparison-block {
+    border-radius: 16px; padding: 32px; position: relative; overflow: hidden;
+  }
+  .comparison-block.old {
+    background: #FFFFFF; border: 1px solid #E8ECF0;
+  }
+  .comparison-block.new {
+    background: var(--surface-1); border: 1px solid var(--border);
+  }
+  .comparison-label {
+    position: absolute; top: 12px; right: 12px;
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 2px 8px; border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .comparison-label.old-label { background: var(--border); color: var(--muted-foreground); }
+  .comparison-label.new-label { background: rgba(196,154,60,0.15); color: var(--brand-dark); }
+
+  /* ─── Color Swatches ─── */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+  .swatch { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); transition: all 0.2s; }
+  .swatch:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: rgba(196,154,60,0.3); }
+  .swatch-color { height: 64px; }
+  .swatch-info { padding: 12px 14px; background: var(--background); }
+  .swatch-name { font-size: 13px; font-weight: 600; color: var(--foreground); font-family: 'Sora', sans-serif; }
+  .swatch-hex { font-size: 12px; color: var(--muted-foreground); font-family: 'JetBrains Mono', monospace; }
+  .swatch-use { font-size: 11px; color: var(--gray); margin-top: 2px; }
+
+  /* ─── Typography ─── */
+  .type-row {
+    margin-bottom: 12px; padding: 20px 24px;
+    background: var(--background); border: 1px solid var(--border); border-radius: 12px;
+    transition: border-color 0.2s;
+  }
+  .type-row:hover { border-color: rgba(196,154,60,0.3); }
+  .type-meta { font-size: 11px; color: var(--gray); font-family: 'JetBrains Mono', monospace; margin-top: 6px; }
+
+  /* ─── Glassmorphism ─── */
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .glass-strong {
+    background: rgba(255,255,255,0.92);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+  .glass-demo-container {
+    position: relative; border-radius: 16px; overflow: hidden;
+    height: 300px; display: flex; align-items: center; justify-content: center;
+  }
+  .glass-demo-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--surface-1) 0%, var(--surface-3) 50%, var(--surface-1) 100%);
+  }
+  .glass-demo-blob-1 {
+    position: absolute; width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(196,154,60,0.15); top: 20%; left: 15%;
+    filter: blur(40px);
+  }
+  .glass-demo-blob-2 {
+    position: absolute; width: 160px; height: 160px; border-radius: 50%;
+    background: rgba(27,42,74,0.08); bottom: 15%; right: 20%;
+    filter: blur(40px);
+  }
+  .glass-card-demo {
+    position: relative; z-index: 2;
+    border-radius: 16px; padding: 32px;
+    width: 320px; text-align: center;
+  }
+
+  /* ─── Buttons ─── */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: 'Inter', sans-serif; font-weight: 600;
+    border-radius: 8px; border: none; cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-primary {
+    background: var(--gradient-brand); color: #FFFFFF;
+    padding: 0 32px; height: 52px; font-size: 16px;
+    box-shadow: var(--glow-brand);
+  }
+  .btn-primary:hover {
+    transform: scale(1.03);
+    box-shadow: var(--glow-brand-lg);
+  }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-outline {
+    background: transparent; color: var(--foreground);
+    border: 1px solid rgba(27,42,74,0.2);
+    padding: 0 32px; height: 52px; font-size: 16px;
+  }
+  .btn-outline:hover { background: rgba(27,42,74,0.05); }
+  .btn-sm {
+    padding: 0 20px; height: 40px; font-size: 14px;
+  }
+  .btn-navbar {
+    background: var(--gradient-brand); color: #FFFFFF;
+    padding: 0 24px; height: 44px; font-size: 14px;
+    border-radius: 8px; box-shadow: var(--glow-brand);
+  }
+  .btn-navbar:hover { transform: scale(1.03); box-shadow: var(--glow-brand-lg); }
+  .btn-ghost {
+    background: transparent; color: var(--foreground);
+    border: 1px solid transparent;
+    padding: 0 24px; height: 44px; font-size: 14px;
+  }
+  .btn-ghost:hover { background: rgba(27,42,74,0.05); }
+  .btn-destructive {
+    background: var(--destructive); color: white;
+    padding: 0 24px; height: 44px; font-size: 14px;
+  }
+
+  /* ─── Cards ─── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+
+  .card-default {
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 16px;
+    padding: 32px; transition: all 0.2s;
+  }
+  .card-default:hover { border-color: rgba(196,154,60,0.3); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+
+  .card-glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-radius: 16px; padding: 32px;
+    transition: all 0.2s;
+  }
+  .card-glass:hover { border-color: rgba(196,154,60,0.3); }
+
+  .card-icon {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(196,154,60,0.1);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px; font-size: 20px; color: var(--brand-dark);
+    transition: background 0.2s;
+  }
+  .card-default:hover .card-icon,
+  .card-glass:hover .card-icon { background: rgba(196,154,60,0.2); }
+
+  .card-title { font-size: 20px; font-weight: 700; color: var(--foreground); margin-bottom: 8px; font-family: 'Sora', sans-serif; }
+  .card-text { font-size: 14px; color: var(--muted-foreground); line-height: 1.6; margin-bottom: 12px; }
+  .card-feature { font-size: 13px; color: var(--muted-foreground); display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .card-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--brand-dark); flex-shrink: 0; }
+  .card-link {
+    font-size: 14px; font-weight: 600; color: var(--brand-dark);
+    display: flex; align-items: center; gap: 6px; margin-top: 12px;
+    transition: gap 0.2s;
+  }
+  .card-glass:hover .card-link,
+  .card-default:hover .card-link { gap: 10px; }
+
+  /* ─── Navbar ─── */
+  .navbar-preview {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border); border-radius: 12px;
+    padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .navbar-links { display: flex; gap: 24px; align-items: center; }
+  .navbar-link {
+    font-size: 15px; font-weight: 500; color: var(--foreground); text-decoration: none;
+    cursor: pointer; transition: color 0.2s;
+  }
+  .navbar-link:hover { color: var(--brand-dark); }
+  .navbar-link.active { color: var(--brand-dark); }
+  .navbar-logo { display: flex; align-items: center; gap: 8px; }
+  .navbar-logo-text { font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 700; color: var(--foreground); }
+
+  /* ─── Stats Bar ─── */
+  .stats-bar {
+    border-radius: 16px; padding: 32px 40px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    text-align: center; gap: 0;
+  }
+  .stats-bar.light {
+    background: var(--glass-bg); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  }
+  .stats-bar.dark {
+    background: var(--navy);
+  }
+  .stat-item { position: relative; }
+  .stat-item:not(:last-child)::after {
+    content: ''; position: absolute; right: 0; top: 10%; height: 80%;
+    width: 1px;
+  }
+  .stats-bar.light .stat-item:not(:last-child)::after { background: var(--border); }
+  .stats-bar.dark .stat-item:not(:last-child)::after { background: rgba(255,255,255,0.2); }
+  .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 32px; font-weight: 700; color: var(--brand-dark); }
+  .stats-bar.light .stat-label { font-size: 14px; color: var(--muted-foreground); margin-top: 4px; }
+  .stats-bar.dark .stat-label { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+
+  /* ─── Footer ─── */
+  .footer-preview {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px;
+    padding: 40px;
+  }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 32px; }
+  .footer-title {
+    font-size: 13px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--foreground); margin-bottom: 12px;
+    font-family: 'Inter', sans-serif;
+  }
+  .footer-link { font-size: 14px; color: var(--muted-foreground); display: block; margin-bottom: 8px; cursor: pointer; transition: color 0.2s; }
+  .footer-link:hover { color: var(--foreground); }
+  .footer-text { font-size: 14px; color: var(--muted-foreground); }
+  .footer-small { font-size: 12px; color: var(--gray); }
+  .footer-divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+  /* ─── Hero Section Preview ─── */
+  .hero-preview {
+    background: var(--background); border: 1px solid var(--border); border-radius: 16px;
+    padding: 64px 48px; position: relative; overflow: hidden; min-height: 440px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-glow {
+    position: absolute; top: 30%; left: 50%;
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse, rgba(196,154,60,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    animation: glow-pulse 8s ease-in-out infinite;
+  }
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+  }
+
+  /* ─── CTA Section Preview ─── */
+  .cta-preview {
+    background: var(--surface-1); border: 1px solid var(--border); border-radius: 16px;
+    padding: 64px 48px; position: relative; overflow: hidden; text-align: center;
+  }
+  .cta-glow {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px; height: 500px;
+    background: rgba(196,154,60,0.05);
+    border-radius: 50%; filter: blur(100px);
+    pointer-events: none;
+  }
+
+  /* ─── Glow demo ─── */
+  .glow-grid { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; }
+  .glow-box {
+    width: 120px; height: 80px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--gray);
+    background: var(--background); border: 1px solid var(--border);
+  }
+
+  /* ─── Shadows ─── */
+  .shadow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .shadow-box {
+    height: 80px; background: var(--background); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: var(--gray); font-family: 'JetBrains Mono', monospace;
+    border: 1px solid var(--border);
+  }
+
+  /* ─── Spacing ─── */
+  .spacing-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; }
+  .spacing-item { text-align: center; }
+  .spacing-box { background: var(--brand-dark); border-radius: 4px; margin-bottom: 6px; }
+  .spacing-label { font-size: 11px; color: var(--gray); font-family: 'JetBrains Mono', monospace; }
+
+  /* ─── Radius ─── */
+  .radius-grid { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; }
+  .radius-item { text-align: center; }
+  .radius-box {
+    width: 80px; height: 80px;
+    background: var(--surface-1); border: 2px solid var(--brand-dark);
+    margin-bottom: 8px;
+  }
+  .radius-label { font-size: 11px; color: var(--gray); font-family: 'JetBrains Mono', monospace; }
+
+  /* ─── Eyebrow ─── */
+  .eyebrow {
+    font-size: 13px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.2em; color: var(--brand-dark);
+  }
+
+  /* ─── Two col ─── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 768px) {
+    .two-col, .stats-bar, .footer-grid, .shadow-grid, .comparison { grid-template-columns: 1fr; }
+  }
+
+  /* selection */
+  ::selection { background: var(--brand-dark); color: white; }
+</style>
+</head>
+<body>
+
+<div class="preview-header">
+  <div class="content">
+    <h1>Emprega+ Sites — Design System v2 <span class="badge-v2">PDV-inspired</span></h1>
+    <p>Site institucional B2B/B2G &bull; empregamais.me &bull; Light theme, Gold accent, Sora headings, Glassmorphism</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ==================== PALETA DE CORES ==================== -->
+  <div class="section">
+    <h2 class="section-title">Paleta de Cores</h2>
+
+    <p class="section-subtitle">Brand (Gold &mdash; compartilhado com PdV)</p>
+    <div class="color-grid">
+      <div class="swatch"><div class="swatch-color" style="background:#C49A3C"></div><div class="swatch-info"><div class="swatch-name">brand-dark</div><div class="swatch-hex">#C49A3C</div><div class="swatch-use">CTAs, links, accents, eyebrows</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#D4AD55"></div><div class="swatch-info"><div class="swatch-name">brand-light</div><div class="swatch-hex">#D4AD55</div><div class="swatch-use">Gradientes, hover, highlights</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:linear-gradient(135deg, #C49A3C 0%, #D4AD55 100%)"></div><div class="swatch-info"><div class="swatch-name">gradient-brand</div><div class="swatch-hex">135deg gold</div><div class="swatch-use">Botoes primarios, CTAs</div></div></div>
+    </div>
+
+    <p class="section-subtitle">Background Scale (Surface Ladder)</p>
+    <div class="color-grid">
+      <div class="swatch"><div class="swatch-color" style="background:#FFFFFF; border-bottom:1px solid #E2E6EB"></div><div class="swatch-info"><div class="swatch-name">background</div><div class="swatch-hex">#FFFFFF</div><div class="swatch-use">Fundo principal (deepest)</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#F5F7F9"></div><div class="swatch-info"><div class="swatch-name">surface-1</div><div class="swatch-hex">#F5F7F9</div><div class="swatch-use">Secoes alternadas, footer</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#FFFFFF; border-bottom:1px solid #E2E6EB"></div><div class="swatch-info"><div class="swatch-name">surface-2</div><div class="swatch-hex">#FFFFFF</div><div class="swatch-use">Cards (= card token)</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#EEF1F4"></div><div class="swatch-info"><div class="swatch-name">surface-3</div><div class="swatch-hex">#EEF1F4</div><div class="swatch-use">Hover states, interactive</div></div></div>
+    </div>
+
+    <p class="section-subtitle">Texto</p>
+    <div class="color-grid">
+      <div class="swatch"><div class="swatch-color" style="background:#1B2A4A"></div><div class="swatch-info"><div class="swatch-name">foreground</div><div class="swatch-hex">#1B2A4A</div><div class="swatch-use">Titulos, texto principal</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#5A6B7D"></div><div class="swatch-info"><div class="swatch-name">muted-foreground</div><div class="swatch-hex">#5A6B7D</div><div class="swatch-use">Descricoes, subtextos</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#8899AA"></div><div class="swatch-info"><div class="swatch-name">gray</div><div class="swatch-hex">#8899AA</div><div class="swatch-use">Placeholders, labels aux</div></div></div>
+    </div>
+
+    <p class="section-subtitle">UI</p>
+    <div class="color-grid">
+      <div class="swatch"><div class="swatch-color" style="background:#E2E6EB"></div><div class="swatch-info"><div class="swatch-name">border</div><div class="swatch-hex">#E2E6EB</div><div class="swatch-use">Bordas, divisores</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#CDD3DA"></div><div class="swatch-info"><div class="swatch-name">border-hover</div><div class="swatch-hex">#CDD3DA</div><div class="swatch-use">Hover state borders</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#EF4444"></div><div class="swatch-info"><div class="swatch-name">destructive</div><div class="swatch-hex">#EF4444</div><div class="swatch-use">Erros, acoes destrutivas</div></div></div>
+    </div>
+
+    <p class="section-subtitle">Legacy (backward compat)</p>
+    <div class="color-grid">
+      <div class="swatch"><div class="swatch-color" style="background:#1B2A4A"></div><div class="swatch-info"><div class="swatch-name">navy</div><div class="swatch-hex">#1B2A4A</div><div class="swatch-use">= foreground</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#D4AF37"></div><div class="swatch-info"><div class="swatch-name">gold</div><div class="swatch-hex">#D4AF37</div><div class="swatch-use">Legacy accent</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#0F1A2E"></div><div class="swatch-info"><div class="swatch-name">navy-dark</div><div class="swatch-hex">#0F1A2E</div><div class="swatch-use">Legacy dark sections</div></div></div>
+    </div>
+  </div>
+
+  <!-- ==================== TIPOGRAFIA ==================== -->
+  <div class="section">
+    <h2 class="section-title">Tipografia</h2>
+
+    <p class="section-subtitle">Sora &mdash; Headings</p>
+    <div class="type-row">
+      <div style="font-family:'Sora',sans-serif; font-size:52px; font-weight:700; color:var(--foreground); line-height:1.1">
+        H1 Hero &mdash; Sora Bold 7xl
+      </div>
+      <div class="type-meta">font-family: Sora &middot; weight: 700 &middot; size: 40&rarr;52&rarr;72px &middot; line-height: 1.1</div>
+    </div>
+    <div class="type-row">
+      <div style="font-family:'Sora',sans-serif; font-size:36px; font-weight:600; color:var(--foreground); line-height:1.1">
+        H2 Section &mdash; Sora SemiBold 4xl
+      </div>
+      <div class="type-meta">font-family: Sora &middot; weight: 600 &middot; size: 28&rarr;32&rarr;36px &middot; line-height: 1.1</div>
+    </div>
+    <div class="type-row">
+      <div style="font-family:'Sora',sans-serif; font-size:24px; font-weight:700; color:var(--foreground); line-height:1.4">
+        H3 Card Title &mdash; Sora Bold 2xl
+      </div>
+      <div class="type-meta">font-family: Sora &middot; weight: 700 &middot; size: 20&rarr;24px &middot; line-height: 1.4</div>
+    </div>
+
+    <p class="section-subtitle">Inter &mdash; Body / UI</p>
+    <div class="type-row">
+      <div style="font-family:'Inter',sans-serif; font-size:18px; font-weight:400; color:var(--muted-foreground); line-height:1.6">
+        Body Large &mdash; Inter Regular 18px. Plataforma completa de soluções para empregabilidade. Intermediação digital de mão de obra para governos.
+      </div>
+      <div class="type-meta">font-family: Inter &middot; weight: 400 &middot; size: 18&rarr;20px &middot; line-height: 1.6</div>
+    </div>
+    <div class="type-row">
+      <div style="font-family:'Inter',sans-serif; font-size:14px; font-weight:400; color:var(--muted-foreground); line-height:1.5">
+        Small &mdash; Inter Regular 14px &middot; Features em cards, labels secundarios
+      </div>
+      <div class="type-meta">font-family: Inter &middot; weight: 400 &middot; size: 14px &middot; line-height: 1.5</div>
+    </div>
+    <div class="type-row">
+      <div class="eyebrow">Eyebrow &mdash; Inter SemiBold 13px Uppercase tracking-[0.2em]</div>
+      <div class="type-meta">font-family: Inter &middot; weight: 600 &middot; size: 13px &middot; uppercase &middot; tracking: 0.2em &middot; color: brand-dark</div>
+    </div>
+    <div class="type-row">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:32px; font-weight:700; color:var(--brand-dark)">50.000+ &mdash; JetBrains Mono Bold</div>
+      <div class="type-meta">font-family: JetBrains Mono &middot; weight: 700 &middot; size: 32px &middot; color: brand-dark (stats)</div>
+    </div>
+  </div>
+
+  <!-- ==================== GLASSMORPHISM ==================== -->
+  <div class="section">
+    <h2 class="section-title">Glassmorphism (Light Variant)</h2>
+
+    <div class="glass-demo-container">
+      <div class="glass-demo-bg"></div>
+      <div class="glass-demo-blob-1"></div>
+      <div class="glass-demo-blob-2"></div>
+      <div class="glass-card-demo glass" style="border-radius:16px">
+        <div class="card-icon" style="margin:0 auto 16px">&#9670;</div>
+        <div class="card-title" style="text-align:center">Glass Card</div>
+        <div class="card-text" style="text-align:center">background: white/70%<br>backdrop-filter: blur(16px)<br>border: navy/8%</div>
+      </div>
+    </div>
+    <div class="note" style="margin-top:12px">
+      .glass = bg white/70% + blur(16px) + border navy/8% &nbsp;&bull;&nbsp;
+      .glass-strong = bg white/92% + blur(24px) (navbar) &nbsp;&bull;&nbsp;
+      .glass-hover:hover = border navy/15%
+    </div>
+  </div>
+
+  <!-- ==================== GLOW EFFECTS ==================== -->
+  <div class="section">
+    <h2 class="section-title">Glow Effects</h2>
+    <div class="glow-grid">
+      <div class="glow-box">none</div>
+      <div class="glow-box" style="box-shadow: var(--glow-brand)">glow-brand</div>
+      <div class="glow-box" style="box-shadow: var(--glow-brand-lg)">glow-brand-lg</div>
+      <div class="glow-box" style="background: var(--gradient-brand); color:white; border:none; box-shadow: var(--glow-brand-lg)">CTA glow</div>
+    </div>
+    <div class="note">glow-brand: 0 0 20px gold/20% &nbsp;&bull;&nbsp; glow-brand-lg: 40px gold/25% + 80px gold/10%</div>
+  </div>
+
+  <!-- ==================== BOTOES ==================== -->
+  <div class="section">
+    <h2 class="section-title">Botoes</h2>
+    <div class="btn-grid" style="margin-bottom:16px">
+      <button class="btn btn-primary">Falar com especialista &rarr;</button>
+      <button class="btn btn-outline">Saiba mais</button>
+      <button class="btn btn-destructive btn-sm">Excluir</button>
+      <button class="btn btn-ghost btn-sm">Voltar</button>
+    </div>
+    <div class="btn-grid">
+      <button class="btn btn-navbar">CTA Navbar &rarr;</button>
+      <button class="btn btn-primary btn-sm">Botao SM</button>
+    </div>
+    <div class="note">Primary: gradient-brand + glow + scale(1.03) on hover &nbsp;&bull;&nbsp; Active: scale(0.98)</div>
+  </div>
+
+  <!-- ==================== CARDS ==================== -->
+  <div class="section">
+    <h2 class="section-title">Cards</h2>
+
+    <p class="section-subtitle">Glass Cards (Solucoes)</p>
+    <div class="card-grid">
+      <div class="card-glass">
+        <div class="card-icon">&#127963;</div>
+        <div class="card-title">Para Governos</div>
+        <div class="card-text">Intermediacao digital de mao de obra com portal white-label.</div>
+        <div class="card-feature"><span class="card-dot"></span>Portal de vagas personalizado</div>
+        <div class="card-feature"><span class="card-dot"></span>Painel de gestao municipal</div>
+        <div class="card-feature"><span class="card-dot"></span>Relatorios de empregabilidade</div>
+        <div class="card-link">Conhecer solucao <span>&rarr;</span></div>
+      </div>
+      <div class="card-glass">
+        <div class="card-icon">&#128188;</div>
+        <div class="card-title">Para Empresas</div>
+        <div class="card-text">ATS com IA, assessments cientificos e preco acessivel.</div>
+        <div class="card-feature"><span class="card-dot"></span>Recrutamento e selecao com IA</div>
+        <div class="card-feature"><span class="card-dot"></span>Assessments comportamentais</div>
+        <div class="card-feature"><span class="card-dot"></span>Simplicidade para candidatos</div>
+        <div class="card-link">Conhecer solucao <span>&rarr;</span></div>
+      </div>
+    </div>
+
+    <p class="section-subtitle">Default Cards (Pilares)</p>
+    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px">
+      <div class="card-default" style="text-align:center">
+        <div class="card-icon" style="margin:0 auto 12px; border-radius:12px">&#127760;</div>
+        <div class="card-title" style="font-size:18px">Ecossistema</div>
+        <div class="card-text">Conectamos governos, setores, empresas e profissionais.</div>
+      </div>
+      <div class="card-default" style="text-align:center">
+        <div class="card-icon" style="margin:0 auto 12px; border-radius:12px">&#128187;</div>
+        <div class="card-title" style="font-size:18px">Tecnologia</div>
+        <div class="card-text">IA, dados e automacao para conectar talentos.</div>
+      </div>
+      <div class="card-default" style="text-align:center">
+        <div class="card-icon" style="margin:0 auto 12px; border-radius:12px">&#128202;</div>
+        <div class="card-title" style="font-size:18px">Dados</div>
+        <div class="card-text">Inteligencia para decisoes baseadas em evidencias.</div>
+      </div>
+      <div class="card-default" style="text-align:center">
+        <div class="card-icon" style="margin:0 auto 12px; border-radius:12px">&#127891;</div>
+        <div class="card-title" style="font-size:18px">Educacao</div>
+        <div class="card-text">Formacao integrada para empregabilidade.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== NAVBAR ==================== -->
+  <div class="section">
+    <h2 class="section-title">Navbar (glass-strong)</h2>
+    <div class="navbar-preview">
+      <div class="navbar-logo">
+        <div style="width:28px; height:28px; border-radius:6px; background:var(--gradient-brand); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:14px; font-family:'Sora',sans-serif">E+</div>
+        <span class="navbar-logo-text">Emprega+</span>
+      </div>
+      <div class="navbar-links">
+        <a class="navbar-link active">Inicio</a>
+        <a class="navbar-link">Solucoes &#9662;</a>
+      </div>
+      <button class="btn btn-navbar">Falar com especialista</button>
+    </div>
+    <div class="note">glass-strong: bg white/92% + blur(24px) &nbsp;&bull;&nbsp; sticky top-0 &nbsp;&bull;&nbsp; Dropdown com .glass</div>
+  </div>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <div class="section">
+    <h2 class="section-title">Hero Section</h2>
+    <div class="hero-preview">
+      <div class="hero-glow"></div>
+      <div style="position:relative; z-index:1; max-width:640px; text-align:center; margin:0 auto">
+        <div class="eyebrow" style="margin-bottom:20px">Plataforma de empregabilidade</div>
+        <div style="font-family:'Sora',sans-serif; font-size:44px; font-weight:700; color:var(--foreground); line-height:1.1; margin-bottom:16px; letter-spacing:-0.02em">
+          Tecnologia para quem <span style="color:var(--brand-dark)">move o mercado de trabalho</span>
+        </div>
+        <div style="font-size:18px; color:var(--muted-foreground); line-height:1.6; margin-bottom:32px">
+          A Emprega+ e a infraestrutura digital que conecta governos, setores produtivos, empresas e profissionais.
+        </div>
+        <div class="btn-grid" style="justify-content:center">
+          <button class="btn btn-primary">Conheca nossas solucoes &rarr;</button>
+          <button class="btn btn-outline">Falar com especialista</button>
+        </div>
+      </div>
+    </div>
+    <div class="note">min-h: 85vh &nbsp;&bull;&nbsp; Glow pulse: radial gold/8%, 8s ease-in-out &nbsp;&bull;&nbsp; Eyebrow: brand-dark uppercase tracking-[0.2em]</div>
+  </div>
+
+  <!-- ==================== CONTEXT SECTION ==================== -->
+  <div class="section">
+    <h2 class="section-title">Context Section (glass card de impacto)</h2>
+    <div style="background:var(--surface-1); border:1px solid var(--border); border-radius:16px; padding:48px">
+      <div style="max-width:640px">
+        <div style="font-family:'Sora',sans-serif; font-size:36px; font-weight:700; color:var(--foreground); line-height:1.1; margin-bottom:20px; letter-spacing:-0.02em">
+          Empregabilidade nao e so vaga. <span style="color:var(--brand-dark)">E estrutura, preparo, conexao e inteligencia.</span>
+        </div>
+        <div style="font-size:16px; color:var(--muted-foreground); line-height:1.7; margin-bottom:24px">
+          O mercado de trabalho brasileiro enfrenta um paradoxo: empresas com vagas abertas e profissionais sem oportunidade. O problema nao e quantidade &mdash; e conexao, dados e infraestrutura.
+        </div>
+        <div class="glass" style="border-radius:16px; padding:32px; text-align:center; border-color:rgba(196,154,60,0.1)">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:36px; font-weight:700; color:var(--brand-dark); margin-bottom:8px">4 verticais</div>
+          <div style="font-size:16px; color:var(--muted-foreground)">Governos, setores, editais e empresas &mdash; uma plataforma, impacto completo.</div>
+        </div>
+      </div>
+    </div>
+    <div class="note">bg: surface-1 + border-y &nbsp;&bull;&nbsp; Glass card: white/70% + blur + border brand-dark/10%</div>
+  </div>
+
+  <!-- ==================== STATS BAR ==================== -->
+  <div class="section">
+    <h2 class="section-title">Stats Bar</h2>
+
+    <p class="section-subtitle">Glass variant (v2)</p>
+    <div class="stats-bar light">
+      <div class="stat-item">
+        <div class="stat-value">50.000+</div>
+        <div class="stat-label">Curriculos cadastrados</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">1.200+</div>
+        <div class="stat-label">Empresas parceiras</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">1.240</div>
+        <div class="stat-label">Vagas publicadas</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">85,4%</div>
+        <div class="stat-label">Taxa de empregabilidade</div>
+      </div>
+    </div>
+
+    <p class="section-subtitle">Dark variant (legacy / gov)</p>
+    <div class="stats-bar dark">
+      <div class="stat-item">
+        <div class="stat-value">50.000+</div>
+        <div class="stat-label">Curriculos cadastrados</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">1.200+</div>
+        <div class="stat-label">Empresas parceiras</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">1.240</div>
+        <div class="stat-label">Vagas publicadas</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">85,4%</div>
+        <div class="stat-label">Taxa de empregabilidade</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== CTA SECTION ==================== -->
+  <div class="section">
+    <h2 class="section-title">CTA Section</h2>
+    <div class="cta-preview">
+      <div class="cta-glow"></div>
+      <div style="position:relative; z-index:1; max-width:560px; margin:0 auto">
+        <div style="font-family:'Sora',sans-serif; font-size:36px; font-weight:700; color:var(--foreground); line-height:1.1; margin-bottom:16px; letter-spacing:-0.02em">
+          Quer desenvolver a empregabilidade da sua <span style="color:var(--brand-dark)">regiao, setor ou empresa?</span>
+        </div>
+        <div style="font-size:18px; color:var(--muted-foreground); margin-bottom:32px">
+          Fale com a Emprega+ e descubra qual solucao se encaixa no seu desafio.
+        </div>
+        <button class="btn btn-primary">Falar com especialista &rarr;</button>
+        <div style="margin-top:16px; font-size:13px; color:var(--gray)">Atendemos governos, associacoes, organizadoras de concursos e empresas.</div>
+      </div>
+    </div>
+    <div class="note">bg: surface-1 + border-t &nbsp;&bull;&nbsp; Glow: gold/5% blur(100px) &nbsp;&bull;&nbsp; PrimaryCTA centralizado</div>
+  </div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <div class="section">
+    <h2 class="section-title">Footer</h2>
+    <div class="footer-preview">
+      <div class="footer-grid">
+        <div>
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px">
+            <div style="width:24px; height:24px; border-radius:4px; background:var(--gradient-brand); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:11px; font-family:'Sora',sans-serif">E+</div>
+            <span style="font-family:'Sora',sans-serif; font-weight:700; font-size:16px; color:var(--foreground)">Emprega+</span>
+          </div>
+          <div class="footer-text" style="font-size:13px">Tecnologia que conecta politicas publicas, setores produtivos e pessoas ao trabalho.</div>
+        </div>
+        <div>
+          <div class="footer-title">Plataforma</div>
+          <div class="footer-link">Para Governos</div>
+          <div class="footer-link">Para Setores</div>
+          <div class="footer-link">Editais</div>
+          <div class="footer-link">Para Empresas</div>
+        </div>
+        <div>
+          <div class="footer-title">Contato</div>
+          <div class="footer-link">11 979555029</div>
+          <div class="footer-link">contato@empregamais.me</div>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div style="display:flex; justify-content:space-between; align-items:center">
+        <div class="footer-small">&copy; 2026 Emprega+. Todos os direitos reservados.</div>
+        <div style="display:flex; gap:24px">
+          <span class="footer-small" style="cursor:pointer">Privacidade</span>
+          <span class="footer-small" style="cursor:pointer">Termos</span>
+          <span class="footer-small" style="cursor:pointer">LGPD</span>
+        </div>
+      </div>
+    </div>
+    <div class="note">bg: surface-1 + border-t &nbsp;&bull;&nbsp; Links: muted-foreground &rarr; foreground on hover &nbsp;&bull;&nbsp; Legal: muted/60%</div>
+  </div>
+
+  <!-- ==================== ESPACAMENTO ==================== -->
+  <div class="section">
+    <h2 class="section-title">Espacamento</h2>
+    <div class="note" style="margin-bottom:16px">Section padding: py-16 md:py-24 px-6 md:px-12 &nbsp;&bull;&nbsp; Section widths: narrow(2xl) | default(4xl) | wide(6xl) | full(7xl)</div>
+    <div class="spacing-grid">
+      <div class="spacing-item"><div class="spacing-box" style="width:8px; height:8px"></div><div class="spacing-label">8</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:12px; height:12px"></div><div class="spacing-label">12</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:16px; height:16px"></div><div class="spacing-label">16</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:24px; height:24px"></div><div class="spacing-label">24</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:32px; height:32px"></div><div class="spacing-label">32</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:48px; height:48px"></div><div class="spacing-label">48</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:64px; height:64px"></div><div class="spacing-label">64</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:96px; height:96px"></div><div class="spacing-label">96</div></div>
+    </div>
+  </div>
+
+  <!-- ==================== BORDER RADIUS ==================== -->
+  <div class="section">
+    <h2 class="section-title">Border Radius</h2>
+    <div class="radius-grid">
+      <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">4px (sm)</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="radius-label">8px (md)<br>buttons, inputs</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="radius-label">12px (lg)<br>icons</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:16px"></div><div class="radius-label">16px (2xl)<br>cards, sections</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:9999px; width:80px; height:80px"></div><div class="radius-label">full<br>badges, avatars</div></div>
+    </div>
+  </div>
+
+  <!-- ==================== SOMBRAS ==================== -->
+  <div class="section">
+    <h2 class="section-title">Sombras</h2>
+    <div class="shadow-grid">
+      <div class="shadow-box">none</div>
+      <div class="shadow-box" style="box-shadow:0 1px 2px rgba(0,0,0,0.05)">shadow-sm</div>
+      <div class="shadow-box" style="box-shadow:0 4px 12px rgba(0,0,0,0.06)">shadow-md</div>
+      <div class="shadow-box" style="box-shadow:var(--glow-brand)">glow-brand</div>
+    </div>
+  </div>
+
+  <!-- ==================== ANIMACOES ==================== -->
+  <div class="section">
+    <h2 class="section-title">Animacoes (Framer Motion)</h2>
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px">
+      <div class="card-default" style="text-align:center; padding:24px">
+        <div style="font-family:'Sora',sans-serif; font-weight:700; font-size:16px; color:var(--foreground); margin-bottom:8px">fadeInUp</div>
+        <div class="note" style="margin:0">y: 32 &rarr; 0<br>opacity: 0 &rarr; 1<br>0.7s ease-out</div>
+      </div>
+      <div class="card-default" style="text-align:center; padding:24px">
+        <div style="font-family:'Sora',sans-serif; font-weight:700; font-size:16px; color:var(--foreground); margin-bottom:8px">scaleIn</div>
+        <div class="note" style="margin:0">scale: 0.92 &rarr; 1<br>opacity: 0 &rarr; 1<br>0.8s ease-out</div>
+      </div>
+      <div class="card-default" style="text-align:center; padding:24px">
+        <div style="font-family:'Sora',sans-serif; font-weight:700; font-size:16px; color:var(--foreground); margin-bottom:8px">staggerContainer</div>
+        <div class="note" style="margin:0">staggerChildren: 0.1s<br>whileInView + once<br>viewport: 20%</div>
+      </div>
+      <div class="card-default" style="text-align:center; padding:24px">
+        <div style="font-family:'Sora',sans-serif; font-weight:700; font-size:16px; color:var(--foreground); margin-bottom:8px">slideInLeft</div>
+        <div class="note" style="margin:0">x: -24 &rarr; 0<br>opacity: 0 &rarr; 1<br>0.6s ease-out</div>
+      </div>
+      <div class="card-default" style="text-align:center; padding:24px">
+        <div style="font-family:'Sora',sans-serif; font-weight:700; font-size:16px; color:var(--foreground); margin-bottom:8px">slideInRight</div>
+        <div class="note" style="margin:0">x: 24 &rarr; 0<br>opacity: 0 &rarr; 1<br>0.6s ease-out</div>
+      </div>
+      <div class="card-default" style="text-align:center; padding:24px">
+        <div style="font-family:'Sora',sans-serif; font-weight:700; font-size:16px; color:var(--foreground); margin-bottom:8px">glow-pulse</div>
+        <div class="note" style="margin:0">scale: 1 &rarr; 1.05<br>opacity: 0.6 &rarr; 1<br>8s infinite</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== COMPARACAO V1 VS V2 ==================== -->
+  <div class="section">
+    <h2 class="section-title">Comparacao: v1 vs v2</h2>
+
+    <div style="overflow:auto">
+      <table style="width:100%; border-collapse:collapse; font-size:13px; margin:16px 0">
+        <thead>
+          <tr style="border-bottom:2px solid var(--border)">
+            <th style="text-align:left; padding:12px 16px; font-family:'Sora',sans-serif; font-weight:600">Aspecto</th>
+            <th style="text-align:left; padding:12px 16px; color:var(--gray)">v1 (anterior)</th>
+            <th style="text-align:left; padding:12px 16px; color:var(--brand-dark); font-weight:600">v2 (PDV-inspired)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:10px 16px; font-weight:600">Headings</td>
+            <td style="padding:10px 16px; color:var(--muted-foreground)">Inter (mesma do body)</td>
+            <td style="padding:10px 16px"><strong>Sora</strong> (geometrica, firme)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:10px 16px; font-weight:600">Accent</td>
+            <td style="padding:10px 16px; color:var(--muted-foreground)">#D4AF37 (gold flat)</td>
+            <td style="padding:10px 16px"><strong>Gradient brand</strong> (C49A3C &rarr; D4AD55)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:10px 16px; font-weight:600">CTA buttons</td>
+            <td style="padding:10px 16px; color:var(--muted-foreground)">bg-gold flat, text-navy</td>
+            <td style="padding:10px 16px"><strong>gradient + glow + scale</strong></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:10px 16px; font-weight:600">Cards</td>
+            <td style="padding:10px 16px; color:var(--muted-foreground)">bg-white + border</td>
+            <td style="padding:10px 16px"><strong>Glass (blur + white/70%)</strong> + default</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:10px 16px; font-weight:600">Navbar</td>
+            <td style="padding:10px 16px; color:var(--muted-foreground)">bg-white fixed + shadow</td>
+            <td style="padding:10px 16px"><strong>glass-strong sticky</strong> + dropdown</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:10px 16px; font-weight:600">Backgrounds</td>
+            <td style="padding:10px 16px; color:var(--muted-foreground)">white / gray-lt</td>
+            <td style="padding:10px 16px"><strong>Surface ladder</strong> (bg/s1/s2/s3)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:10px 16px; font-weight:600">Hero</td>
+            <td style="padding:10px 16px; color:var(--muted-foreground)">ScrollReveal basico</td>
+            <td style="padding:10px 16px"><strong>Eyebrow + glow pulse + stagger</strong></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:10px 16px; font-weight:600">Animacoes</td>
+            <td style="padding:10px 16px; color:var(--muted-foreground)">ScrollReveal simples</td>
+            <td style="padding:10px 16px"><strong>6 variants FM</strong> (fadeInUp, scaleIn, slide, stagger)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border)">
+            <td style="padding:10px 16px; font-weight:600">Sections</td>
+            <td style="padding:10px 16px; color:var(--muted-foreground)">Hardcoded containers</td>
+            <td style="padding:10px 16px"><strong>Section component</strong> (width variants)</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 16px; font-weight:600">Footer</td>
+            <td style="padding:10px 16px; color:var(--muted-foreground)">bg-navy-dark (escuro)</td>
+            <td style="padding:10px 16px"><strong>bg-surface-1</strong> (light, clean)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="text-align:center; padding:40px 0 48px; color:var(--gray); font-size:12px">
+    Emprega+ Sites Design System v2 &bull; PDV-inspired &bull; Light Theme, Gold Accent, Sora + Inter<br>
+    <span style="font-family:'JetBrains Mono',monospace">empregamais/empregamais-sites</span>
+  </div>
+
+</div>
+</body>
+</html>

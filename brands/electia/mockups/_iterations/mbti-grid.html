@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Electia Viz — MBTI Grid v0.1 (estrutura)</title>
+  <link rel="preconnect" href="https://rsms.me/" />
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <style>
+    :root {
+      --bg: oklch(96% 0 0);
+      --text: oklch(18% 0 0);
+      --text-muted: oklch(45% 0 0);
+      --viz-card-padding: clamp(20px, 4vw, 28px);
+      --viz-card-radius: 16px;
+      --viz-card-bg: oklch(98.5% 0 0);
+      --viz-card-border: 1px solid oklch(92% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.06);
+
+      --kei-guardian: oklch(60% 0.12 195);
+      --kei-artisan:  oklch(72% 0.15 75);
+      --kei-rational: oklch(52% 0.20 305);
+      --kei-idealist: oklch(60% 0.18 25);
+
+      --viz-match-on: oklch(60% 0.18 145);
+      --viz-grid: oklch(85% 0 0 / 0.7);
+      --viz-axis: oklch(60% 0 0);
+      --viz-axis-label: oklch(40% 0 0);
+
+      --theory: var(--kei-rational);
+
+      --viz-motion-entry-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --viz-motion-hover: 150ms;
+    }
+
+    [data-theme="dark"] {
+      --bg: oklch(12% 0 0); --text: oklch(94% 0 0); --text-muted: oklch(70% 0 0);
+      --viz-card-bg: oklch(16% 0 0);
+      --viz-card-border: 1px solid oklch(22% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.3);
+
+      --kei-guardian: oklch(72% 0.10 195);
+      --kei-artisan:  oklch(80% 0.13 75);
+      --kei-rational: oklch(75% 0.18 305);
+      --kei-idealist: oklch(72% 0.16 25);
+
+      --viz-match-on: oklch(72% 0.16 145);
+      --viz-grid: oklch(40% 0 0 / 0.5);
+      --viz-axis: oklch(60% 0 0);
+      --viz-axis-label: oklch(75% 0 0);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; transition: background 200ms ease, color 200ms ease; }
+    body { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px; }
+    .stage { max-width: 480px; width: 100%; }
+
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .theme-btn { appearance: none; border: 1px solid var(--viz-card-border); background: var(--viz-card-bg); color: var(--text); font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 999px; cursor: pointer; transition: all var(--viz-motion-hover) ease; }
+    .theme-btn:hover { transform: translateY(-1px); }
+
+    .viz-card { background: var(--viz-card-bg); border: var(--viz-card-border); border-radius: var(--viz-card-radius); padding: var(--viz-card-padding); box-shadow: var(--viz-card-shadow); animation: cardEnter 200ms var(--viz-motion-entry-ease) both; }
+    @keyframes cardEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .grid-wrap { display: grid; place-items: center; margin: 0 0 20px; animation: fadeIn 600ms var(--viz-motion-entry-ease) 100ms both; }
+    .grid-wrap svg { display: block; max-width: 100%; height: auto; }
+
+    .quadrant-bg { fill-opacity: 0.10; animation: fadeIn 400ms ease both; }
+    .qb-1 { animation-delay: 200ms; }
+    .qb-2 { animation-delay: 280ms; }
+    .qb-3 { animation-delay: 360ms; }
+    .qb-4 { animation-delay: 440ms; }
+
+    .grid-line { stroke: var(--viz-grid); stroke-width: 1; stroke-dasharray: 2 3; animation: fadeIn 200ms ease 350ms both; }
+    .axis-line { stroke: var(--viz-axis); stroke-width: 1.5; animation: fadeIn 300ms ease 500ms both; }
+
+    .axis-pole { fill: var(--viz-axis-label); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; animation: fadeIn 200ms ease 600ms both; }
+    .axis-pole-sub { fill: var(--text-muted); font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; animation: fadeIn 200ms ease 600ms both; }
+
+    .type-dot {
+      stroke: var(--viz-card-bg);
+      stroke-width: 2;
+      cursor: pointer;
+      opacity: 0.7;
+      animation: dotIn 300ms var(--viz-motion-entry-ease) both;
+      transition: stroke-width var(--viz-motion-hover) ease, opacity var(--viz-motion-hover) ease;
+    }
+    .type-dot:hover { stroke-width: 3; opacity: 1; }
+    @keyframes dotIn { from { opacity: 0; r: 0; } to { opacity: 0.7; r: 7; } }
+
+    .type-dot.kei-guardian { fill: var(--kei-guardian); }
+    .type-dot.kei-artisan  { fill: var(--kei-artisan);  }
+    .type-dot.kei-rational { fill: var(--kei-rational); }
+    .type-dot.kei-idealist { fill: var(--kei-idealist); }
+
+    .realized {
+      fill: var(--theory);
+      stroke: var(--viz-card-bg);
+      stroke-width: 3;
+      animation: realizedPop 600ms var(--viz-motion-entry-ease) 1100ms both;
+    }
+    @keyframes realizedPop { 0% { opacity: 0; r: 0; } 60% { r: 18; } 100% { opacity: 1; r: 14; } }
+
+    .ideal-halo {
+      fill: none;
+      stroke: var(--viz-match-on);
+      stroke-width: 3;
+      stroke-dasharray: 5 4;
+      animation: haloIn 600ms var(--viz-motion-entry-ease) 1400ms both;
+    }
+    @keyframes haloIn { 0% { opacity: 0; r: 0; } 100% { opacity: 1; r: 24; } }
+
+    .legend-row {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 11px; color: var(--text-muted);
+      animation: fadeIn 300ms ease 1800ms both;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; opacity: 0.7; }
+    .legend-dot.kei-guardian { background: var(--kei-guardian); }
+    .legend-dot.kei-artisan  { background: var(--kei-artisan); }
+    .legend-dot.kei-rational { background: var(--kei-rational); }
+    .legend-dot.kei-idealist { background: var(--kei-idealist); }
+    .legend-dot.realized { background: var(--theory); width: 12px; height: 12px; opacity: 1; }
+    .legend-dot.ideal-halo { background: transparent; border: 2px dashed var(--viz-match-on); width: 14px; height: 14px; opacity: 1; }
+
+    .compare-row {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 10px 14px;
+      background: oklch(from var(--viz-match-on) l c h / 0.06);
+      border-radius: 10px;
+      margin-bottom: 14px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 1900ms both;
+    }
+    .compare-cell { flex: 1; }
+    .compare-label { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    .compare-value { font-size: 16px; font-weight: 600; color: var(--theory); margin-top: 2px; }
+    .compare-divider { width: 1px; background: var(--viz-card-border); margin: 4px 0; }
+
+    .match-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      background: oklch(from var(--viz-match-on) l c h / 0.12);
+      border: 1px solid oklch(from var(--viz-match-on) l c h / 0.4);
+      border-radius: 999px;
+      color: var(--viz-match-on);
+      font-size: 12px; font-weight: 600;
+      margin-bottom: 16px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 200ms both;
+    }
+    .match-badge::before { content: "✓"; font-size: 14px; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0ms !important; animation-delay: 0ms !important; transition-duration: 0ms !important; } }
+
+    .footer-note { margin-top: 20px; font-size: 11px; color: var(--text-muted); text-align: center; letter-spacing: 0.02em; }
+    .footer-note a { color: var(--theory); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="toggle-row">
+      <span>Mockup · MBTI Grid · Estrutura visual</span>
+      <button class="theme-btn" id="themeBtn" aria-label="Alternar tema claro/escuro">🌙 Dark</button>
+    </div>
+
+    <article class="viz-card">
+      <div class="match-badge" role="status">Alinhado · ideal e realizado coincidem</div>
+
+      <div class="grid-wrap">
+        <svg viewBox="0 0 400 400" width="400" height="400"
+             role="img" aria-labelledby="grid-title grid-desc">
+          <title id="grid-title">Plot 2D MBTI</title>
+          <desc id="grid-desc">
+            Plano cartesiano com 16 tipos MBTI posicionados. Eixo X: Pensar (T) à esquerda, Sentir (F) à direita. Eixo Y: Intuição (N) acima, Sensação (S) abaixo. Quatro temperamentos Keirsey indicados por cor. Tipo realizado e ideal coincidem em ENTJ.
+          </desc>
+
+          <rect class="quadrant-bg qb-1" x="50" y="50"  width="150" height="150" fill="var(--kei-rational)" />
+          <rect class="quadrant-bg qb-2" x="200" y="50" width="150" height="150" fill="var(--kei-idealist)" />
+          <rect class="quadrant-bg qb-3" x="50" y="200" width="150" height="150" fill="var(--kei-artisan)" />
+          <rect class="quadrant-bg qb-4" x="200" y="200" width="150" height="150" fill="var(--kei-guardian)" />
+
+          <line class="grid-line" x1="50"  y1="125" x2="350" y2="125" />
+          <line class="grid-line" x1="50"  y1="275" x2="350" y2="275" />
+          <line class="grid-line" x1="125" y1="50"  x2="125" y2="350" />
+          <line class="grid-line" x1="275" y1="50"  x2="275" y2="350" />
+
+          <line class="axis-line" x1="200" y1="40"  x2="200" y2="360" />
+          <line class="axis-line" x1="40"  y1="200" x2="360" y2="200" />
+
+          <text class="axis-pole" x="200" y="32"  text-anchor="middle">N</text>
+          <text class="axis-pole-sub" x="200" y="20"  text-anchor="middle">Intuição</text>
+          <text class="axis-pole" x="200" y="378" text-anchor="middle">S</text>
+          <text class="axis-pole-sub" x="200" y="392" text-anchor="middle">Sensação</text>
+          <text class="axis-pole" x="32"  y="205" text-anchor="middle">T</text>
+          <text class="axis-pole-sub" x="32"  y="220" text-anchor="middle">Pensar</text>
+          <text class="axis-pole" x="368" y="205" text-anchor="middle">F</text>
+          <text class="axis-pole-sub" x="368" y="220" text-anchor="middle">Sentir</text>
+
+          <!-- NT (top-left): ENTJ, INTJ, ENTP, INTP -->
+          <circle class="type-dot kei-rational" cx="95"  cy="95"  r="7" />
+          <circle class="type-dot kei-rational" cx="155" cy="95"  r="7" />
+          <circle class="type-dot kei-rational" cx="95"  cy="155" r="7" />
+          <circle class="type-dot kei-rational" cx="155" cy="155" r="7" />
+
+          <!-- NF (top-right): ENFJ, INFJ, ENFP, INFP -->
+          <circle class="type-dot kei-idealist" cx="245" cy="95"  r="7" />
+          <circle class="type-dot kei-idealist" cx="305" cy="95"  r="7" />
+          <circle class="type-dot kei-idealist" cx="245" cy="155" r="7" />
+          <circle class="type-dot kei-idealist" cx="305" cy="155" r="7" />
+
+          <!-- ST (bot-left): ESTJ Guardian, ISTJ Guardian, ESTP Artisan, ISTP Artisan -->
+          <circle class="type-dot kei-guardian" cx="95"  cy="245" r="7" />
+          <circle class="type-dot kei-guardian" cx="155" cy="245" r="7" />
+          <circle class="type-dot kei-artisan"  cx="95"  cy="305" r="7" />
+          <circle class="type-dot kei-artisan"  cx="155" cy="305" r="7" />
+
+          <!-- SF (bot-right): ESFJ Guardian, ISFJ Guardian, ESFP Artisan, ISFP Artisan -->
+          <circle class="type-dot kei-guardian" cx="245" cy="245" r="7" />
+          <circle class="type-dot kei-guardian" cx="305" cy="245" r="7" />
+          <circle class="type-dot kei-artisan"  cx="245" cy="305" r="7" />
+          <circle class="type-dot kei-artisan"  cx="305" cy="305" r="7" />
+
+          <!-- IDEAL halo + REALIZED dot em ENTJ (95, 95) — match -->
+          <circle class="ideal-halo" cx="95" cy="95" r="24" />
+          <circle class="realized" cx="95" cy="95" r="14" />
+        </svg>
+      </div>
+
+      <div class="legend-row">
+        <div class="legend-item"><span class="legend-dot kei-guardian"></span><span>Guardião</span></div>
+        <div class="legend-item"><span class="legend-dot kei-artisan"></span><span>Artesão</span></div>
+        <div class="legend-item"><span class="legend-dot kei-rational"></span><span>Racional</span></div>
+        <div class="legend-item"><span class="legend-dot kei-idealist"></span><span>Idealista</span></div>
+        <div class="legend-item"><span class="legend-dot realized"></span><span>Você</span></div>
+        <div class="legend-item"><span class="legend-dot ideal-halo"></span><span>Cargo</span></div>
+      </div>
+
+      <div class="compare-row" aria-label="Comparativo cargo vs colaborador">
+        <div class="compare-cell">
+          <div class="compare-label">Ideal · Cargo</div>
+          <div class="compare-value">ENTJ</div>
+        </div>
+        <div class="compare-divider"></div>
+        <div class="compare-cell">
+          <div class="compare-label">Realizado · Você</div>
+          <div class="compare-value">ENTJ</div>
+        </div>
+      </div>
+    </article>
+
+    <p class="footer-note">
+      Mockup B · plot 2D · estrutura visual focada · spec em <a href="../design-system-v0.1.md">design-system-v0.1.md</a> · valores fictícios
+    </p>
+  </div>
+
+  <script>
+    const btn = document.getElementById('themeBtn');
+    const root = document.documentElement;
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      btn.textContent = next === 'light' ? '🌙 Dark' : '☀️ Light';
+    });
+  </script>
+</body>
+</html>

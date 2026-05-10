@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emprega+ Sites — Design System Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B2A4A;
+    --gold: #D4AF37;
+    --white: #FFFFFF;
+    --gray: #8899AA;
+    --gray-lt: #F4F6F8;
+    --green: #34A853;
+    --navy-dark: #0F1A2E;
+    --border: #E8ECF0;
+    --text-primary: #1B2A4A;
+    --text-secondary: #5A6B7D;
+    --destructive: #EF4444;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--white);
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+
+  /* Header */
+  .preview-header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 40px;
+    position: sticky; top: 0; z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .preview-header h1 { font-size: 24px; font-weight: 700; color: var(--navy); }
+  .preview-header p { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
+
+  .content { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+  h2 {
+    font-size: 20px; font-weight: 600; color: var(--navy);
+    margin: 48px 0 20px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-size: 13px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.05em; color: var(--text-secondary); margin: 28px 0 14px;
+  }
+
+  /* Color Swatches */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+
+  .swatch { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); transition: all 0.2s; }
+  .swatch:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: rgba(212,175,55,0.3); }
+  .swatch-color { height: 72px; }
+  .swatch-info { padding: 12px 14px; background: var(--white); }
+  .swatch-name { font-size: 13px; font-weight: 600; color: var(--navy); }
+  .swatch-hex { font-size: 12px; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
+  .swatch-hsl { font-size: 11px; color: var(--gray); font-family: 'JetBrains Mono', monospace; }
+  .swatch-use { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+
+  /* Typography */
+  .type-row {
+    margin-bottom: 16px; padding: 20px 24px;
+    background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+  }
+  .type-row:hover { border-color: rgba(212,175,55,0.3); }
+  .type-meta { font-size: 11px; color: var(--gray); font-family: 'JetBrains Mono', monospace; margin-top: 6px; }
+
+  /* Spacing */
+  .spacing-grid { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; }
+  .spacing-item { text-align: center; }
+  .spacing-box { background: var(--navy); border-radius: 4px; margin-bottom: 6px; }
+  .spacing-label { font-size: 11px; color: var(--gray); font-family: 'JetBrains Mono', monospace; }
+
+  /* Border Radius */
+  .radius-grid { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; }
+  .radius-item { text-align: center; }
+  .radius-box {
+    width: 80px; height: 80px;
+    background: var(--gray-lt); border: 2px solid var(--navy);
+    margin-bottom: 8px;
+  }
+  .radius-label { font-size: 11px; color: var(--gray); font-family: 'JetBrains Mono', monospace; }
+
+  /* Buttons */
+  .btn-grid { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 0 24px; height: 52px;
+    font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600;
+    border-radius: 6px; border: none; cursor: pointer;
+    transition: all 0.2s; min-height: 44px;
+  }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-gold:hover { filter: brightness(0.9); transform: scale(1.02); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+  .btn-outline { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
+  .btn-outline:hover { background: rgba(27,42,74,0.05); }
+  .btn-destructive { background: var(--destructive); color: white; }
+  .btn-destructive:hover { filter: brightness(0.9); }
+  .btn-ghost { background: transparent; color: var(--navy); border: 1px solid transparent; }
+  .btn-ghost:hover { background: rgba(27,42,74,0.05); }
+  .btn-sm { height: 36px; padding: 0 16px; font-size: 14px; }
+  .btn-navbar { height: 44px; padding: 0 24px; }
+
+  /* Badges */
+  .badge-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 500;
+    border: 1px solid var(--border); box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  }
+  .badge-default { background: var(--gray-lt); color: var(--navy); }
+  .badge-green { background: rgba(52,168,83,0.1); color: var(--green); border-color: rgba(52,168,83,0.2); }
+  .badge-gold { background: rgba(212,175,55,0.1); color: #B8941F; border-color: rgba(212,175,55,0.2); }
+  .badge-red { background: rgba(239,68,68,0.1); color: var(--destructive); border-color: rgba(239,68,68,0.2); }
+
+  /* Cards */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+    padding: 24px 28px; transition: all 0.2s;
+  }
+  .card:hover { box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-color: rgba(212,175,55,0.3); }
+  .card-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: rgba(27,42,74,0.05); border: 1px solid rgba(27,42,74,0.1);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px; font-size: 20px; transition: transform 0.3s;
+  }
+  .card:hover .card-icon { transform: scale(1.1); }
+  .card-title { font-size: 20px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+  .card-text { font-size: 16px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; }
+  .card-feature { font-size: 14px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .card-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--gold); flex-shrink: 0; }
+
+  /* Navbar Preview */
+  .navbar-preview {
+    background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+    padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .navbar-links { display: flex; gap: 24px; }
+  .navbar-link { font-size: 16px; font-weight: 500; color: var(--navy); text-decoration: none; cursor: pointer; transition: opacity 0.2s; }
+  .navbar-link:hover { opacity: 0.7; }
+  .navbar-logo { font-size: 18px; font-weight: 700; color: var(--navy); }
+
+  /* Stats Bar */
+  .stats-bar {
+    background: var(--navy); border-radius: 12px; padding: 32px 40px;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    text-align: center; gap: 0;
+  }
+  .stat-item { position: relative; }
+  .stat-item:not(:last-child)::after {
+    content: ''; position: absolute; right: 0; top: 10%; height: 80%;
+    width: 1px; background: rgba(255,255,255,0.2);
+  }
+  .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 32px; font-weight: 700; color: var(--gold); }
+  .stat-label { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 4px; }
+
+  /* Footer Preview */
+  .footer-preview {
+    background: var(--navy-dark); border-radius: 12px; padding: 32px 40px;
+  }
+  .footer-title { font-size: 16px; font-weight: 600; color: white; letter-spacing: 0.05em; margin-bottom: 12px; }
+  .footer-link { font-size: 16px; color: rgba(255,255,255,0.7); display: block; margin-bottom: 8px; cursor: pointer; transition: color 0.2s; }
+  .footer-link:hover { color: white; }
+  .footer-text { font-size: 16px; color: rgba(255,255,255,0.5); }
+  .footer-small { font-size: 14px; color: rgba(255,255,255,0.4); }
+  .footer-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 24px 0; }
+  .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+
+  /* Input */
+  .input-demo { max-width: 360px; margin-bottom: 16px; }
+  .input-label { font-size: 14px; font-weight: 500; color: var(--navy); margin-bottom: 6px; display: block; }
+  .input-field {
+    width: 100%; padding: 10px 14px; border-radius: 8px;
+    background: var(--white); border: 1px solid var(--border); color: var(--text-primary);
+    font-family: 'Inter', sans-serif; font-size: 14px;
+    outline: none; transition: all 0.2s;
+  }
+  .input-field:focus { border-color: var(--navy); box-shadow: 0 0 0 1px var(--navy); }
+  .input-field::placeholder { color: var(--gray); }
+
+  /* Chart Colors */
+  .chart-bar-container { display: flex; gap: 12px; align-items: flex-end; height: 140px; padding: 20px; background: var(--gray-lt); border-radius: 12px; border: 1px solid var(--border); }
+  .chart-bar { width: 56px; border-radius: 6px 6px 0 0; }
+
+  /* Shadows demo */
+  .shadow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .shadow-box {
+    height: 80px; background: var(--white); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--gray); font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Opacity demo */
+  .opacity-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opacity-item {
+    width: 80px; height: 48px; border-radius: 8px; display: flex;
+    align-items: center; justify-content: center;
+    font-size: 11px; font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Hero Section Preview */
+  .hero-preview {
+    background: var(--white); border: 1px solid var(--border); border-radius: 12px;
+    padding: 48px 40px; position: relative; overflow: hidden;
+  }
+  .hero-gradient {
+    position: absolute; top: 0; left: 0; width: 100%; height: 50%;
+    background: linear-gradient(to bottom, rgba(27,42,74,0.05), transparent);
+    pointer-events: none;
+  }
+
+  /* Section */
+  .section { margin-bottom: 56px; }
+
+  /* Two column */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 768px) { .two-col, .stats-bar, .footer-grid, .shadow-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="preview-header">
+  <div class="content">
+    <h1>Emprega+ Sites — Design System</h1>
+    <p>Site institucional B2B/B2G • empregamais.me • Navy/Gold Premium</p>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ==================== CORES ==================== -->
+  <div class="section">
+    <h2>Paleta de Cores</h2>
+
+    <h3>Brand</h3>
+    <div class="color-grid">
+      <div class="swatch"><div class="swatch-color" style="background:#1B2A4A"></div><div class="swatch-info"><div class="swatch-name">navy</div><div class="swatch-hex">#1B2A4A</div><div class="swatch-hsl">HSL 221° 46% 20%</div><div class="swatch-use">Cor primária, textos, navbar</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#D4AF37"></div><div class="swatch-info"><div class="swatch-name">gold</div><div class="swatch-hex">#D4AF37</div><div class="swatch-hsl">HSL 46° 65% 52%</div><div class="swatch-use">Accent, CTAs, destaques</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#0F1A2E"></div><div class="swatch-info"><div class="swatch-name">navy-dark</div><div class="swatch-hex">#0F1A2E</div><div class="swatch-hsl">HSL 219° 51% 12%</div><div class="swatch-use">Footer, seções escuras</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#34A853"></div><div class="swatch-info"><div class="swatch-name">green</div><div class="swatch-hex">#34A853</div><div class="swatch-hsl">HSL 136° 53% 43%</div><div class="swatch-use">Status positivo, badges "Novo"</div></div></div>
+    </div>
+
+    <h3>Backgrounds</h3>
+    <div class="color-grid">
+      <div class="swatch"><div class="swatch-color" style="background:#FFFFFF; border-bottom:1px solid #E8ECF0"></div><div class="swatch-info"><div class="swatch-name">white</div><div class="swatch-hex">#FFFFFF</div><div class="swatch-use">Fundo principal, cards</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#F4F6F8"></div><div class="swatch-info"><div class="swatch-name">gray-lt</div><div class="swatch-hex">#F4F6F8</div><div class="swatch-hsl">HSL 210° 25% 96%</div><div class="swatch-use">Seções alternadas, badges</div></div></div>
+    </div>
+
+    <h3>Texto</h3>
+    <div class="color-grid">
+      <div class="swatch"><div class="swatch-color" style="background:#1B2A4A"></div><div class="swatch-info"><div class="swatch-name">text-primary</div><div class="swatch-hex">#1B2A4A</div><div class="swatch-use">Títulos, corpo principal</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#5A6B7D"></div><div class="swatch-info"><div class="swatch-name">text-secondary</div><div class="swatch-hex">#5A6B7D</div><div class="swatch-hsl">HSL 211° 16% 42%</div><div class="swatch-use">Descrições, subtextos</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#8899AA"></div><div class="swatch-info"><div class="swatch-name">gray</div><div class="swatch-hex">#8899AA</div><div class="swatch-hsl">HSL 210° 19% 60%</div><div class="swatch-use">Placeholders, labels auxiliares</div></div></div>
+    </div>
+
+    <h3>UI</h3>
+    <div class="color-grid">
+      <div class="swatch"><div class="swatch-color" style="background:#E8ECF0"></div><div class="swatch-info"><div class="swatch-name">border</div><div class="swatch-hex">#E8ECF0</div><div class="swatch-use">Bordas, divisores</div></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#EF4444"></div><div class="swatch-info"><div class="swatch-name">destructive</div><div class="swatch-hex">#EF4444</div><div class="swatch-use">Erros, ações destrutivas</div></div></div>
+    </div>
+
+    <h3>Chart (ordem de prioridade)</h3>
+    <div class="chart-bar-container">
+      <div style="text-align:center"><div class="chart-bar" style="background:#1B2A4A; height:110px; width:56px"></div><div style="font-size:11px; color:#8899AA; margin-top:4px">navy</div></div>
+      <div style="text-align:center"><div class="chart-bar" style="background:#D4AF37; height:90px; width:56px"></div><div style="font-size:11px; color:#8899AA; margin-top:4px">gold</div></div>
+      <div style="text-align:center"><div class="chart-bar" style="background:#34A853; height:70px; width:56px"></div><div style="font-size:11px; color:#8899AA; margin-top:4px">green</div></div>
+      <div style="text-align:center"><div class="chart-bar" style="background:#8899AA; height:50px; width:56px"></div><div style="font-size:11px; color:#8899AA; margin-top:4px">gray</div></div>
+      <div style="text-align:center"><div class="chart-bar" style="background:#5A6B7D; height:35px; width:56px"></div><div style="font-size:11px; color:#8899AA; margin-top:4px">text-sec</div></div>
+    </div>
+
+    <h3>Opacidades de Navy</h3>
+    <div class="opacity-grid">
+      <div class="opacity-item" style="background:rgba(27,42,74,0.05); color:#1B2A4A">5%</div>
+      <div class="opacity-item" style="background:rgba(27,42,74,0.10); color:#1B2A4A">10%</div>
+      <div class="opacity-item" style="background:rgba(27,42,74,0.30); color:white">30%</div>
+      <div class="opacity-item" style="background:rgba(27,42,74,0.50); color:white">50%</div>
+      <div class="opacity-item" style="background:rgba(27,42,74,0.70); color:white">70%</div>
+      <div class="opacity-item" style="background:rgba(27,42,74,1.0); color:white">100%</div>
+    </div>
+
+    <h3>Opacidades de Gold</h3>
+    <div class="opacity-grid">
+      <div class="opacity-item" style="background:rgba(212,175,55,0.1); color:#B8941F">10%</div>
+      <div class="opacity-item" style="background:rgba(212,175,55,0.3); color:#1B2A4A">30%</div>
+      <div class="opacity-item" style="background:rgba(212,175,55,0.5); color:#1B2A4A">50%</div>
+      <div class="opacity-item" style="background:rgba(212,175,55,0.9); color:#1B2A4A">90%</div>
+      <div class="opacity-item" style="background:rgba(212,175,55,1.0); color:#1B2A4A">100%</div>
+    </div>
+  </div>
+
+  <!-- ==================== TIPOGRAFIA ==================== -->
+  <div class="section">
+    <h2>Tipografia</h2>
+    <div class="type-row">
+      <div style="font-size:52px; font-weight:700; color:#1B2A4A; line-height:1.1">H1 Hero — Inter Bold 52px</div>
+      <div class="type-meta">font-family: Inter · weight: 700 · size: 36→44→52px · line-height: 1.1</div>
+    </div>
+    <div class="type-row">
+      <div style="font-size:36px; font-weight:600; color:#1B2A4A; line-height:1.1">H2 Section — Inter SemiBold 36px</div>
+      <div class="type-meta">font-family: Inter · weight: 600 · size: 28→32→36px · line-height: 1.1</div>
+    </div>
+    <div class="type-row">
+      <div style="font-size:20px; font-weight:600; color:#1B2A4A; line-height:1.4">H3 Card Title — Inter SemiBold 20px</div>
+      <div class="type-meta">font-family: Inter · weight: 600 · size: 18→20px · line-height: 1.4</div>
+    </div>
+    <div class="type-row">
+      <div style="font-size:16px; font-weight:400; color:#5A6B7D; line-height:1.6">Body — Inter Regular 16px. Plataforma completa de soluções para empregabilidade. Intermediação digital de mão de obra para governos.</div>
+      <div class="type-meta">font-family: Inter · weight: 400 · size: 16px · line-height: 1.6 · color: text-secondary</div>
+    </div>
+    <div class="type-row">
+      <div style="font-size:14px; font-weight:400; color:#5A6B7D; line-height:1.5">Small — Inter Regular 14px · Features em cards, labels secundários</div>
+      <div class="type-meta">font-family: Inter · weight: 400 · size: 14px · line-height: 1.5</div>
+    </div>
+    <div class="type-row">
+      <div style="font-size:12px; font-weight:500; color:#1B2A4A">Badge Label — Inter Medium 12px</div>
+      <div class="type-meta">font-family: Inter · weight: 500 · size: 12px</div>
+    </div>
+    <div class="type-row">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:32px; font-weight:700; color:#D4AF37">50.000+ — JetBrains Mono Bold 32px</div>
+      <div class="type-meta">font-family: JetBrains Mono · weight: 700 · size: 24→28→32px · color: gold (stats)</div>
+    </div>
+  </div>
+
+  <!-- ==================== ESPAÇAMENTO ==================== -->
+  <div class="section">
+    <h2>Espaçamento</h2>
+    <p style="color:#5A6B7D; font-size:13px; margin-bottom:16px">Base Tailwind: 4px · Container max-width: 1200px · Padding: 24px (mobile) → 40px (sm) → 80px (lg)</p>
+    <div class="spacing-grid">
+      <div class="spacing-item"><div class="spacing-box" style="width:8px; height:8px"></div><div class="spacing-label">8</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:12px; height:12px"></div><div class="spacing-label">12</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:16px; height:16px"></div><div class="spacing-label">16</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:20px; height:20px"></div><div class="spacing-label">20</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:24px; height:24px"></div><div class="spacing-label">24</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:32px; height:32px"></div><div class="spacing-label">32</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:40px; height:40px"></div><div class="spacing-label">40</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:48px; height:48px"></div><div class="spacing-label">48</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:64px; height:64px"></div><div class="spacing-label">64</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:80px; height:80px"></div><div class="spacing-label">80</div></div>
+      <div class="spacing-item"><div class="spacing-box" style="width:96px; height:96px"></div><div class="spacing-label">96</div></div>
+    </div>
+  </div>
+
+  <!-- ==================== BORDER RADIUS ==================== -->
+  <div class="section">
+    <h2>Border Radius</h2>
+    <div class="radius-grid">
+      <div class="radius-item"><div class="radius-box" style="border-radius:4px"></div><div class="radius-label">4px (sm)</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:6px"></div><div class="radius-label">6px<br>buttons, inputs</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:8px"></div><div class="radius-label">8px (md)</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:12px"></div><div class="radius-label">12px (lg)<br>cards, icons</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:16px"></div><div class="radius-label">16px (2xl)<br>pillar icons</div></div>
+      <div class="radius-item"><div class="radius-box" style="border-radius:9999px; width:80px; height:80px"></div><div class="radius-label">999px (full)<br>badges</div></div>
+    </div>
+  </div>
+
+  <!-- ==================== SOMBRAS ==================== -->
+  <div class="section">
+    <h2>Sombras</h2>
+    <div class="shadow-grid">
+      <div class="shadow-box" style="border:1px solid #E8ECF0">none</div>
+      <div class="shadow-box" style="box-shadow:0 1px 2px rgba(0,0,0,0.05); border:1px solid #E8ECF0">shadow-sm</div>
+      <div class="shadow-box" style="box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); border:1px solid #E8ECF0">shadow-md</div>
+      <div class="shadow-box" style="box-shadow:0 8px 32px rgba(27,42,74,0.12); border:1px solid #E8ECF0">hero custom</div>
+    </div>
+  </div>
+
+  <!-- ==================== COMPONENTES ==================== -->
+  <div class="section">
+    <h2>Componentes</h2>
+
+    <h3>Botões</h3>
+    <div class="btn-grid" style="margin-bottom:16px">
+      <button class="btn btn-gold">Falar com especialista</button>
+      <button class="btn btn-outline">Saiba mais</button>
+      <button class="btn btn-destructive">Excluir</button>
+      <button class="btn btn-ghost">Voltar</button>
+    </div>
+    <div class="btn-grid">
+      <button class="btn btn-gold btn-navbar">CTA Navbar</button>
+      <button class="btn btn-gold btn-sm">Botão SM</button>
+    </div>
+
+    <h3>Badges</h3>
+    <div class="badge-grid">
+      <span class="badge badge-default">Intermediação de mão de obra</span>
+      <span class="badge badge-green">Novo</span>
+      <span class="badge badge-gold">Premium</span>
+      <span class="badge badge-red">Urgente</span>
+    </div>
+
+    <h3>Inputs</h3>
+    <div class="two-col">
+      <div>
+        <div class="input-demo">
+          <label class="input-label">Email</label>
+          <input class="input-field" type="email" placeholder="seu@email.com">
+        </div>
+        <div class="input-demo">
+          <label class="input-label">Município</label>
+          <input class="input-field" type="text" placeholder="ex: Fortaleza">
+        </div>
+      </div>
+      <div>
+        <p style="font-size:13px; color:#8899AA; margin-bottom:8px">Padrões de input:</p>
+        <ul style="font-size:13px; color:#5A6B7D; list-style:none; padding:0; line-height:2">
+          <li>Label sempre acima do campo</li>
+          <li>Placeholder com exemplo real</li>
+          <li>Border: #E8ECF0 → focus: #1B2A4A</li>
+          <li>Border radius: 8px (md)</li>
+          <li>Focus ring: 1px navy</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Solution Cards</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🏛️</div>
+        <div class="card-title">Para Governos</div>
+        <div class="card-text">Intermediação digital de mão de obra com portal white-label.</div>
+        <div class="card-feature"><span class="card-dot"></span>Portal de vagas personalizado</div>
+        <div class="card-feature"><span class="card-dot"></span>Painel de gestão municipal</div>
+        <div class="card-feature"><span class="card-dot"></span>Relatórios de empregabilidade</div>
+        <div style="margin-top:16px"><button class="btn btn-outline" style="width:100%; height:44px; font-size:14px">Conhecer solução →</button></div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <div class="card-title">Editais & Seletivos</div>
+        <div class="card-text">Plataforma digital para concursos e processos seletivos públicos.</div>
+        <div class="card-feature"><span class="card-dot"></span>Gestão completa de editais</div>
+        <div class="card-feature"><span class="card-dot"></span>Inscrições online</div>
+        <div class="card-feature"><span class="card-dot"></span>Avaliação de títulos</div>
+        <div style="margin-top:16px"><button class="btn btn-outline" style="width:100%; height:44px; font-size:14px">Conhecer solução →</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== NAVBAR ==================== -->
+  <div class="section">
+    <h2>Navbar</h2>
+    <div class="navbar-preview">
+      <div class="navbar-logo">Emprega+</div>
+      <div class="navbar-links">
+        <a class="navbar-link">Para Governos</a>
+        <a class="navbar-link">Editais</a>
+        <a class="navbar-link">Para Setores</a>
+        <a class="navbar-link">Para Empresas</a>
+      </div>
+      <button class="btn btn-gold btn-navbar">Falar com especialista</button>
+    </div>
+    <p style="font-size:12px; color:#8899AA; margin-top:8px">Altura: 64px (padrão) → 56px (compact on scroll) · Shadow on scroll: 0 2px 8px rgba(0,0,0,0.06)</p>
+  </div>
+
+  <!-- ==================== STATS BAR ==================== -->
+  <div class="section">
+    <h2>Stats Bar</h2>
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-value">50.000+</div>
+        <div class="stat-label">Currículos cadastrados</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">1.200+</div>
+        <div class="stat-label">Empresas parceiras</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">1.240</div>
+        <div class="stat-label">Vagas publicadas</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">85,4%</div>
+        <div class="stat-label">Taxa de empregabilidade</div>
+      </div>
+    </div>
+    <p style="font-size:12px; color:#8899AA; margin-top:8px">Fundo: navy · Valores: gold JetBrains Mono Bold · Labels: white/70 · Divisor: white/20</p>
+  </div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <div class="section">
+    <h2>Footer</h2>
+    <div class="footer-preview">
+      <div class="footer-grid">
+        <div>
+          <div style="font-size:20px; font-weight:700; color:white; margin-bottom:8px">Emprega+</div>
+          <div class="footer-text">Soluções completas para empregabilidade e gestão de talentos.</div>
+        </div>
+        <div>
+          <div class="footer-title">SOLUÇÕES</div>
+          <div class="footer-link">Para Governos</div>
+          <div class="footer-link">Editais & Seletivos</div>
+          <div class="footer-link">Para Setores</div>
+          <div class="footer-link">Para Empresas</div>
+        </div>
+        <div>
+          <div class="footer-title">CONTATO</div>
+          <div class="footer-link">contato@empregamais.me</div>
+          <div class="footer-link">WhatsApp</div>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-small">© 2026 Emprega+. Todos os direitos reservados.</div>
+    </div>
+    <p style="font-size:12px; color:#8899AA; margin-top:8px">Fundo: navy-dark #0F1A2E · Links: white/70 → white on hover · Texto: white/50 · Small: white/40 · Divider: white/10</p>
+  </div>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <div class="section">
+    <h2>Hero Section</h2>
+    <div class="hero-preview">
+      <div class="hero-gradient"></div>
+      <div style="position:relative; z-index:1; max-width:640px">
+        <span class="badge badge-default" style="margin-bottom:24px; display:inline-flex">Intermediação de mão de obra</span>
+        <div style="font-size:44px; font-weight:700; color:#1B2A4A; line-height:1.1; margin-bottom:16px">
+          Conecte talentos a <span style="color:#D4AF37">oportunidades reais</span>
+        </div>
+        <div style="font-size:18px; color:#5A6B7D; line-height:1.6; margin-bottom:32px">
+          Plataforma completa de empregabilidade para governos municipais e estaduais.
+        </div>
+        <div class="btn-grid">
+          <button class="btn btn-gold">Falar com especialista</button>
+          <button class="btn btn-outline">Saiba mais</button>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:12px; color:#8899AA; margin-top:8px">min-height: 80vh · Gradiente: navy/5 → transparent (top 50%) · Gold para destaques inline</p>
+  </div>
+
+  <div style="text-align:center; padding:40px 0 48px; color:#8899AA; font-size:12px">
+    Emprega+ Sites Design System · B2B/B2G · Navy/Gold Premium Theme<br>
+    <span style="font-family:'JetBrains Mono',monospace">empregamais/empregamais-sites</span>
+  </div>
+
+</div>
+</body>
+</html>

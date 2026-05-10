@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Electia Viz — MBTI Card v0.1</title>
+  <link rel="preconnect" href="https://rsms.me/" />
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <style>
+    :root {
+      --bg: oklch(96% 0 0);
+      --text: oklch(18% 0 0);
+      --text-muted: oklch(45% 0 0);
+      --viz-card-padding: clamp(24px, 4vw, 32px);
+      --viz-card-radius: 16px;
+      --viz-card-bg: oklch(98.5% 0 0);
+      --viz-card-border: 1px solid oklch(92% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.06);
+      --theory: oklch(55% 0.20 305);
+      --viz-grid: oklch(85% 0 0 / 0.5);
+      --viz-motion-entry-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --viz-motion-hover: 150ms;
+    }
+    [data-theme="dark"] {
+      --bg: oklch(12% 0 0); --text: oklch(94% 0 0); --text-muted: oklch(70% 0 0);
+      --viz-card-bg: oklch(16% 0 0);
+      --viz-card-border: 1px solid oklch(22% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.3);
+      --theory: oklch(75% 0.18 305);
+      --viz-grid: oklch(40% 0 0 / 0.5);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; transition: background 200ms ease, color 200ms ease; }
+    body { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px; }
+    .stage { max-width: 460px; width: 100%; }
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .theme-btn { appearance: none; border: 1px solid var(--viz-card-border); background: var(--viz-card-bg); color: var(--text); font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 999px; cursor: pointer; transition: all var(--viz-motion-hover) ease; }
+    .theme-btn:hover { transform: translateY(-1px); }
+    .theme-btn:focus-visible { outline: 2px solid var(--theory); outline-offset: 2px; }
+    .viz-card { background: var(--viz-card-bg); border: var(--viz-card-border); border-radius: var(--viz-card-radius); padding: var(--viz-card-padding); box-shadow: var(--viz-card-shadow); animation: cardEnter 200ms var(--viz-motion-entry-ease) both; }
+    @keyframes cardEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .card-title { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+    .card-icon { width: 24px; height: 24px; border-radius: 6px; background: oklch(from var(--theory) l c h / 0.18); display: grid; place-items: center; color: var(--theory); font-weight: 700; font-size: 11px; }
+    .card-help { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--viz-card-border); background: transparent; color: var(--text-muted); font-size: 12px; cursor: help; transition: all var(--viz-motion-hover) ease; }
+    .card-help:hover { color: var(--theory); border-color: var(--theory); }
+    .hero { text-align: center; margin-bottom: 24px; animation: fadeUp 400ms var(--viz-motion-entry-ease) 100ms both; }
+    .hero-pattern { font-size: clamp(56px, 10vw, 72px); font-weight: 600; letter-spacing: -0.03em; line-height: 1; color: var(--theory); font-feature-settings: 'tnum' 1; }
+    .hero-subtitle { font-size: 14px; color: var(--text-muted); margin-top: 8px; }
+    .sliders-wrap { display: flex; flex-direction: column; gap: 24px; margin: 16px 0 24px; padding: 0 8px; }
+    .slider { animation: fadeUp 400ms var(--viz-motion-entry-ease) both; }
+    .slider:nth-of-type(1) { animation-delay: 250ms; }
+    .slider:nth-of-type(2) { animation-delay: 350ms; }
+    .slider:nth-of-type(3) { animation-delay: 450ms; }
+    .slider:nth-of-type(4) { animation-delay: 550ms; }
+    .slider-labels { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 11px; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; }
+    .slider-label { display: flex; align-items: baseline; gap: 6px; color: var(--text-muted); }
+    .slider-label.active { color: var(--theory); font-weight: 700; }
+    .slider-label .pct { font-size: 13px; font-feature-settings: 'tnum' 1; letter-spacing: 0; }
+    .slider-track { position: relative; height: 8px; background: var(--viz-grid); border-radius: 999px; overflow: visible; }
+    .slider-fill { position: absolute; top: 0; left: 0; height: 100%; background: oklch(from var(--theory) l c h / 0.3); border-radius: 999px; width: 0; animation: fillSlider 800ms var(--viz-motion-entry-ease) 600ms forwards; }
+    .slider-dot { position: absolute; top: 50%; transform: translate(-50%, -50%) scale(0); width: 18px; height: 18px; border-radius: 50%; background: var(--theory); box-shadow: 0 0 0 3px var(--viz-card-bg), 0 0 0 4px var(--theory); animation: dotPop 200ms var(--viz-motion-entry-ease) 1100ms forwards; }
+    @keyframes fillSlider { to { width: var(--fill, 50%); } }
+    @keyframes dotPop { to { transform: translate(-50%, -50%) scale(1); } }
+    .narrative { font-size: 14px; line-height: 1.55; color: var(--text); margin-bottom: 20px; padding: 12px 14px; background: oklch(from var(--text) l c h / 0.04); border-radius: 10px; border-left: 2px solid var(--theory); animation: fadeUp 400ms var(--viz-motion-entry-ease) 1200ms both; }
+    .cta-row { display: flex; justify-content: flex-end; animation: fadeIn 300ms ease 1300ms both; }
+    .cta { appearance: none; background: transparent; border: 1px solid var(--theory); color: var(--theory); font: inherit; font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all var(--viz-motion-hover) ease; }
+    .cta:hover { background: oklch(from var(--theory) l c h / 0.1); transform: translateX(2px); }
+    .cta:focus-visible { outline: 2px solid var(--theory); outline-offset: 2px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0ms !important; animation-delay: 0ms !important; transition-duration: 0ms !important; } }
+    .footer-note { margin-top: 24px; font-size: 11px; color: var(--text-muted); text-align: center; letter-spacing: 0.02em; }
+    .footer-note a { color: var(--theory); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="toggle-row">
+      <span>Mockup v0.1 · MBTI</span>
+      <button class="theme-btn" id="themeBtn" aria-label="Alternar tema claro/escuro">🌙 Dark</button>
+    </div>
+
+    <article class="viz-card" aria-labelledby="card-title">
+      <header class="card-header">
+        <div class="card-title">
+          <span class="card-icon" aria-hidden="true">M</span>
+          <span id="card-title">MBTI · Tipo Cognitivo</span>
+        </div>
+        <button class="card-help" aria-label="Como ler este perfil">?</button>
+      </header>
+
+      <div class="hero">
+        <div class="hero-pattern">ENTJ</div>
+        <div class="hero-subtitle">O Comandante · clareza estratégica</div>
+      </div>
+
+      <div role="img" aria-labelledby="mbti-title mbti-desc">
+        <span id="mbti-title" class="sr-only">Perfil MBTI ENTJ</span>
+        <span id="mbti-desc" class="sr-only">Extroversão 72, Intuição 85, Pensamento 68, Julgamento 78. Tipo ENTJ.</span>
+
+        <div class="sliders-wrap">
+          <div class="slider">
+            <div class="slider-labels">
+              <span class="slider-label active">E · Extroversão <span class="pct">72</span></span>
+              <span class="slider-label">Introversão · I <span class="pct">28</span></span>
+            </div>
+            <div class="slider-track">
+              <div class="slider-fill" style="--fill: 72%"></div>
+              <div class="slider-dot" style="left: 72%"></div>
+            </div>
+          </div>
+          <div class="slider">
+            <div class="slider-labels">
+              <span class="slider-label">S · Sensação <span class="pct">15</span></span>
+              <span class="slider-label active">Intuição · N <span class="pct">85</span></span>
+            </div>
+            <div class="slider-track">
+              <div class="slider-fill" style="--fill: 85%; left: 15%; right: 0;"></div>
+              <div class="slider-dot" style="left: 85%"></div>
+            </div>
+          </div>
+          <div class="slider">
+            <div class="slider-labels">
+              <span class="slider-label active">T · Pensamento <span class="pct">68</span></span>
+              <span class="slider-label">Sentimento · F <span class="pct">32</span></span>
+            </div>
+            <div class="slider-track">
+              <div class="slider-fill" style="--fill: 68%"></div>
+              <div class="slider-dot" style="left: 68%"></div>
+            </div>
+          </div>
+          <div class="slider">
+            <div class="slider-labels">
+              <span class="slider-label active">J · Julgamento <span class="pct">78</span></span>
+              <span class="slider-label">Percepção · P <span class="pct">22</span></span>
+            </div>
+            <div class="slider-track">
+              <div class="slider-fill" style="--fill: 78%"></div>
+              <div class="slider-dot" style="left: 78%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="narrative">
+        Combinação <strong>ENTJ</strong> indica liderança estratégica e
+        orientação a metas. Forte preferência por planejamento, análise lógica
+        e visão de longo prazo.
+      </p>
+
+      <table class="sr-only">
+        <caption>Pontuações MBTI por dimensão</caption>
+        <thead><tr><th>Dimensão</th><th>Pontuação</th><th>Polo</th></tr></thead>
+        <tbody>
+          <tr><td>E vs I</td><td>72 / 28</td><td>Extroversão</td></tr>
+          <tr><td>S vs N</td><td>15 / 85</td><td>Intuição</td></tr>
+          <tr><td>T vs F</td><td>68 / 32</td><td>Pensamento</td></tr>
+          <tr><td>J vs P</td><td>78 / 22</td><td>Julgamento</td></tr>
+        </tbody>
+      </table>
+
+      <div class="cta-row"><button class="cta" type="button">Saiba mais →</button></div>
+    </article>
+
+    <p class="footer-note">
+      Mockup v0.1 · spec em <a href="../design-system-v0.1.md">design-system-v0.1.md</a> · valores fictícios
+    </p>
+  </div>
+
+  <script>
+    const btn = document.getElementById('themeBtn');
+    const root = document.documentElement;
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      btn.textContent = next === 'light' ? '🌙 Dark' : '☀️ Light';
+    });
+  </script>
+</body>
+</html>

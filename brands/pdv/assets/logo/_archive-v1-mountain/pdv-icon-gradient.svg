@@ -1,0 +1,11 @@
+<svg width="140" height="100" viewBox="0 0 140 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Profissional de Valor — Icone Gradiente -->
+  <defs>
+    <linearGradient id="gradGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C49A3C"/>
+      <stop offset="100%" stop-color="#8B6B2A"/>
+    </linearGradient>
+  </defs>
+  <path d="M48 24 Q55 12 62 24 L82 64 Q88 75 76 75 L34 75 Q22 75 28 64 Z" fill="url(#gradGold)"/>
+  <path d="M73 18 Q82 4 91 18 L118 67 Q125 80 111 80 L53 80 Q39 80 46 67 Z" stroke="url(#gradGold)" stroke-width="2.5" fill="none" opacity="0.4"/>
+</svg>

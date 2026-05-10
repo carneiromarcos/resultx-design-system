@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emprega+ Gov — Mockups UI v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #E8ECF0; padding: 60px 40px; color: #1B2A4A; }
+  .section-label { font-family: 'Sora', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 3px; color: #8B949E; margin-bottom: 20px; }
+  .section { margin-bottom: 100px; }
+  .row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+
+  /* ═══ BROWSER CHROME ═══ */
+  .browser { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(27,42,74,0.15), 0 1px 3px rgba(0,0,0,0.08); }
+  .chrome { background: #F8FAFB; height: 38px; display: flex; align-items: center; padding: 0 16px; gap: 6px; border-bottom: 1px solid #E8ECF0; }
+  .dots { display: flex; gap: 6px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #FF5F56; } .dot-y { background: #FFBD2E; } .dot-g { background: #27C93F; }
+  .url-bar { margin-left: 14px; flex: 1; max-width: 300px; height: 22px; background: #fff; border: 1px solid #D1D9E0; border-radius: 6px; font-size: 10px; color: #586069; display: flex; align-items: center; padding: 0 10px; letter-spacing: 0.3px; }
+
+  /* ═══ PORTAL LAYOUT ═══ */
+  .portal-topbar { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 56px; }
+  .portal-brand { display: flex; align-items: center; gap: 10px; }
+  .portal-logo { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; }
+  .portal-title { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700; color: #fff; }
+  .portal-nav { display: flex; gap: 20px; }
+  .portal-nav a { font-size: 12px; color: rgba(255,255,255,0.7); text-decoration: none; font-weight: 500; }
+  .portal-nav a.active { color: #fff; }
+  .portal-user { display: flex; align-items: center; gap: 8px; }
+  .portal-user-avatar { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; font-weight: 600; }
+  .portal-user-name { font-size: 11px; color: rgba(255,255,255,0.8); }
+
+  /* ═══ PORTAL BODY ═══ */
+  .portal-body { display: flex; min-height: 420px; }
+  .sidebar { width: 200px; background: #F8FAFB; border-right: 1px solid #E8ECF0; padding: 20px 16px; }
+  .sidebar-title { font-size: 11px; font-weight: 700; color: #1B2A4A; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .sidebar-item { font-size: 12px; color: #586069; padding: 8px 10px; border-radius: 6px; margin-bottom: 2px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+  .sidebar-item.active { background: #1D4ED8; color: #fff; font-weight: 600; }
+  .sidebar-item .count { font-size: 10px; opacity: 0.6; }
+  .sidebar-divider { height: 1px; background: #E8ECF0; margin: 14px 0; }
+  .main-content { flex: 1; padding: 20px 24px; background: #fff; }
+
+  /* ═══ STATS BAR ═══ */
+  .stats-bar { display: flex; gap: 16px; margin-bottom: 20px; }
+  .stat-card { flex: 1; background: #F8FAFB; border-radius: 10px; padding: 14px 16px; text-align: center; }
+  .stat-value { font-size: 22px; font-weight: 800; color: #1B2A4A; }
+  .stat-label { font-size: 9px; color: #586069; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+  /* ═══ SEARCH ═══ */
+  .search-row { display: flex; gap: 10px; margin-bottom: 20px; }
+  .search-input { flex: 1; height: 40px; border: 1px solid #D1D9E0; border-radius: 8px; padding: 0 14px; font-size: 13px; color: #586069; background: #fff; }
+  .search-select { width: 140px; height: 40px; border: 1px solid #D1D9E0; border-radius: 8px; padding: 0 12px; font-size: 12px; color: #586069; background: #F8FAFB; appearance: none; }
+  .search-btn { height: 40px; padding: 0 20px; background: #1D4ED8; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+  /* ═══ JOB CARDS ═══ */
+  .job-list { display: flex; flex-direction: column; gap: 10px; }
+  .job-card { padding: 16px; background: #fff; border: 1px solid #E8ECF0; border-radius: 10px; display: flex; align-items: center; gap: 14px; transition: border-color 0.2s, box-shadow 0.2s; }
+  .job-card:hover { border-color: #1D4ED8; box-shadow: 0 2px 8px rgba(29,78,216,0.08); }
+  .job-icon { width: 42px; height: 42px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .job-info { flex: 1; }
+  .job-title { font-size: 13px; font-weight: 600; color: #1B2A4A; }
+  .job-org { font-size: 11px; color: #586069; margin-top: 2px; }
+  .job-tags { display: flex; gap: 6px; margin-top: 8px; }
+  .tag { font-size: 9px; padding: 3px 8px; border-radius: 4px; font-weight: 500; }
+  .tag-type { background: #EDF0FF; color: #1D4ED8; }
+  .tag-salary { background: #F8FAFB; color: #586069; }
+  .tag-location { background: #F8FAFB; color: #586069; }
+  .job-badge { font-size: 9px; padding: 4px 10px; border-radius: 10px; font-weight: 600; background: #DCF8E4; color: #16A34A; flex-shrink: 0; }
+  .job-date { font-size: 10px; color: #8B949E; flex-shrink: 0; text-align: right; }
+
+  /* ═══ PANEL (no browser) ═══ */
+  .panel { background: #fff; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); padding: 24px; }
+  .panel-title { font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 700; color: #1B2A4A; }
+  .panel-subtitle { font-size: 11px; color: #586069; margin-top: 4px; }
+
+  /* ═══ BANCO DE TALENTOS (LinkedIn Recruiter style) ═══ */
+  .talent-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .talent-controls { display: flex; gap: 8px; }
+  .talent-btn { font-size: 11px; padding: 6px 14px; border-radius: 6px; border: 1px solid #D1D9E0; background: #fff; color: #586069; font-weight: 500; cursor: pointer; }
+  .talent-btn-primary { background: #1D4ED8; color: #fff; border-color: #1D4ED8; }
+  .talent-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+  .talent-table th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: #8B949E; font-weight: 600; text-align: left; padding: 10px 12px; border-bottom: 2px solid #E8ECF0; }
+  .talent-table td { font-size: 12px; color: #1B2A4A; padding: 12px; border-bottom: 1px solid #F0F3F5; vertical-align: middle; }
+  .talent-table tr:hover td { background: #F8FAFB; }
+  .talent-profile { display: flex; align-items: center; gap: 10px; }
+  .talent-avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+  .talent-name { font-weight: 600; color: #1B2A4A; font-size: 12px; }
+  .talent-role { font-size: 10px; color: #586069; }
+  .match-bar { width: 60px; height: 6px; background: #E8ECF0; border-radius: 3px; overflow: hidden; }
+  .match-fill { height: 100%; border-radius: 3px; }
+  .match-label { font-size: 10px; font-weight: 600; margin-left: 6px; }
+  .talent-status { font-size: 10px; padding: 3px 8px; border-radius: 4px; font-weight: 600; }
+  .talent-actions { display: flex; gap: 4px; }
+  .talent-action-btn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid #E8ECF0; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; color: #586069; }
+  .talent-action-btn:hover { background: #F8FAFB; border-color: #1D4ED8; color: #1D4ED8; }
+
+  /* ═══ FILTERS ═══ */
+  .filters { display: flex; gap: 8px; margin: 16px 0; }
+  .filter-pill { font-size: 10px; padding: 5px 12px; border-radius: 12px; font-weight: 500; cursor: pointer; }
+  .filter-active { background: #1D4ED8; color: #fff; }
+  .filter-inactive { background: #F8FAFB; color: #586069; border: 1px solid #E8ECF0; }
+
+  /* ═══ CANDIDATE ROWS ═══ */
+  .cand-row { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #F0F3F5; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 600; margin-right: 14px; flex-shrink: 0; }
+  .cand-info { flex: 1; }
+  .cand-name { font-size: 13px; font-weight: 600; color: #1B2A4A; }
+  .cand-role { font-size: 11px; color: #586069; margin-top: 2px; }
+  .cand-dest { font-size: 10px; color: #8B949E; margin-top: 2px; }
+  .status-badge { font-size: 10px; padding: 4px 10px; border-radius: 10px; font-weight: 600; white-space: nowrap; }
+
+  /* ═══ KPIs ═══ */
+  .kpis { display: flex; gap: 12px; margin: 16px 0; }
+  .kpi-card { flex: 1; background: #F8FAFB; border-radius: 10px; padding: 16px; }
+  .kpi-value { font-size: 28px; font-weight: 800; color: #1B2A4A; }
+  .kpi-label { font-size: 10px; color: #586069; margin-top: 4px; }
+  .kpi-delta { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 9px; background: #DCF8E4; color: #16A34A; font-weight: 600; margin-top: 6px; }
+
+  /* ═══ CHART ═══ */
+  .chart { display: flex; align-items: flex-end; gap: 16px; height: 140px; padding: 16px 0; border-bottom: 1px solid #F0F3F5; }
+  .bar-group { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; }
+  .bar { width: 44px; border-radius: 6px 6px 0 0; }
+  .bar-label { font-size: 10px; color: #586069; }
+  .bar-value { font-size: 11px; font-weight: 700; color: #1D4ED8; }
+
+  /* ═══ TABLE ═══ */
+  .table-row { display: flex; align-items: center; padding: 8px 0; font-size: 11px; }
+  .table-rank { color: #8B949E; font-weight: 600; width: 24px; }
+  .table-name { flex: 1; color: #1B2A4A; font-weight: 500; }
+  .table-count { color: #586069; }
+
+  /* ═══ COURSES ═══ */
+  .courses-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+  .course-card { background: #fff; border: 1px solid #E8ECF0; border-radius: 10px; overflow: hidden; }
+  .course-accent { height: 5px; }
+  .course-body { padding: 16px; }
+  .course-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; font-size: 16px; }
+  .course-title { font-size: 12px; font-weight: 600; color: #1B2A4A; margin-bottom: 8px; }
+  .course-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+  .progress-bg { height: 4px; background: #E8ECF0; border-radius: 2px; }
+  .progress-fill { height: 4px; border-radius: 2px; }
+
+  .divider { height: 1px; background: #E8ECF0; margin: 12px 0; }
+  .period { font-size: 11px; color: #586069; font-weight: 500; background: #F8FAFB; border: 1px solid #D1D9E0; border-radius: 6px; padding: 6px 14px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MOCKUP 1 — PORTAL DE VAGAS (estilo GO Recife + Emprega+ DS)
+     Para: GovHeroSection.tsx
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Mockup 1 — Portal de Vagas (Hero)</div>
+  <div class="browser" style="width: 720px;">
+    <div class="chrome">
+      <div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="url-bar">portal.emprega-plus.gov.br</div>
+    </div>
+
+    <!-- Topbar -->
+    <div class="portal-topbar" style="background: #1B2A4A;">
+      <div class="portal-brand">
+        <div class="portal-logo" style="background: #1D4ED8;">E+</div>
+        <div class="portal-title">Portal de Emprego</div>
+      </div>
+      <div class="portal-nav">
+        <a href="#" class="active">Vagas</a>
+        <a href="#">Empresas</a>
+        <a href="#">Cursos</a>
+        <a href="#">Meu Perfil</a>
+      </div>
+      <div class="portal-user">
+        <div class="portal-user-name">Marcos C.</div>
+        <div class="portal-user-avatar">MC</div>
+      </div>
+    </div>
+
+    <div class="portal-body">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="sidebar-title">Categorias</div>
+        <div class="sidebar-item active">Todas as vagas <span class="count">47</span></div>
+        <div class="sidebar-item">Administração <span class="count">12</span></div>
+        <div class="sidebar-item">Saúde <span class="count">9</span></div>
+        <div class="sidebar-item">Educação <span class="count">7</span></div>
+        <div class="sidebar-item">Transporte <span class="count">5</span></div>
+        <div class="sidebar-item">Serviços Gerais <span class="count">8</span></div>
+        <div class="sidebar-item">Obras <span class="count">6</span></div>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-title">Tipo</div>
+        <div class="sidebar-item">CLT <span class="count">38</span></div>
+        <div class="sidebar-item">Temporário <span class="count">6</span></div>
+        <div class="sidebar-item">Estágio <span class="count">3</span></div>
+      </div>
+
+      <!-- Main -->
+      <div class="main-content">
+        <div class="stats-bar">
+          <div class="stat-card"><div class="stat-value">47</div><div class="stat-label">Vagas abertas</div></div>
+          <div class="stat-card"><div class="stat-value">847</div><div class="stat-label">Candidatos</div></div>
+          <div class="stat-card"><div class="stat-value">134</div><div class="stat-label">Encaminhados</div></div>
+          <div class="stat-card"><div class="stat-value">67</div><div class="stat-label">Contratados</div></div>
+        </div>
+
+        <div class="search-row">
+          <input class="search-input" placeholder="Buscar vagas, cargos ou empresas..." />
+          <select class="search-select"><option>Todas as cidades</option></select>
+          <button class="search-btn">Buscar</button>
+        </div>
+
+        <div class="job-list">
+          <div class="job-card">
+            <div class="job-icon" style="background: #EDF0FF; color: #1D4ED8;">🏥</div>
+            <div class="job-info">
+              <div class="job-title">Auxiliar Administrativo</div>
+              <div class="job-org">Secretaria de Saúde — Prefeitura Municipal</div>
+              <div class="job-tags">
+                <span class="tag tag-type">CLT</span>
+                <span class="tag tag-salary">R$ 1.800</span>
+                <span class="tag tag-location">📍 Centro</span>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div class="job-badge">Novo</div>
+              <div class="job-date" style="margin-top: 6px;">Há 2h</div>
+            </div>
+          </div>
+
+          <div class="job-card">
+            <div class="job-icon" style="background: #ECFDF5; color: #16A34A;">💉</div>
+            <div class="job-info">
+              <div class="job-title">Técnico em Enfermagem</div>
+              <div class="job-org">UBS Central — Secretaria de Saúde</div>
+              <div class="job-tags">
+                <span class="tag tag-type">CLT</span>
+                <span class="tag tag-salary">R$ 2.200</span>
+                <span class="tag tag-location">📍 Zona Norte</span>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div class="job-badge">Novo</div>
+              <div class="job-date" style="margin-top: 6px;">Há 5h</div>
+            </div>
+          </div>
+
+          <div class="job-card">
+            <div class="job-icon" style="background: #FDF8EC; color: #C49A3C;">🚛</div>
+            <div class="job-info">
+              <div class="job-title">Motorista Categoria D</div>
+              <div class="job-org">Sec. de Transporte — Prefeitura Municipal</div>
+              <div class="job-tags">
+                <span class="tag tag-type">CLT</span>
+                <span class="tag tag-salary">R$ 2.500</span>
+                <span class="tag tag-location">📍 Distrito Industrial</span>
+              </div>
+            </div>
+            <div class="job-date">Há 1 dia</div>
+          </div>
+
+          <div class="job-card">
+            <div class="job-icon" style="background: #F5ECFF; color: #6F32B1;">📚</div>
+            <div class="job-info">
+              <div class="job-title">Professor(a) de Matemática</div>
+              <div class="job-org">Escola Municipal Dom Pedro — Sec. Educação</div>
+              <div class="job-tags">
+                <span class="tag tag-type">Temporário</span>
+                <span class="tag tag-salary">R$ 3.100</span>
+                <span class="tag tag-location">📍 Zona Sul</span>
+              </div>
+            </div>
+            <div class="job-date">Há 2 dias</div>
+          </div>
+        </div>
+        <div style="text-align: center; padding: 16px; font-size: 11px; color: #8B949E;">Mostrando 1-4 de 47 vagas · Página 1 de 12</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MOCKUPS 2-4 — DASHBOARDS WHITE-LABEL (3 cidades)
+     Para: GovPortalSection.tsx
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Mockups 2-4 — Dashboards White-Label (3 cidades)</div>
+  <div class="row">
+
+    <!-- ═══ ITU — Dashboard Executivo (Vermelho) ═══ -->
+    <div class="browser" style="width: 380px;">
+      <div class="chrome">
+        <div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="url-bar">vagas.itu.sp.gov.br/gestor</div>
+      </div>
+      <div class="portal-topbar" style="background: #B91C1C; height: 46px;">
+        <div class="portal-brand">
+          <div class="portal-logo" style="background: rgba(255,255,255,0.2); font-size: 10px;">ITU</div>
+          <div class="portal-title" style="font-size: 12px;">Emprega Itu</div>
+        </div>
+        <div style="font-size: 10px; color: rgba(255,255,255,0.6);">Painel do Gestor</div>
+      </div>
+      <div style="background: #FEF2F2; padding: 16px;">
+        <!-- Mini KPIs -->
+        <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+          <div style="flex: 1; background: #fff; border-radius: 8px; padding: 10px 12px; text-align: center; border: 1px solid #FECACA;">
+            <div style="font-size: 20px; font-weight: 800; color: #B91C1C;">312</div>
+            <div style="font-size: 8px; color: #586069; text-transform: uppercase; letter-spacing: 0.5px;">Candidatos</div>
+          </div>
+          <div style="flex: 1; background: #fff; border-radius: 8px; padding: 10px 12px; text-align: center; border: 1px solid #FECACA;">
+            <div style="font-size: 20px; font-weight: 800; color: #B91C1C;">24</div>
+            <div style="font-size: 8px; color: #586069; text-transform: uppercase; letter-spacing: 0.5px;">Vagas</div>
+          </div>
+          <div style="flex: 1; background: #fff; border-radius: 8px; padding: 10px 12px; text-align: center; border: 1px solid #FECACA;">
+            <div style="font-size: 20px; font-weight: 800; color: #16A34A;">89%</div>
+            <div style="font-size: 8px; color: #586069; text-transform: uppercase; letter-spacing: 0.5px;">Taxa preench.</div>
+          </div>
+        </div>
+
+        <!-- Donut chart + legend -->
+        <div style="background: #fff; border-radius: 10px; padding: 14px; border: 1px solid #FECACA; margin-bottom: 12px;">
+          <div style="font-size: 11px; font-weight: 700; color: #1B2A4A; margin-bottom: 10px;">Candidatos por área</div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <!-- SVG donut -->
+            <svg width="90" height="90" viewBox="0 0 36 36">
+              <circle cx="18" cy="18" r="14" fill="none" stroke="#FECACA" stroke-width="4"/>
+              <circle cx="18" cy="18" r="14" fill="none" stroke="#B91C1C" stroke-width="4" stroke-dasharray="35 65" stroke-dashoffset="25"/>
+              <circle cx="18" cy="18" r="14" fill="none" stroke="#EF4444" stroke-width="4" stroke-dasharray="25 75" stroke-dashoffset="90"/>
+              <circle cx="18" cy="18" r="14" fill="none" stroke="#F87171" stroke-width="4" stroke-dasharray="20 80" stroke-dashoffset="65"/>
+              <circle cx="18" cy="18" r="14" fill="none" stroke="#FCA5A5" stroke-width="4" stroke-dasharray="20 80" stroke-dashoffset="45"/>
+            </svg>
+            <div style="flex: 1;">
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;"><div style="width: 8px; height: 8px; border-radius: 2px; background: #B91C1C;"></div><span style="font-size: 10px; color: #1B2A4A;">Saúde — 35%</span></div>
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;"><div style="width: 8px; height: 8px; border-radius: 2px; background: #EF4444;"></div><span style="font-size: 10px; color: #1B2A4A;">Administração — 25%</span></div>
+              <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;"><div style="width: 8px; height: 8px; border-radius: 2px; background: #F87171;"></div><span style="font-size: 10px; color: #1B2A4A;">Educação — 20%</span></div>
+              <div style="display: flex; align-items: center; gap: 6px;"><div style="width: 8px; height: 8px; border-radius: 2px; background: #FCA5A5;"></div><span style="font-size: 10px; color: #1B2A4A;">Outros — 20%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini bar chart -->
+        <div style="background: #fff; border-radius: 10px; padding: 14px; border: 1px solid #FECACA;">
+          <div style="font-size: 11px; font-weight: 700; color: #1B2A4A; margin-bottom: 10px;">Contratações (últimos 6 meses)</div>
+          <div style="display: flex; align-items: flex-end; gap: 6px; height: 60px;">
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;"><div style="width: 100%; height: 20px; background: #FCA5A5; border-radius: 3px 3px 0 0;"></div><span style="font-size: 8px; color: #8B949E;">Out</span></div>
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;"><div style="width: 100%; height: 30px; background: #FCA5A5; border-radius: 3px 3px 0 0;"></div><span style="font-size: 8px; color: #8B949E;">Nov</span></div>
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;"><div style="width: 100%; height: 25px; background: #FCA5A5; border-radius: 3px 3px 0 0;"></div><span style="font-size: 8px; color: #8B949E;">Dez</span></div>
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;"><div style="width: 100%; height: 38px; background: #F87171; border-radius: 3px 3px 0 0;"></div><span style="font-size: 8px; color: #8B949E;">Jan</span></div>
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;"><div style="width: 100%; height: 45px; background: #EF4444; border-radius: 3px 3px 0 0;"></div><span style="font-size: 8px; color: #8B949E;">Fev</span></div>
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;"><div style="font-size: 9px; font-weight: 700; color: #B91C1C;">18</div><div style="width: 100%; height: 55px; background: #B91C1C; border-radius: 3px 3px 0 0;"></div><span style="font-size: 8px; color: #8B949E;">Mar</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ MARÍLIA — Funil de Candidatos (Azul) ═══ -->
+    <div class="browser" style="width: 380px;">
+      <div class="chrome">
+        <div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="url-bar">emprega.marilia.sp.gov.br/gestor</div>
+      </div>
+      <div class="portal-topbar" style="background: #1D4ED8; height: 46px;">
+        <div class="portal-brand">
+          <div class="portal-logo" style="background: rgba(255,255,255,0.2); font-size: 9px;">MRL</div>
+          <div class="portal-title" style="font-size: 12px;">Emprega Marília</div>
+        </div>
+        <div style="font-size: 10px; color: rgba(255,255,255,0.6);">Painel do Gestor</div>
+      </div>
+      <div style="background: #EFF6FF; padding: 16px;">
+        <!-- Mini KPIs -->
+        <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+          <div style="flex: 1; background: #fff; border-radius: 8px; padding: 10px 12px; text-align: center; border: 1px solid #BFDBFE;">
+            <div style="font-size: 20px; font-weight: 800; color: #1D4ED8;">587</div>
+            <div style="font-size: 8px; color: #586069; text-transform: uppercase; letter-spacing: 0.5px;">Candidatos</div>
+          </div>
+          <div style="flex: 1; background: #fff; border-radius: 8px; padding: 10px 12px; text-align: center; border: 1px solid #BFDBFE;">
+            <div style="font-size: 20px; font-weight: 800; color: #1D4ED8;">36</div>
+            <div style="font-size: 8px; color: #586069; text-transform: uppercase; letter-spacing: 0.5px;">Vagas</div>
+          </div>
+          <div style="flex: 1; background: #fff; border-radius: 8px; padding: 10px 12px; text-align: center; border: 1px solid #BFDBFE;">
+            <div style="font-size: 20px; font-weight: 800; color: #16A34A;">92%</div>
+            <div style="font-size: 8px; color: #586069; text-transform: uppercase; letter-spacing: 0.5px;">Taxa preench.</div>
+          </div>
+        </div>
+
+        <!-- Funnel -->
+        <div style="background: #fff; border-radius: 10px; padding: 14px; border: 1px solid #BFDBFE; margin-bottom: 12px;">
+          <div style="font-size: 11px; font-weight: 700; color: #1B2A4A; margin-bottom: 12px;">Funil de candidaturas</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 100%; height: 24px; background: #1D4ED8; border-radius: 4px; display: flex; align-items: center; padding: 0 10px;"><span style="font-size: 10px; color: #fff; font-weight: 600;">587 cadastrados</span></div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 78%; height: 24px; background: #3B82F6; border-radius: 4px; display: flex; align-items: center; padding: 0 10px;"><span style="font-size: 10px; color: #fff; font-weight: 600;">458 com perfil completo</span></div>
+              <span style="font-size: 9px; color: #8B949E;">78%</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 52%; height: 24px; background: #60A5FA; border-radius: 4px; display: flex; align-items: center; padding: 0 10px;"><span style="font-size: 10px; color: #fff; font-weight: 600;">305 encaminhados</span></div>
+              <span style="font-size: 9px; color: #8B949E;">52%</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 30%; height: 24px; background: #93C5FD; border-radius: 4px; display: flex; align-items: center; padding: 0 10px;"><span style="font-size: 10px; color: #1D4ED8; font-weight: 600;">176 entrevistas</span></div>
+              <span style="font-size: 9px; color: #8B949E;">30%</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 18%; height: 24px; background: #16A34A; border-radius: 4px; display: flex; align-items: center; padding: 0 10px;"><span style="font-size: 10px; color: #fff; font-weight: 600;">103</span></div>
+              <span style="font-size: 9px; color: #16A34A; font-weight: 600;">contratados ✓</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent activity -->
+        <div style="background: #fff; border-radius: 10px; padding: 14px; border: 1px solid #BFDBFE;">
+          <div style="font-size: 11px; font-weight: 700; color: #1B2A4A; margin-bottom: 10px;">Atividade recente</div>
+          <div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #F0F3F5;">
+            <div style="width: 6px; height: 6px; border-radius: 50%; background: #16A34A; flex-shrink: 0;"></div>
+            <span style="font-size: 10px; color: #1B2A4A; flex: 1;"><strong>Ana P.</strong> contratada — Enfermeira</span>
+            <span style="font-size: 9px; color: #8B949E;">2min</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid #F0F3F5;">
+            <div style="width: 6px; height: 6px; border-radius: 50%; background: #1D4ED8; flex-shrink: 0;"></div>
+            <span style="font-size: 10px; color: #1B2A4A; flex: 1;"><strong>Carlos M.</strong> encaminhado → Sec. Obras</span>
+            <span style="font-size: 9px; color: #8B949E;">15min</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px; padding: 6px 0;">
+            <div style="width: 6px; height: 6px; border-radius: 50%; background: #C49A3C; flex-shrink: 0;"></div>
+            <span style="font-size: 10px; color: #1B2A4A; flex: 1;"><strong>3 novas vagas</strong> publicadas — Educação</span>
+            <span style="font-size: 9px; color: #8B949E;">1h</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ ASSIS — Empregabilidade Regional (Verde) ═══ -->
+    <div class="browser" style="width: 380px;">
+      <div class="chrome">
+        <div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="url-bar">oportunidades.assis.sp.gov.br/gestor</div>
+      </div>
+      <div class="portal-topbar" style="background: #15803D; height: 46px;">
+        <div class="portal-brand">
+          <div class="portal-logo" style="background: rgba(255,255,255,0.2); font-size: 9px;">ASS</div>
+          <div class="portal-title" style="font-size: 12px;">Oportunidades Assis</div>
+        </div>
+        <div style="font-size: 10px; color: rgba(255,255,255,0.6);">Painel do Gestor</div>
+      </div>
+      <div style="background: #F0FDF4; padding: 16px;">
+        <!-- Mini KPIs -->
+        <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+          <div style="flex: 1; background: #fff; border-radius: 8px; padding: 10px 12px; text-align: center; border: 1px solid #BBF7D0;">
+            <div style="font-size: 20px; font-weight: 800; color: #15803D;">423</div>
+            <div style="font-size: 8px; color: #586069; text-transform: uppercase; letter-spacing: 0.5px;">Candidatos</div>
+          </div>
+          <div style="flex: 1; background: #fff; border-radius: 8px; padding: 10px 12px; text-align: center; border: 1px solid #BBF7D0;">
+            <div style="font-size: 20px; font-weight: 800; color: #15803D;">18</div>
+            <div style="font-size: 8px; color: #586069; text-transform: uppercase; letter-spacing: 0.5px;">Vagas</div>
+          </div>
+          <div style="flex: 1; background: #fff; border-radius: 8px; padding: 10px 12px; text-align: center; border: 1px solid #BBF7D0;">
+            <div style="font-size: 20px; font-weight: 800; color: #16A34A;">85%</div>
+            <div style="font-size: 8px; color: #586069; text-transform: uppercase; letter-spacing: 0.5px;">Taxa preench.</div>
+          </div>
+        </div>
+
+        <!-- Horizontal bar chart — Top areas -->
+        <div style="background: #fff; border-radius: 10px; padding: 14px; border: 1px solid #BBF7D0; margin-bottom: 12px;">
+          <div style="font-size: 11px; font-weight: 700; color: #1B2A4A; margin-bottom: 12px;">Demanda por área</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 3px;"><span style="font-size: 10px; color: #1B2A4A; font-weight: 500;">Indústria</span><span style="font-size: 10px; color: #15803D; font-weight: 700;">142</span></div>
+              <div style="height: 8px; background: #DCFCE7; border-radius: 4px;"><div style="height: 100%; width: 85%; background: #15803D; border-radius: 4px;"></div></div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 3px;"><span style="font-size: 10px; color: #1B2A4A; font-weight: 500;">Comércio</span><span style="font-size: 10px; color: #22C55E; font-weight: 700;">98</span></div>
+              <div style="height: 8px; background: #DCFCE7; border-radius: 4px;"><div style="height: 100%; width: 60%; background: #22C55E; border-radius: 4px;"></div></div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 3px;"><span style="font-size: 10px; color: #1B2A4A; font-weight: 500;">Saúde</span><span style="font-size: 10px; color: #4ADE80; font-weight: 700;">76</span></div>
+              <div style="height: 8px; background: #DCFCE7; border-radius: 4px;"><div style="height: 100%; width: 45%; background: #4ADE80; border-radius: 4px;"></div></div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 3px;"><span style="font-size: 10px; color: #1B2A4A; font-weight: 500;">Serviços Gerais</span><span style="font-size: 10px; color: #86EFAC; font-weight: 700;">62</span></div>
+              <div style="height: 8px; background: #DCFCE7; border-radius: 4px;"><div style="height: 100%; width: 37%; background: #86EFAC; border-radius: 4px;"></div></div>
+            </div>
+            <div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 3px;"><span style="font-size: 10px; color: #1B2A4A; font-weight: 500;">Educação</span><span style="font-size: 10px; color: #BBF7D0; font-weight: 700;">45</span></div>
+              <div style="height: 8px; background: #DCFCE7; border-radius: 4px;"><div style="height: 100%; width: 27%; background: #BBF7D0; border-radius: 4px;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparative metric -->
+        <div style="background: #fff; border-radius: 10px; padding: 14px; border: 1px solid #BBF7D0;">
+          <div style="font-size: 11px; font-weight: 700; color: #1B2A4A; margin-bottom: 10px;">Indicadores vs. mês anterior</div>
+          <div style="display: flex; gap: 8px;">
+            <div style="flex: 1; text-align: center; padding: 8px; background: #F0FDF4; border-radius: 6px;">
+              <div style="font-size: 16px; font-weight: 800; color: #15803D;">↑ 23%</div>
+              <div style="font-size: 8px; color: #586069; margin-top: 2px;">Cadastros</div>
+            </div>
+            <div style="flex: 1; text-align: center; padding: 8px; background: #F0FDF4; border-radius: 6px;">
+              <div style="font-size: 16px; font-weight: 800; color: #15803D;">↑ 15%</div>
+              <div style="font-size: 8px; color: #586069; margin-top: 2px;">Encaminhados</div>
+            </div>
+            <div style="flex: 1; text-align: center; padding: 8px; background: #F0FDF4; border-radius: 6px;">
+              <div style="font-size: 16px; font-weight: 800; color: #15803D;">↑ 31%</div>
+              <div style="font-size: 8px; color: #586069; margin-top: 2px;">Contratações</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MOCKUP — BANCO DE TALENTOS (LinkedIn Recruiter style)
+     Para: GovSolutionSection.tsx — aba "Intermediação"
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Mockup — Banco de Talentos (Intermediação)</div>
+  <div class="browser" style="width: 780px;">
+    <div class="chrome">
+      <div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <div class="url-bar">portal.emprega-plus.gov.br/gestor/talentos</div>
+    </div>
+    <div class="portal-topbar" style="background: #1B2A4A;">
+      <div class="portal-brand">
+        <div class="portal-logo" style="background: #1D4ED8;">E+</div>
+        <div class="portal-title">Banco de Talentos</div>
+      </div>
+      <div class="portal-nav">
+        <a href="#">Vagas</a>
+        <a href="#" class="active">Talentos</a>
+        <a href="#">Encaminhamentos</a>
+        <a href="#">Relatórios</a>
+      </div>
+      <div class="portal-user">
+        <div class="portal-user-name">Gestor</div>
+        <div class="portal-user-avatar">GM</div>
+      </div>
+    </div>
+    <div style="padding: 20px 24px; background: #fff;">
+
+      <!-- Search + filters -->
+      <div class="search-row">
+        <input class="search-input" placeholder="Buscar por nome, cargo, habilidade..." style="flex: 1;" />
+        <select class="search-select"><option>Todas as áreas</option></select>
+        <select class="search-select"><option>Disponibilidade</option></select>
+        <button class="search-btn">Buscar</button>
+      </div>
+
+      <div class="talent-header">
+        <div>
+          <span style="font-size: 13px; font-weight: 600; color: #1B2A4A;">847 profissionais encontrados</span>
+          <span style="font-size: 11px; color: #8B949E; margin-left: 8px;">· 134 encaminhados este mês</span>
+        </div>
+        <div class="talent-controls">
+          <button class="talent-btn">Exportar CSV</button>
+          <button class="talent-btn talent-btn-primary">+ Encaminhar selecionados</button>
+        </div>
+      </div>
+
+      <table class="talent-table">
+        <thead>
+          <tr>
+            <th style="width: 30px;"><input type="checkbox" /></th>
+            <th>Profissional</th>
+            <th>Área</th>
+            <th>Experiência</th>
+            <th>Match</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>
+              <div class="talent-profile">
+                <div class="talent-avatar" style="background: #6F32B1;">MS</div>
+                <div><div class="talent-name">Maria Silva</div><div class="talent-role">Auxiliar Administrativo</div></div>
+              </div>
+            </td>
+            <td style="font-size: 11px;">Administração</td>
+            <td style="font-size: 11px;">3 anos</td>
+            <td>
+              <div style="display: flex; align-items: center;">
+                <div class="match-bar"><div class="match-fill" style="width: 92%; background: #16A34A;"></div></div>
+                <span class="match-label" style="color: #16A34A;">92%</span>
+              </div>
+            </td>
+            <td><span class="talent-status" style="background: #DCF8E4; color: #16A34A;">Disponível</span></td>
+            <td>
+              <div class="talent-actions">
+                <button class="talent-action-btn" title="Ver perfil">👤</button>
+                <button class="talent-action-btn" title="Encaminhar">📤</button>
+                <button class="talent-action-btn" title="WhatsApp">💬</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>
+              <div class="talent-profile">
+                <div class="talent-avatar" style="background: #1D4ED8;">JS</div>
+                <div><div class="talent-name">João Santos</div><div class="talent-role">Motorista Cat. D</div></div>
+              </div>
+            </td>
+            <td style="font-size: 11px;">Transporte</td>
+            <td style="font-size: 11px;">8 anos</td>
+            <td>
+              <div style="display: flex; align-items: center;">
+                <div class="match-bar"><div class="match-fill" style="width: 87%; background: #1D4ED8;"></div></div>
+                <span class="match-label" style="color: #1D4ED8;">87%</span>
+              </div>
+            </td>
+            <td><span class="talent-status" style="background: #DCF8E4; color: #16A34A;">Disponível</span></td>
+            <td>
+              <div class="talent-actions">
+                <button class="talent-action-btn" title="Ver perfil">👤</button>
+                <button class="talent-action-btn" title="Encaminhar">📤</button>
+                <button class="talent-action-btn" title="WhatsApp">💬</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>
+              <div class="talent-profile">
+                <div class="talent-avatar" style="background: #B91C1C;">AO</div>
+                <div><div class="talent-name">Ana Oliveira</div><div class="talent-role">Técnica em Enfermagem</div></div>
+              </div>
+            </td>
+            <td style="font-size: 11px;">Saúde</td>
+            <td style="font-size: 11px;">5 anos</td>
+            <td>
+              <div style="display: flex; align-items: center;">
+                <div class="match-bar"><div class="match-fill" style="width: 78%; background: #1D4ED8;"></div></div>
+                <span class="match-label" style="color: #1D4ED8;">78%</span>
+              </div>
+            </td>
+            <td><span class="talent-status" style="background: #FFF4D5; color: #D97706;">Em processo</span></td>
+            <td>
+              <div class="talent-actions">
+                <button class="talent-action-btn" title="Ver perfil">👤</button>
+                <button class="talent-action-btn" title="Encaminhar">📤</button>
+                <button class="talent-action-btn" title="WhatsApp">💬</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>
+              <div class="talent-profile">
+                <div class="talent-avatar" style="background: #15803D;">CM</div>
+                <div><div class="talent-name">Carlos Mendes</div><div class="talent-role">Eletricista Industrial</div></div>
+              </div>
+            </td>
+            <td style="font-size: 11px;">Manutenção</td>
+            <td style="font-size: 11px;">12 anos</td>
+            <td>
+              <div style="display: flex; align-items: center;">
+                <div class="match-bar"><div class="match-fill" style="width: 95%; background: #16A34A;"></div></div>
+                <span class="match-label" style="color: #16A34A;">95%</span>
+              </div>
+            </td>
+            <td><span class="talent-status" style="background: #DCF8E4; color: #16A34A;">Disponível</span></td>
+            <td>
+              <div class="talent-actions">
+                <button class="talent-action-btn" title="Ver perfil">👤</button>
+                <button class="talent-action-btn" title="Encaminhar">📤</button>
+                <button class="talent-action-btn" title="WhatsApp">💬</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>
+              <div class="talent-profile">
+                <div class="talent-avatar" style="background: #C49A3C;">RL</div>
+                <div><div class="talent-name">Roberta Lima</div><div class="talent-role">Professora — Ens. Fundamental</div></div>
+              </div>
+            </td>
+            <td style="font-size: 11px;">Educação</td>
+            <td style="font-size: 11px;">6 anos</td>
+            <td>
+              <div style="display: flex; align-items: center;">
+                <div class="match-bar"><div class="match-fill" style="width: 71%; background: #C49A3C;"></div></div>
+                <span class="match-label" style="color: #C49A3C;">71%</span>
+              </div>
+            </td>
+            <td><span class="talent-status" style="background: #F0F2F5; color: #6B7280;">Indisponível</span></td>
+            <td>
+              <div class="talent-actions">
+                <button class="talent-action-btn" title="Ver perfil">👤</button>
+                <button class="talent-action-btn" title="Encaminhar">📤</button>
+                <button class="talent-action-btn" title="WhatsApp">💬</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="text-align: center; padding: 14px; font-size: 11px; color: #8B949E;">Mostrando 1-5 de 847 profissionais · Página 1 de 170</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MOCKUP 5 — INTERMEDIAÇÃO (Candidatos encaminhados)
+     Para: GovSolutionSection.tsx
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Mockup 5 — Intermediação (Candidatos Encaminhados)</div>
+  <div class="panel" style="width: 500px;">
+    <div class="panel-title">Candidatos encaminhados</div>
+    <div class="panel-subtitle">Março 2026 · 134 encaminhamentos</div>
+    <div class="filters">
+      <span class="filter-pill filter-active">Todos</span>
+      <span class="filter-pill filter-inactive">Contratados</span>
+      <span class="filter-pill filter-inactive">Em entrevista</span>
+      <span class="filter-pill filter-inactive">Aguardando</span>
+    </div>
+    <div class="divider"></div>
+    <div class="cand-row"><div class="avatar" style="background: #6F32B1;">MS</div><div class="cand-info"><div class="cand-name">Maria Silva</div><div class="cand-role">Aux. Administrativo</div><div class="cand-dest">Encaminhada → Sec. Saúde</div></div><span class="status-badge" style="background: #DCF8E4; color: #16A34A;">Contratada</span></div>
+    <div class="cand-row"><div class="avatar" style="background: #1D4ED8;">JS</div><div class="cand-info"><div class="cand-name">João Santos</div><div class="cand-role">Motorista Cat. D</div><div class="cand-dest">Encaminhado → Sec. Transporte</div></div><span class="status-badge" style="background: #FFF4D5; color: #D97706;">Em entrevista</span></div>
+    <div class="cand-row"><div class="avatar" style="background: #B91C1C;">AO</div><div class="cand-info"><div class="cand-name">Ana Oliveira</div><div class="cand-role">Téc. Enfermagem</div><div class="cand-dest">Encaminhada → UBS Norte</div></div><span class="status-badge" style="background: #F0F2F5; color: #6B7280;">Aguardando</span></div>
+    <div class="cand-row" style="border-bottom: none;"><div class="avatar" style="background: #15803D;">CM</div><div class="cand-info"><div class="cand-name">Carlos Mendes</div><div class="cand-role">Eletricista</div><div class="cand-dest">Encaminhado → Sec. Obras</div></div><span class="status-badge" style="background: #DCF8E4; color: #16A34A;">Contratado</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MOCKUP 6 — DASHBOARD DE GESTÃO
+     Para: GovSolutionSection.tsx
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Mockup 6 — Dashboard de Gestão</div>
+  <div class="panel" style="width: 540px;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div class="panel-title">Painel de Empregabilidade</div>
+      <div class="period">Março 2026 ▾</div>
+    </div>
+    <div class="kpis">
+      <div class="kpi-card"><div class="kpi-value">847</div><div class="kpi-label">Candidatos cadastrados</div><div class="kpi-delta">+12%</div></div>
+      <div class="kpi-card"><div class="kpi-value">134</div><div class="kpi-label">Encaminhamentos</div><div class="kpi-delta">+8%</div></div>
+      <div class="kpi-card"><div class="kpi-value">67</div><div class="kpi-label">Contratações efetivadas</div><div class="kpi-delta">+15%</div></div>
+    </div>
+    <div style="font-size: 13px; font-weight: 600; margin-bottom: 4px;">Contratações por mês</div>
+    <div class="chart">
+      <div class="bar-group"><div class="bar" style="height: 46px; background: #BFD0EC;"></div><div class="bar-label">Out</div></div>
+      <div class="bar-group"><div class="bar" style="height: 65px; background: #BFD0EC;"></div><div class="bar-label">Nov</div></div>
+      <div class="bar-group"><div class="bar" style="height: 55px; background: #BFD0EC;"></div><div class="bar-label">Dez</div></div>
+      <div class="bar-group"><div class="bar" style="height: 78px; background: #BFD0EC;"></div><div class="bar-label">Jan</div></div>
+      <div class="bar-group"><div class="bar" style="height: 98px; background: #BFD0EC;"></div><div class="bar-label">Fev</div></div>
+      <div class="bar-group"><div class="bar-value">67</div><div class="bar" style="height: 120px; background: #1D4ED8;"></div><div class="bar-label">Mar</div></div>
+      <div class="bar-group"><div class="bar" style="height: 72px; background: #BFD0EC;"></div><div class="bar-label">Abr</div></div>
+    </div>
+    <div style="font-size: 13px; font-weight: 600; margin: 16px 0 8px;">Top empresas contratantes</div>
+    <div class="table-row"><span class="table-rank">1.</span><span class="table-name">Supermercado Bom Preço</span><span class="table-count">12 contratações</span></div>
+    <div class="table-row"><span class="table-rank">2.</span><span class="table-name">Hospital Municipal</span><span class="table-count">9 contratações</span></div>
+    <div class="table-row"><span class="table-rank">3.</span><span class="table-name">Indústria ABC Ltda</span><span class="table-count">7 contratações</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MOCKUP — QUALIFICAÇÃO (Cursos)
+     Para: GovSolutionSection.tsx
+═══════════════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">Mockup — Qualificação (Cursos)</div>
+  <div class="panel" style="width: 460px;">
+    <div class="panel-title">Trilhas de Qualificação</div>
+    <div class="panel-subtitle">12 cursos disponíveis · 342 inscritos</div>
+    <div class="courses-grid">
+      <div class="course-card">
+        <div class="course-accent" style="background: #1D4ED8;"></div>
+        <div class="course-body">
+          <div class="course-icon" style="background: #EDF0FF;">📋</div>
+          <div class="course-title">Atendimento ao Público</div>
+          <div class="course-meta"><span class="tag" style="background:#EDF0FF;color:#1D4ED8;font-size:9px;">20h</span><span style="font-size:9px;color:#586069;">89 inscritos</span></div>
+          <div class="progress-bg"><div class="progress-fill" style="width: 65%; background: #1D4ED8;"></div></div>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-accent" style="background: #16A34A;"></div>
+        <div class="course-body">
+          <div class="course-icon" style="background: #ECFDF5;">💻</div>
+          <div class="course-title">Informática Básica</div>
+          <div class="course-meta"><span class="tag" style="background:#ECFDF5;color:#16A34A;font-size:9px;">40h</span><span style="font-size:9px;color:#586069;">124 inscritos</span></div>
+          <div class="progress-bg"><div class="progress-fill" style="width: 82%; background: #16A34A;"></div></div>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-accent" style="background: #C49A3C;"></div>
+        <div class="course-body">
+          <div class="course-icon" style="background: #FDF8EC;">⚠️</div>
+          <div class="course-title">Segurança do Trabalho</div>
+          <div class="course-meta"><span class="tag" style="background:#FDF8EC;color:#C49A3C;font-size:9px;">30h</span><span style="font-size:9px;color:#586069;">67 inscritos</span></div>
+          <div class="progress-bg"><div class="progress-fill" style="width: 48%; background: #C49A3C;"></div></div>
+        </div>
+      </div>
+      <div class="course-card">
+        <div class="course-accent" style="background: #6F32B1;"></div>
+        <div class="course-body">
+          <div class="course-icon" style="background: #F5ECFF;">👥</div>
+          <div class="course-title">Gestão de Equipes</div>
+          <div class="course-meta"><span class="tag" style="background:#F5ECFF;color:#6F32B1;font-size:9px;">16h</span><span style="font-size:9px;color:#586069;">62 inscritos</span></div>
+          <div class="progress-bg"><div class="progress-fill" style="width: 55%; background: #6F32B1;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

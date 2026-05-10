@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Electia Viz — Big Five v0.2 (Adioma-fiel + polos bipolares)</title>
+  <link rel="preconnect" href="https://rsms.me/" />
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <style>
+    :root {
+      --bg: oklch(96% 0 0);
+      --text: oklch(18% 0 0);
+      --text-muted: oklch(45% 0 0);
+      --viz-card-padding: clamp(20px, 4vw, 28px);
+      --viz-card-radius: 16px;
+      --viz-card-bg: oklch(98.5% 0 0);
+      --viz-card-border: 1px solid oklch(92% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.06);
+
+      /* 1 fill lavanda único pros 5 setores (Adioma-fiel) */
+      --sector-fill: oklch(94% 0.03 290);
+
+      /* Score (ideal × realizado) — verde sutil + sólido */
+      --score-ideal-stroke: oklch(60% 0.18 145);
+      --score-real-fill: oklch(45% 0.20 145);
+
+      /* Cores polos por dimensão (saturadas, espelham Adioma) */
+      --pole-1: oklch(68% 0.18 50);   /* Abertura — orange-amber */
+      --pole-2: oklch(68% 0.18 350);  /* Conscienciosidade — pink-rose */
+      --pole-3: oklch(60% 0.18 240);  /* Extroversão — blue */
+      --pole-4: oklch(62% 0.18 290);  /* Amabilidade — purple */
+      --pole-5: oklch(60% 0.16 200);  /* Neuroticismo — teal */
+
+      --label-on-light: oklch(20% 0 0);
+      --label-on-dark:  oklch(98% 0 0);
+
+      --viz-motion-entry-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --viz-motion-hover: 150ms;
+    }
+
+    [data-theme="dark"] {
+      --bg: oklch(12% 0 0);
+      --text: oklch(94% 0 0);
+      --text-muted: oklch(70% 0 0);
+      --viz-card-bg: oklch(16% 0 0);
+      --viz-card-border: 1px solid oklch(22% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.3);
+
+      --sector-fill: oklch(22% 0.03 290);
+
+      --score-ideal-stroke: oklch(72% 0.16 145);
+      --score-real-fill: oklch(78% 0.20 145);
+
+      --pole-1: oklch(78% 0.16 50);
+      --pole-2: oklch(78% 0.16 350);
+      --pole-3: oklch(72% 0.16 240);
+      --pole-4: oklch(75% 0.16 290);
+      --pole-5: oklch(72% 0.14 200);
+
+      --label-on-light: oklch(15% 0 0);
+      --label-on-dark:  oklch(98% 0 0);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; transition: background 200ms ease, color 200ms ease; }
+    body { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px; }
+    .stage { max-width: 620px; width: 100%; }
+
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .theme-btn { appearance: none; border: 1px solid var(--viz-card-border); background: var(--viz-card-bg); color: var(--text); font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 999px; cursor: pointer; transition: all var(--viz-motion-hover) ease; }
+    .theme-btn:hover { transform: translateY(-1px); }
+
+    .viz-card { background: var(--viz-card-bg); border: var(--viz-card-border); border-radius: var(--viz-card-radius); padding: var(--viz-card-padding); box-shadow: var(--viz-card-shadow); animation: cardEnter 200ms var(--viz-motion-entry-ease) both; }
+    @keyframes cardEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .card-title { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+    .card-icon { width: 24px; height: 24px; border-radius: 6px; background: oklch(94% 0.03 290); display: grid; place-items: center; color: oklch(45% 0.05 290); font-weight: 700; font-size: 11px; }
+    [data-theme="dark"] .card-icon { background: oklch(28% 0.05 290); color: oklch(85% 0.05 290); }
+
+    .wheel-wrap { display: grid; place-items: center; margin: 0 0 14px; animation: fadeIn 600ms var(--viz-motion-entry-ease) 100ms both; }
+    .wheel-wrap svg { display: block; max-width: 100%; height: auto; }
+
+    /* 5 setores — 1 fill lavanda único */
+    .sector { fill: var(--sector-fill); animation: fadeIn 400ms ease 200ms both; }
+    .sector-divider { stroke: var(--viz-card-bg); stroke-width: 2; animation: fadeIn 200ms ease 350ms both; }
+
+    .ring-center { fill: var(--viz-card-bg); animation: fadeIn 200ms ease 200ms both; }
+
+    /* Hierarquia textual invertida: nome FORA, descrição DENTRO */
+    .label-name { fill: var(--label-on-light); font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; dominant-baseline: middle; animation: fadeIn 200ms ease 600ms both; }
+    [data-theme="dark"] .label-name { fill: var(--label-on-dark); }
+
+    .label-desc { fill: var(--text-muted); font-size: 8.5px; font-weight: 500; letter-spacing: 0.02em; dominant-baseline: middle; animation: fadeIn 200ms ease 700ms both; }
+
+    .dim-icon { color: var(--text-muted); pointer-events: none; animation: fadeIn 240ms ease 800ms both; }
+
+    /* Centro: pictograma + título conceitual (NÃO match score) */
+    .center-pictogram { color: var(--text-muted); animation: fadeIn 300ms ease 400ms both; }
+    .center-title { fill: var(--text); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .center-sub   { fill: var(--text-muted); font-size: 7.5px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; }
+
+    /* Polos: curva colorida + bullets + labels */
+    .pole-curve { fill: none; stroke-width: 2.5; stroke-linecap: round; opacity: 0.7; animation: fadeIn 500ms ease 1000ms both; }
+    .pole-bullet { stroke: var(--viz-card-bg); stroke-width: 1.5; animation: fadeIn 300ms ease 1100ms both; }
+    .pole-label-1 { fill: var(--text); font-size: 9px; font-weight: 600; letter-spacing: 0.01em; animation: fadeIn 300ms ease 1200ms both; }
+    .pole-label-2 { fill: var(--text-muted); font-size: 8px; font-weight: 500; animation: fadeIn 300ms ease 1250ms both; }
+
+    /* Score viz: dot ideal (anel tracejado) + dot realizado (sólido) na curva polo */
+    .score-ideal { fill: var(--viz-card-bg); stroke: var(--score-ideal-stroke); stroke-width: 1.8; stroke-dasharray: 2.5 2; animation: scorePop 500ms var(--viz-motion-entry-ease) 1400ms both; transform-origin: 300px 300px; }
+    .score-real { fill: var(--score-real-fill); stroke: var(--viz-card-bg); stroke-width: 1.8; animation: scorePop 500ms var(--viz-motion-entry-ease) 1500ms both; transform-origin: 300px 300px; }
+    @keyframes scorePop { 0% { opacity: 0; transform: scale(0.4); } 70% { transform: scale(1.1); } 100% { opacity: 1; transform: scale(1); } }
+
+    /* Tabela compactada substitui o compare-row poluído da v0.1 */
+    .dim-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 12px; animation: fadeUp 400ms var(--viz-motion-entry-ease) 1600ms both; }
+    .dim-table th, .dim-table td { padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--viz-card-border); }
+    .dim-table th { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    .dim-table td.score { text-align: right; font-weight: 600; font-feature-settings: 'tnum' 1; color: var(--text); }
+    .dim-table td.score.real { color: var(--score-real-fill); }
+    .dim-table td.delta { text-align: right; font-size: 11px; color: var(--text-muted); font-feature-settings: 'tnum' 1; }
+    .dim-table td.delta.pos { color: oklch(50% 0.15 145); }
+    .dim-table td.delta.neg { color: oklch(55% 0.18 30); }
+    [data-theme="dark"] .dim-table td.delta.pos { color: oklch(75% 0.15 145); }
+    [data-theme="dark"] .dim-table td.delta.neg { color: oklch(75% 0.18 30); }
+
+    .legend-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-bottom: 14px; font-size: 10.5px; color: var(--text-muted); animation: fadeIn 300ms ease 1700ms both; }
+    .leg-item { display: flex; align-items: center; gap: 6px; }
+    .leg-ideal { width: 12px; height: 12px; border-radius: 50%; background: var(--viz-card-bg); border: 1.5px dashed var(--score-ideal-stroke); }
+    .leg-real { width: 10px; height: 10px; border-radius: 50%; background: var(--score-real-fill); }
+
+    .narrative { font-size: 13px; line-height: 1.55; color: var(--text); margin-bottom: 6px; padding: 10px 12px; background: oklch(from var(--text) l c h / 0.04); border-radius: 10px; border-left: 2px solid var(--score-real-fill); animation: fadeUp 400ms var(--viz-motion-entry-ease) 1800ms both; }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0ms !important; animation-delay: 0ms !important; transition-duration: 0ms !important; } }
+
+    .footer-note { margin-top: 16px; font-size: 11px; color: var(--text-muted); text-align: center; letter-spacing: 0.02em; }
+    .footer-note a { color: var(--score-real-fill); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="toggle-row">
+      <span>Mockup v0.3 · Big Five · polos com linha contínua + respiro angular nos divisores</span>
+      <button class="theme-btn" id="themeBtn" aria-label="Alternar tema claro/escuro">🌙 Dark</button>
+    </div>
+
+    <article class="viz-card" aria-labelledby="card-title">
+      <header class="card-header">
+        <div class="card-title">
+          <span class="card-icon" aria-hidden="true">B5</span>
+          <span id="card-title">Big Five · OCEAN</span>
+        </div>
+      </header>
+
+      <div class="wheel-wrap">
+        <svg viewBox="0 0 600 600" width="600" height="600"
+             role="img" aria-labelledby="bf-svg-title bf-svg-desc">
+          <title id="bf-svg-title">Big Five OCEAN: 5 dimensões com polos bipolares e ideal × realizado</title>
+          <desc id="bf-svg-desc">
+            Cinco setores radiais (Abertura, Conscienciosidade, Extroversão, Amabilidade, Neuroticismo). Em cada um, dois polos opostos (alto e baixo) com palavras-chave. Os scores aparecem como pontos na curva externa: anel tracejado para o ideal do cargo, ponto sólido para o realizado.
+          </desc>
+
+          <!-- PATHS INVISÍVEIS PRO TEXTPATH (descrição interna r=85, nome externo r=175) -->
+          <defs>
+            <!-- ANEL DESCRIÇÃO — r=85, hierarquia interna -->
+            <path id="bf-desc-1" d="M 219.16,273.74 A 85,85 0 0,1 300,215" fill="none" />
+            <path id="bf-desc-2" d="M 300,215 A 85,85 0 0,1 380.84,273.74" fill="none" />
+            <path id="bf-desc-3" d="M 349.96,368.77 A 85,85 0 0,0 380.84,273.74" fill="none" />
+            <path id="bf-desc-4" d="M 250.04,368.77 A 85,85 0 0,0 349.96,368.77" fill="none" />
+            <path id="bf-desc-5" d="M 219.16,273.74 A 85,85 0 0,0 250.04,368.77" fill="none" />
+
+            <!-- ANEL NOME — r=175, hierarquia externa (Adioma) -->
+            <path id="bf-name-1" d="M 133.55,245.93 A 175,175 0 0,1 300,125" fill="none" />
+            <path id="bf-name-2" d="M 300,125 A 175,175 0 0,1 466.45,245.93" fill="none" />
+            <path id="bf-name-3" d="M 402.87,441.58 A 175,175 0 0,0 466.45,245.93" fill="none" />
+            <path id="bf-name-4" d="M 197.13,441.58 A 175,175 0 0,0 402.87,441.58" fill="none" />
+            <path id="bf-name-5" d="M 133.55,245.93 A 175,175 0 0,0 197.13,441.58" fill="none" />
+          </defs>
+
+          <!-- 5 SETORES (annular sectors, raio 70 → 200, fill lavanda único) -->
+          <path class="sector" d="M 233.42,278.37 L 109.78,238.20 A 200,200 0 0,1 300,100 L 300,230 A 70,70 0 0,0 233.42,278.37 Z" />
+          <path class="sector" d="M 300,230 L 300,100 A 200,200 0 0,1 490.22,238.20 L 366.58,278.37 A 70,70 0 0,0 300,230 Z" />
+          <path class="sector" d="M 366.58,278.37 L 490.22,238.20 A 200,200 0 0,1 417.56,461.80 L 341.15,356.63 A 70,70 0 0,0 366.58,278.37 Z" />
+          <path class="sector" d="M 341.15,356.63 L 417.56,461.80 A 200,200 0 0,1 182.44,461.80 L 258.85,356.63 A 70,70 0 0,0 341.15,356.63 Z" />
+          <path class="sector" d="M 258.85,356.63 L 182.44,461.80 A 200,200 0 0,1 109.78,238.20 L 233.42,278.37 A 70,70 0 0,0 258.85,356.63 Z" />
+
+          <!-- Separadores radiais entre os 5 setores -->
+          <line class="sector-divider" x1="300"    y1="100"    x2="300"    y2="230" />
+          <line class="sector-divider" x1="490.22" y1="238.20" x2="366.58" y2="278.37" />
+          <line class="sector-divider" x1="417.56" y1="461.80" x2="341.15" y2="356.63" />
+          <line class="sector-divider" x1="182.44" y1="461.80" x2="258.85" y2="356.63" />
+          <line class="sector-divider" x1="109.78" y1="238.20" x2="233.42" y2="278.37" />
+
+          <!-- CENTRO -->
+          <circle class="ring-center" cx="300" cy="300" r="70" />
+
+          <!-- Pictograma central (lucide users) -->
+          <svg class="center-pictogram" x="280" y="252" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <text class="center-title" x="300" y="320" text-anchor="middle">Big Five</text>
+          <text class="center-sub"   x="300" y="335" text-anchor="middle">Personalidade</text>
+
+          <!-- LABELS NOME — textPath externo (hierarquia invertida vs v0.1) -->
+          <text class="label-name"><textPath href="#bf-name-1" startOffset="50%" text-anchor="middle">Abertura</textPath></text>
+          <text class="label-name"><textPath href="#bf-name-2" startOffset="50%" text-anchor="middle">Conscienciosidade</textPath></text>
+          <text class="label-name"><textPath href="#bf-name-3" startOffset="50%" text-anchor="middle">Extroversão</textPath></text>
+          <text class="label-name"><textPath href="#bf-name-4" startOffset="50%" text-anchor="middle">Amabilidade</textPath></text>
+          <text class="label-name"><textPath href="#bf-name-5" startOffset="50%" text-anchor="middle">Neuroticismo</textPath></text>
+
+          <!-- LABELS DESCRIÇÃO — textPath interno -->
+          <text class="label-desc"><textPath href="#bf-desc-1" startOffset="50%" text-anchor="middle">curiosidade · criatividade</textPath></text>
+          <text class="label-desc"><textPath href="#bf-desc-2" startOffset="50%" text-anchor="middle">organização · disciplina</textPath></text>
+          <text class="label-desc"><textPath href="#bf-desc-3" startOffset="50%" text-anchor="middle">sociabilidade · energia</textPath></text>
+          <text class="label-desc"><textPath href="#bf-desc-4" startOffset="50%" text-anchor="middle">cooperação · empatia</textPath></text>
+          <text class="label-desc"><textPath href="#bf-desc-5" startOffset="50%" text-anchor="middle">estabilidade emocional</textPath></text>
+
+          <!-- ÍCONES das 5 dimensões — JS injeta -->
+          <g id="dim-icons" aria-hidden="true"></g>
+
+          <!-- POLOS BIPOLARES EXTERNOS — JS popula (curva + bullets + labels + score dots) -->
+          <g id="poles" aria-hidden="false"></g>
+        </svg>
+      </div>
+
+      <div class="legend-row" aria-hidden="true">
+        <div class="leg-item"><span class="leg-ideal"></span><span>Ideal · Cargo</span></div>
+        <div class="leg-item"><span class="leg-real"></span><span>Realizado · Você</span></div>
+      </div>
+
+      <table class="dim-table" aria-label="Scores Big Five por dimensão">
+        <thead>
+          <tr><th>Dimensão</th><th style="text-align:right">Ideal</th><th style="text-align:right">Realizado</th><th style="text-align:right">Δ</th></tr>
+        </thead>
+        <tbody id="dim-table-body"></tbody>
+      </table>
+
+      <p class="narrative">
+        Perfil <strong>equilibrado</strong> com forte traço de <strong>Conscienciosidade</strong> e <strong>Amabilidade</strong>.
+        Alta cooperação e organização — alinhado ao cargo de Comercial Sr.
+        Baixo neuroticismo (estabilidade sob pressão) e abertura levemente acima do esperado, sinal de potencial criativo.
+      </p>
+    </article>
+
+    <p class="footer-note">
+      Mockup v0.2 · Big Five Adioma-fiel + polos bipolares + ideal×realizado · spec em <a href="../design-system-v0.1.md">design-system-v0.1.md</a> · valores fictícios
+    </p>
+  </div>
+
+  <script>
+    // 5 ícones lucide (centrais nos setores)
+    const ICONS = {
+      'lightbulb':   '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
+      'clipboard':   '<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 2h6a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/><path d="m9 14 2 2 4-4"/>',
+      'megaphone':   '<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+      'handheart':   '<path d="M11 14h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 16"/><path d="m7 20 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 15 6 6"/><path d="M19.5 8.5c.7-.7 1.5-1.6 1.5-2.7A2.7 2.7 0 0 0 18.3 3c-.9 0-1.4.3-2.3 1.2C15.1 3.3 14.6 3 13.7 3A2.7 2.7 0 0 0 11 5.8c0 1.2.8 2 1.5 2.7L16 12Z"/>',
+      'waves':       '<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>'
+    };
+
+    /*
+     * 5 dimensões Big Five
+     * - midDeg: ângulo central CW from top
+     * - poleHighDeg / poleLowDeg: ângulos dos 2 polos (cantos do setor com 4° de respiro)
+     * - ideal/realized: scores 0-100 (cargo × colaborador)
+     * - poleHigh/poleLow: { line1, line2 } — 2 palavras por polo
+     * - color: var() pole color (saturada)
+     * - icon: chave em ICONS
+     * - desc: descrição curta (já usada no textPath fixo acima)
+     */
+    const DIMS = [
+      {
+        name: 'Abertura', midDeg: 324, poleHighDeg: 296, poleLowDeg: 352,
+        ideal: 75, realized: 78, color: 'var(--pole-1)', icon: 'lightbulb',
+        poleHigh: { line1: 'inventivo', line2: 'curioso' },
+        poleLow:  { line1: 'consistente', line2: 'cauteloso' }
+      },
+      {
+        name: 'Conscienciosidade', midDeg: 36, poleHighDeg: 8, poleLowDeg: 64,
+        ideal: 70, realized: 72, color: 'var(--pole-2)', icon: 'clipboard',
+        poleHigh: { line1: 'eficiente', line2: 'organizado' },
+        poleLow:  { line1: 'tranquilo', line2: 'espontâneo' }
+      },
+      {
+        name: 'Extroversão', midDeg: 108, poleHighDeg: 80, poleLowDeg: 136,
+        ideal: 65, realized: 68, color: 'var(--pole-3)', icon: 'megaphone',
+        poleHigh: { line1: 'expansivo', line2: 'enérgico' },
+        poleLow:  { line1: 'reservado', line2: 'introspectivo' }
+      },
+      {
+        name: 'Amabilidade', midDeg: 180, poleHighDeg: 152, poleLowDeg: 208,
+        ideal: 80, realized: 78, color: 'var(--pole-4)', icon: 'handheart',
+        poleHigh: { line1: 'amigável', line2: 'cooperativo' },
+        poleLow:  { line1: 'direto', line2: 'firme' }
+      },
+      {
+        name: 'Neuroticismo', midDeg: 252, poleHighDeg: 224, poleLowDeg: 280,
+        ideal: 30, realized: 35, color: 'var(--pole-5)', icon: 'waves',
+        poleHigh: { line1: 'sensível', line2: 'reativo' },
+        poleLow:  { line1: 'estável', line2: 'confiante' }
+      }
+    ];
+
+    const CX = 300, CY = 300;
+    const R_ICON = 130;     // entre nome (r=175) e descrição (r=85), no espaço vazio do setor
+    const R_POLE = 235;     // raio dos polos externos (fora do círculo principal r=200)
+    const R_POLE_LABEL = 268; // raio do texto dos polos
+
+    const polar = (deg, r) => {
+      const rad = (deg * Math.PI) / 180;
+      return { x: CX + r * Math.sin(rad), y: CY - r * Math.cos(rad) };
+    };
+
+    // Score (0-100) → ângulo na curva polo (poleLowDeg = 0%, poleHighDeg = 100%)
+    const scoreToPoleAngle = (score, dim) =>
+      dim.poleLowDeg + (score / 100) * (dim.poleHighDeg - dim.poleLowDeg);
+
+    function renderIcons() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const layer = document.getElementById('dim-icons');
+      layer.innerHTML = '';
+      const size = 22;
+      DIMS.forEach(dim => {
+        const p = polar(dim.midDeg, R_ICON);
+        const ico = document.createElementNS(NS, 'svg');
+        ico.setAttribute('x', p.x - size / 2);
+        ico.setAttribute('y', p.y - size / 2);
+        ico.setAttribute('width', size);
+        ico.setAttribute('height', size);
+        ico.setAttribute('viewBox', '0 0 24 24');
+        ico.setAttribute('fill', 'none');
+        ico.setAttribute('stroke', 'currentColor');
+        ico.setAttribute('stroke-width', '1.8');
+        ico.setAttribute('stroke-linecap', 'round');
+        ico.setAttribute('stroke-linejoin', 'round');
+        ico.setAttribute('class', 'dim-icon');
+        ico.innerHTML = ICONS[dim.icon] || '';
+        layer.appendChild(ico);
+      });
+    }
+
+    function renderPoles() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const layer = document.getElementById('poles');
+      layer.innerHTML = '';
+
+      DIMS.forEach(dim => {
+        const g = document.createElementNS(NS, 'g');
+        g.setAttribute('class', 'pole-group');
+
+        // 1) Curva polo (arc do polo high ao polo low, em r=235)
+        const high = polar(dim.poleHighDeg, R_POLE);
+        const low = polar(dim.poleLowDeg, R_POLE);
+        const curve = document.createElementNS(NS, 'path');
+        curve.setAttribute('d', `M ${high.x.toFixed(2)},${high.y.toFixed(2)} A ${R_POLE},${R_POLE} 0 0,1 ${low.x.toFixed(2)},${low.y.toFixed(2)}`);
+        curve.setAttribute('class', 'pole-curve');
+        curve.style.stroke = dim.color;
+        g.appendChild(curve);
+
+        // 2) Bullets dos 2 polos (extremos do setor) — score viz fica na tabela compacta abaixo
+        const bulletHigh = document.createElementNS(NS, 'circle');
+        bulletHigh.setAttribute('cx', high.x.toFixed(2));
+        bulletHigh.setAttribute('cy', high.y.toFixed(2));
+        bulletHigh.setAttribute('r', '3.5');
+        bulletHigh.setAttribute('class', 'pole-bullet');
+        bulletHigh.style.fill = dim.color;
+        g.appendChild(bulletHigh);
+
+        const bulletLow = document.createElementNS(NS, 'circle');
+        bulletLow.setAttribute('cx', low.x.toFixed(2));
+        bulletLow.setAttribute('cy', low.y.toFixed(2));
+        bulletLow.setAttribute('r', '3.5');
+        bulletLow.setAttribute('class', 'pole-bullet');
+        bulletLow.style.fill = dim.color;
+        g.appendChild(bulletLow);
+
+        // 3) Labels dos 2 polos (2 linhas cada, posicionados radialmente externos aos bullets)
+        appendPoleLabel(g, dim.poleHighDeg, dim.poleHigh.line1, dim.poleHigh.line2);
+        appendPoleLabel(g, dim.poleLowDeg,  dim.poleLow.line1,  dim.poleLow.line2);
+
+        layer.appendChild(g);
+      });
+    }
+
+    function appendPoleLabel(group, angleDeg, line1, line2) {
+      const NS = 'http://www.w3.org/2000/svg';
+      const pos = polar(angleDeg, R_POLE_LABEL);
+      const txt = document.createElementNS(NS, 'text');
+      txt.setAttribute('x', pos.x.toFixed(2));
+      txt.setAttribute('y', pos.y.toFixed(2));
+      txt.setAttribute('text-anchor', 'middle');
+      txt.setAttribute('dominant-baseline', 'middle');
+
+      const t1 = document.createElementNS(NS, 'tspan');
+      t1.setAttribute('x', pos.x.toFixed(2));
+      t1.setAttribute('dy', '-0.4em');
+      t1.setAttribute('class', 'pole-label-1');
+      t1.textContent = line1;
+      txt.appendChild(t1);
+
+      const t2 = document.createElementNS(NS, 'tspan');
+      t2.setAttribute('x', pos.x.toFixed(2));
+      t2.setAttribute('dy', '1.1em');
+      t2.setAttribute('class', 'pole-label-2');
+      t2.textContent = line2;
+      txt.appendChild(t2);
+
+      group.appendChild(txt);
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('dim-table-body');
+      tbody.innerHTML = '';
+      DIMS.forEach(dim => {
+        const delta = dim.realized - dim.ideal;
+        const sign = delta >= 0 ? '+' : '';
+        const cls = delta === 0 ? '' : (delta > 0 ? ' pos' : ' neg');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${dim.name}</td>
+          <td class="score">${dim.ideal}</td>
+          <td class="score real">${dim.realized}</td>
+          <td class="delta${cls}">${sign}${delta}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    renderIcons();
+    renderPoles();
+    renderTable();
+
+    // Theme toggle
+    const btn = document.getElementById('themeBtn');
+    const root = document.documentElement;
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      btn.textContent = next === 'light' ? '🌙 Dark' : '☀️ Light';
+      // Re-render polos pra pegar var() colors atualizadas
+      renderPoles();
+    });
+  </script>
+</body>
+</html>
