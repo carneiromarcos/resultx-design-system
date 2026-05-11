@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electia by Emprega+ — Social Media Templates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-dark: #2DD4BF;
+      --brand-light: #5EEAD4;
+      --bg: #091020;
+      --surface-1: #0D1729;
+      --surface-2: #111E33;
+      --surface-3: #1A2B45;
+      --border: hsl(221 20% 16%);
+      --border-hover: hsl(220 10% 25%);
+      --text-primary: #FFFFFF;
+      --text-muted: #7A8599;
+      --text-subtle: #505058;
+      --gradient-brand: linear-gradient(135deg, #2DD4BF 0%, #5EEAD4 100%);
+      --gradient-brand-subtle: linear-gradient(135deg, rgba(196,154,60,0.15) 0%, rgba(212,173,85,0.15) 100%);
+      --glass-bg: hsla(220, 20%, 10%, 0.6);
+      --glass-border: hsla(0, 0%, 100%, 0.08);
+      --glass-border-hover: hsla(0, 0%, 100%, 0.15);
+      --glow-brand: 0 0 20px rgba(196,154,60,0.25);
+      --glow-brand-lg: 0 0 40px rgba(196,154,60,0.35), 0 0 80px rgba(196,154,60,0.15);
+      --radius-xl: 0.75rem;
+      --radius-full: 9999px;
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-heading: 'Sora', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .header {
+      background: var(--bg);
+      padding: 3.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(196,154,60,0.08), transparent);
+      transform: translate(-50%, -50%);
+    }
+    .header .mountain {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--brand-dark);
+      position: relative;
+      z-index: 1;
+      line-height: 1;
+    }
+    .header h1 {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 0.75rem;
+      position: relative; z-index: 1;
+    }
+    .header p {
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+      margin-top: 0.375rem;
+      position: relative; z-index: 1;
+    }
+    .header .tagline {
+      color: var(--brand-dark);
+      font-style: italic;
+      font-size: 0.8125rem;
+      margin-top: 0.75rem;
+      position: relative; z-index: 1;
+    }
+    .header .badge {
+      display: inline-block;
+      margin-top: 1rem;
+      background: rgba(196,154,60,0.12);
+      color: var(--brand-light);
+      font-size: 0.625rem;
+      font-weight: 600;
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--radius-full);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(196,154,60,0.2);
+      position: relative; z-index: 1;
+    }
+
+    .nav {
+      background: rgba(9,16,32,0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; gap: 1.5rem;
+      overflow-x: auto; padding: 0.75rem 0;
+    }
+    .nav a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .nav a:hover { color: var(--brand-light); }
+
+    .section { padding: 3rem 1.5rem; max-width: 1200px; margin: 0 auto; }
+    .section + .section { border-top: 1px solid var(--border); }
+    .slabel {
+      font-family: var(--font-heading);
+      font-size: 0.6875rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--brand-dark); margin-bottom: 0.5rem;
+    }
+    .sheading {
+      font-family: var(--font-heading);
+      font-size: 1.5rem; font-weight: 700;
+      margin-bottom: 0.75rem; color: #fff;
+    }
+    .sdesc { font-size: 0.875rem; color: var(--text-muted); max-width: 640px; margin-bottom: 2rem; }
+    .sub { font-family: var(--font-heading); font-size: 1rem; font-weight: 600; margin-bottom: 1.25rem; margin-top: 2rem; color: #fff; }
+    .sub:first-of-type { margin-top: 0; }
+
+    .g2 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    .g3 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    .g4 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    @media (min-width: 768px) {
+      .g2 { grid-template-columns: repeat(2, 1fr); }
+      .g3 { grid-template-columns: repeat(3, 1fr); }
+      .g4 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .g4 { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .gblock {
+      padding: 1.5rem; border-radius: var(--radius-xl);
+      border: 1px solid var(--border); background: var(--surface-1);
+      margin-bottom: 2rem;
+    }
+    .gblock h4 { font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 600; margin-bottom: 0.75rem; color: #fff; }
+    .gblock table { color: var(--text-muted); }
+    .gblock th { color: #fff; }
+
+    .caption-title { margin-top: 0.75rem; font-weight: 600; font-size: 0.8125rem; color: #fff; }
+    .caption-desc { font-size: 0.75rem; color: var(--text-muted); }
+
+    .footer {
+      background: var(--surface-1);
+      border-top: 1px solid var(--border);
+      color: var(--text-subtle);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.8125rem;
+    }
+    .footer strong { color: var(--brand-dark); font-family: var(--font-heading); }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="mountain">&#9650;&#9650;</div>
+  <h1>Electia by Emprega+</h1>
+  <p>Social Media Templates</p>
+  <div class="tagline">[Tagline Electia a definir].</div>
+  <div class="badge">Brand Book v2.2 — Dark Premium</div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#dims">Dimensoes</a>
+    <a href="#feed">Feed</a>
+    <a href="#feed-img">Feed + Foto</a>
+    <a href="#carousel">Carrossel</a>
+    <a href="#stories">Stories</a>
+    <a href="#stories-img">Stories + Foto</a>
+    <a href="#thumb">Thumbnails</a>
+    <a href="#thumb-img">Thumb + Foto</a>
+    <a href="#banners">Banners</a>
+    <a href="#cards">WhatsApp</a>
+    <a href="#rules">Diretrizes</a>
+  </div>
+</div>
+
+<!-- DIMENSOES -->
+<div class="section" id="dims">
+  <div class="slabel">01 / Referencia</div>
+  <div class="sheading">Dimensoes por Plataforma</div>
+  <div class="gblock">
+    <table style="width: 100%; font-size: 0.875rem; border-collapse: collapse;">
+      <thead><tr style="border-bottom: 2px solid var(--border); text-align: left;">
+        <th style="padding: 0.625rem 0;">Formato</th>
+        <th style="padding: 0.625rem 0;">Dimensao</th>
+        <th style="padding: 0.625rem 0;">Proporcao</th>
+        <th style="padding: 0.625rem 0;">Uso</th>
+      </tr></thead>
+      <tbody style="color: var(--text-muted);">
+        <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem 0; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--brand-light);">Feed Post</td><td style="padding: 0.5rem 0;">1080 x 1080</td><td style="padding: 0.5rem 0;">1:1</td><td style="padding: 0.5rem 0;">Instagram, Facebook, LinkedIn</td></tr>
+        <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem 0; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--brand-light);">Carrossel</td><td style="padding: 0.5rem 0;">1080 x 1350</td><td style="padding: 0.5rem 0;">4:5</td><td style="padding: 0.5rem 0;">Instagram, LinkedIn</td></tr>
+        <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem 0; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--brand-light);">Stories / Reels</td><td style="padding: 0.5rem 0;">1080 x 1920</td><td style="padding: 0.5rem 0;">9:16</td><td style="padding: 0.5rem 0;">Instagram, TikTok, Shorts</td></tr>
+        <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem 0; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--brand-light);">Thumbnail YT</td><td style="padding: 0.5rem 0;">1280 x 720</td><td style="padding: 0.5rem 0;">16:9</td><td style="padding: 0.5rem 0;">YouTube</td></tr>
+        <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.5rem 0; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--brand-light);">LinkedIn Post</td><td style="padding: 0.5rem 0;">1200 x 627</td><td style="padding: 0.5rem 0;">~2:1</td><td style="padding: 0.5rem 0;">Artigos, autoridade</td></tr>
+        <tr><td style="padding: 0.5rem 0; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--brand-light);">WhatsApp</td><td style="padding: 0.5rem 0;">1080 x 1080</td><td style="padding: 0.5rem 0;">1:1</td><td style="padding: 0.5rem 0;">Convites, lembretes</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- FEED POST (TEXTO) -->
+<div class="section" id="feed">
+  <div class="slabel">02 / Feed — Texto</div>
+  <div class="sheading">Feed Post (1080 x 1080)</div>
+  <div class="sdesc">REGRA: Fundo SEMPRE escuro. NUNCA branco. Teal como cor primaria de destaque.</div>
+  <div class="g3" style="gap: 1.5rem;">
+    <!-- Frase de impacto / Confronto -->
+    <div>
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--bg); display: flex; align-items: center; justify-content: center;">
+        <div style="position: absolute; top: 50%; left: 50%; width: 250px; height: 250px; background: radial-gradient(circle, rgba(196,154,60,0.06), transparent); transform: translate(-50%, -50%);"></div>
+        <div style="position: relative; z-index: 1; text-align: center; padding: 2rem;">
+          <div style="font-family: var(--font-heading); font-size: 1.375rem; font-weight: 800; color: #fff; line-height: 1.2;">Se ter diplomas fosse<br>suficiente, voce ja estaria<br>onde <span style="color: var(--brand-dark);">deseja</span>.</div>
+        </div>
+        <div style="position: absolute; bottom: 12px; right: 12px; font-size: 0.625rem; color: var(--text-subtle); font-family: var(--font-mono);">&#9650;&#9650; Electia</div>
+      </div>
+      <div class="caption-title">Confronto (Pure Dark)</div>
+      <div class="caption-desc">Fundo puro #091020, sem imagem, texto grande, maximo impacto</div>
+    </div>
+    <!-- Dado estatistico -->
+    <div>
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--surface-1); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;">
+        <div style="font-size: 0.625rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-dark); margin-bottom: 1rem;">EMPREGABILIDADE</div>
+        <div style="font-family: var(--font-heading); font-size: 3rem; font-weight: 800; background: var(--gradient-brand); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">92M</div>
+        <div style="font-size: 0.9375rem; color: var(--text-muted); margin-top: 0.25rem; text-align: center;">de empregos vao<br>desaparecer ate 2030</div>
+        <div style="width: 40px; height: 2px; background: var(--gradient-brand); margin: 1rem 0; border-radius: 2px;"></div>
+        <div style="font-size: 0.625rem; color: var(--text-subtle); font-family: var(--font-mono);">Fonte: World Economic Forum</div>
+        <div style="position: absolute; bottom: 12px; right: 12px; font-size: 0.625rem; color: var(--text-subtle); font-family: var(--font-mono);">&#9650;&#9650; Electia</div>
+      </div>
+      <div class="caption-title">Dado Estatistico</div>
+      <div class="caption-desc">Numero grande teal, contexto, fonte, badge eixo</div>
+    </div>
+    <!-- Dica pratica com glass -->
+    <div>
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--surface-1); display: flex; flex-direction: column; padding: 1.75rem;">
+        <div style="font-size: 0.5625rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-dark); margin-bottom: 0.75rem;">DICA PRATICA</div>
+        <div style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 700; color: #fff; margin-bottom: 1rem;">3 coisas que todo<br>recrutador olha primeiro</div>
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 0.625rem 0.75rem; display: flex; align-items: center; gap: 0.625rem;">
+            <div style="width: 24px; height: 24px; background: rgba(196,154,60,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; color: var(--brand-dark); font-weight: 700; flex-shrink: 0;">1</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Headline do LinkedIn — nao e seu cargo</div>
+          </div>
+          <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 0.625rem 0.75rem; display: flex; align-items: center; gap: 0.625rem;">
+            <div style="width: 24px; height: 24px; background: rgba(196,154,60,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; color: var(--brand-dark); font-weight: 700; flex-shrink: 0;">2</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Resultados, nao responsabilidades</div>
+          </div>
+          <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 0.625rem 0.75rem; display: flex; align-items: center; gap: 0.625rem;">
+            <div style="width: 24px; height: 24px; background: rgba(196,154,60,0.12); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.6875rem; color: var(--brand-dark); font-weight: 700; flex-shrink: 0;">3</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">Consistencia de conteudo publicado</div>
+          </div>
+        </div>
+        <div style="position: absolute; bottom: 12px; right: 12px; font-size: 0.625rem; color: var(--text-subtle); font-family: var(--font-mono);">&#9650;&#9650; Electia</div>
+      </div>
+      <div class="caption-title">Dica Pratica (Glass Cards)</div>
+      <div class="caption-desc">Lista numerada, cards glass, icones teal, badge eixo</div>
+    </div>
+  </div>
+</div>
+
+<!-- FEED COM IMAGEM -->
+<div class="section" id="feed-img">
+  <div class="slabel">03 / Feed — Com Foto</div>
+  <div class="sheading">Feed Post com Fotografia (1080 x 1080)</div>
+  <div class="sdesc">Foto sempre com overlay escuro. Dessaturacao + alto contraste. Nunca domina o texto.</div>
+  <div class="g3" style="gap: 1.5rem;">
+    <!-- Frase sobre foto -->
+    <div>
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; display: flex; align-items: center; justify-content: center;">
+        <div style="position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80') center/cover; filter: saturate(0.3) contrast(1.2);"></div>
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(9,16,32,0.7) 0%, rgba(9,16,32,0.9) 100%);"></div>
+        <div style="position: relative; z-index: 1; text-align: center; padding: 2rem;">
+          <div style="font-size: 0.5625rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-dark); margin-bottom: 0.75rem;">EMPREGABILIDADE</div>
+          <div style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: #fff; line-height: 1.2;">O mercado nao recompensa<br>quem <span style="color: var(--brand-dark);">sabe mais</span>.<br>Recompensa quem<br><span style="color: var(--brand-dark);">resolve melhor</span>.</div>
+          <div style="width: 40px; height: 2px; background: var(--gradient-brand); margin: 1rem auto 0; border-radius: 2px;"></div>
+        </div>
+        <div style="position: absolute; bottom: 12px; right: 12px; z-index: 2; font-size: 0.625rem; color: rgba(255,255,255,0.3); font-family: var(--font-mono);">&#9650;&#9650; Electia</div>
+      </div>
+      <div class="caption-title">Frase sobre Foto (Overlay Dark)</div>
+      <div class="caption-desc">Foto dessaturada, overlay 70-90%, texto branco + palavras teal</div>
+    </div>
+    <!-- Depoimento -->
+    <div>
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--surface-1); display: flex; flex-direction: column; justify-content: center; padding: 1.75rem;">
+        <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(196,154,60,0.06), transparent); border-radius: 50%;"></div>
+        <div style="font-family: var(--font-heading); font-size: 2.5rem; color: var(--brand-dark); line-height: 1; margin-bottom: 0.5rem;">"</div>
+        <div style="font-size: 0.875rem; color: rgba(255,255,255,0.85); line-height: 1.7; font-style: italic; margin-bottom: 1.25rem;">Eu achava que meu problema era falta de competencia. Depois do MAPA, descobri que era falta de posicionamento. Em 4 meses, sai de analista pra lider.</div>
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <div style="width: 48px; height: 48px; border-radius: 50%; background: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80') center/cover; border: 2px solid var(--brand-dark); flex-shrink: 0;"></div>
+          <div>
+            <div style="font-family: var(--font-heading); font-size: 0.8125rem; font-weight: 700; color: var(--brand-light);">Rafael Costa</div>
+            <div style="font-size: 0.6875rem; color: var(--text-muted);">Lider de Equipe — Logistica</div>
+          </div>
+        </div>
+        <div style="position: absolute; bottom: 12px; right: 12px; font-size: 0.625rem; color: var(--text-subtle); font-family: var(--font-mono);">&#9650;&#9650; Electia</div>
+      </div>
+      <div class="caption-title">Depoimento (Glass + Retrato)</div>
+      <div class="caption-desc">Aspas teal, foto circular com borda teal, nome em teal</div>
+    </div>
+    <!-- Convite Workshop -->
+    <div>
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; display: flex; flex-direction: column;">
+        <div style="position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80') center/cover; filter: saturate(0.2) contrast(1.3);"></div>
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(9,16,32,0.5) 0%, rgba(9,16,32,0.95) 50%);"></div>
+        <div style="position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.75rem;">
+          <div style="display: inline-flex; align-items: center; gap: 0.375rem; background: rgba(196,154,60,0.15); border: 1px solid rgba(196,154,60,0.3); color: var(--brand-light); font-size: 0.5rem; font-weight: 700; padding: 3px 10px; border-radius: var(--radius-full); letter-spacing: 0.08em; margin-bottom: 0.75rem; align-self: flex-start; text-transform: uppercase;">&#9733; GRATUITO</div>
+          <div style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 0.75rem;">Workshop ao vivo:<br><span style="color: var(--brand-light);">O que ninguem te ensinou</span><br>sobre o mercado.</div>
+          <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+            <div style="font-size: 0.6875rem; color: var(--text-muted);">&#128197; Quarta, 19h</div>
+            <div style="font-size: 0.6875rem; color: var(--text-muted);">&#127909; Zoom</div>
+          </div>
+          <div style="background: var(--gradient-brand); color: var(--bg); font-size: 0.625rem; font-weight: 700; padding: 8px 0; border-radius: var(--radius-full); text-align: center; letter-spacing: 0.05em; box-shadow: var(--glow-brand);">QUERO PARTICIPAR</div>
+        </div>
+        <div style="position: absolute; bottom: 12px; right: 12px; z-index: 2; font-size: 0.625rem; color: rgba(255,255,255,0.25); font-family: var(--font-mono);">&#9650;&#9650; Electia</div>
+      </div>
+      <div class="caption-title">Convite Workshop (Foto + Badge)</div>
+      <div class="caption-desc">Foto overlay, badge "Gratuito" com borda, data/hora, CTA com glow</div>
+    </div>
+  </div>
+
+  <!-- Linha 2 -->
+  <div class="g3" style="gap: 1.5rem; margin-top: 1.5rem;">
+    <!-- Autoridade fundador -->
+    <div>
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--bg); display: flex;">
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 1.5rem; z-index: 1;">
+          <div style="font-size: 0.5rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-dark); margin-bottom: 0.5rem;">MARCOS CARNEIRO</div>
+          <div style="font-family: var(--font-heading); font-size: 1rem; font-weight: 800; color: #fff; line-height: 1.25; margin-bottom: 0.75rem;">Carreira nao e<br><span style="color: var(--brand-light);">sorte</span>.<br>E <span style="color: var(--brand-light);">estrategia</span>.</div>
+          <div style="font-size: 0.625rem; color: var(--text-muted); font-style: italic;">[Tagline Electia a definir].</div>
+        </div>
+        <div style="width: 42%; position: relative;">
+          <div style="position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80') center/cover; filter: saturate(0.3);"></div>
+          <div style="position: absolute; inset: 0; background: linear-gradient(to right, var(--bg) 0%, transparent 40%);"></div>
+          <div style="position: absolute; inset: 0; background: linear-gradient(to top, var(--bg) 0%, transparent 20%);"></div>
+        </div>
+      </div>
+      <div class="caption-title">Autoridade (Foto Fundador)</div>
+      <div class="caption-desc">Texto esquerda, foto direita com fade, dessaturada</div>
+    </div>
+    <!-- Antes/Depois -->
+    <div>
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; display: flex; flex-direction: column;">
+        <div style="flex: 1; position: relative; display: flex; align-items: center; justify-content: center;">
+          <div style="position: absolute; inset: 0; background: var(--bg);"></div>
+          <div style="position: relative; z-index: 1; text-align: center;">
+            <div style="font-size: 0.5rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.375rem;">ANTES</div>
+            <div style="font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 700; color: rgba(255,255,255,0.5);">"Sei fazer tudo<br>um pouco"</div>
+          </div>
+        </div>
+        <div style="height: 3px; background: var(--gradient-brand); z-index: 2;"></div>
+        <div style="flex: 1; position: relative; display: flex; align-items: center; justify-content: center;">
+          <div style="position: absolute; inset: 0; background: var(--surface-1);"></div>
+          <div style="position: absolute; top: 50%; left: 50%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(196,154,60,0.06), transparent); transform: translate(-50%, -50%);"></div>
+          <div style="position: relative; z-index: 1; text-align: center;">
+            <div style="font-size: 0.5rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand-dark); margin-bottom: 0.375rem;">DEPOIS</div>
+            <div style="font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 700; color: #fff;">"Resolvo <span style="color: var(--brand-light);">este</span> problema<br>melhor que qualquer um"</div>
+          </div>
+        </div>
+        <div style="position: absolute; bottom: 8px; right: 10px; z-index: 3; font-size: 0.625rem; color: var(--text-subtle); font-family: var(--font-mono);">&#9650;&#9650; Electia</div>
+      </div>
+      <div class="caption-title">Antes / Depois</div>
+      <div class="caption-desc">Split horizontal, barra teal central, contraste de claridade</div>
+    </div>
+    <!-- Dica com foto fundo -->
+    <div>
+      <div style="aspect-ratio: 1/1; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; display: flex; flex-direction: column; justify-content: flex-end;">
+        <div style="position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80') center/cover; filter: saturate(0.2) contrast(1.2);"></div>
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 0%, rgba(9,16,32,0.95) 45%);"></div>
+        <div style="position: relative; z-index: 1; padding: 1.75rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+            <div style="width: 24px; height: 24px; background: rgba(196,154,60,0.15); border: 1px solid rgba(196,154,60,0.3); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.625rem; color: var(--brand-dark);">&#9998;</div>
+            <div style="font-size: 0.5625rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand-dark);">HABILIDADE TECNICA</div>
+          </div>
+          <div style="font-family: var(--font-heading); font-size: 1rem; font-weight: 800; color: #fff; line-height: 1.3; margin-bottom: 0.5rem;">Seu curriculo nao e<br>uma lista de <span style="color: var(--brand-light);">tarefas</span>.</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.5;">E um documento de marketing pessoal. Cada linha deve vender um resultado.</div>
+        </div>
+        <div style="position: absolute; bottom: 12px; right: 12px; z-index: 2; font-size: 0.625rem; color: rgba(255,255,255,0.25); font-family: var(--font-mono);">&#9650;&#9650; Electia</div>
+      </div>
+      <div class="caption-title">Dica com Foto (Gradient Bottom)</div>
+      <div class="caption-desc">Foto topo dessaturada, gradient para dark, badge eixo, texto</div>
+    </div>
+  </div>
+</div>
+
+<!-- CARROSSEL -->
+<div class="section" id="carousel">
+  <div class="slabel">04 / Carrossel</div>
+  <div class="sheading">Carrossel Educativo (1080 x 1350)</div>
+  <div class="sdesc">Capa provocadora + 1 ideia por slide + CTA final. Slides consistentes.</div>
+  <div style="display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 1rem;">
+    <!-- Capa -->
+    <div style="flex-shrink: 0; width: 220px;">
+      <div style="aspect-ratio: 4/5; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--bg); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1.5rem;">
+        <div style="position: absolute; top: 50%; left: 50%; width: 250px; height: 250px; background: radial-gradient(circle, rgba(196,154,60,0.06), transparent); transform: translate(-50%, -50%);"></div>
+        <div style="position: absolute; top: 12px; left: 12px; font-size: 0.4375rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand-light); background: rgba(196,154,60,0.12); border: 1px solid rgba(196,154,60,0.2); padding: 2px 8px; border-radius: 4px; z-index: 1;">CARREIRA</div>
+        <div style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: #fff; text-align: center; line-height: 1.2; position: relative; z-index: 1;">Voce esta<br>esperando ser<br><span style="color: var(--brand-light);">reconhecido</span>.</div>
+        <div style="margin-top: 1rem; font-size: 0.5625rem; color: var(--text-muted); position: relative; z-index: 1;">Deslize &#8594;</div>
+      </div>
+      <div class="caption-title" style="text-align: center;">Capa</div>
+    </div>
+    <!-- Slide 01 -->
+    <div style="flex-shrink: 0; width: 220px;">
+      <div style="aspect-ratio: 4/5; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--surface-1); display: flex; flex-direction: column; justify-content: center; padding: 1.5rem;">
+        <div style="position: absolute; left: 0; top: 18%; width: 3px; height: 40px; background: var(--gradient-brand); border-radius: 0 4px 4px 0;"></div>
+        <div style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; background: var(--gradient-brand); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.75rem; padding-left: 0.75rem;">01</div>
+        <div style="font-size: 0.8125rem; color: #fff; line-height: 1.6; padding-left: 0.75rem;">O mercado nao esta<br>esperando voce.<br><span style="color: var(--brand-light);">Se posicione.</span></div>
+      </div>
+      <div class="caption-title" style="text-align: center;">Conteudo</div>
+    </div>
+    <!-- Slide 02 -->
+    <div style="flex-shrink: 0; width: 220px;">
+      <div style="aspect-ratio: 4/5; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--surface-1); display: flex; flex-direction: column; justify-content: center; padding: 1.5rem;">
+        <div style="position: absolute; left: 0; top: 18%; width: 3px; height: 40px; background: var(--gradient-brand); border-radius: 0 4px 4px 0;"></div>
+        <div style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; background: var(--gradient-brand); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.75rem; padding-left: 0.75rem;">02</div>
+        <div style="font-size: 0.8125rem; color: #fff; line-height: 1.6; padding-left: 0.75rem;">Diploma abre portas.<br><span style="color: var(--brand-light);">Posicionamento</span><br>te mantem dentro.</div>
+      </div>
+      <div class="caption-title" style="text-align: center;">Conteudo</div>
+    </div>
+    <!-- CTA -->
+    <div style="flex-shrink: 0; width: 220px;">
+      <div style="aspect-ratio: 4/5; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--bg); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1.5rem; text-align: center;">
+        <div style="position: absolute; top: 50%; left: 50%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(196,154,60,0.08), transparent); transform: translate(-50%, -50%);"></div>
+        <div style="font-size: 2rem; position: relative; z-index: 1;">&#9650;&#9650;</div>
+        <div style="font-family: var(--font-heading); font-size: 0.8125rem; font-weight: 700; color: #fff; margin-top: 0.75rem; margin-bottom: 0.25rem; position: relative; z-index: 1;">Electia by Emprega+</div>
+        <div style="font-size: 0.6875rem; color: var(--text-muted); margin-bottom: 1rem; position: relative; z-index: 1;">Salve. Compartilhe.<br>Comece a escalar.</div>
+        <div style="background: var(--gradient-brand); color: var(--bg); font-size: 0.5625rem; font-weight: 700; padding: 6px 16px; border-radius: var(--radius-full); letter-spacing: 0.05em; box-shadow: var(--glow-brand); position: relative; z-index: 1;">WORKSHOP GRATUITO &#8594;</div>
+      </div>
+      <div class="caption-title" style="text-align: center;">CTA Final</div>
+    </div>
+  </div>
+</div>
+
+<!-- STORIES TEXTO -->
+<div class="section" id="stories">
+  <div class="slabel">05 / Stories — Texto</div>
+  <div class="sheading">Stories e Reels (1080 x 1920)</div>
+  <div class="g3" style="gap: 1.5rem;">
+    <div>
+      <div style="aspect-ratio: 9/16; max-height: 400px; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--bg); display: flex; align-items: center; justify-content: center;">
+        <div style="position: absolute; top: 50%; left: 50%; width: 250px; height: 250px; background: radial-gradient(circle, rgba(196,154,60,0.08), transparent); transform: translate(-50%, -50%);"></div>
+        <div style="position: relative; z-index: 1; text-align: center; padding: 1.25rem;">
+          <div style="font-family: var(--font-heading); font-size: 1.125rem; font-weight: 800; color: #fff; line-height: 1.3;">Disciplina e<br><span style="color: var(--brand-light);">liberdade</span><br>disfarcada.</div>
+        </div>
+        <div style="position: absolute; bottom: 10px; font-size: 0.5rem; color: var(--text-subtle); font-family: var(--font-mono);">&#9650;&#9650; @profissionaldevalor</div>
+      </div>
+      <div class="caption-title">Story — Confronto</div>
+      <div class="caption-desc">Fundo puro dark, glow sutil, frase maxima</div>
+    </div>
+    <div>
+      <div style="aspect-ratio: 9/16; max-height: 400px; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--surface-1); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1.25rem; text-align: center;">
+        <div style="font-size: 0.5rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-dark); margin-bottom: 1rem;">PRINCIPIO</div>
+        <div style="font-family: var(--font-heading); font-size: 1rem; font-weight: 800; color: #fff; line-height: 1.3; margin-bottom: 1rem;">O fogo que queima<br>e destroi e o mesmo<br>que forja e <span style="color: var(--brand-light);">purifica</span>.</div>
+        <div style="width: 40px; height: 2px; background: var(--gradient-brand); border-radius: 2px;"></div>
+        <div style="position: absolute; bottom: 10px; font-size: 0.5rem; color: var(--text-subtle); font-family: var(--font-mono);">&#9650;&#9650; @profissionaldevalor</div>
+      </div>
+      <div class="caption-title">Story — Manifesto</div>
+      <div class="caption-desc">Surface-1, badge eixo, frase longa, barra teal</div>
+    </div>
+    <div>
+      <div style="aspect-ratio: 9/16; max-height: 400px; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--bg); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1.25rem; text-align: center;">
+        <div style="font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 800; color: #fff; line-height: 1.3; margin-bottom: 1rem;">Workshop toda quarta.<br>Ao vivo. <span style="color: var(--brand-light);">Gratuito</span>.</div>
+        <div style="background: var(--gradient-brand); color: var(--bg); font-size: 0.5rem; font-weight: 700; padding: 6px 14px; border-radius: var(--radius-full); box-shadow: var(--glow-brand);">LINK NA BIO &#8593;</div>
+        <div style="position: absolute; bottom: 10px; font-size: 0.5rem; color: var(--text-subtle); font-family: var(--font-mono);">&#9650;&#9650; @profissionaldevalor</div>
+      </div>
+      <div class="caption-title">Story — CTA</div>
+      <div class="caption-desc">Dark, texto + CTA com glow, link na bio</div>
+    </div>
+  </div>
+</div>
+
+<!-- STORIES COM FOTO -->
+<div class="section" id="stories-img">
+  <div class="slabel">06 / Stories — Com Foto</div>
+  <div class="sheading">Stories com Fotografia (1080 x 1920)</div>
+  <div class="g3" style="gap: 1.5rem;">
+    <div>
+      <div style="aspect-ratio: 9/16; max-height: 400px; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; display: flex; flex-direction: column; justify-content: flex-end;">
+        <div style="position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&q=80') center/cover; filter: saturate(0.2) contrast(1.2);"></div>
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 20%, rgba(9,16,32,0.95) 65%);"></div>
+        <div style="position: relative; z-index: 1; padding: 1.25rem;">
+          <div style="font-size: 0.4375rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand-dark); margin-bottom: 0.5rem;">BASTIDORES</div>
+          <div style="font-family: var(--font-heading); font-size: 0.9375rem; font-weight: 800; color: #fff; line-height: 1.3;">Preparando o conteudo<br>da semana.</div>
+          <div style="margin-top: 0.375rem; font-size: 0.5rem; color: var(--text-muted); font-style: italic;">[Tagline Electia a definir].</div>
+        </div>
+      </div>
+      <div class="caption-title">Story — Bastidores</div>
+      <div class="caption-desc">Foto real dessaturada, gradient dark bottom</div>
+    </div>
+    <div>
+      <div style="aspect-ratio: 9/16; max-height: 400px; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; display: flex; flex-direction: column;">
+        <div style="position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80') center top/cover; filter: saturate(0.25);"></div>
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(9,16,32,0.2) 0%, rgba(9,16,32,0.95) 50%);"></div>
+        <div style="position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.25rem;">
+          <div style="display: inline-flex; background: rgba(196,154,60,0.15); border: 1px solid rgba(196,154,60,0.3); color: var(--brand-light); font-size: 0.375rem; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-full); letter-spacing: 0.08em; margin-bottom: 0.5rem; align-self: flex-start; text-transform: uppercase;">AO VIVO — QUARTA 19H</div>
+          <div style="font-family: var(--font-heading); font-size: 0.875rem; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 0.75rem;">O que ninguem te<br>ensinou sobre o<br><span style="color: var(--brand-light);">mercado de trabalho</span>.</div>
+          <div style="background: var(--gradient-brand); color: var(--bg); font-size: 0.4375rem; font-weight: 700; padding: 5px 0; border-radius: var(--radius-full); text-align: center; box-shadow: var(--glow-brand);">ATIVE O LEMBRETE &#8593;</div>
+        </div>
+      </div>
+      <div class="caption-title">Story — Convite Live</div>
+      <div class="caption-desc">Foto apresentador, badge data, CTA com glow</div>
+    </div>
+    <div>
+      <div style="aspect-ratio: 9/16; max-height: 400px; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--surface-1); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1.25rem; text-align: center;">
+        <div style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--brand-dark); line-height: 1; margin-bottom: 0.375rem;">"</div>
+        <div style="font-size: 0.6875rem; color: rgba(255,255,255,0.85); line-height: 1.6; font-style: italic; margin-bottom: 0.75rem; max-width: 90%;">Entrei no workshop achando que era mais do mesmo. Sai com um plano de acao real.</div>
+        <div style="width: 40px; height: 40px; border-radius: 50%; background: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80') center/cover; border: 2px solid var(--brand-dark); margin-bottom: 0.375rem;"></div>
+        <div style="font-family: var(--font-heading); font-size: 0.5625rem; font-weight: 700; color: var(--brand-light);">Ana Paula</div>
+        <div style="font-size: 0.4375rem; color: var(--text-muted);">Analista de Marketing</div>
+        <div style="position: absolute; bottom: 10px; font-size: 0.5rem; color: var(--text-subtle); font-family: var(--font-mono);">&#9650;&#9650; @profissionaldevalor</div>
+      </div>
+      <div class="caption-title">Story — Depoimento</div>
+      <div class="caption-desc">Aspas teal, foto circular, nome em teal</div>
+    </div>
+  </div>
+</div>
+
+<!-- THUMBNAILS -->
+<div class="section" id="thumb">
+  <div class="slabel">07 / Thumbnails — Texto</div>
+  <div class="sheading">Thumbnail YouTube (1280 x 720)</div>
+  <div class="g2" style="gap: 1.5rem;">
+    <div>
+      <div style="aspect-ratio: 16/9; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--bg); display: flex; align-items: center;">
+        <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 40%; background: linear-gradient(to left, rgba(196,154,60,0.1), transparent);"></div>
+        <div style="padding: 1.25rem; max-width: 65%; position: relative; z-index: 1;">
+          <div style="font-size: 0.4375rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bg); background: var(--brand-dark); padding: 2px 6px; border-radius: 3px; display: inline-block; margin-bottom: 0.5rem;">EMPREGABILIDADE</div>
+          <div style="font-family: var(--font-heading); font-size: 1.0625rem; font-weight: 800; color: #fff; line-height: 1.15;">O QUE NINGUEM TE<br>ENSINOU SOBRE<br><span style="color: var(--brand-light);">CARREIRA</span></div>
+        </div>
+        <div style="position: absolute; right: 10px; bottom: 10px; font-size: 0.5rem; color: var(--text-subtle); font-family: var(--font-mono);">&#9650;&#9650; Electia</div>
+      </div>
+      <div class="caption-title">Thumb — Dark + Teal Accent</div>
+      <div class="caption-desc">Fundo puro dark, titulo esquerda, glow teal direita</div>
+    </div>
+    <div>
+      <div style="aspect-ratio: 16/9; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--surface-1); display: flex; align-items: center; justify-content: center;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-brand);"></div>
+        <div style="text-align: center; position: relative; z-index: 1;">
+          <div style="font-family: var(--font-heading); font-size: 2rem; font-weight: 800; background: var(--gradient-brand); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">92M</div>
+          <div style="font-family: var(--font-heading); font-size: 0.875rem; font-weight: 700; color: #fff; margin-top: 0.25rem;">empregos vao<br>desaparecer</div>
+        </div>
+        <div style="position: absolute; right: 10px; bottom: 10px; font-size: 0.5rem; color: var(--text-subtle); font-family: var(--font-mono);">&#9650;&#9650; Electia</div>
+      </div>
+      <div class="caption-title">Thumb — Dado Estatistico</div>
+      <div class="caption-desc">Surface-1, numero teal grande, barra teal topo</div>
+    </div>
+  </div>
+</div>
+
+<!-- THUMBNAILS COM FOTO -->
+<div class="section" id="thumb-img">
+  <div class="slabel">08 / Thumbnails — Com Foto</div>
+  <div class="sheading">Thumbnail com Apresentador (1280 x 720)</div>
+  <div class="g2" style="gap: 1.5rem;">
+    <div>
+      <div style="aspect-ratio: 16/9; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; display: flex; align-items: center;">
+        <div style="position: absolute; inset: 0; background: var(--bg);"></div>
+        <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 45%;">
+          <div style="position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?w=500&q=80') center top/cover; filter: saturate(0.25);"></div>
+          <div style="position: absolute; inset: 0; background: linear-gradient(to right, var(--bg) 0%, transparent 30%);"></div>
+        </div>
+        <div style="position: absolute; top: 8px; left: 8px; font-size: 0.4375rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bg); background: var(--brand-dark); padding: 2px 6px; border-radius: 3px; z-index: 2;">WORKSHOP</div>
+        <div style="padding: 1.25rem; max-width: 55%; position: relative; z-index: 1;">
+          <div style="font-family: var(--font-heading); font-size: 1rem; font-weight: 800; color: #fff; line-height: 1.15;">COMO CONSEGUIR<br>EMPREGO EM<br><span style="color: var(--brand-light);">30 DIAS</span></div>
+        </div>
+        <div style="position: absolute; right: 10px; bottom: 10px; z-index: 2; font-size: 0.5rem; color: rgba(255,255,255,0.3); font-family: var(--font-mono);">&#9650;&#9650; Electia</div>
+      </div>
+      <div class="caption-title">Thumb — Apresentador + Titulo</div>
+      <div class="caption-desc">Rosto direita dessaturado, titulo esquerda, badge, palavra teal</div>
+    </div>
+    <div>
+      <div style="aspect-ratio: 16/9; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; display: flex; align-items: center;">
+        <div style="position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=80') center/cover; filter: saturate(0.15) contrast(1.3);"></div>
+        <div style="position: absolute; inset: 0; background: rgba(9,16,32,0.8);"></div>
+        <div style="position: absolute; top: 0; left: 0; bottom: 0; width: 4px; background: var(--gradient-brand); z-index: 2;"></div>
+        <div style="position: relative; z-index: 1; padding: 1.25rem; width: 100%; text-align: center;">
+          <div style="font-family: var(--font-heading); font-size: 1.0625rem; font-weight: 800; color: #fff; line-height: 1.2;">NETWORKING: <span style="color: var(--brand-light);">O Atalho</span><br>que Ninguem te Conta</div>
+        </div>
+        <div style="position: absolute; bottom: 8px; right: 10px; z-index: 2; font-size: 0.5rem; color: rgba(255,255,255,0.3); font-family: var(--font-mono);">&#9650;&#9650; Electia</div>
+      </div>
+      <div class="caption-title">Thumb — Foto Full + Overlay Dark</div>
+      <div class="caption-desc">Foto grupo dessaturada, overlay 80%, barra teal lateral</div>
+    </div>
+  </div>
+</div>
+
+<!-- BANNERS -->
+<div class="section" id="banners">
+  <div class="slabel">09 / Banners</div>
+  <div class="sheading">YouTube + LinkedIn</div>
+  <div class="sub">Banner YouTube (2560 x 1440)</div>
+  <div style="margin-bottom: 2rem;">
+    <div style="aspect-ratio: 16/4.5; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--bg); display: flex; align-items: center; justify-content: center;">
+      <div style="position: absolute; top: 50%; left: 50%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(196,154,60,0.06), transparent); transform: translate(-50%, -50%);"></div>
+      <div style="position: relative; z-index: 1; text-align: center;">
+        <div style="font-size: 1.75rem; line-height: 1;">&#9650;&#9650;</div>
+        <div style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: #fff; margin-top: 0.25rem;">Electia by Emprega+</div>
+        <div style="font-size: 0.6875rem; color: var(--brand-dark); font-style: italic; margin-top: 0.125rem;">[Tagline Electia a definir].</div>
+        <div style="width: 40px; height: 2px; background: var(--gradient-brand); margin: 0.5rem auto 0; border-radius: 2px;"></div>
+      </div>
+    </div>
+    <div class="caption-title">Canal YouTube — Institucional</div>
+  </div>
+  <div class="sub">Banner LinkedIn (1584 x 396)</div>
+  <div>
+    <div style="aspect-ratio: 4/1; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--bg); display: flex; align-items: center; padding: 0 2rem;">
+      <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 30%; background: linear-gradient(to left, rgba(196,154,60,0.06), transparent);"></div>
+      <div style="position: relative; z-index: 1; display: flex; align-items: center; gap: 0.75rem;">
+        <div style="font-size: 1.25rem;">&#9650;&#9650;</div>
+        <div>
+          <div style="font-family: var(--font-heading); font-size: 0.875rem; font-weight: 700; color: #fff;">Electia by Emprega+</div>
+          <div style="font-size: 0.5625rem; color: var(--brand-dark); font-style: italic;">[Tagline Electia a definir].</div>
+        </div>
+      </div>
+      <div style="position: absolute; right: 2rem; display: flex; gap: 0.75rem; align-items: center;">
+        <div style="text-align: center;"><div style="font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700; color: var(--brand-light);">Principios</div></div>
+        <div style="width: 1px; height: 20px; background: rgba(255,255,255,0.08);"></div>
+        <div style="text-align: center;"><div style="font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700; color: var(--brand-light);">Habilidades</div></div>
+        <div style="width: 1px; height: 20px; background: rgba(255,255,255,0.08);"></div>
+        <div style="text-align: center;"><div style="font-family: var(--font-heading); font-size: 0.75rem; font-weight: 700; color: var(--brand-light);">Tecnicas</div></div>
+      </div>
+    </div>
+    <div class="caption-title">LinkedIn — 3 Pilares</div>
+  </div>
+</div>
+
+<!-- WHATSAPP -->
+<div class="section" id="cards">
+  <div class="slabel">10 / Cards</div>
+  <div class="sheading">WhatsApp (1080 x 1080)</div>
+  <div class="g2" style="gap: 1.5rem;">
+    <div>
+      <div style="aspect-ratio: 1/1; max-width: 280px; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--bg); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1.5rem; text-align: center;">
+        <div style="position: absolute; top: 50%; left: 50%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(196,154,60,0.06), transparent); transform: translate(-50%, -50%);"></div>
+        <div style="font-family: var(--font-heading); font-size: 1rem; font-weight: 700; color: #fff; line-height: 1.3; margin-bottom: 0.75rem; position: relative; z-index: 1;">Workshop toda <span style="color: var(--brand-light);">quarta</span>.<br>Ao vivo. Gratuito.</div>
+        <div style="width: 30px; height: 2px; background: var(--gradient-brand); border-radius: 2px; margin-bottom: 0.75rem;"></div>
+        <div style="background: var(--gradient-brand); color: var(--bg); font-size: 0.5625rem; font-weight: 700; padding: 6px 14px; border-radius: var(--radius-full); box-shadow: var(--glow-brand); position: relative; z-index: 1;">QUERO PARTICIPAR</div>
+        <div style="position: absolute; bottom: 12px; font-size: 0.5rem; color: var(--text-subtle); font-family: var(--font-mono);">&#9650;&#9650; profissionaldevalor</div>
+      </div>
+      <div class="caption-title">Card — Convite Workshop</div>
+    </div>
+    <div>
+      <div style="aspect-ratio: 1/1; max-width: 280px; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); position: relative; background: var(--surface-1); display: flex; flex-direction: column; justify-content: center; padding: 1.5rem;">
+        <div style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--brand-dark); line-height: 1; margin-bottom: 0.5rem;">"</div>
+        <div style="font-size: 0.8125rem; color: rgba(255,255,255,0.85); line-height: 1.6; font-style: italic; margin-bottom: 1rem;">Ferramentas amplificam<br>quem voce ja e.</div>
+        <div style="width: 30px; height: 2px; background: var(--gradient-brand); border-radius: 2px; margin-bottom: 0.5rem;"></div>
+        <div style="font-size: 0.625rem; color: var(--text-subtle); font-family: var(--font-mono);">&#9650;&#9650; Electia by Emprega+</div>
+      </div>
+      <div class="caption-title">Card — Frase Compartilhavel</div>
+    </div>
+  </div>
+</div>
+
+<!-- DIRETRIZES -->
+<div class="section" id="rules">
+  <div class="slabel">11 / Diretrizes</div>
+  <div class="sheading">Regras Visuais — Electia</div>
+  <div class="gblock">
+    <div class="g2" style="gap: 1.5rem;">
+      <div>
+        <p style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Obrigatorio</p>
+        <ul style="font-size: 0.875rem; color: var(--text-muted); padding-left: 1.25rem; line-height: 1.8;">
+          <li>Fundo <strong style="color: #fff;">SEMPRE escuro</strong> (#091020 ou #0E0E11). NUNCA branco</li>
+          <li>Teal (#2DD4BF) como <strong style="color: #fff;">UNICA</strong> cor de destaque</li>
+          <li>Tipografia: Sora (titulos 600-700), Inter (corpo 400-500)</li>
+          <li>Logo &#9650;&#9650; sempre presente (canto inferior direito)</li>
+          <li>Margem interna minimo 48px em todos os lados</li>
+          <li>Foto: sempre com overlay escuro + dessaturacao + alto contraste</li>
+          <li>Zero vermelho, verde, neon ou cores fora da paleta</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-weight: 600; margin-bottom: 0.5rem; color: #fff;">Tom de Voz</p>
+        <ul style="font-size: 0.875rem; color: var(--text-muted); padding-left: 1.25rem; line-height: 1.8;">
+          <li>Provocador — verdade que incomoda, nao motivacional vazio</li>
+          <li>Metodo sobre emocao — dados, estrutura, nao promessas faceis</li>
+          <li>CTA desafiador e digno (maximo 2 por peca)</li>
+          <li>Sem caixa alta em titulos ou paragrafos</li>
+          <li>Conteudo reflete pelo menos 1 dos 3 pilares</li>
+          <li>Marcos como fundador, nao como "a marca"</li>
+          <li>Gradiente brand em destaque, nunca no fundo inteiro</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="gblock">
+    <h4>Checklist antes de publicar</h4>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.375rem; margin-top: 0.5rem; font-size: 0.8125rem; color: var(--text-muted);">
+      <div>&#9744; Fundo escuro (nao branco)?</div>
+      <div>&#9744; Fonte correta (Sora/Inter)?</div>
+      <div>&#9744; Teal como cor primaria destaque?</div>
+      <div>&#9744; Logo presente com area protecao?</div>
+      <div>&#9744; Tom alinhado (sem motivacional vazio)?</div>
+      <div>&#9744; CTA desafiador (max 2)?</div>
+      <div>&#9744; Imagens tratadas (overlay, dessaturacao)?</div>
+      <div>&#9744; Zero ostentacao ou stock generico?</div>
+      <div>&#9744; Contraste acessivel (WCAG AA)?</div>
+      <div>&#9744; Virtude implicita (confronta vicio)?</div>
+      <div>&#9744; Reflete 1 dos 3 pilares?</div>
+      <div>&#9744; Gradiente com parcimonia (max 1/secao)?</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <strong>&#9650;&#9650; Electia by Emprega+</strong> — Social Media Templates<br>
+  Brand Book v2.2 | Dark Premium | [Tagline Electia a definir].
+</div>
+
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Match da fonte emprega+ — comparacao visual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;700;800&family=Inter:wght@400;500;600&family=Nunito:ital,wght@0,800;0,900;1,800;1,900&family=Mulish:ital,wght@0,800;0,900;1,800;1,900&family=Plus+Jakarta+Sans:ital,wght@0,700;0,800;1,700;1,800&family=DM+Sans:ital,wght@0,700;0,900;1,700;1,900&family=Quicksand:wght@600;700&family=Manrope:wght@700;800&family=Lexend:wght@700;800;900&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #0F1A2E;
+    color: #fff;
+    font-family: 'Inter', -apple-system, sans-serif;
+    min-height: 100vh;
+    padding: 40px 24px 80px;
+  }
+
+  header {
+    max-width: 1100px;
+    margin: 0 auto 32px;
+    text-align: center;
+  }
+  header h1 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+  header p {
+    font-size: 13px;
+    opacity: 0.7;
+    line-height: 1.6;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .reference {
+    max-width: 600px;
+    margin: 32px auto 48px;
+    padding: 32px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(94, 234, 212, 0.3);
+    border-radius: 12px;
+    text-align: center;
+  }
+  .reference-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #5EEAD4;
+    margin-bottom: 14px;
+  }
+
+  .candidates {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 20px;
+  }
+
+  .candidate {
+    background: #0F1A2E;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 28px 24px;
+  }
+  .candidate-label {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #5EEAD4;
+    margin-bottom: 4px;
+  }
+  .candidate-meta {
+    font-size: 11px;
+    opacity: 0.5;
+    margin-bottom: 24px;
+  }
+  .wordmark {
+    color: #fff;
+    line-height: 1;
+    font-size: 64px;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .wordmark.hybrid .empre { font-style: normal; }
+  .wordmark.hybrid .ga { font-style: italic; }
+  .wordmark.hybrid .plus { font-style: normal; }
+
+  .f-nunito-800 { font-family: 'Nunito', sans-serif; font-weight: 800; }
+  .f-nunito-900 { font-family: 'Nunito', sans-serif; font-weight: 900; }
+  .f-mulish-900 { font-family: 'Mulish', sans-serif; font-weight: 900; }
+  .f-jakarta-800 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; }
+  .f-sora-800 { font-family: 'Sora', sans-serif; font-weight: 800; }
+  .f-dmsans-900 { font-family: 'DM Sans', sans-serif; font-weight: 900; }
+  .f-quicksand-700 { font-family: 'Quicksand', sans-serif; font-weight: 700; }
+  .f-manrope-800 { font-family: 'Manrope', sans-serif; font-weight: 800; }
+  .f-lexend-900 { font-family: 'Lexend', sans-serif; font-weight: 900; }
+
+  .notes {
+    font-size: 12px;
+    opacity: 0.7;
+    line-height: 1.5;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  footer {
+    max-width: 800px;
+    margin: 56px auto 0;
+    padding: 24px;
+    background: rgba(94, 234, 212, 0.08);
+    border: 1px solid rgba(94, 234, 212, 0.25);
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: center;
+  }
+  footer strong { color: #5EEAD4; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Match da fonte emprega+ — comparacao visual</h1>
+  <p>Compare cada candidato com o logo original (Canva). Tecnica observada no logo: "empre" em regular + "ga" em italic da mesma familia.</p>
+</header>
+
+<div class="reference">
+  <div class="reference-label">Referencia · logo original</div>
+  <div style="font-size:13px;opacity:0.7;">
+    Abra o link <code>canva.link/b2af2hiyal6jca5</code> ao lado e compare visualmente com os candidatos abaixo.
+  </div>
+</div>
+
+<div class="candidates">
+
+  <div class="candidate">
+    <div class="candidate-label">C1 · Nunito ExtraBold 800</div>
+    <div class="candidate-meta">800 normal + 800 italic</div>
+    <div class="wordmark hybrid">
+      <span class="empre f-nunito-800">empre</span><span class="ga f-nunito-800">ga</span><span class="plus f-nunito-800">+</span>
+    </div>
+    <div class="notes">Geometric rounded popular no Canva. "e" clipped horizontal. Italic 800 com inclinacao suave.</div>
+  </div>
+
+  <div class="candidate">
+    <div class="candidate-label">C2 · Nunito Black 900</div>
+    <div class="candidate-meta">900 normal + 900 italic</div>
+    <div class="wordmark hybrid">
+      <span class="empre f-nunito-900">empre</span><span class="ga f-nunito-900">ga</span><span class="plus f-nunito-900">+</span>
+    </div>
+    <div class="notes">Mesmo Nunito no peso maximo. Se logo for ainda mais grosso.</div>
+  </div>
+
+  <div class="candidate">
+    <div class="candidate-label">C3 · Mulish Black 900</div>
+    <div class="candidate-meta">900 normal + 900 italic</div>
+    <div class="wordmark hybrid">
+      <span class="empre f-mulish-900">empre</span><span class="ga f-mulish-900">ga</span><span class="plus f-mulish-900">+</span>
+    </div>
+    <div class="notes">Primo do Nunito. Italic mais inclinado.</div>
+  </div>
+
+  <div class="candidate">
+    <div class="candidate-label">C4 · Plus Jakarta Sans ExtraBold 800</div>
+    <div class="candidate-meta">800 normal + 800 italic</div>
+    <div class="wordmark hybrid">
+      <span class="empre f-jakarta-800">empre</span><span class="ga f-jakarta-800">ga</span><span class="plus f-jakarta-800">+</span>
+    </div>
+    <div class="notes">Modern geometric. Italic dinamico.</div>
+  </div>
+
+  <div class="candidate">
+    <div class="candidate-label">C5 · Sora ExtraBold 800</div>
+    <div class="candidate-meta">800 normal (oblique CSS para italic)</div>
+    <div class="wordmark hybrid">
+      <span class="empre f-sora-800">empre</span><span class="ga f-sora-800" style="font-style:oblique 12deg;">ga</span><span class="plus f-sora-800">+</span>
+    </div>
+    <div class="notes">Ja em uso no DS Electia. Mais rigido. Sora nao tem italic nativo.</div>
+  </div>
+
+  <div class="candidate">
+    <div class="candidate-label">C6 · DM Sans Black 900</div>
+    <div class="candidate-meta">900 normal + 900 italic</div>
+    <div class="wordmark hybrid">
+      <span class="empre f-dmsans-900">empre</span><span class="ga f-dmsans-900">ga</span><span class="plus f-dmsans-900">+</span>
+    </div>
+    <div class="notes">Geometric com "e" clipped. Italic com personalidade.</div>
+  </div>
+
+  <div class="candidate">
+    <div class="candidate-label">C7 · Quicksand Bold 700</div>
+    <div class="candidate-meta">700 (oblique CSS — sem italic)</div>
+    <div class="wordmark hybrid">
+      <span class="empre f-quicksand-700">empre</span><span class="ga f-quicksand-700" style="font-style:oblique 14deg;">ga</span><span class="plus f-quicksand-700">+</span>
+    </div>
+    <div class="notes">Muito rounded. 700 e o peso maximo. Italic via oblique.</div>
+  </div>
+
+  <div class="candidate">
+    <div class="candidate-label">C8 · Manrope ExtraBold 800</div>
+    <div class="candidate-meta">800 (oblique CSS — sem italic)</div>
+    <div class="wordmark hybrid">
+      <span class="empre f-manrope-800">empre</span><span class="ga f-manrope-800" style="font-style:oblique 12deg;">ga</span><span class="plus f-manrope-800">+</span>
+    </div>
+    <div class="notes">Modern geometric tech. Italic via oblique.</div>
+  </div>
+
+  <div class="candidate">
+    <div class="candidate-label">C9 · Lexend Black 900</div>
+    <div class="candidate-meta">900 (oblique CSS — sem italic)</div>
+    <div class="wordmark hybrid">
+      <span class="empre f-lexend-900">empre</span><span class="ga f-lexend-900" style="font-style:oblique 12deg;">ga</span><span class="plus f-lexend-900">+</span>
+    </div>
+    <div class="notes">Variavel Lexend. Italic via oblique.</div>
+  </div>
+
+</div>
+
+<footer>
+  <strong>Como decidir:</strong> abre o link Canva original ao lado e compara. Procura por: (1) "e" com terminacao horizontal cortada, (2) "p" com bowl circular, (3) peso/altura geral, (4) "g" italic — forma do loop.
+  <br/><br/>
+  Responde o codigo do match (ex: <code>C1</code> = Nunito ExtraBold).
+</footer>
+
+</body>
+</html>

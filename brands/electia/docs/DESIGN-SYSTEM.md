@@ -1,8 +1,41 @@
-# Electia Visualization System — v0.1
+# Electia Design System — v1.0
 
-**Status:** spec em revisão
-**Audiência:** Marcos (decisor) + agente que vai implementar quando OPS-SEC liberar
-**Não é:** código. Não é bibioteca pronta. É contrato de design.
+**Versao:** 1.0 (promoted from v0.1 spec) | **Data:** 2026-05-11 | **Status:** Canônico
+
+**Escopo:** Sistema de visualização e UI do produto Electia (assessments comportamentais). Foco em cards de teoria, anatomia de relatórios e tokens de produto.
+
+**Audiência:** equipe de produto + agente que implementa.
+
+**Cross-references:**
+- **Tokens canônicos:** `../tokens/tokens.css` e `../tokens/tokens.json` — paleta teal + escalas de fundo, bordas, texto, motion. Sempre que houver conflito entre este doc e os tokens, **os tokens prevalecem** (eles são a source of truth executável).
+- **Brand Book:** `BRAND-BOOK.md` (v1.1) — voz, posicionamento, arquétipo, regras de uso visual.
+- **DS root (multi-brand):** `../../../DESIGN-SYSTEM.md` (ResultX DS v2.1.1) — fundação compartilhada entre PdV, Electia, IMO. Electia herda tokens base e adiciona overrides de marca.
+
+---
+
+## 0. Tokens canônicos
+
+**Fonte da verdade:** `tokens/tokens.json` (W3C Design Tokens format) → gera `tokens/tokens.css` no build.
+
+Principais grupos:
+- `color.teal` — `#5EEAD4` (light) / `#2DD4BF` (DEFAULT/accent-primary) / `#14B8A6` (dark) / `#0F766E` (muted)
+- `color.bg` — `#0B0E14` (base) → `#161B26` → `#1C2333` (3 níveis de surface)
+- `color.text` — `#E6EDF3` (primary) / `#8B949E` (secondary) / `#6E7681` (muted)
+- `color.border` — `#2A3444` (default) / `#2DD4BF` (focus ring teal)
+- `color.semantic` — success `#22C55E` / warning `#F59E0B` / danger `#EF4444`
+- `color.theory` — 6 cores (DISC azul, Tipologia Cognitiva roxo, Eneagrama âmbar, Big Five verde, Le Senne rosa, Motivadores ciano)
+- `motion.duration` — 200ms / 400ms / 600ms / 1200ms
+- `motion.easing` — `cubic-bezier(0.16, 1, 0.3, 1)` (spring-out, padrão)
+
+**Como usar no app:**
+```css
+@import 'resultx-design-system/tokens';
+@import './tokens/tokens.css'; /* override Electia em cima do DS base */
+```
+
+```tsx
+<div style={{ color: 'var(--teal)', background: 'var(--bg)' }} />
+```
 
 ---
 

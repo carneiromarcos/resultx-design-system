@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brand Book — Electia by Emprega+</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================
+       BRAND BOOK VIEWER — Electia
+       ========================================== */
+    :root {
+      --teal: #2DD4BF;
+      --teal-light: #5EEAD4;
+      --teal-dark: #14B8A6;
+      --teal-muted: #0F766E;
+      --bg: #08080A;
+      --surface-1: #0E0E11;
+      --surface-2: #141417;
+      --surface-3: #1C1C20;
+      --surface-4: #24242A;
+      --white: #FFFFFF;
+      --gray-100: #E8E8EC;
+      --gray-200: #C8C8D0;
+      --gray-300: #A0A0AC;
+      --gray-400: #7E7E8A;
+      --gray-500: #5A5A66;
+      --gray-600: #2E2E36;
+      --green: #2D8B5C;
+      --red: #B83A3A;
+      --amber: #B8862A;
+      --font-heading: 'Sora', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --gradient-brand: linear-gradient(135deg, #2DD4BF 0%, #5EEAD4 100%);
+      --glass-bg: rgba(14,14,17,0.6);
+      --glass-border: rgba(255,255,255,0.06);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--gray-200);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- Navigation ---- */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(8,8,10,0.92);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--gray-600);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      height: 56px;
+      gap: 32px;
+    }
+    .nav-brand {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .nav-brand span { color: var(--teal); }
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-link {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gray-400);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      white-space: nowrap;
+      transition: all 200ms;
+    }
+    .nav-link:hover { color: var(--teal); background: rgba(196,154,60,0.08); }
+
+    /* ---- Layout ---- */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+    .section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--gray-600);
+    }
+    .section:last-child { border-bottom: none; }
+
+    /* ---- Section headers ---- */
+    .section-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .section-subtitle {
+      font-size: 18px;
+      color: var(--gray-300);
+      max-width: 640px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* ---- Hero ---- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 32px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(196,154,60,0.08), transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--teal);
+      margin-bottom: 24px;
+    }
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(40px, 8vw, 76px);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+    .hero-title .teal { color: var(--teal); }
+    .hero-tagline {
+      font-size: 20px;
+      color: var(--gray-300);
+      max-width: 560px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .hero-quote {
+      font-style: italic;
+      font-size: 16px;
+      color: var(--teal-dark);
+      max-width: 480px;
+      line-height: 1.6;
+      padding: 20px 32px;
+      border-left: 2px solid var(--teal);
+      text-align: left;
+    }
+    .teal-bar {
+      width: 60px;
+      height: 2px;
+      background: var(--gradient-brand);
+      margin: 32px auto;
+      border-radius: 1px;
+    }
+
+    /* ---- Cards ---- */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 28px;
+      transition: border-color 200ms, transform 200ms;
+    }
+    .card:hover { border-color: rgba(196,154,60,0.2); transform: translateY(-2px); }
+    .card-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--teal);
+      margin-bottom: 12px;
+    }
+    .card h3 {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .card p { font-size: 14px; color: var(--gray-300); line-height: 1.6; }
+
+    /* ---- Values table ---- */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .value-item {
+      background: var(--surface-1);
+      border: 1px solid var(--gray-600);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      transition: border-color 200ms;
+    }
+    .value-item:hover { border-color: var(--teal-dark); }
+    .value-item h4 {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--teal);
+      margin-bottom: 6px;
+    }
+    .value-item p { font-size: 12px; color: var(--gray-400); }
+
+    /* ---- Archetype cards ---- */
+    .archetype-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .archetype-card {
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      border: 1px solid var(--gray-600);
+      transition: all 300ms;
+      position: relative;
+      overflow: hidden;
+    }
+    .archetype-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--gradient-brand);
+    }
+    .archetype-card:hover { border-color: var(--teal-dark); transform: translateY(-4px); }
+    .archetype-icon { font-size: 40px; margin-bottom: 16px; display: block; }
+    .archetype-card h3 {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .archetype-card .role {
+      font-size: 12px;
+      color: var(--teal);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .archetype-card p { font-size: 13px; color: var(--gray-300); line-height: 1.6; }
+
+    /* ---- Pillar cards ---- */
+    .pillar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .pillar-card {
+      background: var(--surface-1);
+      border: 1px solid var(--gray-600);
+      border-radius: 12px;
+      padding: 32px 24px;
+      position: relative;
+      transition: border-color 200ms;
+    }
+    .pillar-card:hover { border-color: var(--teal-dark); }
+    .pillar-num {
+      font-family: var(--font-mono);
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--gray-600);
+      position: absolute;
+      top: 16px;
+      right: 20px;
+    }
+    .pillar-card h3 {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .pillar-card .arch {
+      font-size: 11px;
+      color: var(--teal);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .pillar-card p { font-size: 13px; color: var(--gray-300); line-height: 1.6; }
+    .pillar-card .quote-sm {
+      font-style: italic;
+      font-size: 12px;
+      color: var(--gray-400);
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--gray-600);
+    }
+
+    /* ---- Color swatches ---- */
+    .color-section-title {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+      margin-top: 32px;
+    }
+    .color-section-title:first-child { margin-top: 0; }
+    .color-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+    .swatch {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--gray-600);
+      min-width: 120px;
+      flex: 1;
+      transition: transform 200ms;
+    }
+    .swatch:hover { transform: translateY(-2px); }
+    .swatch-color { height: 64px; }
+    .swatch-info { padding: 8px 10px; background: var(--surface-1); }
+    .swatch-name { font-size: 11px; font-weight: 600; color: var(--gray-200); }
+    .swatch-hex { font-family: var(--font-mono); font-size: 10px; color: var(--gray-500); }
+
+    /* ---- Background scale (full width) ---- */
+    .bg-scale {
+      display: flex;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--gray-600);
+      margin-bottom: 24px;
+    }
+    .bg-scale-item {
+      flex: 1;
+      padding: 32px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: 120px;
+    }
+    .bg-scale-item span {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--gray-500);
+    }
+    .bg-scale-item .name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-400);
+      margin-bottom: 2px;
+    }
+
+    /* ---- Typography showcase ---- */
+    .type-row {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--gray-600);
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+    }
+    .type-row:last-child { border-bottom: none; }
+    .type-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--gray-500);
+      min-width: 70px;
+      flex-shrink: 0;
+    }
+    .type-meta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--gray-500);
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    /* ---- Voice table ---- */
+    .voice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .voice-card {
+      border-radius: 10px;
+      padding: 20px;
+      border: 1px solid var(--gray-600);
+    }
+    .voice-card.wrong { background: rgba(184,58,58,0.06); border-color: rgba(184,58,58,0.2); }
+    .voice-card.right { background: rgba(196,154,60,0.06); border-color: rgba(196,154,60,0.2); }
+    .voice-card .label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .voice-card.wrong .label { color: var(--red); }
+    .voice-card.right .label { color: var(--teal); }
+    .voice-card p { font-size: 14px; color: var(--gray-200); }
+
+    /* ---- Vocab tags ---- */
+    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .tag {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 6px;
+    }
+    .tag.use { background: rgba(196,154,60,0.1); color: var(--teal); border: 1px solid rgba(196,154,60,0.2); }
+    .tag.avoid { background: rgba(184,58,58,0.08); color: #D06060; border: 1px solid rgba(184,58,58,0.15); text-decoration: line-through; text-decoration-color: rgba(184,58,58,0.4); }
+
+    /* ---- Sins/Virtues table ---- */
+    .sin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+    .sin-card {
+      background: var(--surface-1);
+      border: 1px solid var(--gray-600);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: border-color 200ms;
+    }
+    .sin-card:hover { border-color: var(--teal-dark); }
+    .sin-arrow { color: var(--teal); font-size: 18px; flex-shrink: 0; }
+    .sin-from { font-size: 13px; color: var(--gray-400); min-width: 80px; }
+    .sin-to { font-size: 13px; font-weight: 600; color: var(--teal); }
+    .sin-how { font-size: 11px; color: var(--gray-500); margin-top: 2px; }
+
+    /* ---- Glass showcase ---- */
+    .glass-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 40px;
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--gray-600);
+    }
+    .glass-row::before {
+      content: '';
+      position: absolute;
+      top: 30%;
+      left: 25%;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(196,154,60,0.12), transparent 70%);
+      pointer-events: none;
+    }
+    .glass-item {
+      flex: 1;
+      min-width: 180px;
+      border-radius: 12px;
+      padding: 24px;
+      position: relative;
+    }
+    .glass-item h4 {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .glass-item p { font-size: 12px; color: var(--gray-400); }
+
+    /* ---- Gradient bars ---- */
+    .gradient-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .gradient-item {
+      flex: 1;
+      min-width: 200px;
+      height: 80px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gradient-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    /* ---- Manifesto block ---- */
+    .manifesto {
+      background: var(--surface-1);
+      border: 1px solid var(--gray-600);
+      border-radius: 16px;
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .manifesto::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gradient-brand);
+    }
+    .manifesto p {
+      font-size: 20px;
+      line-height: 1.8;
+      color: var(--gray-200);
+      max-width: 640px;
+    }
+    .manifesto p strong { color: var(--white); font-weight: 600; }
+    .manifesto .sig {
+      font-style: italic;
+      font-size: 16px;
+      color: var(--teal);
+      margin-top: 32px;
+    }
+
+    /* ---- Assessment table ---- */
+    .assess-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+    .assess-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--surface-1);
+      border-radius: 8px;
+      border: 1px solid var(--gray-600);
+    }
+    .assess-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--teal);
+      background: rgba(196,154,60,0.1);
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .assess-result { font-size: 13px; color: var(--gray-200); }
+    .assess-meaning { font-size: 11px; color: var(--gray-400); }
+
+    /* ---- Logo showcase ---- */
+    .logo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+    .logo-card {
+      border-radius: 12px;
+      padding: 32px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 140px;
+      border: 1px solid var(--gray-600);
+      transition: border-color 200ms;
+    }
+    .logo-card:hover { border-color: var(--teal-dark); }
+    .logo-card .logo-text {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .logo-card .logo-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 12px;
+    }
+    .logo-bar {
+      width: 40px;
+      height: 2px;
+      border-radius: 1px;
+      margin-top: 6px;
+    }
+
+    /* ---- PAID framework ---- */
+    .paid-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .paid-step {
+      background: var(--surface-1);
+      border: 1px solid var(--gray-600);
+      border-radius: 10px;
+      padding: 20px;
+      position: relative;
+    }
+    .paid-step .step-letter {
+      font-family: var(--font-heading);
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--gray-600);
+      position: absolute;
+      top: 12px;
+      right: 16px;
+    }
+    .paid-step h4 {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--teal);
+      margin-bottom: 6px;
+    }
+    .paid-step p { font-size: 12px; color: var(--gray-300); line-height: 1.5; }
+    .paid-step .example {
+      font-style: italic;
+      font-size: 11px;
+      color: var(--gray-400);
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--gray-600);
+    }
+
+    /* ---- Checklist ---- */
+    .checklist {
+      columns: 2;
+      column-gap: 24px;
+    }
+    .check-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 8px 0;
+      break-inside: avoid;
+      font-size: 13px;
+      color: var(--gray-300);
+    }
+    .check-box {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--gray-500);
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 768px) {
+      .nav { padding: 0 16px; gap: 16px; }
+      .container { padding: 0 20px; }
+      .section { padding: 60px 0; }
+      .archetype-grid, .pillar-grid { grid-template-columns: 1fr; }
+      .voice-grid { grid-template-columns: 1fr; }
+      .paid-row { grid-template-columns: 1fr 1fr; }
+      .checklist { columns: 1; }
+      .hero { padding: 100px 20px 60px; }
+      .manifesto { padding: 32px 24px; }
+    }
+
+    /* ---- Scroll animation ---- */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 600ms cubic-bezier(0.16,1,0.3,1), transform 600ms cubic-bezier(0.16,1,0.3,1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav">
+    <div class="nav-brand">P<span>d</span>V Brand Book</div>
+    <div class="nav-links">
+      <a class="nav-link" href="#origem">Origem</a>
+      <a class="nav-link" href="#essencia">Essencia</a>
+      <a class="nav-link" href="#pilares">Pilares</a>
+      <a class="nav-link" href="#arquetipos">Arquetipos</a>
+      <a class="nav-link" href="#voz">Voz</a>
+      <a class="nav-link" href="#logo">Logo</a>
+      <a class="nav-link" href="#cores">Cores</a>
+      <a class="nav-link" href="#tipografia">Tipografia</a>
+      <a class="nav-link" href="#visual">Visual</a>
+      <a class="nav-link" href="#marketing">Marketing</a>
+      <a class="nav-link" href="#checklist">Checklist</a>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <div class="hero">
+    <div class="hero-eyebrow">Brand Book v2.3</div>
+    <h1 class="hero-title">Profissional<br>de <span class="teal">Valor</span></h1>
+    <div class="teal-bar"></div>
+    <p class="hero-tagline">[Tagline Electia a definir]. Documento de identidade visual, posicionamento e diretrizes de marca.</p>
+    <blockquote class="hero-quote">
+      "O fogo que queima e destroi e o mesmo que forja e purifica."
+    </blockquote>
+  </div>
+
+  <div class="container">
+
+    <!-- ===== 1. ORIGEM ===== -->
+    <div class="section fade-up" id="origem">
+      <span class="section-num">01 / Origem</span>
+      <h2 class="section-title">A historia por tras da marca</h2>
+      <p class="section-subtitle">A Comunidade Electia by Emprega+ nao nasceu de um plano de negocios. Nasceu de uma vida forjada pelo fogo.</p>
+
+      <div style="display:grid; grid-template-columns:2fr 1fr; gap:24px; margin-bottom:32px;">
+        <div style="background:var(--surface-1); border:1px solid var(--gray-600); border-radius:12px; padding:28px;">
+          <p style="font-size:15px; color:var(--gray-200); line-height:1.8; margin-bottom:16px;">
+            Marcos Carneiro — engenheiro por formacao, empreendedor por vocacao, idealista por natureza. Aos 23, fundou a CRONIC Jeans. Aos 31, perdeu tudo num incendio — R$1.5M, 100+ demissoes, sem seguro.
+          </p>
+          <p style="font-size:15px; color:var(--gray-200); line-height:1.8; margin-bottom:16px;">
+            Depois: 7 anos como executivo, uma secretaria de trabalho em cidade violenta, a fundacao da Emprega+ (2022) e do Electia (2024).
+          </p>
+          <p style="font-size:15px; color:var(--teal); line-height:1.8; font-weight:500;">
+            O Electia e a materializacao de uma conviccao: carreira sem carater e castelo de areia.
+          </p>
+        </div>
+        <div>
+          <div class="section-num" style="margin-bottom:12px;">Perfil Psicologico</div>
+          <div class="assess-grid" style="grid-template-columns:1fr;">
+            <div class="assess-item"><span class="assess-tag">JUNG</span><span class="assess-result">Heroi + Rebelde + Sabio 100%</span></div>
+            <div class="assess-item"><span class="assess-tag">ENEA</span><span class="assess-result">1w9 — Perfeccionista</span></div>
+            <div class="assess-item"><span class="assess-tag">MBTI</span><span class="assess-result">INFP — 100% Introvertido</span></div>
+            <div class="assess-item"><span class="assess-tag">DISC</span><span class="assess-result">CD — Conf 89% + Dom 68%</span></div>
+            <div class="assess-item"><span class="assess-tag">BIG5</span><span class="assess-result">Abertura 95% | Neuro 22%</span></div>
+            <div class="assess-item"><span class="assess-tag">LSNE</span><span class="assess-result">Sanguineo (nE-A-P)</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 2. ESSENCIA ===== -->
+    <div class="section fade-up" id="essencia">
+      <span class="section-num">02 / Essencia</span>
+      <h2 class="section-title">Proposito, missao e valores</h2>
+      <p class="section-subtitle">Forjar profissionais e empreendedores que vencem pela excelencia, virtude e proposito — nao pelo dinheiro ou poder.</p>
+
+      <div class="values-grid" style="margin-bottom:40px;">
+        <div class="value-item"><h4>Verdade</h4><p>Dizemos o que precisa ser dito, nao o que agrada</p></div>
+        <div class="value-item"><h4>Virtude</h4><p>O carater e o alicerce de tudo</p></div>
+        <div class="value-item"><h4>Coragem</h4><p>Agir mesmo quando o caminho e ingreme</p></div>
+        <div class="value-item"><h4>Metodo</h4><p>Nada de motivacional vazio</p></div>
+        <div class="value-item"><h4>Excelencia</h4><p>Nenhum material sai sem cuidado extremo</p></div>
+      </div>
+
+      <!-- Manifesto -->
+      <div class="manifesto">
+        <p>
+          Voce nao precisa de mais um diploma.<br>
+          Precisa de <strong>coragem para subir a montanha</strong>.<br><br>
+          O mercado nao recompensa esforco.<br>
+          Recompensa quem se <strong>posiciona com verdade</strong>.<br><br>
+          Nos nao vendemos formula magica.<br>
+          Nos <strong>forjamos vencedores</strong> — pelo fogo do metodo, da virtude e da acao.<br><br>
+          Se voce busca o caminho facil, esse lugar nao e pra voce.<br>
+          Se voce esta pronto pra escalar, <strong>bem-vindo</strong>.
+        </p>
+        <div class="sig">O fogo que queima e destroi e o mesmo que forja e purifica.</div>
+      </div>
+    </div>
+
+    <!-- ===== 3. PILARES ===== -->
+    <div class="section fade-up" id="pilares">
+      <span class="section-num">03 / Os Tres Pilares</span>
+      <h2 class="section-title">O Triangulo do Valor</h2>
+      <p class="section-subtitle">A montanha tem tres lados — e o profissional de valor se desenvolve em tres dimensoes. O triangulo so funciona com os tres lados: tire um e ele desmorona.</p>
+
+      <div class="pillar-grid">
+        <div class="pillar-card">
+          <span class="pillar-num">1</span>
+          <div class="arch">Sabio</div>
+          <h3>Principios e Valores</h3>
+          <p>O fundamento de tudo. Quem voce e determina como voce e percebido. Resultado: boa reputacao — o ativo mais valioso.</p>
+          <div class="quote-sm">"Seu curriculo fala de competencias. Sua reputacao fala de carater."</div>
+        </div>
+        <div class="pillar-card">
+          <span class="pillar-num">2</span>
+          <div class="arch">Heroi</div>
+          <h3>Habilidades Comportamentais</h3>
+          <p>As competencias que separam quem cresce de quem fica parado. Comunicacao sem virtude e manipulacao, resiliencia sem virtude e teimosia.</p>
+          <div class="quote-sm">"Habilidades tecnicas te colocam na porta. Comportamentais te fazem ficar."</div>
+        </div>
+        <div class="pillar-card">
+          <span class="pillar-num">3</span>
+          <div class="arch">Rebelde</div>
+          <h3>Habilidades Tecnicas</h3>
+          <p>As ferramentas do profissional moderno. IA como principal habilidade tecnica a ser desenvolvida.</p>
+          <div class="quote-sm">"92 milhoes de empregos vao desaparecer. Voce esta se preparando ou esperando?"</div>
+        </div>
+      </div>
+
+      <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:220px; background:rgba(184,58,58,0.06); border:1px solid rgba(184,58,58,0.15); border-radius:8px; padding:14px 18px;">
+          <span style="font-size:12px; color:#D06060; font-weight:600;">Sem carater:</span>
+          <span style="font-size:12px; color:var(--gray-300);"> profissional <strong style="color:#D06060;">perigoso</strong></span>
+        </div>
+        <div style="flex:1; min-width:220px; background:rgba(184,58,58,0.06); border:1px solid rgba(184,58,58,0.15); border-radius:8px; padding:14px 18px;">
+          <span style="font-size:12px; color:#D06060; font-weight:600;">Sem competencia:</span>
+          <span style="font-size:12px; color:var(--gray-300);"> profissional <strong style="color:#D06060;">irrelevante</strong></span>
+        </div>
+        <div style="flex:1; min-width:220px; background:rgba(184,58,58,0.06); border:1px solid rgba(184,58,58,0.15); border-radius:8px; padding:14px 18px;">
+          <span style="font-size:12px; color:#D06060; font-weight:600;">Sem comunicacao:</span>
+          <span style="font-size:12px; color:var(--gray-300);"> profissional <strong style="color:#D06060;">invisivel</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 4. ARQUETIPOS ===== -->
+    <div class="section fade-up" id="arquetipos">
+      <span class="section-num">04 / Arquetipo de Marca</span>
+      <h2 class="section-title">Heroi + Rebelde + Sabio</h2>
+      <p class="section-subtitle">O Electia nao opera com um unico arquetipo. Opera com tres, em equilibrio.</p>
+
+      <div class="archetype-grid" style="margin-bottom:40px;">
+        <div class="archetype-card" style="background:var(--surface-1);">
+          <span class="archetype-icon">&#9876;</span>
+          <h3>O Heroi</h3>
+          <div class="role">Dominante — Coragem</div>
+          <p>"Voce vai se tornar quem deveria ser." Desafiador, inspirador pela acao. Simbolo: a montanha.</p>
+        </div>
+        <div class="archetype-card" style="background:var(--surface-1);">
+          <span class="archetype-icon">&#9760;</span>
+          <h3>O Rebelde</h3>
+          <div class="role">Confronto ao errado</div>
+          <p>Templario moderno — combate mediocridade moral, vitimismo, promessas vazias. Provocador, firme.</p>
+        </div>
+        <div class="archetype-card" style="background:var(--surface-1);">
+          <span class="archetype-icon">&#9670;</span>
+          <h3>O Sabio</h3>
+          <div class="role">Profundidade</div>
+          <p>"Voce vai enxergar o que ninguem te mostrou." Reflexivo, profundo, cada palavra carrega peso.</p>
+        </div>
+      </div>
+
+      <!-- Framework moral -->
+      <div class="color-section-title">Framework Moral (implicito, nunca explicito)</div>
+      <p style="font-size:13px; color:var(--gray-400); margin-bottom:16px;">Combate aos 7 pecados manifestados no trabalho, atraves das virtudes.</p>
+      <div class="sin-grid">
+        <div class="sin-card">
+          <span class="sin-from">Preguica</span>
+          <span class="sin-arrow">&#10230;</span>
+          <div><span class="sin-to">Diligencia</span><div class="sin-how">"Excelencia e o minimo"</div></div>
+        </div>
+        <div class="sin-card">
+          <span class="sin-from">Soberba</span>
+          <span class="sin-arrow">&#10230;</span>
+          <div><span class="sin-to">Humildade</span><div class="sin-how">"Competencia real, nao performance"</div></div>
+        </div>
+        <div class="sin-card">
+          <span class="sin-from">Avareza</span>
+          <span class="sin-arrow">&#10230;</span>
+          <div><span class="sin-to">Generosidade</span><div class="sin-how">"Gerar valor antes de cobrar"</div></div>
+        </div>
+        <div class="sin-card">
+          <span class="sin-from">Inveja</span>
+          <span class="sin-arrow">&#10230;</span>
+          <div><span class="sin-to">Gratidao</span><div class="sin-how">"Merito, nao vitimismo"</div></div>
+        </div>
+        <div class="sin-card">
+          <span class="sin-from">Luxuria</span>
+          <span class="sin-arrow">&#10230;</span>
+          <div><span class="sin-to">Temperanca</span><div class="sin-how">"Dignidade em tudo"</div></div>
+        </div>
+        <div class="sin-card">
+          <span class="sin-from">Ira</span>
+          <span class="sin-arrow">&#10230;</span>
+          <div><span class="sin-to">Paciencia</span><div class="sin-how">"Fortaleza serena"</div></div>
+        </div>
+        <div class="sin-card">
+          <span class="sin-from">Gula</span>
+          <span class="sin-arrow">&#10230;</span>
+          <div><span class="sin-to">Prudencia</span><div class="sin-how">"Clareza sobre o que importa"</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 5. VOZ ===== -->
+    <div class="section fade-up" id="voz">
+      <span class="section-num">05 / Tom de Voz</span>
+      <h2 class="section-title">Coragem provocadora, profundidade serena</h2>
+      <p class="section-subtitle">Metodo sobre emocao. Empatia sem vitimizacao. Diz verdades que incomodam.</p>
+
+      <div class="voice-grid" style="margin-bottom:32px;">
+        <div class="voice-card wrong"><div class="label">Generico</div><p>"Compre agora!"</p></div>
+        <div class="voice-card right"><div class="label">Electia</div><p>"Se voce esta pronto pra escalar, o primeiro passo e gratuito."</p></div>
+        <div class="voice-card wrong"><div class="label">Generico</div><p>"Sabemos como e dificil..."</p></div>
+        <div class="voice-card right"><div class="label">Electia</div><p>"Voce sabe que merece mais. O mercado nao sabe. Isso muda hoje."</p></div>
+        <div class="voice-card wrong"><div class="label">Generico</div><p>"ULTIMAS VAGAS!!!"</p></div>
+        <div class="voice-card right"><div class="label">Electia</div><p>"92 milhoes de empregos vao desaparecer. O seu?"</p></div>
+        <div class="voice-card wrong"><div class="label">Generico</div><p>"Voce merece ser feliz!"</p></div>
+        <div class="voice-card right"><div class="label">Electia</div><p>"Se ter diplomas fosse suficiente, voce ja estaria onde deseja."</p></div>
+      </div>
+
+      <!-- Vocab -->
+      <div class="color-section-title">Vocabulario da Marca</div>
+      <div style="margin-bottom:8px; font-size:11px; color:var(--teal); font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Usar sempre</div>
+      <div class="tag-row">
+        <span class="tag use">forjar</span><span class="tag use">escalar</span><span class="tag use">montanha</span>
+        <span class="tag use">virtude</span><span class="tag use">metodo</span><span class="tag use">estrategia</span>
+        <span class="tag use">valor</span><span class="tag use">posicionamento</span><span class="tag use">clareza</span>
+        <span class="tag use">coragem</span><span class="tag use">excelencia</span><span class="tag use">verdade</span>
+        <span class="tag use">carater</span><span class="tag use">vencedor</span><span class="tag use">vocacao</span>
+      </div>
+      <div style="margin-bottom:8px; font-size:11px; color:#D06060; font-weight:600; text-transform:uppercase; letter-spacing:0.05em;">Nunca usar</div>
+      <div class="tag-row">
+        <span class="tag avoid">sucesso garantido</span><span class="tag avoid">enriquecer</span><span class="tag avoid">facil</span>
+        <span class="tag avoid">rapido</span><span class="tag avoid">hack</span><span class="tag avoid">segredo</span>
+        <span class="tag avoid">magica</span><span class="tag avoid">coach</span><span class="tag avoid">guru</span>
+        <span class="tag avoid">forca do universo</span><span class="tag avoid">lei da atracao</span><span class="tag avoid">empoderamento</span>
+      </div>
+    </div>
+
+    <!-- ===== 6. LOGO ===== -->
+    <div class="section fade-up" id="logo">
+      <span class="section-num">06 / Logomarca</span>
+      <h2 class="section-title">Monograma P/V — A Montanha Abstrata</h2>
+      <p class="section-subtitle">Tres leituras simultaneas: P (Profissional), V (Valor), Montanha (silhueta abstrata). A barra teal e o alicerce.</p>
+
+      <div class="logo-grid" style="margin-bottom:32px;">
+        <div class="logo-card" style="background:var(--bg);">
+          <span class="logo-text" style="font-size:32px; color:#fff;">P<span style="color:var(--teal);">d</span>V</span>
+          <div class="logo-bar" style="background:var(--gradient-brand);"></div>
+          <span class="logo-label">Simplificada (dark)</span>
+        </div>
+        <div class="logo-card" style="background:#1B2A4A;">
+          <span class="logo-text" style="font-size:32px; color:#fff;">P<span style="color:var(--teal);">d</span>V</span>
+          <div class="logo-bar" style="background:var(--gradient-brand);"></div>
+          <span class="logo-label">Sobre navy</span>
+        </div>
+        <div class="logo-card" style="background:#fff;">
+          <span class="logo-text" style="font-size:32px; color:#1B2A4A;">P<span style="color:var(--teal);">d</span>V</span>
+          <div class="logo-bar" style="background:var(--gradient-brand);"></div>
+          <span class="logo-label" style="color:#8B949E;">Sobre fundo claro</span>
+        </div>
+        <div class="logo-card" style="background:var(--bg);">
+          <span class="logo-text" style="font-size:32px; color:var(--teal);">P<span style="color:var(--teal-light);">d</span>V</span>
+          <div class="logo-bar" style="background:var(--gradient-brand);"></div>
+          <span class="logo-label">Premium (teal)</span>
+        </div>
+      </div>
+
+      <!-- Variacoes list -->
+      <div class="color-section-title">9 Variacoes</div>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px;">
+        <div style="padding:10px 14px; background:var(--surface-1); border-radius:8px; font-size:12px; color:var(--gray-300); border:1px solid var(--gray-600);">Completa horizontal</div>
+        <div style="padding:10px 14px; background:var(--surface-1); border-radius:8px; font-size:12px; color:var(--gray-300); border:1px solid var(--gray-600);">Completa vertical</div>
+        <div style="padding:10px 14px; background:var(--surface-1); border-radius:8px; font-size:12px; color:var(--gray-300); border:1px solid var(--gray-600);">Simplificada (Electia)</div>
+        <div style="padding:10px 14px; background:var(--surface-1); border-radius:8px; font-size:12px; color:var(--gray-300); border:1px solid var(--gray-600);">Icone padrao</div>
+        <div style="padding:10px 14px; background:var(--surface-1); border-radius:8px; font-size:12px; color:var(--gray-300); border:1px solid var(--gray-600);">Icone outline</div>
+        <div style="padding:10px 14px; background:var(--surface-1); border-radius:8px; font-size:12px; color:var(--gray-300); border:1px solid var(--gray-600);">Icone ouro</div>
+        <div style="padding:10px 14px; background:var(--surface-1); border-radius:8px; font-size:12px; color:var(--gray-300); border:1px solid var(--gray-600);">Mono branca</div>
+        <div style="padding:10px 14px; background:var(--surface-1); border-radius:8px; font-size:12px; color:var(--gray-300); border:1px solid var(--gray-600);">Mono navy</div>
+        <div style="padding:10px 14px; background:var(--surface-1); border-radius:8px; font-size:12px; color:var(--gray-300); border:1px solid var(--gray-600);">Micro (favicon)</div>
+      </div>
+
+      <!-- Area de protecao -->
+      <div style="margin-top:24px; padding:20px; background:var(--surface-1); border:1px solid var(--gray-600); border-radius:10px;">
+        <div style="font-size:12px; font-weight:600; color:var(--teal); margin-bottom:8px;">Area de protecao</div>
+        <div style="font-size:13px; color:var(--gray-300);">Minimo 1.5x a altura do icone em todos os lados. A barra teal faz parte do conjunto.</div>
+      </div>
+    </div>
+
+    <!-- ===== 7. CORES ===== -->
+    <div class="section fade-up" id="cores">
+      <span class="section-num">07 / Paleta de Cores</span>
+      <h2 class="section-title">Monocromatica + ouro</h2>
+      <p class="section-subtitle">Fundo escuro como a caverna da montanha, ouro como o metal purificado pela forja. Nada e decorativo — cada cor tem funcao.</p>
+
+      <!-- Teal -->
+      <div class="color-section-title">Ouro — cor de destaque primaria</div>
+      <div class="color-row">
+        <div class="swatch"><div class="swatch-color" style="background:#5EEAD4;"></div><div class="swatch-info"><div class="swatch-name">Teal Light</div><div class="swatch-hex">#5EEAD4</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#2DD4BF;"></div><div class="swatch-info"><div class="swatch-name">Teal (Primary)</div><div class="swatch-hex">#2DD4BF</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#14B8A6;"></div><div class="swatch-info"><div class="swatch-name">Teal Dark</div><div class="swatch-hex">#14B8A6</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#0F766E;"></div><div class="swatch-info"><div class="swatch-name">Teal Muted</div><div class="swatch-hex">#0F766E</div></div></div>
+      </div>
+
+      <!-- Background Scale -->
+      <div class="color-section-title">Background Scale</div>
+      <div class="bg-scale">
+        <div class="bg-scale-item" style="background:#08080A;"><div class="name">Background</div><span>#08080A</span></div>
+        <div class="bg-scale-item" style="background:#0E0E11;"><div class="name">Surface 1</div><span>#0E0E11</span></div>
+        <div class="bg-scale-item" style="background:#141417;"><div class="name">Surface 2</div><span>#141417</span></div>
+        <div class="bg-scale-item" style="background:#1C1C20;"><div class="name">Surface 3</div><span>#1C1C20</span></div>
+        <div class="bg-scale-item" style="background:#24242A;"><div class="name">Surface 4</div><span>#24242A</span></div>
+      </div>
+
+      <!-- Text -->
+      <div class="color-section-title">Texto</div>
+      <div class="color-row">
+        <div class="swatch"><div class="swatch-color" style="background:#FFFFFF;"></div><div class="swatch-info"><div class="swatch-name">White</div><div class="swatch-hex">#FFFFFF</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#E8E8EC;"></div><div class="swatch-info"><div class="swatch-name">Gray 100</div><div class="swatch-hex">#E8E8EC</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#C8C8D0;"></div><div class="swatch-info"><div class="swatch-name">Gray 200</div><div class="swatch-hex">#C8C8D0</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#A0A0AC;"></div><div class="swatch-info"><div class="swatch-name">Gray 300</div><div class="swatch-hex">#A0A0AC</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#7E7E8A;"></div><div class="swatch-info"><div class="swatch-name">Gray 400</div><div class="swatch-hex">#7E7E8A</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#5A5A66;"></div><div class="swatch-info"><div class="swatch-name">Gray 500</div><div class="swatch-hex">#5A5A66</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#2E2E36;"></div><div class="swatch-info"><div class="swatch-name">Gray 600</div><div class="swatch-hex">#2E2E36</div></div></div>
+      </div>
+
+      <!-- Support -->
+      <div class="color-section-title">Suporte (apenas estados UI)</div>
+      <div class="color-row">
+        <div class="swatch"><div class="swatch-color" style="background:#2D8B5C;"></div><div class="swatch-info"><div class="swatch-name">Verde Confirmacao</div><div class="swatch-hex">#2D8B5C</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#B83A3A;"></div><div class="swatch-info"><div class="swatch-name">Vermelho Erro</div><div class="swatch-hex">#B83A3A</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#B8862A;"></div><div class="swatch-info"><div class="swatch-name">Ambar Aviso</div><div class="swatch-hex">#B8862A</div></div></div>
+      </div>
+
+      <!-- Gradients -->
+      <div class="color-section-title">Gradientes</div>
+      <div class="gradient-row">
+        <div class="gradient-item" style="background:linear-gradient(135deg,#2DD4BF,#5EEAD4);">
+          <span class="gradient-label" style="color:#08080A;">Teal Gradient 135deg</span>
+        </div>
+        <div class="gradient-item" style="background:linear-gradient(135deg,rgba(196,154,60,0.12),rgba(139,107,42,0.12)); border:1px solid var(--gray-600);">
+          <span class="gradient-label" style="color:var(--gray-400);">Teal Subtle 12%</span>
+        </div>
+        <div class="gradient-item" style="background:#08080A; box-shadow:0 0 40px rgba(196,154,60,0.35), 0 0 80px rgba(196,154,60,0.15);">
+          <span class="gradient-label" style="color:var(--teal);">Glow Brand LG</span>
+        </div>
+      </div>
+
+      <!-- Rules -->
+      <div style="margin-top:32px; display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div style="padding:16px 20px; background:var(--surface-1); border:1px solid var(--gray-600); border-radius:8px;">
+          <div style="font-size:11px; font-weight:600; color:var(--teal); margin-bottom:4px;">REGRA</div>
+          <div style="font-size:13px; color:var(--gray-300);">Fundo SEMPRE escuro. Teal como cor primaria de destaque.</div>
+        </div>
+        <div style="padding:16px 20px; background:var(--surface-1); border:1px solid var(--gray-600); border-radius:8px;">
+          <div style="font-size:11px; font-weight:600; color:var(--teal); margin-bottom:4px;">REGRA</div>
+          <div style="font-size:13px; color:var(--gray-300);">Maximo 3 cores por peca: fundo escuro + ouro + branco.</div>
+        </div>
+        <div style="padding:16px 20px; background:var(--surface-1); border:1px solid var(--gray-600); border-radius:8px;">
+          <div style="font-size:11px; font-weight:600; color:var(--teal); margin-bottom:4px;">REGRA</div>
+          <div style="font-size:13px; color:var(--gray-300);">Gradiente Teal com parcimonia — maximo 1 por secao.</div>
+        </div>
+        <div style="padding:16px 20px; background:rgba(184,58,58,0.06); border:1px solid rgba(184,58,58,0.15); border-radius:8px;">
+          <div style="font-size:11px; font-weight:600; color:#D06060; margin-bottom:4px;">PROIBIDO</div>
+          <div style="font-size:13px; color:var(--gray-300);">Cores neon, saturadas, multiplas cores de acento, ouro sobre branco.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 8. TIPOGRAFIA ===== -->
+    <div class="section fade-up" id="tipografia">
+      <span class="section-num">08 / Tipografia</span>
+      <h2 class="section-title">Sora + Inter</h2>
+      <p class="section-subtitle">Sora: geometrica, moderna, firme — o Heroi fala. Inter: limpa, legivel, neutra — o Sabio explica.</p>
+
+      <div style="background:var(--surface-1); border:1px solid var(--gray-600); border-radius:12px; padding:24px; margin-bottom:24px;">
+        <div class="type-row">
+          <span class="type-label">H1</span>
+          <span style="font-family:'Sora',sans-serif; font-size:76px; font-weight:700; color:var(--white); letter-spacing:-0.03em; line-height:1;">Forjando</span>
+          <span class="type-meta">Sora 700 / 76px / -0.03em</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">H2</span>
+          <span style="font-family:'Sora',sans-serif; font-size:44px; font-weight:700; color:var(--white); letter-spacing:-0.02em; line-height:1.1;">Titulo de Secao</span>
+          <span class="type-meta">Sora 700 / 44px</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">H3</span>
+          <span style="font-family:'Sora',sans-serif; font-size:24px; font-weight:600; color:var(--white);">Sub-secoes e Cards</span>
+          <span class="type-meta">Sora 600 / 24px</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">Body L</span>
+          <span style="font-family:'Inter',sans-serif; font-size:20px; font-weight:400; color:var(--gray-200); line-height:1.7;">Paragrafos hero — texto de destaque para aberturas.</span>
+          <span class="type-meta">Inter 400 / 20px</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">Body</span>
+          <span style="font-family:'Inter',sans-serif; font-size:16px; font-weight:400; color:var(--gray-200); line-height:1.7;">Texto geral de corpo, paragrafos e descricoes.</span>
+          <span class="type-meta">Inter 400 / 16px</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">Eyebrow</span>
+          <span style="font-family:'Inter',sans-serif; font-size:12px; font-weight:600; color:var(--teal); text-transform:uppercase; letter-spacing:0.15em;">MENTORIA Electia</span>
+          <span class="type-meta">Inter 600 / 12px / uppercase / 0.15em</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">Small</span>
+          <span style="font-family:'Inter',sans-serif; font-size:13px; font-weight:500; color:var(--gray-300);">Labels, captions, metadata</span>
+          <span class="type-meta">Inter 500 / 13px</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">Caption</span>
+          <span style="font-family:'Inter',sans-serif; font-size:11px; font-weight:500; color:var(--gray-400);">Badges, metadados, codigo</span>
+          <span class="type-meta">Inter 500 / 11px</span>
+        </div>
+      </div>
+
+      <!-- Destaque em heading -->
+      <div style="padding:24px; background:var(--surface-1); border:1px solid var(--gray-600); border-radius:10px;">
+        <div style="font-size:11px; font-weight:600; color:var(--teal); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:16px;">Destaque em heading</div>
+        <div style="font-family:'Sora',sans-serif; font-size:32px; font-weight:700; color:var(--white); letter-spacing:-0.02em;">
+          Carreira nao e sorte. E <span style="color:var(--teal);">estrategia</span>.
+        </div>
+        <div style="font-size:11px; color:var(--gray-500); margin-top:12px;">Regra: palavra-chave em teal. Nunca negrito + cor ao mesmo tempo.</div>
+      </div>
+    </div>
+
+    <!-- ===== 9. VISUAL ===== -->
+    <div class="section fade-up" id="visual">
+      <span class="section-num">09 / Elementos Visuais</span>
+      <h2 class="section-title">Glassmorphism, glow e atmosfera</h2>
+      <p class="section-subtitle">Profundidade, sofisticacao e misterio. O glass transmite algo por tras do vidro, revelado a quem escala.</p>
+
+      <!-- Glass -->
+      <div class="glass-row" style="background:linear-gradient(135deg,var(--bg),var(--surface-3)); margin-bottom:32px;">
+        <div style="position:absolute; bottom:20%; right:25%; width:200px; height:200px; background:radial-gradient(circle,rgba(196,154,60,0.08),transparent 70%); pointer-events:none;"></div>
+        <div class="glass-item" style="background:rgba(14,14,17,0.4); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.04);">
+          <h4>Sutil</h4>
+          <p>40% opacity | 12px blur</p>
+        </div>
+        <div class="glass-item" style="background:rgba(14,14,17,0.6); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.06);">
+          <h4>Padrao</h4>
+          <p>60% opacity | 16px blur</p>
+        </div>
+        <div class="glass-item" style="background:rgba(14,14,17,0.85); backdrop-filter:blur(24px); border:1px solid rgba(255,255,255,0.08);">
+          <h4>Forte</h4>
+          <p>85% opacity | 24px blur</p>
+        </div>
+      </div>
+
+      <!-- Photography -->
+      <div class="color-section-title">Fotografia</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px;">
+        <div style="padding:16px 20px; background:var(--surface-1); border:1px solid var(--gray-600); border-radius:8px;">
+          <div style="font-size:12px; font-weight:600; color:var(--white); margin-bottom:4px;">Iluminacao</div>
+          <div style="font-size:12px; color:var(--gray-400);">Dramatica, direcional (Rembrandt). Nunca flat.</div>
+        </div>
+        <div style="padding:16px 20px; background:var(--surface-1); border:1px solid var(--gray-600); border-radius:8px;">
+          <div style="font-size:12px; font-weight:600; color:var(--white); margin-bottom:4px;">Temperatura</div>
+          <div style="font-size:12px; color:var(--gray-400);">Quente nas sombras (ambar), neutra nos highlights.</div>
+        </div>
+        <div style="padding:16px 20px; background:var(--surface-1); border:1px solid var(--gray-600); border-radius:8px;">
+          <div style="font-size:12px; font-weight:600; color:var(--white); margin-bottom:4px;">Expressao</div>
+          <div style="font-size:12px; color:var(--gray-400);">Determinada, pensativa, firme. O Heroi antes da batalha.</div>
+        </div>
+        <div style="padding:16px 20px; background:var(--surface-1); border:1px solid var(--gray-600); border-radius:8px;">
+          <div style="font-size:12px; font-weight:600; color:var(--white); margin-bottom:4px;">Color Grade</div>
+          <div style="font-size:12px; color:var(--gray-400);">-30% saturacao, +15% contraste. Look cinematografico.</div>
+        </div>
+      </div>
+
+      <!-- Overlay demo -->
+      <div style="border-radius:12px; overflow:hidden; position:relative; height:200px; background:linear-gradient(135deg,#2a1f14,#1a1510,#0f0d0a); border:1px solid var(--gray-600); display:flex; align-items:center; justify-content:center;">
+        <div style="position:absolute; inset:0; background:linear-gradient(to bottom, rgba(8,8,10,0.8) 0%, rgba(8,8,10,0.3) 50%, rgba(8,8,10,0.8) 100%);"></div>
+        <div style="position:relative; text-align:center;">
+          <div style="font-family:'Sora',sans-serif; font-size:24px; font-weight:700; color:var(--white);">Overlay padrao sobre fotos</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gray-500); margin-top:8px;">hsl(0 0% 3%) / 80% -> 30% -> 80%</div>
+        </div>
+      </div>
+
+      <!-- Audiovisual -->
+      <div class="color-section-title" style="margin-top:32px;">Atmosfera Audiovisual</div>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <div style="flex:1; min-width:200px; padding:16px; background:var(--surface-1); border:1px solid var(--gray-600); border-radius:8px;">
+          <div style="font-size:11px; font-weight:600; color:var(--teal); margin-bottom:4px;">Trilhas</div>
+          <div style="font-size:12px; color:var(--gray-300);">Classicas e epicas (orquestral). NUNCA eletronica.</div>
+        </div>
+        <div style="flex:1; min-width:200px; padding:16px; background:var(--surface-1); border:1px solid var(--gray-600); border-radius:8px;">
+          <div style="font-size:11px; font-weight:600; color:var(--teal); margin-bottom:4px;">Locucao</div>
+          <div style="font-size:12px; color:var(--gray-300);">Tom firme, pausado, grave. Sem entusiasmo exagerado.</div>
+        </div>
+        <div style="flex:1; min-width:200px; padding:16px; background:var(--surface-1); border:1px solid var(--gray-600); border-radius:8px;">
+          <div style="font-size:11px; font-weight:600; color:var(--teal); margin-bottom:4px;">Transicoes</div>
+          <div style="font-size:12px; color:var(--gray-300);">Cortes secos ou fade simples. Sem efeitos chamativos.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 10. MARKETING ===== -->
+    <div class="section fade-up" id="marketing">
+      <span class="section-num">10 / Marketing</span>
+      <h2 class="section-title">Estrutura PAID e headlines</h2>
+      <p class="section-subtitle">Toda peca de marketing segue: Provocacao, Autoidentificacao, Iluminacao, Decisao.</p>
+
+      <div class="paid-row" style="margin-bottom:40px;">
+        <div class="paid-step">
+          <span class="step-letter">P</span>
+          <h4>Provocacao</h4>
+          <p>Verdade que incomoda ou dado chocante.</p>
+          <div class="example">"92 milhoes de empregos vao desaparecer ate 2030."</div>
+        </div>
+        <div class="paid-step">
+          <span class="step-letter">A</span>
+          <h4>Autoidentificacao</h4>
+          <p>O publico se reconhece na dor.</p>
+          <div class="example">"Voce envia curriculos e nao recebe resposta."</div>
+        </div>
+        <div class="paid-step">
+          <span class="step-letter">I</span>
+          <h4>Iluminacao</h4>
+          <p>O caminho (nao o produto).</p>
+          <div class="example">"O problema nao e falta de competencia. E falta de posicionamento."</div>
+        </div>
+        <div class="paid-step">
+          <span class="step-letter">D</span>
+          <h4>Decisao</h4>
+          <p>CTA que desafia, nao seduz.</p>
+          <div class="example">"Se voce esta pronto pra escalar, o primeiro passo e gratuito."</div>
+        </div>
+      </div>
+
+      <!-- Headlines por produto -->
+      <div class="color-section-title">Headlines por Produto</div>
+      <div class="card-grid">
+        <div class="card" style="background:var(--surface-1);">
+          <div class="card-eyebrow">Workshop (gratuito)</div>
+          <p style="color:var(--white); font-family:'Sora',sans-serif; font-size:16px; font-weight:600; margin-bottom:8px;">"O que ninguem te ensinou sobre o mercado de trabalho."</p>
+          <p>"Toda quarta, ao vivo. Gratuito. Sem enrolacao."</p>
+        </div>
+        <div class="card" style="background:var(--surface-1);">
+          <div class="card-eyebrow">MAPA Electia (programa)</div>
+          <p style="color:var(--white); font-family:'Sora',sans-serif; font-size:16px; font-weight:600; margin-bottom:8px;">"Voce nao precisa de mais um MBA. Precisa de um MAPA."</p>
+          <p>"40+ aulas. 12 meses. O metodo que faltava."</p>
+        </div>
+        <div class="card" style="background:var(--surface-1);">
+          <div class="card-eyebrow">Mentoria (premium)</div>
+          <p style="color:var(--white); font-family:'Sora',sans-serif; font-size:16px; font-weight:600; margin-bottom:8px;">"12 semanas na forja. Voce sai outro profissional."</p>
+          <p>"Para quem quer resultado, nao teoria."</p>
+        </div>
+      </div>
+
+      <!-- Co-branding -->
+      <div style="margin-top:40px; padding:24px; background:var(--surface-1); border:1px solid var(--gray-600); border-radius:12px;">
+        <div class="color-section-title" style="margin:0 0 12px 0;">Hierarquia de Marca</div>
+        <div style="font-family:var(--font-mono); font-size:13px; color:var(--gray-300); line-height:2;">
+          Emprega+ <span style="color:var(--gray-500);">(marca-mae)</span><br>
+          &nbsp;&nbsp;|--- <span style="color:var(--teal);">Electia by Emprega+</span> <span style="color:var(--gray-500);">B2C / comunidade</span><br>
+          &nbsp;&nbsp;|--- Emprega+ Gov <span style="color:var(--gray-500);">B2G / governos</span><br>
+          &nbsp;&nbsp;|--- Electia <span style="color:var(--gray-500);">B2B / SaaS assessments</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 11. CHECKLIST ===== -->
+    <div class="section fade-up" id="checklist">
+      <span class="section-num">11 / Validacao</span>
+      <h2 class="section-title">Checklist de publicacao</h2>
+      <p class="section-subtitle">Antes de publicar qualquer material visual, validar todos os itens.</p>
+
+      <div class="checklist">
+        <div class="check-item"><div class="check-box"></div>Fundo escuro (nao branco)?</div>
+        <div class="check-item"><div class="check-box"></div>Fonte correta (Sora titulos, Inter corpo)?</div>
+        <div class="check-item"><div class="check-box"></div>Cores dentro da paleta (ouro, neutros, branco)?</div>
+        <div class="check-item"><div class="check-box"></div>ZERO vermelho, verde, neon fora da paleta?</div>
+        <div class="check-item"><div class="check-box"></div>Teal como cor primaria de destaque?</div>
+        <div class="check-item"><div class="check-box"></div>Logo presente com area de protecao?</div>
+        <div class="check-item"><div class="check-box"></div>Tom de voz alinhado (sem motivacional vazio)?</div>
+        <div class="check-item"><div class="check-box"></div>CTA desafiador e digno (max 2 por peca)?</div>
+        <div class="check-item"><div class="check-box"></div>Imagens tratadas (overlay, dessaturacao)?</div>
+        <div class="check-item"><div class="check-box"></div>Nenhuma imagem sensual ou generica?</div>
+        <div class="check-item"><div class="check-box"></div>Contraste acessivel (WCAG AA)?</div>
+        <div class="check-item"><div class="check-box"></div>Sem caixa alta em titulos ou paragrafos?</div>
+        <div class="check-item"><div class="check-box"></div>Gradiente com parcimonia (max 1/secao)?</div>
+        <div class="check-item"><div class="check-box"></div>Virtudes implicitas no conteudo?</div>
+        <div class="check-item"><div class="check-box"></div>Reflete pelo menos 1 dos 3 pilares?</div>
+        <div class="check-item"><div class="check-box"></div>Trilha classica/epica (se video)?</div>
+        <div class="check-item"><div class="check-box"></div>Marcos como fundador (nao como a marca)?</div>
+      </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div style="padding:48px 0; text-align:center; border-top:1px solid var(--gray-600);">
+      <div style="font-family:var(--font-heading); font-size:24px; font-weight:700; color:var(--white); margin-bottom:4px;">P<span style="color:var(--teal);">d</span>V</div>
+      <div style="width:40px; height:2px; background:var(--gradient-brand); margin:8px auto 16px; border-radius:1px;"></div>
+      <div style="font-style:italic; font-size:14px; color:var(--teal);">[Tagline Electia a definir].</div>
+      <div style="font-size:11px; color:var(--gray-500); margin-top:16px;">Brand Book v2.3 — Electia by Emprega+ por Emprega+</div>
+      <div style="font-size:11px; color:var(--gray-600); margin-top:4px;">Nascido da historia de Marcos Carneiro.</div>
+    </div>
+  </div>
+
+  <script>
+    // Scroll animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 120" role="img" aria-label="electia by emprega+">
+  <title>electia by emprega+ — accent teal</title>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&amp;family=Sora:wght@400;800&amp;display=swap');
+      .electia { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 64px; letter-spacing: -0.04em; fill: #2DD4BF; }
+      .by      { font-family: 'Sora', sans-serif; font-weight: 400; font-size: 18px; fill: #E6EDF3; opacity: 0.55; }
+      .empregamais { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 32px; letter-spacing: -0.01em; fill: #E6EDF3; opacity: 0.85; }
+    </style>
+  </defs>
+  <rect width="560" height="120" fill="#0B0E14"/>
+  <g transform="translate(32, 80)">
+    <text class="electia" x="0" y="0">electia</text>
+    <text class="by" x="290" y="0">by</text>
+    <text class="empregamais" x="324" y="0">emprega+</text>
+  </g>
+</svg>

@@ -1,0 +1,25 @@
+/* ============================================
+   RESULTX — Design Tokens v0.1 (stub)
+   ============================================
+   ResultX e a marca-base do ResultX Design System.
+   Os tokens canonicos ficam no DS root (tokens/tokens.css raiz).
+   Este arquivo existe pra paridade estrutural com brands/pdv/ e brands/electia/.
+
+   QUANDO PRECISAR DE OVERRIDES ESPECIFICOS DA MARCA RESULTX,
+   ADICIONAR ABAIXO. ATE LA, REFERENCIA TOKENS ROOT.
+
+   Vide: docs/BRAND-BOOK.md secao 4 (Paleta de Cores) para
+   decisao pendente entre 3 direcoes de paleta.
+   ============================================ */
+
+:root {
+  /* ---- Paleta ResultX (TBD) ---- */
+  /* Sera definida apos Marcos escolher uma das 3 direcoes do BRAND-BOOK §4. */
+  /* Por enquanto, ResultX usa os tokens do DS root sem override. */
+
+  /* Quando definida, adicionar aqui:
+   *   --resultx-primary: #...;
+   *   --resultx-primary-hover: #...;
+   *   --resultx-primary-muted: rgba(...);
+   */
+}
