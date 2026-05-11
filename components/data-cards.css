@@ -538,6 +538,7 @@
   /* 4 main quadrants (Conductor red, Promoter yellow, Supporter green, Analyzer blue)
      with 4 transitional styles (Motivator orange, Facilitator yellow-green,
      Coordinator teal, Organizer purple) blending smoothly. */
+  /* stylelint-disable color-no-hex -- 8-color dot scale is a fixed perceptual palette, not theme tokens */
   background:
     radial-gradient(circle at center,
       rgba(255, 255, 255, 0.55) 0%,
@@ -552,11 +553,13 @@
       #3D6CCE 270deg,  /* Analyzer */
       #9C42C4 315deg,  /* Organizer */
       #E85B3A 360deg);
+  /* stylelint-enable color-no-hex */
 }
 
 [data-theme="dark"] .dl-pwheel-disc,
 [data-theme="sober-dark"] .dl-pwheel-disc,
 [data-theme="vibrant-dark"] .dl-pwheel-disc {
+  /* stylelint-disable color-no-hex -- 8-color dot scale is a fixed perceptual palette, not theme tokens */
   background:
     radial-gradient(circle at center,
       rgba(255, 255, 255, 0.45) 0%,
@@ -572,6 +575,7 @@
       #3D6CCE 270deg,
       #9C42C4 315deg,
       #E85B3A 360deg);
+  /* stylelint-enable color-no-hex */
 }
 
 /* Subtle dividing lines between the 8 octants (stylistic only) */
@@ -646,14 +650,14 @@
 }
 
 .dl-pwheel-point-circle {
-  fill: #0B0E14;
+  fill: var(--bg-base);
   stroke: var(--bg-surface-1);
   stroke-width: var(--pwheel-marker-stroke);
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
 }
 
 .dl-pwheel-point-initial {
-  fill: #FFFFFF;
+  fill: var(--white);
   font-size: var(--pwheel-marker-size);
   font-weight: var(--font-bold);
   font-family: var(--font-body);
