@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Electia Viz — MBTI Sunburst (D3) + ícones</title>
+  <link rel="preconnect" href="https://rsms.me/" />
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <script src="https://unpkg.com/d3@7/dist/d3.min.js"></script>
+  <style>
+    :root {
+      --bg: oklch(96% 0 0);
+      --text: oklch(18% 0 0);
+      --text-muted: oklch(45% 0 0);
+      --viz-card-padding: clamp(20px, 4vw, 28px);
+      --viz-card-radius: 16px;
+      --viz-card-bg: oklch(98.5% 0 0);
+      --viz-card-border: 1px solid oklch(92% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.06);
+
+      --kei-g-soft:   oklch(86% 0.04 195);
+      --kei-g-med:    oklch(70% 0.10 195);
+      --kei-g-strong: oklch(52% 0.13 195);
+
+      --kei-a-soft:   oklch(90% 0.05 75);
+      --kei-a-med:    oklch(76% 0.13 75);
+      --kei-a-strong: oklch(60% 0.15 75);
+
+      --kei-r-soft:   oklch(86% 0.06 305);
+      --kei-r-med:    oklch(60% 0.16 305);
+      --kei-r-strong: oklch(45% 0.20 305);
+
+      --kei-i-soft:   oklch(89% 0.04 25);
+      --kei-i-med:    oklch(70% 0.14 25);
+      --kei-i-strong: oklch(55% 0.18 25);
+
+      --theory: var(--kei-r-strong);
+      --realized-fill: oklch(35% 0.26 305);
+      --realized-stroke: oklch(50% 0.30 305);
+
+      --viz-match-on: oklch(60% 0.18 145);
+      --label-on-light: oklch(20% 0 0);
+      --label-on-dark:  oklch(98% 0 0);
+
+      --viz-motion-entry-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --viz-motion-hover: 150ms;
+    }
+
+    [data-theme="dark"] {
+      --bg: oklch(12% 0 0); --text: oklch(94% 0 0); --text-muted: oklch(70% 0 0);
+      --viz-card-bg: oklch(16% 0 0);
+      --viz-card-border: 1px solid oklch(22% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.3);
+
+      --kei-g-soft:   oklch(28% 0.06 195);
+      --kei-g-med:    oklch(48% 0.10 195);
+      --kei-g-strong: oklch(72% 0.12 195);
+
+      --kei-a-soft:   oklch(30% 0.06 75);
+      --kei-a-med:    oklch(52% 0.14 75);
+      --kei-a-strong: oklch(78% 0.13 75);
+
+      --kei-r-soft:   oklch(30% 0.07 305);
+      --kei-r-med:    oklch(50% 0.18 305);
+      --kei-r-strong: oklch(75% 0.18 305);
+
+      --kei-i-soft:   oklch(30% 0.06 25);
+      --kei-i-med:    oklch(52% 0.14 25);
+      --kei-i-strong: oklch(75% 0.16 25);
+
+      --theory: var(--kei-r-strong);
+      --realized-fill: oklch(85% 0.22 305);
+      --realized-stroke: oklch(95% 0.18 305);
+
+      --viz-match-on: oklch(72% 0.16 145);
+      --label-on-light: oklch(15% 0 0);
+      --label-on-dark:  oklch(98% 0 0);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; transition: background 200ms ease, color 200ms ease; }
+    body { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px; }
+    .stage { max-width: 600px; width: 100%; }
+
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .theme-btn { appearance: none; border: 1px solid var(--viz-card-border); background: var(--viz-card-bg); color: var(--text); font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 999px; cursor: pointer; transition: all var(--viz-motion-hover) ease; }
+    .theme-btn:hover { transform: translateY(-1px); }
+
+    .viz-card { background: var(--viz-card-bg); border: var(--viz-card-border); border-radius: var(--viz-card-radius); padding: var(--viz-card-padding); box-shadow: var(--viz-card-shadow); animation: cardEnter 200ms var(--viz-motion-entry-ease) both; }
+    @keyframes cardEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .card-title { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+    .card-icon { width: 24px; height: 24px; border-radius: 6px; background: oklch(from var(--theory) l c h / 0.18); display: grid; place-items: center; color: var(--theory); font-weight: 700; font-size: 11px; }
+
+    .match-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      background: oklch(from var(--viz-match-on) l c h / 0.12);
+      border: 1px solid oklch(from var(--viz-match-on) l c h / 0.4);
+      border-radius: 999px;
+      color: var(--viz-match-on);
+      font-size: 12px; font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .match-badge::before { content: "✓"; font-size: 14px; }
+
+    .sunburst-wrap { display: grid; place-items: center; margin: 0 0 16px; }
+    .sunburst-wrap svg { display: block; max-width: 100%; height: auto; }
+
+    .arc { cursor: pointer; transition: opacity var(--viz-motion-hover) ease; }
+    .arc:hover { opacity: 0.85; }
+    .arc-realized { stroke: var(--realized-stroke); stroke-width: 2.5; }
+
+    .ideal-halo {
+      fill: none;
+      stroke: var(--viz-match-on);
+      stroke-width: 4;
+      stroke-dasharray: 6 4;
+      filter: drop-shadow(0 0 6px oklch(from var(--viz-match-on) l c h / 0.5));
+    }
+
+    .label { pointer-events: none; }
+    .label-temp { fill: var(--label-on-light); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    [data-theme="dark"] .label-temp { fill: var(--label-on-dark); }
+    .label-role { fill: var(--label-on-dark); font-size: 9px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+    [data-theme="dark"] .label-role { fill: var(--label-on-light); }
+    .label-type { fill: var(--label-on-dark); font-size: 9.5px; font-weight: 700; }
+    [data-theme="dark"] .label-type { fill: var(--label-on-light); }
+
+    .type-icon { color: var(--label-on-dark); pointer-events: none; }
+    [data-theme="dark"] .type-icon { color: var(--label-on-light); }
+
+    .center-label-title { fill: var(--text); font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .center-label-num   { fill: var(--theory); font-size: 30px; font-weight: 600; letter-spacing: -0.03em; font-feature-settings: 'tnum' 1; }
+    .center-label-sub   { fill: var(--text-muted); font-size: 9px; font-weight: 500; letter-spacing: 0.06em; }
+
+    .keirsey-legend {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center;
+      margin-bottom: 14px;
+      font-size: 10.5px; color: var(--text-muted);
+    }
+    .leg-item { display: flex; align-items: center; gap: 6px; }
+    .leg-swatch { width: 10px; height: 10px; border-radius: 3px; }
+    .leg-g { background: var(--kei-g-strong); }
+    .leg-a { background: var(--kei-a-strong); }
+    .leg-r { background: var(--kei-r-strong); }
+    .leg-i { background: var(--kei-i-strong); }
+
+    .compare-row {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 10px 14px;
+      background: oklch(from var(--viz-match-on) l c h / 0.06);
+      border-radius: 10px;
+      margin-bottom: 14px;
+    }
+    .compare-cell { flex: 1; }
+    .compare-label { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    .compare-value { font-size: 15px; font-weight: 600; color: var(--theory); margin-top: 2px; }
+    .compare-divider { width: 1px; background: var(--viz-card-border); margin: 4px 0; }
+
+    .narrative { font-size: 13px; line-height: 1.55; color: var(--text); margin-bottom: 14px; padding: 10px 12px; background: oklch(from var(--text) l c h / 0.04); border-radius: 10px; border-left: 2px solid var(--theory); }
+
+    .footer-note { margin-top: 20px; font-size: 11px; color: var(--text-muted); text-align: center; letter-spacing: 0.02em; }
+    .footer-note a { color: var(--theory); text-decoration: none; }
+
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0ms !important; transition-duration: 0ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="toggle-row">
+      <span>Mockup · MBTI Sunburst (D3) + ícones</span>
+      <button class="theme-btn" id="themeBtn" aria-label="Alternar tema claro/escuro">🌙 Dark</button>
+    </div>
+
+    <article class="viz-card">
+      <header class="card-header">
+        <div class="card-title">
+          <span class="card-icon" aria-hidden="true">M</span>
+          <span>MBTI · Tipo Cognitivo</span>
+        </div>
+      </header>
+
+      <div class="match-badge" role="status">Alinhado ao cargo Comercial Sr.</div>
+
+      <div class="sunburst-wrap" id="chart"></div>
+
+      <div class="keirsey-legend">
+        <div class="leg-item"><span class="leg-swatch leg-g"></span><span>Guardião · SJ</span></div>
+        <div class="leg-item"><span class="leg-swatch leg-a"></span><span>Artesão · SP</span></div>
+        <div class="leg-item"><span class="leg-swatch leg-r"></span><span>Racional · NT</span></div>
+        <div class="leg-item"><span class="leg-swatch leg-i"></span><span>Idealista · NF</span></div>
+      </div>
+
+      <div class="compare-row">
+        <div class="compare-cell">
+          <div class="compare-label">Ideal · Cargo</div>
+          <div class="compare-value">ENTJ · Marechal</div>
+        </div>
+        <div class="compare-divider"></div>
+        <div class="compare-cell">
+          <div class="compare-label">Realizado · Você</div>
+          <div class="compare-value">ENTJ · Marechal</div>
+        </div>
+      </div>
+
+      <p class="narrative">
+        <strong>ENTJ · Marechal</strong> · papel <strong>Coordenador</strong>
+        · temperamento <strong>Racional</strong>. Liderança estratégica
+        alinhada ao cargo Comercial Sr.
+      </p>
+    </article>
+
+    <p class="footer-note">
+      D3 sunburst + lucide icons · solução de produção · spec em <a href="../design-system-v0.1.md">design-system-v0.1.md</a> · valores fictícios
+    </p>
+  </div>
+
+  <script>
+    // 16 ícones lucide simplificados (1-4 paths, viewBox 24x24)
+    const ICONS = {
+      'Inspetor':     '<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 2h6a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/><path d="m9 14 2 2 4-4"/>',
+      'Supervisor':   '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+      'Provedor':     '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+      'Protetor':     '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+      'Promotor':     '<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+      'Artífice':     '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+      'Performer':    '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/>',
+      'Compositor':   '<path d="M12 22a10 10 0 1 1 10-10c0 1.5-.5 2.5-1.5 2.5h-2.5a2 2 0 0 0-1 3.5 2 2 0 0 1-1 3.5z"/><circle cx="13.5" cy="6.5" r="1"/><circle cx="17.5" cy="10.5" r="1"/><circle cx="6.5" cy="12.5" r="1"/><circle cx="8.5" cy="7.5" r="1"/>',
+      'Marechal':     '<path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/>',
+      'Estrategista': '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+      'Inventor':     '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
+      'Arquiteto':    '<circle cx="12" cy="12" r="10"/><polygon points="16.24,7.76 14.5,13.5 8.76,15.24 10.5,9.5"/>',
+      'Campeão':      '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
+      'Curador':      '<path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6c-.6.7-1.1 1.6-1.1 2.5"/><path d="M14.1 6.1c2.4-.5 4.7-.7 6.9.5"/>',
+      'Professor':    '<path d="M22 10v6"/><path d="M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>',
+      'Conselheiro':  '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>'
+    };
+
+    const data = {
+      name: "16 Tipos",
+      children: [
+        { name: "Guardião", family: "g", children: [
+          { name: "Administrador", family: "g", children: [
+            { name: "ISTJ", variant: "Inspetor", family: "g", value: 1 },
+            { name: "ESTJ", variant: "Supervisor", family: "g", value: 1 }
+          ]},
+          { name: "Conservador", family: "g", children: [
+            { name: "ESFJ", variant: "Provedor", family: "g", value: 1 },
+            { name: "ISFJ", variant: "Protetor", family: "g", value: 1 }
+          ]}
+        ]},
+        { name: "Artesão", family: "a", children: [
+          { name: "Operador", family: "a", children: [
+            { name: "ESTP", variant: "Promotor", family: "a", value: 1 },
+            { name: "ISTP", variant: "Artífice", family: "a", value: 1 }
+          ]},
+          { name: "Animador", family: "a", children: [
+            { name: "ESFP", variant: "Performer", family: "a", value: 1 },
+            { name: "ISFP", variant: "Compositor", family: "a", value: 1 }
+          ]}
+        ]},
+        { name: "Racional", family: "r", children: [
+          { name: "Coordenador", family: "r", children: [
+            { name: "ENTJ", variant: "Marechal", family: "r", value: 1, realized: true, ideal: true },
+            { name: "INTJ", variant: "Estrategista", family: "r", value: 1 }
+          ]},
+          { name: "Engenheiro", family: "r", children: [
+            { name: "ENTP", variant: "Inventor", family: "r", value: 1 },
+            { name: "INTP", variant: "Arquiteto", family: "r", value: 1 }
+          ]}
+        ]},
+        { name: "Idealista", family: "i", children: [
+          { name: "Defensor", family: "i", children: [
+            { name: "ENFP", variant: "Campeão", family: "i", value: 1 },
+            { name: "INFP", variant: "Curador", family: "i", value: 1 }
+          ]},
+          { name: "Mentor", family: "i", children: [
+            { name: "ENFJ", variant: "Professor", family: "i", value: 1 },
+            { name: "INFJ", variant: "Conselheiro", family: "i", value: 1 }
+          ]}
+        ]}
+      ]
+    };
+
+    const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+    const fillFor = (d) => {
+      const fam = d.data.family;
+      if (!fam) return css('--viz-card-bg');
+      let suffix;
+      if (d.depth === 1) suffix = 'soft';
+      else if (d.depth === 2) suffix = 'med';
+      else suffix = 'strong';
+      if (d.data.realized) return css('--realized-fill');
+      return css(`--kei-${fam}-${suffix}`);
+    };
+
+    const width = 580, height = 580;
+    const radius = Math.min(width, height) / 2 - 30;
+
+    function render() {
+      d3.select('#chart').selectAll('*').remove();
+
+      const svg = d3.select('#chart').append('svg')
+        .attr('viewBox', `${-width/2} ${-height/2} ${width} ${height}`)
+        .attr('width', width)
+        .attr('height', height)
+        .attr('role', 'img')
+        .attr('aria-label', 'MBTI sunburst com 4 quadrantes Keirsey, 8 papéis e 16 tipos com ícones representativos. ENTJ Marechal destacado.');
+
+      const root = d3.hierarchy(data).sum(d => d.value || 0);
+      d3.partition().size([2 * Math.PI, radius])(root);
+
+      const arc = d3.arc()
+        .startAngle(d => d.x0)
+        .endAngle(d => d.x1)
+        .padAngle(0.003)
+        .innerRadius(d => d.y0)
+        .outerRadius(d => d.y1);
+
+      svg.selectAll('path.arc')
+        .data(root.descendants().filter(d => d.depth >= 1 && d.depth <= 3))
+        .join('path')
+          .attr('class', d => 'arc' + (d.data.realized ? ' arc-realized' : ''))
+          .attr('d', arc)
+          .attr('fill', fillFor)
+          .attr('stroke', css('--viz-card-bg'))
+          .attr('stroke-width', d => d.depth === 1 ? 2 : 1)
+          .style('opacity', 0)
+          .transition()
+            .duration(600)
+            .delay(d => 200 + d.depth * 150)
+            .ease(d3.easeCubicOut)
+            .style('opacity', 1);
+
+      const idealNode = root.descendants().find(d => d.data.ideal);
+      if (idealNode) {
+        svg.append('path')
+          .attr('class', 'ideal-halo')
+          .attr('d', arc(idealNode))
+          .style('opacity', 0)
+          .transition().duration(500).delay(1100).ease(d3.easeCubicOut)
+          .style('opacity', 1);
+      }
+
+      const placeAtArc = (d, dyOffset = 0) => {
+        const angle = (d.x0 + d.x1) / 2;
+        const r = (d.y0 + d.y1) / 2 + dyOffset;
+        const x = Math.sin(angle) * r;
+        const y = -Math.cos(angle) * r;
+        return { x, y, angle };
+      };
+
+      // Labels temperamento (depth 1)
+      svg.selectAll('text.label-temp')
+        .data(root.descendants().filter(d => d.depth === 1))
+        .join('text')
+          .attr('class', 'label label-temp')
+          .attr('transform', d => { const p = placeAtArc(d); return `translate(${p.x},${p.y})`; })
+          .attr('text-anchor', 'middle')
+          .attr('dy', '0.35em')
+          .text(d => d.data.name)
+          .style('opacity', 0)
+          .transition().duration(400).delay(500).style('opacity', 1);
+
+      // Labels papéis (depth 2)
+      svg.selectAll('text.label-role')
+        .data(root.descendants().filter(d => d.depth === 2))
+        .join('text')
+          .attr('class', 'label label-role')
+          .attr('transform', d => { const p = placeAtArc(d); return `translate(${p.x},${p.y})`; })
+          .attr('text-anchor', 'middle')
+          .attr('dy', '0.35em')
+          .text(d => d.data.name)
+          .style('opacity', 0)
+          .transition().duration(400).delay(700).style('opacity', 1);
+
+      // Tipos (depth 3): ÍCONE no topo + sigla MBTI embaixo
+      const typeNodes = root.descendants().filter(d => d.depth === 3);
+
+      // Ícones lucide
+      svg.selectAll('g.type-icon')
+        .data(typeNodes)
+        .join('g')
+          .attr('class', 'type-icon')
+          .attr('transform', d => {
+            const p = placeAtArc(d, -8);
+            return `translate(${p.x - 9},${p.y - 9})`;
+          })
+          .each(function(d) {
+            const html = ICONS[d.data.variant] || '';
+            const inner = d3.select(this).append('svg')
+              .attr('width', 18)
+              .attr('height', 18)
+              .attr('viewBox', '0 0 24 24')
+              .attr('fill', 'none')
+              .attr('stroke', 'currentColor')
+              .attr('stroke-width', 2)
+              .attr('stroke-linecap', 'round')
+              .attr('stroke-linejoin', 'round');
+            inner.html(html);
+          })
+          .style('opacity', 0)
+          .transition().duration(400).delay(900).style('opacity', 1);
+
+      // Sigla MBTI (4 letras)
+      svg.selectAll('text.label-type')
+        .data(typeNodes)
+        .join('text')
+          .attr('class', 'label label-type')
+          .attr('transform', d => { const p = placeAtArc(d, 11); return `translate(${p.x},${p.y})`; })
+          .attr('text-anchor', 'middle')
+          .attr('dy', '0.35em')
+          .text(d => d.data.name)
+          .style('opacity', 0)
+          .transition().duration(400).delay(1000).style('opacity', 1);
+
+      // Centro
+      const innerRadius = root.children[0].y0;
+      svg.append('circle')
+        .attr('r', innerRadius)
+        .attr('fill', css('--viz-card-bg'));
+
+      svg.append('text')
+        .attr('class', 'center-label-title')
+        .attr('text-anchor', 'middle')
+        .attr('dy', '-1.2em')
+        .text('SEU TIPO')
+        .style('opacity', 0)
+        .transition().duration(400).delay(1300).style('opacity', 1);
+
+      svg.append('text')
+        .attr('class', 'center-label-num')
+        .attr('text-anchor', 'middle')
+        .attr('dy', '0.2em')
+        .text('ENTJ')
+        .style('opacity', 0)
+        .transition().duration(400).delay(1400).style('opacity', 1);
+
+      svg.append('text')
+        .attr('class', 'center-label-sub')
+        .attr('text-anchor', 'middle')
+        .attr('dy', '1.8em')
+        .text('Marechal · Coordenador')
+        .style('opacity', 0)
+        .transition().duration(400).delay(1500).style('opacity', 1);
+    }
+
+    render();
+
+    const btn = document.getElementById('themeBtn');
+    const root = document.documentElement;
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      btn.textContent = next === 'light' ? '🌙 Dark' : '☀️ Light';
+      setTimeout(render, 50);
+    });
+  </script>
+</body>
+</html>

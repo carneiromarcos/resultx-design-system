@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Electia Viz — DISC Card v0.1</title>
+  <link rel="preconnect" href="https://rsms.me/" />
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <style>
+    :root {
+      --bg: oklch(96% 0 0);
+      --text: oklch(18% 0 0);
+      --text-muted: oklch(45% 0 0);
+
+      /* Card surface */
+      --viz-card-padding: clamp(24px, 4vw, 32px);
+      --viz-card-radius: 16px;
+      --viz-card-bg: oklch(98.5% 0 0);
+      --viz-card-border: 1px solid oklch(92% 0 0);
+      --viz-card-shadow:
+        0 1px 2px oklch(0% 0 0 / 0.04),
+        0 4px 12px oklch(0% 0 0 / 0.06);
+
+      /* DISC theory color */
+      --theory-disc: oklch(50% 0.18 250);
+
+      /* Match zones */
+      --viz-match-on:    oklch(60% 0.18 145);
+      --viz-match-near:  oklch(70% 0.15 75);
+      --viz-match-off:   oklch(58% 0.18 25);
+
+      /* Grid + structure */
+      --viz-grid:        oklch(85% 0 0 / 0.5);
+      --viz-axis-label:  oklch(45% 0 0);
+      --viz-target-band: oklch(60% 0.18 145 / 0.12);
+
+      /* Motion */
+      --viz-motion-entry-duration: 600ms;
+      --viz-motion-entry-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --viz-motion-stagger: 80ms;
+      --viz-motion-hover: 150ms;
+    }
+
+    [data-theme="dark"] {
+      --bg: oklch(12% 0 0);
+      --text: oklch(94% 0 0);
+      --text-muted: oklch(70% 0 0);
+
+      --viz-card-bg: oklch(16% 0 0);
+      --viz-card-border: 1px solid oklch(22% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.3);
+
+      --theory-disc: oklch(72% 0.18 250);
+
+      --viz-match-on:    oklch(70% 0.16 145);
+      --viz-match-near:  oklch(78% 0.13 75);
+      --viz-match-off:   oklch(70% 0.16 25);
+
+      --viz-grid:        oklch(40% 0 0 / 0.5);
+      --viz-axis-label:  oklch(70% 0 0);
+      --viz-target-band: oklch(70% 0.16 145 / 0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-feature-settings: 'cv11', 'ss01';
+      transition: background 200ms ease, color 200ms ease;
+    }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px 16px;
+    }
+
+    .stage { max-width: 460px; width: 100%; }
+
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .theme-btn {
+      appearance: none;
+      border: 1px solid var(--viz-card-border);
+      background: var(--viz-card-bg);
+      color: var(--text);
+      font: inherit;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all var(--viz-motion-hover) ease;
+    }
+    .theme-btn:hover { transform: translateY(-1px); }
+    .theme-btn:focus-visible {
+      outline: 2px solid var(--theory-disc);
+      outline-offset: 2px;
+    }
+
+    .viz-card {
+      background: var(--viz-card-bg);
+      border: var(--viz-card-border);
+      border-radius: var(--viz-card-radius);
+      padding: var(--viz-card-padding);
+      box-shadow: var(--viz-card-shadow);
+      animation: cardEnter 200ms var(--viz-motion-entry-ease) both;
+    }
+
+    @keyframes cardEnter {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .card-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: oklch(from var(--theory-disc) l c h / 0.18);
+      display: grid;
+      place-items: center;
+      color: var(--theory-disc);
+      font-weight: 700;
+      font-size: 11px;
+    }
+    .card-help {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid var(--viz-card-border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 12px;
+      cursor: help;
+      transition: all var(--viz-motion-hover) ease;
+    }
+    .card-help:hover {
+      color: var(--theory-disc);
+      border-color: var(--theory-disc);
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 8px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 100ms both;
+    }
+    .hero-pattern {
+      font-size: clamp(32px, 6vw, 40px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--theory-disc);
+    }
+    .hero-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .viz-wrap {
+      display: grid;
+      place-items: center;
+      margin: 8px 0 16px;
+      animation: fadeIn 600ms var(--viz-motion-entry-ease) 200ms both;
+    }
+    .viz-wrap svg { display: block; max-width: 100%; height: auto; }
+
+    .grid-ring { animation: fadeIn 300ms ease 100ms both; }
+    .target-band { animation: fadeIn 400ms ease 200ms both; }
+    .axis-line {
+      stroke-dasharray: 200;
+      stroke-dashoffset: 200;
+      animation: drawLine 500ms var(--viz-motion-entry-ease) 300ms forwards;
+    }
+    @keyframes drawLine { to { stroke-dashoffset: 0; } }
+
+    .profile-polygon {
+      fill: var(--theory-disc);
+      fill-opacity: 0.16;
+      stroke: var(--theory-disc);
+      stroke-width: 2;
+      stroke-linejoin: round;
+      animation: polyDraw 600ms var(--viz-motion-entry-ease) 400ms both;
+      transform-origin: 200px 200px;
+    }
+    @keyframes polyDraw {
+      from { opacity: 0; transform: scale(0.85); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .vertex-dot {
+      fill: var(--theory-disc);
+      animation: dotPop 200ms var(--viz-motion-entry-ease) both;
+    }
+    .vertex-dot:nth-of-type(1) { animation-delay: 800ms; }
+    .vertex-dot:nth-of-type(2) { animation-delay: 880ms; }
+    .vertex-dot:nth-of-type(3) { animation-delay: 960ms; }
+    .vertex-dot:nth-of-type(4) { animation-delay: 1040ms; }
+    @keyframes dotPop {
+      from { opacity: 0; r: 0; }
+      to { opacity: 1; r: 5; }
+    }
+
+    .axis-label {
+      fill: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      animation: fadeIn 200ms ease both;
+    }
+    .axis-label:nth-of-type(1) { animation-delay: 220ms; }
+    .axis-label:nth-of-type(2) { animation-delay: 300ms; }
+    .axis-label:nth-of-type(3) { animation-delay: 380ms; }
+    .axis-label:nth-of-type(4) { animation-delay: 460ms; }
+
+    .axis-value {
+      fill: var(--text-muted);
+      font-size: 11px;
+      font-weight: 500;
+      font-feature-settings: 'tnum' 1;
+    }
+
+    .sub-tick {
+      stroke: var(--viz-grid);
+      stroke-width: 1;
+      stroke-linecap: round;
+      animation: fadeIn 200ms ease 600ms both;
+    }
+
+    .subscores {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 1100ms both;
+    }
+    .subscore {
+      text-align: center;
+      padding: 10px 4px;
+      border-radius: 10px;
+      background: oklch(from var(--theory-disc) l c h / 0.06);
+      transition: all var(--viz-motion-hover) ease;
+    }
+    .subscore:hover {
+      background: oklch(from var(--theory-disc) l c h / 0.12);
+      transform: translateY(-1px);
+    }
+    .subscore-value {
+      display: block;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      font-feature-settings: 'tnum' 1;
+      color: var(--text);
+    }
+    .subscore-label {
+      display: block;
+      margin-top: 2px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .subscore[data-match="on"] .subscore-value { color: var(--viz-match-on); }
+    .subscore[data-match="near"] .subscore-value { color: var(--viz-match-near); }
+    .subscore[data-match="off"] .subscore-value { color: var(--viz-match-off); }
+
+    .narrative {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text);
+      margin-bottom: 20px;
+      padding: 12px 14px;
+      background: oklch(from var(--text) l c h / 0.04);
+      border-radius: 10px;
+      border-left: 2px solid var(--theory-disc);
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 1200ms both;
+    }
+
+    .legend {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      font-size: 11px;
+      color: var(--text-muted);
+      animation: fadeIn 300ms ease 1300ms both;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+    .swatch-target { background: var(--viz-target-band); border: 1px dashed var(--viz-match-on); }
+    .swatch-profile { background: oklch(from var(--theory-disc) l c h / 0.4); border: 1px solid var(--theory-disc); }
+
+    .cta-row {
+      display: flex;
+      justify-content: flex-end;
+      animation: fadeIn 300ms ease 1400ms both;
+    }
+    .cta {
+      appearance: none;
+      background: transparent;
+      border: 1px solid var(--theory-disc);
+      color: var(--theory-disc);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all var(--viz-motion-hover) ease;
+    }
+    .cta:hover {
+      background: oklch(from var(--theory-disc) l c h / 0.1);
+      transform: translateX(2px);
+    }
+    .cta:focus-visible {
+      outline: 2px solid var(--theory-disc);
+      outline-offset: 2px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0ms !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0ms !important;
+      }
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+    .footer-note a {
+      color: var(--theory-disc);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="toggle-row">
+      <span>Mockup v0.1 · DISC</span>
+      <button class="theme-btn" id="themeBtn" aria-label="Alternar tema claro/escuro">🌙 Dark</button>
+    </div>
+
+    <article class="viz-card" aria-labelledby="card-title">
+      <header class="card-header">
+        <div class="card-title">
+          <span class="card-icon" aria-hidden="true">D</span>
+          <span id="card-title">DISC · Visão Detalhada</span>
+        </div>
+        <button class="card-help" aria-label="Como ler este gráfico">?</button>
+      </header>
+
+      <div class="hero">
+        <div class="hero-pattern">Catalisador</div>
+        <div class="hero-subtitle">Perfil predominante · alinhado ao cargo</div>
+      </div>
+
+      <div class="viz-wrap">
+        <svg viewBox="0 0 400 400" width="360" height="360"
+             role="img" aria-labelledby="disc-svg-title disc-svg-desc">
+          <title id="disc-svg-title">Perfil DISC do colaborador comparado ao cargo Comercial Sr.</title>
+          <desc id="disc-svg-desc">
+            Pontuações: Dominância 72, Influência 58, Estabilidade 41, Conformidade 39.
+            Faixa-alvo do cargo: Dominância 60-80, Influência 50-70, Estabilidade 30-50, Conformidade 30-50.
+            Resultado: alinhado ao cargo em todas as quatro dimensões.
+          </desc>
+
+          <g class="grid">
+            <circle class="grid-ring" cx="200" cy="200" r="35"  fill="none" stroke="var(--viz-grid)" stroke-width="1" />
+            <circle class="grid-ring" cx="200" cy="200" r="70"  fill="none" stroke="var(--viz-grid)" stroke-width="1" />
+            <circle class="grid-ring" cx="200" cy="200" r="105" fill="none" stroke="var(--viz-grid)" stroke-width="1" />
+            <circle class="grid-ring" cx="200" cy="200" r="140" fill="none" stroke="var(--viz-grid)" stroke-width="1" />
+          </g>
+
+          <g class="ticks">
+            <line class="sub-tick" x1="200" y1="60"  x2="200" y2="50"  stroke-width="2" />
+            <line class="sub-tick" x1="340" y1="200" x2="350" y2="200" stroke-width="2" />
+            <line class="sub-tick" x1="200" y1="340" x2="200" y2="350" stroke-width="2" />
+            <line class="sub-tick" x1="60"  y1="200" x2="50"  y2="200" stroke-width="2" />
+            <line class="sub-tick" x1="253.6" y1="68.6"  x2="257.4" y2="59.6"  />
+            <line class="sub-tick" x1="299"   y1="101"   x2="306"   y2="94"    />
+            <line class="sub-tick" x1="331.4" y1="146.4" x2="340.4" y2="142.6" />
+            <line class="sub-tick" x1="331.4" y1="253.6" x2="340.4" y2="257.4" />
+            <line class="sub-tick" x1="299"   y1="299"   x2="306"   y2="306"   />
+            <line class="sub-tick" x1="253.6" y1="331.4" x2="257.4" y2="340.4" />
+            <line class="sub-tick" x1="146.4" y1="331.4" x2="142.6" y2="340.4" />
+            <line class="sub-tick" x1="101"   y1="299"   x2="94"    y2="306"   />
+            <line class="sub-tick" x1="68.6"  y1="253.6" x2="59.6"  y2="257.4" />
+            <line class="sub-tick" x1="68.6"  y1="146.4" x2="59.6"  y2="142.6" />
+            <line class="sub-tick" x1="101"   y1="101"   x2="94"    y2="94"    />
+            <line class="sub-tick" x1="146.4" y1="68.6"  x2="142.6" y2="59.6"  />
+          </g>
+
+          <g class="axes" stroke="var(--viz-grid)" stroke-width="1">
+            <line class="axis-line" x1="200" y1="60"  x2="200" y2="340" />
+            <line class="axis-line" x1="60"  y1="200" x2="340" y2="200" />
+          </g>
+
+          <path class="target-band"
+                d="M 200 88 L 298 200 L 200 270 L 130 200 Z
+                   M 200 116 L 270 200 L 200 242 L 158 200 Z"
+                fill="var(--viz-target-band)"
+                fill-rule="evenodd"
+                stroke="var(--viz-match-on)"
+                stroke-width="1"
+                stroke-dasharray="4 3"
+                stroke-opacity="0.6" />
+
+          <polygon class="profile-polygon"
+                   points="200,99.2 281.2,200 200,257.4 145.4,200" />
+
+          <circle class="vertex-dot" cx="200"   cy="99.2"  r="5" />
+          <circle class="vertex-dot" cx="281.2" cy="200"   r="5" />
+          <circle class="vertex-dot" cx="200"   cy="257.4" r="5" />
+          <circle class="vertex-dot" cx="145.4" cy="200"   r="5" />
+
+          <g class="labels">
+            <text class="axis-label" x="200" y="34" text-anchor="middle">Dominância</text>
+            <text class="axis-value" x="200" y="48" text-anchor="middle">72</text>
+
+            <text class="axis-label" x="372" y="204" text-anchor="middle">Influência</text>
+            <text class="axis-value" x="372" y="218" text-anchor="middle">58</text>
+
+            <text class="axis-label" x="200" y="378" text-anchor="middle">Estabilidade</text>
+            <text class="axis-value" x="200" y="392" text-anchor="middle">41</text>
+
+            <text class="axis-label" x="28" y="204" text-anchor="middle">Conformidade</text>
+            <text class="axis-value" x="28" y="218" text-anchor="middle">39</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="legend" aria-hidden="true">
+        <div class="legend-item">
+          <span class="legend-swatch swatch-target"></span>
+          <span>Faixa do cargo</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch swatch-profile"></span>
+          <span>Perfil do colaborador</span>
+        </div>
+      </div>
+
+      <div class="subscores">
+        <div class="subscore" data-match="on"><span class="subscore-value">72</span><span class="subscore-label">D</span></div>
+        <div class="subscore" data-match="on"><span class="subscore-value">58</span><span class="subscore-label">I</span></div>
+        <div class="subscore" data-match="on"><span class="subscore-value">41</span><span class="subscore-label">S</span></div>
+        <div class="subscore" data-match="on"><span class="subscore-value">39</span><span class="subscore-label">C</span></div>
+      </div>
+
+      <p class="narrative">
+        Perfil predominante em <strong>Dominância</strong>, com forte
+        <strong>Influência</strong>. Alinhado à faixa esperada do cargo
+        Comercial Sr. em todas as quatro dimensões.
+      </p>
+
+      <table class="sr-only">
+        <caption>Pontuações DISC vs faixa-alvo do cargo Comercial Sr.</caption>
+        <thead><tr><th>Dimensão</th><th>Pontuação</th><th>Faixa-alvo</th><th>Resultado</th></tr></thead>
+        <tbody>
+          <tr><td>Dominância</td><td>72</td><td>60-80</td><td>Dentro</td></tr>
+          <tr><td>Influência</td><td>58</td><td>50-70</td><td>Dentro</td></tr>
+          <tr><td>Estabilidade</td><td>41</td><td>30-50</td><td>Dentro</td></tr>
+          <tr><td>Conformidade</td><td>39</td><td>30-50</td><td>Dentro</td></tr>
+        </tbody>
+      </table>
+
+      <div class="cta-row">
+        <button class="cta" type="button">Saiba mais →</button>
+      </div>
+    </article>
+
+    <p class="footer-note">
+      Mockup v0.1 · spec em <a href="../design-system-v0.1.md">design-system-v0.1.md</a> · valores fictícios
+    </p>
+  </div>
+
+  <script>
+    const btn = document.getElementById('themeBtn');
+    const root = document.documentElement;
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      btn.textContent = next === 'light' ? '🌙 Dark' : '☀️ Light';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emprega+ Premium — Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       EMPREGA+ PREMIUM — DESIGN SYSTEM v1.0
+       Paleta: Gold + Navy | Light Theme
+       Fonts: Inter (body) + Sora (headings)
+       ============================================ */
+
+    :root {
+      /* Brand */
+      --brand-dark: hsl(41 54% 50%);
+      --brand-light: hsl(42 60% 58%);
+
+      /* Surfaces */
+      --background: hsl(0 0% 100%);
+      --surface-1: hsl(210 25% 97%);
+      --surface-2: hsl(0 0% 100%);
+      --surface-3: hsl(210 20% 95%);
+      --foreground: hsl(221 46% 20%);
+
+      /* Legacy / Semantic */
+      --navy: hsl(221 46% 20%);
+      --navy-dark: hsl(219 51% 12%);
+      --gold: hsl(46 65% 52%);
+      --green: hsl(136 53% 43%);
+      --gray: hsl(210 19% 60%);
+      --text-primary: hsl(221 46% 20%);
+      --text-secondary: hsl(211 16% 42%);
+      --destructive: hsl(0 84% 60%);
+
+      /* Borders */
+      --border: hsl(210 20% 90%);
+      --border-hover: hsl(210 20% 82%);
+
+      /* Gradients */
+      --gradient-brand: linear-gradient(135deg, hsl(41 54% 50%) 0%, hsl(42 60% 58%) 100%);
+      --gradient-brand-subtle: linear-gradient(135deg, hsl(41 54% 50% / 0.08) 0%, hsl(42 60% 58% / 0.08) 100%);
+
+      /* Glassmorphism */
+      --glass-bg: hsl(0 0% 100% / 0.7);
+      --glass-bg-strong: hsl(0 0% 100% / 0.92);
+      --glass-border: hsl(221 46% 20% / 0.08);
+      --glass-border-hover: hsl(221 46% 20% / 0.15);
+      --glass-blur: 16px;
+
+      /* Glow */
+      --glow-brand: 0 0 20px hsl(41 54% 50% / 0.20);
+      --glow-brand-lg: 0 0 40px hsl(41 54% 50% / 0.25), 0 0 80px hsl(41 54% 50% / 0.10);
+
+      /* Radius */
+      --radius: 0.5rem;
+      --radius-sm: 0.25rem;
+      --radius-md: 0.375rem;
+      --radius-lg: 0.5rem;
+      --radius-xl: 0.75rem;
+
+      /* Fonts */
+      --font-sans: 'Inter', system-ui, sans-serif;
+      --font-heading: 'Sora', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    /* ---- RESET ---- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background: var(--background);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- UTILITIES ---- */
+    .text-gradient-brand {
+      background: var(--gradient-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .glass {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+    }
+    .glass-strong {
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+    .glass:hover { border-color: var(--glass-border-hover); }
+    .glow-brand { box-shadow: var(--glow-brand); }
+    .glow-brand-lg { box-shadow: var(--glow-brand-lg); }
+
+    /* ---- ANIMATIONS ---- */
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+    }
+    @keyframes fade-in-up {
+      from { opacity: 0; transform: translateY(32px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .animate-fade-in-up {
+      animation: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .animate-fade-in {
+      animation: fade-in 0.6s ease-out forwards;
+    }
+    .delay-100 { animation-delay: 0.1s; opacity: 0; }
+    .delay-200 { animation-delay: 0.2s; opacity: 0; }
+    .delay-300 { animation-delay: 0.3s; opacity: 0; }
+    .delay-400 { animation-delay: 0.4s; opacity: 0; }
+    .delay-500 { animation-delay: 0.5s; opacity: 0; }
+
+    /* ---- HOVER EFFECTS ---- */
+    .hover-elevate {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease-out;
+    }
+    .hover-elevate:hover { transform: translateY(-2px); }
+
+    /* ============================================
+       NAVBAR
+       ============================================ */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--glass-bg-strong);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    .navbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .navbar-logo {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 800;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+    .navbar-logo span { color: var(--brand-dark); }
+    .navbar-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+    .navbar-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .navbar-links a:hover { color: var(--text-primary); }
+
+    /* ============================================
+       SECTIONS
+       ============================================ */
+    .section {
+      padding: 5rem 1.5rem;
+    }
+    .section-surface {
+      background: var(--surface-1);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .section-inner {
+      max-width: 1024px;
+      margin: 0 auto;
+    }
+    .section-wide {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--brand-dark);
+      margin-bottom: 0.75rem;
+    }
+    .section-heading {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: 1.7;
+    }
+
+    /* ============================================
+       HERO
+       ============================================ */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 1.5rem;
+    }
+    .hero-glow {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      width: 700px;
+      height: 500px;
+      background: radial-gradient(ellipse at center, hsl(41 54% 50% / 0.08) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      animation: glow-pulse 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--brand-dark);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    /* ============================================
+       BUTTONS
+       ============================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 600;
+      border-radius: var(--radius-lg);
+      padding: 0.5rem 1rem;
+      min-height: 2.25rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+    }
+    .btn:active { transform: scale(0.98); }
+
+    .btn-primary {
+      background: var(--gradient-brand);
+      color: #fff;
+      border-color: var(--brand-dark);
+      box-shadow: var(--glow-brand);
+    }
+    .btn-primary:hover {
+      box-shadow: var(--glow-brand-lg);
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    .btn-secondary {
+      background: var(--brand-light);
+      color: var(--navy);
+      border-color: hsl(42 50% 55%);
+    }
+    .btn-secondary:hover { transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border-color: var(--border);
+    }
+    .btn-outline:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-primary);
+      border: none;
+    }
+    .btn-ghost:hover { background: var(--surface-3); }
+
+    .btn-destructive {
+      background: var(--destructive);
+      color: #fff;
+      border-color: hsl(0 70% 50%);
+    }
+    .btn-destructive:hover { transform: translateY(-2px); }
+
+    .btn-lg {
+      padding: 0.875rem 2rem;
+      font-size: 1.125rem;
+      min-height: 2.75rem;
+    }
+    .btn-sm {
+      padding: 0.375rem 0.75rem;
+      font-size: 0.75rem;
+      min-height: 2rem;
+    }
+    .btn-icon {
+      padding: 0;
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+
+    /* ============================================
+       CARDS
+       ============================================ */
+    .card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: 0 1px 3px hsl(0 0% 0% / 0.05);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card:hover {
+      border-color: hsl(41 54% 50% / 0.3);
+      box-shadow: 0 4px 12px hsl(0 0% 0% / 0.08);
+      transform: translateY(-2px);
+    }
+    .card-glass {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 1rem;
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card-glass:hover {
+      border-color: var(--glass-border-hover);
+      transform: translateY(-2px);
+    }
+    .card-body { padding: 2rem; }
+    .card-icon {
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: var(--radius-xl);
+      background: hsl(41 54% 50% / 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      transition: background 0.2s;
+      color: var(--brand-dark);
+      font-size: 1.5rem;
+    }
+    .card:hover .card-icon,
+    .card-glass:hover .card-icon {
+      background: hsl(41 54% 50% / 0.2);
+    }
+    .card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .card p, .card-glass p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      font-size: 0.9375rem;
+    }
+
+    /* ============================================
+       BADGES
+       ============================================ */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: var(--radius-md);
+      padding: 0.125rem 0.625rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+    }
+    .badge-primary { background: var(--brand-dark); color: #fff; }
+    .badge-secondary { background: var(--brand-light); color: var(--navy); }
+    .badge-outline { background: transparent; border-color: var(--border); color: var(--text-primary); }
+    .badge-success { background: hsl(136 53% 43%); color: #fff; }
+    .badge-destructive { background: var(--destructive); color: #fff; }
+
+    /* ============================================
+       COLOR SWATCHES
+       ============================================ */
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+    }
+    .swatch {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .swatch-color {
+      height: 80px;
+      display: flex;
+      align-items: flex-end;
+      padding: 0.5rem 0.75rem;
+    }
+    .swatch-info {
+      padding: 0.75rem;
+      background: var(--surface-2);
+    }
+    .swatch-name {
+      font-weight: 600;
+      font-size: 0.8125rem;
+      margin-bottom: 0.25rem;
+    }
+    .swatch-value {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--text-secondary);
+    }
+
+    /* ============================================
+       TYPOGRAPHY SPECIMENS
+       ============================================ */
+    .type-specimen {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .type-specimen:last-child { border-bottom: none; }
+    .type-label {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ============================================
+       INPUTS
+       ============================================ */
+    .input {
+      height: 2.25rem;
+      width: 100%;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: transparent;
+      padding: 0.25rem 0.75rem;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .input:focus {
+      border-color: var(--brand-dark);
+      box-shadow: 0 0 0 2px hsl(41 54% 50% / 0.15);
+    }
+    .input::placeholder { color: var(--gray); }
+    .input-lg { height: 2.75rem; font-size: 1rem; padding: 0.5rem 1rem; }
+    .textarea {
+      min-height: 5rem;
+      resize: vertical;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: transparent;
+      padding: 0.5rem 0.75rem;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .textarea:focus {
+      border-color: var(--brand-dark);
+      box-shadow: 0 0 0 2px hsl(41 54% 50% / 0.15);
+    }
+    .label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.375rem;
+    }
+
+    /* ============================================
+       GRID & LAYOUT
+       ============================================ */
+    .grid-2 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    .grid-3 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    .grid-4 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+    @media (min-width: 768px) {
+      .grid-2 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    }
+    .flex-row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .footer {
+      background: var(--surface-1);
+      border-top: 1px solid var(--border);
+      padding: 4rem 1.5rem 2rem;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    .footer h4 {
+      font-family: var(--font-heading);
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .footer a {
+      display: block;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.875rem;
+      margin-bottom: 0.5rem;
+      transition: color 0.2s;
+    }
+    .footer a:hover { color: var(--text-primary); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
+
+    /* ============================================
+       TOKEN TABLE
+       ============================================ */
+    .token-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    .token-table th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      border-bottom: 2px solid var(--border);
+    }
+    .token-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .token-table code {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      background: var(--surface-1);
+      padding: 0.125rem 0.375rem;
+      border-radius: var(--radius-sm);
+      color: var(--brand-dark);
+    }
+    .color-dot {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+      border: 1px solid var(--border);
+    }
+
+    /* Nav anchors */
+    .nav-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+    .nav-section a {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 0.375rem 0.75rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+    .nav-section a:hover {
+      border-color: var(--brand-dark);
+      color: var(--brand-dark);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================
+     NAVBAR
+     ============================================ -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="#" class="navbar-logo">emprega<span>+</span></a>
+    <ul class="navbar-links">
+      <li><a href="#colors">Cores</a></li>
+      <li><a href="#typography">Tipografia</a></li>
+      <li><a href="#buttons">Botoes</a></li>
+      <li><a href="#cards">Cards</a></li>
+      <li><a href="#inputs">Inputs</a></li>
+      <li><a href="#tokens">Tokens</a></li>
+      <li><a href="#" class="btn btn-primary btn-sm">Acessar</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============================================
+     HERO
+     ============================================ -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow animate-fade-in-up">Design System v1.0</div>
+    <h1 class="animate-fade-in-up delay-100">
+      Emprega<span class="text-gradient-brand">+</span> Premium
+    </h1>
+    <p class="animate-fade-in-up delay-200">
+      Sistema de design completo com glassmorphism, glow effects e paleta gold + navy.
+      Construido com Inter, Sora, Tailwind CSS v4 e shadcn/ui.
+    </p>
+    <div class="flex-row animate-fade-in-up delay-300" style="justify-content: center;">
+      <a href="#colors" class="btn btn-primary btn-lg">Explorar Tokens</a>
+      <a href="#components" class="btn btn-outline btn-lg">Componentes</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     COLORS
+     ============================================ -->
+<section class="section section-surface" id="colors">
+  <div class="section-wide">
+    <div class="section-title">Paleta</div>
+    <h2 class="section-heading">Cores</h2>
+    <p class="section-desc" style="margin-bottom: 3rem;">
+      Paleta gold + navy projetada para transmitir sofisticacao e confianca profissional.
+    </p>
+
+    <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 600; margin-bottom: 1rem;">Brand</h3>
+    <div class="swatches" style="margin-bottom: 2.5rem;">
+      <div class="swatch">
+        <div class="swatch-color" style="background: hsl(41 54% 50%);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Brand Dark</div>
+          <div class="swatch-value">#C49A3C · hsl(41 54% 50%)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: hsl(42 60% 58%);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Brand Light</div>
+          <div class="swatch-value">#D4AD55 · hsl(42 60% 58%)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: linear-gradient(135deg, hsl(41 54% 50%), hsl(42 60% 58%));"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Gradient Brand</div>
+          <div class="swatch-value">135deg · Dark → Light</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 600; margin-bottom: 1rem;">Surfaces</h3>
+    <div class="swatches" style="margin-bottom: 2.5rem;">
+      <div class="swatch">
+        <div class="swatch-color" style="background: #fff; border-bottom: 1px solid var(--border);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Background</div>
+          <div class="swatch-value">#FFFFFF · hsl(0 0% 100%)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: hsl(210 25% 97%);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Surface 1</div>
+          <div class="swatch-value">#F5F7F9 · hsl(210 25% 97%)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: hsl(210 20% 95%);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Surface 3</div>
+          <div class="swatch-value">#EEF1F4 · hsl(210 20% 95%)</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 600; margin-bottom: 1rem;">Text & Semantic</h3>
+    <div class="swatches">
+      <div class="swatch">
+        <div class="swatch-color" style="background: hsl(221 46% 20%);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Navy (Primary Text)</div>
+          <div class="swatch-value">#1B2A4A · hsl(221 46% 20%)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: hsl(219 51% 12%);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Navy Dark</div>
+          <div class="swatch-value">#0F1A2E · hsl(219 51% 12%)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: hsl(211 16% 42%);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Text Secondary</div>
+          <div class="swatch-value">#5A6B7D · hsl(211 16% 42%)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: hsl(210 19% 60%);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Gray</div>
+          <div class="swatch-value">#8899AA · hsl(210 19% 60%)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: hsl(136 53% 43%);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Green (Success)</div>
+          <div class="swatch-value">#34A853 · hsl(136 53% 43%)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: hsl(0 84% 60%);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Destructive</div>
+          <div class="swatch-value">#FF4C4C · hsl(0 84% 60%)</div>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: hsl(210 20% 90%);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Border</div>
+          <div class="swatch-value">#D6E0E8 · hsl(210 20% 90%)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     TYPOGRAPHY
+     ============================================ -->
+<section class="section" id="typography">
+  <div class="section-inner">
+    <div class="section-title">Tipografia</div>
+    <h2 class="section-heading">Fontes & Escala</h2>
+    <p class="section-desc" style="margin-bottom: 3rem;">
+      Sora para headings (impacto e modernidade), Inter para body (legibilidade), JetBrains Mono para codigo.
+    </p>
+
+    <div class="type-specimen">
+      <div class="type-label">Sora · Display · clamp(2.5rem, 6vw, 4.5rem) · 800</div>
+      <div style="font-family: var(--font-heading); font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1;">
+        Emprega<span class="text-gradient-brand">+</span> Premium
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-label">Sora · H1 · 2.5rem (40px) · 700</div>
+      <div style="font-family: var(--font-heading); font-size: 2.5rem; font-weight: 700; line-height: 1.2;">
+        Encontre os melhores talentos
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-label">Sora · H2 · 2rem (32px) · 700</div>
+      <div style="font-family: var(--font-heading); font-size: 2rem; font-weight: 700; line-height: 1.2;">
+        Solucoes para cada necessidade
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-label">Sora · H3 · 1.25rem (20px) · 700</div>
+      <div style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; line-height: 1.3;">
+        Plataforma completa de empregabilidade
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-label">Sora · Eyebrow · 0.75rem (12px) · 600 · uppercase · tracking 0.15em</div>
+      <div style="font-family: var(--font-heading); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--brand-dark);">
+        Novo recurso disponivel
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-label">Inter · Body Large · 1.25rem (20px) · 400</div>
+      <div style="font-size: 1.25rem; color: var(--text-secondary); line-height: 1.7;">
+        Plataforma que conecta candidatos, empresas e governos com solucoes inteligentes de recrutamento e gestao de processos seletivos.
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-label">Inter · Body · 1rem (16px) · 400</div>
+      <div style="font-size: 1rem; color: var(--text-secondary); line-height: 1.7;">
+        Automatize seus processos seletivos, gerencie inscricoes e publique resultados em uma unica plataforma. Simples, seguro e eficiente.
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-label">Inter · Small · 0.875rem (14px) · 400</div>
+      <div style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6;">
+        Este e um texto auxiliar usado para descricoes, labels e informacoes complementares no sistema.
+      </div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-label">JetBrains Mono · Code · 0.8125rem (13px) · 400</div>
+      <div style="font-family: var(--font-mono); font-size: 0.8125rem; background: var(--surface-1); padding: 1rem; border-radius: var(--radius-lg); color: var(--brand-dark);">
+        --brand-dark: hsl(41 54% 50%);<br>
+        --gradient-brand: linear-gradient(135deg, #C49A3C, #D4AD55);
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     BUTTONS
+     ============================================ -->
+<section class="section section-surface" id="buttons">
+  <div class="section-inner">
+    <div class="section-title">Componentes</div>
+    <h2 class="section-heading" id="components">Botoes</h2>
+    <p class="section-desc" style="margin-bottom: 3rem;">
+      6 variantes + 4 tamanhos. Hover com elevacao e glow no CTA primario.
+    </p>
+
+    <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 600; margin-bottom: 1.25rem;">Variantes</h3>
+    <div class="flex-row" style="margin-bottom: 2.5rem;">
+      <button class="btn btn-primary">Primary</button>
+      <button class="btn btn-secondary">Secondary</button>
+      <button class="btn btn-outline">Outline</button>
+      <button class="btn btn-ghost">Ghost</button>
+      <button class="btn btn-destructive">Destructive</button>
+      <button class="btn btn-primary" disabled style="opacity: 0.5; pointer-events: none;">Disabled</button>
+    </div>
+
+    <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 600; margin-bottom: 1.25rem;">Tamanhos</h3>
+    <div class="flex-row" style="margin-bottom: 2.5rem;">
+      <button class="btn btn-primary btn-sm">Small</button>
+      <button class="btn btn-primary">Default</button>
+      <button class="btn btn-primary btn-lg">Large</button>
+      <button class="btn btn-primary btn-icon">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 600; margin-bottom: 1.25rem;">CTA com Glow</h3>
+    <div class="flex-row">
+      <a href="#" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">
+        Comece agora
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#" class="btn btn-outline btn-lg">Saiba mais</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     BADGES
+     ============================================ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-title">Componentes</div>
+    <h2 class="section-heading">Badges</h2>
+    <div class="flex-row" style="margin-top: 1.5rem;">
+      <span class="badge badge-primary">Primary</span>
+      <span class="badge badge-secondary">Secondary</span>
+      <span class="badge badge-outline">Outline</span>
+      <span class="badge badge-success">Success</span>
+      <span class="badge badge-destructive">Destructive</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     CARDS
+     ============================================ -->
+<section class="section section-surface" id="cards">
+  <div class="section-wide">
+    <div class="section-title">Componentes</div>
+    <h2 class="section-heading">Cards</h2>
+    <p class="section-desc" style="margin-bottom: 3rem;">
+      Dois estilos: solid (padrao) e glass (glassmorphism com backdrop-blur).
+    </p>
+
+    <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 600; margin-bottom: 1.25rem;">Solid Cards</h3>
+    <div class="grid-3" style="margin-bottom: 3rem;">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-icon">&#9733;</div>
+          <h3>Processos Seletivos</h3>
+          <p>Gerencie editais, inscricoes, documentos e resultados em uma plataforma unica e intuitiva.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="card-icon">&#9881;</div>
+          <h3>Automacao Inteligente</h3>
+          <p>Automatize fluxos de avaliacao, notificacoes e acompanhamento de candidatos com IA.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="card-icon">&#9878;</div>
+          <h3>Assessments</h3>
+          <p>Avalie competencias com testes comportamentais validados: DISC, Big Five, MBTI e mais.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 600; margin-bottom: 1.25rem;">Glass Cards</h3>
+    <div class="grid-3">
+      <div class="card-glass">
+        <div class="card-body">
+          <div class="card-icon">&#9729;</div>
+          <h3>Cloud Native</h3>
+          <p>Infraestrutura escalavel em nuvem com deploy automatizado e alta disponibilidade.</p>
+        </div>
+      </div>
+      <div class="card-glass">
+        <div class="card-body">
+          <div class="card-icon">&#9830;</div>
+          <h3>White Label</h3>
+          <p>Personalize a plataforma com sua marca, cores e dominio para cada cliente.</p>
+        </div>
+      </div>
+      <div class="card-glass">
+        <div class="card-body">
+          <div class="card-icon">&#10003;</div>
+          <h3>Compliance</h3>
+          <p>Conformidade total com LGPD, auditoria completa e rastreabilidade de acoes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     GLASSMORPHISM & GLOW
+     ============================================ -->
+<section class="section" id="effects">
+  <div class="section-inner">
+    <div class="section-title">Efeitos</div>
+    <h2 class="section-heading">Glassmorphism & Glow</h2>
+    <p class="section-desc" style="margin-bottom: 3rem;">
+      Efeitos visuais que definem a identidade premium da marca.
+    </p>
+
+    <div class="grid-2" style="gap: 2rem;">
+      <div>
+        <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 600; margin-bottom: 1rem;">Glass (blur 16px)</h3>
+        <div class="glass" style="padding: 2rem; border-radius: var(--radius-xl); position: relative; overflow: hidden;">
+          <div style="position: absolute; top: -20px; right: -20px; width: 100px; height: 100px; background: var(--gradient-brand); border-radius: 50%; opacity: 0.3;"></div>
+          <div style="position: relative; z-index: 1;">
+            <h4 style="font-family: var(--font-heading); font-weight: 600; margin-bottom: 0.5rem;">Glass Default</h4>
+            <p style="font-size: 0.875rem; color: var(--text-secondary);">background: rgba(255,255,255,0.7)<br>backdrop-filter: blur(16px)<br>border: 1px solid rgba(27,42,74,0.08)</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 600; margin-bottom: 1rem;">Glass Strong (blur 24px)</h3>
+        <div class="glass-strong" style="padding: 2rem; border-radius: var(--radius-xl); border: 1px solid var(--glass-border); position: relative; overflow: hidden;">
+          <div style="position: absolute; bottom: -20px; left: -20px; width: 120px; height: 120px; background: hsl(136 53% 43% / 0.2); border-radius: 50%;"></div>
+          <div style="position: relative; z-index: 1;">
+            <h4 style="font-family: var(--font-heading); font-weight: 600; margin-bottom: 0.5rem;">Glass Strong</h4>
+            <p style="font-size: 0.875rem; color: var(--text-secondary);">background: rgba(255,255,255,0.92)<br>backdrop-filter: blur(24px)<br>Usado na navbar sticky</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 600; margin-bottom: 1rem;">Glow Brand</h3>
+        <div style="padding: 2rem; border-radius: var(--radius-xl); background: var(--surface-2); border: 1px solid var(--border); box-shadow: var(--glow-brand);">
+          <h4 style="font-family: var(--font-heading); font-weight: 600; margin-bottom: 0.5rem;">Glow Default</h4>
+          <p style="font-size: 0.875rem; color: var(--text-secondary);">box-shadow: 0 0 20px<br>hsl(41 54% 50% / 0.20)</p>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 600; margin-bottom: 1rem;">Glow Brand Large</h3>
+        <div style="padding: 2rem; border-radius: var(--radius-xl); background: var(--surface-2); border: 1px solid var(--border); box-shadow: var(--glow-brand-lg);">
+          <h4 style="font-family: var(--font-heading); font-weight: 600; margin-bottom: 0.5rem;">Glow Large</h4>
+          <p style="font-size: 0.875rem; color: var(--text-secondary);">box-shadow: 0 0 40px (25%)<br>+ 0 0 80px (10%)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     INPUTS
+     ============================================ -->
+<section class="section section-surface" id="inputs">
+  <div class="section-inner">
+    <div class="section-title">Componentes</div>
+    <h2 class="section-heading">Inputs & Forms</h2>
+    <p class="section-desc" style="margin-bottom: 3rem;">
+      Campos de formulario com focus ring dourado e transicoes suaves.
+    </p>
+
+    <div class="grid-2" style="gap: 2rem;">
+      <div>
+        <label class="label">Nome completo</label>
+        <input type="text" class="input" placeholder="Digite seu nome">
+      </div>
+      <div>
+        <label class="label">Email</label>
+        <input type="email" class="input" placeholder="seu@email.com">
+      </div>
+      <div>
+        <label class="label">Input Large</label>
+        <input type="text" class="input input-lg" placeholder="Campo grande">
+      </div>
+      <div>
+        <label class="label">Desabilitado</label>
+        <input type="text" class="input" placeholder="Campo desabilitado" disabled style="opacity: 0.5; cursor: not-allowed;">
+      </div>
+      <div style="grid-column: 1 / -1;">
+        <label class="label">Mensagem</label>
+        <textarea class="textarea" placeholder="Escreva sua mensagem aqui..."></textarea>
+      </div>
+    </div>
+
+    <div style="margin-top: 2rem;">
+      <h3 style="font-family: var(--font-heading); font-size: 1rem; font-weight: 600; margin-bottom: 1.25rem;">Form Example</h3>
+      <div class="card" style="max-width: 480px;">
+        <div class="card-body">
+          <h3 style="margin-bottom: 0.25rem;">Fale conosco</h3>
+          <p style="margin-bottom: 1.5rem; font-size: 0.875rem;">Preencha o formulario e retornaremos em breve.</p>
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div>
+              <label class="label">Nome</label>
+              <input type="text" class="input" placeholder="Seu nome">
+            </div>
+            <div>
+              <label class="label">Email</label>
+              <input type="email" class="input" placeholder="seu@email.com">
+            </div>
+            <div>
+              <label class="label">Mensagem</label>
+              <textarea class="textarea" placeholder="Como podemos ajudar?" style="min-height: 4rem;"></textarea>
+            </div>
+            <button class="btn btn-primary" style="width: 100%;">Enviar mensagem</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     TOKENS TABLE
+     ============================================ -->
+<section class="section" id="tokens">
+  <div class="section-wide">
+    <div class="section-title">Referencia</div>
+    <h2 class="section-heading">Design Tokens</h2>
+    <p class="section-desc" style="margin-bottom: 3rem;">
+      Variaveis CSS utilizadas em todo o sistema.
+    </p>
+
+    <div class="card" style="overflow: hidden;">
+      <table class="token-table">
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th>Valor</th>
+            <th>Preview</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--brand-dark</code></td>
+            <td>hsl(41 54% 50%) · #C49A3C</td>
+            <td><span class="color-dot" style="background: hsl(41 54% 50%);"></span></td>
+          </tr>
+          <tr>
+            <td><code>--brand-light</code></td>
+            <td>hsl(42 60% 58%) · #D4AD55</td>
+            <td><span class="color-dot" style="background: hsl(42 60% 58%);"></span></td>
+          </tr>
+          <tr>
+            <td><code>--navy</code></td>
+            <td>hsl(221 46% 20%) · #1B2A4A</td>
+            <td><span class="color-dot" style="background: hsl(221 46% 20%);"></span></td>
+          </tr>
+          <tr>
+            <td><code>--navy-dark</code></td>
+            <td>hsl(219 51% 12%) · #0F1A2E</td>
+            <td><span class="color-dot" style="background: hsl(219 51% 12%);"></span></td>
+          </tr>
+          <tr>
+            <td><code>--surface-1</code></td>
+            <td>hsl(210 25% 97%) · #F5F7F9</td>
+            <td><span class="color-dot" style="background: hsl(210 25% 97%);"></span></td>
+          </tr>
+          <tr>
+            <td><code>--border</code></td>
+            <td>hsl(210 20% 90%) · #D6E0E8</td>
+            <td><span class="color-dot" style="background: hsl(210 20% 90%);"></span></td>
+          </tr>
+          <tr>
+            <td><code>--text-secondary</code></td>
+            <td>hsl(211 16% 42%) · #5A6B7D</td>
+            <td><span class="color-dot" style="background: hsl(211 16% 42%);"></span></td>
+          </tr>
+          <tr>
+            <td><code>--green</code></td>
+            <td>hsl(136 53% 43%) · #34A853</td>
+            <td><span class="color-dot" style="background: hsl(136 53% 43%);"></span></td>
+          </tr>
+          <tr>
+            <td><code>--destructive</code></td>
+            <td>hsl(0 84% 60%) · #FF4C4C</td>
+            <td><span class="color-dot" style="background: hsl(0 84% 60%);"></span></td>
+          </tr>
+          <tr>
+            <td><code>--font-sans</code></td>
+            <td colspan="2">Inter, system-ui, sans-serif</td>
+          </tr>
+          <tr>
+            <td><code>--font-heading</code></td>
+            <td colspan="2">Sora, system-ui, sans-serif</td>
+          </tr>
+          <tr>
+            <td><code>--font-mono</code></td>
+            <td colspan="2">JetBrains Mono, monospace</td>
+          </tr>
+          <tr>
+            <td><code>--radius</code></td>
+            <td colspan="2">0.5rem (8px)</td>
+          </tr>
+          <tr>
+            <td><code>--radius-xl</code></td>
+            <td colspan="2">0.75rem (12px)</td>
+          </tr>
+          <tr>
+            <td><code>--glass-blur</code></td>
+            <td colspan="2">16px (default) · 24px (strong)</td>
+          </tr>
+          <tr>
+            <td><code>--gradient-brand</code></td>
+            <td colspan="2">linear-gradient(135deg, #C49A3C → #D4AD55)</td>
+          </tr>
+          <tr>
+            <td><code>--glow-brand</code></td>
+            <td colspan="2">0 0 20px hsl(41 54% 50% / 0.20)</td>
+          </tr>
+          <tr>
+            <td><code>--glow-brand-lg</code></td>
+            <td colspan="2">0 0 40px (25%) + 0 0 80px (10%)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SAMPLE HERO SECTION
+     ============================================ -->
+<section class="section section-surface" id="sample">
+  <div class="section-wide">
+    <div class="section-title">Exemplo</div>
+    <h2 class="section-heading">Hero Section Completa</h2>
+    <p class="section-desc" style="margin-bottom: 3rem;">
+      Composicao real de uma hero section com todos os elementos do design system.
+    </p>
+  </div>
+
+  <div style="max-width: 1200px; margin: 0 auto; border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--border); background: var(--background);">
+    <div style="position: relative; overflow: hidden; padding: 5rem 2rem; text-align: center;">
+      <!-- Glow -->
+      <div style="position: absolute; top: 30%; left: 50%; width: 600px; height: 400px; background: radial-gradient(ellipse at center, hsl(41 54% 50% / 0.1) 0%, transparent 70%); transform: translate(-50%, -50%); animation: glow-pulse 8s ease-in-out infinite; pointer-events: none;"></div>
+
+      <div style="position: relative; z-index: 1;">
+        <div style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+          <span class="badge badge-primary">Novo</span>
+          <span style="font-family: var(--font-heading); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; color: var(--brand-dark);">Plataforma de Concursos</span>
+        </div>
+        <h1 style="font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.25rem;">
+          Gerencie seus processos<br>seletivos com <span class="text-gradient-brand">excelencia</span>
+        </h1>
+        <p style="font-size: 1.125rem; color: var(--text-secondary); max-width: 550px; margin: 0 auto 2rem; line-height: 1.7;">
+          Inscricoes, documentos, provas, recursos e resultados. Tudo em uma plataforma segura e intuitiva.
+        </p>
+        <div class="flex-row" style="justify-content: center;">
+          <a href="#" class="btn btn-primary btn-lg">
+            Conhecer plataforma
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#" class="btn btn-outline btn-lg">Falar com consultor</a>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid-4" style="max-width: 700px; margin: 3rem auto 0; gap: 1rem;">
+          <div class="glass" style="padding: 1.25rem; border-radius: var(--radius-xl); text-align: center;">
+            <div style="font-family: var(--font-heading); font-size: 1.75rem; font-weight: 800; color: var(--brand-dark);">50k+</div>
+            <div style="font-size: 0.8125rem; color: var(--text-secondary);">Candidatos</div>
+          </div>
+          <div class="glass" style="padding: 1.25rem; border-radius: var(--radius-xl); text-align: center;">
+            <div style="font-family: var(--font-heading); font-size: 1.75rem; font-weight: 800; color: var(--brand-dark);">1.2k+</div>
+            <div style="font-size: 0.8125rem; color: var(--text-secondary);">Processos</div>
+          </div>
+          <div class="glass" style="padding: 1.25rem; border-radius: var(--radius-xl); text-align: center;">
+            <div style="font-family: var(--font-heading); font-size: 1.75rem; font-weight: 800; color: var(--brand-dark);">99.9%</div>
+            <div style="font-size: 0.8125rem; color: var(--text-secondary);">Uptime</div>
+          </div>
+          <div class="glass" style="padding: 1.25rem; border-radius: var(--radius-xl); text-align: center;">
+            <div style="font-family: var(--font-heading); font-size: 1.75rem; font-weight: 800; color: var(--brand-dark);">85%</div>
+            <div style="font-size: 0.8125rem; color: var(--text-secondary);">Satisfacao</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="navbar-logo" style="margin-bottom: 1rem;">emprega<span style="color: var(--brand-dark);">+</span></div>
+        <p style="font-size: 0.875rem; color: var(--text-secondary); max-width: 280px; line-height: 1.7;">
+          Plataforma completa de empregabilidade conectando candidatos, empresas e governos.
+        </p>
+      </div>
+      <div>
+        <h4>Produtos</h4>
+        <a href="#">Editais</a>
+        <a href="#">IMO Gov</a>
+        <a href="#">Empresa</a>
+        <a href="#">Setores</a>
+      </div>
+      <div>
+        <h4>Recursos</h4>
+        <a href="#">Documentacao</a>
+        <a href="#">Suporte</a>
+        <a href="#">API</a>
+        <a href="#">Status</a>
+      </div>
+      <div>
+        <h4>Empresa</h4>
+        <a href="#">Sobre</a>
+        <a href="#">Contato</a>
+        <a href="#">Privacidade</a>
+        <a href="#">Termos</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Emprega+. Todos os direitos reservados.</span>
+      <span>Design System v1.0</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Electia Viz — Temperamentos v0.1 (Le Senne · 8 tipos · 3 eixos)</title>
+  <link rel="preconnect" href="https://rsms.me/" />
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <style>
+    :root {
+      --bg: oklch(96% 0 0);
+      --text: oklch(18% 0 0);
+      --text-muted: oklch(45% 0 0);
+      --viz-card-padding: clamp(20px, 4vw, 28px);
+      --viz-card-radius: 16px;
+      --viz-card-bg: oklch(98.5% 0 0);
+      --viz-card-border: 1px solid oklch(92% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.06);
+
+      /* Theory color: Temperamentos = rose */
+      --theory: oklch(62% 0.16 10);
+
+      --realized-stroke: oklch(20% 0 0);
+      --viz-match-on: oklch(60% 0.18 145);
+      --line-axis: oklch(45% 0 0);
+
+      --label-on-light: oklch(20% 0 0);
+      --label-on-dark:  oklch(98% 0 0);
+
+      --viz-motion-entry-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --viz-motion-hover: 150ms;
+    }
+
+    [data-theme="dark"] {
+      --bg: oklch(12% 0 0);
+      --text: oklch(94% 0 0);
+      --text-muted: oklch(70% 0 0);
+      --viz-card-bg: oklch(16% 0 0);
+      --viz-card-border: 1px solid oklch(22% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.3);
+
+      --theory: oklch(78% 0.14 10);
+      --realized-stroke: oklch(98% 0 0);
+      --viz-match-on: oklch(72% 0.16 145);
+      --line-axis: oklch(70% 0 0);
+
+      --label-on-light: oklch(15% 0 0);
+      --label-on-dark:  oklch(98% 0 0);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; transition: background 200ms ease, color 200ms ease; }
+    body { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px; }
+    .stage { max-width: 600px; width: 100%; }
+
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .theme-btn { appearance: none; border: 1px solid var(--viz-card-border); background: var(--viz-card-bg); color: var(--text); font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 999px; cursor: pointer; transition: all var(--viz-motion-hover) ease; }
+    .theme-btn:hover { transform: translateY(-1px); }
+
+    .viz-card { background: var(--viz-card-bg); border: var(--viz-card-border); border-radius: var(--viz-card-radius); padding: var(--viz-card-padding); box-shadow: var(--viz-card-shadow); animation: cardEnter 200ms var(--viz-motion-entry-ease) both; }
+    @keyframes cardEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .card-title { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+    .card-icon { width: 24px; height: 24px; border-radius: 6px; background: oklch(from var(--theory) l c h / 0.18); display: grid; place-items: center; color: var(--theory); font-weight: 700; font-size: 11px; }
+
+    .match-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      background: oklch(from var(--viz-match-on) l c h / 0.12);
+      border: 1px solid oklch(from var(--viz-match-on) l c h / 0.4);
+      border-radius: 999px;
+      color: var(--viz-match-on);
+      font-size: 12px; font-weight: 600;
+      margin-bottom: 12px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 200ms both;
+    }
+    .match-badge::before { content: "✓"; font-size: 14px; }
+
+    .wheel-wrap { display: grid; place-items: center; margin: 0 0 16px; animation: fadeIn 600ms var(--viz-motion-entry-ease) 100ms both; }
+    .wheel-wrap svg { display: block; width: 100%; max-width: 540px; aspect-ratio: 1 / 1; height: auto; }
+
+    /* 8 cores distintas — arco-íris percorrendo o círculo */
+    .type-1 { fill: oklch(60% 0.20 25);  animation: fadeIn 400ms ease 250ms both; }
+    .type-2 { fill: oklch(65% 0.18 50);  animation: fadeIn 400ms ease 280ms both; }
+    .type-3 { fill: oklch(75% 0.16 90);  animation: fadeIn 400ms ease 310ms both; }
+    .type-4 { fill: oklch(70% 0.16 130); animation: fadeIn 400ms ease 340ms both; }
+    .type-5 { fill: oklch(60% 0.14 180); animation: fadeIn 400ms ease 370ms both; }
+    .type-6 { fill: oklch(55% 0.16 240); animation: fadeIn 400ms ease 400ms both; }
+    .type-7 { fill: oklch(55% 0.18 290); animation: fadeIn 400ms ease 430ms both; }
+    .type-8 { fill: oklch(60% 0.20 340); animation: fadeIn 400ms ease 460ms both; }
+
+    [data-theme="dark"] .type-1 { fill: oklch(72% 0.20 25); }
+    [data-theme="dark"] .type-2 { fill: oklch(75% 0.18 50); }
+    [data-theme="dark"] .type-3 { fill: oklch(82% 0.16 90); }
+    [data-theme="dark"] .type-4 { fill: oklch(80% 0.16 130); }
+    [data-theme="dark"] .type-5 { fill: oklch(72% 0.14 180); }
+    [data-theme="dark"] .type-6 { fill: oklch(67% 0.16 240); }
+    [data-theme="dark"] .type-7 { fill: oklch(68% 0.18 290); }
+    [data-theme="dark"] .type-8 { fill: oklch(72% 0.20 340); }
+
+    /* 4 perfis primários (anel interno r=70-95) — versão soft das cores do par */
+    .primario-1 { fill: oklch(88% 0.05 35);  animation: fadeIn 400ms ease 200ms both; } /* Colérico (par 1) */
+    .primario-2 { fill: oklch(90% 0.05 110); animation: fadeIn 400ms ease 230ms both; } /* Sanguíneo (par 2) */
+    .primario-3 { fill: oklch(88% 0.04 210); animation: fadeIn 400ms ease 260ms both; } /* Amorfo (par 3) */
+    .primario-4 { fill: oklch(88% 0.05 315); animation: fadeIn 400ms ease 290ms both; } /* Nervoso (par 4) */
+
+    [data-theme="dark"] .primario-1 { fill: oklch(35% 0.06 35); }
+    [data-theme="dark"] .primario-2 { fill: oklch(36% 0.06 110); }
+    [data-theme="dark"] .primario-3 { fill: oklch(34% 0.05 210); }
+    [data-theme="dark"] .primario-4 { fill: oklch(35% 0.06 315); }
+
+    .label-primario {
+      fill: var(--label-on-light);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      dominant-baseline: middle;
+      animation: fadeIn 200ms ease 700ms both;
+    }
+    [data-theme="dark"] .label-primario { fill: var(--label-on-dark); }
+
+    .sector-divider-quad { stroke: var(--viz-card-bg); stroke-width: 2.5; animation: fadeIn 200ms ease 600ms both; }
+    .sector-divider-thin { stroke: var(--viz-card-bg); stroke-width: 1.2; animation: fadeIn 200ms ease 600ms both; }
+
+    .ring-center { fill: var(--viz-card-bg); animation: fadeIn 200ms ease 200ms both; }
+
+    /* Eixos cardinais Le Senne — linhas tracejadas finas no centro */
+    .axis-line {
+      stroke: var(--line-axis);
+      stroke-width: 0.8;
+      stroke-opacity: 0.35;
+      stroke-dasharray: 4 3;
+      fill: none;
+      animation: fadeIn 600ms ease 700ms both;
+    }
+    .axis-label-pole {
+      fill: var(--text);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      animation: fadeIn 300ms ease 800ms both;
+    }
+
+    .slot-realized-overlay {
+      fill: none;
+      stroke: var(--realized-stroke);
+      stroke-width: 3;
+      stroke-linejoin: round;
+      animation: slotPop 500ms var(--viz-motion-entry-ease) 900ms both;
+      transform-origin: 270px 270px;
+    }
+    @keyframes slotPop { 0% { opacity: 0; transform: scale(0.5); } 70% { transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
+
+    .slot-ideal-halo {
+      fill: none;
+      stroke: var(--viz-match-on);
+      stroke-width: 4;
+      stroke-opacity: 0.85;
+      stroke-dasharray: 6 4;
+      filter: drop-shadow(0 0 6px oklch(from var(--viz-match-on) l c h / 0.5));
+      animation: fadeIn 400ms ease 1100ms both;
+    }
+
+    .label-quad {
+      fill: var(--text);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      dominant-baseline: middle;
+      animation: fadeIn 200ms ease 600ms both;
+    }
+    .label-quad .quad-sub { fill: var(--text-muted); font-weight: 500; letter-spacing: 0.08em; }
+
+    .label-type {
+      fill: var(--label-on-dark);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      dominant-baseline: middle;
+      animation: fadeIn 200ms ease 750ms both;
+    }
+    [data-theme="dark"] .label-type { fill: var(--label-on-light); }
+
+    .sigla-type {
+      fill: var(--label-on-dark);
+      font-size: 10px;
+      font-weight: 700;
+      font-feature-settings: 'tnum' 1;
+      letter-spacing: 0.04em;
+      pointer-events: none;
+      animation: fadeIn 240ms ease 700ms both;
+    }
+    [data-theme="dark"] .sigla-type { fill: var(--label-on-light); }
+
+    .center-bg { fill: oklch(from var(--viz-card-bg) l c h / 0.92); animation: fadeIn 300ms ease 1500ms both; }
+    .center-bg-stroke { fill: none; stroke: var(--theory); stroke-width: 1.5; stroke-opacity: 0.4; animation: fadeIn 400ms ease 1600ms both; }
+    .center-title { fill: var(--text-muted); font-size: 8.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+    .center-name  { fill: var(--theory); font-size: 18px; font-weight: 700; letter-spacing: -0.01em; animation: fadeUp 400ms var(--viz-motion-entry-ease) 1700ms both; }
+    .center-sigla { fill: var(--text); font-size: 11px; font-weight: 600; letter-spacing: 0.18em; font-feature-settings: 'tnum' 1; }
+
+    .keirsey-legend {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      justify-content: center;
+      margin-bottom: 12px;
+      font-size: 10.5px; color: var(--text-muted);
+      animation: fadeIn 300ms ease 1800ms both;
+    }
+    .leg-item { display: flex; align-items: center; gap: 6px; }
+    .leg-axis { width: 16px; height: 0; border-top: 1px dashed var(--line-axis); }
+    .leg-real { width: 10px; height: 10px; border: 2px solid var(--realized-stroke); border-radius: 2px; }
+    .leg-ideal { width: 10px; height: 10px; border: 2px dashed var(--viz-match-on); border-radius: 2px; }
+
+    .compare-row {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 10px 14px;
+      background: oklch(from var(--viz-match-on) l c h / 0.06);
+      border-radius: 10px;
+      margin-bottom: 14px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 1900ms both;
+    }
+    .compare-cell { flex: 1; }
+    .compare-label { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    .compare-value { font-size: 14px; font-weight: 600; color: var(--theory); margin-top: 2px; }
+    .compare-divider { width: 1px; background: var(--viz-card-border); margin: 4px 0; }
+
+    .narrative { font-size: 13px; line-height: 1.55; color: var(--text); margin-bottom: 14px; padding: 10px 12px; background: oklch(from var(--text) l c h / 0.04); border-radius: 10px; border-left: 2px solid var(--theory); animation: fadeUp 400ms var(--viz-motion-entry-ease) 2100ms both; }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0ms !important; animation-delay: 0ms !important; transition-duration: 0ms !important; } }
+
+    .footer-note { margin-top: 20px; font-size: 11px; color: var(--text-muted); text-align: center; letter-spacing: 0.02em; }
+    .footer-note a { color: var(--theory); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="toggle-row">
+      <span>Mockup v0.3 · Temperamentos · 4 primários hipocráticos + 8 Le Senne + fix arcPath bottom</span>
+      <button class="theme-btn" id="themeBtn" aria-label="Alternar tema claro/escuro">🌙 Dark</button>
+    </div>
+
+    <article class="viz-card" aria-labelledby="card-title">
+      <header class="card-header">
+        <div class="card-title">
+          <span class="card-icon" aria-hidden="true">LS</span>
+          <span id="card-title">Temperamentos · Le Senne</span>
+        </div>
+      </header>
+
+      <div class="match-badge" role="status">Alinhado ao cargo Comercial Sr.</div>
+
+      <div class="wheel-wrap">
+        <svg viewBox="0 0 540 540"
+             role="img" aria-labelledby="ls-svg-title ls-svg-desc">
+          <title id="ls-svg-title">Temperamentos Le Senne: 8 tipos em 3 dimensões (Emotividade, Atividade, Ressonância)</title>
+          <desc id="ls-svg-desc">
+            Anel externo com 8 setores representando os 8 temperamentos clássicos de Le Senne. Eixos cardinais indicam as 3 dimensões: Emotividade (vertical, E no topo / nE embaixo), Atividade (horizontal, A à direita / nA à esquerda), e Ressonância (Primário/Secundário indicada por sigla no setor). Apaixonado (E.A.S) destacado como realizado e ideal.
+          </desc>
+
+          <defs id="textpath-defs"></defs>
+
+          <g id="axes"></g>
+          <g id="primaries"></g>
+          <g id="types"></g>
+          <g id="dividers"></g>
+          <g id="slot-overlay"></g>
+          <g id="labels-quad"></g>
+          <g id="labels-primario"></g>
+          <g id="labels-type"></g>
+          <g id="siglas"></g>
+          <g id="axis-labels"></g>
+
+          <circle class="center-bg" cx="270" cy="270" r="70" />
+          <circle class="center-bg-stroke" cx="270" cy="270" r="70" />
+          <text class="center-title" x="270" y="248" text-anchor="middle">SEU TEMPERAMENTO</text>
+          <text class="center-name"  x="270" y="272" text-anchor="middle">Apaixonado</text>
+          <text class="center-sigla" x="270" y="292" text-anchor="middle">E.A.S</text>
+        </svg>
+      </div>
+
+      <div class="keirsey-legend" aria-hidden="true">
+        <div class="leg-item"><span class="leg-axis"></span><span>3 eixos Le Senne</span></div>
+        <div class="leg-item"><span class="leg-real"></span><span>Realizado · Você</span></div>
+        <div class="leg-item"><span class="leg-ideal"></span><span>Ideal · Cargo</span></div>
+      </div>
+
+      <div class="compare-row" aria-label="Comparativo cargo vs colaborador">
+        <div class="compare-cell">
+          <div class="compare-label">Ideal · Cargo</div>
+          <div class="compare-value">Apaixonado · E.A.S</div>
+        </div>
+        <div class="compare-divider"></div>
+        <div class="compare-cell">
+          <div class="compare-label">Realizado · Você</div>
+          <div class="compare-value">Apaixonado · E.A.S</div>
+        </div>
+      </div>
+
+      <p class="narrative">
+        <strong>Apaixonado · E.A.S</strong> · Emotivo, Ativo, Secundário.
+        Combinação de profundidade emocional, energia direcionada e durabilidade nas convicções.
+        Líder intenso, comprometido com causas que importam, capaz de sustentar grandes esforços.
+        Alinhado ao cargo Comercial Sr.
+      </p>
+
+      <table class="sr-only">
+        <caption>Temperamentos Le Senne — 3 dimensões e tipo dominante</caption>
+        <thead><tr><th>Dimensão</th><th>Polaridade</th></tr></thead>
+        <tbody>
+          <tr><td>Emotividade</td><td>Alta (Emotivo)</td></tr>
+          <tr><td>Atividade</td><td>Alta (Ativo)</td></tr>
+          <tr><td>Ressonância</td><td>Secundária</td></tr>
+          <tr><td>Tipo</td><td>Apaixonado</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <p class="footer-note">
+      Mockup v0.1 · Temperamentos Le Senne · spec em <a href="../design-system-v0.1.md">design-system-v0.1.md</a> · valores fictícios
+    </p>
+  </div>
+
+  <script>
+    /*
+     * 8 temperamentos Le Senne em ordem CW from top.
+     * Le Senne classifica via 3 dimensões binárias:
+     *   - Emotividade (E vs nE)
+     *   - Atividade (A vs nA)
+     *   - Ressonância (P=Primário vs S=Secundário)
+     * 8 combinações = 8 temperamentos.
+     */
+    const TYPES = [
+      { num: 1, name: 'Colérico',    sigla: 'E.A.P',   midDeg: 22.5,  dims: { e: 1, a: 1, r: 'P' } },
+      { num: 2, name: 'Apaixonado',  sigla: 'E.A.S',   midDeg: 67.5,  dims: { e: 1, a: 1, r: 'S' } },
+      { num: 3, name: 'Sanguíneo',   sigla: 'nE.A.P',  midDeg: 112.5, dims: { e: 0, a: 1, r: 'P' } },
+      { num: 4, name: 'Fleumático',  sigla: 'nE.A.S',  midDeg: 157.5, dims: { e: 0, a: 1, r: 'S' } },
+      { num: 5, name: 'Amorfo',      sigla: 'nE.nA.P', midDeg: 202.5, dims: { e: 0, a: 0, r: 'P' } },
+      { num: 6, name: 'Apático',     sigla: 'nE.nA.S', midDeg: 247.5, dims: { e: 0, a: 0, r: 'S' } },
+      { num: 7, name: 'Nervoso',     sigla: 'E.nA.P',  midDeg: 292.5, dims: { e: 1, a: 0, r: 'P' } },
+      { num: 8, name: 'Sentimental', sigla: 'E.nA.S',  midDeg: 337.5, dims: { e: 1, a: 0, r: 'S' } }
+    ];
+
+    /*
+     * 4 quadrantes — labels FORA do círculo (estilo Adioma).
+     * Cada quadrante agrupa 2 temperamentos (par P/S da mesma combinação E×A).
+     */
+    const QUADRANTS = [
+      { name: 'EMOTIVOS',     sub: 'ativos',     range: [0, 90],    pathId: 'q-ea' },
+      { name: 'NÃO-EMOTIVOS', sub: 'ativos',     range: [90, 180],  pathId: 'q-na' },
+      { name: 'NÃO-EMOTIVOS', sub: 'não-ativos', range: [180, 270], pathId: 'q-nn' },
+      { name: 'EMOTIVOS',     sub: 'não-ativos', range: [270, 360], pathId: 'q-en' }
+    ];
+
+    /*
+     * 4 perfis PRIMÁRIOS — anel interno (r=70-95).
+     * Cada par P/S é nomeado pelo Primário (ex: par Colérico+Apaixonado = perfil primário Colérico).
+     */
+    /*
+     * Mapeamento Hipócrates → Le Senne (4 humores clássicos do mercado):
+     * - Colérico (E+A)      = Colérico Le Senne (E.A.P) + Apaixonado (E.A.S)
+     * - Sanguíneo (nE+A)    = Sanguíneo Le Senne (nE.A.P) + Fleumático Le Senne (nE.A.S)
+     * - Fleumático (nE+nA)  = Amorfo (nE.nA.P) + Apático (nE.nA.S)
+     * - Melancólico (E+nA)  = Nervoso (E.nA.P) + Sentimental (E.nA.S)
+     */
+    const PRIMARIES = [
+      { num: 1, name: 'Colérico',    range: [0, 90],    pathId: 'p-1' },
+      { num: 2, name: 'Sanguíneo',   range: [90, 180],  pathId: 'p-2' },
+      { num: 3, name: 'Fleumático',  range: [180, 270], pathId: 'p-3' },
+      { num: 4, name: 'Melancólico', range: [270, 360], pathId: 'p-4' }
+    ];
+
+    const REALIZED_NUM = 2; // Apaixonado
+    const IDEAL_NUM = 2;
+
+    const CX = 270, CY = 270;
+    const R_PRIMARY_INNER = 70;
+    const R_INNER = 95, R_OUTER = 185;
+    const R_PRIMARY_LABEL = 82;
+    const R_SIGLA = 125;
+    const R_LABEL = 170;
+    const R_QUAD = 215;
+
+    const polar = (deg, r) => {
+      const rad = (deg * Math.PI) / 180;
+      return { x: CX + r * Math.sin(rad), y: CY - r * Math.cos(rad) };
+    };
+
+    function annularSector(thetaStart, thetaEnd, rIn, rOut) {
+      const oS = polar(thetaStart, rOut);
+      const oE = polar(thetaEnd, rOut);
+      const iE = polar(thetaEnd, rIn);
+      const iS = polar(thetaStart, rIn);
+      const span = ((thetaEnd - thetaStart) % 360 + 360) % 360;
+      const largeArc = span > 180 ? 1 : 0;
+      return `M ${oS.x.toFixed(2)},${oS.y.toFixed(2)} A ${rOut},${rOut} 0 ${largeArc},1 ${oE.x.toFixed(2)},${oE.y.toFixed(2)} L ${iE.x.toFixed(2)},${iE.y.toFixed(2)} A ${rIn},${rIn} 0 ${largeArc},0 ${iS.x.toFixed(2)},${iS.y.toFixed(2)} Z`;
+    }
+
+    function arcPath(thetaStart, thetaEnd, r, sweep) {
+      const start = polar(thetaStart, r);
+      const end = polar(thetaEnd, r);
+      // Span CW (sentido horário) entre os 2 pontos
+      const spanCW = ((thetaEnd - thetaStart) % 360 + 360) % 360;
+      // Arc desenhado depende da direção do sweep:
+      //   sweep=1 (CW direction): arc desenhado = spanCW
+      //   sweep=0 (CCW direction): arc desenhado = 360 - spanCW
+      const arcSpan = (sweep === 1) ? spanCW : (360 - spanCW);
+      const largeArc = arcSpan > 180 ? 1 : 0;
+      return `M ${start.x.toFixed(2)},${start.y.toFixed(2)} A ${r},${r} 0 ${largeArc},${sweep} ${end.x.toFixed(2)},${end.y.toFixed(2)}`;
+    }
+
+    const NS = 'http://www.w3.org/2000/svg';
+    function el(tag, attrs = {}, parent = null) {
+      const e = document.createElementNS(NS, tag);
+      for (const k in attrs) e.setAttribute(k, attrs[k]);
+      if (parent) parent.appendChild(e);
+      return e;
+    }
+
+    function renderAxes() {
+      const layer = document.getElementById('axes');
+      const top = polar(0, R_OUTER + 5);
+      const bottom = polar(180, R_OUTER + 5);
+      el('line', { class: 'axis-line', x1: top.x.toFixed(2), y1: top.y.toFixed(2), x2: bottom.x.toFixed(2), y2: bottom.y.toFixed(2) }, layer);
+      const right = polar(90, R_OUTER + 5);
+      const left = polar(270, R_OUTER + 5);
+      el('line', { class: 'axis-line', x1: left.x.toFixed(2), y1: left.y.toFixed(2), x2: right.x.toFixed(2), y2: right.y.toFixed(2) }, layer);
+    }
+
+    function renderAxisLabels() {
+      const layer = document.getElementById('axis-labels');
+      const poles = [
+        { deg: 0,   label: 'E'  },
+        { deg: 180, label: 'nE' },
+        { deg: 90,  label: 'A'  },
+        { deg: 270, label: 'nA' }
+      ];
+      poles.forEach(p => {
+        const pos = polar(p.deg, R_OUTER + 22);
+        const t = el('text', { class: 'axis-label-pole', x: pos.x.toFixed(2), y: pos.y.toFixed(2), 'text-anchor': 'middle', 'dominant-baseline': 'middle' }, layer);
+        t.textContent = p.label;
+      });
+    }
+
+    function renderPrimaries() {
+      const layer = document.getElementById('primaries');
+      PRIMARIES.forEach(p => {
+        el('path', { class: 'primario-' + p.num, d: annularSector(p.range[0], p.range[1], R_PRIMARY_INNER, R_INNER) }, layer);
+      });
+    }
+
+    function renderTypes() {
+      const layer = document.getElementById('types');
+      TYPES.forEach(t => {
+        el('path', { class: 'type-' + t.num, d: annularSector(t.midDeg - 22.5, t.midDeg + 22.5, R_INNER, R_OUTER) }, layer);
+      });
+    }
+
+    function renderDividers() {
+      const layer = document.getElementById('dividers');
+      [0, 90, 180, 270].forEach(deg => {
+        const a = polar(deg, R_INNER);
+        const b = polar(deg, R_OUTER);
+        el('line', { class: 'sector-divider-quad', x1: a.x.toFixed(2), y1: a.y.toFixed(2), x2: b.x.toFixed(2), y2: b.y.toFixed(2) }, layer);
+      });
+      [45, 135, 225, 315].forEach(deg => {
+        const a = polar(deg, R_INNER);
+        const b = polar(deg, R_OUTER);
+        el('line', { class: 'sector-divider-thin', x1: a.x.toFixed(2), y1: a.y.toFixed(2), x2: b.x.toFixed(2), y2: b.y.toFixed(2) }, layer);
+      });
+    }
+
+    function renderSlotOverlay() {
+      const layer = document.getElementById('slot-overlay');
+      const realized = TYPES.find(t => t.num === REALIZED_NUM);
+      const ideal = TYPES.find(t => t.num === IDEAL_NUM);
+      el('path', { class: 'slot-realized-overlay', d: annularSector(realized.midDeg - 22.5, realized.midDeg + 22.5, R_INNER, R_OUTER) }, layer);
+      el('path', { class: 'slot-ideal-halo', d: annularSector(ideal.midDeg - 22.5, ideal.midDeg + 22.5, R_INNER, R_OUTER) }, layer);
+    }
+
+    function renderTextPathDefs() {
+      const defs = document.getElementById('textpath-defs');
+      // 4 quadrantes em r=215 (FORA do círculo)
+      el('path', { id: 'q-ea', d: arcPath(0, 90, R_QUAD, 1), fill: 'none' }, defs);
+      el('path', { id: 'q-na', d: arcPath(180, 90, R_QUAD, 0), fill: 'none' }, defs);
+      el('path', { id: 'q-nn', d: arcPath(270, 180, R_QUAD, 0), fill: 'none' }, defs);
+      el('path', { id: 'q-en', d: arcPath(270, 360, R_QUAD, 1), fill: 'none' }, defs);
+
+      // 4 perfis PRIMÁRIOS no anel interno em r=82
+      el('path', { id: 'p-1', d: arcPath(0, 90, R_PRIMARY_LABEL, 1), fill: 'none' }, defs);
+      el('path', { id: 'p-2', d: arcPath(180, 90, R_PRIMARY_LABEL, 0), fill: 'none' }, defs);
+      el('path', { id: 'p-3', d: arcPath(270, 180, R_PRIMARY_LABEL, 0), fill: 'none' }, defs);
+      el('path', { id: 'p-4', d: arcPath(270, 360, R_PRIMARY_LABEL, 1), fill: 'none' }, defs);
+
+      // 8 nomes dos tipos em r=170
+      TYPES.forEach(t => {
+        const start = t.midDeg - 22.5;
+        const end   = t.midDeg + 22.5;
+        const isTopHalf = (t.midDeg >= 270) || (t.midDeg <= 90);
+        const d = isTopHalf ? arcPath(start, end, R_LABEL, 1) : arcPath(end, start, R_LABEL, 0);
+        el('path', { id: 'rt-' + t.num, d, fill: 'none' }, defs);
+      });
+    }
+
+    function renderLabels() {
+      const quadLayer = document.getElementById('labels-quad');
+      QUADRANTS.forEach(q => {
+        const txt = el('text', { class: 'label-quad' }, quadLayer);
+        const tp = el('textPath', { href: '#' + q.pathId, startOffset: '50%', 'text-anchor': 'middle' }, txt);
+        tp.textContent = q.name + ' · ';
+        const sub = el('tspan', { class: 'quad-sub' }, tp);
+        sub.textContent = q.sub;
+      });
+
+      // Labels dos 4 perfis primários (anel interno)
+      const primLayer = document.getElementById('labels-primario');
+      PRIMARIES.forEach(p => {
+        const txt = el('text', { class: 'label-primario' }, primLayer);
+        const tp = el('textPath', { href: '#' + p.pathId, startOffset: '50%', 'text-anchor': 'middle' }, txt);
+        tp.textContent = p.name;
+      });
+
+      const typeLayer = document.getElementById('labels-type');
+      TYPES.forEach(t => {
+        const txt = el('text', { class: 'label-type' }, typeLayer);
+        const tp = el('textPath', { href: '#rt-' + t.num, startOffset: '50%', 'text-anchor': 'middle' }, txt);
+        tp.textContent = t.name;
+      });
+    }
+
+    function renderSiglas() {
+      const layer = document.getElementById('siglas');
+      TYPES.forEach(t => {
+        const p = polar(t.midDeg, R_SIGLA);
+        const txt = el('text', {
+          class: 'sigla-type',
+          x: p.x.toFixed(2),
+          y: p.y.toFixed(2),
+          'text-anchor': 'middle',
+          'dominant-baseline': 'middle'
+        }, layer);
+        txt.textContent = t.sigla;
+      });
+    }
+
+    function renderAll() {
+      renderTextPathDefs();
+      renderAxes();
+      renderPrimaries();
+      renderTypes();
+      renderDividers();
+      renderSlotOverlay();
+      renderLabels();
+      renderSiglas();
+      renderAxisLabels();
+    }
+
+    renderAll();
+
+    const btn = document.getElementById('themeBtn');
+    const root = document.documentElement;
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      btn.textContent = next === 'light' ? '🌙 Dark' : '☀️ Light';
+    });
+  </script>
+</body>
+</html>

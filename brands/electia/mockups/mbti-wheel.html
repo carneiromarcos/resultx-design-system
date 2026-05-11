@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Electia Viz — MBTI Wheel v0.4 (mesclada)</title>
+  <link rel="preconnect" href="https://rsms.me/" />
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <style>
+    :root {
+      --bg: oklch(96% 0 0);
+      --text: oklch(18% 0 0);
+      --text-muted: oklch(45% 0 0);
+      --viz-card-padding: clamp(20px, 4vw, 28px);
+      --viz-card-radius: 16px;
+      --viz-card-bg: oklch(98.5% 0 0);
+      --viz-card-border: 1px solid oklch(92% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.06);
+
+      /* 4 famílias Keirsey × 3 saturações (soft = anel temperamento, med = anel papel, strong = anel tipo) */
+      --kei-g-soft:   oklch(86% 0.04 195);
+      --kei-g-med:    oklch(70% 0.10 195);
+      --kei-g-strong: oklch(52% 0.13 195);
+
+      --kei-a-soft:   oklch(90% 0.05 75);
+      --kei-a-med:    oklch(76% 0.13 75);
+      --kei-a-strong: oklch(60% 0.15 75);
+
+      --kei-r-soft:   oklch(86% 0.06 305);
+      --kei-r-med:    oklch(60% 0.16 305);
+      --kei-r-strong: oklch(45% 0.20 305);
+
+      --kei-i-soft:   oklch(89% 0.04 25);
+      --kei-i-med:    oklch(70% 0.14 25);
+      --kei-i-strong: oklch(55% 0.18 25);
+
+      --theory: var(--kei-r-strong);
+      --realized-fill: oklch(35% 0.26 305);
+      --realized-stroke: oklch(45% 0.30 305);
+
+      --viz-match-on: oklch(60% 0.18 145);
+      --viz-axis: oklch(60% 0 0);
+
+      --label-on-light: oklch(20% 0 0);
+      --label-on-dark:  oklch(98% 0 0);
+
+      --viz-motion-entry-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --viz-motion-hover: 150ms;
+    }
+
+    [data-theme="dark"] {
+      --bg: oklch(12% 0 0); --text: oklch(94% 0 0); --text-muted: oklch(70% 0 0);
+      --viz-card-bg: oklch(16% 0 0);
+      --viz-card-border: 1px solid oklch(22% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.3);
+
+      --kei-g-soft:   oklch(28% 0.06 195);
+      --kei-g-med:    oklch(48% 0.10 195);
+      --kei-g-strong: oklch(72% 0.12 195);
+
+      --kei-a-soft:   oklch(30% 0.06 75);
+      --kei-a-med:    oklch(52% 0.14 75);
+      --kei-a-strong: oklch(78% 0.13 75);
+
+      --kei-r-soft:   oklch(30% 0.07 305);
+      --kei-r-med:    oklch(50% 0.18 305);
+      --kei-r-strong: oklch(75% 0.18 305);
+
+      --kei-i-soft:   oklch(30% 0.06 25);
+      --kei-i-med:    oklch(52% 0.14 25);
+      --kei-i-strong: oklch(75% 0.16 25);
+
+      --theory: var(--kei-r-strong);
+      --realized-fill: oklch(85% 0.22 305);
+      --realized-stroke: oklch(95% 0.18 305);
+
+      --viz-match-on: oklch(72% 0.16 145);
+
+      --label-on-light: oklch(15% 0 0);
+      --label-on-dark:  oklch(98% 0 0);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; transition: background 200ms ease, color 200ms ease; }
+    body { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px; }
+    .stage { max-width: 540px; width: 100%; }
+
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .theme-btn { appearance: none; border: 1px solid var(--viz-card-border); background: var(--viz-card-bg); color: var(--text); font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 999px; cursor: pointer; transition: all var(--viz-motion-hover) ease; }
+    .theme-btn:hover { transform: translateY(-1px); }
+
+    .viz-card { background: var(--viz-card-bg); border: var(--viz-card-border); border-radius: var(--viz-card-radius); padding: var(--viz-card-padding); box-shadow: var(--viz-card-shadow); animation: cardEnter 200ms var(--viz-motion-entry-ease) both; }
+    @keyframes cardEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .card-title { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+    .card-icon { width: 24px; height: 24px; border-radius: 6px; background: oklch(from var(--theory) l c h / 0.18); display: grid; place-items: center; color: var(--theory); font-weight: 700; font-size: 11px; }
+    .card-help { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--viz-card-border); background: transparent; color: var(--text-muted); font-size: 12px; cursor: help; }
+    .card-help:hover { color: var(--theory); border-color: var(--theory); }
+
+    .match-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      background: oklch(from var(--viz-match-on) l c h / 0.12);
+      border: 1px solid oklch(from var(--viz-match-on) l c h / 0.4);
+      border-radius: 999px;
+      color: var(--viz-match-on);
+      font-size: 12px; font-weight: 600;
+      margin-bottom: 12px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 200ms both;
+    }
+    .match-badge::before { content: "✓"; font-size: 14px; }
+
+    .wheel-wrap { display: grid; place-items: center; margin: 0 0 16px; animation: fadeIn 600ms var(--viz-motion-entry-ease) 100ms both; }
+    .wheel-wrap svg { display: block; max-width: 100%; height: auto; }
+
+    /* 4 anéis temperamento (soft) */
+    .ring-temp-g { fill: var(--kei-g-soft); animation: fadeIn 400ms ease 250ms both; }
+    .ring-temp-a { fill: var(--kei-a-soft); animation: fadeIn 400ms ease 280ms both; }
+    .ring-temp-r { fill: var(--kei-r-soft); animation: fadeIn 400ms ease 310ms both; }
+    .ring-temp-i { fill: var(--kei-i-soft); animation: fadeIn 400ms ease 340ms both; }
+
+    /* 8 anéis papel (med) */
+    .ring-role-g { fill: var(--kei-g-med); animation: fadeIn 400ms ease 400ms both; }
+    .ring-role-a { fill: var(--kei-a-med); animation: fadeIn 400ms ease 430ms both; }
+    .ring-role-r { fill: var(--kei-r-med); animation: fadeIn 400ms ease 460ms both; }
+    .ring-role-i { fill: var(--kei-i-med); animation: fadeIn 400ms ease 490ms both; }
+
+    /* 16 anéis tipo (strong) */
+    .ring-type-g { fill: var(--kei-g-strong); animation: fadeIn 400ms ease 550ms both; }
+    .ring-type-a { fill: var(--kei-a-strong); animation: fadeIn 400ms ease 580ms both; }
+    .ring-type-r { fill: var(--kei-r-strong); animation: fadeIn 400ms ease 610ms both; }
+    .ring-type-i { fill: var(--kei-i-strong); animation: fadeIn 400ms ease 640ms both; }
+
+    .ring-center{ fill: var(--viz-card-bg); animation: fadeIn 200ms ease 200ms both; }
+
+    .slot-realized {
+      fill: var(--realized-fill);
+      stroke: var(--realized-stroke);
+      stroke-width: 2.5;
+      animation: slotPop 500ms var(--viz-motion-entry-ease) 800ms both;
+      transform-origin: 230px 230px;
+    }
+    @keyframes slotPop { 0% { opacity: 0; transform: scale(0.3); } 70% { transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
+
+    .slot-ideal-halo {
+      fill: none;
+      stroke: var(--viz-match-on);
+      stroke-width: 4;
+      stroke-opacity: 0.85;
+      stroke-dasharray: 6 4;
+      filter: drop-shadow(0 0 6px oklch(from var(--viz-match-on) l c h / 0.5));
+      animation: fadeIn 400ms ease 1100ms both;
+    }
+
+    .separator-quad { stroke: var(--viz-card-bg); stroke-width: 2; animation: fadeIn 200ms ease 700ms both; }
+    .separator-thin { stroke: var(--viz-card-bg); stroke-width: 0.8; opacity: 0.5; animation: fadeIn 200ms ease 700ms both; }
+
+    .label-temp { fill: var(--label-on-light); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; dominant-baseline: middle; animation: fadeIn 200ms ease 350ms both; }
+    [data-theme="dark"] .label-temp { fill: var(--label-on-dark); }
+
+    .label-role { fill: var(--label-on-dark); font-size: 9px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; dominant-baseline: middle; animation: fadeIn 200ms ease 500ms both; }
+    [data-theme="dark"] .label-role { fill: var(--label-on-light); }
+
+    .label-type { fill: var(--label-on-dark); font-size: 9.5px; font-weight: 700; animation: fadeIn 200ms ease 700ms both; }
+    [data-theme="dark"] .label-type { fill: var(--label-on-light); }
+
+    .label-variant { fill: var(--label-on-dark); fill-opacity: 0.85; font-size: 7.5px; font-weight: 500; animation: fadeIn 200ms ease 800ms both; }
+    [data-theme="dark"] .label-variant { fill: var(--label-on-light); fill-opacity: 0.78; }
+
+    .type-icon { color: var(--label-on-dark); pointer-events: none; animation: fadeIn 240ms ease 850ms both; }
+    [data-theme="dark"] .type-icon { color: var(--label-on-light); }
+
+    .center-title { fill: var(--text); font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .center-num   { fill: var(--theory); font-size: 28px; font-weight: 600; letter-spacing: -0.03em; font-feature-settings: 'tnum' 1; animation: fadeUp 400ms var(--viz-motion-entry-ease) 1200ms both; }
+
+    .compare-row {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 10px 14px;
+      background: oklch(from var(--viz-match-on) l c h / 0.06);
+      border-radius: 10px;
+      margin-bottom: 14px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 1500ms both;
+    }
+    .compare-cell { flex: 1; }
+    .compare-label { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    .compare-value { font-size: 15px; font-weight: 600; color: var(--theory); margin-top: 2px; }
+    .compare-divider { width: 1px; background: var(--viz-card-border); margin: 4px 0; }
+
+    .keirsey-legend {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center;
+      margin-bottom: 14px;
+      font-size: 10.5px; color: var(--text-muted);
+      animation: fadeIn 300ms ease 1600ms both;
+    }
+    .leg-item { display: flex; align-items: center; gap: 6px; }
+    .leg-swatch { width: 10px; height: 10px; border-radius: 3px; }
+    .leg-g { background: var(--kei-g-strong); }
+    .leg-a { background: var(--kei-a-strong); }
+    .leg-r { background: var(--kei-r-strong); }
+    .leg-i { background: var(--kei-i-strong); }
+
+    .narrative { font-size: 13px; line-height: 1.55; color: var(--text); margin-bottom: 14px; padding: 10px 12px; background: oklch(from var(--text) l c h / 0.04); border-radius: 10px; border-left: 2px solid var(--theory); animation: fadeUp 400ms var(--viz-motion-entry-ease) 1700ms both; }
+
+    .cta-row { display: flex; justify-content: flex-end; animation: fadeIn 300ms ease 1800ms both; }
+    .cta { appearance: none; background: transparent; border: 1px solid var(--theory); color: var(--theory); font: inherit; font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all var(--viz-motion-hover) ease; }
+    .cta:hover { background: oklch(from var(--theory) l c h / 0.1); transform: translateX(2px); }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0ms !important; animation-delay: 0ms !important; transition-duration: 0ms !important; } }
+
+    .footer-note { margin-top: 20px; font-size: 11px; color: var(--text-muted); text-align: center; letter-spacing: 0.02em; }
+    .footer-note a { color: var(--theory); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="toggle-row">
+      <span>Mockup v1.0 · MBTI · 3 anéis curvados (temperamento + papel + tipo) estilo Adioma</span>
+      <button class="theme-btn" id="themeBtn" aria-label="Alternar tema claro/escuro">🌙 Dark</button>
+    </div>
+
+    <article class="viz-card" aria-labelledby="card-title">
+      <header class="card-header">
+        <div class="card-title">
+          <span class="card-icon" aria-hidden="true">M</span>
+          <span id="card-title">MBTI · Tipo Cognitivo</span>
+        </div>
+        <button class="card-help" aria-label="Como ler este perfil">?</button>
+      </header>
+
+      <div class="match-badge" role="status">Alinhado ao cargo Comercial Sr.</div>
+
+      <div class="wheel-wrap">
+        <svg viewBox="0 0 460 460" width="460" height="460"
+             role="img" aria-labelledby="mbti-svg-title mbti-svg-desc">
+          <title id="mbti-svg-title">Wheel MBTI: 4 quadrantes Keirsey × 3 anéis hierárquicos</title>
+          <desc id="mbti-svg-desc">
+            Quatro quadrantes Keirsey com cores distintas (Guardião teal, Artesão âmbar, Racional roxo, Idealista rose). Em cada quadrante, três anéis: temperamento (centro, claro), papel (meio, médio) e tipo (externo, saturado). Realizado e ideal coincidem em ENTJ Marechal, no quadrante Racional.
+          </desc>
+
+          <!-- PATHS INVISÍVEIS PRO TEXTPATH (3 anéis) -->
+          <defs>
+            <!-- ANEL ROLE — 8 papéis, mid-radius r=117 -->
+            <path id="rp-administrator" d="M 230,113 A 117,117 0 0,1 312.73,147.27" fill="none" />
+            <path id="rp-conservator"   d="M 312.73,147.27 A 117,117 0 0,1 347,230" fill="none" />
+            <path id="rp-defender"      d="M 113,230 A 117,117 0 0,1 147.27,147.27" fill="none" />
+            <path id="rp-mentor"        d="M 147.27,147.27 A 117,117 0 0,1 230,113" fill="none" />
+            <path id="rp-operator"      d="M 312.73,312.73 A 117,117 0 0,0 347,230" fill="none" />
+            <path id="rp-entertainer"   d="M 230,347 A 117,117 0 0,0 312.73,312.73" fill="none" />
+            <path id="rp-coordinator"   d="M 147.27,312.73 A 117,117 0 0,0 230,347" fill="none" />
+            <path id="rp-engineer"      d="M 113,230 A 117,117 0 0,0 147.27,312.73" fill="none" />
+
+            <!-- ANEL TEMPERAMENTO — 4 famílias, mid-radius r=72.5 -->
+            <path id="rt-guardian" d="M 230,157.5 A 72.5,72.5 0 0,1 302.5,230" fill="none" />
+            <path id="rt-idealist" d="M 157.5,230 A 72.5,72.5 0 0,1 230,157.5" fill="none" />
+            <path id="rt-artisan"  d="M 230,302.5 A 72.5,72.5 0 0,0 302.5,230" fill="none" />
+            <path id="rt-rational" d="M 157.5,230 A 72.5,72.5 0 0,0 230,302.5" fill="none" />
+
+            <!-- ANEL TIPO — 16 siglas MBTI, r=152 (preserva profundidade da v0.8) -->
+            <path id="rty-istj" d="M 230,78 A 152,152 0 0,1 288.17,89.57" fill="none" />
+            <path id="rty-estj" d="M 288.17,89.57 A 152,152 0 0,1 337.48,122.52" fill="none" />
+            <path id="rty-esfj" d="M 337.48,122.52 A 152,152 0 0,1 370.43,171.83" fill="none" />
+            <path id="rty-isfj" d="M 370.43,171.83 A 152,152 0 0,1 382,230" fill="none" />
+            <path id="rty-estp" d="M 370.43,288.17 A 152,152 0 0,0 382,230" fill="none" />
+            <path id="rty-istp" d="M 337.48,337.48 A 152,152 0 0,0 370.43,288.17" fill="none" />
+            <path id="rty-esfp" d="M 288.17,370.43 A 152,152 0 0,0 337.48,337.48" fill="none" />
+            <path id="rty-isfp" d="M 230,382 A 152,152 0 0,0 288.17,370.43" fill="none" />
+            <path id="rty-entj" d="M 171.83,370.43 A 152,152 0 0,0 230,382" fill="none" />
+            <path id="rty-intj" d="M 122.52,337.48 A 152,152 0 0,0 171.83,370.43" fill="none" />
+            <path id="rty-entp" d="M 89.57,288.17 A 152,152 0 0,0 122.52,337.48" fill="none" />
+            <path id="rty-intp" d="M 78,230 A 152,152 0 0,0 89.57,288.17" fill="none" />
+            <path id="rty-enfp" d="M 78,230 A 152,152 0 0,1 89.57,171.83" fill="none" />
+            <path id="rty-infp" d="M 89.57,171.83 A 152,152 0 0,1 122.52,122.52" fill="none" />
+            <path id="rty-enfj" d="M 122.52,122.52 A 152,152 0 0,1 171.83,89.57" fill="none" />
+            <path id="rty-infj" d="M 171.83,89.57 A 152,152 0 0,1 230,78" fill="none" />
+          </defs>
+
+          <!-- ANEL TEMPERAMENTO (raio 50-95) -->
+          <path class="ring-temp-g" d="M 230 180 L 230 135 A 95 95 0 0 1 325 230 L 280 230 A 50 50 0 0 0 230 180 Z" />
+          <path class="ring-temp-a" d="M 280 230 L 325 230 A 95 95 0 0 1 230 325 L 230 280 A 50 50 0 0 0 280 230 Z" />
+          <path class="ring-temp-r" d="M 230 280 L 230 325 A 95 95 0 0 1 135 230 L 180 230 A 50 50 0 0 0 230 280 Z" />
+          <path class="ring-temp-i" d="M 180 230 L 135 230 A 95 95 0 0 1 230 135 L 230 180 A 50 50 0 0 0 180 230 Z" />
+
+          <!-- ANEL PAPÉIS (raio 95-140) -->
+          <path class="ring-role-g" d="M 230 135 L 230 90 A 140 140 0 0 1 329 131 L 297.2 162.8 A 95 95 0 0 0 230 135 Z" />
+          <path class="ring-role-g" d="M 297.2 162.8 L 329 131 A 140 140 0 0 1 370 230 L 325 230 A 95 95 0 0 0 297.2 162.8 Z" />
+          <path class="ring-role-a" d="M 325 230 L 370 230 A 140 140 0 0 1 329 329 L 297.2 297.2 A 95 95 0 0 0 325 230 Z" />
+          <path class="ring-role-a" d="M 297.2 297.2 L 329 329 A 140 140 0 0 1 230 370 L 230 325 A 95 95 0 0 0 297.2 297.2 Z" />
+          <path class="ring-role-r" d="M 230 325 L 230 370 A 140 140 0 0 1 131 329 L 162.8 297.2 A 95 95 0 0 0 230 325 Z" />
+          <path class="ring-role-r" d="M 162.8 297.2 L 131 329 A 140 140 0 0 1 90 230 L 135 230 A 95 95 0 0 0 162.8 297.2 Z" />
+          <path class="ring-role-i" d="M 135 230 L 90 230 A 140 140 0 0 1 131 131 L 162.8 162.8 A 95 95 0 0 0 135 230 Z" />
+          <path class="ring-role-i" d="M 162.8 162.8 L 131 131 A 140 140 0 0 1 230 90 L 230 135 A 95 95 0 0 0 162.8 162.8 Z" />
+
+          <!-- ANEL TIPOS (raio 140-185) -->
+          <path class="ring-type-g" d="M 230 90 L 230 45 A 185 185 0 0 1 300.9 59.1 L 283.6 100.6 A 140 140 0 0 0 230 90 Z" />
+          <path class="ring-type-g" d="M 283.6 100.6 L 300.9 59.1 A 185 185 0 0 1 360.8 99.2 L 329 131 A 140 140 0 0 0 283.6 100.6 Z" />
+          <path class="ring-type-g" d="M 329 131 L 360.8 99.2 A 185 185 0 0 1 400.9 159.1 L 359.4 176.4 A 140 140 0 0 0 329 131 Z" />
+          <path class="ring-type-g" d="M 359.4 176.4 L 400.9 159.1 A 185 185 0 0 1 415 230 L 370 230 A 140 140 0 0 0 359.4 176.4 Z" />
+          <path class="ring-type-a" d="M 370 230 L 415 230 A 185 185 0 0 1 400.9 300.9 L 359.4 283.6 A 140 140 0 0 0 370 230 Z" />
+          <path class="ring-type-a" d="M 359.4 283.6 L 400.9 300.9 A 185 185 0 0 1 360.8 360.8 L 329 329 A 140 140 0 0 0 359.4 283.6 Z" />
+          <path class="ring-type-a" d="M 329 329 L 360.8 360.8 A 185 185 0 0 1 300.9 400.9 L 283.6 359.4 A 140 140 0 0 0 329 329 Z" />
+          <path class="ring-type-a" d="M 283.6 359.4 L 300.9 400.9 A 185 185 0 0 1 230 415 L 230 370 A 140 140 0 0 0 283.6 359.4 Z" />
+          <!-- ENTJ slot (Racional bot-right) — REALIZADO + IDEAL -->
+          <path class="slot-realized"  d="M 230 370 L 230 415 A 185 185 0 0 1 159.1 400.9 L 176.4 359.4 A 140 140 0 0 0 230 370 Z" />
+          <path class="slot-ideal-halo" d="M 230 370 L 230 415 A 185 185 0 0 1 159.1 400.9 L 176.4 359.4 A 140 140 0 0 0 230 370 Z" />
+          <path class="ring-type-r" d="M 176.4 359.4 L 159.1 400.9 A 185 185 0 0 1 99.2 360.8 L 131 329 A 140 140 0 0 0 176.4 359.4 Z" />
+          <path class="ring-type-r" d="M 131 329 L 99.2 360.8 A 185 185 0 0 1 59.1 300.9 L 100.6 283.6 A 140 140 0 0 0 131 329 Z" />
+          <path class="ring-type-r" d="M 100.6 283.6 L 59.1 300.9 A 185 185 0 0 1 45 230 L 90 230 A 140 140 0 0 0 100.6 283.6 Z" />
+          <path class="ring-type-i" d="M 90 230 L 45 230 A 185 185 0 0 1 59.1 159.1 L 100.6 176.4 A 140 140 0 0 0 90 230 Z" />
+          <path class="ring-type-i" d="M 100.6 176.4 L 59.1 159.1 A 185 185 0 0 1 99.2 99.2 L 131 131 A 140 140 0 0 0 100.6 176.4 Z" />
+          <path class="ring-type-i" d="M 131 131 L 99.2 99.2 A 185 185 0 0 1 159.1 59.1 L 176.4 100.6 A 140 140 0 0 0 131 131 Z" />
+          <path class="ring-type-i" d="M 176.4 100.6 L 159.1 59.1 A 185 185 0 0 1 230 45 L 230 90 A 140 140 0 0 0 176.4 100.6 Z" />
+
+          <!-- Separadores radiais entre os 4 quadrantes (cruz) -->
+          <line class="separator-quad" x1="230" y1="45"  x2="230" y2="90" />
+          <line class="separator-quad" x1="370" y1="230" x2="415" y2="230" />
+          <line class="separator-quad" x1="230" y1="370" x2="230" y2="415" />
+          <line class="separator-quad" x1="45"  y1="230" x2="90"  y2="230" />
+
+          <!-- CENTRO -->
+          <circle class="ring-center" cx="230" cy="230" r="50" />
+
+          <!-- LABELS DOS 4 TEMPERAMENTOS — curvados nos arcos do anel temp -->
+          <text class="label-temp"><textPath href="#rt-guardian" startOffset="50%" text-anchor="middle">Guardião</textPath></text>
+          <text class="label-temp"><textPath href="#rt-artisan"  startOffset="50%" text-anchor="middle">Artesão</textPath></text>
+          <text class="label-temp"><textPath href="#rt-rational" startOffset="50%" text-anchor="middle">Racional</textPath></text>
+          <text class="label-temp"><textPath href="#rt-idealist" startOffset="50%" text-anchor="middle">Idealista</textPath></text>
+
+          <!-- LABELS DOS 8 PAPÉIS — curvados nos arcos do anel role (estilo Adioma) -->
+          <text class="label-role"><textPath href="#rp-administrator" startOffset="50%" text-anchor="middle">Administrador</textPath></text>
+          <text class="label-role"><textPath href="#rp-conservator"   startOffset="50%" text-anchor="middle">Conservador</textPath></text>
+          <text class="label-role"><textPath href="#rp-operator"      startOffset="50%" text-anchor="middle">Operador</textPath></text>
+          <text class="label-role"><textPath href="#rp-entertainer"   startOffset="50%" text-anchor="middle">Animador</textPath></text>
+          <text class="label-role"><textPath href="#rp-coordinator"   startOffset="50%" text-anchor="middle">Coordenador</textPath></text>
+          <text class="label-role"><textPath href="#rp-engineer"      startOffset="50%" text-anchor="middle">Engenheiro</textPath></text>
+          <text class="label-role"><textPath href="#rp-defender"      startOffset="50%" text-anchor="middle">Defensor</textPath></text>
+          <text class="label-role"><textPath href="#rp-mentor"        startOffset="50%" text-anchor="middle">Mentor</textPath></text>
+
+          <!-- SIGLAS MBTI DOS 16 TIPOS — curvadas nos arcos do anel tipo (r=152) -->
+          <text class="label-type"><textPath href="#rty-istj" startOffset="50%" text-anchor="middle">ISTJ</textPath></text>
+          <text class="label-type"><textPath href="#rty-estj" startOffset="50%" text-anchor="middle">ESTJ</textPath></text>
+          <text class="label-type"><textPath href="#rty-esfj" startOffset="50%" text-anchor="middle">ESFJ</textPath></text>
+          <text class="label-type"><textPath href="#rty-isfj" startOffset="50%" text-anchor="middle">ISFJ</textPath></text>
+          <text class="label-type"><textPath href="#rty-estp" startOffset="50%" text-anchor="middle">ESTP</textPath></text>
+          <text class="label-type"><textPath href="#rty-istp" startOffset="50%" text-anchor="middle">ISTP</textPath></text>
+          <text class="label-type"><textPath href="#rty-esfp" startOffset="50%" text-anchor="middle">ESFP</textPath></text>
+          <text class="label-type"><textPath href="#rty-isfp" startOffset="50%" text-anchor="middle">ISFP</textPath></text>
+          <text class="label-type"><textPath href="#rty-entj" startOffset="50%" text-anchor="middle">ENTJ</textPath></text>
+          <text class="label-type"><textPath href="#rty-intj" startOffset="50%" text-anchor="middle">INTJ</textPath></text>
+          <text class="label-type"><textPath href="#rty-entp" startOffset="50%" text-anchor="middle">ENTP</textPath></text>
+          <text class="label-type"><textPath href="#rty-intp" startOffset="50%" text-anchor="middle">INTP</textPath></text>
+          <text class="label-type"><textPath href="#rty-enfp" startOffset="50%" text-anchor="middle">ENFP</textPath></text>
+          <text class="label-type"><textPath href="#rty-infp" startOffset="50%" text-anchor="middle">INFP</textPath></text>
+          <text class="label-type"><textPath href="#rty-enfj" startOffset="50%" text-anchor="middle">ENFJ</textPath></text>
+          <text class="label-type"><textPath href="#rty-infj" startOffset="50%" text-anchor="middle">INFJ</textPath></text>
+
+          <!-- ÍCONES LUCIDE NOS 16 ROLE VARIANTS (anel externo) -->
+          <g id="type-icons" aria-hidden="true"></g>
+
+          <!-- CENTRO -->
+          <text class="center-title" x="230" y="218" text-anchor="middle">SEU TIPO</text>
+          <text class="center-num"   x="230" y="246" text-anchor="middle">ENTJ</text>
+        </svg>
+      </div>
+
+      <div class="keirsey-legend" aria-hidden="true">
+        <div class="leg-item"><span class="leg-swatch leg-g"></span><span>Guardião · SJ</span></div>
+        <div class="leg-item"><span class="leg-swatch leg-a"></span><span>Artesão · SP</span></div>
+        <div class="leg-item"><span class="leg-swatch leg-r"></span><span>Racional · NT</span></div>
+        <div class="leg-item"><span class="leg-swatch leg-i"></span><span>Idealista · NF</span></div>
+      </div>
+
+      <div class="compare-row" aria-label="Comparativo cargo vs colaborador">
+        <div class="compare-cell">
+          <div class="compare-label">Ideal · Cargo</div>
+          <div class="compare-value">ENTJ · Marechal</div>
+        </div>
+        <div class="compare-divider"></div>
+        <div class="compare-cell">
+          <div class="compare-label">Realizado · Você</div>
+          <div class="compare-value">ENTJ · Marechal</div>
+        </div>
+      </div>
+
+      <p class="narrative">
+        <strong>ENTJ · Marechal</strong> · papel <strong>Coordenador</strong>
+        · temperamento <strong>Racional</strong>. Liderança estratégica,
+        orientação a metas, planejamento de longo prazo — alinhado ao cargo
+        Comercial Sr. Forte sinergia com INTJ Estrategista (mesmo papel).
+      </p>
+
+      <table class="sr-only">
+        <caption>Hierarquia MBTI: temperamento, papel, tipo</caption>
+        <thead><tr><th>Camada</th><th>Ideal</th><th>Realizado</th></tr></thead>
+        <tbody>
+          <tr><td>Temperamento</td><td>Racional</td><td>Racional</td></tr>
+          <tr><td>Papel</td><td>Coordenador</td><td>Coordenador</td></tr>
+          <tr><td>Tipo</td><td>ENTJ Marechal</td><td>ENTJ Marechal</td></tr>
+        </tbody>
+      </table>
+
+      <div class="cta-row"><button class="cta" type="button">Saiba mais →</button></div>
+    </article>
+
+    <p class="footer-note">
+      Mockup v0.4 · 3 anéis + 4 cores Keirsey + ideal×realizado · spec em <a href="../design-system-v0.1.md">design-system-v0.1.md</a> · valores fictícios
+    </p>
+  </div>
+
+  <script>
+    // 16 ícones lucide simplificados (paths originais, viewBox 24x24, stroke currentColor)
+    const ICONS = {
+      'Inspetor':     '<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 2h6a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/><path d="m9 14 2 2 4-4"/>',
+      'Supervisor':   '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+      'Provedor':     '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+      'Protetor':     '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+      'Promotor':     '<path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+      'Artífice':     '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+      'Performer':    '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/>',
+      'Compositor':   '<path d="M12 22a10 10 0 1 1 10-10c0 1.5-.5 2.5-1.5 2.5h-2.5a2 2 0 0 0-1 3.5 2 2 0 0 1-1 3.5z"/><circle cx="13.5" cy="6.5" r="1"/><circle cx="17.5" cy="10.5" r="1"/><circle cx="6.5" cy="12.5" r="1"/><circle cx="8.5" cy="7.5" r="1"/>',
+      'Marechal':     '<path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/><path d="M5 21h14"/>',
+      'Estrategista': '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+      'Inventor':     '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
+      'Arquiteto':    '<circle cx="12" cy="12" r="10"/><polygon points="16.24,7.76 14.5,13.5 8.76,15.24 10.5,9.5"/>',
+      'Campeão':      '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
+      'Curador':      '<path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6c-.6.7-1.1 1.6-1.1 2.5"/><path d="M14.1 6.1c2.4-.5 4.7-.7 6.9.5"/>',
+      'Professor':    '<path d="M22 10v6"/><path d="M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>',
+      'Conselheiro':  '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>'
+    };
+
+    // Ordem horária a partir do topo (12h) — espelha a sequência dos labels do SVG
+    const TYPES_CW = [
+      'Inspetor', 'Supervisor', 'Provedor', 'Protetor',
+      'Promotor', 'Artífice', 'Performer', 'Compositor',
+      'Marechal', 'Estrategista', 'Inventor', 'Arquiteto',
+      'Campeão', 'Curador', 'Professor', 'Conselheiro'
+    ];
+
+    function renderTypeIcons() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const layer = document.getElementById('type-icons');
+      if (!layer) return;
+      layer.innerHTML = '';
+      const cx = 230, cy = 230;
+      const r = 169;        // parte externa do slot (padrão ISFP v0.6) — ícone fora, sigla dentro a r=152
+      const size = 16;      // pequeno mas legível, alinhado com Adioma
+      TYPES_CW.forEach((variant, k) => {
+        const deg = k * 22.5 + 11.25; // centro geométrico de cada slot, horário a partir do topo
+        const rad = (deg * Math.PI) / 180;
+        const x = cx + r * Math.sin(rad);
+        const y = cy - r * Math.cos(rad);
+        const ico = document.createElementNS(NS, 'svg');
+        ico.setAttribute('x', x - size / 2);
+        ico.setAttribute('y', y - size / 2);
+        ico.setAttribute('width', size);
+        ico.setAttribute('height', size);
+        ico.setAttribute('viewBox', '0 0 24 24');
+        ico.setAttribute('fill', 'none');
+        ico.setAttribute('stroke', 'currentColor');
+        ico.setAttribute('stroke-width', '2');
+        ico.setAttribute('stroke-linecap', 'round');
+        ico.setAttribute('stroke-linejoin', 'round');
+        ico.setAttribute('class', 'type-icon');
+        ico.innerHTML = ICONS[variant] || '';
+        layer.appendChild(ico);
+      });
+    }
+
+    renderTypeIcons();
+
+    const btn = document.getElementById('themeBtn');
+    const root = document.documentElement;
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      btn.textContent = next === 'light' ? '🌙 Dark' : '☀️ Light';
+    });
+  </script>
+</body>
+</html>

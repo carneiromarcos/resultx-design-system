@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electia — Assessments Comportamentais</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            bg: { primary: '#0D1117', card: '#161B22', hover: '#1C2333' },
+            border: { subtle: '#30363D' },
+            text: { primary: '#E6EDF3', secondary: '#8B949E', muted: '#6E7681' },
+            accent: { teal: '#2DD4BF', green: '#22C55E', amber: '#F59E0B', red: '#EF4444' },
+            theory: { mbti: '#22D3EE', enneagram: '#A78BFA', bigfive: '#60A5FA', disc: '#FB923C', lesenne: '#F472B6' }
+          },
+          fontFamily: { sora: ['Sora','sans-serif'], inter: ['Inter','sans-serif'] }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #0D1117; color: #E6EDF3; }
+    h1,h2,h3,h4,h5 { font-family: 'Sora', sans-serif; }
+    .card-glow { background: rgba(22,27,34,0.8); backdrop-filter: blur(12px); border: 1px solid rgba(45,212,191,0.15); box-shadow: 0 0 20px rgba(45,212,191,0.05), inset 0 0 20px rgba(45,212,191,0.02); }
+    .glow-high { box-shadow: 0 0 20px rgba(34,197,94,0.2); border-color: rgba(34,197,94,0.3); }
+    .theory-badge:hover { transform: translateY(-2px); transition: all 0.2s ease; }
+    .tab-active { border-bottom: 2px solid #2DD4BF; color: #2DD4BF; }
+    .precision-bar { background: linear-gradient(90deg, #2DD4BF, #22C55E); }
+    .sidebar-active { background: #1C2333; color: #2DD4BF; border-right: 2px solid #2DD4BF; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #0D1117; } ::-webkit-scrollbar-thumb { background: #30363D; border-radius: 3px; }
+    [x-cloak] { display: none !important; }
+  </style>
+</head>
+<body x-data="app()" x-init="init()">
+<div class="flex h-screen overflow-hidden">
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside class="w-56 bg-bg-card border-r border-border-subtle flex flex-col shrink-0">
+    <div class="p-5 border-b border-border-subtle">
+      <h1 class="font-sora text-lg font-bold text-accent-teal">◆ ELECTIA</h1>
+      <p class="text-[10px] text-text-muted mt-0.5">by Emprega+ · Assessments Comportamentais</p>
+    </div>
+    <nav class="p-3 flex-1 space-y-0.5">
+      <button @click="go('dashboard')" :class="page==='dashboard' ? 'sidebar-active' : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all">
+        <span>📊</span> Painel
+      </button>
+      <button @click="go('roles')" :class="page==='roles' ? 'sidebar-active' : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all">
+        <span>🎯</span> Cargos
+      </button>
+      <button @click="go('candidates')" :class="page==='candidates'||page==='candidate-profile' ? 'sidebar-active' : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all">
+        <span>👤</span> Candidatos
+      </button>
+      <button @click="go('employees')" :class="page==='employees'||page==='employee-profile' ? 'sidebar-active' : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all">
+        <span>👥</span> Colaboradores
+      </button>
+      <button @click="go('tests')" :class="page==='tests' ? 'sidebar-active' : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all">
+        <span>📝</span> Teste Padrão
+      </button>
+      <button @click="go('conversations')" :class="page==='conversations'||page==='conversation-detail' ? 'sidebar-active' : 'text-text-secondary hover:text-text-primary hover:bg-bg-hover'" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all">
+        <span>💬</span> Conversas
+        <span class="ml-auto w-5 h-5 rounded-full bg-accent-green/20 text-accent-green text-[10px] flex items-center justify-center font-bold">3</span>
+      </button>
+
+      <div class="!mt-5 px-3">
+        <p class="text-[10px] uppercase tracking-wider text-text-muted mb-2">Cargos Ativos</p>
+        <div class="space-y-2">
+          <div class="flex items-center gap-2 text-xs text-text-secondary cursor-pointer hover:text-accent-teal" @click="go('roles')"><span class="w-2 h-2 rounded-full bg-accent-green"></span> Analista Comercial</div>
+          <div class="flex items-center gap-2 text-xs text-text-secondary cursor-pointer hover:text-accent-teal" @click="go('roles')"><span class="w-2 h-2 rounded-full bg-accent-teal"></span> Dev Senior</div>
+          <div class="flex items-center gap-2 text-xs text-text-secondary cursor-pointer hover:text-accent-teal" @click="go('roles')"><span class="w-2 h-2 rounded-full bg-accent-amber"></span> SDR Junior</div>
+        </div>
+      </div>
+    </nav>
+    <div class="p-4 border-t border-border-subtle">
+      <p class="text-xs text-text-muted">TechCorp Ltda</p>
+      <p class="text-[10px] text-text-secondary">Plano Pro · 47 candidatos</p>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN ==================== -->
+  <main class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- TOP BAR -->
+    <header class="h-14 bg-bg-card border-b border-border-subtle flex items-center justify-between px-6 shrink-0">
+      <div class="relative">
+        <input type="text" placeholder="Buscar candidatos, cargos, colaboradores..." class="bg-bg-primary border border-border-subtle rounded-lg px-4 py-1.5 text-sm text-text-primary placeholder-text-muted w-80 focus:outline-none focus:border-accent-teal/50">
+        <span class="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted text-xs">⌘K</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="relative cursor-pointer text-text-secondary hover:text-text-primary">🔔<span class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-accent-red rounded-full text-[8px] flex items-center justify-center text-white">3</span></span>
+        <div class="flex items-center gap-2 text-sm text-text-secondary">
+          <div class="w-7 h-7 rounded-full bg-accent-teal/20 flex items-center justify-center text-accent-teal text-xs font-bold">AL</div>
+          Ana Lima ▾
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="flex-1 overflow-y-auto p-6" :class="(page==='candidate-profile'||page==='employee-profile') ? 'pb-20' : ''">
+
+      <!-- ==================== PAINEL ==================== -->
+      <div x-show="page==='dashboard'" x-cloak>
+        <h2 class="font-sora text-xl font-bold mb-5">Painel Geral</h2>
+        <div class="grid grid-cols-5 gap-4 mb-6">
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-4 border-l-[3px] border-l-accent-teal cursor-pointer hover:bg-bg-hover" @click="go('candidates')">
+            <p class="font-sora text-3xl font-bold">47</p>
+            <p class="text-xs text-text-muted mt-1">Candidatos</p>
+            <p class="text-[11px] text-accent-green mt-2">↑ 5 esta semana</p>
+          </div>
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-4 border-l-[3px] border-l-theory-bigfive">
+            <p class="font-sora text-3xl font-bold">12</p>
+            <p class="text-xs text-text-muted mt-1">Em Triagem</p>
+            <p class="text-[11px] text-accent-amber mt-2">↑ 3 hoje</p>
+          </div>
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-4 border-l-[3px] border-l-accent-amber">
+            <p class="font-sora text-3xl font-bold">8</p>
+            <p class="text-xs text-text-muted mt-1">Em Áudio</p>
+            <p class="text-[11px] text-text-muted mt-2">análise pendente</p>
+          </div>
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-4 border-l-[3px] border-l-accent-green cursor-pointer hover:bg-bg-hover" @click="go('employees')">
+            <p class="font-sora text-3xl font-bold">23</p>
+            <p class="text-xs text-text-muted mt-1">Colaboradores</p>
+            <p class="text-[11px] text-accent-green mt-2">perfis ativos</p>
+          </div>
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-4 border-l-[3px] border-l-theory-enneagram cursor-pointer hover:bg-bg-hover" @click="go('roles')">
+            <p class="font-sora text-3xl font-bold">6</p>
+            <p class="text-xs text-text-muted mt-1">Cargos</p>
+            <p class="text-[11px] text-text-muted mt-2">perfis definidos</p>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-5">
+            <h3 class="font-sora text-sm font-semibold mb-4 pb-3 border-b border-border-subtle">Atividade Recente</h3>
+            <div class="space-y-3 text-sm">
+              <div class="flex items-center gap-3"><span class="text-accent-green">●</span><div><p class="text-text-primary">Maria Santos completou assessment</p><p class="text-xs text-text-muted">Analista Comercial · Precisão: 79% · há 2h</p></div></div>
+              <div class="flex items-center gap-3"><span class="text-accent-amber">●</span><div><p class="text-text-primary">João Silva enviou áudio 3/4</p><p class="text-xs text-text-muted">Dev Senior · Precisão: 42% · há 4h</p></div></div>
+              <div class="flex items-center gap-3"><span class="text-theory-bigfive">●</span><div><p class="text-text-primary">Ana Costa iniciou triagem</p><p class="text-xs text-text-muted">SDR Junior · via WhatsApp · há 6h</p></div></div>
+              <div class="flex items-center gap-3"><span class="text-theory-enneagram">●</span><div><p class="text-text-primary">Carlos Rocha migrado para Colaborador</p><p class="text-xs text-text-muted">Analista Comercial · Contratado · há 1d</p></div></div>
+            </div>
+          </div>
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-5">
+            <h3 class="font-sora text-sm font-semibold mb-4 pb-3 border-b border-border-subtle">Precisão por Cargo</h3>
+            <div class="space-y-4">
+              <div><div class="flex justify-between text-sm mb-1"><span>Analista Comercial</span><span class="text-text-muted">82% média</span></div><div class="h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full precision-bar rounded-full" style="width:82%"></div></div><p class="text-[10px] text-text-muted mt-1">15 candidatos · 8 colaboradores</p></div>
+              <div><div class="flex justify-between text-sm mb-1"><span>Dev Senior</span><span class="text-text-muted">58% média</span></div><div class="h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full bg-accent-amber rounded-full" style="width:58%"></div></div><p class="text-[10px] text-text-muted mt-1">10 candidatos · 6 colaboradores</p></div>
+              <div><div class="flex justify-between text-sm mb-1"><span>SDR Junior</span><span class="text-text-muted">45% média</span></div><div class="h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full bg-accent-amber rounded-full" style="width:45%"></div></div><p class="text-[10px] text-text-muted mt-1">8 candidatos · 3 colaboradores</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== CARGOS ==================== -->
+      <div x-show="page==='roles'" x-cloak>
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="font-sora text-xl font-bold">Cargos e Perfis Ideais</h2>
+          <button class="px-4 py-2 rounded-lg bg-accent-teal/10 text-accent-teal text-sm border border-accent-teal/20 hover:bg-accent-teal/20">+ Novo Cargo</button>
+        </div>
+
+        <p class="text-sm text-text-secondary mb-6">Defina o perfil comportamental ideal para cada cargo. O sistema usa esses perfis como referência para calcular o <span class="text-accent-teal font-medium">Match Score</span> dos candidatos.</p>
+
+        <!-- Role Cards -->
+        <div class="space-y-4">
+          <!-- Analista Comercial -->
+          <div class="bg-bg-card border border-border-subtle rounded-lg overflow-hidden" x-data="{open:true}">
+            <div @click="open=!open" class="flex items-center justify-between p-5 cursor-pointer hover:bg-bg-hover transition-colors">
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-accent-green/10 flex items-center justify-center text-accent-green text-lg">🎯</div>
+                <div>
+                  <h3 class="font-sora font-semibold">Analista Comercial Senior</h3>
+                  <p class="text-xs text-text-muted">15 candidatos · 8 colaboradores · Atualizado há 3 dias</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-theory-mbti/15 text-theory-mbti font-medium">ENTJ</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-theory-enneagram/15 text-theory-enneagram font-medium">3w2</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-theory-disc/15 text-theory-disc font-medium">DC</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-theory-lesenne/15 text-theory-lesenne font-medium">Colérico</span>
+                </div>
+                <span class="text-text-muted transition-transform" :class="open?'rotate-180':''">▾</span>
+              </div>
+            </div>
+
+            <div x-show="open" x-collapse class="border-t border-border-subtle p-5">
+              <!-- Info -->
+              <div class="bg-bg-primary/50 rounded-lg p-3 mb-5 border border-accent-teal/10 flex items-start gap-2">
+                <span class="text-accent-teal text-sm">💡</span>
+                <p class="text-xs text-text-secondary">Este perfil é <span class="text-accent-teal font-medium">recalculado automaticamente</span> quando novos dados de colaboradores neste cargo são adicionados (áudios, entrevistas, testes padrão). Última atualização: 27/02/2026.</p>
+              </div>
+
+              <div class="grid grid-cols-5 gap-4 mb-5">
+                <!-- MBTI -->
+                <div class="bg-bg-primary border border-theory-mbti/20 rounded-lg p-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <p class="text-[10px] uppercase text-text-muted">MBTI</p>
+                    <span class="text-theory-mbti text-xs">✏️</span>
+                  </div>
+                  <p class="font-sora text-xl font-bold text-theory-mbti text-center">ENTJ</p>
+                  <p class="text-xs text-text-secondary text-center mt-1">O Comandante</p>
+                  <div class="mt-3 space-y-1.5">
+                    <div><div class="flex justify-between text-[10px] text-text-muted"><span>E/I</span><span>80% E</span></div><div class="h-1 bg-border-subtle rounded-full"><div class="h-full bg-theory-mbti rounded-full" style="width:80%"></div></div></div>
+                    <div><div class="flex justify-between text-[10px] text-text-muted"><span>S/N</span><span>65% N</span></div><div class="h-1 bg-border-subtle rounded-full"><div class="h-full bg-theory-mbti rounded-full" style="width:65%"></div></div></div>
+                    <div><div class="flex justify-between text-[10px] text-text-muted"><span>T/F</span><span>75% T</span></div><div class="h-1 bg-border-subtle rounded-full"><div class="h-full bg-theory-mbti rounded-full" style="width:75%"></div></div></div>
+                    <div><div class="flex justify-between text-[10px] text-text-muted"><span>J/P</span><span>60% J</span></div><div class="h-1 bg-border-subtle rounded-full"><div class="h-full bg-theory-mbti rounded-full" style="width:60%"></div></div></div>
+                  </div>
+                  <p class="text-[10px] text-text-muted mt-2 text-center">Baseado em 8 colaboradores</p>
+                </div>
+                <!-- Enneagram -->
+                <div class="bg-bg-primary border border-theory-enneagram/20 rounded-lg p-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <p class="text-[10px] uppercase text-text-muted">Eneagrama</p>
+                    <span class="text-theory-enneagram text-xs">✏️</span>
+                  </div>
+                  <p class="font-sora text-xl font-bold text-theory-enneagram text-center">3w2</p>
+                  <p class="text-xs text-text-secondary text-center mt-1">O Performador</p>
+                  <div class="mt-3 space-y-2 text-xs text-text-secondary">
+                    <p><span class="text-text-muted">Centro:</span> Coração</p>
+                    <p><span class="text-text-muted">Desejo:</span> Ser admirado</p>
+                    <p><span class="text-text-muted">Medo:</span> Fracasso</p>
+                    <p><span class="text-text-muted">Variante:</span> SO/SX</p>
+                  </div>
+                  <p class="text-[10px] text-text-muted mt-2 text-center">Baseado em 8 colaboradores</p>
+                </div>
+                <!-- Big Five -->
+                <div class="bg-bg-primary border border-theory-bigfive/20 rounded-lg p-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <p class="text-[10px] uppercase text-text-muted">Big Five</p>
+                    <span class="text-theory-bigfive text-xs">✏️</span>
+                  </div>
+                  <div class="space-y-2 mt-2">
+                    <div><div class="flex justify-between text-[10px]"><span class="text-text-muted">Abertura</span><span class="text-theory-bigfive">72</span></div><div class="h-1.5 bg-border-subtle rounded-full"><div class="h-full bg-theory-bigfive rounded-full" style="width:72%"></div></div></div>
+                    <div><div class="flex justify-between text-[10px]"><span class="text-text-muted">Conscienciosidade</span><span class="text-theory-bigfive">85</span></div><div class="h-1.5 bg-border-subtle rounded-full"><div class="h-full bg-theory-bigfive rounded-full" style="width:85%"></div></div></div>
+                    <div><div class="flex justify-between text-[10px]"><span class="text-text-muted">Extroversão</span><span class="text-theory-bigfive">80</span></div><div class="h-1.5 bg-border-subtle rounded-full"><div class="h-full bg-theory-bigfive rounded-full" style="width:80%"></div></div></div>
+                    <div><div class="flex justify-between text-[10px]"><span class="text-text-muted">Amabilidade</span><span class="text-theory-bigfive">55</span></div><div class="h-1.5 bg-border-subtle rounded-full"><div class="h-full bg-accent-amber rounded-full" style="width:55%"></div></div></div>
+                    <div><div class="flex justify-between text-[10px]"><span class="text-text-muted">Neuroticismo</span><span class="text-theory-bigfive">25</span></div><div class="h-1.5 bg-border-subtle rounded-full"><div class="h-full bg-accent-green rounded-full" style="width:25%"></div></div></div>
+                  </div>
+                  <p class="text-[10px] text-text-muted mt-2 text-center">Baseado em 8 colaboradores</p>
+                </div>
+                <!-- DISC -->
+                <div class="bg-bg-primary border border-theory-disc/20 rounded-lg p-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <p class="text-[10px] uppercase text-text-muted">DISC</p>
+                    <span class="text-theory-disc text-xs">✏️</span>
+                  </div>
+                  <p class="font-sora text-xl font-bold text-theory-disc text-center">DC</p>
+                  <p class="text-xs text-text-secondary text-center mt-1">Dominante-Consciencioso</p>
+                  <div class="flex items-end justify-center gap-2 h-16 mt-3">
+                    <div class="w-6 bg-theory-disc rounded-t" style="height:85%"></div>
+                    <div class="w-6 bg-theory-disc/50 rounded-t" style="height:45%"></div>
+                    <div class="w-6 bg-theory-disc/30 rounded-t" style="height:30%"></div>
+                    <div class="w-6 bg-theory-disc/60 rounded-t" style="height:70%"></div>
+                  </div>
+                  <div class="flex justify-center gap-2 text-[10px] text-text-muted mt-1">
+                    <span>D</span><span>I</span><span>S</span><span>C</span>
+                  </div>
+                  <p class="text-[10px] text-text-muted mt-2 text-center">Baseado em 8 colaboradores</p>
+                </div>
+                <!-- Le Senne -->
+                <div class="bg-bg-primary border border-theory-lesenne/20 rounded-lg p-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <p class="text-[10px] uppercase text-text-muted">Le Senne</p>
+                    <span class="text-theory-lesenne text-xs">✏️</span>
+                  </div>
+                  <p class="font-sora text-xl font-bold text-theory-lesenne text-center">EAP</p>
+                  <p class="text-xs text-text-secondary text-center mt-1">Colérico</p>
+                  <div class="mt-3 space-y-1.5">
+                    <div><div class="flex justify-between text-[10px] text-text-muted"><span>Emotividade</span><span>Alta</span></div><div class="h-1.5 bg-border-subtle rounded-full"><div class="h-full bg-theory-lesenne rounded-full" style="width:82%"></div></div></div>
+                    <div><div class="flex justify-between text-[10px] text-text-muted"><span>Atividade</span><span>Alta</span></div><div class="h-1.5 bg-border-subtle rounded-full"><div class="h-full bg-theory-lesenne rounded-full" style="width:88%"></div></div></div>
+                    <div><div class="flex justify-between text-[10px] text-text-muted"><span>Ressonância</span><span>Primária</span></div><div class="h-1.5 bg-border-subtle rounded-full"><div class="h-full bg-theory-lesenne rounded-full" style="width:40%"></div></div></div>
+                  </div>
+                  <p class="text-[10px] text-text-muted mt-2 text-center">Baseado em 8 colaboradores</p>
+                </div>
+              </div>
+
+              <!-- Agent 2 Toggle -->
+              <div class="bg-bg-primary/50 rounded-lg p-4 mb-5 border border-border-subtle" x-data="{agent2:true}">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-sm font-medium text-text-primary">Agente 2 — Análise Comportamental por Áudio</p>
+                    <p class="text-xs text-text-muted mt-1">Se desativado, candidatos aprovados na triagem recebem teste padrão em vez de entrevista por áudio.</p>
+                  </div>
+                  <button @click="agent2=!agent2" class="relative w-12 h-6 rounded-full transition-all" :class="agent2 ? 'bg-accent-teal' : 'bg-border-subtle'">
+                    <span class="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform" :class="agent2 ? 'translate-x-6' : ''"></span>
+                  </button>
+                </div>
+                <div x-show="!agent2" class="mt-3 bg-accent-amber/5 border border-accent-amber/20 rounded-lg p-3">
+                  <p class="text-xs text-accent-amber">⚠ Com o Agente 2 desativado, o sistema sugerirá envio de testes padrão para os candidatos aprovados na triagem. A precisão do perfil comportamental dependerá dos testes.</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <button class="px-4 py-2 rounded-lg bg-accent-teal/10 text-accent-teal text-sm border border-accent-teal/20 hover:bg-accent-teal/20">🔄 Recalcular com dados dos colaboradores</button>
+                <button class="px-4 py-2 rounded-lg bg-bg-primary text-text-secondary text-sm border border-border-subtle hover:bg-bg-hover">✏️ Editar manualmente</button>
+                <button class="px-4 py-2 rounded-lg bg-bg-primary text-text-secondary text-sm border border-border-subtle hover:bg-bg-hover">📊 Ver comparação candidatos vs ideal</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dev Senior (collapsed) -->
+          <div class="bg-bg-card border border-border-subtle rounded-lg" x-data="{open:false}">
+            <div @click="open=!open" class="flex items-center justify-between p-5 cursor-pointer hover:bg-bg-hover transition-colors">
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-accent-teal/10 flex items-center justify-center text-accent-teal text-lg">🎯</div>
+                <div><h3 class="font-sora font-semibold">Desenvolvedor Senior</h3><p class="text-xs text-text-muted">10 candidatos · 6 colaboradores · Atualizado há 1 semana</p></div>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-theory-mbti/15 text-theory-mbti font-medium">INTJ</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-theory-enneagram/15 text-theory-enneagram font-medium">5w6</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-theory-disc/15 text-theory-disc font-medium">CS</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-theory-lesenne/15 text-theory-lesenne font-medium">Apaixonado</span>
+                </div>
+                <span class="text-text-muted transition-transform" :class="open?'rotate-180':''">▾</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SDR Junior (collapsed) -->
+          <div class="bg-bg-card border border-border-subtle rounded-lg" x-data="{open:false}">
+            <div @click="open=!open" class="flex items-center justify-between p-5 cursor-pointer hover:bg-bg-hover transition-colors">
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-accent-amber/10 flex items-center justify-center text-accent-amber text-lg">🎯</div>
+                <div><h3 class="font-sora font-semibold">SDR Junior</h3><p class="text-xs text-text-muted">8 candidatos · 3 colaboradores · Atualizado há 2 semanas</p></div>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-theory-mbti/15 text-theory-mbti font-medium">ESFP</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-theory-enneagram/15 text-theory-enneagram font-medium">7w8</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-theory-disc/15 text-theory-disc font-medium">ID</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-theory-lesenne/15 text-theory-lesenne font-medium">Sanguíneo</span>
+                </div>
+                <span class="text-text-muted">▾</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== CANDIDATOS (Lista) ==================== -->
+      <div x-show="page==='candidates'" x-cloak>
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="font-sora text-xl font-bold">Candidatos</h2>
+          <button class="px-4 py-2 rounded-lg bg-accent-teal/10 text-accent-teal text-sm border border-accent-teal/20 hover:bg-accent-teal/20">+ Convidar Candidato</button>
+        </div>
+        <div class="flex items-center gap-3 mb-4">
+          <select class="bg-bg-primary border border-border-subtle rounded-lg px-3 py-1.5 text-sm text-text-secondary focus:outline-none"><option>Todos os Status</option><option>Triagem</option><option>Áudio</option><option>Entrevista</option><option>Concluído</option></select>
+          <select class="bg-bg-primary border border-border-subtle rounded-lg px-3 py-1.5 text-sm text-text-secondary focus:outline-none"><option>Todos os Scores</option><option>8+</option><option>6-8</option><option>Abaixo de 6</option></select>
+          <select class="bg-bg-primary border border-border-subtle rounded-lg px-3 py-1.5 text-sm text-text-secondary focus:outline-none"><option>Todos os Cargos</option><option>Analista Comercial</option><option>Dev Senior</option><option>SDR Junior</option></select>
+        </div>
+        <div class="bg-bg-card border border-border-subtle rounded-lg overflow-hidden">
+          <div class="grid grid-cols-[40px_1fr_180px_80px_80px_100px_80px] gap-4 px-5 py-3 border-b border-border-subtle text-xs text-text-muted uppercase tracking-wider">
+            <div><input type="checkbox" class="accent-accent-teal"></div><div>Candidato</div><div>Cargo</div><div>Match</div><div>Precisão</div><div>Status</div><div>Ações</div>
+          </div>
+          <!-- Row 1 -->
+          <div @click="go('candidate-profile')" class="grid grid-cols-[40px_1fr_180px_80px_80px_100px_80px] gap-4 px-5 py-4 border-b border-border-subtle hover:bg-bg-hover cursor-pointer transition-colors">
+            <div class="flex items-center"><input type="checkbox" class="accent-accent-teal" @click.stop></div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-accent-teal/30 to-theory-enneagram/30 flex items-center justify-center text-sm font-bold text-accent-teal shrink-0">MS</div>
+              <div><p class="font-medium text-sm">Maria Santos</p><div class="flex gap-1 mt-1"><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-mbti/15 text-theory-mbti">ENTJ</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-enneagram/15 text-theory-enneagram">3w2</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-disc/15 text-theory-disc">DI</span></div></div>
+            </div>
+            <div class="flex items-center text-sm text-text-secondary">Analista Comercial</div>
+            <div class="flex items-center"><span class="font-sora font-bold text-accent-green">8.2</span><span class="text-text-muted text-xs">/10</span></div>
+            <div class="flex items-center gap-2"><div class="flex-1 h-1.5 bg-border-subtle rounded-full overflow-hidden"><div class="h-full precision-bar rounded-full" style="width:79%"></div></div><span class="text-xs text-text-muted">79%</span></div>
+            <div class="flex items-center"><span class="text-xs px-2.5 py-1 rounded-full bg-accent-green/15 text-accent-green">● Concluído</span></div>
+            <div class="flex items-center gap-1" @click.stop>
+              <button class="p-1 hover:bg-bg-hover rounded text-text-muted hover:text-accent-teal" title="Migrar para Colaborador">👥</button>
+              <button class="p-1 hover:bg-bg-hover rounded text-text-muted hover:text-accent-amber" title="Enviar teste">📝</button>
+            </div>
+          </div>
+          <!-- Row 2 -->
+          <div class="grid grid-cols-[40px_1fr_180px_80px_80px_100px_80px] gap-4 px-5 py-4 border-b border-border-subtle hover:bg-bg-hover cursor-pointer transition-colors">
+            <div class="flex items-center"><input type="checkbox" class="accent-accent-teal"></div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-theory-bigfive/30 to-theory-mbti/30 flex items-center justify-center text-sm font-bold text-theory-bigfive shrink-0">JS</div>
+              <div><p class="font-medium text-sm">João Silva</p><div class="flex gap-1 mt-1"><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-mbti/15 text-theory-mbti">INFP</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-enneagram/15 text-theory-enneagram">5w4</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-disc/15 text-theory-disc">SC</span></div></div>
+            </div>
+            <div class="flex items-center text-sm text-text-secondary">Dev Senior</div>
+            <div class="flex items-center"><span class="font-sora font-bold text-accent-amber">7.5</span><span class="text-text-muted text-xs">/10</span></div>
+            <div class="flex items-center gap-2"><div class="flex-1 h-1.5 bg-border-subtle rounded-full overflow-hidden"><div class="h-full precision-bar rounded-full" style="width:62%"></div></div><span class="text-xs text-text-muted">62%</span></div>
+            <div class="flex items-center"><span class="text-xs px-2.5 py-1 rounded-full bg-accent-amber/15 text-accent-amber">● Áudio</span></div>
+            <div class="flex items-center gap-1" @click.stop>
+              <button class="p-1 hover:bg-bg-hover rounded text-text-muted hover:text-accent-amber" title="Enviar teste">📝</button>
+            </div>
+          </div>
+          <!-- Row 3 -->
+          <div class="grid grid-cols-[40px_1fr_180px_80px_80px_100px_80px] gap-4 px-5 py-4 hover:bg-bg-hover cursor-pointer transition-colors">
+            <div class="flex items-center"><input type="checkbox" class="accent-accent-teal"></div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-theory-lesenne/30 to-accent-red/30 flex items-center justify-center text-sm font-bold text-theory-lesenne shrink-0">AC</div>
+              <div><p class="font-medium text-sm">Ana Costa</p><div class="flex gap-1 mt-1"><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-mbti/15 text-theory-mbti">ESFJ</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-enneagram/15 text-theory-enneagram">2w3</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-disc/15 text-theory-disc">IS</span></div></div>
+            </div>
+            <div class="flex items-center text-sm text-text-secondary">SDR Junior</div>
+            <div class="flex items-center"><span class="font-sora font-bold text-accent-amber">6.8</span><span class="text-text-muted text-xs">/10</span></div>
+            <div class="flex items-center gap-2"><div class="flex-1 h-1.5 bg-border-subtle rounded-full overflow-hidden"><div class="h-full precision-bar rounded-full" style="width:45%"></div></div><span class="text-xs text-text-muted">45%</span></div>
+            <div class="flex items-center"><span class="text-xs px-2.5 py-1 rounded-full bg-theory-bigfive/15 text-theory-bigfive">● Triagem</span></div>
+            <div class="flex items-center gap-1" @click.stop>
+              <button class="p-1 hover:bg-bg-hover rounded text-text-muted hover:text-accent-amber" title="Enviar teste">📝</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== COLABORADORES ==================== -->
+      <div x-show="page==='employees'" x-cloak>
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="font-sora text-xl font-bold">Colaboradores</h2>
+          <button class="px-4 py-2 rounded-lg bg-accent-teal/10 text-accent-teal text-sm border border-accent-teal/20 hover:bg-accent-teal/20">+ Adicionar Colaborador</button>
+        </div>
+
+        <p class="text-sm text-text-secondary mb-4">Colaboradores possuem perfil comportamental contínuo. Seus dados alimentam o <span class="text-accent-teal font-medium">perfil ideal do cargo</span> e são refinados com <span class="text-accent-teal font-medium">testes padrão</span>.</p>
+
+        <div class="flex items-center gap-3 mb-4">
+          <select class="bg-bg-primary border border-border-subtle rounded-lg px-3 py-1.5 text-sm text-text-secondary focus:outline-none"><option>Todos os Cargos</option><option>Analista Comercial</option><option>Dev Senior</option><option>SDR Junior</option></select>
+          <select class="bg-bg-primary border border-border-subtle rounded-lg px-3 py-1.5 text-sm text-text-secondary focus:outline-none"><option>Todas as Precisões</option><option>80%+</option><option>60-80%</option><option>Abaixo de 60%</option></select>
+        </div>
+
+        <div class="bg-bg-card border border-border-subtle rounded-lg overflow-hidden">
+          <div class="grid grid-cols-[40px_1fr_180px_80px_100px_120px] gap-4 px-5 py-3 border-b border-border-subtle text-xs text-text-muted uppercase tracking-wider">
+            <div><input type="checkbox" class="accent-accent-teal"></div><div>Colaborador</div><div>Cargo</div><div>Precisão</div><div>Último Teste</div><div>Ações</div>
+          </div>
+          <!-- Employee 1 -->
+          <div @click="go('employee-profile'); empSelected='carlos'" class="grid grid-cols-[40px_1fr_180px_80px_100px_120px] gap-4 px-5 py-4 border-b border-border-subtle hover:bg-bg-hover cursor-pointer transition-colors">
+            <div class="flex items-center"><input type="checkbox" class="accent-accent-teal" @click.stop></div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-accent-green/30 to-accent-teal/30 flex items-center justify-center text-sm font-bold text-accent-green shrink-0">CR</div>
+              <div><p class="font-medium text-sm">Carlos Rocha</p><div class="flex gap-1 mt-1"><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-mbti/15 text-theory-mbti">ENTJ</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-disc/15 text-theory-disc">DC</span><span class="text-[10px] px-1 py-0.5 rounded bg-accent-green/15 text-accent-green">ex-candidato</span></div></div>
+            </div>
+            <div class="flex items-center text-sm text-text-secondary">Analista Comercial</div>
+            <div class="flex items-center gap-2"><div class="flex-1 h-1.5 bg-border-subtle rounded-full overflow-hidden"><div class="h-full precision-bar rounded-full" style="width:91%"></div></div><span class="text-xs text-accent-green font-medium">91%</span></div>
+            <div class="flex items-center text-xs text-text-muted">há 2 semanas</div>
+            <div class="flex items-center gap-1" @click.stop>
+              <button class="px-2 py-1 rounded bg-accent-teal/10 text-accent-teal text-xs hover:bg-accent-teal/20" title="Enviar teste padrão">📝 Enviar Teste</button>
+            </div>
+          </div>
+          <!-- Employee 2 -->
+          <div class="grid grid-cols-[40px_1fr_180px_80px_100px_120px] gap-4 px-5 py-4 border-b border-border-subtle hover:bg-bg-hover cursor-pointer transition-colors">
+            <div class="flex items-center"><input type="checkbox" class="accent-accent-teal" @click.stop></div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-theory-enneagram/30 to-theory-bigfive/30 flex items-center justify-center text-sm font-bold text-theory-enneagram shrink-0">FM</div>
+              <div><p class="font-medium text-sm">Fernanda Martins</p><div class="flex gap-1 mt-1"><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-mbti/15 text-theory-mbti">ESTJ</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-disc/15 text-theory-disc">DI</span></div></div>
+            </div>
+            <div class="flex items-center text-sm text-text-secondary">Analista Comercial</div>
+            <div class="flex items-center gap-2"><div class="flex-1 h-1.5 bg-border-subtle rounded-full overflow-hidden"><div class="h-full precision-bar rounded-full" style="width:85%"></div></div><span class="text-xs text-text-muted">85%</span></div>
+            <div class="flex items-center text-xs text-text-muted">há 1 mês</div>
+            <div class="flex items-center gap-1" @click.stop>
+              <button class="px-2 py-1 rounded bg-accent-teal/10 text-accent-teal text-xs hover:bg-accent-teal/20">📝 Enviar Teste</button>
+            </div>
+          </div>
+          <!-- Employee 3 -->
+          <div class="grid grid-cols-[40px_1fr_180px_80px_100px_120px] gap-4 px-5 py-4 hover:bg-bg-hover cursor-pointer transition-colors">
+            <div class="flex items-center"><input type="checkbox" class="accent-accent-teal" @click.stop></div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-theory-mbti/30 to-theory-disc/30 flex items-center justify-center text-sm font-bold text-theory-mbti shrink-0">RL</div>
+              <div><p class="font-medium text-sm">Rafael Lopes</p><div class="flex gap-1 mt-1"><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-mbti/15 text-theory-mbti">INTJ</span><span class="text-[10px] px-1.5 py-0.5 rounded bg-theory-disc/15 text-theory-disc">CS</span></div></div>
+            </div>
+            <div class="flex items-center text-sm text-text-secondary">Dev Senior</div>
+            <div class="flex items-center gap-2"><div class="flex-1 h-1.5 bg-border-subtle rounded-full overflow-hidden"><div class="h-full bg-accent-amber rounded-full" style="width:68%"></div></div><span class="text-xs text-accent-amber font-medium">68%</span></div>
+            <div class="flex items-center text-xs text-accent-amber">pendente ⚠️</div>
+            <div class="flex items-center gap-1" @click.stop>
+              <button class="px-2 py-1 rounded bg-accent-amber/10 text-accent-amber text-xs hover:bg-accent-amber/20 animate-pulse">📝 Teste Pendente</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== TESTE PADRÃO ==================== -->
+      <div x-show="page==='tests'" x-cloak>
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="font-sora text-xl font-bold">Teste Padrão</h2>
+          <button @click="go('public-test')" class="px-4 py-2 rounded-lg bg-bg-primary text-text-secondary text-sm border border-border-subtle hover:bg-bg-hover hover:text-accent-teal transition-colors">👁 Visualizar Página Pública</button>
+        </div>
+        <p class="text-sm text-text-secondary mb-6">Testes oficiais baseados na cartilha de cada teoria. Recomendado para <span class="text-accent-teal font-medium">colaboradores internos</span> — funcionários são mais verdadeiros nas respostas. Use para refinar a precisão de teorias com assertividade abaixo de 70%.</p>
+
+        <div class="bg-bg-primary/50 rounded-lg p-4 mb-6 border border-accent-amber/15 flex items-start gap-3">
+          <span class="text-accent-amber text-lg">⚠️</span>
+          <div>
+            <p class="text-sm text-accent-amber font-medium">Sobre testes para candidatos</p>
+            <p class="text-xs text-text-secondary mt-1">Testes comportamentais em processos seletivos tendem a ser menos precisos — candidatos buscam se encaixar no perfil desejado. Por isso, priorizamos <strong class="text-text-primary">análise de áudio e transcrição de entrevistas</strong> para candidatos. Testes padrão são ideais para <strong class="text-text-primary">colaboradores já contratados</strong>, que respondem de forma mais autêntica.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-5 gap-4 mb-6">
+          <!-- MBTI Test -->
+          <div class="bg-bg-card border border-theory-mbti/20 rounded-lg p-5 hover:border-theory-mbti/40 transition-colors">
+            <div class="text-center mb-4">
+              <div class="w-12 h-12 rounded-xl bg-theory-mbti/10 flex items-center justify-center text-theory-mbti text-xl mx-auto mb-2">🧩</div>
+              <p class="font-sora font-bold text-theory-mbti">MBTI</p>
+              <p class="text-xs text-text-muted mt-1">Myers-Briggs</p>
+            </div>
+            <div class="space-y-2 text-xs text-text-secondary">
+              <p>📋 93 perguntas</p>
+              <p>⏱ ~15 min</p>
+              <p>🎯 16 tipos possíveis</p>
+            </div>
+            <button class="w-full mt-4 px-3 py-2 rounded-lg bg-theory-mbti/10 text-theory-mbti text-xs border border-theory-mbti/20 hover:bg-theory-mbti/20 transition-colors">Enviar para colaborador</button>
+          </div>
+          <!-- Enneagram Test -->
+          <div class="bg-bg-card border border-theory-enneagram/20 rounded-lg p-5 hover:border-theory-enneagram/40 transition-colors">
+            <div class="text-center mb-4">
+              <div class="w-12 h-12 rounded-xl bg-theory-enneagram/10 flex items-center justify-center text-theory-enneagram text-xl mx-auto mb-2">🔮</div>
+              <p class="font-sora font-bold text-theory-enneagram">Eneagrama</p>
+              <p class="text-xs text-text-muted mt-1">Riso-Hudson</p>
+            </div>
+            <div class="space-y-2 text-xs text-text-secondary">
+              <p>📋 144 perguntas</p>
+              <p>⏱ ~20 min</p>
+              <p>🎯 9 tipos + asas</p>
+            </div>
+            <button class="w-full mt-4 px-3 py-2 rounded-lg bg-theory-enneagram/10 text-theory-enneagram text-xs border border-theory-enneagram/20 hover:bg-theory-enneagram/20 transition-colors">Enviar para colaborador</button>
+          </div>
+          <!-- Big Five Test -->
+          <div class="bg-bg-card border border-theory-bigfive/20 rounded-lg p-5 hover:border-theory-bigfive/40 transition-colors">
+            <div class="text-center mb-4">
+              <div class="w-12 h-12 rounded-xl bg-theory-bigfive/10 flex items-center justify-center text-theory-bigfive text-xl mx-auto mb-2">📐</div>
+              <p class="font-sora font-bold text-theory-bigfive">Big Five</p>
+              <p class="text-xs text-text-muted mt-1">NEO-PI-R</p>
+            </div>
+            <div class="space-y-2 text-xs text-text-secondary">
+              <p>📋 120 perguntas</p>
+              <p>⏱ ~18 min</p>
+              <p>🎯 5 dimensões + facetas</p>
+            </div>
+            <button class="w-full mt-4 px-3 py-2 rounded-lg bg-theory-bigfive/10 text-theory-bigfive text-xs border border-theory-bigfive/20 hover:bg-theory-bigfive/20 transition-colors">Enviar para colaborador</button>
+          </div>
+          <!-- DISC Test -->
+          <div class="bg-bg-card border border-theory-disc/20 rounded-lg p-5 hover:border-theory-disc/40 transition-colors">
+            <div class="text-center mb-4">
+              <div class="w-12 h-12 rounded-xl bg-theory-disc/10 flex items-center justify-center text-theory-disc text-xl mx-auto mb-2">📊</div>
+              <p class="font-sora font-bold text-theory-disc">DISC</p>
+              <p class="text-xs text-text-muted mt-1">William Marston</p>
+            </div>
+            <div class="space-y-2 text-xs text-text-secondary">
+              <p>📋 28 grupos de 4</p>
+              <p>⏱ ~10 min</p>
+              <p>🎯 4 dimensões + perfis</p>
+            </div>
+            <button class="w-full mt-4 px-3 py-2 rounded-lg bg-theory-disc/10 text-theory-disc text-xs border border-theory-disc/20 hover:bg-theory-disc/20 transition-colors">Enviar para colaborador</button>
+          </div>
+          <!-- Le Senne Test -->
+          <div class="bg-bg-card border border-theory-lesenne/20 rounded-lg p-5 hover:border-theory-lesenne/40 transition-colors">
+            <div class="text-center mb-4">
+              <div class="w-12 h-12 rounded-xl bg-theory-lesenne/10 flex items-center justify-center text-theory-lesenne text-xl mx-auto mb-2">🎭</div>
+              <p class="font-sora font-bold text-theory-lesenne">Le Senne</p>
+              <p class="text-xs text-text-muted mt-1">Caracteriologia</p>
+            </div>
+            <div class="space-y-2 text-xs text-text-secondary">
+              <p>📋 60 perguntas</p>
+              <p>⏱ ~8 min</p>
+              <p>🎯 8 temperamentos</p>
+            </div>
+            <button class="w-full mt-4 px-3 py-2 rounded-lg bg-theory-lesenne/10 text-theory-lesenne text-xs border border-theory-lesenne/20 hover:bg-theory-lesenne/20 transition-colors">Enviar para colaborador</button>
+          </div>
+        </div>
+
+        <!-- Testes Enviados -->
+        <h3 class="font-sora text-sm font-semibold mb-3">Testes Enviados Recentemente</h3>
+        <div class="bg-bg-card border border-border-subtle rounded-lg overflow-hidden">
+          <div class="grid grid-cols-[1fr_120px_100px_100px_100px] gap-4 px-5 py-3 border-b border-border-subtle text-xs text-text-muted uppercase tracking-wider">
+            <div>Colaborador</div><div>Teste</div><div>Enviado</div><div>Status</div><div>Impacto</div>
+          </div>
+          <div class="grid grid-cols-[1fr_120px_100px_100px_100px] gap-4 px-5 py-3 border-b border-border-subtle text-sm">
+            <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-accent-green/20 flex items-center justify-center text-[10px] text-accent-green font-bold">CR</span> Carlos Rocha</div>
+            <div class="flex items-center"><span class="text-[10px] px-2 py-0.5 rounded bg-theory-bigfive/15 text-theory-bigfive">Big Five</span></div>
+            <div class="flex items-center text-xs text-text-muted">15/02/2026</div>
+            <div class="flex items-center"><span class="text-xs px-2 py-0.5 rounded-full bg-accent-green/15 text-accent-green">✅ Completo</span></div>
+            <div class="flex items-center text-xs text-accent-green">+12% precisão</div>
+          </div>
+          <div class="grid grid-cols-[1fr_120px_100px_100px_100px] gap-4 px-5 py-3 border-b border-border-subtle text-sm">
+            <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-theory-enneagram/20 flex items-center justify-center text-[10px] text-theory-enneagram font-bold">FM</span> Fernanda Martins</div>
+            <div class="flex items-center"><span class="text-[10px] px-2 py-0.5 rounded bg-theory-enneagram/15 text-theory-enneagram">Eneagrama</span></div>
+            <div class="flex items-center text-xs text-text-muted">01/02/2026</div>
+            <div class="flex items-center"><span class="text-xs px-2 py-0.5 rounded-full bg-accent-green/15 text-accent-green">✅ Completo</span></div>
+            <div class="flex items-center text-xs text-accent-green">+8% precisão</div>
+          </div>
+          <div class="grid grid-cols-[1fr_120px_100px_100px_100px] gap-4 px-5 py-3 text-sm">
+            <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-theory-mbti/20 flex items-center justify-center text-[10px] text-theory-mbti font-bold">RL</span> Rafael Lopes</div>
+            <div class="flex items-center"><span class="text-[10px] px-2 py-0.5 rounded bg-theory-disc/15 text-theory-disc">DISC</span></div>
+            <div class="flex items-center text-xs text-text-muted">28/02/2026</div>
+            <div class="flex items-center"><span class="text-xs px-2 py-0.5 rounded-full bg-accent-amber/15 text-accent-amber animate-pulse">⏳ Pendente</span></div>
+            <div class="flex items-center text-xs text-text-muted">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== CONVERSAS (Lista) ==================== -->
+      <div x-show="page==='conversations'" x-cloak>
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="font-sora text-xl font-bold">Conversas</h2>
+          <div class="flex items-center gap-2 text-xs text-accent-green"><span class="w-2 h-2 rounded-full bg-accent-green animate-pulse"></span> Atualização em tempo real</div>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-bg-card border border-border-subtle rounded-lg p-4 mb-5 flex items-center gap-4">
+          <select class="bg-bg-primary border border-border-subtle rounded-lg px-3 py-1.5 text-sm text-text-secondary focus:outline-none focus:border-accent-teal/50">
+            <option>Todas</option><option>Ativas</option><option>Aguardando</option><option>Humano</option><option>Concluídas</option><option>Expiradas</option>
+          </select>
+          <select class="bg-bg-primary border border-border-subtle rounded-lg px-3 py-1.5 text-sm text-text-secondary focus:outline-none focus:border-accent-teal/50">
+            <option>Todos Agentes</option><option>Agent 1 (Triagem)</option><option>Agent 2 (Comportamental)</option><option>Humano</option>
+          </select>
+          <select class="bg-bg-primary border border-border-subtle rounded-lg px-3 py-1.5 text-sm text-text-secondary focus:outline-none focus:border-accent-teal/50">
+            <option>Todos os Cargos</option><option>Analista Comercial</option><option>Dev Senior</option><option>SDR Junior</option>
+          </select>
+          <input type="text" placeholder="🔍 Buscar candidato..." class="flex-1 bg-bg-primary border border-border-subtle rounded-lg px-3 py-1.5 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:border-accent-teal/50">
+        </div>
+
+        <!-- Active Conversations -->
+        <div class="mb-6">
+          <h3 class="text-sm font-medium text-text-secondary mb-3 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-accent-green"></span> Conversas Ativas (3)</h3>
+          <div class="space-y-2">
+            <!-- Maria Santos - Active -->
+            <div @click="go('conversation-detail'); convSelected='maria'" class="bg-bg-card border border-border-subtle rounded-lg p-4 hover:bg-bg-hover hover:border-accent-teal/20 cursor-pointer transition-all">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="relative">
+                    <div class="w-10 h-10 rounded-full bg-accent-teal/20 flex items-center justify-center text-sm font-bold text-accent-teal">MS</div>
+                    <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-accent-green border-2 border-bg-card"></span>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium">Maria Santos</p>
+                    <p class="text-xs text-text-muted">Analista Comercial</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-theory-enneagram/15 text-theory-enneagram">Agent 2 · Pergunta 3/4</span>
+                  <span class="text-xs text-text-muted">há 5 min</span>
+                </div>
+              </div>
+              <p class="text-xs text-text-secondary mt-2 ml-13 truncate pl-[52px]">💬 "Deixa eu pensar... no meu último trabalho, quando surgiu esse tipo de conflito..."</p>
+            </div>
+
+            <!-- João Silva - Waiting -->
+            <div @click="go('conversation-detail'); convSelected='joao'" class="bg-bg-card border border-border-subtle rounded-lg p-4 hover:bg-bg-hover hover:border-accent-teal/20 cursor-pointer transition-all">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="relative">
+                    <div class="w-10 h-10 rounded-full bg-theory-bigfive/20 flex items-center justify-center text-sm font-bold text-theory-bigfive">JS</div>
+                    <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-accent-amber border-2 border-bg-card"></span>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium">João Silva</p>
+                    <p class="text-xs text-text-muted">Dev Senior</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-theory-bigfive/15 text-theory-bigfive">Agent 1 · Coletando Skills</span>
+                  <span class="text-xs text-text-muted">há 12 min</span>
+                </div>
+              </div>
+              <p class="text-xs text-text-secondary mt-2 truncate pl-[52px]">💬 "Trabalho com React e Node há 4 anos, também tenho experiência com..."</p>
+            </div>
+
+            <!-- Pedro Lima - Human Takeover -->
+            <div @click="go('conversation-detail'); convSelected='pedro'" class="bg-bg-card border border-accent-red/20 rounded-lg p-4 hover:bg-bg-hover cursor-pointer transition-all">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="relative">
+                    <div class="w-10 h-10 rounded-full bg-accent-red/20 flex items-center justify-center text-sm font-bold text-accent-red">PL</div>
+                    <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-accent-red border-2 border-bg-card"></span>
+                  </div>
+                  <div>
+                    <p class="text-sm font-medium">Pedro Lima</p>
+                    <p class="text-xs text-text-muted">SDR Junior</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-4">
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-accent-red/15 text-accent-red font-medium">🔴 HUMANO · Ana assumiu</span>
+                  <span class="text-xs text-text-muted">há 2 min</span>
+                </div>
+              </div>
+              <p class="text-xs text-text-secondary mt-2 truncate pl-[52px]">👩 Ana: "Pedro, pode me dar mais detalhes sobre sua experiência com vendas..."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent / Completed Conversations -->
+        <div>
+          <h3 class="text-sm font-medium text-text-secondary mb-3 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-text-muted"></span> Conversas Recentes</h3>
+          <div class="bg-bg-card border border-border-subtle rounded-lg overflow-hidden">
+            <div class="grid grid-cols-[1fr_150px_120px_100px] gap-4 px-5 py-2.5 text-[10px] uppercase text-text-muted border-b border-border-subtle">
+              <span>Candidato</span><span>Agente</span><span>Data</span><span>Status</span>
+            </div>
+            <div class="grid grid-cols-[1fr_150px_120px_100px] gap-4 px-5 py-3 text-sm border-b border-border-subtle/50 hover:bg-bg-hover cursor-pointer">
+              <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-accent-green/20 flex items-center justify-center text-[10px] text-accent-green font-bold">CS</span> Carla Souza</div>
+              <div class="flex items-center text-xs text-text-secondary">Agent 2 · Concluído</div>
+              <div class="flex items-center text-xs text-text-muted">02/03/2026</div>
+              <div class="flex items-center"><span class="text-[10px] px-2 py-0.5 rounded-full bg-accent-green/15 text-accent-green">✅ Completo</span></div>
+            </div>
+            <div class="grid grid-cols-[1fr_150px_120px_100px] gap-4 px-5 py-3 text-sm border-b border-border-subtle/50 hover:bg-bg-hover cursor-pointer">
+              <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-accent-green/20 flex items-center justify-center text-[10px] text-accent-green font-bold">RD</span> Rafael Dias</div>
+              <div class="flex items-center text-xs text-text-secondary">Agent 1 · Concluído</div>
+              <div class="flex items-center text-xs text-text-muted">01/03/2026</div>
+              <div class="flex items-center"><span class="text-[10px] px-2 py-0.5 rounded-full bg-accent-green/15 text-accent-green">✅ Completo</span></div>
+            </div>
+            <div class="grid grid-cols-[1fr_150px_120px_100px] gap-4 px-5 py-3 text-sm hover:bg-bg-hover cursor-pointer">
+              <div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-text-muted/20 flex items-center justify-center text-[10px] text-text-muted font-bold">JR</span> Julia Reis</div>
+              <div class="flex items-center text-xs text-text-secondary">Agent 2 · Expirado</div>
+              <div class="flex items-center text-xs text-text-muted">28/02/2026</div>
+              <div class="flex items-center"><span class="text-[10px] px-2 py-0.5 rounded-full bg-text-muted/15 text-text-muted">⏱ Timeout</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="mt-4 flex items-center gap-6 text-[10px] text-text-muted">
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-accent-green"></span> Ativa</span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-accent-amber"></span> Aguardando</span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-accent-red"></span> Humano assumiu</span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-text-muted"></span> Concluída</span>
+        </div>
+      </div>
+
+      <!-- ==================== CONVERSATION DETAIL ==================== -->
+      <div x-show="page==='conversation-detail'" x-cloak>
+        <button @click="go('conversations')" class="text-sm text-text-muted hover:text-accent-teal mb-4 flex items-center gap-1">← Voltar para Conversas</button>
+
+        <!-- Header -->
+        <div class="bg-bg-card border border-border-subtle rounded-lg p-4 mb-4 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-accent-teal/20 flex items-center justify-center text-lg font-bold text-accent-teal" x-text="convSelected==='pedro'?'PL':convSelected==='joao'?'JS':'MS'"></div>
+            <div>
+              <h2 class="font-sora text-lg font-bold" x-text="convSelected==='pedro'?'Pedro Lima':convSelected==='joao'?'João Silva':'Maria Santos'"></h2>
+              <p class="text-xs text-text-muted" x-text="convSelected==='pedro'?'SDR Junior · Agent 1 · Triagem':convSelected==='joao'?'Dev Senior · Agent 1 · Triagem':'Analista Comercial · Agent 2 · Pergunta 3/4'"></p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <template x-if="convSelected!=='pedro'">
+              <button @click="humanTakeover=true" class="px-4 py-2 rounded-lg bg-accent-red/10 text-accent-red text-sm border border-accent-red/20 hover:bg-accent-red/20 font-medium">🔴 Assumir Conversa</button>
+            </template>
+            <template x-if="convSelected==='pedro'">
+              <button @click="humanTakeover=false" class="px-4 py-2 rounded-lg bg-accent-green/10 text-accent-green text-sm border border-accent-green/20 hover:bg-accent-green/20 font-medium">↩ Devolver ao Agente</button>
+            </template>
+          </div>
+        </div>
+
+        <!-- Takeover Banner -->
+        <template x-if="convSelected==='pedro' || humanTakeover">
+          <div class="bg-accent-red/5 border border-accent-red/20 rounded-lg p-3 mb-4 flex items-center gap-3">
+            <span class="text-accent-red text-lg">⚠</span>
+            <div>
+              <p class="text-sm text-accent-red font-medium">Agente pausado — Você está enviando mensagens diretamente via WhatsApp</p>
+              <p class="text-xs text-text-muted mt-0.5">Mensagens enviadas aqui vão direto para o candidato. O agente não interferirá.</p>
+            </div>
+          </div>
+        </template>
+
+        <div class="flex gap-4">
+          <!-- Chat Area -->
+          <div class="flex-1 bg-bg-card border border-border-subtle rounded-lg flex flex-col" style="height: calc(100vh - 260px);">
+            <!-- Messages -->
+            <div class="flex-1 overflow-y-auto p-5 space-y-4">
+              <!-- Agent: Consent -->
+              <div class="flex gap-3 max-w-[75%]">
+                <div class="w-8 h-8 rounded-full bg-accent-teal/20 flex items-center justify-center text-xs text-accent-teal shrink-0">🤖</div>
+                <div class="bg-bg-primary border-l-2 border-accent-teal rounded-lg p-3">
+                  <p class="text-xs text-text-muted mb-1">Agente · 10:23</p>
+                  <p class="text-sm text-text-primary">Olá! Sou o assistente virtual da TechCorp. Antes de começarmos, preciso que leia nossa <span class="text-accent-teal underline cursor-pointer">Política de Privacidade</span> e os <span class="text-accent-teal underline cursor-pointer">Termos de Uso</span>.</p>
+                  <p class="text-sm text-text-primary mt-2">Responda <span class="text-accent-teal font-bold">"DE ACORDO"</span> para continuar.</p>
+                </div>
+              </div>
+
+              <!-- Candidate: Consent -->
+              <div class="flex gap-3 max-w-[65%] ml-auto flex-row-reverse">
+                <div class="w-8 h-8 rounded-full bg-theory-bigfive/20 flex items-center justify-center text-xs text-theory-bigfive shrink-0">👤</div>
+                <div class="bg-bg-hover border-r-2 border-theory-bigfive rounded-lg p-3">
+                  <p class="text-xs text-text-muted mb-1 text-right">Candidato · 10:24</p>
+                  <p class="text-sm text-text-primary">DE ACORDO</p>
+                </div>
+              </div>
+
+              <!-- Agent: Greeting -->
+              <div class="flex gap-3 max-w-[75%]">
+                <div class="w-8 h-8 rounded-full bg-accent-teal/20 flex items-center justify-center text-xs text-accent-teal shrink-0">🤖</div>
+                <div class="bg-bg-primary border-l-2 border-accent-teal rounded-lg p-3">
+                  <p class="text-xs text-text-muted mb-1">Agente · 10:24</p>
+                  <p class="text-sm text-text-primary">Ótimo! Vamos lá. Agora vou fazer algumas perguntas para conhecer melhor seu perfil. Pode responder por áudio, se preferir. 🎤</p>
+                  <p class="text-sm text-text-primary mt-2">Conte-me sobre uma situação em que você precisou resolver um conflito no trabalho. Como você agiu?</p>
+                </div>
+              </div>
+
+              <!-- Candidate: Audio -->
+              <div class="flex gap-3 max-w-[65%] ml-auto flex-row-reverse">
+                <div class="w-8 h-8 rounded-full bg-theory-bigfive/20 flex items-center justify-center text-xs text-theory-bigfive shrink-0">👤</div>
+                <div class="bg-bg-hover border-r-2 border-theory-bigfive rounded-lg p-3">
+                  <p class="text-xs text-text-muted mb-1 text-right">Candidato · 10:28</p>
+                  <div class="flex items-center gap-3 bg-bg-primary rounded-lg p-2.5">
+                    <button class="w-8 h-8 rounded-full bg-accent-teal/20 flex items-center justify-center text-accent-teal text-sm hover:bg-accent-teal/30">▶</button>
+                    <div class="flex-1">
+                      <div class="h-1 bg-border-subtle rounded-full"><div class="h-full bg-accent-teal rounded-full" style="width:35%"></div></div>
+                    </div>
+                    <span class="text-[10px] text-text-muted">1:23</span>
+                  </div>
+                  <p class="text-[10px] text-text-muted mt-1.5 cursor-pointer hover:text-accent-teal">📝 Ver transcrição</p>
+                </div>
+              </div>
+
+              <!-- Agent: Follow-up -->
+              <div class="flex gap-3 max-w-[75%]">
+                <div class="w-8 h-8 rounded-full bg-accent-teal/20 flex items-center justify-center text-xs text-accent-teal shrink-0">🤖</div>
+                <div class="bg-bg-primary border-l-2 border-accent-teal rounded-lg p-3">
+                  <p class="text-xs text-text-muted mb-1">Agente · 10:29</p>
+                  <p class="text-sm text-text-primary">Interessante! Agora me conte sobre como você toma decisões importantes sob pressão. Pode dar um exemplo?</p>
+                </div>
+              </div>
+
+              <!-- Candidate typing -->
+              <div class="flex gap-3 max-w-[75%] ml-auto flex-row-reverse">
+                <div class="w-8 h-8 rounded-full bg-theory-bigfive/20 flex items-center justify-center text-xs text-theory-bigfive shrink-0">👤</div>
+                <div class="bg-bg-hover/50 rounded-lg p-3">
+                  <p class="text-xs text-text-muted animate-pulse">digitando...</p>
+                </div>
+              </div>
+
+              <!-- Human takeover message (only for Pedro) -->
+              <template x-if="convSelected==='pedro'">
+                <div class="space-y-4">
+                  <!-- System message -->
+                  <div class="text-center py-2">
+                    <span class="text-[10px] text-text-muted bg-bg-primary px-3 py-1 rounded-full">⚡ Ana Lima assumiu a conversa · 10:45</span>
+                  </div>
+                  <!-- Human message -->
+                  <div class="flex gap-3 max-w-[75%]">
+                    <div class="w-8 h-8 rounded-full bg-accent-amber/20 flex items-center justify-center text-xs text-accent-amber shrink-0">👩</div>
+                    <div class="bg-bg-primary border-l-2 border-accent-amber rounded-lg p-3">
+                      <p class="text-xs text-text-muted mb-1">Ana (humano) · 10:45</p>
+                      <p class="text-sm text-text-primary">Pedro, pode me dar mais detalhes sobre sua experiência com vendas consultivas? Quero entender melhor seu perfil.</p>
+                    </div>
+                  </div>
+                  <!-- Pedro response -->
+                  <div class="flex gap-3 max-w-[65%] ml-auto flex-row-reverse">
+                    <div class="w-8 h-8 rounded-full bg-theory-bigfive/20 flex items-center justify-center text-xs text-theory-bigfive shrink-0">👤</div>
+                    <div class="bg-bg-hover border-r-2 border-theory-bigfive rounded-lg p-3">
+                      <p class="text-xs text-text-muted mb-1 text-right">Pedro · 10:47</p>
+                      <p class="text-sm text-text-primary">Sim! Na empresa anterior eu trabalhava com ciclos de venda longos, tipo 3-6 meses. Tinha que mapear decisores, entender a dor do cliente...</p>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </div>
+
+            <!-- Input Area (only when human takeover) -->
+            <template x-if="convSelected==='pedro' || humanTakeover">
+              <div class="border-t border-border-subtle p-4">
+                <div class="flex items-center gap-3">
+                  <input type="text" placeholder="Escreva sua mensagem..." class="flex-1 bg-bg-primary border border-border-subtle rounded-lg px-4 py-2.5 text-sm text-text-primary placeholder-text-muted focus:outline-none focus:border-accent-teal/50">
+                  <button class="px-5 py-2.5 rounded-lg bg-accent-teal text-bg-primary text-sm font-medium hover:bg-accent-teal/90">Enviar</button>
+                </div>
+                <p class="text-[10px] text-accent-amber mt-2">⚠ Mensagens enviadas aqui vão direto para o WhatsApp do candidato.</p>
+              </div>
+            </template>
+
+            <!-- Read-only notice when agent is active -->
+            <template x-if="convSelected!=='pedro' && !humanTakeover">
+              <div class="border-t border-border-subtle p-4 text-center">
+                <p class="text-xs text-text-muted">Conversa gerenciada pelo agente. Clique em <span class="text-accent-red font-medium">"Assumir Conversa"</span> para intervir.</p>
+              </div>
+            </template>
+          </div>
+
+          <!-- Side Info -->
+          <div class="w-64 space-y-4 shrink-0">
+            <!-- State -->
+            <div class="bg-bg-card border border-border-subtle rounded-lg p-4">
+              <h4 class="text-xs uppercase text-text-muted font-medium mb-3">Estado da Conversa</h4>
+              <div class="space-y-2 text-sm">
+                <div class="flex justify-between"><span class="text-text-muted text-xs">Agente:</span><span class="text-xs" x-text="convSelected==='pedro'?'Agent 1':'Agent 2'"></span></div>
+                <div class="flex justify-between"><span class="text-text-muted text-xs">Estado:</span><span class="text-xs text-accent-teal" x-text="convSelected==='pedro'?'COLLECTING_SKILLS':'QUESTION_3'"></span></div>
+                <div class="flex justify-between"><span class="text-text-muted text-xs">Áudios:</span><span class="text-xs" x-text="convSelected==='pedro'?'0':'2/4'"></span></div>
+                <div class="flex justify-between"><span class="text-text-muted text-xs">Precisão:</span><span class="text-xs" x-text="convSelected==='pedro'?'—':'47%'"></span></div>
+                <div class="flex justify-between"><span class="text-text-muted text-xs">Início:</span><span class="text-xs">02/03 10:23</span></div>
+              </div>
+            </div>
+
+            <!-- Partial Profiles (for Maria/Agent 2) -->
+            <template x-if="convSelected==='maria'">
+              <div class="bg-bg-card border border-border-subtle rounded-lg p-4">
+                <h4 class="text-xs uppercase text-text-muted font-medium mb-3">Perfil Parcial</h4>
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between text-xs"><span class="text-theory-mbti">MBTI</span><span class="text-text-secondary">ENTJ <span class="text-text-muted">(42%)</span></span></div>
+                  <div class="flex items-center justify-between text-xs"><span class="text-theory-disc">DISC</span><span class="text-text-secondary">DI <span class="text-text-muted">(51%)</span></span></div>
+                  <div class="flex items-center justify-between text-xs"><span class="text-theory-bigfive">Big Five</span><span class="text-text-muted">pendente</span></div>
+                  <div class="flex items-center justify-between text-xs"><span class="text-theory-enneagram">Eneagrama</span><span class="text-text-muted">pendente</span></div>
+                  <div class="flex items-center justify-between text-xs"><span class="text-theory-lesenne">Le Senne</span><span class="text-text-muted">pendente</span></div>
+                </div>
+              </div>
+            </template>
+
+            <!-- Takeover state (for Pedro) -->
+            <template x-if="convSelected==='pedro'">
+              <div class="bg-bg-card border border-accent-red/20 rounded-lg p-4">
+                <h4 class="text-xs uppercase text-accent-red font-medium mb-3">Takeover Ativo</h4>
+                <div class="space-y-2 text-xs">
+                  <div class="flex justify-between"><span class="text-text-muted">Assumido por:</span><span>Ana Lima</span></div>
+                  <div class="flex justify-between"><span class="text-text-muted">Desde:</span><span>10:45</span></div>
+                  <div class="flex justify-between"><span class="text-text-muted">Msgs enviadas:</span><span>1</span></div>
+                  <div class="flex justify-between"><span class="text-text-muted">Estado salvo:</span><span class="text-accent-teal">COLLECTING_SKILLS</span></div>
+                </div>
+                <div class="mt-3 space-y-2">
+                  <button class="w-full px-3 py-2 rounded-lg bg-accent-green/10 text-accent-green text-xs border border-accent-green/20 hover:bg-accent-green/20">↩ Devolver ao Agente</button>
+                  <button class="w-full px-3 py-2 rounded-lg bg-accent-red/10 text-accent-red text-xs border border-accent-red/20 hover:bg-accent-red/20">🛑 Encerrar Conversa</button>
+                </div>
+              </div>
+            </template>
+
+            <!-- Actions -->
+            <div class="bg-bg-card border border-border-subtle rounded-lg p-4">
+              <h4 class="text-xs uppercase text-text-muted font-medium mb-3">Ações</h4>
+              <div class="space-y-2">
+                <button @click="go('candidate-profile')" class="w-full px-3 py-2 rounded-lg bg-bg-primary text-text-secondary text-xs border border-border-subtle hover:bg-bg-hover">👤 Ver Perfil Completo</button>
+                <button class="w-full px-3 py-2 rounded-lg bg-bg-primary text-text-secondary text-xs border border-border-subtle hover:bg-bg-hover">📝 Enviar Teste Padrão</button>
+                <button class="w-full px-3 py-2 rounded-lg bg-bg-primary text-text-secondary text-xs border border-border-subtle hover:bg-bg-hover">📄 Exportar Conversa</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== TESTE PADRÃO — PÁGINA PÚBLICA ==================== -->
+      <div x-show="page==='public-test'" x-cloak>
+        <button @click="go('tests')" class="text-sm text-text-muted hover:text-accent-teal mb-4 flex items-center gap-1">← Voltar para Teste Padrão</button>
+
+        <!-- Preview Banner -->
+        <div class="bg-accent-teal/5 border border-accent-teal/20 rounded-lg p-3 mb-5 flex items-center gap-3">
+          <span class="text-accent-teal text-lg">👁</span>
+          <div>
+            <p class="text-sm text-accent-teal font-medium">Pré-visualização da Página Pública</p>
+            <p class="text-xs text-text-muted">Esta é a aparência de <span class="text-text-secondary">electia.empregamais.me/bigfive</span> para candidatos e colaboradores.</p>
+          </div>
+        </div>
+
+        <!-- Public Test Page Preview -->
+        <div class="bg-bg-primary border-2 border-border-subtle rounded-xl overflow-hidden" x-data="{testStep:'auth'}">
+
+          <!-- Step 1: Auth -->
+          <div x-show="testStep==='auth'">
+            <div class="text-center py-8 border-b border-border-subtle">
+              <h2 class="font-sora text-xl font-bold text-accent-teal">◆ ELECTIA</h2>
+              <p class="text-xs text-text-muted mt-1">Assessments Comportamentais</p>
+            </div>
+
+            <div class="max-w-lg mx-auto p-8">
+              <!-- Test Info -->
+              <div class="bg-theory-bigfive/5 border border-theory-bigfive/20 rounded-lg p-4 mb-6">
+                <h3 class="font-sora font-bold text-theory-bigfive">Big Five — OCEAN</h3>
+                <p class="text-xs text-text-secondary mt-1">120 perguntas · ~25 minutos</p>
+                <p class="text-xs text-text-muted mt-2">Avalia 5 dimensões de personalidade: Abertura, Conscienciosidade, Extroversão, Amabilidade e Neuroticismo.</p>
+              </div>
+
+              <!-- Form -->
+              <h4 class="font-sora text-sm font-medium mb-4">Seus Dados</h4>
+              <div class="space-y-4">
+                <div>
+                  <label class="text-xs text-text-muted block mb-1">Nome Completo *</label>
+                  <input type="text" value="Carla Souza" class="w-full bg-bg-card border border-border-subtle rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-teal/50">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="text-xs text-text-muted block mb-1">E-mail *</label>
+                    <input type="email" value="carla@email.com" class="w-full bg-bg-card border border-border-subtle rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-teal/50">
+                  </div>
+                  <div>
+                    <label class="text-xs text-text-muted block mb-1">Telefone (WhatsApp) *</label>
+                    <input type="tel" value="(11) 98765-4321" class="w-full bg-bg-card border border-border-subtle rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-teal/50">
+                  </div>
+                </div>
+                <div>
+                  <label class="text-xs text-text-muted block mb-1">Você é: *</label>
+                  <div class="flex gap-4">
+                    <label class="flex items-center gap-2 text-sm text-text-secondary cursor-pointer"><input type="radio" name="role_type" checked class="accent-accent-teal"> Colaborador (cargo exercido)</label>
+                    <label class="flex items-center gap-2 text-sm text-text-secondary cursor-pointer"><input type="radio" name="role_type" class="accent-accent-teal"> Candidato (cargo desejado)</label>
+                  </div>
+                </div>
+                <div>
+                  <label class="text-xs text-text-muted block mb-1">Cargo *</label>
+                  <input type="text" value="Analista Comercial" class="w-full bg-bg-card border border-border-subtle rounded-lg px-3 py-2 text-sm text-text-primary focus:outline-none focus:border-accent-teal/50">
+                  <p class="text-[10px] text-text-muted mt-1">Selecione o cargo desejado ou exercido na empresa.</p>
+                </div>
+                <label class="flex items-start gap-2 text-xs text-text-secondary cursor-pointer">
+                  <input type="checkbox" checked class="accent-accent-teal mt-0.5">
+                  <span>Li e concordo com a <span class="text-accent-teal underline">Política de Privacidade</span> e os <span class="text-accent-teal underline">Termos de Uso</span>.</span>
+                </label>
+                <button @click="testStep='taking'" class="w-full py-3 rounded-lg bg-accent-teal text-bg-primary font-medium text-sm hover:bg-accent-teal/90 transition-colors">Iniciar Teste →</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Taking Test -->
+          <div x-show="testStep==='taking'">
+            <div class="flex items-center justify-between px-6 py-3 border-b border-border-subtle">
+              <h3 class="font-sora text-sm font-bold text-accent-teal">◆ ELECTIA</h3>
+              <p class="text-xs text-text-secondary">Big Five — OCEAN</p>
+              <p class="text-xs text-text-muted">Pergunta <span class="text-text-primary font-medium">42</span> de 120</p>
+            </div>
+
+            <!-- Progress -->
+            <div class="px-6 pt-4">
+              <div class="h-2 bg-border-subtle rounded-full overflow-hidden">
+                <div class="h-full bg-theory-bigfive rounded-full transition-all" style="width:35%"></div>
+              </div>
+              <p class="text-[10px] text-text-muted mt-1 text-right">35%</p>
+            </div>
+
+            <!-- Question -->
+            <div class="max-w-xl mx-auto p-8">
+              <div class="bg-bg-card border border-border-subtle rounded-lg p-6 mb-6">
+                <p class="text-lg text-text-primary leading-relaxed">"Eu me considero uma pessoa que gosta de experimentar coisas novas e diferentes."</p>
+              </div>
+
+              <div class="space-y-3" x-data="{selected:4}">
+                <template x-for="(opt,i) in ['Discordo totalmente','Discordo parcialmente','Neutro','Concordo parcialmente','Concordo totalmente']" :key="i">
+                  <button @click="selected=i" class="w-full text-left px-4 py-3 rounded-lg border text-sm transition-all" :class="selected===i ? 'bg-accent-teal/10 border-accent-teal/40 text-accent-teal' : 'bg-bg-card border-border-subtle text-text-secondary hover:bg-bg-hover'">
+                    <span x-text="opt"></span>
+                  </button>
+                </template>
+              </div>
+
+              <div class="flex items-center justify-between mt-6">
+                <button class="px-4 py-2 rounded-lg bg-bg-card text-text-secondary text-sm border border-border-subtle hover:bg-bg-hover">← Anterior</button>
+                <button @click="testStep='done'" class="px-6 py-2 rounded-lg bg-accent-teal text-bg-primary text-sm font-medium hover:bg-accent-teal/90">Próxima →</button>
+              </div>
+
+              <div class="flex items-center justify-between mt-4 text-[10px] text-text-muted">
+                <span>⏱ Tempo decorrido: 08:32</span>
+                <span>💾 Progresso salvo automaticamente</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Done -->
+          <div x-show="testStep==='done'">
+            <div class="text-center py-16 px-8">
+              <h2 class="font-sora text-xl font-bold text-accent-teal mb-2">◆ ELECTIA</h2>
+              <div class="max-w-md mx-auto bg-bg-card border border-border-subtle rounded-xl p-8 mt-8">
+                <div class="w-16 h-16 rounded-full bg-accent-green/20 flex items-center justify-center text-3xl mx-auto mb-4">✅</div>
+                <h3 class="font-sora text-xl font-bold mb-2">Teste Concluído!</h3>
+                <p class="text-sm text-text-secondary mb-1">Big Five — OCEAN</p>
+                <p class="text-xs text-text-muted mb-6">120 perguntas respondidas em 22 minutos</p>
+                <div class="bg-bg-primary rounded-lg p-4 text-left">
+                  <p class="text-sm text-text-secondary">Seus resultados serão processados e disponibilizados para a empresa responsável pelo processo.</p>
+                  <p class="text-sm text-text-secondary mt-3">Se tiver dúvidas, entre em contato com o recrutador responsável pelo seu processo.</p>
+                </div>
+                <p class="text-accent-teal font-sora font-medium mt-6">Obrigado por participar!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== CANDIDATE PROFILE ==================== -->
+      <div x-show="page==='candidate-profile'" x-cloak>
+        <button @click="go('candidates')" class="text-sm text-text-muted hover:text-accent-teal mb-4 flex items-center gap-1">← Voltar para Candidatos</button>
+
+        <!-- HEADER -->
+        <div class="card-glow rounded-xl p-6 mb-6">
+          <div class="flex items-start gap-6">
+            <div class="w-20 h-20 rounded-xl bg-gradient-to-br from-accent-teal/30 to-theory-enneagram/30 flex items-center justify-center text-2xl font-bold text-accent-teal shrink-0 font-sora">MS</div>
+            <div class="flex-1">
+              <div class="flex items-start justify-between">
+                <div>
+                  <h2 class="font-sora text-2xl font-bold">Maria Santos</h2>
+                  <p class="text-text-secondary text-sm mt-0.5">Analista Comercial Senior</p>
+                  <p class="text-accent-teal text-xs mt-1">✦ "Líder orientada a resultados com alta capacidade de influência"</p>
+                </div>
+                <div class="flex items-center gap-8">
+                  <div class="text-center">
+                    <div class="relative w-16 h-16"><svg viewBox="0 0 36 36" class="w-16 h-16 -rotate-90"><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#30363D" stroke-width="2.5"/><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-dasharray="82,100" stroke-linecap="round"/></svg><div class="absolute inset-0 flex flex-col items-center justify-center"><span class="font-sora text-lg font-bold text-accent-green">8.2</span><span class="text-[9px] text-text-muted">/10</span></div></div>
+                    <p class="text-[10px] text-text-muted mt-1">MATCH</p>
+                  </div>
+                  <div class="text-center"><p class="font-sora text-2xl font-bold">47</p><p class="text-[10px] text-text-muted">DADOS</p></div>
+                  <div class="text-center"><p class="font-sora text-lg font-bold text-accent-teal">Negociação</p><p class="text-[10px] text-text-muted">COMPETÊNCIA TOP</p></div>
+                  <div>
+                    <span class="text-xs px-3 py-1.5 rounded-full bg-accent-green/15 text-accent-green font-medium">● CONCLUÍDO</span>
+                    <button class="block mt-2 text-[10px] text-accent-teal hover:underline">👥 Migrar para Colaborador</button>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-3 mt-4">
+                <div class="theory-badge text-center px-4 py-2 rounded-lg bg-bg-primary border border-theory-mbti/20 border-b-2 border-b-theory-mbti"><p class="text-[10px] uppercase text-text-muted">MBTI</p><p class="font-sora font-bold text-sm">ENTJ</p><p class="text-[11px] text-theory-mbti">72%</p></div>
+                <div class="theory-badge text-center px-4 py-2 rounded-lg bg-bg-primary border border-theory-enneagram/20 border-b-2 border-b-theory-enneagram"><p class="text-[10px] uppercase text-text-muted">Eneagrama</p><p class="font-sora font-bold text-sm">3w2</p><p class="text-[11px] text-theory-enneagram">75%</p></div>
+                <div class="theory-badge text-center px-4 py-2 rounded-lg bg-bg-primary border border-theory-bigfive/20 border-b-2 border-b-theory-bigfive"><p class="text-[10px] uppercase text-text-muted">Big Five</p><p class="font-sora font-bold text-sm">C:87</p><p class="text-[11px] text-theory-bigfive">82%</p></div>
+                <div class="theory-badge text-center px-4 py-2 rounded-lg bg-bg-primary border border-theory-disc/20 border-b-2 border-b-theory-disc"><p class="text-[10px] uppercase text-text-muted">DISC</p><p class="font-sora font-bold text-sm">DI</p><p class="text-[11px] text-theory-disc">88%</p></div>
+                <div class="theory-badge text-center px-4 py-2 rounded-lg bg-bg-primary border border-theory-lesenne/20 border-b-2 border-b-theory-lesenne"><p class="text-[10px] uppercase text-text-muted">Le Senne</p><p class="font-sora font-bold text-sm">EAP</p><p class="text-[11px] text-theory-lesenne">80%</p></div>
+                <div class="flex-1 ml-4">
+                  <div class="flex items-center justify-between mb-1"><span class="text-xs text-text-muted">Precisão Geral</span><span class="text-xs text-accent-teal font-medium">79%</span></div>
+                  <div class="h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full precision-bar rounded-full" style="width:79%"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-0 mt-6 border-b border-border-subtle -mx-6 px-6">
+            <template x-for="t in [{k:'overview',l:'Visão Geral'},{k:'dna',l:'DNA'},{k:'communication',l:'Comunicação'},{k:'audio',l:'Áudio & Entrevista'},{k:'compatibility',l:'Compatibilidade'},{k:'timeline',l:'Trajetória'},{k:'documents',l:'Documentos'}]">
+              <button @click="activeTab=t.k" :class="activeTab===t.k ? 'tab-active text-accent-teal' : 'text-text-muted hover:text-text-secondary'" class="px-4 py-3 text-sm font-medium transition-colors" x-text="t.l"></button>
+            </template>
+          </div>
+        </div>
+
+        <!-- Tab: Visão Geral -->
+        <div x-show="activeTab==='overview'">
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-5 mb-4">
+            <div class="flex items-center gap-2 mb-3 pb-3 border-b border-border-subtle"><span>🧠</span><h3 class="font-sora text-sm font-semibold">Sobre a Candidata</h3></div>
+            <p class="text-sm text-text-secondary leading-relaxed italic">"Profissional orientada a resultados com comunicação assertiva e alta energia. Perfil de liderança natural com forte capacidade de influência e foco em metas. Demonstra pensamento estratégico e proatividade acima da média. Ponto de atenção: tendência a impaciência com processos lentos e possível dificuldade em delegar tarefas operacionais."</p>
+            <p class="text-xs text-text-muted mt-3">🤖 Gerado por IA · Precisão: 79%</p>
+          </div>
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="bg-bg-card border border-border-subtle rounded-lg p-5">
+              <div class="flex items-center gap-2 mb-3 pb-3 border-b border-border-subtle"><span>♡</span><h3 class="font-sora text-sm font-semibold">Valores Centrais</h3></div>
+              <ul class="space-y-2 text-sm text-text-secondary"><li>• Resultado acima de processo</li><li>• Autonomia e liberdade de execução</li><li>• Reconhecimento por performance</li><li>• Crescimento acelerado</li></ul>
+              <p class="text-xs text-text-muted mt-3">Fonte: Eneagrama + Análise de áudio</p>
+            </div>
+            <div class="bg-bg-card border border-border-subtle rounded-lg p-5">
+              <div class="flex items-center gap-2 mb-3 pb-3 border-b border-border-subtle"><span>◎</span><h3 class="font-sora text-sm font-semibold">Motivação Central</h3></div>
+              <div class="mb-3"><p class="text-xs text-text-muted uppercase tracking-wider mb-1">Desejo Central</p><p class="text-sm">Ser valorizada e reconhecida por suas conquistas</p></div>
+              <div><p class="text-xs text-text-muted uppercase tracking-wider mb-1">Medo Central</p><p class="text-sm text-accent-red/80">Ser vista como incompetente ou sem valor</p></div>
+              <p class="text-xs text-text-muted mt-3">Fonte: Eneagrama Tipo 3w2 · 75%</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-bg-card border border-border-subtle rounded-lg p-5">
+              <div class="flex items-center gap-2 mb-3 pb-3 border-b border-border-subtle"><span>📊</span><h3 class="font-sora text-sm font-semibold">Competências-Chave</h3></div>
+              <div class="space-y-3">
+                <div><div class="flex justify-between text-sm mb-1"><span>Comunicação</span><span class="text-text-muted">82</span></div><div class="h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full bg-accent-teal rounded-full" style="width:82%"></div></div></div>
+                <div><div class="flex justify-between text-sm mb-1"><span>Liderança</span><span class="text-text-muted">75</span></div><div class="h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full bg-accent-teal rounded-full" style="width:75%"></div></div></div>
+                <div><div class="flex justify-between text-sm mb-1"><span>Negociação</span><span class="text-text-muted">88</span></div><div class="h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full bg-accent-teal rounded-full" style="width:88%"></div></div></div>
+                <div><div class="flex justify-between text-sm mb-1"><span>Organização</span><span class="text-text-muted">62</span></div><div class="h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full bg-accent-amber rounded-full" style="width:62%"></div></div></div>
+                <div><div class="flex justify-between text-sm mb-1"><span>Trabalho em equipe</span><span class="text-text-muted">72</span></div><div class="h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full bg-accent-teal rounded-full" style="width:72%"></div></div></div>
+                <div><div class="flex justify-between text-sm mb-1"><span>Resiliência</span><span class="text-text-muted">80</span></div><div class="h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full bg-accent-teal rounded-full" style="width:80%"></div></div></div>
+              </div>
+            </div>
+            <div class="bg-bg-card border border-border-subtle rounded-lg p-5">
+              <div class="flex items-center gap-2 mb-3 pb-3 border-b border-border-subtle"><span>⚡</span><h3 class="font-sora text-sm font-semibold">Triagem Técnica</h3></div>
+              <div class="space-y-2.5 text-sm">
+                <div class="flex items-center gap-2"><span class="text-accent-green">✅</span> Graduação em Administração</div>
+                <div class="flex items-center gap-2"><span class="text-accent-green">✅</span> 3+ anos vendas B2B</div>
+                <div class="flex items-center gap-2"><span class="text-accent-green">✅</span> CRM HubSpot</div>
+                <div class="flex items-center gap-2"><span class="text-accent-amber">⚠️</span><span class="text-accent-amber">Inglês: intermediário</span></div>
+                <div class="flex items-center gap-2"><span class="text-accent-green">✅</span> Disponibilidade imediata</div>
+              </div>
+              <div class="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between">
+                <span class="text-sm text-text-muted">Score Técnico</span>
+                <span class="font-sora text-xl font-bold text-accent-green">85%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Placeholder para outras abas -->
+        <div x-show="activeTab==='dna'" class="bg-bg-card border border-border-subtle rounded-lg p-8 text-center">
+          <p class="text-text-muted text-sm">Aba DNA — Mesmo conteúdo do protótipo anterior (arquétipos, Big Five radar, DISC, Eneagrama, Le Senne, MBTI, Alinhamentos e Tensões)</p>
+        </div>
+        <div x-show="activeTab==='communication'" class="bg-bg-card border border-border-subtle rounded-lg p-8 text-center">
+          <p class="text-text-muted text-sm">Aba Comunicação — DNA Cirúrgico, Assinatura de Fala, Sistema Operacional Comportamental</p>
+        </div>
+        <div x-show="activeTab==='audio'" class="bg-bg-card border border-border-subtle rounded-lg p-8 text-center">
+          <p class="text-text-muted text-sm">Aba Áudio & Entrevista — Player de áudio, transcrição, análise IA, evolução de precisão</p>
+        </div>
+        <div x-show="activeTab==='compatibility'" class="bg-bg-card border border-border-subtle rounded-lg p-8 text-center">
+          <p class="text-text-muted text-sm">Aba Compatibilidade — Match com o cargo, perfis de função, compatibilidade de equipe</p>
+        </div>
+        <div x-show="activeTab==='timeline'" class="bg-bg-card border border-border-subtle rounded-lg p-8 text-center">
+          <p class="text-text-muted text-sm">Aba Trajetória — Jornada profissional em timeline vertical</p>
+        </div>
+        <div x-show="activeTab==='documents'" class="bg-bg-card border border-border-subtle rounded-lg p-8 text-center">
+          <p class="text-text-muted text-sm">Aba Documentos — CV, certificados, anexos</p>
+        </div>
+
+        <!-- Actions Bar -->
+        <div class="fixed bottom-0 left-56 right-0 bg-bg-card border-t border-border-subtle px-6 py-3 flex items-center gap-3 z-10">
+          <button class="px-4 py-2 rounded-lg bg-accent-teal/10 text-accent-teal text-sm border border-accent-teal/20 hover:bg-accent-teal/20">📅 Agendar Entrevista</button>
+          <button class="px-4 py-2 rounded-lg bg-bg-primary text-text-secondary text-sm border border-border-subtle hover:bg-bg-hover">⭐ Favoritar</button>
+          <button class="px-4 py-2 rounded-lg bg-bg-primary text-text-secondary text-sm border border-border-subtle hover:bg-bg-hover">💬 Nota</button>
+          <button class="px-4 py-2 rounded-lg bg-bg-primary text-text-secondary text-sm border border-border-subtle hover:bg-bg-hover">📄 Exportar PDF</button>
+          <button class="px-4 py-2 rounded-lg bg-accent-green/10 text-accent-green text-sm border border-accent-green/20 hover:bg-accent-green/20">👥 Migrar para Colaborador</button>
+          <div class="flex-1"></div>
+          <button class="px-4 py-2 rounded-lg bg-accent-red/10 text-accent-red text-sm border border-accent-red/20 hover:bg-accent-red/20">❌ Rejeitar</button>
+        </div>
+      </div>
+
+      <!-- ==================== EMPLOYEE PROFILE ==================== -->
+      <div x-show="page==='employee-profile'" x-cloak>
+        <button @click="go('employees')" class="text-sm text-text-muted hover:text-accent-teal mb-4 flex items-center gap-1">← Voltar para Colaboradores</button>
+
+        <!-- HEADER -->
+        <div class="card-glow rounded-xl p-6 mb-6">
+          <div class="flex items-start gap-6">
+            <div class="w-20 h-20 rounded-xl bg-gradient-to-br from-accent-green/30 to-accent-teal/30 flex items-center justify-center text-2xl font-bold text-accent-green shrink-0 font-sora">CR</div>
+            <div class="flex-1">
+              <div class="flex items-start justify-between">
+                <div>
+                  <div class="flex items-center gap-3">
+                    <h2 class="font-sora text-2xl font-bold">Carlos Rocha</h2>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-accent-green/15 text-accent-green font-medium border border-accent-green/20">ex-candidato</span>
+                  </div>
+                  <p class="text-text-secondary text-sm mt-0.5">Analista Comercial · TechCorp Ltda</p>
+                  <p class="text-text-muted text-xs mt-1">Contratado em 15/01/2026 · 1 mês e 15 dias na empresa</p>
+                </div>
+                <div class="flex items-center gap-8">
+                  <div class="text-center">
+                    <div class="relative w-16 h-16"><svg viewBox="0 0 36 36" class="w-16 h-16 -rotate-90"><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#30363D" stroke-width="2.5"/><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-dasharray="91,100" stroke-linecap="round"/></svg><div class="absolute inset-0 flex flex-col items-center justify-center"><span class="font-sora text-lg font-bold text-accent-green">9.1</span><span class="text-[9px] text-text-muted">/10</span></div></div>
+                    <p class="text-[10px] text-text-muted mt-1">FIT</p>
+                  </div>
+                  <div class="text-center"><p class="font-sora text-2xl font-bold">62</p><p class="text-[10px] text-text-muted">DADOS</p></div>
+                  <div class="text-center"><p class="font-sora text-lg font-bold text-accent-teal">Negociação</p><p class="text-[10px] text-text-muted">COMPETÊNCIA TOP</p></div>
+                  <div>
+                    <span class="text-xs px-3 py-1.5 rounded-full bg-accent-green/15 text-accent-green font-medium">● ATIVO</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Theory Badges -->
+              <div class="flex items-center gap-3 mt-4">
+                <div class="theory-badge text-center px-4 py-2 rounded-lg bg-bg-primary border border-theory-mbti/20 border-b-2 border-b-theory-mbti"><p class="text-[10px] uppercase text-text-muted">MBTI</p><p class="font-sora font-bold text-sm">ENTJ</p><p class="text-[11px] text-theory-mbti">85%</p></div>
+                <div class="theory-badge text-center px-4 py-2 rounded-lg bg-bg-primary border border-theory-enneagram/20 border-b-2 border-b-theory-enneagram"><p class="text-[10px] uppercase text-text-muted">Eneagrama</p><p class="font-sora font-bold text-sm">3w2</p><p class="text-[11px] text-theory-enneagram">82%</p></div>
+                <div class="theory-badge text-center px-4 py-2 rounded-lg bg-bg-primary border border-theory-bigfive/20 border-b-2 border-b-theory-bigfive"><p class="text-[10px] uppercase text-text-muted">Big Five</p><p class="font-sora font-bold text-sm">C:89</p><p class="text-[11px] text-theory-bigfive">88%</p></div>
+                <div class="theory-badge text-center px-4 py-2 rounded-lg bg-bg-primary border border-theory-disc/20 border-b-2 border-b-theory-disc"><p class="text-[10px] uppercase text-text-muted">DISC</p><p class="font-sora font-bold text-sm">DI</p><p class="text-[11px] text-theory-disc">92%</p></div>
+                <div class="theory-badge text-center px-4 py-2 rounded-lg bg-bg-primary border border-theory-lesenne/20 border-b-2 border-b-theory-lesenne"><p class="text-[10px] uppercase text-text-muted">Le Senne</p><p class="font-sora font-bold text-sm">EAP</p><p class="text-[11px] text-theory-lesenne">84%</p></div>
+                <div class="flex-1 ml-4">
+                  <div class="flex items-center justify-between mb-1"><span class="text-xs text-text-muted">Precisão Geral</span><span class="text-xs text-accent-green font-medium">85%</span></div>
+                  <div class="h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full precision-bar rounded-full" style="width:85%"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tabs -->
+          <div class="flex gap-0 mt-6 border-b border-border-subtle -mx-6 px-6">
+            <template x-for="t in [{k:'overview',l:'Visão Geral'},{k:'dna',l:'DNA'},{k:'communication',l:'Comunicação'},{k:'audio',l:'Áudio & Entrevista'},{k:'cargo-fit',l:'Cargo & Fit'},{k:'tests-history',l:'Testes'},{k:'documents',l:'Documentos'}]">
+              <button @click="empTab=t.k" :class="empTab===t.k ? 'tab-active text-accent-teal' : 'text-text-muted hover:text-text-secondary'" class="px-4 py-3 text-sm font-medium transition-colors" x-text="t.l"></button>
+            </template>
+          </div>
+        </div>
+
+        <!-- Tab: Visão Geral -->
+        <div x-show="empTab==='overview'">
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-5 mb-4">
+            <div class="flex items-center gap-2 mb-3 pb-3 border-b border-border-subtle"><span>🧠</span><h3 class="font-sora text-sm font-semibold">Sobre o Colaborador</h3></div>
+            <p class="text-sm text-text-secondary leading-relaxed italic">"Profissional orientado a resultados com comunicação assertiva e alta energia. Confirma perfil de liderança natural com forte capacidade de influência e foco em metas, validado por 3 testes padrão e análise de áudio pré-contratação. Boa adaptação ao time e ao cargo."</p>
+            <p class="text-xs text-text-muted mt-3">🤖 Gerado por IA · Precisão: 85% · Atualizado após teste MBTI (01/03/2026)</p>
+          </div>
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="bg-bg-card border border-border-subtle rounded-lg p-5">
+              <div class="flex items-center gap-2 mb-3 pb-3 border-b border-border-subtle"><span>♡</span><h3 class="font-sora text-sm font-semibold">Valores Centrais</h3></div>
+              <ul class="space-y-2 text-sm text-text-secondary"><li>• Resultado acima de processo</li><li>• Autonomia e liberdade de execução</li><li>• Reconhecimento por performance</li><li>• Crescimento acelerado</li></ul>
+              <p class="text-xs text-text-muted mt-3">Fonte: Eneagrama + Análise de áudio + Teste padrão</p>
+            </div>
+            <div class="bg-bg-card border border-border-subtle rounded-lg p-5">
+              <div class="flex items-center gap-2 mb-3 pb-3 border-b border-border-subtle"><span>◎</span><h3 class="font-sora text-sm font-semibold">Motivação Central</h3></div>
+              <div class="mb-3"><p class="text-xs text-text-muted uppercase tracking-wider mb-1">Desejo Central</p><p class="text-sm">Ser valorizado e reconhecido por suas conquistas</p></div>
+              <div><p class="text-xs text-text-muted uppercase tracking-wider mb-1">Medo Central</p><p class="text-sm text-accent-red/80">Ser visto como incompetente ou sem valor</p></div>
+              <p class="text-xs text-text-muted mt-3">Fonte: Eneagrama Tipo 3w2 · 82%</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-bg-card border border-border-subtle rounded-lg p-5">
+              <div class="flex items-center gap-2 mb-3 pb-3 border-b border-border-subtle"><span>📊</span><h3 class="font-sora text-sm font-semibold">Competências-Chave</h3></div>
+              <div class="space-y-3">
+                <div><div class="flex justify-between text-sm"><span>Negociação</span><span class="text-accent-teal font-medium">92</span></div><div class="h-1.5 bg-border-subtle rounded-full mt-1"><div class="h-full bg-accent-teal rounded-full" style="width:92%"></div></div></div>
+                <div><div class="flex justify-between text-sm"><span>Comunicação</span><span class="text-accent-teal font-medium">88</span></div><div class="h-1.5 bg-border-subtle rounded-full mt-1"><div class="h-full bg-accent-teal rounded-full" style="width:88%"></div></div></div>
+                <div><div class="flex justify-between text-sm"><span>Liderança</span><span class="text-accent-green font-medium">85</span></div><div class="h-1.5 bg-border-subtle rounded-full mt-1"><div class="h-full bg-accent-green rounded-full" style="width:85%"></div></div></div>
+                <div><div class="flex justify-between text-sm"><span>Resolução de Problemas</span><span class="text-accent-green font-medium">80</span></div><div class="h-1.5 bg-border-subtle rounded-full mt-1"><div class="h-full bg-accent-green rounded-full" style="width:80%"></div></div></div>
+                <div><div class="flex justify-between text-sm"><span>Trabalho em Equipe</span><span class="text-accent-amber font-medium">65</span></div><div class="h-1.5 bg-border-subtle rounded-full mt-1"><div class="h-full bg-accent-amber rounded-full" style="width:65%"></div></div></div>
+              </div>
+            </div>
+            <div class="bg-bg-card border border-border-subtle rounded-lg p-5">
+              <div class="flex items-center gap-2 mb-3 pb-3 border-b border-border-subtle"><span>🎯</span><h3 class="font-sora text-sm font-semibold">Radar de Personalidade</h3></div>
+              <div id="empRadarChart" class="h-52"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Cargo & Fit -->
+        <div x-show="empTab==='cargo-fit'">
+          <!-- Fit Card -->
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-5 mb-4">
+            <div class="flex items-center gap-2 mb-4 pb-3 border-b border-border-subtle"><span>🎯</span><h3 class="font-sora text-sm font-semibold">Analista Comercial — Fit do Colaborador</h3></div>
+            <div class="flex items-center gap-4 mb-5 bg-bg-primary rounded-lg p-4 border border-accent-green/20">
+              <div class="text-center">
+                <div class="relative w-20 h-20"><svg viewBox="0 0 36 36" class="w-20 h-20 -rotate-90"><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#30363D" stroke-width="2"/><path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#22C55E" stroke-width="2" stroke-dasharray="91,100" stroke-linecap="round"/></svg><div class="absolute inset-0 flex flex-col items-center justify-center"><span class="font-sora text-xl font-bold text-accent-green">9.1</span><span class="text-[9px] text-text-muted">/10</span></div></div>
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-accent-green mb-1">Excelente Fit com o Cargo</p>
+                <p class="text-xs text-text-secondary">Este colaborador está altamente alinhado com o perfil ideal definido para Analista Comercial. Seu perfil contribui positivamente para o recálculo automático do cargo.</p>
+              </div>
+            </div>
+
+            <!-- Theory comparison table -->
+            <div class="space-y-3">
+              <div class="grid grid-cols-[100px_1fr_1fr_120px] gap-4 text-[10px] uppercase text-text-muted border-b border-border-subtle pb-2">
+                <span>Teoria</span><span>Ideal do Cargo</span><span>Perfil Atual</span><span>Match</span>
+              </div>
+              <div class="grid grid-cols-[100px_1fr_1fr_120px] gap-4 items-center text-sm py-2 border-b border-border-subtle/50">
+                <span class="text-theory-mbti text-xs font-medium">MBTI</span>
+                <span class="text-text-secondary">ENTJ</span>
+                <span class="text-text-primary font-medium">ENTJ</span>
+                <span class="text-xs text-accent-green flex items-center gap-1">✅ 100% match</span>
+              </div>
+              <div class="grid grid-cols-[100px_1fr_1fr_120px] gap-4 items-center text-sm py-2 border-b border-border-subtle/50">
+                <span class="text-theory-enneagram text-xs font-medium">Eneagrama</span>
+                <span class="text-text-secondary">3w2</span>
+                <span class="text-text-primary font-medium">3w2</span>
+                <span class="text-xs text-accent-green flex items-center gap-1">✅ 100% match</span>
+              </div>
+              <div class="grid grid-cols-[100px_1fr_1fr_120px] gap-4 items-center text-sm py-2 border-b border-border-subtle/50">
+                <span class="text-theory-bigfive text-xs font-medium">Big Five</span>
+                <span class="text-text-secondary">C: 80+</span>
+                <span class="text-text-primary font-medium">C: 89</span>
+                <span class="text-xs text-accent-green flex items-center gap-1">✅ Dentro da faixa</span>
+              </div>
+              <div class="grid grid-cols-[100px_1fr_1fr_120px] gap-4 items-center text-sm py-2 border-b border-border-subtle/50">
+                <span class="text-theory-disc text-xs font-medium">DISC</span>
+                <span class="text-text-secondary">DC</span>
+                <span class="text-text-primary font-medium">DI</span>
+                <span class="text-xs text-accent-amber flex items-center gap-1">⚠ Próximo (I vs C)</span>
+              </div>
+              <div class="grid grid-cols-[100px_1fr_1fr_120px] gap-4 items-center text-sm py-2">
+                <span class="text-theory-lesenne text-xs font-medium">Le Senne</span>
+                <span class="text-text-secondary">EAP (Colérico)</span>
+                <span class="text-text-primary font-medium">EAP (Colérico)</span>
+                <span class="text-xs text-accent-green flex items-center gap-1">✅ 100% match</span>
+              </div>
+            </div>
+
+            <div class="bg-bg-primary/50 rounded-lg p-3 mt-4 border border-accent-teal/10">
+              <p class="text-xs text-text-secondary">💡 Este colaborador contribui para o perfil ideal do cargo. Seu perfil tem peso no <span class="text-accent-teal font-medium">recálculo automático</span>.</p>
+            </div>
+          </div>
+
+          <!-- Evolution Chart -->
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-5">
+            <div class="flex items-center gap-2 mb-4 pb-3 border-b border-border-subtle"><span>📈</span><h3 class="font-sora text-sm font-semibold">Evolução Pós-Contratação</h3></div>
+            <div id="empEvolutionChart" class="h-56"></div>
+            <div class="flex items-center justify-between mt-3 text-xs">
+              <span class="text-text-muted">Contratação: 15/01/2026 (precisão: 79%)</span>
+              <span class="text-accent-green font-medium">Δ total: +6% desde contratação</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Testes -->
+        <div x-show="empTab==='tests-history'">
+          <!-- Test History -->
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-5 mb-4">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-border-subtle">
+              <div class="flex items-center gap-2"><span>📝</span><h3 class="font-sora text-sm font-semibold">Histórico de Testes Padrão</h3></div>
+              <button class="px-3 py-1.5 rounded-lg bg-accent-teal/10 text-accent-teal text-xs border border-accent-teal/20 hover:bg-accent-teal/20">📝 Enviar Novo Teste</button>
+            </div>
+
+            <div class="space-y-4">
+              <!-- DISC Test - Completed -->
+              <div class="bg-bg-primary rounded-lg p-4 border border-border-subtle">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-theory-disc/10 flex items-center justify-center text-theory-disc text-sm font-bold">D</div>
+                    <div>
+                      <p class="text-sm font-medium">DISC</p>
+                      <p class="text-[10px] text-text-muted">28 grupos · 28/02/2026</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-accent-green/15 text-accent-green">✅ Completo</span>
+                </div>
+                <div class="flex items-center gap-6 mt-3">
+                  <div class="flex items-center gap-2 text-xs"><span class="text-text-muted">Resultado:</span><span class="text-theory-disc font-medium">D:85 I:72 S:35 C:48 — Perfil DI confirmado</span></div>
+                  <div class="flex items-center gap-2 text-xs"><span class="text-text-muted">Precisão:</span><span>79% → <span class="text-accent-green font-medium">82%</span></span><span class="text-accent-green text-[10px]">(+3%)</span></div>
+                </div>
+              </div>
+
+              <!-- Big Five Test - Completed -->
+              <div class="bg-bg-primary rounded-lg p-4 border border-border-subtle">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-theory-bigfive/10 flex items-center justify-center text-theory-bigfive text-sm font-bold">B</div>
+                    <div>
+                      <p class="text-sm font-medium">Big Five (OCEAN)</p>
+                      <p class="text-[10px] text-text-muted">120 perguntas · 15/02/2026</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-accent-green/15 text-accent-green">✅ Completo</span>
+                </div>
+                <div class="flex items-center gap-6 mt-3">
+                  <div class="flex items-center gap-2 text-xs"><span class="text-text-muted">Resultado:</span><span class="text-theory-bigfive font-medium">O:78 C:89 E:82 A:55 N:22</span></div>
+                  <div class="flex items-center gap-2 text-xs"><span class="text-text-muted">Precisão:</span><span>82% → <span class="text-accent-green font-medium">85%</span></span><span class="text-accent-green text-[10px]">(+3%)</span></div>
+                </div>
+              </div>
+
+              <!-- MBTI Test - Completed -->
+              <div class="bg-bg-primary rounded-lg p-4 border border-border-subtle">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-theory-mbti/10 flex items-center justify-center text-theory-mbti text-sm font-bold">M</div>
+                    <div>
+                      <p class="text-sm font-medium">MBTI</p>
+                      <p class="text-[10px] text-text-muted">93 perguntas · 01/03/2026</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-accent-green/15 text-accent-green">✅ Completo</span>
+                </div>
+                <div class="flex items-center gap-6 mt-3">
+                  <div class="flex items-center gap-2 text-xs"><span class="text-text-muted">Resultado:</span><span class="text-theory-mbti font-medium">ENTJ — E:80 N:68 T:78 J:62 (confirmado)</span></div>
+                  <div class="flex items-center gap-2 text-xs"><span class="text-text-muted">Precisão:</span><span>83% → <span class="text-accent-green font-medium">85%</span></span><span class="text-accent-green text-[10px]">(+2%)</span></div>
+                </div>
+              </div>
+
+              <!-- Enneagram - Not applied -->
+              <div class="bg-bg-primary rounded-lg p-4 border border-accent-amber/20">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-theory-enneagram/10 flex items-center justify-center text-theory-enneagram text-sm font-bold">E</div>
+                    <div>
+                      <p class="text-sm font-medium">Eneagrama</p>
+                      <p class="text-[10px] text-text-muted">144 perguntas · Não aplicado</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-accent-amber/15 text-accent-amber">⏳ Não aplicado</span>
+                </div>
+                <div class="flex items-center justify-between mt-3">
+                  <p class="text-xs text-accent-amber">Precisão atual: 82% — abaixo de 85%, teste recomendado</p>
+                  <button class="px-3 py-1.5 rounded bg-theory-enneagram/10 text-theory-enneagram text-xs border border-theory-enneagram/20 hover:bg-theory-enneagram/20">Enviar Teste</button>
+                </div>
+              </div>
+
+              <!-- Le Senne - Not applied -->
+              <div class="bg-bg-primary rounded-lg p-4 border border-border-subtle">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-theory-lesenne/10 flex items-center justify-center text-theory-lesenne text-sm font-bold">L</div>
+                    <div>
+                      <p class="text-sm font-medium">Le Senne</p>
+                      <p class="text-[10px] text-text-muted">60 perguntas · Não aplicado</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] px-2 py-0.5 rounded-full bg-text-muted/15 text-text-muted">⏳ Não aplicado</span>
+                </div>
+                <div class="flex items-center justify-between mt-3">
+                  <p class="text-xs text-text-muted">Precisão atual: 84%</p>
+                  <button class="px-3 py-1.5 rounded bg-theory-lesenne/10 text-theory-lesenne text-xs border border-theory-lesenne/20 hover:bg-theory-lesenne/20">Enviar Teste</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Precision per Theory -->
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-5">
+            <div class="flex items-center gap-2 mb-4 pb-3 border-b border-border-subtle"><span>📊</span><h3 class="font-sora text-sm font-semibold">Precisão por Teoria</h3></div>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3"><span class="text-xs text-theory-mbti w-20">MBTI</span><div class="flex-1 h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full bg-theory-mbti rounded-full" style="width:85%"></div></div><span class="text-xs text-text-secondary w-10 text-right">85%</span></div>
+              <div class="flex items-center gap-3"><span class="text-xs text-theory-enneagram w-20">Eneagrama</span><div class="flex-1 h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full bg-theory-enneagram rounded-full" style="width:82%"></div></div><span class="text-xs text-text-secondary w-10 text-right">82%</span></div>
+              <div class="flex items-center gap-3"><span class="text-xs text-theory-bigfive w-20">Big Five</span><div class="flex-1 h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full bg-theory-bigfive rounded-full" style="width:88%"></div></div><span class="text-xs text-text-secondary w-10 text-right">88%</span></div>
+              <div class="flex items-center gap-3"><span class="text-xs text-theory-disc w-20">DISC</span><div class="flex-1 h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full bg-theory-disc rounded-full" style="width:92%"></div></div><span class="text-xs text-text-secondary w-10 text-right">92%</span></div>
+              <div class="flex items-center gap-3"><span class="text-xs text-theory-lesenne w-20">Le Senne</span><div class="flex-1 h-2 bg-border-subtle rounded-full overflow-hidden"><div class="h-full bg-theory-lesenne rounded-full" style="width:84%"></div></div><span class="text-xs text-text-secondary w-10 text-right">84%</span></div>
+            </div>
+            <div class="flex items-center justify-between mt-4 pt-3 border-t border-border-subtle text-xs">
+              <span class="text-text-muted">Geral: <span class="text-text-primary font-medium">85%</span></span>
+              <span class="text-text-muted">Target do cargo: <span class="text-text-primary font-medium">80%</span></span>
+              <span class="text-accent-green font-medium">✅ Acima do target</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: DNA (reuses same structure as candidate) -->
+        <div x-show="empTab==='dna'">
+          <div class="grid grid-cols-2 gap-4">
+            <!-- MBTI Detail -->
+            <div class="bg-bg-card border border-theory-mbti/20 rounded-lg p-5">
+              <div class="flex items-center justify-between mb-3 pb-3 border-b border-border-subtle">
+                <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-theory-mbti"></div><h3 class="font-sora text-sm font-semibold">MBTI</h3></div>
+                <span class="text-xs text-theory-mbti">Precisão: 85%</span>
+              </div>
+              <p class="font-sora text-2xl font-bold text-theory-mbti mb-1">ENTJ</p>
+              <p class="text-xs text-text-secondary mb-3">O Comandante — Estrategista natural, decisivo e assertivo.</p>
+              <div class="space-y-2">
+                <div><div class="flex justify-between text-xs"><span class="text-text-muted">Extroversão (E)</span><span class="text-theory-mbti">80%</span></div><div class="h-1.5 bg-border-subtle rounded-full mt-0.5"><div class="h-full bg-theory-mbti rounded-full" style="width:80%"></div></div></div>
+                <div><div class="flex justify-between text-xs"><span class="text-text-muted">Intuição (N)</span><span class="text-theory-mbti">68%</span></div><div class="h-1.5 bg-border-subtle rounded-full mt-0.5"><div class="h-full bg-theory-mbti rounded-full" style="width:68%"></div></div></div>
+                <div><div class="flex justify-between text-xs"><span class="text-text-muted">Pensamento (T)</span><span class="text-theory-mbti">78%</span></div><div class="h-1.5 bg-border-subtle rounded-full mt-0.5"><div class="h-full bg-theory-mbti rounded-full" style="width:78%"></div></div></div>
+                <div><div class="flex justify-between text-xs"><span class="text-text-muted">Julgamento (J)</span><span class="text-theory-mbti">62%</span></div><div class="h-1.5 bg-border-subtle rounded-full mt-0.5"><div class="h-full bg-theory-mbti rounded-full" style="width:62%"></div></div></div>
+              </div>
+              <p class="text-[10px] text-text-muted mt-3">Fonte: Análise de áudio + Teste padrão MBTI (01/03)</p>
+            </div>
+            <!-- DISC Detail -->
+            <div class="bg-bg-card border border-theory-disc/20 rounded-lg p-5">
+              <div class="flex items-center justify-between mb-3 pb-3 border-b border-border-subtle">
+                <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-theory-disc"></div><h3 class="font-sora text-sm font-semibold">DISC</h3></div>
+                <span class="text-xs text-theory-disc">Precisão: 92%</span>
+              </div>
+              <p class="font-sora text-2xl font-bold text-theory-disc mb-1">DI</p>
+              <p class="text-xs text-text-secondary mb-3">Dominante-Influente — Direto e persuasivo.</p>
+              <div class="flex items-end justify-center gap-4 h-24 mt-3">
+                <div class="text-center"><div class="w-10 bg-theory-disc rounded-t" style="height:85%"></div><p class="text-[10px] text-text-muted mt-1">D:85</p></div>
+                <div class="text-center"><div class="w-10 bg-theory-disc/70 rounded-t" style="height:72%"></div><p class="text-[10px] text-text-muted mt-1">I:72</p></div>
+                <div class="text-center"><div class="w-10 bg-theory-disc/30 rounded-t" style="height:35%"></div><p class="text-[10px] text-text-muted mt-1">S:35</p></div>
+                <div class="text-center"><div class="w-10 bg-theory-disc/50 rounded-t" style="height:48%"></div><p class="text-[10px] text-text-muted mt-1">C:48</p></div>
+              </div>
+              <p class="text-[10px] text-text-muted mt-3">Fonte: Análise de áudio + Teste padrão DISC (28/02)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Comunicação (simplified) -->
+        <div x-show="empTab==='communication'">
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-5 mb-4">
+            <div class="flex items-center gap-2 mb-3 pb-3 border-b border-border-subtle"><span>💬</span><h3 class="font-sora text-sm font-semibold">Estilo de Comunicação</h3></div>
+            <div class="grid grid-cols-2 gap-6">
+              <div class="space-y-4">
+                <div><div class="flex justify-between text-sm mb-1"><span>Nível de Provocação</span><span class="text-accent-teal font-medium">7.5</span></div><div class="h-2 bg-border-subtle rounded-full"><div class="h-full bg-accent-teal rounded-full" style="width:75%"></div></div><p class="text-[10px] text-text-muted mt-1">Desafia interlocutores de forma construtiva</p></div>
+                <div><div class="flex justify-between text-sm mb-1"><span>Temperatura da Verdade</span><span class="text-accent-amber font-medium">8.2</span></div><div class="h-2 bg-border-subtle rounded-full"><div class="h-full bg-accent-amber rounded-full" style="width:82%"></div></div><p class="text-[10px] text-text-muted mt-1">Alta franqueza, comunica fatos de forma direta</p></div>
+                <div><div class="flex justify-between text-sm mb-1"><span>Validação vs Desafio</span><span class="text-theory-enneagram font-medium">3.8</span></div><div class="h-2 bg-border-subtle rounded-full"><div class="h-full bg-theory-enneagram rounded-full" style="width:38%"></div></div><p class="text-[10px] text-text-muted mt-1">Tende a desafiar mais do que validar</p></div>
+              </div>
+              <div>
+                <h4 class="text-xs text-text-muted uppercase tracking-wider mb-3">Palavras de Poder (frequentes)</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-2 py-1 rounded bg-accent-teal/10 text-accent-teal text-xs">resultado</span>
+                  <span class="px-2 py-1 rounded bg-accent-teal/10 text-accent-teal text-xs">meta</span>
+                  <span class="px-2 py-1 rounded bg-accent-teal/10 text-accent-teal text-xs">entregar</span>
+                  <span class="px-2 py-1 rounded bg-theory-disc/10 text-theory-disc text-xs">decisão</span>
+                  <span class="px-2 py-1 rounded bg-theory-disc/10 text-theory-disc text-xs">liderar</span>
+                  <span class="px-2 py-1 rounded bg-theory-enneagram/10 text-theory-enneagram text-xs">performance</span>
+                  <span class="px-2 py-1 rounded bg-theory-bigfive/10 text-theory-bigfive text-xs">estratégia</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Áudio & Entrevista (from pre-hiring) -->
+        <div x-show="empTab==='audio'">
+          <div class="bg-bg-primary/50 rounded-lg p-3 mb-4 border border-accent-teal/10 flex items-start gap-2">
+            <span class="text-accent-teal text-sm">ℹ</span>
+            <p class="text-xs text-text-secondary">Áudios e entrevistas do período <span class="text-accent-teal font-medium">pré-contratação</span>. Esses dados foram migrados quando Carlos foi contratado em 15/01/2026.</p>
+          </div>
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-5">
+            <div class="flex items-center gap-2 mb-3 pb-3 border-b border-border-subtle"><span>🎤</span><h3 class="font-sora text-sm font-semibold">Áudios do Assessment (4)</h3></div>
+            <div class="space-y-3">
+              <div class="bg-bg-primary rounded-lg p-3 border border-border-subtle">
+                <div class="flex items-center justify-between mb-2"><p class="text-xs font-medium">Q1: Resolução de Conflitos</p><span class="text-[10px] text-text-muted">02/01/2026</span></div>
+                <div class="flex items-center gap-3"><button class="w-8 h-8 rounded-full bg-accent-teal/20 flex items-center justify-center text-accent-teal text-sm">▶</button><div class="flex-1 h-1 bg-border-subtle rounded-full"><div class="h-full bg-accent-teal rounded-full" style="width:0%"></div></div><span class="text-[10px] text-text-muted">1:45</span></div>
+              </div>
+              <div class="bg-bg-primary rounded-lg p-3 border border-border-subtle">
+                <div class="flex items-center justify-between mb-2"><p class="text-xs font-medium">Q2: Tomada de Decisão sob Pressão</p><span class="text-[10px] text-text-muted">02/01/2026</span></div>
+                <div class="flex items-center gap-3"><button class="w-8 h-8 rounded-full bg-accent-teal/20 flex items-center justify-center text-accent-teal text-sm">▶</button><div class="flex-1 h-1 bg-border-subtle rounded-full"><div class="h-full bg-accent-teal rounded-full" style="width:0%"></div></div><span class="text-[10px] text-text-muted">2:10</span></div>
+              </div>
+              <div class="bg-bg-primary rounded-lg p-3 border border-border-subtle">
+                <div class="flex items-center justify-between mb-2"><p class="text-xs font-medium">Q3: Trabalho em Equipe</p><span class="text-[10px] text-text-muted">03/01/2026</span></div>
+                <div class="flex items-center gap-3"><button class="w-8 h-8 rounded-full bg-accent-teal/20 flex items-center justify-center text-accent-teal text-sm">▶</button><div class="flex-1 h-1 bg-border-subtle rounded-full"><div class="h-full bg-accent-teal rounded-full" style="width:0%"></div></div><span class="text-[10px] text-text-muted">1:23</span></div>
+              </div>
+              <div class="bg-bg-primary rounded-lg p-3 border border-border-subtle">
+                <div class="flex items-center justify-between mb-2"><p class="text-xs font-medium">Q4: Motivação e Valores</p><span class="text-[10px] text-text-muted">03/01/2026</span></div>
+                <div class="flex items-center gap-3"><button class="w-8 h-8 rounded-full bg-accent-teal/20 flex items-center justify-center text-accent-teal text-sm">▶</button><div class="flex-1 h-1 bg-border-subtle rounded-full"><div class="h-full bg-accent-teal rounded-full" style="width:0%"></div></div><span class="text-[10px] text-text-muted">1:55</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Documentos -->
+        <div x-show="empTab==='documents'">
+          <div class="bg-bg-card border border-border-subtle rounded-lg p-5">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-border-subtle">
+              <div class="flex items-center gap-2"><span>📄</span><h3 class="font-sora text-sm font-semibold">Documentos</h3></div>
+              <button class="text-xs text-accent-teal hover:underline">+ Upload</button>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between p-3 bg-bg-primary rounded-lg border border-border-subtle hover:bg-bg-hover cursor-pointer">
+                <div class="flex items-center gap-3"><span class="text-lg">📊</span><div><p class="text-sm font-medium">Relatório Comportamental Completo</p><p class="text-[10px] text-text-muted">PDF · Gerado em 01/03/2026 · Precisão 85%</p></div></div>
+                <button class="text-xs text-accent-teal hover:underline">⬇ Download</button>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-bg-primary rounded-lg border border-border-subtle hover:bg-bg-hover cursor-pointer">
+                <div class="flex items-center gap-3"><span class="text-lg">📋</span><div><p class="text-sm font-medium">Relatório Pré-Contratação (Candidato)</p><p class="text-[10px] text-text-muted">PDF · Gerado em 10/01/2026 · Precisão 79%</p></div></div>
+                <button class="text-xs text-accent-teal hover:underline">⬇ Download</button>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-bg-primary rounded-lg border border-border-subtle hover:bg-bg-hover cursor-pointer">
+                <div class="flex items-center gap-3"><span class="text-lg">📝</span><div><p class="text-sm font-medium">Resultado Teste DISC</p><p class="text-[10px] text-text-muted">PDF · 28/02/2026</p></div></div>
+                <button class="text-xs text-accent-teal hover:underline">⬇ Download</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="fixed bottom-0 left-56 right-0 bg-bg-card border-t border-border-subtle px-6 py-3 flex items-center gap-3 z-10">
+          <button class="px-4 py-2 rounded-lg bg-accent-teal/10 text-accent-teal text-sm border border-accent-teal/20 hover:bg-accent-teal/20">📝 Enviar Teste</button>
+          <button class="px-4 py-2 rounded-lg bg-bg-primary text-text-secondary text-sm border border-border-subtle hover:bg-bg-hover">💬 Nota</button>
+          <button class="px-4 py-2 rounded-lg bg-bg-primary text-text-secondary text-sm border border-border-subtle hover:bg-bg-hover">📄 Exportar PDF</button>
+          <div class="flex-1"></div>
+          <button class="px-4 py-2 rounded-lg bg-bg-primary text-text-muted text-sm border border-border-subtle hover:bg-bg-hover">🔄 Desativar Colaborador</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+function app() {
+  return {
+    page: 'dashboard',
+    activeTab: 'overview',
+    empTab: 'overview',
+    empSelected: 'carlos',
+    convSelected: 'maria',
+    humanTakeover: false,
+    go(p) {
+      this.page = p;
+      if (p === 'candidate-profile') this.activeTab = 'overview';
+      if (p === 'employee-profile') this.empTab = 'overview';
+      if (p === 'conversations') { this.humanTakeover = false; }
+    },
+    init() {
+      this.$watch('empTab', (val) => {
+        if (val === 'overview') {
+          this.$nextTick(() => {
+            const el = document.getElementById('empRadarChart');
+            if (el && !el.dataset.rendered) {
+              el.dataset.rendered = 'true';
+              new ApexCharts(el, {
+                series: [{name:'Carlos Rocha',data:[80,89,82,85,84]}],
+                chart:{type:'radar',height:200,background:'transparent',toolbar:{show:false}},
+                xaxis:{categories:['MBTI\n(E:80)','Big Five\n(C:89)','Extroversão\n(E:82)','DISC\n(D:85)','Le Senne\n(E:84)']},
+                yaxis:{show:false,min:0,max:100},
+                stroke:{colors:['#2DD4BF'],width:2},
+                fill:{colors:['#2DD4BF'],opacity:0.15},
+                markers:{size:3,colors:['#2DD4BF']},
+                plotOptions:{radar:{polygons:{strokeColors:'#30363D',connectorColors:'#30363D',fill:{colors:['transparent']}}}},
+                theme:{mode:'dark'},
+                dataLabels:{enabled:false}
+              }).render();
+            }
+          });
+        }
+        if (val === 'cargo-fit') {
+          this.$nextTick(() => {
+            const el = document.getElementById('empEvolutionChart');
+            if (el && !el.dataset.rendered) {
+              el.dataset.rendered = 'true';
+              new ApexCharts(el, {
+                series:[{name:'Precisão Geral',data:[79,82,85,85]}],
+                chart:{type:'line',height:220,background:'transparent',toolbar:{show:false}},
+                xaxis:{categories:['Contratação\n15/01','Teste DISC\n28/02','Teste BF\n15/02','Teste MBTI\n01/03'],labels:{style:{colors:'#8B949E',fontSize:'10px'}}},
+                yaxis:{min:70,max:100,labels:{style:{colors:'#8B949E',fontSize:'10px'}},title:{text:'Precisão %',style:{color:'#6E7681',fontSize:'10px'}}},
+                stroke:{colors:['#2DD4BF'],width:3,curve:'smooth'},
+                markers:{size:6,colors:['#0D1117'],strokeColors:['#2DD4BF'],strokeWidth:2},
+                fill:{type:'gradient',gradient:{shadeIntensity:1,opacityFrom:0.3,opacityTo:0.05,stops:[0,100],colorStops:[{offset:0,color:'#2DD4BF',opacity:0.3},{offset:100,color:'#2DD4BF',opacity:0.05}]}},
+                grid:{borderColor:'#30363D',strokeDashArray:4},
+                theme:{mode:'dark'},
+                annotations:{yaxis:[{y:80,borderColor:'#F59E0B',label:{text:'Target: 80%',style:{background:'#F59E0B20',color:'#F59E0B',fontSize:'10px',padding:{left:4,right:4,top:2,bottom:2}}}}]}
+              }).render();
+            }
+          });
+        }
+      });
+    }
+  }
+}
+</script>
+</body>
+</html>

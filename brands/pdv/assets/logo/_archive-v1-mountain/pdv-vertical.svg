@@ -1,0 +1,9 @@
+<svg width="170" height="165" viewBox="0 0 170 165" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Profissional de Valor — Completa Vertical -->
+  <g transform="translate(85, 50) scale(0.95) translate(-73.5, -42)">
+    <path d="M48 24 Q55 12 62 24 L82 64 Q88 75 76 75 L34 75 Q22 75 28 64 Z" fill="white" opacity="0.9"/>
+    <path d="M73 18 Q82 4 91 18 L118 67 Q125 80 111 80 L53 80 Q39 80 46 67 Z" stroke="#C49A3C" stroke-width="2.6" fill="none" opacity="0.6"/>
+  </g>
+  <text x="85" y="114" font-family="Sora, sans-serif" font-size="12" font-weight="300" fill="white" text-anchor="middle" letter-spacing="0.15em" opacity="0.6">Profissional</text>
+  <text x="85" y="136" font-family="Sora, sans-serif" font-size="18" font-weight="700" fill="white" text-anchor="middle" letter-spacing="-0.02em">de Valor</text>
+</svg>

@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wireframe — Página do Colaborador (Electia)</title>
+  <link rel="preconnect" href="https://rsms.me/" />
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <style>
+    :root {
+      --bg: oklch(96% 0 0);
+      --surface: oklch(98.5% 0 0);
+      --text: oklch(18% 0 0);
+      --text-muted: oklch(45% 0 0);
+      --border: oklch(92% 0 0);
+      --accent: oklch(50% 0.18 145);
+
+      /* THEORY_COLORS Electia (em produção) */
+      --theory-disc:           oklch(58% 0.18 240);
+      --theory-mbti:           oklch(58% 0.20 295);
+      --theory-bigfive:        oklch(55% 0.13 145);
+      --theory-eneagrama:      oklch(70% 0.16 75);
+      --theory-temperamentos:  oklch(62% 0.16 10);
+      --theory-motivadores:    oklch(60% 0.14 195);
+      --theory-bat:            oklch(55% 0.12 175);
+    }
+
+    [data-theme="dark"] {
+      --bg: oklch(12% 0 0);
+      --surface: oklch(16% 0 0);
+      --text: oklch(94% 0 0);
+      --text-muted: oklch(70% 0 0);
+      --border: oklch(22% 0 0);
+      --accent: oklch(75% 0.18 145);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; transition: background 200ms ease, color 200ms ease; }
+
+    /* TOPBAR */
+    .topbar {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; padding: 12px 24px;
+      background: oklch(from var(--surface) l c h / 0.92); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+    .brand::before { content: ""; display: inline-block; width: 22px; height: 22px; border-radius: 6px; background: linear-gradient(135deg, var(--theory-mbti), var(--theory-disc)); }
+    .topbar-actions { display: flex; gap: 8px; }
+    .btn { appearance: none; border: 1px solid var(--border); background: transparent; color: var(--text); font: inherit; font-size: 13px; padding: 8px 14px; border-radius: 8px; cursor: pointer; transition: all 150ms ease; font-weight: 500; }
+    .btn:hover { transform: translateY(-1px); border-color: var(--accent); }
+    .btn-primary { background: var(--accent); color: oklch(98% 0 0); border-color: transparent; }
+    .btn-primary:hover { filter: brightness(1.08); }
+    .theme-btn { width: 36px; padding: 0; height: 36px; border-radius: 50%; }
+
+    /* HERO */
+    .hero {
+      max-width: 1200px; margin: 0 auto; padding: 32px 24px 16px;
+      display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center;
+    }
+    .avatar {
+      width: 88px; height: 88px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--theory-mbti) 0%, var(--theory-disc) 100%);
+      display: grid; place-items: center;
+      color: oklch(98% 0 0); font-size: 32px; font-weight: 700;
+      box-shadow: 0 4px 16px oklch(0% 0 0 / 0.1);
+    }
+    .hero-info h1 { margin: 0 0 4px; font-size: 26px; letter-spacing: -0.02em; font-weight: 700; }
+    .hero-info .role { font-size: 14px; color: var(--text-muted); margin-bottom: 8px; }
+    .hero-summary {
+      display: inline-flex; gap: 12px; align-items: center;
+      padding: 6px 12px;
+      background: oklch(from var(--accent) l c h / 0.1);
+      border: 1px solid oklch(from var(--accent) l c h / 0.3);
+      border-radius: 999px;
+      font-size: 12px; color: var(--accent); font-weight: 600;
+    }
+    .hero-summary::before { content: "✓"; }
+    .hero-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+
+    /* SUMMARY GRID — 7 chips */
+    .summary-grid {
+      max-width: 1200px; margin: 16px auto;
+      padding: 0 24px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+    }
+    .theory-pill {
+      padding: 10px 14px; border-radius: 12px;
+      background: var(--surface); border: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 4px;
+      cursor: pointer; transition: all 150ms ease;
+      border-left: 3px solid var(--theory-color, var(--border));
+      text-decoration: none; color: inherit;
+    }
+    .theory-pill:hover { transform: translateY(-2px); box-shadow: 0 4px 12px oklch(0% 0 0 / 0.06); }
+    .pill-label { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    .pill-value { font-size: 14px; font-weight: 600; color: var(--text); }
+
+    /* ANCHOR NAV STICKY */
+    .anchor-nav {
+      position: sticky; top: 60px; z-index: 50;
+      background: oklch(from var(--surface) l c h / 0.92); backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      padding: 10px 24px;
+      display: flex; gap: 6px; overflow-x: auto;
+      max-width: 1200px; margin: 16px auto 0;
+      border-radius: 12px;
+    }
+    .anchor-nav a {
+      padding: 6px 14px;
+      font-size: 12px; font-weight: 600;
+      color: var(--text-muted); text-decoration: none;
+      border-radius: 999px;
+      white-space: nowrap;
+      transition: all 150ms ease;
+      border: 1px solid transparent;
+    }
+    .anchor-nav a:hover { color: var(--text); background: oklch(from var(--text) l c h / 0.05); }
+    .anchor-nav a.active { color: var(--text); background: oklch(from var(--text) l c h / 0.08); border-color: var(--border); }
+
+    /* THEORY SECTIONS */
+    .theory-section {
+      max-width: 1200px; margin: 0 auto;
+      padding: 48px 24px;
+      scroll-margin-top: 120px;
+      border-top: 1px solid var(--border);
+    }
+    .theory-section:first-of-type { border-top: none; }
+
+    .theory-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 20px; gap: 16px; flex-wrap: wrap;
+    }
+    .theory-header-text { flex: 1; min-width: 200px; }
+    .theory-header h2 {
+      margin: 0 0 6px; font-size: 22px; letter-spacing: -0.02em; font-weight: 700;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .theory-header h2::before {
+      content: ""; display: inline-block;
+      width: 6px; height: 24px; border-radius: 3px;
+      background: var(--theory-color, var(--border));
+    }
+    .theory-header p { margin: 0; font-size: 13px; color: var(--text-muted); }
+    .theory-status {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 999px;
+      background: oklch(from var(--accent) l c h / 0.1);
+      color: var(--accent);
+      border: 1px solid oklch(from var(--accent) l c h / 0.3);
+    }
+    .theory-status.placeholder { background: oklch(from var(--text-muted) l c h / 0.08); color: var(--text-muted); border-color: var(--border); }
+
+    /* THEORY CONTENT — 2 colunas: card + sidebar */
+    .theory-content {
+      display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px;
+    }
+    @media (max-width: 900px) { .theory-content { grid-template-columns: 1fr; } }
+
+    .card-frame {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 1px 2px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.04);
+    }
+    .card-frame iframe {
+      width: 100%; height: 820px; border: none; display: block;
+      background: var(--surface);
+    }
+    .card-placeholder {
+      height: 600px; display: grid; place-items: center;
+      background: repeating-linear-gradient(45deg, var(--surface), var(--surface) 10px, oklch(from var(--text-muted) l c h / 0.04) 10px, oklch(from var(--text-muted) l c h / 0.04) 20px);
+      color: var(--text-muted);
+      text-align: center; padding: 24px;
+    }
+    .card-placeholder strong { display: block; font-size: 16px; color: var(--text); margin-bottom: 6px; }
+    .card-placeholder span { font-size: 12px; }
+
+    /* SIDEBAR INSIGHTS + AÇÕES */
+    .insights-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 18px;
+      align-self: start;
+      position: sticky; top: 130px;
+    }
+    @media (max-width: 900px) { .insights-panel { position: static; } }
+
+    .insights-section { margin-bottom: 18px; }
+    .insights-section:last-child { margin-bottom: 0; }
+    .insights-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .insights-title::before {
+      content: ""; width: 14px; height: 14px; border-radius: 4px;
+      background: var(--theory-color, var(--accent));
+    }
+    .insights-list { margin: 0; padding: 0; list-style: none; }
+    .insights-list li {
+      padding: 8px 0; font-size: 13px; line-height: 1.45;
+      border-bottom: 1px solid oklch(from var(--border) l c h / 0.5);
+    }
+    .insights-list li:last-child { border-bottom: none; }
+    .insights-list strong { color: var(--text); font-weight: 600; }
+
+    .action-btn {
+      width: 100%; margin-top: 8px;
+      padding: 9px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text); font: inherit; font-size: 12px; font-weight: 500;
+      cursor: pointer; transition: all 150ms ease;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .action-btn:hover { border-color: var(--theory-color, var(--accent)); color: var(--theory-color, var(--accent)); transform: translateX(2px); }
+    .action-btn::after { content: "→"; opacity: 0.5; }
+
+    /* APPLY THEORY COLORS */
+    [data-theory="disc"]          { --theory-color: var(--theory-disc); }
+    [data-theory="mbti"]          { --theory-color: var(--theory-mbti); }
+    [data-theory="bigfive"]       { --theory-color: var(--theory-bigfive); }
+    [data-theory="eneagrama"]     { --theory-color: var(--theory-eneagrama); }
+    [data-theory="temperamentos"] { --theory-color: var(--theory-temperamentos); }
+    [data-theory="motivadores"]   { --theory-color: var(--theory-motivadores); }
+    [data-theory="bat"]           { --theory-color: var(--theory-bat); }
+
+    /* FOOTER FIXO */
+    .footer-actions {
+      position: sticky; bottom: 0; z-index: 50;
+      background: oklch(from var(--surface) l c h / 0.95); backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+      box-shadow: 0 -4px 12px oklch(0% 0 0 / 0.04);
+    }
+
+    /* HIDE TEORIAS NÃO REALIZADAS — só aparece o que o colaborador realmente fez */
+    .theory-section[data-completed="false"],
+    .theory-pill[data-completed="false"],
+    .anchor-nav a[data-completed="false"] { display: none; }
+
+    /* PRÓXIMOS PASSOS — bloco discreto pros testes ainda pendentes */
+    .next-steps {
+      max-width: 1200px; margin: 32px auto 16px;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+    }
+    .next-steps-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 16px; gap: 16px; flex-wrap: wrap;
+    }
+    .next-steps-header h3 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+    .next-steps-header p { margin: 0; font-size: 12px; color: var(--text-muted); }
+    .next-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; list-style: none; padding: 0; margin: 0; }
+    .next-list li {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      border-left: 3px solid var(--theory-color, var(--border));
+      font-size: 13px;
+    }
+    .next-list .next-name { font-weight: 600; flex: 1; }
+    .next-list .next-cta {
+      appearance: none; border: none; background: transparent;
+      color: var(--theory-color, var(--accent)); font: inherit; font-size: 12px; font-weight: 600;
+      cursor: pointer; padding: 4px 8px; border-radius: 6px;
+      transition: all 150ms ease;
+    }
+    .next-list .next-cta:hover { background: oklch(from var(--theory-color, var(--accent)) l c h / 0.1); }
+    .next-list .next-cta::after { content: " →"; }
+
+    /* WIREFRAME ANNOTATIONS */
+    .wf-banner {
+      max-width: 1200px; margin: 16px auto;
+      padding: 10px 16px;
+      background: oklch(75% 0.10 75 / 0.15);
+      border: 1px dashed oklch(60% 0.14 75);
+      border-radius: 10px;
+      color: oklch(45% 0.14 75);
+      font-size: 12px;
+      display: flex; gap: 8px; align-items: center;
+    }
+    [data-theme="dark"] .wf-banner { color: oklch(80% 0.14 75); }
+    .wf-banner::before { content: "⚠"; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="brand">Electia</div>
+    <div class="topbar-actions">
+      <button class="btn theme-btn" id="themeBtn" aria-label="Alternar tema">🌙</button>
+      <button class="btn">Equipe</button>
+      <button class="btn btn-primary">Avaliação 1:1</button>
+    </div>
+  </header>
+
+  <!-- WIREFRAME BANNER -->
+  <div class="wf-banner">
+    <span>Wireframe v0.4 · Página do Colaborador · 5 de 7 testes realizados (DISC, MBTI, Big Five, Eneagrama, Temperamentos)</span>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="avatar">MC</div>
+    <div class="hero-info">
+      <h1>Marcos Carneiro</h1>
+      <div class="role">Comercial Sênior · Tech Solutions LTDA</div>
+      <span class="hero-summary">Alinhado ao cargo · 5 de 7 testes realizados</span>
+    </div>
+    <div class="hero-actions">
+      <button class="btn">Compartilhar link</button>
+      <button class="btn btn-primary">Exportar PDF</button>
+    </div>
+  </section>
+
+  <!-- SUMMARY GRID — só os realizados aparecem (data-completed=false fica oculto via CSS) -->
+  <section class="summary-grid">
+    <a href="#disc" class="theory-pill" data-theory="disc" data-completed="true">
+      <span class="pill-label">DISC</span>
+      <span class="pill-value">D dominante</span>
+    </a>
+    <a href="#mbti" class="theory-pill" data-theory="mbti" data-completed="true">
+      <span class="pill-label">MBTI</span>
+      <span class="pill-value">ENTJ · Marechal</span>
+    </a>
+    <a href="#bigfive" class="theory-pill" data-theory="bigfive" data-completed="true">
+      <span class="pill-label">Big Five</span>
+      <span class="pill-value">Equilibrado</span>
+    </a>
+    <a href="#eneagrama" class="theory-pill" data-theory="eneagrama" data-completed="true">
+      <span class="pill-label">Eneagrama</span>
+      <span class="pill-value">Tipo 8 · 8w7</span>
+    </a>
+    <a href="#temperamentos" class="theory-pill" data-theory="temperamentos" data-completed="true">
+      <span class="pill-label">Temperamentos</span>
+      <span class="pill-value">Colérico-Melancólico</span>
+    </a>
+    <a href="#motivadores" class="theory-pill" data-theory="motivadores" data-completed="false">
+      <span class="pill-label">Motivadores</span>
+      <span class="pill-value">Realização · Poder</span>
+    </a>
+    <a href="#bat" class="theory-pill" data-theory="bat" data-completed="false">
+      <span class="pill-label">Bem-Estar</span>
+      <span class="pill-value">Saudável</span>
+    </a>
+  </section>
+
+  <!-- ANCHOR NAV — só os realizados aparecem -->
+  <nav class="anchor-nav" aria-label="Navegar entre teorias">
+    <a href="#disc" class="active" data-completed="true">DISC</a>
+    <a href="#mbti" data-completed="true">MBTI</a>
+    <a href="#bigfive" data-completed="true">Big Five</a>
+    <a href="#eneagrama" data-completed="true">Eneagrama</a>
+    <a href="#temperamentos" data-completed="true">Temperamentos</a>
+    <a href="#motivadores" data-completed="false">Motivadores</a>
+    <a href="#bat" data-completed="false">Bem-Estar</a>
+  </nav>
+
+  <!-- 1. DISC -->
+  <section id="disc" class="theory-section" data-theory="disc" data-completed="true">
+    <div class="theory-header">
+      <div class="theory-header-text">
+        <h2>DISC</h2>
+        <p>Estilo comportamental dominante · perfil baseado em Marston (1928)</p>
+      </div>
+      <span class="theory-status">✓ Aprovado · v0.1</span>
+    </div>
+    <div class="theory-content">
+      <div class="card-frame">
+        <iframe src="../mockups/disc-card.html" loading="lazy" title="DISC card"></iframe>
+      </div>
+      <aside class="insights-panel">
+        <div class="insights-section">
+          <div class="insights-title">Insights IA</div>
+          <ul class="insights-list">
+            <li><strong>Estilo de liderança:</strong> direto, orientado a resultados</li>
+            <li><strong>Comunicação:</strong> objetiva, prefere bullet points a discursos</li>
+            <li><strong>Risco:</strong> impaciência sob pressão · monitorar</li>
+          </ul>
+        </div>
+        <div class="insights-section">
+          <div class="insights-title">Próximas ações</div>
+          <button class="action-btn">Pauta sugerida pra 1:1</button>
+          <button class="action-btn">Comparar com equipe</button>
+          <button class="action-btn">Refazer teste DISC</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 2. MBTI -->
+  <section id="mbti" class="theory-section" data-theory="mbti" data-completed="true">
+    <div class="theory-header">
+      <div class="theory-header-text">
+        <h2>MBTI</h2>
+        <p>Tipo cognitivo · 16 tipos Jung/Myers-Briggs com papéis Keirsey</p>
+      </div>
+      <span class="theory-status">✓ Aprovado · v1.0</span>
+    </div>
+    <div class="theory-content">
+      <div class="card-frame">
+        <iframe src="../mockups/mbti-wheel.html" loading="lazy" title="MBTI wheel"></iframe>
+      </div>
+      <aside class="insights-panel">
+        <div class="insights-section">
+          <div class="insights-title">Insights IA</div>
+          <ul class="insights-list">
+            <li><strong>ENTJ · Marechal:</strong> liderança estratégica natural</li>
+            <li><strong>Coordenador:</strong> mobiliza pessoas em torno de metas longas</li>
+            <li><strong>Sinergia:</strong> forte com INTJ Estrategista</li>
+          </ul>
+        </div>
+        <div class="insights-section">
+          <div class="insights-title">Próximas ações</div>
+          <button class="action-btn">Roteiro de feedback</button>
+          <button class="action-btn">Comparar com gestor</button>
+          <button class="action-btn">Saiba mais sobre ENTJ</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 3. BIG FIVE -->
+  <section id="bigfive" class="theory-section" data-theory="bigfive" data-completed="true">
+    <div class="theory-header">
+      <div class="theory-header-text">
+        <h2>Big Five · OCEAN</h2>
+        <p>Cinco dimensões independentes · modelo dimensional Digman/Costa-McCrae</p>
+      </div>
+      <span class="theory-status">✓ Aprovado · v0.3</span>
+    </div>
+    <div class="theory-content">
+      <div class="card-frame">
+        <iframe src="../mockups/bigfive-card.html" loading="lazy" title="Big Five card"></iframe>
+      </div>
+      <aside class="insights-panel">
+        <div class="insights-section">
+          <div class="insights-title">Insights IA</div>
+          <ul class="insights-list">
+            <li><strong>Conscienciosidade alta (72):</strong> entrega confiável</li>
+            <li><strong>Amabilidade alta (78):</strong> cooperativo, gera consenso</li>
+            <li><strong>Neuroticismo baixo (35):</strong> estável sob pressão</li>
+          </ul>
+        </div>
+        <div class="insights-section">
+          <div class="insights-title">Próximas ações</div>
+          <button class="action-btn">Pontos de atenção · cargo</button>
+          <button class="action-btn">Plano de desenvolvimento</button>
+          <button class="action-btn">Conversar com IA</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 4. ENEAGRAMA (placeholder) -->
+  <section id="eneagrama" class="theory-section" data-theory="eneagrama" data-completed="true">
+    <div class="theory-header">
+      <div class="theory-header-text">
+        <h2>Eneagrama</h2>
+        <p>9 tipos com asas + linhas de integração e desintegração · símbolo clássico</p>
+      </div>
+      <span class="theory-status">✓ Aprovado · v0.3</span>
+    </div>
+    <div class="theory-content">
+      <div class="card-frame">
+        <iframe src="../mockups/eneagrama-card.html" loading="lazy" title="Eneagrama card"></iframe>
+      </div>
+      <aside class="insights-panel">
+        <div class="insights-section">
+          <div class="insights-title">Insights IA</div>
+          <ul class="insights-list">
+            <li><strong>Tipo 8 · Desafiador · 8w7:</strong> liderança intensa, decisiva</li>
+            <li><strong>Tríade Corpo (instinto):</strong> agir antes de sentir ou pensar</li>
+            <li><strong>Integração → Tipo 2:</strong> sob saúde, abre-se ao cuidado</li>
+            <li><strong>Desintegração → Tipo 5:</strong> sob estresse, retrai mentalmente</li>
+          </ul>
+        </div>
+        <div class="insights-section">
+          <div class="insights-title">Próximas ações</div>
+          <button class="action-btn">Plano de integração 8→2</button>
+          <button class="action-btn">Cuidados sob estresse</button>
+          <button class="action-btn">Saiba mais sobre Tipo 8</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 5. TEMPERAMENTOS (placeholder) -->
+  <section id="temperamentos" class="theory-section" data-theory="temperamentos" data-completed="true">
+    <div class="theory-header">
+      <div class="theory-header-text">
+        <h2>Temperamentos · 4 elementos</h2>
+        <p>4 temperamentos hipocráticos modernizados (Marsili) · Fogo, Ar, Água, Terra</p>
+      </div>
+      <span class="theory-status">✓ Aprovado · v0.5</span>
+    </div>
+    <div class="theory-content">
+      <div class="card-frame">
+        <iframe src="../mockups/temperamentos-card.html" loading="lazy" title="Temperamentos card"></iframe>
+      </div>
+      <aside class="insights-panel">
+        <div class="insights-section">
+          <div class="insights-title">Insights IA</div>
+          <ul class="insights-list">
+            <li><strong>Colérico (Fogo) · 70%:</strong> reação rápida e duradoura</li>
+            <li><strong>Secundário Melancólico (Terra) · 45%:</strong> profundidade reflexiva</li>
+            <li><strong>Combinação:</strong> liderança intensa + análise estratégica</li>
+          </ul>
+        </div>
+        <div class="insights-section">
+          <div class="insights-title">Próximas ações</div>
+          <button class="action-btn">Saiba mais sobre Marsili</button>
+          <button class="action-btn">Comparar com equipe</button>
+          <button class="action-btn">Plano de desenvolvimento</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 6. MOTIVADORES (placeholder) -->
+  <section id="motivadores" class="theory-section" data-theory="motivadores" data-completed="false">
+    <div class="theory-header">
+      <div class="theory-header-text">
+        <h2>Motivadores</h2>
+        <p>Hierarquia de impulsionadores · ranking dimensional</p>
+      </div>
+      <span class="theory-status placeholder">⏳ Mockup pendente</span>
+    </div>
+    <div class="theory-content">
+      <div class="card-frame">
+        <div class="card-placeholder">
+          <div>
+            <strong>Motivadores card · em produção</strong>
+            <span>Bar ranked horizontal · top motivadores ideal × realizado · padrão dimensional (similar Big Five)</span>
+          </div>
+        </div>
+      </div>
+      <aside class="insights-panel">
+        <div class="insights-section">
+          <div class="insights-title">Insights IA</div>
+          <ul class="insights-list">
+            <li>Top 3 motivadores</li>
+            <li>Match cargo × pessoa</li>
+            <li>Riscos de desengajamento</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 7. BAT / BEM-ESTAR (placeholder) -->
+  <section id="bat" class="theory-section" data-theory="bat" data-completed="false">
+    <div class="theory-header">
+      <div class="theory-header-text">
+        <h2>Bem-Estar · BAT</h2>
+        <p>Saúde mental ocupacional · modo individual com gate de psicólogo (CRP)</p>
+      </div>
+      <span class="theory-status placeholder">⏳ Mockup pendente</span>
+    </div>
+    <div class="theory-content">
+      <div class="card-frame">
+        <div class="card-placeholder">
+          <div>
+            <strong>Bem-Estar card · em produção</strong>
+            <span>Gauge zonas (saudável / atenção / alerta) · padrão dimensional com risk colors · acesso restrito ACL</span>
+          </div>
+        </div>
+      </div>
+      <aside class="insights-panel">
+        <div class="insights-section">
+          <div class="insights-title">Insights IA</div>
+          <ul class="insights-list">
+            <li>Estado geral de bem-estar</li>
+            <li>Zonas de atenção</li>
+            <li>Recursos de apoio (CAPS, APP)</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- PRÓXIMOS PASSOS — testes ainda não realizados (não interfere nos resultados acima) -->
+  <section class="next-steps" aria-label="Avaliações pendentes">
+    <div class="next-steps-header">
+      <div>
+        <h3>Próximos testes</h3>
+        <p>Avaliações que ainda não foram realizadas — você decide quando responder.</p>
+      </div>
+      <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">5 de 7 concluídos</span>
+    </div>
+    <ul class="next-list">
+      <li data-theory="motivadores">
+        <span class="next-name">Motivadores</span>
+        <button class="next-cta" type="button">Iniciar</button>
+      </li>
+      <li data-theory="bat">
+        <span class="next-name">Bem-Estar</span>
+        <button class="next-cta" type="button">Iniciar</button>
+      </li>
+    </ul>
+  </section>
+
+  <!-- FOOTER FIXO -->
+  <div class="footer-actions">
+    <button class="btn">Compartilhar link público</button>
+    <button class="btn btn-primary">Exportar PDF completo</button>
+    <button class="btn">Agendar 1:1</button>
+    <button class="btn">Conversar com IA Mentor</button>
+  </div>
+
+  <script>
+    // Active anchor on scroll
+    const links = document.querySelectorAll('.anchor-nav a');
+    const sections = [...document.querySelectorAll('.theory-section')];
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+        }
+      });
+    }, { rootMargin: '-30% 0px -50% 0px' });
+    sections.forEach(s => observer.observe(s));
+
+    // Theme toggle
+    const btn = document.getElementById('themeBtn');
+    const root = document.documentElement;
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      btn.textContent = next === 'light' ? '🌙' : '☀️';
+    });
+  </script>
+</body>
+</html>

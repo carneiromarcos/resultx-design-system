@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minhas Vagas — Emprega+ IMO</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>.icon { width: 18px; height: 18px; stroke-width: 1.8; }</style>
+
+  <link rel="stylesheet" href="../dist/tokens.min.css">
+  <link rel="stylesheet" href="../dist/components.min.css">
+
+  <style>
+    .sidebar-logo { background: linear-gradient(135deg, #1D4ED8, #6366F1); color: #fff; }
+
+    .status-tabs { display: flex; gap: var(--space-1); border-bottom: 1px solid var(--border-subtle); margin-bottom: var(--space-5); }
+    .status-tab {
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-sm); font-weight: var(--font-medium);
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      cursor: pointer; transition: all 150ms;
+    }
+    .status-tab:hover { color: var(--text-secondary); }
+    .status-tab.active { color: var(--accent-primary); border-bottom-color: var(--accent-primary); }
+    .status-tab .count {
+      display: inline-block;
+      background: var(--bg-surface-3); color: var(--text-muted);
+      font-size: 10px; padding: 1px 6px; border-radius: var(--radius-full); margin-left: var(--space-1);
+    }
+    .status-tab.active .count { background: var(--accent-primary-muted); color: var(--accent-primary); }
+
+    .action-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 30px; height: 30px; border-radius: var(--radius-md);
+      border: none; background: transparent; color: var(--text-muted);
+      cursor: pointer; transition: all 150ms;
+    }
+    .action-btn:hover { background: var(--bg-surface-3); color: var(--text-primary); }
+    .action-btn.danger:hover { background: var(--color-error-bg); color: var(--color-error); }
+
+    .stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); margin-bottom: var(--space-6); }
+    .stats-strip-card {
+      background: var(--bg-surface-2); border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5);
+    }
+    .stats-strip-label { font-size: var(--text-xs); color: var(--text-muted); text-transform: uppercase; letter-spacing: var(--tracking-wide); margin-bottom: var(--space-1); }
+    .stats-strip-value { font-size: var(--text-2xl); font-weight: var(--font-bold); color: var(--text-primary); font-family: var(--font-heading); }
+    .stats-strip-sub { font-size: var(--text-xs); color: var(--text-muted); margin-top: 2px; }
+    .delta-up { color: var(--color-success); }
+
+    .td-vaga { min-width: 240px; }
+    .vaga-title { font-size: var(--text-sm); font-weight: var(--font-semibold); color: var(--text-primary); margin-bottom: 2px; }
+    .vaga-meta { font-size: var(--text-xs); color: var(--text-muted); display: flex; align-items: center; gap: var(--space-2); }
+    .featured-star { color: #F59E0B; width: 12px; height: 12px; fill: #F59E0B; display: inline-block; }
+
+    .td-candidaturas { text-align: center; }
+    .cand-count { font-size: var(--text-sm); font-weight: var(--font-semibold); color: var(--text-primary); }
+    .cand-new { font-size: 10px; color: var(--color-success); font-weight: var(--font-medium); }
+    .cand-none { font-size: 10px; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Pular para o conteúdo</a>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     SIDEBAR — Empregador
+     ════════════════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">E+</div>
+    <div class="sidebar-brand-text">
+      <span>Emprega+</span>
+      <span style="font-size:10px;color:var(--text-muted);font-family:var(--font-mono);">EMPREGADOR</span>
+    </div>
+  </div>
+
+  <nav aria-label="Sidebar">
+    <div class="sidebar-section-label">Principal</div>
+    <div class="sidebar-item"><i data-lucide="layout-dashboard" class="icon" aria-hidden="true"></i> Dashboard</div>
+    <div class="sidebar-item active" aria-current="page"><i data-lucide="briefcase" class="icon" aria-hidden="true"></i> Vagas <span class="badge-count">8</span></div>
+    <div class="sidebar-item"><i data-lucide="users" class="icon" aria-hidden="true"></i> Candidaturas <span class="badge-count">23</span></div>
+    <div class="sidebar-item"><i data-lucide="calendar" class="icon" aria-hidden="true"></i> Entrevistas</div>
+
+    <div class="sidebar-section-label">Empresa</div>
+    <div class="sidebar-item"><i data-lucide="building-2" class="icon" aria-hidden="true"></i> Perfil da Empresa</div>
+    <div class="sidebar-item"><i data-lucide="heart" class="icon" aria-hidden="true"></i> Seguidores</div>
+
+    <div class="sidebar-section-label">Financeiro</div>
+    <div class="sidebar-item"><i data-lucide="credit-card" class="icon" aria-hidden="true"></i> Assinatura</div>
+    <div class="sidebar-item"><i data-lucide="file-text" class="icon" aria-hidden="true"></i> Transações</div>
+
+    <hr class="sidebar-divider">
+    <div class="sidebar-item"><i data-lucide="settings" class="icon" aria-hidden="true"></i> Configurações</div>
+    <div class="sidebar-item"><i data-lucide="help-circle" class="icon" aria-hidden="true"></i> Ajuda</div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div style="background:var(--bg-surface-3);border-radius:var(--radius-md);padding:var(--space-3);margin-bottom:var(--space-3);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-2);">
+        <span style="font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:var(--tracking-wide);">Plano Pro</span>
+        <span style="font-size:10px;color:var(--accent-primary);font-weight:var(--font-semibold);">8 / 15 vagas</span>
+      </div>
+      <div class="progress-track" style="height:4px;">
+        <div class="progress-fill" style="width:53%;background:linear-gradient(90deg,var(--accent-primary),#6366F1);"></div>
+      </div>
+    </div>
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar">PM</div>
+      <div>
+        <div class="sidebar-user-name">Prefeitura de Macaé</div>
+        <div class="sidebar-user-role">Administrador</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- ════════════════════════════════════════════════════════════════════
+     MAIN
+     ════════════════════════════════════════════════════════════════════ -->
+<main class="main" id="main-content">
+
+  <header class="header">
+    <h1 class="header-title">Minhas Vagas</h1>
+    <div class="header-actions">
+      <button class="btn btn-secondary btn-sm"><i data-lucide="download" style="width:14px;height:14px;" aria-hidden="true"></i> Exportar</button>
+      <button class="btn btn-primary btn-sm"><i data-lucide="plus" style="width:14px;height:14px;" aria-hidden="true"></i> Nova Vaga</button>
+    </div>
+  </header>
+
+  <!-- Stats Strip -->
+  <div class="stats-strip" role="region" aria-label="Resumo de vagas">
+    <div class="stats-strip-card">
+      <div class="stats-strip-label">Vagas Ativas</div>
+      <div class="stats-strip-value">6</div>
+      <div class="stats-strip-sub delta-up">↑ 2 esta semana</div>
+    </div>
+    <div class="stats-strip-card">
+      <div class="stats-strip-label">Total Candidaturas</div>
+      <div class="stats-strip-value">147</div>
+      <div class="stats-strip-sub delta-up">↑ 23 novos hoje</div>
+    </div>
+    <div class="stats-strip-card">
+      <div class="stats-strip-label">Visualizações</div>
+      <div class="stats-strip-value">2.4k</div>
+      <div class="stats-strip-sub">Últimos 30 dias</div>
+    </div>
+    <div class="stats-strip-card">
+      <div class="stats-strip-label">Taxa de Conversão</div>
+      <div class="stats-strip-value">6.1%</div>
+      <div class="stats-strip-sub">Visitas → Candidatos</div>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="table-card">
+
+    <!-- Toolbar -->
+    <div class="table-header">
+      <div style="display:flex;align-items:center;gap:var(--space-3);">
+        <div style="position:relative;">
+          <i data-lucide="search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text-muted);" aria-hidden="true"></i>
+          <input type="text" class="form-input" style="padding-left:32px;width:220px;" placeholder="Buscar vaga..." aria-label="Buscar vaga">
+        </div>
+        <div class="dropdown">
+          <button class="dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+            <i data-lucide="tag" style="width:13px;height:13px;" aria-hidden="true"></i> Categoria <i data-lucide="chevron-down" style="width:13px;height:13px;" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="dropdown">
+          <button class="dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+            <i data-lucide="calendar" style="width:13px;height:13px;" aria-hidden="true"></i> Período <i data-lucide="chevron-down" style="width:13px;height:13px;" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <span style="font-size:var(--text-xs);color:var(--text-muted);">8 vagas</span>
+    </div>
+
+    <!-- Status Tabs -->
+    <div style="padding:0 var(--space-5);">
+      <div class="status-tabs" role="tablist" aria-label="Filtrar por status">
+        <div class="status-tab active" role="tab" aria-selected="true">Todas <span class="count">8</span></div>
+        <div class="status-tab" role="tab" aria-selected="false">Ativas <span class="count">6</span></div>
+        <div class="status-tab" role="tab" aria-selected="false">Pausadas <span class="count">1</span></div>
+        <div class="status-tab" role="tab" aria-selected="false">Fechadas <span class="count">1</span></div>
+        <div class="status-tab" role="tab" aria-selected="false">Pendentes <span class="count">0</span></div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div style="overflow-x:auto;">
+      <table aria-label="Lista de vagas">
+        <thead>
+          <tr>
+            <th class="td-checkbox"><input type="checkbox" aria-label="Selecionar todas as vagas"></th>
+            <th class="th-sortable asc">Vaga</th>
+            <th>Status</th>
+            <th class="td-candidaturas th-sortable desc">Candidaturas</th>
+            <th class="th-sortable">Publicada em</th>
+            <th>Validade</th>
+            <th>Tipo</th>
+            <th style="text-align:right;">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <!-- Ativa + Destaque -->
+          <tr>
+            <td class="td-checkbox"><input type="checkbox" aria-label="Selecionar vaga Desenvolvedor React Jr"></td>
+            <td class="td-vaga">
+              <div style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <div class="icon-badge-sm icon-badge-blue" style="flex-shrink:0;"><i data-lucide="code-2" style="width:16px;height:16px;" aria-hidden="true"></i></div>
+                <div>
+                  <div class="vaga-title">
+                    Desenvolvedor React Jr
+                    <svg class="featured-star" aria-label="Destaque" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  </div>
+                  <div class="vaga-meta"><i data-lucide="tag" style="width:11px;height:11px;" aria-hidden="true"></i> TI &amp; Tecnologia</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="badge badge-success badge-table">Ativa</span></td>
+            <td class="td-candidaturas"><div class="cand-count">34</div><div class="cand-new">+5 novos</div></td>
+            <td style="font-size:var(--text-sm);color:var(--text-secondary);">05/05/2026</td>
+            <td style="font-size:var(--text-sm);color:var(--text-secondary);">05/06/2026</td>
+            <td><span class="tag tag-blue">CLT</span></td>
+            <td class="td-actions">
+              <button class="action-btn" aria-label="Ver candidatos" title="Ver candidatos"><i data-lucide="users" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Editar" title="Editar"><i data-lucide="pencil" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Pausar" title="Pausar"><i data-lucide="pause-circle" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn danger" aria-label="Excluir" title="Excluir"><i data-lucide="trash-2" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+
+          <!-- Ativa -->
+          <tr>
+            <td class="td-checkbox"><input type="checkbox" aria-label="Selecionar vaga Assistente Administrativo"></td>
+            <td class="td-vaga">
+              <div style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <div class="icon-badge-sm icon-badge-gold" style="flex-shrink:0;"><i data-lucide="file-spreadsheet" style="width:16px;height:16px;" aria-hidden="true"></i></div>
+                <div>
+                  <div class="vaga-title">Assistente Administrativo</div>
+                  <div class="vaga-meta"><i data-lucide="tag" style="width:11px;height:11px;" aria-hidden="true"></i> Administração</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="badge badge-success badge-table">Ativa</span></td>
+            <td class="td-candidaturas"><div class="cand-count">58</div><div class="cand-new">+12 novos</div></td>
+            <td style="font-size:var(--text-sm);color:var(--text-secondary);">28/04/2026</td>
+            <td style="font-size:var(--text-sm);color:var(--text-secondary);">28/05/2026</td>
+            <td><span class="tag tag-purple">Estágio</span></td>
+            <td class="td-actions">
+              <button class="action-btn" aria-label="Ver candidatos" title="Ver candidatos"><i data-lucide="users" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Editar" title="Editar"><i data-lucide="pencil" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Pausar" title="Pausar"><i data-lucide="pause-circle" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn danger" aria-label="Excluir" title="Excluir"><i data-lucide="trash-2" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+
+          <!-- Ativa -->
+          <tr>
+            <td class="td-checkbox"><input type="checkbox" aria-label="Selecionar vaga Enfermeiro(a) Plantonista"></td>
+            <td class="td-vaga">
+              <div style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <div class="icon-badge-sm icon-badge-pink" style="flex-shrink:0;"><i data-lucide="heart-pulse" style="width:16px;height:16px;" aria-hidden="true"></i></div>
+                <div>
+                  <div class="vaga-title">Enfermeiro(a) Plantonista</div>
+                  <div class="vaga-meta"><i data-lucide="tag" style="width:11px;height:11px;" aria-hidden="true"></i> Saúde</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="badge badge-success badge-table">Ativa</span></td>
+            <td class="td-candidaturas"><div class="cand-count">21</div><div class="cand-new">+3 novos</div></td>
+            <td style="font-size:var(--text-sm);color:var(--text-secondary);">01/05/2026</td>
+            <td style="font-size:var(--text-sm);color:var(--text-secondary);">01/06/2026</td>
+            <td><span class="tag tag-blue">CLT</span></td>
+            <td class="td-actions">
+              <button class="action-btn" aria-label="Ver candidatos" title="Ver candidatos"><i data-lucide="users" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Editar" title="Editar"><i data-lucide="pencil" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Pausar" title="Pausar"><i data-lucide="pause-circle" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn danger" aria-label="Excluir" title="Excluir"><i data-lucide="trash-2" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+
+          <!-- Ativa -->
+          <tr>
+            <td class="td-checkbox"><input type="checkbox" aria-label="Selecionar vaga Agente de Tributos"></td>
+            <td class="td-vaga">
+              <div style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <div class="icon-badge-sm icon-badge-green" style="flex-shrink:0;"><i data-lucide="landmark" style="width:16px;height:16px;" aria-hidden="true"></i></div>
+                <div>
+                  <div class="vaga-title">Agente de Tributos</div>
+                  <div class="vaga-meta"><i data-lucide="tag" style="width:11px;height:11px;" aria-hidden="true"></i> Jurídico &amp; Fiscal</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="badge badge-success badge-table">Ativa</span></td>
+            <td class="td-candidaturas"><div class="cand-count">9</div><div class="cand-none">sem novos</div></td>
+            <td style="font-size:var(--text-sm);color:var(--text-secondary);">03/05/2026</td>
+            <td style="font-size:var(--text-sm);color:var(--text-secondary);">03/06/2026</td>
+            <td><span class="tag tag-blue">CLT</span></td>
+            <td class="td-actions">
+              <button class="action-btn" aria-label="Ver candidatos" title="Ver candidatos"><i data-lucide="users" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Editar" title="Editar"><i data-lucide="pencil" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Pausar" title="Pausar"><i data-lucide="pause-circle" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn danger" aria-label="Excluir" title="Excluir"><i data-lucide="trash-2" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+
+          <!-- Ativa -->
+          <tr>
+            <td class="td-checkbox"><input type="checkbox" aria-label="Selecionar vaga Motorista de Ambulância"></td>
+            <td class="td-vaga">
+              <div style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <div class="icon-badge-sm icon-badge-orange" style="flex-shrink:0;"><i data-lucide="truck" style="width:16px;height:16px;" aria-hidden="true"></i></div>
+                <div>
+                  <div class="vaga-title">Motorista de Ambulância</div>
+                  <div class="vaga-meta"><i data-lucide="tag" style="width:11px;height:11px;" aria-hidden="true"></i> Logística &amp; Transporte</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="badge badge-success badge-table">Ativa</span></td>
+            <td class="td-candidaturas"><div class="cand-count">14</div><div class="cand-new">+2 novos</div></td>
+            <td style="font-size:var(--text-sm);color:var(--text-secondary);">06/05/2026</td>
+            <td style="font-size:var(--text-sm);color:var(--text-secondary);">06/06/2026</td>
+            <td><span class="tag tag-blue">CLT</span></td>
+            <td class="td-actions">
+              <button class="action-btn" aria-label="Ver candidatos" title="Ver candidatos"><i data-lucide="users" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Editar" title="Editar"><i data-lucide="pencil" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Pausar" title="Pausar"><i data-lucide="pause-circle" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn danger" aria-label="Excluir" title="Excluir"><i data-lucide="trash-2" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+
+          <!-- Ativa -->
+          <tr>
+            <td class="td-checkbox"><input type="checkbox" aria-label="Selecionar vaga Professor de Educação Física"></td>
+            <td class="td-vaga">
+              <div style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <div class="icon-badge-sm icon-badge-cyan" style="flex-shrink:0;"><i data-lucide="graduation-cap" style="width:16px;height:16px;" aria-hidden="true"></i></div>
+                <div>
+                  <div class="vaga-title">Professor de Educação Física</div>
+                  <div class="vaga-meta"><i data-lucide="tag" style="width:11px;height:11px;" aria-hidden="true"></i> Educação</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="badge badge-success badge-table">Ativa</span></td>
+            <td class="td-candidaturas"><div class="cand-count">7</div><div class="cand-none">sem novos</div></td>
+            <td style="font-size:var(--text-sm);color:var(--text-secondary);">07/05/2026</td>
+            <td style="font-size:var(--text-sm);color:var(--text-secondary);">07/06/2026</td>
+            <td><span class="tag tag-blue">CLT</span></td>
+            <td class="td-actions">
+              <button class="action-btn" aria-label="Ver candidatos" title="Ver candidatos"><i data-lucide="users" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Editar" title="Editar"><i data-lucide="pencil" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Pausar" title="Pausar"><i data-lucide="pause-circle" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn danger" aria-label="Excluir" title="Excluir"><i data-lucide="trash-2" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+
+          <!-- Pausada -->
+          <tr style="opacity:0.7;">
+            <td class="td-checkbox"><input type="checkbox" aria-label="Selecionar vaga Analista de Contratos"></td>
+            <td class="td-vaga">
+              <div style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <div class="icon-badge-sm" style="background:var(--bg-surface-3);color:var(--text-muted);flex-shrink:0;"><i data-lucide="file-check-2" style="width:16px;height:16px;" aria-hidden="true"></i></div>
+                <div>
+                  <div class="vaga-title" style="color:var(--text-secondary);">Analista de Contratos</div>
+                  <div class="vaga-meta"><i data-lucide="tag" style="width:11px;height:11px;" aria-hidden="true"></i> Jurídico &amp; Fiscal</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="badge badge-warning badge-table">Pausada</span></td>
+            <td class="td-candidaturas"><div class="cand-count">3</div><div class="cand-none">pausada</div></td>
+            <td style="font-size:var(--text-sm);color:var(--text-secondary);">20/04/2026</td>
+            <td style="font-size:var(--text-sm);color:var(--text-secondary);">20/05/2026</td>
+            <td><span class="tag tag-blue">CLT</span></td>
+            <td class="td-actions">
+              <button class="action-btn" aria-label="Ver candidatos" title="Ver candidatos"><i data-lucide="users" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Editar" title="Editar"><i data-lucide="pencil" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Ativar vaga" title="Ativar"><i data-lucide="play-circle" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn danger" aria-label="Excluir" title="Excluir"><i data-lucide="trash-2" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+
+          <!-- Fechada -->
+          <tr style="opacity:0.55;">
+            <td class="td-checkbox"><input type="checkbox" aria-label="Selecionar vaga Auxiliar de Serviços Gerais"></td>
+            <td class="td-vaga">
+              <div style="display:flex;align-items:flex-start;gap:var(--space-3);">
+                <div class="icon-badge-sm" style="background:var(--bg-surface-3);color:var(--text-muted);flex-shrink:0;"><i data-lucide="wrench" style="width:16px;height:16px;" aria-hidden="true"></i></div>
+                <div>
+                  <div class="vaga-title" style="color:var(--text-muted);">Auxiliar de Serviços Gerais</div>
+                  <div class="vaga-meta"><i data-lucide="tag" style="width:11px;height:11px;" aria-hidden="true"></i> Serviços Gerais</div>
+                </div>
+              </div>
+            </td>
+            <td><span class="badge badge-error badge-table">Fechada</span></td>
+            <td class="td-candidaturas"><div class="cand-count">1</div><div class="cand-none">encerrada</div></td>
+            <td style="font-size:var(--text-sm);color:var(--text-muted);">10/03/2026</td>
+            <td style="font-size:var(--text-sm);color:var(--color-error);">Expirada</td>
+            <td><span class="tag" style="background:var(--bg-surface-3);color:var(--text-muted);">CLT</span></td>
+            <td class="td-actions">
+              <button class="action-btn" aria-label="Ver candidatos" title="Ver candidatos"><i data-lucide="users" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn" aria-label="Republicar" title="Republicar"><i data-lucide="refresh-cw" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+              <button class="action-btn danger" aria-label="Excluir" title="Excluir"><i data-lucide="trash-2" style="width:15px;height:15px;" aria-hidden="true"></i></button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:var(--space-4) var(--space-5);border-top:1px solid var(--border-subtle);">
+      <span style="font-size:var(--text-xs);color:var(--text-muted);">Mostrando 1–8 de 8 vagas</span>
+      <nav aria-label="Paginação">
+        <div style="display:flex;gap:var(--space-1);">
+          <button class="btn btn-secondary btn-sm" disabled aria-label="Página anterior">←</button>
+          <button class="btn btn-primary btn-sm" aria-current="page" aria-label="Página 1">1</button>
+          <button class="btn btn-secondary btn-sm" disabled aria-label="Próxima página">→</button>
+        </div>
+      </nav>
+    </div>
+
+  </div>
+
+</main>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>

@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Electia Viz — Eneagrama v0.2 (Adioma-aligned: símbolo clássico + 9 cores)</title>
+  <link rel="preconnect" href="https://rsms.me/" />
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <style>
+    :root {
+      --bg: oklch(96% 0 0);
+      --text: oklch(18% 0 0);
+      --text-muted: oklch(45% 0 0);
+      --viz-card-padding: clamp(20px, 4vw, 28px);
+      --viz-card-radius: 16px;
+      --viz-card-bg: oklch(98.5% 0 0);
+      --viz-card-border: 1px solid oklch(92% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.06);
+
+      /* Theory color: Eneagrama = amber */
+      --theory: oklch(60% 0.16 75);
+
+      --realized-stroke: oklch(20% 0 0);
+      --viz-match-on: oklch(60% 0.18 145);
+      --line-symbol: oklch(45% 0 0);
+      --line-integration: oklch(58% 0.18 145);
+      --line-disintegration: oklch(62% 0.20 25);
+
+      --label-on-light: oklch(20% 0 0);
+      --label-on-dark:  oklch(98% 0 0);
+
+      --viz-motion-entry-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --viz-motion-hover: 150ms;
+    }
+
+    [data-theme="dark"] {
+      --bg: oklch(12% 0 0);
+      --text: oklch(94% 0 0);
+      --text-muted: oklch(70% 0 0);
+      --viz-card-bg: oklch(16% 0 0);
+      --viz-card-border: 1px solid oklch(22% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.3);
+
+      --theory: oklch(78% 0.14 75);
+      --realized-stroke: oklch(98% 0 0);
+      --viz-match-on: oklch(72% 0.16 145);
+      --line-symbol: oklch(70% 0 0);
+      --line-integration: oklch(75% 0.16 145);
+      --line-disintegration: oklch(78% 0.18 25);
+
+      --label-on-light: oklch(15% 0 0);
+      --label-on-dark:  oklch(98% 0 0);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; transition: background 200ms ease, color 200ms ease; }
+    body { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px; }
+    .stage { max-width: 600px; width: 100%; }
+
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .theme-btn { appearance: none; border: 1px solid var(--viz-card-border); background: var(--viz-card-bg); color: var(--text); font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 999px; cursor: pointer; transition: all var(--viz-motion-hover) ease; }
+    .theme-btn:hover { transform: translateY(-1px); }
+
+    .viz-card { background: var(--viz-card-bg); border: var(--viz-card-border); border-radius: var(--viz-card-radius); padding: var(--viz-card-padding); box-shadow: var(--viz-card-shadow); animation: cardEnter 200ms var(--viz-motion-entry-ease) both; }
+    @keyframes cardEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .card-title { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+    .card-icon { width: 24px; height: 24px; border-radius: 6px; background: oklch(from var(--theory) l c h / 0.18); display: grid; place-items: center; color: var(--theory); font-weight: 700; font-size: 11px; }
+
+    .match-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      background: oklch(from var(--viz-match-on) l c h / 0.12);
+      border: 1px solid oklch(from var(--viz-match-on) l c h / 0.4);
+      border-radius: 999px;
+      color: var(--viz-match-on);
+      font-size: 12px; font-weight: 600;
+      margin-bottom: 12px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 200ms both;
+    }
+    .match-badge::before { content: "✓"; font-size: 14px; }
+
+    .wheel-wrap { display: grid; place-items: center; margin: 0 0 16px; animation: fadeIn 600ms var(--viz-motion-entry-ease) 100ms both; }
+    .wheel-wrap svg { display: block; width: 100%; max-width: 540px; aspect-ratio: 1 / 1; height: auto; }
+
+    /* 9 cores distintas — arco-íris percorrendo o círculo */
+    .type-9 { fill: oklch(62% 0.18 320); animation: fadeIn 400ms ease 250ms both; }
+    .type-1 { fill: oklch(52% 0.18 280); animation: fadeIn 400ms ease 280ms both; }
+    .type-2 { fill: oklch(55% 0.18 240); animation: fadeIn 400ms ease 310ms both; }
+    .type-3 { fill: oklch(60% 0.14 200); animation: fadeIn 400ms ease 340ms both; }
+    .type-4 { fill: oklch(58% 0.16 150); animation: fadeIn 400ms ease 370ms both; }
+    .type-5 { fill: oklch(70% 0.16 110); animation: fadeIn 400ms ease 400ms both; }
+    .type-6 { fill: oklch(70% 0.18 60);  animation: fadeIn 400ms ease 430ms both; }
+    .type-7 { fill: oklch(60% 0.22 25);  animation: fadeIn 400ms ease 460ms both; }
+    .type-8 { fill: oklch(60% 0.22 0);   animation: fadeIn 400ms ease 490ms both; }
+
+    [data-theme="dark"] .type-9 { fill: oklch(72% 0.18 320); }
+    [data-theme="dark"] .type-1 { fill: oklch(64% 0.18 280); }
+    [data-theme="dark"] .type-2 { fill: oklch(67% 0.18 240); }
+    [data-theme="dark"] .type-3 { fill: oklch(72% 0.14 200); }
+    [data-theme="dark"] .type-4 { fill: oklch(70% 0.16 150); }
+    [data-theme="dark"] .type-5 { fill: oklch(78% 0.16 110); }
+    [data-theme="dark"] .type-6 { fill: oklch(78% 0.18 60); }
+    [data-theme="dark"] .type-7 { fill: oklch(70% 0.22 25); }
+    [data-theme="dark"] .type-8 { fill: oklch(70% 0.22 0); }
+
+    .sector-divider-quad { stroke: var(--viz-card-bg); stroke-width: 2.5; animation: fadeIn 200ms ease 600ms both; }
+    .sector-divider-thin { stroke: var(--viz-card-bg); stroke-width: 1.2; animation: fadeIn 200ms ease 600ms both; }
+
+    .ring-center { fill: var(--viz-card-bg); animation: fadeIn 200ms ease 200ms both; }
+
+    /* Símbolo clássico Eneagrama (triângulo + hexagrama) — linhas finas neutras */
+    .symbol-line {
+      fill: none;
+      stroke: var(--line-symbol);
+      stroke-width: 1.2;
+      stroke-opacity: 0.35;
+      stroke-linejoin: round;
+      animation: fadeIn 600ms ease 700ms both;
+    }
+
+    /* Slot realizado: borda intensificada sobre a cor do tipo 8 */
+    .slot-realized-overlay {
+      fill: none;
+      stroke: var(--realized-stroke);
+      stroke-width: 3;
+      stroke-linejoin: round;
+      animation: slotPop 500ms var(--viz-motion-entry-ease) 900ms both;
+      transform-origin: 270px 270px;
+    }
+    @keyframes slotPop { 0% { opacity: 0; transform: scale(0.5); } 70% { transform: scale(1.05); } 100% { opacity: 1; transform: scale(1); } }
+
+    .slot-ideal-halo {
+      fill: none;
+      stroke: var(--viz-match-on);
+      stroke-width: 4;
+      stroke-opacity: 0.85;
+      stroke-dasharray: 6 4;
+      filter: drop-shadow(0 0 6px oklch(from var(--viz-match-on) l c h / 0.5));
+      animation: fadeIn 400ms ease 1100ms both;
+    }
+
+    /* Linhas integração/desintegração específicas do tipo realizado */
+    .line-integration {
+      stroke: var(--line-integration);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      fill: none;
+      animation: fadeIn 500ms var(--viz-motion-entry-ease) 1200ms both;
+    }
+    .line-disintegration {
+      stroke: var(--line-disintegration);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-dasharray: 4 3;
+      fill: none;
+      animation: fadeIn 500ms var(--viz-motion-entry-ease) 1300ms both;
+    }
+    .line-bullet { stroke: var(--viz-card-bg); stroke-width: 1.5; animation: fadeIn 300ms ease 1400ms both; }
+    .line-bullet-int { fill: var(--line-integration); }
+    .line-bullet-dis { fill: var(--line-disintegration); }
+
+    /* Labels via textPath */
+    .label-triade {
+      fill: var(--text);
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      dominant-baseline: middle;
+      animation: fadeIn 200ms ease 600ms both;
+    }
+    .label-triade .triade-sub { fill: var(--text-muted); font-weight: 500; letter-spacing: 0.10em; }
+
+    .label-type {
+      fill: var(--label-on-dark);
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      dominant-baseline: middle;
+      animation: fadeIn 200ms ease 750ms both;
+    }
+    [data-theme="dark"] .label-type { fill: var(--label-on-light); }
+
+    .number-type {
+      fill: var(--label-on-dark);
+      font-size: 24px; font-weight: 700;
+      font-feature-settings: 'tnum' 1;
+      pointer-events: none;
+      animation: fadeIn 240ms ease 700ms both;
+    }
+    [data-theme="dark"] .number-type { fill: var(--label-on-light); }
+
+    /* Centro: tipo realizado em destaque sobre o símbolo */
+    .center-bg { fill: oklch(from var(--viz-card-bg) l c h / 0.92); animation: fadeIn 300ms ease 1500ms both; }
+    .center-bg-stroke { fill: none; stroke: var(--theory); stroke-width: 1.5; stroke-opacity: 0.4; animation: fadeIn 400ms ease 1600ms both; }
+    .center-title { fill: var(--text-muted); font-size: 8.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+    .center-num   { fill: var(--theory); font-size: 38px; font-weight: 700; letter-spacing: -0.04em; font-feature-settings: 'tnum' 1; animation: fadeUp 400ms var(--viz-motion-entry-ease) 1700ms both; }
+    .center-name  { fill: var(--text); font-size: 11px; font-weight: 600; }
+    .center-wing  { fill: var(--text-muted); font-size: 9px; font-weight: 500; letter-spacing: 0.08em; }
+
+    .keirsey-legend {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      justify-content: center;
+      margin-bottom: 12px;
+      font-size: 10.5px; color: var(--text-muted);
+      animation: fadeIn 300ms ease 1800ms both;
+    }
+    .leg-item { display: flex; align-items: center; gap: 6px; }
+    .leg-int { width: 12px; height: 2px; background: var(--line-integration); border-radius: 1px; }
+    .leg-dis { width: 14px; height: 0; border-top: 2px dashed var(--line-disintegration); }
+    .leg-symbol { width: 12px; height: 1.2px; background: var(--line-symbol); opacity: 0.5; }
+
+    .compare-row {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 10px 14px;
+      background: oklch(from var(--viz-match-on) l c h / 0.06);
+      border-radius: 10px;
+      margin-bottom: 14px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 1900ms both;
+    }
+    .compare-cell { flex: 1; }
+    .compare-label { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    .compare-value { font-size: 14px; font-weight: 600; color: var(--theory); margin-top: 2px; }
+    .compare-divider { width: 1px; background: var(--viz-card-border); margin: 4px 0; }
+
+    .narrative { font-size: 13px; line-height: 1.55; color: var(--text); margin-bottom: 14px; padding: 10px 12px; background: oklch(from var(--text) l c h / 0.04); border-radius: 10px; border-left: 2px solid var(--theory); animation: fadeUp 400ms var(--viz-motion-entry-ease) 2100ms both; }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0ms !important; animation-delay: 0ms !important; transition-duration: 0ms !important; } }
+
+    .footer-note { margin-top: 20px; font-size: 11px; color: var(--text-muted); text-align: center; letter-spacing: 0.02em; }
+    .footer-note a { color: var(--theory); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="toggle-row">
+      <span>Mockup v0.3 · Eneagrama · fix aspect-ratio (todos os 9 tipos visíveis)</span>
+      <button class="theme-btn" id="themeBtn" aria-label="Alternar tema claro/escuro">🌙 Dark</button>
+    </div>
+
+    <article class="viz-card" aria-labelledby="card-title">
+      <header class="card-header">
+        <div class="card-title">
+          <span class="card-icon" aria-hidden="true">E9</span>
+          <span id="card-title">Eneagrama · Tipo dominante</span>
+        </div>
+      </header>
+
+      <div class="match-badge" role="status">Alinhado ao cargo Comercial Sr.</div>
+
+      <div class="wheel-wrap">
+        <svg viewBox="0 0 540 540"
+             role="img" aria-labelledby="en-svg-title en-svg-desc">
+          <title id="en-svg-title">Eneagrama: 9 tipos com símbolo clássico (triângulo + lei do sete) e linhas de integração/desintegração</title>
+          <desc id="en-svg-desc">
+            Anel externo com 9 setores numerados (1 a 9) em cores distintas. Centro com símbolo clássico do Eneagrama: triângulo conectando 3-6-9 e hexagrama da lei do sete conectando 1-4-2-8-5-7. Tríades nomeadas no exterior — Corpo (8/9/1) ao topo, Coração (2/3/4) à direita, Mente (5/6/7) à esquerda. Tipo 8 destacado como realizado e ideal. Linha verde sólida indica integração para tipo 2; linha rose tracejada indica desintegração para tipo 5.
+          </desc>
+
+          <defs id="textpath-defs"></defs>
+
+          <!-- Camada 1: símbolo clássico (linhas neutras) -->
+          <g id="symbol"></g>
+
+          <!-- Camada 2: anel tipos (9 setores arco-íris) -->
+          <g id="types"></g>
+
+          <!-- Camada 3: divisores entre tríades + tipos -->
+          <g id="dividers"></g>
+
+          <!-- Camada 4: slot realizado overlay + halo ideal -->
+          <g id="slot-overlay"></g>
+
+          <!-- Camada 5: linhas integração/desintegração específicas -->
+          <g id="lines"></g>
+
+          <!-- Camada 6: labels textPath (tríades fora, nomes tipos na borda) -->
+          <g id="labels-triade"></g>
+          <g id="labels-type"></g>
+
+          <!-- Camada 7: números grandes -->
+          <g id="numbers"></g>
+
+          <!-- Camada 8: centro com tipo realizado destacado -->
+          <circle class="center-bg" cx="270" cy="270" r="42" />
+          <circle class="center-bg-stroke" cx="270" cy="270" r="42" />
+          <text class="center-title" x="270" y="252" text-anchor="middle">SEU TIPO</text>
+          <text class="center-num"   x="270" y="280" text-anchor="middle">8</text>
+          <text class="center-name"  x="270" y="295" text-anchor="middle">Desafiador</text>
+          <text class="center-wing"  x="270" y="306" text-anchor="middle">8w7</text>
+        </svg>
+      </div>
+
+      <div class="keirsey-legend" aria-hidden="true">
+        <div class="leg-item"><span class="leg-symbol"></span><span>Símbolo Eneagrama</span></div>
+        <div class="leg-item"><span class="leg-int"></span><span>Integração 8→2</span></div>
+        <div class="leg-item"><span class="leg-dis"></span><span>Desintegração 8→5</span></div>
+      </div>
+
+      <div class="compare-row" aria-label="Comparativo cargo vs colaborador">
+        <div class="compare-cell">
+          <div class="compare-label">Ideal · Cargo</div>
+          <div class="compare-value">Tipo 8 · Desafiador</div>
+        </div>
+        <div class="compare-divider"></div>
+        <div class="compare-cell">
+          <div class="compare-label">Realizado · Você</div>
+          <div class="compare-value">Tipo 8 · 8w7</div>
+        </div>
+      </div>
+
+      <p class="narrative">
+        <strong>Tipo 8 · Desafiador · 8w7</strong> · tríade <strong>Corpo</strong> (instinto/raiva).
+        Liderança intensa, decisão direta, confronto produtivo. Sob saúde, integra para
+        <strong>Tipo 2 · Prestativo</strong> (cuidado pelas pessoas). Sob estresse, desintegra para
+        <strong>Tipo 5 · Investigador</strong> (retraimento mental). Alinhado ao cargo Comercial Sr.
+      </p>
+
+      <table class="sr-only">
+        <caption>Eneagrama — tipo dominante e movimentos</caption>
+        <thead><tr><th>Camada</th><th>Ideal</th><th>Realizado</th></tr></thead>
+        <tbody>
+          <tr><td>Tipo</td><td>8 Desafiador</td><td>8 Desafiador</td></tr>
+          <tr><td>Tríade</td><td>Corpo / Instinto</td><td>Corpo / Instinto</td></tr>
+          <tr><td>Ala</td><td>—</td><td>8w7</td></tr>
+          <tr><td>Integração</td><td>—</td><td>Tipo 2 (Prestativo)</td></tr>
+          <tr><td>Desintegração</td><td>—</td><td>Tipo 5 (Investigador)</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <p class="footer-note">
+      Mockup v0.2 · Eneagrama Adioma-aligned · spec em <a href="../design-system-v0.1.md">design-system-v0.1.md</a> · valores fictícios
+    </p>
+  </div>
+
+  <script>
+    /*
+     * 9 tipos do Eneagrama — ordem CW from top (Tipo 9 no topo, Tipo 8 à esquerda).
+     * Cores arco-íris distintas por tipo (espelha a referência Adioma).
+     */
+    const TYPES = [
+      { num: 9, name: 'Pacificador',    midDeg: 0   },
+      { num: 1, name: 'Reformador',     midDeg: 40  },
+      { num: 2, name: 'Prestativo',     midDeg: 80  },
+      { num: 3, name: 'Realizador',     midDeg: 120 },
+      { num: 4, name: 'Individualista', midDeg: 160 },
+      { num: 5, name: 'Investigador',   midDeg: 200 },
+      { num: 6, name: 'Leal',           midDeg: 240 },
+      { num: 7, name: 'Entusiasta',     midDeg: 280 },
+      { num: 8, name: 'Desafiador',     midDeg: 320 }
+    ];
+
+    /*
+     * 3 tríades — labels FORA do círculo principal (estilo Adioma).
+     * Cada tríade cobre 3 tipos consecutivos (120°).
+     */
+    const TRIADES = [
+      { name: 'CORPO',   sub: 'instinto',    range: [-60, 60],  pathId: 'tri-corpo'   },
+      { name: 'CORAÇÃO', sub: 'sentimento',  range: [60, 180],  pathId: 'tri-coracao' },
+      { name: 'MENTE',   sub: 'pensamento',  range: [180, 300], pathId: 'tri-mente'   }
+    ];
+
+    const REALIZED_NUM = 8;
+    const IDEAL_NUM = 8;
+
+    // Linhas integração/desintegração (clássico Eneagrama)
+    const FLOW = {
+      1: { integration: 7, disintegration: 4 },
+      2: { integration: 4, disintegration: 8 },
+      3: { integration: 6, disintegration: 9 },
+      4: { integration: 1, disintegration: 2 },
+      5: { integration: 8, disintegration: 7 },
+      6: { integration: 9, disintegration: 3 },
+      7: { integration: 5, disintegration: 1 },
+      8: { integration: 2, disintegration: 5 },
+      9: { integration: 3, disintegration: 6 }
+    };
+
+    const CX = 270, CY = 270;
+    const R_INNER = 95;        // borda interna do anel tipo
+    const R_OUTER = 185;       // borda externa do anel tipo
+    const R_NUMBER = 125;      // raio do número grande dentro do setor
+    const R_LABEL = 170;       // raio do textPath nome do tipo (perto da borda externa)
+    const R_TRI = 215;         // raio do textPath tríade (FORA do círculo)
+    const R_SYMBOL_VERTEX = 90; // vértices do símbolo clássico (logo dentro do anel tipo)
+    const R_LINE_END = 88;     // endpoints das linhas integração/desintegração
+
+    const polar = (deg, r) => {
+      const rad = (deg * Math.PI) / 180;
+      return { x: CX + r * Math.sin(rad), y: CY - r * Math.cos(rad) };
+    };
+
+    function annularSector(thetaStart, thetaEnd, rIn, rOut) {
+      const oS = polar(thetaStart, rOut);
+      const oE = polar(thetaEnd, rOut);
+      const iE = polar(thetaEnd, rIn);
+      const iS = polar(thetaStart, rIn);
+      const span = ((thetaEnd - thetaStart) % 360 + 360) % 360;
+      const largeArc = span > 180 ? 1 : 0;
+      return `M ${oS.x.toFixed(2)},${oS.y.toFixed(2)} A ${rOut},${rOut} 0 ${largeArc},1 ${oE.x.toFixed(2)},${oE.y.toFixed(2)} L ${iE.x.toFixed(2)},${iE.y.toFixed(2)} A ${rIn},${rIn} 0 ${largeArc},0 ${iS.x.toFixed(2)},${iS.y.toFixed(2)} Z`;
+    }
+
+    function arcPath(thetaStart, thetaEnd, r, sweep) {
+      const start = polar(thetaStart, r);
+      const end = polar(thetaEnd, r);
+      const span = ((thetaEnd - thetaStart) % 360 + 360) % 360;
+      const largeArc = span > 180 ? 1 : 0;
+      return `M ${start.x.toFixed(2)},${start.y.toFixed(2)} A ${r},${r} 0 ${largeArc},${sweep} ${end.x.toFixed(2)},${end.y.toFixed(2)}`;
+    }
+
+    const NS = 'http://www.w3.org/2000/svg';
+    function el(tag, attrs = {}, parent = null) {
+      const e = document.createElementNS(NS, tag);
+      for (const k in attrs) e.setAttribute(k, attrs[k]);
+      if (parent) parent.appendChild(e);
+      return e;
+    }
+
+    function pointForType(num, r) {
+      const t = TYPES.find(x => x.num === num);
+      return polar(t.midDeg, r);
+    }
+
+    function renderSymbol() {
+      const layer = document.getElementById('symbol');
+      // Triângulo 9-3-6
+      const p9 = pointForType(9, R_SYMBOL_VERTEX);
+      const p3 = pointForType(3, R_SYMBOL_VERTEX);
+      const p6 = pointForType(6, R_SYMBOL_VERTEX);
+      el('path', {
+        class: 'symbol-line',
+        d: `M ${p9.x.toFixed(2)},${p9.y.toFixed(2)} L ${p3.x.toFixed(2)},${p3.y.toFixed(2)} L ${p6.x.toFixed(2)},${p6.y.toFixed(2)} Z`
+      }, layer);
+
+      // Hexagrama (lei do sete) 1-4-2-8-5-7
+      const order = [1, 4, 2, 8, 5, 7];
+      const pts = order.map(n => pointForType(n, R_SYMBOL_VERTEX));
+      const d = pts.map((p, i) => (i === 0 ? 'M' : 'L') + ` ${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' ') + ' Z';
+      el('path', { class: 'symbol-line', d }, layer);
+    }
+
+    function renderTypes() {
+      const layer = document.getElementById('types');
+      TYPES.forEach(t => {
+        el('path', {
+          class: 'type-' + t.num,
+          d: annularSector(t.midDeg - 20, t.midDeg + 20, R_INNER, R_OUTER)
+        }, layer);
+      });
+    }
+
+    function renderDividers() {
+      const layer = document.getElementById('dividers');
+      // Separadores fortes entre tríades (a cada 120°)
+      [60, 180, 300].forEach(deg => {
+        const a = polar(deg, R_INNER);
+        const b = polar(deg, R_OUTER);
+        el('line', { class: 'sector-divider-quad', x1: a.x.toFixed(2), y1: a.y.toFixed(2), x2: b.x.toFixed(2), y2: b.y.toFixed(2) }, layer);
+      });
+      // Separadores finos entre tipos
+      for (let i = 0; i < 9; i++) {
+        const deg = i * 40 + 20;
+        if ([60, 180, 300].includes(deg)) continue;
+        const a = polar(deg, R_INNER);
+        const b = polar(deg, R_OUTER);
+        el('line', { class: 'sector-divider-thin', x1: a.x.toFixed(2), y1: a.y.toFixed(2), x2: b.x.toFixed(2), y2: b.y.toFixed(2) }, layer);
+      }
+    }
+
+    function renderSlotOverlay() {
+      const layer = document.getElementById('slot-overlay');
+      const realized = TYPES.find(t => t.num === REALIZED_NUM);
+      const ideal = TYPES.find(t => t.num === IDEAL_NUM);
+      // Borda intensificada sobre a cor original do tipo realizado
+      el('path', {
+        class: 'slot-realized-overlay',
+        d: annularSector(realized.midDeg - 20, realized.midDeg + 20, R_INNER, R_OUTER)
+      }, layer);
+      // Halo verde tracejado do ideal
+      el('path', {
+        class: 'slot-ideal-halo',
+        d: annularSector(ideal.midDeg - 20, ideal.midDeg + 20, R_INNER, R_OUTER)
+      }, layer);
+    }
+
+    function renderLines() {
+      const layer = document.getElementById('lines');
+      const flow = FLOW[REALIZED_NUM];
+      const a = pointForType(REALIZED_NUM, R_LINE_END);
+      const b = pointForType(flow.integration, R_LINE_END);
+      const c = pointForType(flow.disintegration, R_LINE_END);
+
+      el('line', { class: 'line-integration',    x1: a.x.toFixed(2), y1: a.y.toFixed(2), x2: b.x.toFixed(2), y2: b.y.toFixed(2) }, layer);
+      el('line', { class: 'line-disintegration', x1: a.x.toFixed(2), y1: a.y.toFixed(2), x2: c.x.toFixed(2), y2: c.y.toFixed(2) }, layer);
+
+      el('circle', { class: 'line-bullet line-bullet-int', cx: b.x.toFixed(2), cy: b.y.toFixed(2), r: 4 }, layer);
+      el('circle', { class: 'line-bullet line-bullet-dis', cx: c.x.toFixed(2), cy: c.y.toFixed(2), r: 3.5 }, layer);
+      el('circle', { class: 'line-bullet line-bullet-int', cx: a.x.toFixed(2), cy: a.y.toFixed(2), r: 4 }, layer);
+    }
+
+    function renderTextPathDefs() {
+      const defs = document.getElementById('textpath-defs');
+
+      // Tríades em r=215 (FORA do círculo)
+      // Corpo (range -60 a 60, cruza topo): top half, sweep=1
+      el('path', { id: 'tri-corpo',   d: arcPath(-60, 60, R_TRI, 1), fill: 'none' }, defs);
+      // Coração (60 a 180, bottom-right): reverso, sweep=0
+      el('path', { id: 'tri-coracao', d: arcPath(180, 60, R_TRI, 0), fill: 'none' }, defs);
+      // Mente (180 a 300, bottom-left): reverso, sweep=0
+      el('path', { id: 'tri-mente',   d: arcPath(300, 180, R_TRI, 0), fill: 'none' }, defs);
+
+      // 9 tipos em r=170 (perto da borda externa do anel)
+      TYPES.forEach(t => {
+        const start = t.midDeg - 20;
+        const end   = t.midDeg + 20;
+        const isTopHalf = (t.midDeg >= 270) || (t.midDeg <= 90);
+        const d = isTopHalf ? arcPath(start, end, R_LABEL, 1) : arcPath(end, start, R_LABEL, 0);
+        el('path', { id: 'rt-' + t.num, d, fill: 'none' }, defs);
+      });
+    }
+
+    function renderLabels() {
+      // Labels tríades (com sub-tag descritor)
+      const triLayer = document.getElementById('labels-triade');
+      TRIADES.forEach(tri => {
+        const txt = el('text', { class: 'label-triade' }, triLayer);
+        const tp = el('textPath', { href: '#' + tri.pathId, startOffset: '50%', 'text-anchor': 'middle' }, txt);
+        tp.textContent = tri.name + ' · ';
+        const sub = el('tspan', { class: 'triade-sub' }, tp);
+        sub.textContent = tri.sub;
+      });
+
+      // Labels tipos (curvados na borda externa)
+      const typeLayer = document.getElementById('labels-type');
+      TYPES.forEach(t => {
+        const txt = el('text', { class: 'label-type' }, typeLayer);
+        const tp = el('textPath', { href: '#rt-' + t.num, startOffset: '50%', 'text-anchor': 'middle' }, txt);
+        tp.textContent = t.name;
+      });
+    }
+
+    function renderNumbers() {
+      const layer = document.getElementById('numbers');
+      TYPES.forEach(t => {
+        const p = polar(t.midDeg, R_NUMBER);
+        const txt = el('text', {
+          class: 'number-type',
+          x: p.x.toFixed(2),
+          y: p.y.toFixed(2),
+          'text-anchor': 'middle',
+          'dominant-baseline': 'middle'
+        }, layer);
+        txt.textContent = t.num;
+      });
+    }
+
+    function renderAll() {
+      renderTextPathDefs();
+      renderSymbol();
+      renderTypes();
+      renderDividers();
+      renderSlotOverlay();
+      renderLines();
+      renderLabels();
+      renderNumbers();
+    }
+
+    renderAll();
+
+    const btn = document.getElementById('themeBtn');
+    const root = document.documentElement;
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      btn.textContent = next === 'light' ? '🌙 Dark' : '☀️ Light';
+    });
+  </script>
+</body>
+</html>
