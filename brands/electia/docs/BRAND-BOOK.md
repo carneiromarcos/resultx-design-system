@@ -1,26 +1,26 @@
 # Brand Book — Electia by Emprega+
 
-**Versao:** 1.2 | **Data:** 2026-05-11 | **Classificacao:** Interno
+**Versão:** 1.3 | **Data:** 2026-05-11 | **Classificação:** Interno
 
 ---
 
-## 1. Essencia da Marca
+## 1. Essência da Marca
 
-### Proposito
+### Propósito
 
-Electia vem do grego *electio* — o eleito, o escolhido. Acreditamos que trabalho e vocacao deveriam ser a mesma coisa. Que quando uma pessoa encontra o lugar certo, tudo muda — a produtividade, a satisfacao, a saude mental.
+Electia vem do grego *electio* — o eleito, o escolhido. Acreditamos que trabalho e vocação deveriam ser a mesma coisa. Que quando uma pessoa encontra o lugar certo, tudo muda — a produtividade, a satisfação, a saúde mental.
 
-### Missao
+### Missão
 
-Ajudar lideres a colocar a pessoa certa no lugar certo, usando ciencia comportamental e inteligencia artificial.
+Ajudar líderes a colocar a pessoa certa no lugar certo, usando ciência comportamental e inteligência artificial.
 
-### Visao
+### Visão
 
-Ser a plataforma de referencia em gestao comportamental de pessoas no Brasil — onde empresas entendem sua equipe de verdade antes de tomar qualquer decisao sobre pessoas.
+Ser a plataforma de referência em gestão comportamental de pessoas no Brasil — onde empresas entendem sua equipe de verdade antes de tomar qualquer decisão sobre pessoas.
 
 ### Promessa de Marca
 
-> "Sua equipe nao e ruim. Esta desencaixada."
+> "Sua equipe não e ruim. Esta desencaixada."
 
 O Electia mostra quem cada colaborador realmente e — e onde deveria estar.
 
@@ -28,11 +28,11 @@ O Electia mostra quem cada colaborador realmente e — e onde deveria estar.
 
 | Valor | Significado |
 |-------|-------------|
-| **Profundidade** | Nao fazemos testes rasos. Cruzamos 6 teorias para entregar o retrato completo. |
-| **Verdade** | Cenarios situacionais revelam comportamento real, nao autoimagem. |
+| **Profundidade** | Não fazemos testes rasos. Cruzamos 6 teorias para entregar o retrato completo. |
+| **Verdade** | Cenarios situacionais revelam comportamento real, não autoimagem. |
 | **Clareza** | Relatórios que gestores entendem sem ser psicologos. |
-| **Acao** | Dados que geram decisoes, nao PDFs que ninguem le. |
-| **Encaixe** | O problema nao e a pessoa. E onde ela esta. |
+| **Acao** | Dados que geram decisões, não PDFs que ninguem le. |
+| **Encaixe** | O problema não e a pessoa. E onde ela esta. |
 
 ---
 
@@ -43,8 +43,8 @@ O Electia mostra quem cada colaborador realmente e — e onde deveria estar.
 ```
 Emprega+  (marca-mae — ecossistema de empregabilidade)
 └── Electia by Emprega+  (produto SaaS B2B — assessments comportamentais)
-    ├── Mentor AI  (feature — assistente de gestao de pessoas)
-    ├── Testes Situacionais  (feature — cenarios sob pressao)
+    ├── Mentor AI  (feature — assistente de gestão de pessoas)
+    ├── Testes Situacionais  (feature — cenários sob pressao)
     └── [Recrutamento e Selecao]  (futuro — em breve)
 ```
 
@@ -52,59 +52,65 @@ Emprega+  (marca-mae — ecossistema de empregabilidade)
 
 | Uso | Formato |
 |-----|---------|
-| **Primario** | Electia |
+| **Primário** | Electia |
 | **Com endosso** | Electia by Emprega+ |
-| **Feature** | Mentor AI — Assistente de Gestao de Pessoas |
+| **Feature** | Mentor AI — Assistente de Gestão de Pessoas |
 | **URL** | electia.empregamais.me |
 
 ### Regras de grafia (oficial — atualizada 2026-05-11)
 
-- **O nome da marca e sempre "electia" — tudo minusculo, sem acento.** Aplicavel a: wordmark, copy de site, posts, emails, app, materiais impressos. Excecao unica: inicio de frase em texto editorial (ai vira "Electia" pela regra ortografica padrao).
-- **"by emprega+"** (tambem minusculo) e o endosso obrigatorio em materiais publicos
-- **Nunca usar "electia by ResultX"** em materiais publicos (ResultX e consultoria, nao marca de produto)
-- **O "Mentor AI"** e sempre grafado com M e A maiusculos, nunca "mentor ai" ou "MENTOR AI"
-- **URL/dominio mantem o padrao:** `electia.empregamais.me` (ja era lowercase)
+- **O nome da marca e sempre "electia" — tudo minúsculo, sem acento.** Aplicável a: wordmark, copy de site, posts, emails, app, materiais impressos. Exceção única: início de frase em texto editorial (ai vira "Electia" pela regra ortográfica padrão).
+- **"by emprega+"** (também minúsculo) e o endosso obrigatório em materiais públicos
+- **Nunca usar "electia by ResultX"** em materiais públicos (ResultX e consultoria, não marca de produto)
+- **O "Mentor AI"** e sempre grafado com M e A maiúsculos, nunca "mentor ai" ou "MENTOR AI"
+- **URL/dominio mantem o padrão:** `electia.empregamais.me` (ja era lowercase)
 
 ---
 
-## 3. Logo (oficial — atualizado 2026-05-11)
+## 3. Wordmark (oficial — atualizado 2026-05-11)
 
-### Wordmark canonico
+> **electia não tem logo gráfico.** O wordmark tipográfico **e** a marca. Sem simbolo isolado, sem ícone próprio, sem marca registrada visual alem da palavra "electia".
+
+### Wordmark canônico
 
 ```
 electia by emprega+
 ```
 
-**Composicao tipografica:**
+**Composição tipográfica:**
 
 | Trecho | Fonte | Peso | Estilo | Notas |
 |--------|-------|------|--------|-------|
-| `electia` | **JetBrains Mono** | 600 (Semibold) | Normal | Tudo minusculo. Letter-spacing: `-0.04em`. Cor: branco `#E6EDF3` ou accent teal `#2DD4BF` em destaque |
+| `electia` | **JetBrains Mono** | 600 (Semibold) | Normal | Tudo minúsculo. Letter-spacing: `-0.04em`. Cor: branco `#E6EDF3` ou accent teal `#2DD4BF` em destaque |
 | `by` | Sora | 400 (Regular) | Normal | Tamanho ~30% do `electia`. Cor: `rgba(230,237,243,0.55)` |
 | `emprega+` | **Sora ExtraBold** | 800 | Normal | Mesma fonte oficial da marca-mae Emprega+. Tamanho ~50% do `electia`. Cor: `rgba(230,237,243,0.85)` |
 
-**Por que JetBrains Mono em `electia`?** Decisao tipografica T2 (mono tech). Sinaliza ferramenta cientifica/IA, diferencia de competidores que usam sans-serif puro (Solides, Buk, Pulses). Aprovado em 2026-05-11.
+**Por que JetBrains Mono em `electia`?** Decisão tipográfica T2 (mono tech). Sinaliza ferramenta científica/IA, diferencia de competidores que usam sans-serif puro (Sólides, Buk, Pulses). Aprovado em 2026-05-11.
 
 **Por que Sora ExtraBold em `emprega+`?** E a fonte oficial da marca Emprega+ (logo original tem o "ga+" desenhado custom no Canva, mas para o endorsement do Electia usamos Sora reto sem o custom).
 
-### Versoes
+### Variantes do wordmark
 
-| Versao | Uso | Composicao |
-|--------|-----|------------|
-| **Wordmark completo** | Site, LP, materiais oficiais, header | `electia by emprega+` (3 trechos acima) |
-| **Wordmark curto** | Espacos com pouca largura, segundo uso na mesma pagina | `electia` (sozinho, sem endosso) |
-| **Monogram "e"** | Favicon, app icon, avatar, marca d'agua | "**e**" minusculo em JetBrains Mono 600 dentro de container arredondado |
-| **Lockup vertical** | Social media quadrado, papelaria | `electia` em cima, `by emprega+` embaixo centralizado |
-| **Monocromatico** | Fundos complexos, impressao | Versao single-color (branco ou teal) |
+| Variante | Uso |
+|----------|-----|
+| **Completo** | Site, LP, materiais oficiais, header. Composição: `electia by emprega+` |
+| **Curto** | Espacos com pouca largura, segundo uso na mesma pagina. Composição: `electia` (sozinho, sem endosso) |
+| **Lockup vertical** | Social média quadrado, papelaria. `electia` em cima, `by emprega+` embaixo centralizado |
+| **Monocromatico** | Fundos complexos, impressao. Versão single-color (branco ou teal) |
 
-### Container do monogram "e"
+### Favicon e avatar — helper "e"
 
+Quando o espaço e tao pequeno que não cabe nem `electia` (16-48px), usa-se um **helper visual**: a letra `e` (minuscula, JetBrains Mono 600) dentro de um container quadrado arredondado.
+
+> **Importante:** o helper "e" **NAO e o logo**. Ele e apenas uma forma de manter a presença visual da marca em contextos de tamanho insuficiente para o wordmark (favicon do browser, app icon iOS/Android, avatar de mensagem, marca d'agua minuscula). Em qualquer espaço onde `electia` cabe legivel, sempre prefira o wordmark.
+
+**Container:**
 - Forma: quadrado arredondado, `border-radius: 24%` (proporcional ao tamanho)
 - Tamanho minimo: 32x32px (favicon)
 - Padding interno: 22% do tamanho
-- Fundo: opcao A `--bg` (#0B0E14) com letra teal · opcao B `--teal` (#2DD4BF) com letra branca/preta · opcao C `rgba(45,212,191,0.15)` (teal/15) com letra teal
+- Fundo: opção A `--bg` (#0B0E14) com letra teal · opção B `--teal` (#2DD4BF) com letra dark · opção C `rgba(45,212,191,0.15)` (teal/15) com letra teal
 
-### Tamanhos e proporcoes
+### Tamanhos e proporcoes do wordmark
 
 | Contexto | `electia` size | `emprega+` size |
 |----------|---------------|-----------------|
@@ -113,39 +119,40 @@ electia by emprega+
 | Navbar / header | 18-24px | 10-12px |
 | Mobile compact | 14-18px | 9-11px |
 | Email header | 28-36px | 12-14px |
-| Favicon (monogram so) | 16-512px | — |
+| Favicon (helper "e") | 16-512px | — |
 
 ### Cores do wordmark
 
 | Variante | `electia` | `by` | `emprega+` | Fundo |
 |----------|-----------|------|------------|-------|
-| **Padrao dark** | `#E6EDF3` (branco) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#0B0E14` |
+| **Padrão dark** | `#E6EDF3` (branco) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#0B0E14` |
 | **Accent dark** | `#2DD4BF` (teal) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#0B0E14` |
 | **Accent glow** | `#2DD4BF` + text-shadow teal blur 32px 45% | idem | idem | `#0B0E14` ou gradient |
 | **Light** | `#0B0E14` (dark) | `rgba(11,14,20,0.65)` | `rgba(11,14,20,0.85)` | `#FFFFFF` ou `#F5F7FA` |
 
-### Area de protecao
+### Área de protecao
 
-Manter espaco minimo equivalente a **altura do "e" minusculo** ao redor do wordmark inteiro. Nenhum elemento deve invadir essa area.
+Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wordmark inteiro. Nenhum elemento deve invadir essa area.
 
 ### Usos proibidos
 
-- Nao distorcer proporcoes
-- Nao usar cores fora da paleta
-- Nao colocar sobre fundos que comprometam legibilidade
-- Nao rotacionar
-- Nao adicionar sombras, brilhos ou efeitos (exceto o glow teal oficial)
-- Nao escrever `Electia` com E maiusculo em wordmark (so minusculo)
-- Nao usar `electia by ResultX` em materiais publicos
-- Nao trocar a fonte do `electia` (so JetBrains Mono Semibold 600)
-- Nao trocar a fonte do `emprega+` (so Sora ExtraBold 800)
-- Nao isolar o "e" sem o container (monogram sempre dentro do container arredondado)
+- Não distorcer proporcoes do wordmark
+- Não usar cores fora da paleta
+- Não colocar sobre fundos que comprometam legibilidade
+- Não rotacionar
+- Não adicionar sombras, brilhos ou efeitos (exceto o glow teal oficial)
+- Não escrever `Electia` com E maiúsculo em wordmark (so minúsculo)
+- Não usar `electia by ResultX` em materiais públicos
+- Não trocar a fonte do `electia` (so JetBrains Mono Semibold 600)
+- Não trocar a fonte do `emprega+` (so Sora ExtraBold 800)
+- Não tratar o helper "e" do favicon como logo — wordmark sempre que o espaço permitir
+- Não desenhar um ícone/simbolo/grafismo próprio para Electia (a marca **e** o wordmark)
 
 ---
 
 ## 4. Paleta de Cores
 
-### Cores Primarias
+### Cores Primárias
 
 | Nome | Hex | Uso |
 |------|-----|-----|
@@ -157,7 +164,7 @@ Manter espaco minimo equivalente a **altura do "e" minusculo** ao redor do wordm
 
 | Nome | Hex | Uso |
 |------|-----|-----|
-| **BG Base** | `#0B0E14` | Fundo principal da aplicacao e LP |
+| **BG Base** | `#0B0E14` | Fundo principal da aplicação e LP |
 | **BG Surface** | `#161B26` | Cards, paineis, modais |
 | **BG Surface Hover** | `#1C2333` | Hover de cards e elementos interativos |
 
@@ -182,7 +189,7 @@ Manter espaco minimo equivalente a **altura do "e" minusculo** ao redor do wordm
 |------|-----|-----|
 | **Success** | `#22C55E` | Confirmacoes, status positivo |
 | **Warning** | `#F59E0B` | Alertas, atencao |
-| **Danger** | `#EF4444` | Erros, exclusoes, critico |
+| **Danger** | `#EF4444` | Erros, exclusoes, crítico |
 
 ### Cores por Teoria Comportamental
 
@@ -195,15 +202,15 @@ Manter espaco minimo equivalente a **altura do "e" minusculo** ao redor do wordm
 | Le Senne | Rosa | `#FB7185` | rose-400 |
 | Motivadores | Ciano | `#22D3EE` | cyan-400 |
 
-### Cores por Macro-Dimensao (Testes Situacionais)
+### Cores por Macro-Dimensão (Testes Situacionais)
 
-| Dimensao | Cor | Tailwind |
+| Dimensão | Cor | Tailwind |
 |----------|-----|----------|
-| Etica e Valores | Azul | blue-400 |
+| Ética e Valores | Azul | blue-400 |
 | Execucao e Entrega | Verde | green-400 |
-| Lideranca e Gestao | Roxo | purple-400 |
+| Lideranca e Gestão | Roxo | purple-400 |
 | Cultura e Clima | Ambar | amber-400 |
-| Saude Organizacional | Vermelho | red-400 |
+| Saúde Organizacional | Vermelho | red-400 |
 
 ---
 
@@ -218,20 +225,20 @@ Manter espaco minimo equivalente a **altura do "e" minusculo** ao redor do wordm
 
 ### Hierarquia
 
-| Nivel | Fonte | Tamanho | Peso | Uso |
+| Nível | Fonte | Tamanho | Peso | Uso |
 |-------|-------|---------|------|-----|
-| H1 | Sora | 36-48px | ExtraBold 800 | Headline da LP, titulos de pagina |
-| H2 | Sora | 24-30px | Bold 700 | Titulos de secao |
+| H1 | Sora | 36-48px | ExtraBold 800 | Headline da LP, titulos de página |
+| H2 | Sora | 24-30px | Bold 700 | Titulos de seção |
 | H3 | Inter | 18-20px | SemiBold 600 | Subtitulos, card headers |
 | Body | Inter | 14-16px | Regular 400 | Texto corrido, descricoes |
 | Small | Inter | 12-13px | Medium 500 | Labels, metadata, badges |
 | Micro | Inter | 10-11px | Medium 500 | Timestamps, tooltips |
 
-### Regras tipograficas
+### Regras tipográficas
 
 - **Line-height:** 1.5 para body, 1.2 para headings
 - **Letter-spacing:** -0.02em para Sora headings (mais apertado), normal para Inter
-- **Maximo de largura de texto:** 640px para blocos de leitura
+- **Máximo de largura de texto:** 640px para blocos de leitura
 - **Cor do texto:** sempre var(--text-primary) ou var(--text-secondary). Nunca branco puro (#FFFFFF)
 
 ---
@@ -240,33 +247,33 @@ Manter espaco minimo equivalente a **altura do "e" minusculo** ao redor do wordm
 
 ### Personalidade
 
-| Atributo | E | Nao e |
+| Atributo | E | Não e |
 |----------|---|-------|
 | **Direto** | Fala sem rodeios, vai ao ponto | Frio, agressivo ou impessoal |
 | **Inteligente** | Mostra profundidade sem ser academico | Arrogante, jargao excessivo |
-| **Confiante** | Afirma com seguranca | Exagerado, promessas vazias |
-| **Acessivel** | Linguagem que gestores entendem | Infantil ou casual demais |
-| **Provocativo** | Questiona premissas ("sua equipe nao e ruim") | Ofensivo ou desrespeitoso |
+| **Confiante** | Afirma com segurança | Exagerado, promessas vazias |
+| **Acessível** | Linguagem que gestores entendem | Infantil ou casual demais |
+| **Provocativo** | Questiona premissas ("sua equipe não e ruim") | Ofensivo ou desrespeitoso |
 
 ### Exemplos de Tom
 
 **Certo:**
-> "Sua equipe nao e ruim. Esta desencaixada."
+> "Sua equipe não e ruim. Esta desencaixada."
 > "Testes tradicionais medem autoimagem. Cenarios situacionais medem comportamento real."
-> "Nao e mais um PDF que ninguem le."
+> "Não e mais um PDF que ninguem le."
 
 **Errado:**
-> "A solucao definitiva e inovadora para gestao de pessoas!!!"
+> "A solucao definitiva e inovadora para gestão de pessoas!!!"
 > "Potencialize os resultados do seu capital humano com nossa plataforma disruptiva."
 > "Somos os melhores do mercado em people analytics."
 
 ### Regras de escrita
 
-- **Sem exclamacao.** Confianca nao precisa de pontuacao enfatica.
+- **Sem exclamacao.** Confianca não precisa de pontuacao enfatica.
 - **Sem jargao corporativo.** "Capital humano", "stakeholders", "sinergia" — fora.
-- **Sem superlativos vazios.** "O melhor", "revolucionario", "unico" — so se for comprovavel.
-- **Dados concretos > adjetivos.** "6 teorias cruzadas" > "avaliacao completa e abrangente".
-- **Portugues brasileiro.** Sempre pt-BR. Codigo e variáveis em ingles.
+- **Sem superlativos vazios.** "O melhor", "revolucionario", "único" — só se for comprovavel.
+- **Dados concretos > adjetivos.** "6 teorias cruzadas" > "avaliação completa e abrangente".
+- **Portugues brasileiro.** Sempre pt-BR. Código e variáveis em ingles.
 
 ---
 
@@ -276,45 +283,45 @@ Manter espaco minimo equivalente a **altura do "e" minusculo** ao redor do wordm
 
 - **Biblioteca:** Lucide React (ja em uso no app)
 - **Estilo:** Outline, stroke 1.5-2px
-- **Cor padrao:** var(--text-muted) para inativo, var(--accent-teal) para ativo/destaque
-- **Tamanho padrao:** 20x20px (UI), 24x24px (destaque), 40x40px (hero/feature)
+- **Cor padrão:** var(--text-muted) para inativo, var(--accent-teal) para ativo/destaque
+- **Tamanho padrão:** 20x20px (UI), 24x24px (destaque), 40x40px (hero/feature)
 
-### Containers de icone
+### Containers de ícone
 
 - Background: accent-teal/15% (teal sutil)
 - Border-radius: 12px (rounded-xl)
-- Padding: proporcional ao tamanho do icone
+- Padding: proporcional ao tamanho do ícone
 
 ### Cards
 
 - Background: var(--bg-card)
 - Border: 1px solid var(--border-default)
 - Border-radius: 12px
-- Hover: border muda para var(--border-focus) + sutil bg shift
+- Hover: border muda para var(--border-focus) + sútil bg shift
 
 ### Botoes
 
 | Variante | Background | Texto | Borda |
 |----------|-----------|-------|-------|
-| **Primario** | var(--accent-teal) | var(--bg-primary) (escuro) | nenhuma |
+| **Primário** | var(--accent-teal) | var(--bg-primary) (escuro) | nenhuma |
 | **Secundario** | transparente | var(--text-secondary) | var(--border-default) |
 | **Ghost** | transparente | var(--text-muted) | nenhuma |
 | **Danger** | var(--danger) | branco | nenhuma |
 
 - Border-radius: 8px (rounded-lg)
-- Altura padrao: 40px (h-10)
+- Altura padrão: 40px (h-10)
 - Font: Inter SemiBold 14px
 
 ---
 
-## 8. Aplicacoes
+## 8. Aplicações
 
 ### Landing Page
 
 - Fundo: var(--bg-primary) — dark
 - Hero: headline em Sora ExtraBold, accent teal no CTA
-- Secoes alternam entre bg-primary e bg-card para ritmo visual
-- Imagens: screenshots do produto com borda sutil, nunca mockups genericos
+- Seções alternam entre bg-primary e bg-card para ritmo visual
+- Imagens: screenshots do produto com borda sutil, nunca mockups genéricos
 
 ### App (Dashboard)
 
@@ -334,14 +341,14 @@ Manter espaco minimo equivalente a **altura do "e" minusculo** ao redor do wordm
 
 - Posts: fundo dark (#0B0E14) com accent teal para destaques
 - Tipografia: Sora Bold para frases de impacto
-- Elementos graficos: linhas e shapes em teal/15%
-- Nunca usar fotos de banco de imagens genericas
+- Elementos gráficos: linhas e shapes em teal/15%
+- Nunca usar fotos de banco de imagens genéricas
 
-### PDF / Relatorios
+### PDF / Relatórios
 
 - Header: logo + nome da empresa + data
-- Tipografia: Inter (corpo) + Sora (titulos de secao)
-- Cores de teoria nos graficos
+- Tipografia: Inter (corpo) + Sora (titulos de seção)
+- Cores de teoria nos gráficos
 - Footer: "Gerado por Electia by Emprega+ — electia.empregamais.me"
 
 ---
@@ -353,19 +360,19 @@ Manter espaco minimo equivalente a **altura do "e" minusculo** ao redor do wordm
 | Nome do produto | Electia | electia, ELECTIA, Eléctia |
 | Com endosso | Electia by Emprega+ | Electia by ResultX, Electia/Emprega+ |
 | Feature IA | Mentor AI | Mentor IA, mentor ai, Consultor IA |
-| Subtitulo Mentor | Assistente de Gestao de Pessoas | Consultor de RH, Chatbot |
+| Subtitulo Mentor | Assistente de Gestão de Pessoas | Consultor de RH, Chatbot |
 | Testes | Testes Situacionais | Testes de pegadinha, SJT |
-| Modulo N1 | Cenarios de Postura | Assessment de Postura |
-| Modulo N2 | Inventario de Praticas | Assessment de Maturidade |
-| Modulo N3 | Diagnostico de Lideranca | SJT de Prontidao |
-| Modulo N4 | Termometro Organizacional | Pulso Coletivo |
+| Módulo N1 | Cenarios de Postura | Assessment de Postura |
+| Módulo N2 | Inventario de Práticas | Assessment de Maturidade |
+| Módulo N3 | Diagnóstico de Lideranca | SJT de Prontidao |
+| Módulo N4 | Termometro Organizacional | Pulso Coletivo |
 | Teste antigo | Tipologia Cognitiva | MBTI |
 | Plano gratis | Gratis | Free, Freemium |
 | Trial | Teste gratis de 14 dias | Free trial, trial period |
 
 ---
 
-## 10. Coexistencia com Emprega+
+## 10. Coexistência com Emprega+
 
 ### O que compartilham
 
@@ -377,32 +384,32 @@ Manter espaco minimo equivalente a **altura do "e" minusculo** ao redor do wordm
 
 | Aspecto | Emprega+ | Electia |
 |---------|----------|---------|
-| Publico | Candidatos, editais, vagas | Gestores, RH, diretoria |
+| Público | Candidatos, editais, vagas | Gestores, RH, diretoria |
 | Modelo | B2C (gratuito) | B2B SaaS (assinatura) |
 | Tom | Acolhedor, motivacional | Direto, provocativo, inteligente |
 | Paleta | Accent teal (compartilhado) | Dark theme dominante (mais tech) |
-| Complexidade | Simples, acessivel | Profundo, dados, IA |
+| Complexidade | Simples, acessível | Profundo, dados, IA |
 
 O Electia herda a credibilidade da Emprega+ mas se posiciona como produto premium para decisores corporativos.
 
 ### Hierarquia legal e canais
 
 ```
-ResultX (CNPJ unico, Marcos Carneiro CEO)
+ResultX (CNPJ único, Marcos Carneiro CEO)
 └── Emprega+ (marca-mae, plataforma empregabilidade)
     ├── Emprega+ direto    canais: empregamais.me + @empregamais (Insta + LinkedIn)
-    ├── IMO                via Emprega+ (sem canais proprios)
-    ├── Electia            via Emprega+ (sem canais proprios)
+    ├── IMO                via Emprega+ (sem canais próprios)
+    ├── Electia            via Emprega+ (sem canais próprios)
     └── Editais            via Emprega+ (parado, reformulacao prevista)
 ```
 
-**O que isso significa para a comunicacao do Electia:**
+**O que isso significa para a comúnicação do Electia:**
 
-1. **Electia NAO tem rede social propria.** Toda comunicacao social (posts, anuncios, lives) passa por `@empregamais` (Instagram + LinkedIn empresa).
-2. **Domain:** `electia.empregamais.me` — subdominio da Emprega+, nunca dominio proprio.
-3. **Endorsement obrigatorio:** "Electia by Emprega+" em todo material publico (site, anuncios, social, PDF).
-4. **Entidade legal nas comunicacoes:** "ResultX" aparece apenas em Termos, Privacidade, NF — nunca em marketing.
-5. **Marcos Carneiro NAO e o canal do Electia.** Marcos representa PdV (personal-brand). Electia se comunica como empresa, nao como pessoa.
+1. **Electia NAO tem rede social própria.** Toda comúnicação social (posts, anuncios, lives) passa por `@empregamais` (Instagram + LinkedIn empresa).
+2. **Domain:** `electia.empregamais.me` — subdominio da Emprega+, nunca dominio próprio.
+3. **Endorsement obrigatório:** "Electia by Emprega+" em todo material público (site, anuncios, social, PDF).
+4. **Entidade legal nas comúnicações:** "ResultX" aparece apenas em Termos, Privacidade, NF — nunca em marketing.
+5. **Marcos Carneiro NAO e o canal do Electia.** Marcos representa PdV (personal-brand). Electia se comúnica como empresa, não como pessoa.
 
 > Mapa completo da arquitetura de marcas: `../../README.md`
 
@@ -410,175 +417,175 @@ ResultX (CNPJ unico, Marcos Carneiro CEO)
 
 ## 11. Origem da Marca
 
-### A historia por tras do Electia
+### A história por tras do Electia
 
-Electia nao nasceu de pesquisa de mercado. Nasceu de 12 anos de consultoria observando o mesmo padrao em empresas brasileiras: **o problema raramente eram as pessoas — eram pessoas desencaixadas**.
+Electia não nasceu de pesquisa de mercado. Nasceu de 12 anos de consultoria observando o mesmo padrão em empresas brasileiras: **o problema raramente eram as pessoas — eram pessoas desencaixadas**.
 
-A ResultX (consultoria fundada por Marcos Carneiro) atendia PMEs e grandes operacoes brasileiras desde 2012. Em cada projeto de turnover alto, baixo engajamento ou conflito de equipe, o diagnostico se repetia: gestores nao sabiam quem tinham na equipe. O RH usava ferramentas rasas (DISC isolado, MBTI nao-validado), faziam o teste uma vez na contratacao e esqueciam.
+A ResultX (consultoria fundada por Marcos Carneiro) atendia PMEs e grandes operações brasileiras desde 2012. Em cada projeto de turnover alto, baixo engajamento ou conflito de equipe, o diagnóstico se repetia: gestores não sabiam quem tinham na equipe. O RH usava ferramentas rasas (DISC isolado, MBTI não-validado), faziam o teste uma vez na contratação e esqueciam.
 
-A IA generativa de 2024-2026 tornou possivel o que era inviavel antes: cruzar 6 teorias psicometricas de forma narrativa, interpretar contextos situacionais e gerar planos de desenvolvimento personalizados. Onde antes era preciso um psicologo para 8 horas de leitura, hoje a IA entrega em 30 segundos — sem substituir o psicologo, mas dando escala.
+A IA generativa de 2024-2026 tornou possivel o que era inviável antes: cruzar 6 teorias psicometricas de forma narrativa, interpretar contextos situacionais e gerar planos de desenvolvimento personalizados. Onde antes era preciso um psicologo para 8 horas de leitura, hoje a IA entrega em 30 segundos — sem substituir o psicologo, mas dando escala.
 
 O nome **Electia** vem do grego *electio* — "o eleito, o escolhido". Reforca a promessa central:
 
-> "Sua equipe nao e ruim. Esta desencaixada."
+> "Sua equipe não e ruim. Esta desencaixada."
 
 Cada colaborador e o eleito de algum lugar — o trabalho do Electia e mostrar qual.
 
-### O fundador — visao de produto
+### O fundador — visão de produto
 
 Marcos Carneiro traz para o Electia uma combinacao rara:
 
 | Origem | Contribuicao para o produto |
 |--------|----------------------------|
-| **Engenheiro** (formacao) | Rigor metodologico, base cientifica nao-negociavel |
-| **Empreendedor** (CRONIC Jeans, ResultX, Emprega+) | Foco em produto B2B real, nao academico |
+| **Engenheiro** (formação) | Rigor metodológico, base científica não-negociavel |
+| **Empreendedor** (CRONIC Jeans, ResultX, Emprega+) | Foco em produto B2B real, não academico |
 | **Consultor 12+ anos** | Conhecimento profundo da dor do gestor brasileiro |
-| **Catolico aplicado** (implicito) | Etica nao-negociavel: LGPD, CFP, saude mental |
+| **Católico aplicado** (implícito) | Ética não-negociavel: LGPD, CFP, saúde mental |
 
-**O que isso significa para a voz do Electia:** cientifico mas pratico, sofisticado mas direto, ousado em provocar mas blindado em etica.
+**O que isso significa para a voz do Electia:** científico mas pratico, sofisticado mas direto, ousado em provocar mas blindado em etica.
 
 ---
 
-## 12. Posicionamento Estrategico
+## 12. Posicionamento Estratégico
 
 ### Declaracao de posicionamento
 
-> Para diretores de RH, gestores de pessoas e CEOs de empresas brasileiras que precisam tomar decisoes melhores sobre quem contratar, promover, desenvolver ou onde realocar — Electia by Emprega+ e uma plataforma SaaS de assessments comportamentais que, diferente de testes DISC rasos, MBTI nao-validado ou consultorias caras de people analytics, cruza 6 teorias cientificas (DISC + Tipologia Cognitiva + Eneagrama + Big Five + Le Senne + Motivadores) com IA aplicada e cenarios situacionais — para que lideres entendam suas equipes com profundidade real e tomem decisoes baseadas em comportamento, nao em achismo.
+> Para diretores de RH, gestores de pessoas e CEOs de empresas brasileiras que precisam tomar decisões melhores sobre quem contratar, promover, desenvolver ou onde realocar — Electia by Emprega+ e uma plataforma SaaS de assessments comportamentais que, diferente de testes DISC rasos, MBTI não-validado ou consultorias caras de people analytics, cruza 6 teorias científicas (DISC + Tipologia Cognitiva + Eneagrama + Big Five + Le Senne + Motivadores) com IA aplicada e cenários situacionais — para que líderes entendam suas equipes com profundidade real e tomem decisões baseadas em comportamento, não em achismo.
 
 ### Perfil do cliente ideal (ICP)
 
-| Atributo | Definicao |
+| Atributo | Definição |
 |----------|-----------|
 | **Quem** | Diretores de RH, gestores de pessoas, CEOs/founders de PMEs (50-500 colab) |
 | **Tamanho** | 50 a 1.000 colaboradores (sweet spot 100-300) |
-| **Setores** | Tecnologia, servicos profissionais, varejo, industria leve |
-| **Maturidade RH** | Empresa que ja faz avaliacao de desempenho mas sente que ela e rasa |
-| **Gatilho de compra** | NR-1 (saude mental), turnover alto, conflito de equipe, dificuldade de promocao interna |
+| **Setores** | Tecnologia, serviços profissionais, varejo, industria leve |
+| **Maturidade RH** | Empresa que já faz avaliação de desempenho mas sente que ela e rasa |
+| **Gatilho de compra** | NR-1 (saúde mental), turnover alto, conflito de equipe, dificuldade de promoção interna |
 
 ### A dor — nas palavras deles
 
 > "Contratamos um senior brilhante no papel, em 6 meses ele estava paralisando o time."
 >
-> "Meu RH faz DISC ha 3 anos. Ninguem mais olha o resultado depois da contratacao."
+> "Meu RH faz DISC ha 3 anos. Ninguem mais olha o resultado depois da contratação."
 >
-> "A NR-1 vai pegar a gente. Nao tenho como mapear saude mental de 250 pessoas com 1 psicologa."
+> "A NR-1 vai pegar a gente. Não tenho como mapear saúde mental de 250 pessoas com 1 psicologa."
 >
-> "Eu sei quem da resultado. Nao consigo explicar pro RH por que."
+> "Eu sei quem da resultado. Não consigo explicar pro RH por que."
 
-O que essas frases revelam: **autoimagem nao bate com comportamento real**. Falta um instrumento que veja a pessoa por multiplos angulos e mostre como ela age sob pressao.
+O que essas frases revelam: **autoimagem não bate com comportamento real**. Falta um instrumento que veja a pessoa por múltiplos angulos e mostre como ela age sob pressao.
 
 ### Alternativas competitivas
 
-| Alternativa | Por que nao funciona | O Electia e diferente porque... |
+| Alternativa | Por que não funciona | O Electia e diferente porque... |
 |-------------|----------------------|--------------------------------|
-| **DISC isolado** (Solides, Etalent) | 1 teoria so. Reduz pessoa a 4 cores. Resultado raso | Cruza 6 teorias — DISC + 5 outras complementares |
-| **MBTI tradicional** | Nao-cientificamente validado, 16 caixas rigidas | Migrou para Tipologia Cognitiva (validacao + 8 funcoes) |
+| **DISC isolado** (Sólides, Etalent) | 1 teoria só. Reduz pessoa a 4 cores. Resultado raso | Cruza 6 teorias — DISC + 5 outras complementares |
+| **MBTI tradicional** | Nao-científicamente validado, 16 caixas rigidas | Migrou para Tipologia Cognitiva (validação + 8 funções) |
 | **People analytics enterprise** (Korn Ferry, Mercer) | R$100k+, consultoria longa, fora do alcance de PME | SaaS self-service, planos de R$149-R$5k/mes |
-| **Pulses de clima** (Pulses, Buk, Feedz) | Mede sentimento, nao comportamento | Mede comportamento estavel + traz IA aplicada |
-| **Mereo, Lattice** (OKRs/desempenho) | Foco em metas, nao em pessoas | Foco em pessoas (assessment) — complementar |
-| **Consultoria caso-a-caso** | Lenta (semanas), nao escala, depende de individuo | 30 segundos para relatorio cruzado, escala infinito |
+| **Pulses de clima** (Pulses, Buk, Feedz) | Mede sentimento, não comportamento | Mede comportamento estavel + traz IA aplicada |
+| **Mereo, Lattice** (OKRs/desempenho) | Foco em metas, não em pessoas | Foco em pessoas (assessment) — complementar |
+| **Consultoria caso-a-caso** | Lenta (semanas), não escala, depende de individuo | 30 segundos para relatório cruzado, escala infinito |
 
-### Atributos unicos do Electia
+### Atributos únicos do Electia
 
-1. **6 teorias cruzadas** — DISC + Tipologia Cognitiva + Eneagrama + Big Five + Le Senne + Motivadores. Nenhum competidor brasileiro cruza tantas teorias com narrativa unica
-2. **IA aplicada com etica blindada** — IA interpreta, narra, recomenda. Mas nunca substitui psicologo (CRP) em decisao clinica
-3. **Modulos situacionais N1-N4** — cenarios sob pressao revelam comportamento real, nao autoimagem
-4. **NR-1 compliant** — modulo Saude Mental gerido por psicologo (CRP) com acesso compartimentado
+1. **6 teorias cruzadas** — DISC + Tipologia Cognitiva + Eneagrama + Big Five + Le Senne + Motivadores. Nenhum competidor brasileiro cruza tantas teorias com narrativa única
+2. **IA aplicada com etica blindada** — IA interpreta, narra, recomenda. Mas nunca substitui psicologo (CRP) em decisão clinica
+3. **Módulos situacionais N1-N4** — cenários sob pressao revelam comportamento real, não autoimagem
+4. **NR-1 compliant** — módulo Saúde Mental gerido por psicologo (CRP) com acesso compartimentado
 5. **LGPD by design** — consent gate, soft-delete 30d, cron mensal de cleanup, DPO designado
 6. **Cobertura Brasil-real** — pt-BR nativo, mapeamento de cargos brasileiros, integracao com folha/ERP daqui
-7. **Heranca Emprega+** — credibilidade de plataforma B2C ja consolidada (milhoes de candidatos)
+7. **Heranca Emprega+** — credibilidade de plataforma B2C já consolidada (milhões de candidatos)
 
 ### Por que agora
 
-- **NR-1 (Saude Mental no Trabalho)** — Norma regulamentadora que obriga empresas a mapear saude mental. 89% das PMEs nao estao prontas. Electia entrega protocolo CFP-compliant pronto
+- **NR-1 (Saúde Mental no Trabalho)** — Norma regulamentadora que obriga empresas a mapear saúde mental. 89% das PMEs não estao prontas. Electia entrega protocolo CFP-compliant pronto
 - **Gestores sobrecarregados** — pos-pandemia, gestor brasileiro lidera 8-12 pessoas com zero ferramenta. Mentor AI vira "consultor 24/7"
-- **IA passou do POC para producao** — GPT-4o e equivalentes tornaram custo de interpretacao narrativa <R$0.01/relatorio. Era inviavel ate 2024
-- **Brasil tem 2.5M empresas com 50+ colab** — TAM R$18-30M/ano (apenas o modulo basico, sem upsell)
+- **IA passou do POC para produção** — GPT-4o e equivalentes tornaram custo de interpretação narrativa <R$0.01/relatório. Era inviável até 2024
+- **Brasil tem 2.5M empresas com 50+ colab** — TAM R$18-30M/ano (apenas o módulo basico, sem upsell)
 
 ### Categoria de mercado
 
-**Plataforma de Assessment Comportamental e Saude Mental Organizacional.**
+**Plataforma de Assessment Comportamental e Saúde Mental Organizacional.**
 
-Nao e ATS. Nao e LMS. Nao e ERP de RH. E o **instrumento que conecta dados de pessoa a decisoes de gestao** — o "raio-X comportamental" da equipe.
+Não e ATS. Não e LMS. Não e ERP de RH. E o **instrumento que conecta dados de pessoa a decisões de gestão** — o "raio-X comportamental" da equipe.
 
 ---
 
-## 13. Arquetipo de Marca
+## 13. Arquétipo de Marca
 
-### Triade arquetipica: Sabio + Mago + Cuidador
+### Triade arquetipica: Sábio + Mago + Cuidador
 
-O Electia opera com tres arquetipos em equilibrio. Diferente do PdV (Heroi-Rebelde-Sabio, motor de coragem), o Electia e motor de **profundidade, transformacao e cuidado**.
+O Electia opera com três arquétipos em equilibrio. Diferente do PdV (Heroi-Rebelde-Sabio, motor de coragem), o Electia e motor de **profundidade, transformação e cuidado**.
 
-#### O Sabio (dominante) — Profundidade cientifica
+#### O Sábio (dominante) — Profundidade científica
 
 | Aspecto | Expressao no Electia |
 |---------|---------------------|
 | **Motivacao** | Mostrar a verdade comportamental por tras da fachada |
-| **Promessa** | "Voce vai entender sua equipe como nunca entendeu" |
-| **Tom** | Profundo, cientifico, cada afirmacao referenciada |
+| **Promessa** | "Você vai entender sua equipe como nunca entendeu" |
+| **Tom** | Profundo, científico, cada afirmacao referênciada |
 | **Simbolo** | A clarividencia — ver o que esta latente |
 
-#### O Mago — Transformacao por dados/IA
+#### O Mago — Transformação por dados/IA
 
 | Aspecto | Expressao no Electia |
 |---------|---------------------|
-| **Motivacao** | Transformar dados em decisao acionavel |
+| **Motivacao** | Transformar dados em decisão acionavel |
 | **Promessa** | "30 segundos para o que antes levava 8 horas de psicologo" |
-| **Tom** | Tech-forward, IA como ferramenta nobre (nao buzzword) |
+| **Tom** | Tech-forward, IA como ferramenta nobre (não buzzword) |
 | **Simbolo** | Energy core / aurora — energia em movimento (vide aurora-hero-v1) |
 
-#### O Cuidador — Etica blindada
+#### O Cuidador — Ética blindada
 
 | Aspecto | Expressao no Electia |
 |---------|---------------------|
-| **Motivacao** | Proteger o colaborador. Saude mental nao e dado de RH |
+| **Motivacao** | Proteger o colaborador. Saúde mental não e dado de RH |
 | **Compromisso** | CFP, LGPD, soft-delete, consent gate, psicologo no circuito |
-| **Tom** | Sereno, responsavel, sem urgencia falsa |
+| **Tom** | Sereno, responsável, sem urgencia falsa |
 | **Simbolo** | O escudo — protecao individual contra o coletivo |
 
 ### O que o Electia NAO e
 
-| Anti-arquetipo | Por que nao |
+| Anti-arquétipo | Por que não |
 |----------------|-------------|
-| O Heroi motivacional | Nao vendemos superacao emocional. Vendemos dados |
-| O Bobo da corte | Tom serio. Saude mental no trabalho nao e marketing leve |
-| O Vendedor agressivo | Nao usamos urgencia falsa, scarcity sintetico, FOMO |
-| O Guru de RH | Nao prometemos "transformar sua cultura". Damos instrumento, voce decide |
+| O Heroi motivacional | Não vendemos superacao emocional. Vendemos dados |
+| O Bobo da corte | Tom serio. Saúde mental no trabalho não e marketing leve |
+| O Vendedor agressivo | Não usamos urgencia falsa, scarcity sintetico, FOMO |
+| O Guru de RH | Não prometemos "transformar sua cultura". Damos instrumento, você decide |
 
-### Framework etico (implicito, nunca explicito)
+### Framework etico (implícito, nunca explícito)
 
-A marca trabalha 4 valores nao-negociaveis que aparecem em decisoes de produto, nao em copy de marketing:
+A marca trabalha 4 valores não-negociaveis que aparecem em decisões de produto, não em copy de marketing:
 
 | Valor | Manifestacao no produto |
 |-------|------------------------|
-| **Verdade cientifica** | Toda teoria usada e validada. Migramos MBTI -> Tipologia Cognitiva por causa disso |
+| **Verdade científica** | Toda teoria usada e validada. Migramos MBTI -> Tipologia Cognitiva por causa disso |
 | **Consentimento** | Consent gate LGPD em onboarding. Soft-delete 30d. Cron mensal de purge |
-| **Compartimentalizacao** | Admin nao ve dado clinico. RH nao ve resultado individual de saude mental. So psicologo (CRP) ve |
-| **Dignidade do dado** | Resultado individual nunca usado para ranking ou demissao. Apenas desenvolvimento |
+| **Compartimentalizacao** | Admin não ve dado clinico. RH não ve resultado individual de saúde mental. Só psicologo (CRP) ve |
+| **Dignidade do dado** | Resultado individual nunca usado para ranking ou demissão. Apenas desenvolvimento |
 
 ---
 
 ## 14. Fotografia e Imagens
 
-### Asset hero canonico: `aurora-hero-v1`
+### Asset hero canônico: `aurora-hero-v1`
 
 **Arquivos:** `assets/hero/aurora-hero-v1.{mp4, webm, poster.jpg}`
-**Status:** ✅ v1 em producao desde 2026-05-10 (modo Electia Subtle validado por Marcos)
+**Status:** ✅ v1 em produção desde 2026-05-10 (modo Electia Subtle validado por Marcos)
 **Origem:** Pexels (Colin Jones / @larchmedia) — Pexels License (uso comercial OK)
 **Dimensoes:** 1920x1080 @ 24fps · 12s loop perfeito · 4.6 MB MP4 + 4.8 MB WebM + 71 KB poster JPG
 
-Este e o asset visual primario da marca Electia. Aparece no hero de LPs, materiais institucionais e capas. Detalhes tecnicos completos em `assets/hero/README.md`. Demo funcional com 3 modos toggle em `previews/aurora-hero-demo.html`.
+Este e o asset visual primário da marca Electia. Aparece no hero de LPs, materiais institucionais e capas. Detalhes técnicos completos em `assets/hero/README.md`. Demo funcional com 3 modos toggle em `previews/aurora-hero-demo.html`.
 
 ### Filosofia visual
 
-Electia nao usa fotografia tradicional de RH (sorrisos corporativos, salas reluzentes, equipes em ilhotas). A estetica visual e **abstrata, tech, cientifica** — refletindo o produto: dados em movimento. O aurora-hero-v1 (acima) e a materializacao dessa filosofia.
+Electia não usa fotografia tradicional de RH (sorrisos corporativos, salas reluzentes, equipes em ilhotas). A estética visual e **abstrata, tech, científica** — refletindo o produto: dados em movimento. O aurora-hero-v1 (acima) e a materializacao dessa filosofia.
 
 ### Estilo visual
 
 | Aspecto | Diretriz |
 |---------|----------|
 | **Iluminacao** | Dark mode dominante. Contraste alto. Glows teal sutis |
-| **Temperatura** | Frias. Tons teal, cyan, navy. Acentos sutis em ambar (saude mental) |
+| **Temperatura** | Frias. Tons teal, cyan, navy. Acentos sutis em ambar (saúde mental) |
 | **Movimento** | Lento, organico, "silk-flow". Nunca frenetico |
 | **Densidade** | Limpa, com whitespace. Dado e protagonista — texto e suporte |
 | **Cor dominante** | Tons escuros (#0B0E14 base) com acentos teal (#2DD4BF) e amber em estados especiais |
@@ -588,13 +595,13 @@ Electia nao usa fotografia tradicional de RH (sorrisos corporativos, salas reluz
 | Categoria | Descricao | Uso |
 |-----------|-----------|-----|
 | **Abstract energy flow** | Fios, fitas, energy core, particles (vide aurora-hero-v1) | Hero sections, fundos, capas |
-| **Data visualization estetizada** | Charts limpos, mockups de dashboards, network graphs | LP, features, blog tecnico |
-| **Retrato profissional** | Gestores reais, profissionais maduros, expressao pensativa | Depoimentos, social proof |
-| **Detalhe tech** | Codigo em monitor, terminal, IA em acao | Material tecnico, blog dev |
+| **Data visualization estetizada** | Charts limpos, mockups de dashboards, network graphs | LP, features, blog técnico |
+| **Retrato profissional** | Gestores reais, profissionais maduros, expressão pensativa | Depoimentos, social proof |
+| **Detalhe tech** | Código em monitor, terminal, IA em acao | Material técnico, blog dev |
 
 ### Tratamento de imagem
 
-#### Overlay padrao
+#### Overlay padrão
 ```css
 background: linear-gradient(
   180deg,
@@ -605,51 +612,297 @@ background: linear-gradient(
 );
 ```
 
-#### Filter padrao (sobre videos hero — ver aurora-hero-v1)
+#### Filter padrão (sobre vídeos hero — ver aurora-hero-v1)
 ```css
 filter: brightness(0.38) saturate(0.55) hue-rotate(-12deg) contrast(1.10);
 ```
 
-#### Color grade fotografico
+#### Color grade fotográfico
 - **Saturacao**: Reduzir 30-40%
 - **Contraste**: Alto (+15%)
 - **Sombras**: Empurrar para frio (azul/teal)
 - **Highlights**: Manter neutros
-- **Referencia**: Look tech moderno, nao editorial
+- **Referência**: Look tech moderno, não editorial
 
 ### Imagens proibidas
 
-- Stock photos de RH genericas (sorrisos, polegares, brindes, mesas circulares)
+- Stock photos de RH genéricas (sorrisos, polegares, brindes, mesas circulares)
 - Cliches de "diversidade forcada" (cada raca e genero posando)
-- Imagens motivacionais (montanhas, sol nascendo, "voce consegue")
+- Imagens motivacionais (montanhas, sol nascendo, "você consegue")
 - Fotos de equipes felizes em cafe
-- IA generativa com artefatos visiveis
+- IA generativa com artefatos visíveis
 - Cenarios de luxo corporativo
-- Imagens em paleta gold/warm (essa e a paleta PdV — nao confundir)
+- Imagens em paleta gold/warm (essa e a paleta PdV — não confundir)
 
 ---
 
-## 15. Checklist de Validacao
+## 15. Checklist de Validação
 
 Antes de publicar qualquer material visual:
 
-- [ ] Fundo escuro (nao branco)?
+- [ ] Fundo escuro (não branco)?
 - [ ] Fonte correta (Sora titulos, Inter corpo)?
 - [ ] Cores dentro da paleta Electia (teal #2DD4BF, neutros escuros, branco)?
-- [ ] ZERO gold/amber como destaque primario (gold so em estados ambar especificos, ex: warning)?
-- [ ] Teal como UNICA cor de destaque primaria?
-- [ ] Logo presente com area de protecao respeitada?
-- [ ] Tom de voz alinhado (cientifico, direto, sem motivacional vazio)?
-- [ ] CTA digno e claro (maximo 2 por peca)?
+- [ ] ZERO gold/amber como destaque primário (gold só em estados ambar específicos, ex: warning)?
+- [ ] Teal como UNICA cor de destaque primária?
+- [ ] Logo presente com área de protecao respeitada?
+- [ ] Tom de voz alinhado (científico, direto, sem motivacional vazio)?
+- [ ] CTA digno e claro (máximo 2 por peca)?
 - [ ] Imagens tratadas (overlay dark, dessaturacao, contraste alto)?
-- [ ] Nenhuma imagem generica de RH (sorrisos corporativos, polegares, brindes)?
-- [ ] Contraste acessivel (WCAG AA — 4.5:1 para texto)?
-- [ ] Sem caixa alta em titulos ou paragrafos?
+- [ ] Nenhuma imagem genérica de RH (sorrisos corporativos, polegares, brindes)?
+- [ ] Contraste acessível (WCAG AA — 4.5:1 para texto)?
+- [ ] Sem caixa alta em titulos ou parágrafos?
 - [ ] Animacao com `prefers-reduced-motion` respeitado?
-- [ ] Nomenclatura correta ("Electia", "Mentor AI", "Tipologia Cognitiva" — vide secao 9)?
-- [ ] Se mencionar saude mental: gate de psicologo (CRP) explicitado?
+- [ ] Nomenclatura correta ("Electia", "Mentor AI", "Tipologia Cognitiva" — vide seção 9)?
+- [ ] Se mencionar saúde mental: gate de psicologo (CRP) explícitado?
 - [ ] Se coleta dados: consent gate LGPD presente?
-- [ ] Sem promessas de "diagnostico" ou "tratamento" clinico (nao somos terapia)?
+- [ ] Sem promessas de "diagnóstico" ou "tratamento" clinico (não somos terapia)?
+
+---
+
+## 16. Aplicação na LP e Plataforma
+
+Como instalar e aplicar este Brand Book no código real da LP (electia.empregamais.me institucional) e da plataforma (app electia.empregamais.me).
+
+### 16.1 Quem consome o Brand Book
+
+| Surface | Stack provavel | Path no monorepo |
+|---------|---------------|------------------|
+| **LP institucional** | Next.js + Tailwind | `resultx/electia/` (Next 16 app router) |
+| **Plataforma SaaS** | Next.js + Supabase | `resultx/electia/` (mesmo repo, área autenticada) |
+| **Email Brevo** | HTML estatico | usa `brands/electia/email-templates/*` |
+
+### 16.2 Importar fontes (Google Fonts)
+
+Adicionar no `<head>` da LP/plataforma (uma única vez no layout raiz):
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+```
+
+No Next.js (App Router), prefira `next/font/google` para self-host automático:
+
+```ts
+// app/layout.tsx
+import { JetBrains_Mono, Sora, Inter } from 'next/font/google';
+
+const jetbrains = JetBrains_Mono({ subsets: ['latin'], weight: ['500','600','700'], variable: '--font-mono' });
+const sora      = Sora({ subsets: ['latin'], weight: ['400','500','600','700','800'], variable: '--font-display' });
+const inter     = Inter({ subsets: ['latin'], weight: ['400','500','600','700'], variable: '--font-body' });
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="pt-BR" className={`${jetbrains.variable} ${sora.variable} ${inter.variable}`}>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+### 16.3 Importar tokens (CSS variables)
+
+O DS multi-brand vive em `resultx-design-system` (NPM). Ordem de import:
+
+```css
+/* 1. Tokens base do DS root (cores genéricas, escalas) */
+@import 'resultx-design-system/tokens';
+
+/* 2. Override Electia (paleta teal + tokens específicos) */
+@import 'resultx-design-system/brands/electia/tokens/tokens.css';
+```
+
+Ou se o código viver no mesmo monorepo, importar por path relativo:
+
+```css
+@import '../../design-system/tokens/tokens.css';
+@import '../../design-system/brands/electia/tokens/tokens.css';
+```
+
+Apos isso, todas as CSS variables ficam disponíveis: `var(--bg)`, `var(--teal)`, `var(--text-primary)`, `var(--surface-1)`, etc.
+
+### 16.4 Aplicar o wordmark
+
+Copiar os SVGs de `brands/electia/assets/logo/` para `public/brand/` da LP/plataforma:
+
+```bash
+cp brands/electia/assets/logo/electia-wordmark.svg          electia-app/public/brand/
+cp brands/electia/assets/logo/electia-wordmark-accent.svg   electia-app/public/brand/
+cp brands/electia/assets/logo/electia-wordmark-light.svg    electia-app/public/brand/
+cp brands/electia/assets/logo/electia-short.svg             electia-app/public/brand/
+cp brands/electia/assets/logo/electia-monogram.svg          electia-app/public/brand/
+cp brands/electia/assets/logo/electia-monogram-teal.svg     electia-app/public/brand/
+cp brands/electia/assets/logo/electia-lockup-vertical.svg   electia-app/public/brand/
+```
+
+Uso no header:
+
+```tsx
+import Image from 'next/image';
+
+export function Header() {
+  return (
+    <header>
+      <Image
+        src="/brand/electia-wordmark.svg"
+        alt="electia by emprega+"
+        width={200}
+        height={40}
+        priority
+      />
+    </header>
+  );
+}
+```
+
+Favicon (helper "e"):
+
+```tsx
+// app/icon.tsx (Next.js auto-icon)
+import { ImageResponse } from 'next/og';
+export const size = { width: 256, height: 256 };
+export const contentType = 'image/png';
+export default function Icon() {
+  // Renderiza electia-monogram.svg ou retorna SVG inline equivalente
+}
+```
+
+Ou estatico em `public/favicon.svg` (apontar do `<head>` do layout).
+
+### 16.5 Aplicar o aurora-hero
+
+Copiar os 3 assets de `brands/electia/assets/hero/`:
+
+```bash
+mkdir -p electia-app/public/hero/
+cp brands/electia/assets/hero/aurora-hero-v1.mp4         electia-app/public/hero/
+cp brands/electia/assets/hero/aurora-hero-v1.webm        electia-app/public/hero/
+cp brands/electia/assets/hero/aurora-hero-v1.poster.jpg  electia-app/public/hero/
+```
+
+Componente React:
+
+```tsx
+export function AuroraHero({ children }) {
+  return (
+    <section className="aurora-hero-frame">
+      <video
+        autoPlay muted loop playsInline preload="metadata"
+        poster="/hero/aurora-hero-v1.poster.jpg"
+      >
+        <source src="/hero/aurora-hero-v1.webm" type="video/webm" />
+        <source src="/hero/aurora-hero-v1.mp4" type="video/mp4" />
+      </video>
+      <div className="scrim" />
+      <div className="content">{children}</div>
+    </section>
+  );
+}
+```
+
+CSS aplicado (modo Electia Subtle oficial):
+
+```css
+.aurora-hero-frame {
+  position: relative;
+  width: 100%;
+  min-height: clamp(420px, 78vh, 820px);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--bg);
+}
+.aurora-hero-frame vídeo {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: brightness(0.38) saturate(0.55) hue-rotate(-12deg) contrast(1.10);
+}
+.aurora-hero-frame .scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, rgba(45, 212, 191, 0.06) 0%, transparent 45%, rgba(11, 14, 20, 0.55) 75%),
+    linear-gradient(180deg, rgba(11, 14, 20, 0.65) 0%, rgba(11, 14, 20, 0.35) 40%, rgba(11, 14, 20, 0.40) 60%, rgba(11, 14, 20, 0.96) 100%);
+}
+.aurora-hero-frame .content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: clamp(80px, 18vh, 200px) 24px;
+}
+
+/* Reduced motion: pausar vídeo, mostrar só poster */
+@média (prefers-reduced-motion: reduce) {
+  .aurora-hero-frame vídeo { display: none; }
+  .aurora-hero-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('/hero/aurora-hero-v1.poster.jpg') center/cover;
+    filter: brightness(0.38) saturate(0.55) hue-rotate(-12deg);
+  }
+}
+```
+
+### 16.6 Email Brevo
+
+Os 4 templates em `brands/electia/email-templates/` (electia-email-base, newsletter, product-cta, brevo-base.yaml) já estao com paleta teal e grafia lowercase. Subir direto no painel Brevo via importacao YAML.
+
+### 16.7 Checklist por surface
+
+**Antes de subir uma nova pagina/LP do Electia, verificar:**
+
+- [ ] Fontes Google carregadas (JetBrains Mono + Sora + Inter)
+- [ ] Tokens importados (`@import` ou via Next/Tailwind config)
+- [ ] Wordmark `electia by emprega+` no header (SVG do `public/brand/`)
+- [ ] Favicon helper "e" no `<link rel="icon">`
+- [ ] Hero usa `<AuroraHero>` ou equivalente com filter electia-subtle
+- [ ] Cores apenas via `var(--*)` (zero hardcoded)
+- [ ] Texto principal em `var(--text-primary)`, secundário em `var(--text-secondary)`
+- [ ] Background dark (`var(--bg)` ou `var(--surface-1)`)
+- [ ] `prefers-reduced-motion` respeitado em vídeos/animacoes
+- [ ] Grafia "electia" minuscula em todo copy
+- [ ] Endorsement "by emprega+" presente onde aplicável
+- [ ] CTA usa cor `var(--teal)` ou variante accent
+- [ ] WCAG AA: contraste 4.5:1 mínimo testado
+
+### 16.8 Mapa de onde cada arquivo vive
+
+```
+brands/electia/                          <- fonte da verdade (este DS)
+├── docs/BRAND-BOOK.md                   <- este arquivo (sempre consultar)
+├── tokens/tokens.css                    <- importar na LP/plataforma
+├── tokens/tokens.json                   <- W3C tokens (para build tools)
+├── assets/logo/*.svg                    <- copiar para public/brand/
+├── assets/hero/aurora-hero-v1.*         <- copiar para public/hero/
+└── email-templates/*                    <- importar no Brevo
+
+resultx/electia/                         <- consumidor (LP + plataforma)
+├── public/
+│   ├── brand/electia-wordmark.svg       <- copia do DS
+│   ├── hero/aurora-hero-v1.{mp4,webm,jpg}  <- copia do DS
+│   └── favicon.svg                      <- electia-monogram.svg renomeado
+├── app/layout.tsx                       <- fontes + tokens import
+├── components/AuroraHero.tsx            <- usa o vídeo hero
+├── components/Header.tsx                <- usa o wordmark
+└── styles/globals.css                   <- @import dos tokens
+```
+
+### 16.9 Atualizar quando o Brand muda
+
+Sempre que este Brand Book virar v1.4, v1.5, etc:
+1. Atualizar `brands/electia/` (fonte da verdade)
+2. Bump versão no `package.json` do DS root
+3. Republicar NPM se for um consumidor externo
+4. Na LP/plataforma, atualizar imports + copiar novos assets
+5. Documentar mudanças no CHANGELOG.md do Electia + da LP/plataforma
 
 ---
 

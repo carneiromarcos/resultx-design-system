@@ -2,7 +2,7 @@
 
 > Movimento e vida. Mas vida controlada — como a chama da forja, nunca como fogos de artificio.
 >
-> Referencia principal: academialendaria.ai — suave, premium, intencional.
+> Referência principal: academialendaria.ai — suave, premium, intencional.
 
 ---
 
@@ -10,7 +10,7 @@
 
 ### Filosofia
 
-O Electia nao e um site estatico, mas tambem nao e um parque de diversoes. O motion deve:
+O Electia não e um site estatico, mas também não e um parque de diversões. O motion deve:
 
 - **Guiar o olhar** — direcionar a atencao para o que importa
 - **Criar profundidade** — reforcar o mundo dark/caverna da marca
@@ -19,14 +19,14 @@ O Electia nao e um site estatico, mas tambem nao e um parque de diversoes. O mot
 
 ### Regra de teal
 
-> Se voce tirasse todas as animacoes, o site ainda funcionaria perfeitamente.
-> As animacoes adicionam CAMADA, nao dependencia.
+> Se você tirasse todas as animacoes, o site ainda funcionaria perfeitamente.
+> As animacoes adicionam CAMADA, não dependencia.
 
 ---
 
 ## 2. Scroll Reveal (entrada de elementos)
 
-### 2.1 Fade Up (padrao para tudo)
+### 2.1 Fade Up (padrão para tudo)
 
 O efeito mais usado. Elementos entram de baixo para cima com fade.
 
@@ -37,7 +37,7 @@ O efeito mais usado. Elementos entram de baixo para cima com fade.
   transform: translateY(32px);
 }
 
-/* Estado final (visivel) */
+/* Estado final (visível) */
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
@@ -51,8 +51,8 @@ O efeito mais usado. Elementos entram de baixo para cima com fade.
 | **Duracao** | 700ms |
 | **Easing** | `cubic-bezier(0.16, 1, 0.3, 1)` — ease-out exponencial |
 | **Deslocamento** | 32px para cima |
-| **Trigger** | Elemento 20% visivel na viewport |
-| **Repeat** | Nao — anima uma vez, nunca reseta |
+| **Trigger** | Elemento 20% visível na viewport |
+| **Repeat** | Não — anima uma vez, nunca reseta |
 
 ### 2.2 Fade Up Staggered (grupos de cards/itens)
 
@@ -68,12 +68,12 @@ Cards ou itens em grid entram com delay progressivo.
 | Propriedade | Valor |
 |-------------|-------|
 | **Delay entre itens** | 100ms |
-| **Delay maximo** | 400ms (nao importa quantos itens) |
+| **Delay máximo** | 400ms (não importa quantos itens) |
 | **Duracao de cada** | 700ms (igual ao fade up) |
 
 ### 2.3 Fade In (sem deslocamento)
 
-Para elementos que so aparecem, sem subir. Usado em textos de corpo, paragrafos.
+Para elementos que só aparecem, sem subir. Usado em textos de corpo, parágrafos.
 
 ```css
 .fade-in {
@@ -85,9 +85,9 @@ Para elementos que so aparecem, sem subir. Usado em textos de corpo, paragrafos.
 }
 ```
 
-### 2.4 Scale In (logo, icones de destaque)
+### 2.4 Scale In (logo, ícones de destaque)
 
-Para elementos que merecem atencao especial — logo no hero, icones de pilares.
+Para elementos que merecem atencao especial — logo no hero, ícones de pilares.
 
 ```css
 .scale-in {
@@ -120,10 +120,10 @@ Para elementos que merecem atencao especial — logo no hero, icones de pilares.
 
 | Tipo | Elementos |
 |------|-----------|
-| **Fade Up** | Headings, cards, secoes, CTAs, badges |
+| **Fade Up** | Headings, cards, seções, CTAs, badges |
 | **Fade Up Stagger** | Grids de cards, logo variations, social posts, pilares |
-| **Fade In** | Paragrafos, textos de corpo, labels |
-| **Scale In** | Logo hero, icones de feature, manifesto blockquote |
+| **Fade In** | Parágrafos, textos de corpo, labels |
+| **Scale In** | Logo hero, ícones de feature, manifesto blockquote |
 | **Slide In** | Teal line separadores, barras decorativas, nav ao scroll |
 
 ---
@@ -223,7 +223,7 @@ a.link-teal:hover {
 
 ### 4.1 Teal Radial Glow (hero)
 
-Um glow dourado sutil atras do hero que pulsa MUITO lentamente.
+Um glow dourado sútil atras do hero que pulsa MUITO lentamente.
 
 ```css
 .hero-glow {
@@ -247,8 +247,8 @@ Um glow dourado sutil atras do hero que pulsa MUITO lentamente.
 | Propriedade | Valor |
 |-------------|-------|
 | **Ciclo** | 8 segundos (MUITO lento) |
-| **Variacao de opacidade** | 0.6 → 1.0 |
-| **Variacao de escala** | 1.0 → 1.05 (quase imperceptivel) |
+| **Variação de opacidade** | 0.6 → 1.0 |
+| **Variação de escala** | 1.0 → 1.05 (quase imperceptivel) |
 | **Easing** | ease-in-out (suave nos extremos) |
 
 ### 4.2 Teal Line (separadores animados)
@@ -269,7 +269,7 @@ Linhas douradas que "acendem" quando entram na viewport.
 
 ### 4.3 Noise Texture (background global)
 
-Uma textura de ruido muito sutil no fundo para dar "vida" ao preto.
+Uma textura de ruido muito sútil no fundo para dar "vida" ao preto.
 
 ```css
 body::after {
@@ -277,14 +277,14 @@ body::after {
   position: fixed;
   inset: 0;
   background-image: url('data:image/svg+xml,...'); /* noise pattern */
-  opacity: 0.015; /* quase invisivel */
+  opacity: 0.015; /* quase invisível */
   pointer-events: none;
   z-index: 9999;
   mix-blend-mode: overlay;
 }
 ```
 
-### 4.4 Parallax Sutil (secoes)
+### 4.4 Parallax Sútil (seções)
 
 Elementos de fundo se movem mais lento que o conteudo. MUITO sutil.
 
@@ -300,7 +300,7 @@ Elementos de fundo se movem mais lento que o conteudo. MUITO sutil.
 |-------------|-------|
 | **Fator** | 0.05 (5% do scroll) |
 | **Elementos** | Apenas glows, patterns, montanhas decorativas |
-| **Nunca** | Textos, cards, CTAs — so backgrounds |
+| **Nunca** | Textos, cards, CTAs — só backgrounds |
 
 ---
 
@@ -366,16 +366,16 @@ A logo entra com scale + fade, os dois triangulos aparecem sequencialmente.
 |----------|-------|--------|
 | Triangulo menor (solido) | 200ms | Scale up + fade in |
 | Triangulo maior (outline teal) | 500ms | Scale up + fade in |
-| Tagline | 900ms | Fade up padrao |
-| CTAs | 1100ms | Fade up padrao |
+| Tagline | 900ms | Fade up padrão |
+| CTAs | 1100ms | Fade up padrão |
 
-### 6.2 Counter Animado (numeros de impacto)
+### 6.2 Counter Animado (números de impacto)
 
-Numeros como "92M" ou "1.000+" contam de 0 ate o valor final.
+Números como "92M" ou "1.000+" contam de 0 até o valor final.
 
 ```javascript
 // Duracao: 2 segundos
-// Easing: ease-out (rapido no inicio, desacelera)
+// Easing: ease-out (rapido no início, desacelera)
 // Trigger: quando entra na viewport
 function countUp(element, target, duration = 2000) {
   const start = performance.now();
@@ -434,9 +434,9 @@ Um brilho dourado que percorre o badge de tempos em tempos.
 | Nome | Valor | Uso |
 |------|-------|-----|
 | **Standard** | `cubic-bezier(0.16, 1, 0.3, 1)` | Scroll reveals, entradas. Sai rapido, desacelera suave |
-| **Ease out** | `ease-out` | Hovers, transicoes rapidas |
+| **Ease out** | `ease-out` | Hovers, transições rapidas |
 | **Ease in-out** | `ease-in-out` | Loops infinitos (glow, shimmer) |
-| **Snap** | `cubic-bezier(0.22, 0.68, 0, 1.71)` | Feedback tatil (bounce sutil em CTAs) — usar com parcimonia |
+| **Snap** | `cubic-bezier(0.22, 0.68, 0, 1.71)` | Feedback tatil (bounce sútil em CTAs) — usar com parcimonia |
 
 ### NUNCA usar
 
@@ -454,10 +454,10 @@ Um brilho dourado que percorre o badge de tempos em tempos.
 
 1. **Apenas animar `transform` e `opacity`** — nunca width, height, margin, padding, top, left
 2. **`will-change`** em elementos que animam frequentemente (nav, glow, parallax)
-3. **`prefers-reduced-motion`** — respeitar preferencias do sistema:
+3. **`prefers-reduced-motion`** — respeitar preferências do sistema:
 
 ```css
-@media (prefers-reduced-motion: reduce) {
+@média (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
@@ -466,13 +466,13 @@ Um brilho dourado que percorre o badge de tempos em tempos.
 }
 ```
 
-4. **Intersection Observer** para scroll reveals (nao scroll listener)
-5. **`requestAnimationFrame`** para parallax (nao setInterval)
-6. **Maximo 3 animacoes simultaneas** visiveis na viewport
+4. **Intersection Observer** para scroll reveals (não scroll listener)
+5. **`requestAnimationFrame`** para parallax (não setInterval)
+6. **Máximo 3 animacoes simultaneas** visíveis na viewport
 
 ---
 
-## 9. Implementacao (React)
+## 9. Implementação (React)
 
 ### Scroll Reveal Hook
 

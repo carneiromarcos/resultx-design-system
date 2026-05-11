@@ -1,36 +1,36 @@
 # Guia de Social Media — Electia by Emprega+ (Electia)
 
-> Documento dedicado a templates, tipos de conteudo e diretrizes de producao visual para redes sociais.
+> Documento dedicado a templates, tipos de conteudo e diretrizes de produção visual para redes sociais.
 > Complementa o Brand Book (BRAND-BOOK.md) — todas as regras visuais do BB se aplicam aqui.
-> Single source of truth para producao de conteudo visual.
+> Single source of truth para produção de conteudo visual.
 
 ---
 
 ## 1. Regras Gerais (herdadas do Brand Book)
 
-Toda peca de social media deve respeitar:
+Toda peca de social média deve respeitar:
 
 1. **Fundo**: Sempre escuro (`#08080A` ou `#0E0E11`). NUNCA fundo branco
-2. **Titulo**: Sora Bold, branco ou ouro. Maximo 2 linhas
+2. **Titulo**: Sora Bold, branco ou ouro. Máximo 2 linhas
 3. **Texto de apoio**: Inter Regular, `gray-300` (`#A0A0AC`)
-4. **Ouro**: Unica cor de destaque (`#2DD4BF`). Maximo 1 gradiente por peca
-5. **Logo**: Sempre presente — canto inferior direito, versao icone (monograma P/V)
-6. **Margem interna**: Minimo 48px em todos os lados
+4. **Ouro**: Unica cor de destaque (`#2DD4BF`). Máximo 1 gradiente por peca
+5. **Logo**: Sempre presente — canto inferior direito, versão ícone (monograma P/V)
+6. **Margem interna**: Mínimo 48px em todos os lados
 7. **Fotografia**: Se usar foto, sempre com overlay escuro
-8. **Maximo 3 cores por peca**: Fundo escuro + ouro + branco
+8. **Máximo 3 cores por peca**: Fundo escuro + ouro + branco
 9. **Contraste**: WCAG AA (4.5:1 texto, 3:1 elementos grandes)
 
 ---
 
 ## 2. Dimensoes por Plataforma
 
-| Plataforma | Formato | Dimensao | Uso |
+| Plataforma | Formato | Dimensão | Uso |
 |------------|---------|----------|-----|
 | Instagram Feed | Quadrado | 1080x1080 | Carroseis, frases, dados |
 | Instagram Stories/Reels | Vertical | 1080x1920 | Bastidores, CTAs, cortes |
 | LinkedIn Post | Horizontal | 1200x627 | Artigos, autoridade |
 | LinkedIn Carrossel | Quadrado | 1080x1080 | Conteudo educativo |
-| YouTube Thumbnail | Horizontal | 1280x720 | Workshops, videos |
+| YouTube Thumbnail | Horizontal | 1280x720 | Workshops, vídeos |
 | WhatsApp | Quadrado | 1080x1080 | Convites, lembretes |
 
 ---
@@ -44,18 +44,18 @@ Toda peca de social media deve respeitar:
 | **Layout** | Texto centralizado, fundo dark puro |
 | **Elementos** | Titulo grande branco + palavra-chave em teal + logo |
 | **Tipografia** | Sora Bold 48-64px (titulo), destaque em teal |
-| **Exemplo** | "Se ter diplomas fosse suficiente, voce ja estaria onde deseja." |
-| **Pilar** | Qualquer — provocacao universal |
+| **Exemplo** | "Se ter diplomas fosse suficiente, você já estaria onde deseja." |
+| **Pilar** | Qualquer — provocação universal |
 
 ### 3.2 Dado estatistico
 
 | Aspecto | Diretriz |
 |---------|----------|
-| **Layout** | Numero grande em teal centralizado + contexto abaixo |
-| **Elementos** | Numero (Sora Bold 72-96px ouro) + frase explicativa + fonte do dado + logo |
+| **Layout** | Número grande em teal centralizado + contexto abaixo |
+| **Elementos** | Número (Sora Bold 72-96px ouro) + frase explicativa + fonte do dado + logo |
 | **Regra** | Sempre citar a fonte. Nunca inventar dados |
-| **Exemplo** | "92 milhoes" em teal + "de empregos vao desaparecer ate 2030." + "Fonte: WEF" |
-| **Pilar** | Pilar 3 (Tecnicas/IA) |
+| **Exemplo** | "92 milhões" em teal + "de empregos vão desaparecer até 2030." + "Fonte: WEF" |
+| **Pilar** | Pilar 3 (Técnicas/IA) |
 
 ### 3.3 Dica pratica
 
@@ -64,7 +64,7 @@ Toda peca de social media deve respeitar:
 | **Layout** | Titulo + lista numerada (3-5 itens) |
 | **Elementos** | Icones Lucide (outline, gray-400) + cards glass + logo |
 | **Regra** | Cada item em 1 linha. Linguagem direta |
-| **Exemplo** | "5 perguntas que voce DEVE fazer na entrevista" |
+| **Exemplo** | "5 perguntas que você DEVE fazer na entrevista" |
 | **Pilar** | Pilar 2 (Comportamentais) |
 
 ### 3.4 Depoimento
@@ -83,7 +83,7 @@ Toda peca de social media deve respeitar:
 |---------|----------|
 | **Layout** | Capa provocadora + slides com 1 ideia cada + CTA final |
 | **Elementos** | Slides consistentes (mesmo layout), numeracao discreta, barra teal no topo |
-| **Regra** | 5-10 slides. Capa com pergunta ou provocacao. Ultimo slide = CTA |
+| **Regra** | 5-10 slides. Capa com pergunta ou provocação. Último slide = CTA |
 | **Estrutura** | Capa → Contexto → Slides de conteudo → Resumo → CTA |
 | **Pilar** | Qualquer |
 
@@ -92,7 +92,7 @@ Toda peca de social media deve respeitar:
 | Aspecto | Diretriz |
 |---------|----------|
 | **Layout** | Data/hora em destaque + badge "Gratuito" |
-| **Elementos** | Teal bar + monograma P/V sutil + dados do evento |
+| **Elementos** | Teal bar + monograma P/V sútil + dados do evento |
 | **Regra** | Sempre incluir: dia, hora, "ao vivo", "gratuito", link ou QR |
 | **Exemplo** | "Quarta, 20h. Ao vivo. Gratuito. O que ninguem te ensinou sobre o mercado." |
 | **Pilar** | Porta de entrada |
@@ -103,9 +103,9 @@ Toda peca de social media deve respeitar:
 |---------|----------|
 | **Layout** | Fundo puro escuro, texto grande, NADA mais |
 | **Elementos** | Texto (Sora Bold branco) + logo. Sem imagem, sem decoracao |
-| **Regra** | Maximo impacto. Menos e mais. Poucas palavras |
-| **Exemplo** | "Voce esta esperando ser reconhecido. O mercado esta esperando voce se posicionar." |
-| **Pilar** | Pilar 1 (Principios e Valores) — confronto com vicio, promocao de virtude |
+| **Regra** | Máximo impacto. Menos e mais. Poucas palavras |
+| **Exemplo** | "Você esta esperando ser reconhecido. O mercado esta esperando você se posicionar." |
+| **Pilar** | Pilar 1 (Principios e Valores) — confronto com vicio, promoção de virtude |
 
 ---
 
@@ -113,50 +113,50 @@ Toda peca de social media deve respeitar:
 
 Toda peca de marketing segue esta sequencia:
 
-| Etapa | Funcao | Exemplo |
+| Etapa | Função | Exemplo |
 |-------|--------|---------|
-| **Provocacao** | Verdade que incomoda ou dado chocante | "92 milhoes de empregos vao desaparecer ate 2030." |
-| **Autoidentificacao** | O publico se reconhece na dor | "Voce envia curriculos e nao recebe resposta." |
-| **Iluminacao** | O caminho (nao o produto) | "O problema nao e falta de competencia. E falta de posicionamento." |
-| **Decisao** | CTA que desafia, nao que seduz | "Se voce esta pronto pra escalar, o primeiro passo e gratuito." |
+| **Provocação** | Verdade que incomoda ou dado chocante | "92 milhões de empregos vão desaparecer até 2030." |
+| **Autoidentificação** | O público se reconhece na dor | "Você envia curriculos e não recebe resposta." |
+| **Iluminacao** | O caminho (não o produto) | "O problema não e falta de competência. E falta de posicionamento." |
+| **Decisão** | CTA que desafia, não que seduz | "Se você esta pronto pra escalar, o primeiro passo e gratuito." |
 
 ---
 
 ## 5. Temas por Eixo
 
-Os eixos definem os temas de conteudo. Cada eixo tem tom e abordagem proprios:
+Os eixos definem os temas de conteudo. Cada eixo tem tom e abordagem próprios:
 
 | Eixo | Foco | Tom | Pilares |
 |------|------|-----|---------|
 | **Empregabilidade** | Recolocacao, entrevistas, curriculo, LinkedIn | Pratico, direto | Pilar 2 + 3 |
-| **Crescimento** | Promocao, lideranca, gestao, empreendedorismo | Desafiador, estrategico | Pilar 1 + 2 |
-| **Virtudes** | Carater, etica, integridade, proposito | Profundo, reflexivo | Pilar 1 |
+| **Crescimento** | Promoção, lideranca, gestão, empreendedorismo | Desafiador, estratégico | Pilar 1 + 2 |
+| **Virtudes** | Carater, etica, integridade, propósito | Profundo, reflexivo | Pilar 1 |
 | **Hype** | Tendencias, dados de mercado, noticias relevantes | Provocador, atual | Pilar 3 |
-| **IA** | Ferramentas, aplicacoes praticas, impacto no mercado | Tecnico, acessivel | Pilar 3 |
+| **IA** | Ferramentas, aplicações praticas, impacto no mercado | Técnico, acessível | Pilar 3 |
 
-**Regra:** Virtudes e IA devem permear TODOS os eixos, nao apenas seus eixos dedicados. Um post de Empregabilidade deve incluir virtudes (posicionar-se com verdade) e IA (usar IA para preparar entrevista).
+**Regra:** Virtudes e IA devem permear TODOS os eixos, não apenas seus eixos dedicados. Um post de Empregabilidade deve incluir virtudes (posicionar-se com verdade) e IA (usar IA para preparar entrevista).
 
 ---
 
-## 6. Frequencia Sugerida
+## 6. Frequência Sugerida
 
-| Plataforma | Frequencia | Tipo principal |
+| Plataforma | Frequência | Tipo principal |
 |------------|------------|----------------|
-| **YouTube** | 1x/semana | Video longo (workshop gravado ou conteudo dedicado) |
+| **YouTube** | 1x/semana | Vídeo longo (workshop gravado ou conteudo dedicado) |
 | **LinkedIn** | 3-5x/semana | Artigos, carroseis, reflexoes |
 | **Instagram** | 3-5x/semana | Frases, carroseis, stories |
 | **WhatsApp** | 1-2x/semana | Convites workshop, lembretes |
 
-**Fluxo de producao (YouTube-first):**
+**Fluxo de produção (YouTube-first):**
 ```
-YouTube (video) → Transcricao → LinkedIn (artigo) + Instagram (carrossel) + Email (newsletter)
+YouTube (vídeo) → Transcrição → LinkedIn (artigo) + Instagram (carrossel) + Email (newsletter)
 ```
 
 ---
 
-## 7. Pipeline de Producao (Make.com + Notion)
+## 7. Pipeline de Produção (Make.com + Notion)
 
-Referencia completa do pipeline automatizado: ver documentacao em `emprega-mais-electia-smedia/`.
+Referência completa do pipeline automátizado: ver documentação em `emprega-mais-electia-smedia/`.
 
 **Fluxo resumido:**
 ```
@@ -172,25 +172,25 @@ SCN-1b Planner → SCN-NEW Script → Gravacao → SCN-UPLOAD Metadata → SCN-C
 Templates HTML renderizaveis via Playwright: `social-media-templates.html`
 Renderer: `render-templates.mjs`
 
-*Nota: templates visuais seguem a paleta navy+teal do Electia (material de comunicacao/brand), nao o App DS (teal/dark do produto SaaS).*
+*Nota: templates visuais seguem a paleta navy+teal do Electia (material de comúnicação/brand), não o App DS (teal/dark do produto SaaS).*
 
 ---
 
-## 9. Checklist Pre-Publicacao
+## 9. Checklist Pré-Publicacao
 
 Antes de publicar qualquer peca:
 
-- [ ] Fundo escuro (nao branco)?
+- [ ] Fundo escuro (não branco)?
 - [ ] Cores dentro da paleta (ouro + neutros + branco)?
-- [ ] Teal como cor primaria de destaque?
-- [ ] Logo presente com area de protecao?
+- [ ] Teal como cor primária de destaque?
+- [ ] Logo presente com área de protecao?
 - [ ] Tom de voz alinhado (sem motivacional vazio, sem promessas faceis)?
-- [ ] CTA desafiador e digno (maximo 2 por peca)?
+- [ ] CTA desafiador e digno (máximo 2 por peca)?
 - [ ] Imagens tratadas (overlay, dessaturacao, contraste)?
-- [ ] Nenhuma imagem sensual, ostensiva ou generica?
+- [ ] Nenhuma imagem sensual, ostensiva ou genérica?
 - [ ] Virtudes implicitas (confronta um vicio, promove uma virtude)?
 - [ ] Conteudo reflete pelo menos 1 dos 3 pilares?
-- [ ] IA presente como ferramenta quando aplicavel?
+- [ ] IA presente como ferramenta quando aplicável?
 - [ ] Fonte citada para dados estatisticos?
 
 ---

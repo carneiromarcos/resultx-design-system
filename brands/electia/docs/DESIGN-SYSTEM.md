@@ -1,6 +1,6 @@
 # Electia Design System — v1.0
 
-**Versao:** 1.0 (promoted from v0.1 spec) | **Data:** 2026-05-11 | **Status:** Canônico
+**Versão:** 1.0 (promoted from v0.1 spec) | **Data:** 2026-05-11 | **Status:** Canônico
 
 **Escopo:** Sistema de visualização e UI do produto Electia (assessments comportamentais). Foco em cards de teoria, anatomia de relatórios e tokens de produto.
 
@@ -108,7 +108,7 @@ Gauge com 3 zonas explícitas, jamais ranqueamento competitivo:
 | Atenção | `oklch(72% 0.13 75)` (âmbar) | `oklch(78% 0.13 75)` |
 | Risco | `oklch(58% 0.18 25)` (rose) | `oklch(70% 0.16 25)` |
 
-Acompanhado SEMPRE de copy psicologicamente segura ("merece atenção", não "você está em risco").
+Acompanhado SEMPRE de copy psicológicamente segura ("merece atenção", não "você está em risco").
 
 ---
 

@@ -1,9 +1,9 @@
-# Prompts de Imagem & Video — Electia by Emprega+
+# Prompts de Imagem & Vídeo — Electia by Emprega+
 
 > Guia de prompts para geracao de imagens com IA (Midjourney, DALL-E, Ideogram, Runway, Kling).
-> Todas as imagens devem refletir a estetica dark premium da marca.
+> Todas as imagens devem refletir a estética dark premium da marca.
 
-> ⚠️ **TO-DO (2026-05-10) — Rewrite editorial pendente.** Este arquivo foi clonado do PdV (estetica mountain + golden hour + warm gold accents) e ainda descreve imagens com paleta dourada/amber. Para Electia a estetica visual e **diferente**: cyan/teal, energy core, tech moderna, fios fluidos (vide aurora-hero-v1 aprovado em sessao de 2026-05-10). **Reescrever os prompts** das secoes 1 a 4 com vocabulario coerente:
+> ⚠️ **TO-DO (2026-05-10) — Rewrite editorial pendente.** Este arquivo foi clonado do PdV (estética mountain + golden hour + warm gold accents) e ainda descreve imagens com paleta dourada/amber. Para Electia a estética visual e **diferente**: cyan/teal, energy core, tech moderna, fios fluidos (vide aurora-hero-v1 aprovado em sessao de 2026-05-10). **Reescrever os prompts** das seções 1 a 4 com vocabulario coerente:
 > - "warm golden tones" -> "cool teal/cyan tones, dark navy backgrounds"
 > - "mountain peak / golden hour" -> "energy field / data visualization / abstract tech"
 > - "fog rolling below" -> "particle systems / circuit-like flows"
@@ -26,7 +26,7 @@ desaturated color palette, editorial photography style --ar 16:9 --style raw --v
 
 | Formato | Aspect Ratio | Uso |
 |---------|-------------|-----|
-| Hero / site | `--ar 16:9` | Secoes hero, banners |
+| Hero / site | `--ar 16:9` | Seções hero, banners |
 | Social quadrado | `--ar 1:1` | Instagram feed, carroseis |
 | Social stories | `--ar 9:16` | Reels, stories |
 | LinkedIn | `--ar 1200:627` ou `--ar 2:1` | Posts LinkedIn |
@@ -39,7 +39,7 @@ desaturated color palette, editorial photography style --ar 16:9 --style raw --v
 
 ### 2.1 MONTANHA / NATUREZA EPICA
 
-**Uso:** Hero sections, fundos de secao, capas de carrossel, thumbnails
+**Uso:** Hero sections, fundos de seção, capas de carrossel, thumbnails
 
 #### Prompt: Pico ao amanhecer
 ```
@@ -59,7 +59,7 @@ no people, cinematic landscape photography, dark moody tones,
 amber and gold light accents --ar 16:9 --style raw --v 6.1
 ```
 
-#### Prompt: Vista do topo (visao do vencedor)
+#### Prompt: Vista do topo (visão do vencedor)
 ```
 Breathtaking aerial view from a mountain summit looking down at clouds
 and valleys below, golden sunrise light painting the peaks,
@@ -79,7 +79,7 @@ sense of solitude and purpose --ar 16:9 --style raw --v 6.1
 
 ### 2.2 FORJA / FOGO / METAL
 
-**Uso:** Metafora visual, backgrounds de secao, social media provocativo
+**Uso:** Metafora visual, backgrounds de seção, social média provocativo
 
 #### Prompt: Forja artesanal
 ```
@@ -110,7 +110,7 @@ shallow depth of field, film grain --ar 16:9 --style raw --v 6.1
 
 ### 2.3 RETRATO PROFISSIONAL
 
-**Uso:** Depoimentos, social proof, pagina "sobre", secao fundador
+**Uso:** Depoimentos, social proof, página "sobre", seção fundador
 
 #### Prompt: Profissional determinado (homem)
 ```
@@ -185,7 +185,7 @@ shallow depth of field --ar 16:9 --style raw --v 6.1
 
 ### 2.5 ABSTRATO / TEXTURAS
 
-**Uso:** Backgrounds de secao, overlays, patterns
+**Uso:** Backgrounds de seção, overlays, patterns
 
 #### Prompt: Textura de montanha escura
 ```
@@ -214,7 +214,7 @@ high contrast, dark moody --ar 16:9 --style raw --v 6.1
 
 ---
 
-## 3. Prompts de Video Conceitual (Runway / Kling / Pika)
+## 3. Prompts de Vídeo Conceitual (Runway / Kling / Pika)
 
 ### 3.1 Hero do site — loop de fundo
 
@@ -236,7 +236,7 @@ dark to golden transition, 10 second loop,
 cinematic wide shot, high contrast
 ```
 
-### 3.3 Forja — transicao de metal
+### 3.3 Forja — transição de metal
 
 ```
 Close-up of metal being heated in a forge, transitioning from
@@ -269,7 +269,7 @@ perfect loop, 8 seconds, cinematic
 
 ## 4. Tratamento Pos-Geracao
 
-### Filtro padrao (Lightroom / Photoshop)
+### Filtro padrão (Lightroom / Photoshop)
 
 Aplicar em TODA imagem gerada:
 
@@ -289,7 +289,7 @@ Aplicar em TODA imagem gerada:
 
 ### Color grading (split toning)
 
-| Area | Cor | Saturacao |
+| Área | Cor | Saturacao |
 |------|-----|-----------|
 | **Shadows** | Amber (#2DD4BF direction) | 15% |
 | **Midtones** | Neutro | 0% |
@@ -328,7 +328,7 @@ Layout:
 - Texto principal: Sora Bold 64px, branco, centralizado
 - Palavra destaque: cor ouro #2DD4BF
 - Barra inferior: 3px gold, 48px de largura
-- Logo: icone montanha, canto inferior direito, 32px, opacity 0.4
+- Logo: ícone montanha, canto inferior direito, 32px, opacity 0.4
 - Handle: @profissionaldevalor, Inter 11px, gray-500, inferior esquerdo
 - Margem: 64px em todos os lados
 ```
@@ -341,8 +341,8 @@ Layout:
 - Numero: Sora Bold 120px, ouro #2DD4BF, centralizado superior
 - Contexto: Inter 500 20px, gray-200, abaixo do numero
 - Fonte: Inter 12px, gray-500, abaixo do contexto
-- Barra gold: 48px largura, 3px, entre numero e contexto
-- Logo + handle: inferior, padrao
+- Barra gold: 48px largura, 3px, entre número e contexto
+- Logo + handle: inferior, padrão
 - Margem: 64px
 ```
 
@@ -353,7 +353,7 @@ Layout:
 - Fundo: ouro #2DD4BF solido
 - Titulo: Sora Bold 56px, #08080A (preto)
 - Subtitulo: Inter 16px, #3D2E0F (marrom escuro)
-- Logo: icone montanha escura, inferior direito, opacity 0.6
+- Logo: ícone montanha escura, inferior direito, opacity 0.6
 - "Deslize →": Inter 11px, inferior esquerdo, #5C4518
 - Margem: 64px
 ```
@@ -363,11 +363,11 @@ Layout:
 ```
 Layout:
 - Fundo: #08080A
-- Numero do slide: Sora Bold 24px, ouro, superior esquerdo (ex: "01")
+- Número do slide: Sora Bold 24px, ouro, superior esquerdo (ex: "01")
 - Titulo do ponto: Sora 600 28px, branco, abaixo do numero
 - Texto explicativo: Inter 400 18px, gray-300, abaixo do titulo
 - Icone Lucide: 32px, ouro, ao lado do titulo
-- Barra progress: inferior, gold line mostrando posicao no carrossel
+- Barra progress: inferior, gold line mostrando posição no carrossel
 - Margem: 64px
 ```
 
@@ -403,7 +403,7 @@ Layout:
 Layout:
 - Fundo: #08080A
 - Layout split: esquerda texto (60%), direita imagem (40%) com overlay
-- Titulo: Sora Bold 36px, branco, ate 3 linhas
+- Titulo: Sora Bold 36px, branco, até 3 linhas
 - Subtitulo: Inter 400 16px, gray-300
 - Badge: produto relevante (Workshop, MAPA, etc.)
 - Logo + tagline: inferior esquerdo
@@ -415,11 +415,11 @@ Layout:
 ```
 Layout:
 - Fundo: foto (montanha/forja/retrato) com overlay escuro forte
-- Titulo: Sora Bold 48px, branco, maximo 2 linhas, sombra de texto
+- Titulo: Sora Bold 48px, branco, máximo 2 linhas, sombra de texto
 - Palavra destaque: ouro #2DD4BF
-- Badge numerico: circulo ouro com numero (ex: "EP. 12")
-- Rosto do Marcos: recortado, lado direito (se aplicavel)
-- Logo: icone, canto inferior esquerdo, pequeno
+- Badge numerico: circulo ouro com número (ex: "EP. 12")
+- Rosto do Marcos: recortado, lado direito (se aplicável)
+- Logo: ícone, canto inferior esquerdo, pequeno
 - SEM borda colorida, SEM setas, SEM emojis — minimalismo
 ```
 
@@ -431,9 +431,9 @@ Layout:
 - Titulo: Sora Bold 48px, branco, centralizado, 2-3 linhas
 - Palavra destaque: ouro
 - CTA: badge-gold ou btn-gold na parte inferior
-- Logo: icone, centralizado superior, 48px, opacity 0.6
+- Logo: ícone, centralizado superior, 48px, opacity 0.6
 - Barra gold: inferior, 3px
-- Margem lateral: 80px (safe area stories)
+- Margem lateral: 80px (safe área stories)
 ```
 
 ---
@@ -441,41 +441,41 @@ Layout:
 ## 6. Imagens Proibidas (nunca gerar)
 
 - Pessoas sorrindo exageradamente
-- Cenarios de escritorio generico com luz fluorescente
+- Cenarios de escritório genérico com luz fluorescente
 - Carros, mansoes, relogios, dinheiro
 - Praias, ferias, "lifestyle" de ostentacao
-- Cores neon ou vibrantes no cenario
+- Cores neon ou vibrantes no cenário
 - Mulheres ou homens em poses sensuais
-- IA com artefatos visiveis (6 dedos, fundos distorcidos)
-- Qualquer simbolo religioso explicito (cruzes, santos, igrejas)
-- Imagens "motivacionais" genericas (punho cerrado, leao, aguia)
+- IA com artefatos visíveis (6 dedos, fundos distorcidos)
+- Qualquer simbolo religioso explícito (cruzes, santos, igrejas)
+- Imagens "motivacionais" genéricas (punho cerrado, leao, aguia)
 
 ---
 
 ## 7. Banco de Imagens Recomendado
 
-Quando nao for possivel gerar com IA:
+Quando não for possivel gerar com IA:
 
-| Fonte | Tipo | Observacao |
+| Fonte | Tipo | Observação |
 |-------|------|-----------|
 | **Unsplash** | Gratuito | Buscar: "dark mountain", "blacksmith forge", "cinematic portrait" |
 | **Pexels** | Gratuito | Boa para retratos diversos brasileiros |
 | **Adobe Stock** | Pago | Melhor qualidade, buscar com filtro "moody dark" |
 
-Sempre aplicar o tratamento pos-geracao (secao 4) em qualquer imagem de banco.
+Sempre aplicar o tratamento pos-geracao (seção 4) em qualquer imagem de banco.
 
 ---
 
-## 8. Templates com Aplicacao de Imagens
+## 8. Templates com Aplicação de Imagens
 
-Os templates abaixo definem como aplicar fotografias dentro dos layouts de social media. Complementam os templates texto-puro (secao 5) com composicoes foto+texto.
+Os templates abaixo definem como aplicar fotografias dentro dos layouts de social media. Complementam os templates texto-puro (seção 5) com composições foto+texto.
 
-### Regra geral: Overlay obrigatorio
+### Regra geral: Overlay obrigatório
 
 Toda foto usada em template precisa de overlay escuro para garantir legibilidade do texto e coesao com a paleta dark:
 
 ```css
-/* Overlay padrao (vertical) */
+/* Overlay padrão (vertical) */
 background: linear-gradient(
   to bottom,
   rgba(8, 8, 10, 0.75) 0%,
@@ -515,7 +515,7 @@ Eyebrow: Inter 600 12px, ouro, uppercase, topo
 Titulo: Sora Bold 52px, branco, centralizado, max 3 linhas
 Palavra destaque: ouro
 Barra gold: 48px, 3px, abaixo do titulo
-Logo: icone, inferior direito, 28px, opacity 0.5
+Logo: ícone, inferior direito, 28px, opacity 0.5
 Handle: inferior esquerdo
 Margem: 64px
 ```
@@ -586,13 +586,13 @@ Margem: 56px topo/lados, 48px base
 Formato: 9:16
 Foto: vertical (montanha, forja, retrato, workshop)
 Overlay: forte topo + base (safe zones da plataforma)
-Logo: icone, centralizado superior, 48px, opacity 0.5
+Logo: ícone, centralizado superior, 48px, opacity 0.5
 Eyebrow: ouro, uppercase, abaixo do logo
 Titulo: Sora Bold 40px, branco, centralizado, max 3 linhas
 CTA: botao ouro (bg gold, texto escuro), centralizado inferior
   padding: 10px 24px, radius: 8px, Sora 600 13px
 Handle: centralizado abaixo do CTA
-Margem lateral: 80px (safe area stories)
+Margem lateral: 80px (safe área stories)
 ```
 
 **Prompt de foto recomendado:** Montanha noturna com estrelas (2.1) ou Workshop ao vivo (2.4)
@@ -612,8 +612,8 @@ Lado direito (40%): foto do Marcos
   Recorte: cintura pra cima, olhando 3/4 pro texto
   Expressao: determinada, pensativa
   Roupa: camiseta preta ou henley (conforme brand book)
-  Rim light ouro sutil ou luz lateral quente
-Logo: canto inferior, icone, 22px, opacity 0.4
+  Rim light ouro sútil ou luz lateral quente
+Logo: canto inferior, ícone, 22px, opacity 0.4
 SEM bordas, setas, emojis — minimalismo total
 ```
 
@@ -630,7 +630,7 @@ Esquerda:
   Body: Inter 400 14px, gray-300 (opcional)
   Badge: produto (Workshop, MAPA, Mentoria) ou eixo
 Direita: foto com overlay left-blending
-  Teal glow sutil na borda entre texto e foto
+  Teal glow sútil na borda entre texto e foto
 Logo + "[Tagline Electia a definir].": inferior esquerdo
 ```
 
@@ -642,7 +642,7 @@ Logo + "[Tagline Electia a definir].": inferior esquerdo
 
 ```
 Foto: Marcos ensinando, plateia engajada (full bleed)
-Overlay: mais pesado que padrao (apresentador visivel + texto legivel)
+Overlay: mais pesado que padrão (apresentador visível + texto legivel)
 Badge: "GRATUITO", gold solid, texto escuro, topo
   padding: 6px 14px, radius: 6px, Sora 700 11px
 Label: "WORKSHOP AO VIVO", Inter 600 12px, ouro, uppercase

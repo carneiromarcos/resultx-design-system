@@ -1,12 +1,12 @@
 # ResultX — Logo Assets
 
-> **Status: 🟡 Logo existe mas nao esta hospedado aqui** — confirmado por Marcos em 2026-05-11. Falta exportar + hospedar.
+> **Status: 🟡 Logo existe mas não esta hospedado aqui** — confirmado por Marcos em 2026-05-11. Falta exportar + hospedar.
 
 ## Spec do wordmark
 
 `[TBD]` Logo ResultX existente. Documentar quando arquivos forem hospedados aqui:
 - Fonte usada
-- Cor primaria do logo
+- Cor primária do logo
 - Variante com simbolo (se houver)
 
 ## Arquivos esperados (template PdV/Electia)
@@ -22,14 +22,14 @@
 | `resultx-linkedin-banner-1584x396.png` | Banner LinkedIn empresa | PNG | 🔴 Pendente |
 | `resultx-og-cover-1200x630.png` | OG image social/site | PNG | 🔴 Pendente |
 
-## Proximos passos
+## Próximos passos
 
 1. **Localizar logo atual** — Marcos confirmar se esta no Canva, Figma ou outro
-2. **Exportar versoes** seguindo workflow padrao (vide PdV ou Electia)
+2. **Exportar versões** seguindo workflow padrão (vide PdV ou Electia)
 3. **Hospedar nesta pasta** com naming exato listado acima
 4. **Atualizar BRAND-BOOK ResultX §3** com previews e regras quando arquivos existirem
 
-## Referencia
+## Referência
 
 - Spec completa: `../../docs/BRAND-BOOK.md` §3 (Logo) — atualmente `[TBD]`
-- Estrutura paralela: `brands/electia/assets/logo/README.md` (mesmo padrao)
+- Estrutura paralela: `brands/electia/assets/logo/README.md` (mesmo padrão)

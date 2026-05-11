@@ -1,6 +1,6 @@
 # Changelog — ResultX Brand Kit
 
-Mudancas notaveis no brand kit ResultX (consultoria de transformacao digital).
+Mudanças notaveis no brand kit ResultX (consultoria de transformação digital).
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ---
@@ -8,19 +8,19 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 ## [0.1] - 2026-05-11
 
 ### Added — Bootstrap inicial da brand
-- `docs/BRAND-BOOK.md` v0.1 — 10 secoes com rascunho + varios `[TBD]` markers
+- `docs/BRAND-BOOK.md` v0.1 — 10 seções com rascunho + varios `[TBD]` markers
 - `tokens/tokens.css` + `tokens/tokens.json` — stubs apontando para tokens root do DS (ResultX e a marca-base do ResultX DS)
 - `assets/logo/README.md` — placeholder com TODO list dos arquivos esperados
-- Estrutura de pastas padrao: `docs/`, `tokens/`, `assets/logo/`, `previews/`
+- Estrutura de pastas padrão: `docs/`, `tokens/`, `assets/logo/`, `previews/`
 
 ### Identidade declarada
-- **Nome:** ResultX (R e X maiusculos, sem espaco)
-- **Tipo:** Consultoria de transformacao digital
-- **Operacao:** desde 2012
+- **Nome:** ResultX (R e X maiúsculos, sem espaco)
+- **Tipo:** Consultoria de transformação digital
+- **Operação:** desde 2012
 - **CEO:** Marcos Carneiro
-- **CNPJ:** unico (mesmo CNPJ legal de Emprega+, PdV, Electia, IMO, Editais)
+- **CNPJ:** único (mesmo CNPJ legal de Emprega+, PdV, Electia, IMO, Editais)
 
-### Decisoes pendentes (TBD)
+### Decisões pendentes (TBD)
 - Paleta de cores oficial (3 direcoes sugeridas no Brand Book §4)
 - Tagline / slogan
 - URL oficial
@@ -29,6 +29,6 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 - Tipografia (provavelmente Sora + Inter herdadas, mas confirmar)
 
 ### Roadmap
-- LinkedIn pagina empresa (planejado Marcos 2026-05-11)
+- LinkedIn página empresa (planejado Marcos 2026-05-11)
 - Newsletter ResultX no LinkedIn (planejado Marcos 2026-05-11)
-- Site institucional ja existe — URL a confirmar
+- Site institucional já existe — URL a confirmar

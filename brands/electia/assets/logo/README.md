@@ -1,6 +1,6 @@
-# electia — Logo Assets
+# electia — Wordmark Assets
 
-> **Status: 🟢 v1 gerado** — 7 SVGs criados em 2026-05-11 seguindo spec do BRAND-BOOK §3. PNGs raster ainda pendentes.
+> **electia não tem logo gráfico.** O wordmark tipográfico **e** a marca. Sem simbolo isolado, sem ícone próprio. Esta pasta hospeda as variantes do wordmark + um helper "e" para favicon/avatar (espaços onde o wordmark não cabe).
 
 ## Spec oficial do wordmark
 
@@ -14,49 +14,52 @@ electia by emprega+
 | `by` | Sora | 400 (Regular) | ~30% do tamanho do `electia` |
 | `emprega+` | **Sora** | 800 (ExtraBold) | ~50% do tamanho do `electia`. Fonte oficial Emprega+ |
 
-**Grafia oficial:** `electia` tudo minúsculo (decisão 2026-05-11). Vide BRAND-BOOK §2 (Regras de grafia) e §3 (Logo).
+**Grafia oficial:** `electia` tudo minúsculo (decisão 2026-05-11). Vide BRAND-BOOK §2 (Regras de grafia) e §3 (Wordmark).
 
-## Arquivos esperados
+## Arquivos disponíveis (v1)
 
-| Arquivo | Conteúdo | Formato | Status |
-|---------|----------|---------|--------|
-| `electia-wordmark.svg` | Wordmark completo `electia by emprega+` (dark, texto branco) | SVG | ✅ Gerado |
-| `electia-wordmark-accent.svg` | Wordmark com `electia` em teal accent (#2DD4BF) | SVG | ✅ Gerado |
-| `electia-wordmark-light.svg` | Wordmark para fundo claro (cor invertida) | SVG | ✅ Gerado |
-| `electia-wordmark-mono.svg` | Wordmark single-color (branco) | SVG | 🟡 Use `electia-wordmark.svg` (já é single-color branco) |
-| `electia-short.svg` | Wordmark curto (`electia` sozinho) | SVG | ✅ Gerado |
-| `electia-lockup-vertical.svg` | Lockup vertical para social/papelaria | SVG | ✅ Gerado |
-| `electia-monogram.svg` | "e" minúsculo em container arredondado (dark bg, letra teal) | SVG | ✅ Gerado |
-| `electia-monogram-teal.svg` | "e" em container teal bg + letra dark (variante B) | SVG | ✅ Gerado |
-| `electia-monogram-outline.svg` | Versão outline do monogram | SVG | 🔴 Pendente |
-| `electia-monogram-micro.svg` | Monogram para <16px | SVG | 🟡 Use `electia-monogram.svg` em 16px (escala bem) |
-| `electia-favicon.svg` | Favicon (alias do monogram dark) | SVG | 🟡 Use `electia-monogram.svg` |
-| `electia-favicon-32x32.png` + `64x64.png` + `256x256.png` | Favicons PNG | PNG | 🔴 Pendente |
-| `electia-email-header-440x120.png` | Header de email Brevo | PNG | 🔴 Pendente |
-| `electia-email-icon-200x200.png` | Avatar de email | PNG | 🔴 Pendente |
-| `electia-og-cover-1200x630.png` | OG image social | PNG | 🔴 Pendente |
-| `electia-app-icon-1024x1024.png` | App icon (iOS/Android template) | PNG | 🔴 Pendente |
+### Wordmark — 4 variantes
 
-## Workflow para gerar
+| Arquivo | Conteudo | Status |
+|---------|----------|--------|
+| `electia-wordmark.svg` | Wordmark completo dark (texto branco em fundo dark) | ✅ Gerado |
+| `electia-wordmark-accent.svg` | Wordmark com `electia` em teal accent (#2DD4BF) | ✅ Gerado |
+| `electia-wordmark-light.svg` | Wordmark para fundo claro (texto dark em fundo branco) | ✅ Gerado |
+| `electia-short.svg` | Wordmark curto: apenas `electia` (sem endorsement) | ✅ Gerado |
+| `electia-lockup-vertical.svg` | Lockup vertical: `electia` em cima, `by emprega+` embaixo | ✅ Gerado |
 
-1. **Figma / Canva** — montar wordmark seguindo a spec (JetBrains Mono 600 + Sora 400/800)
-2. Exportar versões em SVG (vetor, escalável) e PNG (sizes específicos acima)
-3. Versionar nesta pasta com naming exato listado acima
-4. Atualizar `BRAND-BOOK.md` §3 com previews quando arquivos existirem
-5. Atualizar `previews/brand-preview.html` apontando pros assets reais
+### Favicon helper "e" — NAO E LOGO
 
-## Container do monogram "e"
+| Arquivo | Conteudo | Status |
+|---------|----------|--------|
+| `electia-monogram.svg` | "e" em container dark (variante A: bg dark + letra teal) | ✅ Gerado |
+| `electia-monogram-teal.svg` | "e" em container teal (variante B: bg teal + letra dark) | ✅ Gerado |
+
+> Estes 2 arquivos sao **helpers** para favicon, app icon e avatar em contextos onde o wordmark não cabe (16-48px). **Não usar como logo**. Em qualquer espaço maior, sempre preferir o wordmark.
+
+## PNGs pendentes
+
+| Arquivo | Tamanho | Uso |
+|---------|---------|-----|
+| `electia-favicon-32x32.png` + `64x64.png` + `128x128.png` + `256x256.png` | varios | Favicon multi-size (rasterizado do monogram.svg) |
+| `electia-email-header-440x120.png` | 440x120 | Header de email Brevo |
+| `electia-email-icon-200x200.png` | 200x200 | Avatar de email |
+| `electia-og-cover-1200x630.png` | 1200x630 | OG image social/site |
+| `electia-app-icon-1024x1024.png` | 1024x1024 | App icon iOS/Android template |
+
+Workflow: rasterizar SVGs no tamanho exato via Figma, Canva ou ImageMagick.
+
+## Container do helper "e"
 
 - Forma: quadrado arredondado, `border-radius: 24%`
-- Tamanho mínimo: 32×32px
+- Tamanho minimo: 32x32px
 - Padding interno: 22% do tamanho
 - 3 variantes de cor:
-  - **A — Dark bg:** fundo `#0B0E14` com letra teal `#2DD4BF`
-  - **B — Teal bg:** fundo `#2DD4BF` com letra dark `#0B0E14`
-  - **C — Subtle:** fundo `rgba(45,212,191,0.15)` com letra teal `#2DD4BF`
+  - **A — Dark bg:** fundo `#0B0E14` com letra teal `#2DD4BF` (electia-monogram.svg)
+  - **B — Teal bg:** fundo `#2DD4BF` com letra dark `#0B0E14` (electia-monogram-teal.svg)
+  - **C — Subtle:** fundo `rgba(45,212,191,0.15)` com letra teal `#2DD4BF` (gerar quando precisar)
 
 ## Referências
 
-- Spec completa: `../../docs/BRAND-BOOK.md` §3 (Logo)
-- Direção tipográfica T2 (mono tech): `../../previews/logo-typography-preview.html`
-- Match da fonte Emprega+: `../../previews/emprega-font-match.html`
+- Spec completa: `../../docs/BRAND-BOOK.md` §3 (Wordmark)
+- Galeria visual: `../../previews/logo-variants.html`
