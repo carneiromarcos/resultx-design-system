@@ -42,7 +42,7 @@ jobs:
           cp -r pages _site/pages
           cp DESIGN-SYSTEM.md _site/
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
