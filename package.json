@@ -82,7 +82,7 @@
   "type": "commonjs",
   "devDependencies": {
     "@commitlint/cli": "^21.0.1",
-    "@commitlint/config-conventional": "^20.5.0",
+    "@commitlint/config-conventional": "^21.0.1",
     "@playwright/test": "^1.59.1",
     "autoprefixer": "^10.4.27",
     "commit-and-tag-version": "^12.7.1",
