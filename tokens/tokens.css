@@ -298,6 +298,17 @@
   --disc-s: #16A34A;
   --disc-c: #2563EB;
 
+  /* ── DISC Positioning Wheel (8 octants — Conductor → Organizer, -90° start)
+     Fixed perceptual palette, theme-agnostic. Mirror of dark scope for parity. */
+  --disc-wheel-conductor: #E85B3A;
+  --disc-wheel-motivator: #F89B3A;
+  --disc-wheel-promoter: #F6D63A;
+  --disc-wheel-facilitator: #B4D14F;
+  --disc-wheel-supporter: #5BBF5C;
+  --disc-wheel-coordinator: #3DAACE;
+  --disc-wheel-analyzer: #3D6CCE;
+  --disc-wheel-organizer: #9C42C4;
+
   /* ── MBTI Axes ─────────────────────────────────────────────────────────── */
   --mbti-ei: #D97706;
   --mbti-sn: #4F46E5;
@@ -378,6 +389,10 @@
     --theory-lesenne: #F472B6; --theory-lesenne-bg: rgba(244, 114, 182, 0.15);
     --theory-jung: #FBBF24; --theory-jung-bg: rgba(251, 191, 36, 0.15);
     --disc-d: #EF4444; --disc-i: #F59E0B; --disc-s: #22C55E; --disc-c: #3B82F6;
+    --disc-wheel-conductor: #E85B3A; --disc-wheel-motivator: #F89B3A;
+    --disc-wheel-promoter: #F6D63A; --disc-wheel-facilitator: #B4D14F;
+    --disc-wheel-supporter: #5BBF5C; --disc-wheel-coordinator: #3DAACE;
+    --disc-wheel-analyzer: #3D6CCE; --disc-wheel-organizer: #9C42C4;
     --mbti-ei: #F59E0B; --mbti-sn: #6366F1; --mbti-tf: #0EA5E9; --mbti-jp: #10B981;
     --bigfive-o: #6366F1; --bigfive-c: #0EA5E9; --bigfive-e: #F59E0B;
     --bigfive-a: #10B981; --bigfive-n: #EF4444;
@@ -429,6 +444,10 @@
     --theory-lesenne: #DB2777; --theory-lesenne-bg: rgba(219, 39, 119, 0.15);
     --theory-jung: #D97706; --theory-jung-bg: rgba(217, 119, 6, 0.15);
     --disc-d: #DC2626; --disc-i: #D97706; --disc-s: #16A34A; --disc-c: #2563EB;
+    --disc-wheel-conductor: #E85B3A; --disc-wheel-motivator: #F89B3A;
+    --disc-wheel-promoter: #F6D63A; --disc-wheel-facilitator: #B4D14F;
+    --disc-wheel-supporter: #5BBF5C; --disc-wheel-coordinator: #3DAACE;
+    --disc-wheel-analyzer: #3D6CCE; --disc-wheel-organizer: #9C42C4;
     --mbti-ei: #D97706; --mbti-sn: #4F46E5; --mbti-tf: #0284C7; --mbti-jp: #059669;
     --bigfive-o: #4F46E5; --bigfive-c: #0284C7; --bigfive-e: #D97706;
     --bigfive-a: #059669; --bigfive-n: #DC2626;
