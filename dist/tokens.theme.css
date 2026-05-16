@@ -16,7 +16,7 @@
   /* Auto-classified tokens exposed as Tailwind v4 utilities. */
   /* Uses var() references so runtime theme switching keeps working. */
 
-  /* color (94) */
+  /* color (104) */
   --color-accent-primary: var(--accent-primary);
   --color-accent-primary-hover: var(--accent-primary-hover);
   --color-accent-primary-muted: var(--accent-primary-muted);
@@ -58,6 +58,14 @@
   --color-disc-i-light: var(--disc-i-light);
   --color-disc-s: var(--disc-s);
   --color-disc-s-light: var(--disc-s-light);
+  --color-disc-wheel-analyzer: var(--disc-wheel-analyzer);
+  --color-disc-wheel-conductor: var(--disc-wheel-conductor);
+  --color-disc-wheel-coordinator: var(--disc-wheel-coordinator);
+  --color-disc-wheel-facilitator: var(--disc-wheel-facilitator);
+  --color-disc-wheel-motivator: var(--disc-wheel-motivator);
+  --color-disc-wheel-organizer: var(--disc-wheel-organizer);
+  --color-disc-wheel-promoter: var(--disc-wheel-promoter);
+  --color-disc-wheel-supporter: var(--disc-wheel-supporter);
   --color-focus-ring-color: var(--focus-ring-color);
   --color-glass-standard-bg: var(--glass-standard-bg);
   --color-glass-standard-border: var(--glass-standard-border);
@@ -79,6 +87,8 @@
   --color-mbti-jp: var(--mbti-jp);
   --color-mbti-sn: var(--mbti-sn);
   --color-mbti-tf: var(--mbti-tf);
+  --color-pwheel-marker-bg: var(--pwheel-marker-bg);
+  --color-pwheel-marker-fg: var(--pwheel-marker-fg);
   --color-sidebar-active-bg: var(--sidebar-active-bg);
   --color-sidebar-badge-active-bg: var(--sidebar-badge-active-bg);
   --color-sidebar-badge-bg: var(--sidebar-badge-bg);
@@ -367,6 +377,16 @@
   --disc-i: #F59E0B;
   --disc-s: #22C55E;
   --disc-c: #3B82F6;
+  --disc-wheel-conductor: #E85B3A;
+  --disc-wheel-motivator: #F89B3A;
+  --disc-wheel-promoter: #F6D63A;
+  --disc-wheel-facilitator: #B4D14F;
+  --disc-wheel-supporter: #5BBF5C;
+  --disc-wheel-coordinator: #3DAACE;
+  --disc-wheel-analyzer: #3D6CCE;
+  --disc-wheel-organizer: #9C42C4;
+  --pwheel-marker-bg: #0B0E14;
+  --pwheel-marker-fg: #FFF;
   --mbti-ei: #F59E0B;
   --mbti-sn: #6366F1;
   --mbti-tf: #0EA5E9;
@@ -771,6 +791,16 @@
     --disc-i: #F59E0B;
     --disc-s: #22C55E;
     --disc-c: #3B82F6;
+    --disc-wheel-conductor: #E85B3A;
+    --disc-wheel-motivator: #F89B3A;
+    --disc-wheel-promoter: #F6D63A;
+    --disc-wheel-facilitator: #B4D14F;
+    --disc-wheel-supporter: #5BBF5C;
+    --disc-wheel-coordinator: #3DAACE;
+    --disc-wheel-analyzer: #3D6CCE;
+    --disc-wheel-organizer: #9C42C4;
+    --pwheel-marker-bg: #0B0E14;
+    --pwheel-marker-fg: #FFF;
     --mbti-ei: #F59E0B;
     --mbti-sn: #6366F1;
     --mbti-tf: #0EA5E9;

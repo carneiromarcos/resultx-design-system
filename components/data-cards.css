@@ -543,15 +543,15 @@
       rgba(255, 255, 255, 0.55) 0%,
       rgba(255, 255, 255, 0) 55%),
     conic-gradient(from -90deg,
-      #E85B3A 0deg,    /* Conductor (top) */
-      #F89B3A 45deg,   /* Motivator */
-      #F6D63A 90deg,   /* Promoter */
-      #B4D14F 135deg,  /* Facilitator */
-      #5BBF5C 180deg,  /* Supporter */
-      #3DAACE 225deg,  /* Coordinator */
-      #3D6CCE 270deg,  /* Analyzer */
-      #9C42C4 315deg,  /* Organizer */
-      #E85B3A 360deg);
+      var(--disc-wheel-conductor) 0deg,
+      var(--disc-wheel-motivator) 45deg,
+      var(--disc-wheel-promoter) 90deg,
+      var(--disc-wheel-facilitator) 135deg,
+      var(--disc-wheel-supporter) 180deg,
+      var(--disc-wheel-coordinator) 225deg,
+      var(--disc-wheel-analyzer) 270deg,
+      var(--disc-wheel-organizer) 315deg,
+      var(--disc-wheel-conductor) 360deg);
 }
 
 [data-theme="dark"] .dl-pwheel-disc,
@@ -563,15 +563,15 @@
       rgba(255, 255, 255, 0) 50%,
       rgba(0, 0, 0, 0.10) 100%),
     conic-gradient(from -90deg,
-      #E85B3A 0deg,
-      #F89B3A 45deg,
-      #F6D63A 90deg,
-      #B4D14F 135deg,
-      #5BBF5C 180deg,
-      #3DAACE 225deg,
-      #3D6CCE 270deg,
-      #9C42C4 315deg,
-      #E85B3A 360deg);
+      var(--disc-wheel-conductor) 0deg,
+      var(--disc-wheel-motivator) 45deg,
+      var(--disc-wheel-promoter) 90deg,
+      var(--disc-wheel-facilitator) 135deg,
+      var(--disc-wheel-supporter) 180deg,
+      var(--disc-wheel-coordinator) 225deg,
+      var(--disc-wheel-analyzer) 270deg,
+      var(--disc-wheel-organizer) 315deg,
+      var(--disc-wheel-conductor) 360deg);
 }
 
 /* Subtle dividing lines between the 8 octants (stylistic only) */
@@ -646,14 +646,14 @@
 }
 
 .dl-pwheel-point-circle {
-  fill: #0B0E14;
+  fill: var(--pwheel-marker-bg);
   stroke: var(--bg-surface-1);
   stroke-width: var(--pwheel-marker-stroke);
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
 }
 
 .dl-pwheel-point-initial {
-  fill: #FFFFFF;
+  fill: var(--pwheel-marker-fg);
   font-size: var(--pwheel-marker-size);
   font-weight: var(--font-bold);
   font-family: var(--font-body);
