@@ -5,6 +5,47 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-05-24 — Reorganização estrutural (folders)
+
+### Changed — Top-level layout
+- `docs-viewer.html` (orfão na raiz) → `docs/viewer.html`
+- `render-templates.mjs` (orfão na raiz) → `scripts/render-templates.mjs`
+- `pages/` (demos full-page) → `demos/` — nome menos confuso (não são páginas de app)
+- `social-media-png/` → `templates/social-media/` — cria estrutura `templates/` semântica
+
+### Changed — Padronização brands
+- `brands/{electia,pdv}/email-templates/` → `brands/{electia,pdv}/templates/email/` — paridade com `templates/` raiz
+- `brands/electia/previews/` agrupada em 5 categorias:
+  - `logos/` (variants.html, purple-v2.5.html, concepts-v2/)
+  - `brand-book/` (index.html, aurora-hero.html)
+  - `gradients/` (options-2026-05-24.html)
+  - `prototypes/` (prototype.html)
+  - `visual-language/` (mantido)
+- `brands/emprega-mais/previews/_archive/` criado para versões antigas:
+  - `design-system-v1.html` (era `design-system.html`)
+  - `design-system-v1-preview.html`
+  - `design-system-v2-preview.html`
+- `brands/emprega-mais/previews/` raiz fica só com canônicos: `brand-guidelines.html` + `mockups-gov.html`
+
+### Updated — Referências
+- `README.md`, `DESIGN-SYSTEM.md`, `CHANGELOG.md`, BBs e SOCIAL-MEDIA-GUIDE de todas marcas: refs atualizadas pros paths novos via sed
+- `scripts/render-templates.mjs`: outDir aponta pra `templates/social-media/`
+- `scripts/render-dashboards.mjs`: inPath aponta pra `demos/`
+
+### Why
+Marcos apontou desorganização: templates antigos misturados com novos, orphans na raiz, naming inconsistente entre brands. Aplicado padrão multi-brand DS (Brad Frost · Tokens Studio · W3C DTCG):
+- Source vs output separados (`tokens/` `components/` `brands/` source; `dist/` `templates/social-media/` outputs)
+- Orphans em pastas semânticas (`docs/`, `scripts/`)
+- Brand structure padronizada (todos com `templates/email/`)
+- Legacy explícito (`_archive/` em vez de v1/v2 misturados)
+
+### Não alterado
+- Tokens (valores, naming) — refactor puro cosmético de folders
+- Brand kits content (BRAND-BOOKs, CHANGELOG marcas)
+- Apps consumidores externos não dependiam dos paths alterados (validado por grep cross-repo)
+
+---
+
 ## [2.1.1] - 2026-04-26
 
 Hotfix release com correções de distribution + cleanup de lint, e expansão da documentação para refletir o estado real do DS (5 themes + Data Layer).
@@ -73,7 +114,7 @@ Adiciona **camada Data Layer** ao DS: 3 themes opt-in (premium-light, sober-dark
 - `files` array — inclui `tokens/base/tokens-base.css` para garantir que consumers via npm recebam o source completo
 
 ### Fixed
-- `.gitignore` — ignora `social-media-png/` (artefatos gerados) e `.claude/` (estado local)
+- `.gitignore` — ignora `templates/social-media/` (artefatos gerados) e `.claude/` (estado local)
 
 ### Notes
 - **`tokens/tokens.css` continua sendo o source autoritativo** — edite sempre lá, rode `npm run build:tokens`

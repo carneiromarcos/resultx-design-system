@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const dsRoot = join(__dirname, '..');
-const inPath = join(dsRoot, 'pages');
+const inPath = join(dsRoot, 'demos');
 const outPath = join(dsRoot, 'brands/emprega-mais/mockups/dashboards');
 
 const pages = [

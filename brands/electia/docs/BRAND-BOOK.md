@@ -673,7 +673,7 @@ Como instalar e aplicar este Brand Book no código real da LP (electia.empregama
 |---------|---------------|------------------|
 | **LP institucional** | Next.js + Tailwind | `resultx/electia/` (Next 16 app router) |
 | **Plataforma SaaS** | Next.js + Supabase | `resultx/electia/` (mesmo repo, área autenticada) |
-| **Email Brevo** | HTML estatico | usa `brands/electia/email-templates/*` |
+| **Email Brevo** | HTML estatico | usa `brands/electia/templates/email/*` |
 
 ### 16.2 Importar fontes (Google Fonts)
 
@@ -856,7 +856,7 @@ CSS aplicado (modo Electia Subtle oficial):
 
 ### 16.6 Email Brevo
 
-Os 4 templates em `brands/electia/email-templates/` (electia-email-base, newsletter, product-cta, brevo-base.yaml) já estao com paleta teal e grafia lowercase. Subir direto no painel Brevo via importacao YAML.
+Os 4 templates em `brands/electia/templates/email/` (electia-email-base, newsletter, product-cta, brevo-base.yaml) já estao com paleta teal e grafia lowercase. Subir direto no painel Brevo via importacao YAML.
 
 ### 16.7 Checklist por surface
 
@@ -885,7 +885,7 @@ brands/electia/                          <- fonte da verdade (este DS)
 ├── tokens/tokens.json                   <- W3C tokens (para build tools)
 ├── assets/logo/*.svg                    <- copiar para public/brand/
 ├── assets/hero/aurora-hero-v1.*         <- copiar para public/hero/
-└── email-templates/*                    <- importar no Brevo
+└── templates/email/*                    <- importar no Brevo
 
 resultx/electia/                         <- consumidor (LP + plataforma)
 ├── public/

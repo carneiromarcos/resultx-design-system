@@ -70,7 +70,7 @@ Padrão herdado do PdV/Electia. `[TBD adaptar workflow Make pra outputs Emprega+
 ## 8. Templates Visuais
 
 Templates HTML renderizáveis via Playwright. Pipeline:
-- Source: `../../resultx/design-system/social-media-png/` (hub central — hoje populado com templates PdV)
+- Source: `../../resultx/design-system/templates/social-media/` (hub central — hoje populado com templates PdV)
 - Renderer: `../../resultx/design-system/render-templates.mjs`
 
 `[TBD criar variantes Emprega+ dos templates feed/stories/banners/thumbnails/whatsapp]`

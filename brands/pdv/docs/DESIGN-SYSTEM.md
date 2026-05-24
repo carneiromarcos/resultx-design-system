@@ -110,7 +110,7 @@ Single source of truth: `client/src/index.css` (@theme inline)
 | `AuthoritySection` | — | Photo + bio layout |
 | `CtaSection` | — | Final CTA with glow |
 
-## Email Marketing Templates (`design-system/email-templates/`)
+## Email Marketing Templates (`design-system/templates/email/`)
 
 Templates HTML compatíveis com Brevo, Gmail, Apple Mail, Outlook. Dark-first, 600px max-width, inline styles, VML fallback para Outlook.
 

@@ -298,7 +298,7 @@ Previews restantes (3):
 ### Added — Brand assets (estrutura)
 - `tokens/tokens.css` + `tokens/tokens.json` — paleta canônica Electia (teal #2DD4BF)
 - `assets/logo/README.md` — placeholder com 9 arquivos esperados (TODO: logo definitivo)
-- `email-templates/` — 4 templates Brevo (base + newsletter + product-cta + brevo-base.yaml) adaptados de PdV
+- `templates/email/` — 4 templates Brevo (base + newsletter + product-cta + brevo-base.yaml) adaptados de PdV
 - `previews/brand-preview.html` + `brand-book-viewer.html` + `social-media-templates.html` (adaptados)
 - `docs/SOCIAL-MEDIA-GUIDE.md` — guia de social média adaptado
 - `docs/MOTION-GUIDE.md` — diretrizes de animacao

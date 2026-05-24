@@ -15,7 +15,7 @@
 | Brand book de uma marca especifica | `brands/{marca}/docs/BRAND-BOOK.md` |
 | Tokens W3C de uma marca | `brands/{marca}/tokens/tokens.json` |
 | Logos canonicos | `brands/{marca}/assets/logo/` |
-| Templates de redes sociais (PNGs prontos) | [`social-media-png/`](social-media-png/) |
+| Templates de redes sociais (PNGs prontos) | [`templates/social-media/`](templates/social-media/) |
 | Renderer Playwright (HTML→PNG) | [`render-templates.mjs`](render-templates.mjs) |
 | Tokens compilados pra consumir em JS/TS | [`dist/tokens.ts`](dist/tokens.ts) |
 
@@ -40,29 +40,46 @@ Detalhes em [`brands/README.md`](brands/README.md).
 
 ---
 
-## 📁 Estrutura do hub
+## 📁 Estrutura do hub (reorganizada 2026-05-24)
 
 ```
 design-system/
 ├── DESIGN-SYSTEM.md           ← filosofia + tokens base + componentes (canonico)
 ├── README.md                  ← voce esta aqui (porta de entrada)
-├── tokens/                    ← tokens base + 5 themes opt-in (dark, light, premium-light, sober-dark, vibrant-dark)
+├── CHANGELOG.md               ← mudancas estruturais do hub
+│
+├── tokens/                    ← tokens base + 5 themes opt-in
 │   ├── tokens.json            ← W3C Design Tokens Community Format
 │   ├── tokens.css             ← CSS custom properties
 │   ├── base/tokens-base.css
-│   └── themes/                ← 5 themes (cada um arquivo .css + preview.html)
+│   └── themes/                ← dark, light, premium-light, sober-dark, vibrant-dark
+│
+├── components/                ← componentes reutilizaveis cross-brand (CSS)
+│
 ├── brands/                    ← 4 brand kits (1 pasta por marca)
 │   ├── README.md              ← arquitetura de marca (hierarquia, paletas, co-branding)
-│   ├── resultx/               ← stub v0.1 (paleta TBD)
-│   ├── emprega-mais/          ← v0.2 (tokens + 5 docs estruturados, [TBD] em campos)
-│   ├── electia/               ← canonical (mais completo — 6 docs + specs + email + mockups + wireframes)
-│   └── pdv/                   ← canonical (5 docs + email-templates)
-├── components/                ← componentes reutilizaveis cross-brand
-├── pages/                     ← demos full-page (dashboard, login, candidatos, ...)
-├── social-media-png/          ← 17 templates renderizados (banners/feed/stories/thumbnails/whatsapp)
-├── render-templates.mjs       ← renderer Playwright HTML→PNG
+│   ├── resultx/               ← consultoria · paleta gradient 5-cor · Poppins+Roboto
+│   ├── emprega-mais/          ← marca-mae · gold+navy · Sora+Inter
+│   ├── electia/               ← B2B SaaS · roxo+navy · Sora+Inter+JBMono
+│   └── pdv/                   ← personal-brand Marcos · sincronizada Emprega+
+│
+├── demos/                     ← demos full-page (dashboard, login, candidatos, ...) — antes era `pages/`
+│
+├── templates/                 ← outputs renderizados (social + email cross-brand)
+│   └── social-media/          ← templates social renderizados
+│
+├── scripts/                   ← scripts de build/render — antes `render-templates.mjs` ficava na raiz
+│   ├── render-templates.mjs   ← Playwright HTML→PNG (social-media templates)
+│   ├── render-dashboards.mjs  ← Playwright HTML→PNG (demos/ → brands/X/mockups/)
+│   ├── build-tokens.js        ← compila tokens
+│   └── bundle-analysis.js
+│
 ├── dist/                      ← outputs compilados (tokens.ts, tokens.theme.css, theme-toggle.js)
-└── docs/                      ← documentacao adicional do DS (componentes, tokens, gradientes)
+├── docs/                      ← documentacao adicional
+│   ├── viewer.html            ← viewer interativo do DS — antes `docs-viewer.html` na raiz
+│   ├── components/            ← docs de componentes
+│   └── tokens/                ← docs de tokens
+└── tests/                     ← Playwright + visual regression
 ```
 
 ---
@@ -85,9 +102,16 @@ Padrao canonico estabelecido em **Electia** (referencia) e **PdV** (segunda refe
 │   └── SOCIAL-MEDIA-GUIDE.md  ← (opcional) 9 secoes: dimensoes, PAID, pipeline Make+Notion, templates
 ├── assets/
 │   └── logo/                  ← SVGs/PNGs canonicos (source-of-truth)
-├── previews/                  ← HTMLs navegaveis (brand-book.html, logo-variants.html, ...)
-├── email-templates/           ← (opcional) base + newsletter + product-cta + Brevo YAML
-├── mockups/                   ← (opcional) cards HTML demo
+├── previews/                  ← HTMLs navegaveis (organizados por categoria — reorganizado 2026-05-24)
+│   ├── logos/                 ← variants.html, purple-v2.5.html, concepts-v2/
+│   ├── brand-book/            ← index.html, aurora-hero.html
+│   ├── gradients/             ← options-2026-05-24.html
+│   ├── prototypes/            ← protótipos
+│   ├── visual-language/       ← visual language demos
+│   └── _archive/              ← versões antigas (v1, v2)
+├── templates/
+│   └── email/                 ← (opcional) base + newsletter + product-cta + Brevo YAML
+├── mockups/                   ← (opcional) cards HTML demo + dashboards/ (PNGs renderizados)
 └── wireframes/                ← (opcional) low-fi HTML
 ```
 
