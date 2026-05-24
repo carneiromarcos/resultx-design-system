@@ -3,6 +3,31 @@
 Todas as mudancas notaveis neste design system serao documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
+## [2.5.0] - 2026-05-23
+
+### Changed — Sinergia com ecossistema Emprega+
+
+PdV vive em `profissional.empregamais.me` (subdominio Emprega+). Faz sentido alinhar paleta-base, mantendo DNA proprio (Sora+Inter, glass scale, gradient brand, glow-brand, voz Heroi+Sabio+Rebelde).
+
+- `tokens/tokens.json` + `tokens/tokens.css` — paleta canonizada alinhada Emprega+:
+  - **Gold DEFAULT:** `#D4A928` (json) / `#C49A3C` (css) → unificado em **`#c4993b`** (`--emp-gold` do ecossistema, extraido de `empregamais.me/--color-brand-dark`).
+  - **Gold light:** `#D4AD55` → `#d4ae54` (paralelo `--emp-gold-light`).
+  - **Gold dark:** `#9C7C1E` / `#A07D2E` → `#a07b2a` (paralelo `--emp-gold-dark`).
+  - **Background base:** `#0F1A2E` (json) / `#08080A` (css quase preto) → unificado em **`#1B2A4A`** (theme-color oficial Emprega+).
+  - **Surface scale (1-4):** recalibrada como escala crescente sobre nova base navy (`#1c2a4a` → `#36508f`).
+  - **Glass scale (subtle/default/strong):** rgba base atualizada de `rgba(14,14,17,*)` (dark puro) → `rgba(28,42,74,*)` (navy ecossistema).
+  - **Gradient-brand + gradient-gold-line + gradient-radial-glow:** atualizados pro novo hex gold.
+  - **Gold-muted:** mantido em `#8B6B2A` / `#6D5918` (variantes proprias PdV).
+
+### Fixed — Desconjunto interno tokens
+- Resolvida divergencia ENTRE `tokens.json` (navy `#0F1A2E`) e `tokens.css` (dark puro `#08080A`) — agora ambos canonicamente em `#1B2A4A`.
+
+### Notes
+- **Mantido (DNA PdV):** typography Sora+Inter, escala tipografica completa (h1 76px → caption 11px), glass scale 3-niveis (subtle/default/strong), gradient-brand, glow-brand, transitions com spring+reveal, utility classes (`.glass`, `.glow-brand`, `.text-gradient-brand`, `.hover-elevate`, `.eyebrow`).
+- **Mantido (logo):** versao atual em `assets/logo/` (pdv-icon variantes + monogram footer/navbar). Versao mountain arquivada em `_archive-v1-mountain/`.
+- **Logo template kit Canva:** `DAHFDkEfITg` ("logomarca-pdv", 8 paginas) — descoberta nesta sessao. NAO e logo lockup, e sim template kit de posts sociais 1080x1350 (card navy, card gold, card foto, KPI light, testemunho, evento, autor stock, autor real). Util pra social media producao. Lockup completo (simbolo + wordmark "Profissional de Valor") ainda precisa ser gerado.
+- **Sinergia obtida:** paleta unificada ecossistema (gold #c4993b + navy #1B2A4A); fontes compartilhadas (Sora+Inter); PdV mantem identidade visual unica via glass scale + glow-brand + tom de voz Mountain/Forge.
+
 ## [2.3.1] - 2026-03-26
 
 ### Added

@@ -3,9 +3,9 @@
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&amp;display=swap');
-      .e { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 96px; letter-spacing: -0.04em; fill: #2DD4BF; }
+      .e { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 96px; letter-spacing: -0.04em; fill: #6f32b1; }
     </style>
   </defs>
-  <rect width="128" height="128" rx="30" fill="#0B0E14"/>
+  <rect width="128" height="128" rx="30" fill="#1B2A4A"/>
   <text class="e" x="64" y="88" text-anchor="middle">e</text>
 </svg>

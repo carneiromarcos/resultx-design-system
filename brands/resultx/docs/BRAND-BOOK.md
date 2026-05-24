@@ -12,7 +12,17 @@
 
 ResultX e a consultoria de **transformação digital** fundada por Marcos Carneiro. Atende PMEs e grandes operações brasileiras desde 2012, ajudando empresas a destravar produtividade e tomada de decisão com tecnologia, dados e gestão de pessoas.
 
-### O que ResultX faz
+### Posicionamento oficial (resultx.app)
+
+> **"ResultX — Consultoria em Transformação Digital. Implementamos IA, reestruturamos processos e montamos squads de desenvolvimento para resultados reais."**
+
+### Os 3 Pilares (declarados no site)
+
+1. **Implementação de IA** — IA aplicada a problemas reais de negócio
+2. **Reestruturação de processos** — diagnóstico + redesenho de operacao
+3. **Squads de desenvolvimento** — times de tecnologia montados e operados pela ResultX
+
+### O que ResultX faz (visao expandida — escopo historico)
 
 - Diagnóstico de processos e organizacao
 - Implementação de tecnologia (ERPs, automações, IA aplicada)
@@ -83,50 +93,100 @@ ResultX (consultoria + entidade legal CNPJ)
 
 ## 3. Logo
 
-### Status
+### Source-of-truth atual
 
-- ✅ **Logo existe** (Marcos confirmou em 2026-05-11)
-- 🟡 Logo precisa ser hospedado em `brands/resultx/assets/logo/` seguindo workflow do DS
+- **Canva master:** `DAHFnUzUpeA` (criado 2026-05-02) — [editor](https://www.canva.com/d/XIbP_lf5i76V-oB) · [view](https://www.canva.com/d/F1Pur7n4ExCrm_Z)
+- **Site (favicon):** `https://resultx.app/images/logo-icon.svg`
+- 🟡 Falta exportar SVGs canonicos pra `brands/resultx/assets/logo/`
 
-### Spec inicial
+### Spec visual
 
-`[TBD]` — apos hospedagem dos arquivos, documentar aqui:
-- Versoes (full, monogram, micro, inverted, email-header)
-- Cores do logo
-- Área de protecao
-- Usos proibidos
+Wordmark **"resultx"**:
+- **"result"** — sans-serif bold branco sobre navy (fonte alinhada com Poppins)
+- **"X"** — desenhado em outline com **gradient 5-cor** (brand gradient oficial: blue → cyan → magenta → orange → gold)
+- Fundo: navy `#0d1b2e`
+- Dimensoes master: 2048×400 (banner) e 400×400 (quadrado)
 
-Vide `assets/logo/README.md` para lista de arquivos esperados.
+### Variacoes esperadas (a exportar)
+
+| Arquivo | Conteudo | Status |
+|---------|----------|--------|
+| `resultx-wordmark.svg` | Wordmark completo sobre navy | 🔴 |
+| `resultx-wordmark-light.svg` | Wordmark sobre branco | 🔴 |
+| `resultx-wordmark-mono.svg` | Single-color (sem gradient) | 🔴 |
+| `resultx-x-monogram.svg` | "X" isolado com gradient | 🔴 |
+| `resultx-favicon.svg` + `32x32.png` + `256x256.png` | Favicons | 🔴 |
+| `resultx-og-cover-1200x630.png` | OG image | 🔴 |
+| `resultx-linkedin-banner-1584x396.png` | Banner LinkedIn empresa (a criar) | 🔴 |
 
 ---
 
 ## 4. Paleta de Cores
 
-### Status
+Fonte canonica: `../tokens/tokens.json` e `../tokens/tokens.css` (prefixo `--rx-*`). Extraida de `resultx.app` (CSS bundle e theme-color oficial).
 
-`[TBD]` — não definida formalmente. Sugestoes para discussão:
+### Backgrounds (navy)
 
-| Direcao | Cor primária | Vibe |
-|---------|--------------|------|
-| **Premium consultoria** | Navy profundo `#0F1A2E` + accent platinum `#C5C5CD` | Conservador, premium, sereno |
-| **Tech moderna** | Dark `#0B0E14` + accent ciano `#0EA5E9` | Tech, tras associacao Emprega+ |
-| **Resultado ousado** | Black `#000` + accent red `#DC2626` | Confronto, impacto |
+| Token | Hex | Uso |
+|-------|-----|-----|
+| `--rx-bg` | `#0d1b2e` | Page background — theme-color oficial do site |
+| `--rx-surface-elevated` | `#192744` | Cards, surfaces elevadas |
 
-Recomendo iniciar com **Tech moderna** pela coerência com o restante do ecossistema (DS root usa Dark+Teal). ResultX poderia usar Dark + variante azul ciano pra se distinguir de Electia (teal).
+### Brand Gradient 5-cor (alma da marca)
 
-### Cores de fundo, texto e bordas
+A marca ResultX se distingue do ecossistema (Emprega+ navy+gold, Electia teal, PdV gold) por usar um **gradient multi-cor** como assinatura visual. Aparece no "X" do logo e em elementos hero.
 
-Herda do DS root (`tokens/tokens.css` raiz) que já define escalas dark/light, surfaces, text scales. Sem override por enquanto.
+| Token | Hex | Posicao no gradient |
+|-------|-----|---------------------|
+| `--rx-blue` | `#2040a0` | Stop 1 — royal blue |
+| `--rx-cyan` | `#00afef` | Stop 2 — cyan vibrante |
+| `--rx-magenta` | `#8040a0` | Stop 3 — magenta/roxo |
+| `--rx-orange` | `#c08020` | Stop 4 — laranja queimado |
+| `--rx-gold` | `#b29442` | Stop 5 — ouro/amarelo dourado |
+
+**Gradient oficial:**
+```css
+linear-gradient(135deg, #2040a0, #00afef, #8040a0, #c08020, #b29442)
+```
+
+### Text
+
+| Token | Hex | Uso |
+|-------|-----|-----|
+| `--rx-text` | `#FFFFFF` | Texto principal sobre navy |
+| `--rx-text-inverse` | `#0d1b2e` | Texto sobre fundo claro |
+
+### Diferenciacao no ecossistema
+
+| Marca | Cor primaria | Logica |
+|-------|-------------|--------|
+| **ResultX** | Navy + **gradient 5-cor** | Holding criativa/diversa — gradient simboliza diversidade de produtos |
+| Emprega+ | Navy + gold | Marca-mae empregabilidade — sobria, autoridade |
+| Electia | Dark + teal | Tech/ciencia — frieza analitica |
+| PdV | Dark + gold (mountain) | Personal-brand — heroi/forja |
 
 ---
 
 ## 5. Tipografia
 
-Herda do ecossistema:
-- **Sora** (display/headings) — pesos 600, 700, 800
-- **Inter** (body/UI) — pesos 400, 500, 600
+ResultX usa stack proprio (NAO Sora+Inter do restante do ecossistema). Confirmado em `resultx.app` HTML head:
 
-Sem fonte própria até decisão de marca.
+```html
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+```
+
+| Familia | Uso | Pesos disponiveis |
+|---------|-----|-------------------|
+| **Poppins** | Headings, display, hero, eyebrows | 300, 400, 500, 600, 700, 800, 900 |
+| **Roboto** | Body, UI, captions | 300, 400, 500, 700 |
+
+CSS vars:
+- `--rx-font-heading: 'Poppins', system-ui, sans-serif;`
+- `--rx-font-body: 'Roboto', system-ui, sans-serif;`
+
+### Por que stack diferente do ecossistema?
+
+Reforca posicionamento "ResultX e marca separada" — Emprega+/PdV/Electia compartilham Sora+Inter (alinhamento ecossistema empregabilidade). ResultX e consultoria, vive em outro campo semantico (transformacao digital B2B).
 
 ---
 
@@ -162,7 +222,7 @@ Sem fonte própria até decisão de marca.
 
 | Canal | Status | Notas |
 |-------|--------|-------|
-| **Site institucional** | ✅ Existe | URL: `[TBD confirmar]` |
+| **Site institucional** | ✅ Existe | URL: **resultx.app** (SPA React/Vite + Facebook Pixel + Google Fonts) |
 | **LinkedIn empresa** | 🔜 A criar | Roadmap Marcos 2026-05-11 |
 | **Newsletter LinkedIn (ResultX)** | 🔜 A criar | Roadmap Marcos 2026-05-11 |
 | **Instagram** | ❌ Sem plano | ResultX e B2B consultoria — não precisa |
@@ -195,8 +255,8 @@ Quando os assets visuais existirem (logo + tokens definidos), padronizar:
 | Termo | Grafia | Nunca usar |
 |-------|--------|------------|
 | Nome | ResultX | Result X, Resultx, RESULTX, ResultaX |
-| URL | `[TBD confirmar dominio oficial]` | — |
-| Slogan | `[TBD]` | — |
+| URL | `resultx.app` | — |
+| Slogan / tagline embutida | "resultados reais" (final da meta description) | — |
 
 ---
 

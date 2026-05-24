@@ -116,12 +116,16 @@ Acompanhado SEMPRE de copy psicológicamente segura ("merece atenção", não "v
 
 | Função | Size | Weight | Tracking | Feature |
 |---|---|---|---|---|
-| Hero pattern (texto) | 32-40px | 600 | -0.02em | — |
-| Hero number (D=72) | 56-72px | 600 | -0.03em | `tnum` |
-| Subscore | 20-24px | 500 | -0.01em | `tnum` |
-| Subscore label | 11-12px | 500 | 0.05em (uppercase) | — |
-| Axis label viz | 12px | 500 | 0 | — |
-| Narrativa | 14-15px | 400 | 0 | — |
+| Hero pattern (texto) | 32-44px | 600 | -0.02em | — |
+| Hero number / center number (SVG) | 28-38px | 600-700 | -0.03em | `tnum` |
+| Subscore | 18-22px | 500-600 | -0.01em | `tnum` |
+| Subscore label | 10-12px | 500-600 | 0.04-0.06em (uppercase) | — |
+| Axis label viz | 9-13px | 500-700 | 0 | — |
+| Narrativa | 13-14px | 400 | 0 | — |
+| Compare-row value | 14-15px | 600 | -0.01em | `tnum` |
+| Match-badge | 12px | 600 | 0 | — |
+
+**Nota (2026-05-11):** faixas reconciliadas com os 6 mockups aprovados (v0.5 Temperamentos, v1.0 MBTI, v0.3 Big Five/Eneagrama, v0.1 DISC/BAT). Hero number 56-72px do spec v0.1 não foi adotado nos mockups — escala maior dominaria o viz no iframe 820×830 do wireframe colaborador.
 
 **Regras:**
 
@@ -165,7 +169,7 @@ Acompanhado SEMPRE de copy psicológicamente segura ("merece atenção", não "v
 ## 5. Card surface + elevation
 
 ```css
---viz-card-padding: clamp(24px, 4vw, 32px);
+--viz-card-padding: clamp(20px, 4vw, 28px);
 --viz-card-radius: 16px; /* alinhado ResultX DS v2.1 */
 --viz-card-bg-light: oklch(98.5% 0 0);
 --viz-card-bg-dark: oklch(16% 0 0);
@@ -174,6 +178,8 @@ Acompanhado SEMPRE de copy psicológicamente segura ("merece atenção", não "v
 --viz-card-shadow-light: 0 1px 2px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.06);
 --viz-card-shadow-dark: 0 1px 2px oklch(0% 0 0 / 0.3);
 ```
+
+**Nota (2026-05-11):** padding `clamp(20px, 4vw, 28px)` unificado a partir de duas opções coexistentes (24-32 vs 20-28). Faixa menor cabe melhor no iframe 820×830 do wireframe colaborador e foi a já adotada por 4/6 mockups.
 
 ---
 
@@ -220,7 +226,7 @@ Acompanhado SEMPRE de copy psicológicamente segura ("merece atenção", não "v
 | Big Five | Neutral (green) | Pentagrama | "Aberto/Estável/..." | 5 axes ortogonais |
 | Eneagrama | Neutral (amber) | Radar 9 + linhas integ/desint | "Tipo 8 — w7" | Geometria nativa da teoria |
 | Temperamentos | Neutral (rose) | Quadrante 2×2 | "Sanguíneo dominante" | Categórico, não radar |
-| Motivadores | Neutral (cyan) | Bar ranked horizontal | "Top 3: ..." | Ordinal, não distância |
+| Motivadores | Neutral (cyan) + Match (top-3) | Bar ranked horizontal duplo (Ideal × Realizado lado a lado) | "Executivo" (perfil composto top 2) | 6 valores ordinais; perfil composto pelos 2 mais altos |
 | BAT/CBI | **Risk system** | Gauge zonas | "Saudável / Atenção / Risco" | UX delicado, narrativa cuidadosa |
 
 ---
@@ -230,7 +236,7 @@ Acompanhado SEMPRE de copy psicológicamente segura ("merece atenção", não "v
 ```css
 :root {
   /* Card surface */
-  --viz-card-padding: clamp(24px, 4vw, 32px);
+  --viz-card-padding: clamp(20px, 4vw, 28px);
   --viz-card-radius: 16px;
 
   /* Match zones (comparativo) */

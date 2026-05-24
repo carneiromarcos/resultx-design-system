@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Electia Viz — Big Five v0.2 (Adioma-fiel + polos bipolares)</title>
+  <title>Electia Viz — Big Five v0.3 (Adioma-fiel + polos bipolares + linha contínua)</title>
   <link rel="preconnect" href="https://rsms.me/" />
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
   <style>
@@ -34,7 +34,9 @@
       --label-on-light: oklch(20% 0 0);
       --label-on-dark:  oklch(98% 0 0);
 
+      --viz-motion-entry-duration: 600ms;
       --viz-motion-entry-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --viz-motion-stagger: 80ms;
       --viz-motion-hover: 150ms;
     }
 
@@ -77,6 +79,24 @@
     .card-title { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
     .card-icon { width: 24px; height: 24px; border-radius: 6px; background: oklch(94% 0.03 290); display: grid; place-items: center; color: oklch(45% 0.05 290); font-weight: 700; font-size: 11px; }
     [data-theme="dark"] .card-icon { background: oklch(28% 0.05 290); color: oklch(85% 0.05 290); }
+
+    .match-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      background: oklch(from var(--score-ideal-stroke) l c h / 0.12);
+      border: 1px solid oklch(from var(--score-ideal-stroke) l c h / 0.4);
+      border-radius: 999px;
+      color: var(--score-ideal-stroke);
+      font-size: 12px; font-weight: 600;
+      margin-bottom: 12px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 200ms both;
+    }
+    .match-badge::before { content: "✓"; font-size: 14px; }
+
+    .cta-row { display: flex; justify-content: flex-end; margin-top: 4px; animation: fadeIn 300ms ease 1900ms both; }
+    .cta { appearance: none; background: transparent; border: 1px solid var(--score-real-fill); color: var(--score-real-fill); font: inherit; font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all var(--viz-motion-hover) ease; }
+    .cta:hover { background: oklch(from var(--score-real-fill) l c h / 0.1); transform: translateX(2px); }
+    .cta:focus-visible { outline: 2px solid var(--score-real-fill); outline-offset: 2px; }
 
     .wheel-wrap { display: grid; place-items: center; margin: 0 0 14px; animation: fadeIn 600ms var(--viz-motion-entry-ease) 100ms both; }
     .wheel-wrap svg { display: block; max-width: 100%; height: auto; }
@@ -154,6 +174,8 @@
           <span id="card-title">Big Five · OCEAN</span>
         </div>
       </header>
+
+      <div class="match-badge" role="status">Alinhado ao cargo Comercial Sr.</div>
 
       <div class="wheel-wrap">
         <svg viewBox="0 0 600 600" width="600" height="600"
@@ -246,10 +268,12 @@
         Alta cooperação e organização — alinhado ao cargo de Comercial Sr.
         Baixo neuroticismo (estabilidade sob pressão) e abertura levemente acima do esperado, sinal de potencial criativo.
       </p>
+
+      <div class="cta-row"><button class="cta" type="button">Saiba mais →</button></div>
     </article>
 
     <p class="footer-note">
-      Mockup v0.2 · Big Five Adioma-fiel + polos bipolares + ideal×realizado · spec em <a href="../design-system-v0.1.md">design-system-v0.1.md</a> · valores fictícios
+      Mockup v0.3 · Big Five Adioma-fiel + polos bipolares + ideal×realizado · spec em <a href="../docs/DESIGN-SYSTEM.md">DESIGN-SYSTEM.md</a> · valores fictícios
     </p>
   </div>
 

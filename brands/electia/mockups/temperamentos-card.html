@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Electia Viz — Temperamentos v0.4 (Marsili 4 + 4 elementos + secundário)</title>
+  <title>Electia Viz — Temperamentos v0.5 (Marsili 4 + 4 elementos + secundário, sem traço dom↔sec)</title>
   <link rel="preconnect" href="https://rsms.me/" />
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
   <style>
@@ -37,7 +37,9 @@
       --label-on-light: oklch(20% 0 0);
       --label-on-dark:  oklch(98% 0 0);
 
+      --viz-motion-entry-duration: 600ms;
       --viz-motion-entry-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --viz-motion-stagger: 80ms;
       --viz-motion-hover: 150ms;
     }
 
@@ -262,6 +264,11 @@
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .cta-row { display: flex; justify-content: flex-end; margin-top: 4px; animation: fadeIn 300ms ease 2200ms both; }
+    .cta { appearance: none; background: transparent; border: 1px solid var(--theory); color: var(--theory); font: inherit; font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all var(--viz-motion-hover) ease; }
+    .cta:hover { background: oklch(from var(--theory) l c h / 0.1); transform: translateX(2px); }
+    .cta:focus-visible { outline: 2px solid var(--theory); outline-offset: 2px; }
+
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0ms !important; animation-delay: 0ms !important; transition-duration: 0ms !important; } }
 
     .footer-note { margin-top: 20px; font-size: 11px; color: var(--text-muted); text-align: center; letter-spacing: 0.02em; }
@@ -290,7 +297,7 @@
              role="img" aria-labelledby="t-svg-title t-svg-desc">
           <title id="t-svg-title">Temperamentos: 4 quadrantes Marsili com elementos da natureza</title>
           <desc id="t-svg-desc">
-            Quatro quadrantes representam os 4 temperamentos hipocráticos modernizados por Italo Marsili: Colérico (Fogo, top-right, rápido e duradouro), Sanguíneo (Ar, bottom-right, rápido e passageiro), Fleumático (Água, bottom-left, lento e passageiro), Melancólico (Terra, top-left, lento e duradouro). Eixos cardinais indicam Velocidade da reação (horizontal) e Duração da reação (vertical). Tipo dominante destacado com borda intensificada; secundário conectado por linha cinza.
+            Quatro quadrantes representam os 4 temperamentos hipocráticos modernizados por Italo Marsili: Colérico (Fogo, top-right, rápido e duradouro), Sanguíneo (Ar, bottom-right, rápido e passageiro), Fleumático (Água, bottom-left, lento e passageiro), Melancólico (Terra, top-left, lento e duradouro). Eixos cardinais indicam Velocidade da reação (horizontal) e Duração da reação (vertical). Tipo dominante destacado com borda intensificada e halo verde tracejado indicando alinhamento ao ideal do cargo. Secundário identificado na tabela de scores abaixo.
           </desc>
 
           <defs id="textpath-defs"></defs>
@@ -357,10 +364,12 @@
           <tr><td>Terra</td><td>Melancólico</td><td>45</td></tr>
         </tbody>
       </table>
+
+      <div class="cta-row"><button class="cta" type="button">Saiba mais →</button></div>
     </article>
 
     <p class="footer-note">
-      Mockup v0.4 · Marsili 4 temperamentos + 4 elementos · spec em <a href="../design-system-v0.1.md">design-system-v0.1.md</a> · valores fictícios
+      Mockup v0.5 · Marsili 4 temperamentos + 4 elementos · spec em <a href="../docs/DESIGN-SYSTEM.md">DESIGN-SYSTEM.md</a> · valores fictícios
     </p>
   </div>
 

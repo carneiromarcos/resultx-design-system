@@ -1,25 +1,45 @@
 /* ============================================
-   RESULTX — Design Tokens v0.1 (stub)
-   ============================================
-   ResultX e a marca-base do ResultX Design System.
-   Os tokens canonicos ficam no DS root (tokens/tokens.css raiz).
-   Este arquivo existe pra paridade estrutural com brands/pdv/ e brands/electia/.
-
-   QUANDO PRECISAR DE OVERRIDES ESPECIFICOS DA MARCA RESULTX,
-   ADICIONAR ABAIXO. ATE LA, REFERENCIA TOKENS ROOT.
-
-   Vide: docs/BRAND-BOOK.md secao 4 (Paleta de Cores) para
-   decisao pendente entre 3 direcoes de paleta.
+   RESULTX — Design Tokens v0.2
+   Generated from tokens.json (Brand Book)
+   Canonizado 2026-05-23 extraindo paleta de resultx.app
    ============================================ */
 
 :root {
-  /* ---- Paleta ResultX (TBD) ---- */
-  /* Sera definida apos Marcos escolher uma das 3 direcoes do BRAND-BOOK §4. */
-  /* Por enquanto, ResultX usa os tokens do DS root sem override. */
+  /* ---- Backgrounds (navy base — theme-color oficial do site) ---- */
+  --rx-bg: #0d1b2e;
+  --rx-surface-elevated: #192744;
 
-  /* Quando definida, adicionar aqui:
-   *   --resultx-primary: #...;
-   *   --resultx-primary-hover: #...;
-   *   --resultx-primary-muted: rgba(...);
-   */
+  /* ---- Brand Gradient 5-cor (alma da marca — X do logo) ---- */
+  --rx-blue: #2040a0;
+  --rx-cyan: #00afef;
+  --rx-magenta: #8040a0;
+  --rx-orange: #c08020;
+  --rx-gold: #b29442;
+
+  --rx-gradient-brand: linear-gradient(135deg, #2040a0, #00afef, #8040a0, #c08020, #b29442);
+  --rx-gradient-navy-deep: linear-gradient(135deg, #192744 0%, #0d1b2e 100%);
+
+  /* ---- Text ---- */
+  --rx-text: #FFFFFF;
+  --rx-text-inverse: #0d1b2e;
+
+  /* ---- Typography (Poppins + Roboto — Google Fonts) ---- */
+  --rx-font-heading: 'Poppins', system-ui, sans-serif;
+  --rx-font-body: 'Roboto', system-ui, sans-serif;
+
+  --rx-weight-light: 300;
+  --rx-weight-regular: 400;
+  --rx-weight-medium: 500;
+  --rx-weight-semibold: 600;
+  --rx-weight-bold: 700;
+  --rx-weight-extrabold: 800;
+  --rx-weight-black: 900;
+}
+
+/* ---- Utility: aplicar gradient brand em texto/borda ---- */
+.rx-text-gradient {
+  background: var(--rx-gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }

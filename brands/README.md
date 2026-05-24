@@ -64,18 +64,38 @@
 
 | Marca | Site | Instagram | LinkedIn empresa | Newsletter LinkedIn | Personal-channel |
 |-------|------|-----------|------------------|---------------------|------------------|
-| **ResultX** | ✅ existe | ❌ | 🔜 planejado | 🔜 planejado (ResultX) | — |
-| **Emprega+** | ✅ empregamais.me | ✅ @empregamais | ✅ Emprega+ | — | — |
-| **IMO** | herda Emprega+ (visual + canais) | herda Emprega+ | herda Emprega+ | — | — |
-| **Editais** | herda Emprega+ (visual + canais) | herda Emprega+ | herda Emprega+ | — | — |
-| **Electia** | identidade própria, via Emprega+ | via @empregamais | via Emprega+ | — | — |
-| **PdV** | (a confirmar) | ❌ | ❌ | ✅ "Profissional de Valor" | ✅ Marcos pessoal |
-| **Marcos Carneiro** | — | (pessoal) | ✅ pessoal | ✅ "Empregabilidade" | — |
+| **ResultX** | ✅ existe | 🔜 @resultxdigital (a criar) | 🔜 resultx (a criar) | — (sem newsletter por enquanto) | — |
+| **Emprega+** | ✅ empregamais.me | ✅ @empregamais.me | ✅ empregamais | ✅ "Empregabilidade" (na conta @empregamais) | — |
+| **IMO** | herda Emprega+ | herda @empregamais.me | herda empregamais | herda Emprega+ | — |
+| **Editais** | herda Emprega+ | herda @empregamais.me | herda empregamais | herda Emprega+ | — |
+| **Electia by Emprega+** | identidade propria, via Emprega+ | compartilha @empregamais.me | compartilha empregamais | — (tem mala direta propria) | — |
+| **PdV** | ✅ profissional.empregamais.me | via @marcosxcarneirox (Marcos pessoal) | via carneiromarcos (Marcos pessoal) | ✅ "Profissional de Valor" (na conta Marcos) | ✅ Marcos pessoal |
+| **Marcos Carneiro** | — | @marcosxcarneirox (canal PdV) | carneiromarcos (canal PdV) | — | — |
 
-> ⚠️ **TODO confirmar com Marcos:**
-> - Newsletter "Empregabilidade" pertence a qual marca? PdV, Emprega+ ou ResultX?
-> - PdV tem site próprio ou está em subpath Emprega+?
-> - Paleta canônica oficial da Emprega+ (gold+navy ou outra?)
+### TikTok, YouTube e Blogs
+
+| Marca | TikTok | YouTube | Blog |
+|-------|--------|---------|------|
+| **ResultX** | — | — | — |
+| **Emprega+** | — | 🔜 empregamais (a criar) | ✅ dentro do portal jobs (futuro `app.empregamais.me`) |
+| **Electia by Emprega+** | — | — (sem YT) | ✅ dentro do portal jobs |
+| **PdV** | @marcoscarneiro (canal Marcos pessoal) | carneiromarcos (canal Marcos pessoal) | ✅ dentro do portal jobs |
+
+### Email marketing
+
+| Marca | Email mkt |
+|-------|----------|
+| **Emprega+** | proprio |
+| **Electia by Emprega+** | **mala direta propria** (canal independente do Emprega+) |
+| **PdV** | proprio |
+| **ResultX** | — (sem email mkt por enquanto) |
+
+> ✅ **Decisoes resolvidas 2026-05-23** (matriz canonizada por Marcos):
+> - Newsletter "Empregabilidade" pertence a **Emprega+** (conta @empregamais).
+> - Newsletter "Profissional de Valor" pertence a **PdV** (na conta pessoal Marcos).
+> - PdV vive em `profissional.empregamais.me` (subdominio Emprega+).
+> - Marcos Carneiro nao tem site pessoal separado — sao canais sociais (carneiromarcos.*).
+> - Paleta Emprega+ canonizada: gold+navy.
 
 ---
 
@@ -83,9 +103,9 @@
 
 | Brand | Pasta | Status | Versão |
 |-------|-------|--------|--------|
-| Emprega+ | `emprega-mais/` | 🟡 Legado (5 HTMLs) · **ALTA PRIORIDADE** — atende Emprega+ + IMO + Editais | — |
+| Emprega+ | `emprega-mais/` | 🟡 Estruturada (tokens ✅ · 5 docs com `[TBD]` · logos pendentes) — atende Emprega+ + IMO + Editais | v0.2 (2026-05-23) |
 | PdV | `pdv/` | ✅ Completo | Brand Book v2.4 |
-| Electia | `electia/` | ✅ Completo | Brand Book v1.2 · DS v1.0 · Aurora hero v1 · Logo SVGs v1 (2026-05-11) |
+| Electia | `electia/` | ✅ Completo · logos canonicos agora em `electia/assets/logo/` (movidos do app 2026-05-23) | Brand Book v1.2 · DS v1.0 |
 | IMO | (não tem) | N/A — herda Emprega+ (visual + canais) | — |
 | Editais | (não tem) | N/A — herda Emprega+ (visual + canais) | — |
 | ResultX | `resultx/` | 🟡 Inicial (rascunho v0.1 com TBDs) | Brand Book v0.1 (2026-05-11) |
@@ -97,13 +117,13 @@
 | Marca | Cor primária | Hex | Vibe |
 |-------|--------------|-----|------|
 | **ResultX** | (a definir) | — | Consultoria premium |
-| **Emprega+** | (canonizar — provavelmente gold + navy) | — | Empregabilidade |
+| **Emprega+** | Gold + Navy (canonizado 2026-05-23) | `#D4A928` (+ navy `#0F1A2E`) — extraido de `emprega-mais/previews/brand-guidelines.html` | Empregabilidade |
 | **PdV** | Gold | `#D4A928` (+ navy `#0F1A2E`) | Forjar, montanha |
 | **IMO** | — | — | Herda 100% Emprega+ |
 | **Editais** | — | — | Herda 100% Emprega+ |
 | **Electia** | **Teal** | `#2DD4BF` (+ dark `#0B0E14`) | Tech, ciência |
 
-> ⚠️ **Paleta da Emprega+ precisa ser verificada.** Em README anterior estava "gold + navy" mas isso pode ter sido herança PdV. Pesquisar `brands/emprega-mais/brand-guidelines.html` e atualizar.
+> ✅ **Paleta Emprega+ canonizada 2026-05-23.** Gold + navy confirmados extraindo de `emprega-mais/previews/brand-guidelines.html` (96KB). Tokens cristalizados em `emprega-mais/tokens/tokens.json` + `tokens.css` (prefixo `--emp-*`). PdV reutiliza o navy `#0F1A2E` como `bg.base` (descrito como "navy escuro Emprega+" no tokens.json do PdV) — confirmando que o navy e canonico do ecossistema, herdado pela personal-brand.
 
 ---
 
@@ -126,10 +146,10 @@
 
 | Marca | Logo existe? | Onde |
 |-------|--------------|------|
-| Emprega+ | ✅ | Canva (logomarca-pdv emprega-mais, DAHFDuSkSXE — fonte: Sora ExtraBold 800 + "ga+" desenhado custom) |
-| PdV | ✅ | `brands/pdv/assets/logo/` (10+ variantes SVG/PNG) |
-| ResultX | ✅ | (a confirmar localização) |
-| Electia | ✅ | `brands/electia/assets/logo/` (7 SVGs v1 gerados 2026-05-11) |
+| Emprega+ | ⚠️ Canva-only | Canva (logomarca-pdv emprega-mais, DAHFDuSkSXE — fonte: Sora ExtraBold 800 + "ga+" desenhado custom). **Pendente:** exportar SVGs canonicos pra `brands/emprega-mais/assets/logo/`. |
+| PdV | ✅ | `brands/pdv/assets/logo/` (10+ variantes SVG/PNG + `_archive-v1-mountain/` com versao antiga) |
+| ResultX | ⚠️ | (a confirmar localização — `brands/resultx/assets/logo/` so tem README placeholder) |
+| Electia | ✅ | `brands/electia/assets/logo/` (7 SVGs canonicos — movidos do app 2026-05-23). App Next.js mantem copia em `resultx/electia/public/brand/` por compat. |
 | IMO | — | Usa logo Emprega+ (mesma marca visual) |
 | Editais | — | Usa logo Emprega+ (mesma marca visual) |
 
@@ -148,12 +168,15 @@ Spec completa: `brands/electia/docs/BRAND-BOOK.md` §3 (Logo)
 
 ## Próximos passos sugeridos
 
-1. **`brands/emprega-mais/` — ALTA PRIORIDADE.** Promover legacy HTMLs a full brand kit (atende **3 produtos**: Emprega+ direto, IMO, Editais)
-2. **Rasterizar PNGs do logo Electia** (favicon, email header/icon, OG cover) — SVGs v1 já gerados
-3. **`brands/resultx/`** — Marcos preencher TBDs (paleta, tagline, URL oficial, tom de voz, hospedar logo)
-4. **Confirmar com Marcos** as 3 dúvidas TODO ainda em aberto:
-   - Vínculo da newsletter "Empregabilidade" (PdV, Emprega+ ou ResultX?)
-   - Site próprio PdV ou subpath Emprega+
-   - Paleta canônica Emprega+ (gold+navy? outra?)
+> Atualizado 2026-05-23 apos consolidacao (Emprega+ estruturada · logos Electia canonical · 6 agents brand/design espelhados no `.antigravity`).
+
+1. **`brands/emprega-mais/` — preencher os `[TBD]`** dos 5 docs (BRAND-BOOK §1 Essencia + §6 Tom e Voz + §10 Origem em primeiro). Estrutura ja existe; falta conteudo de Marcos.
+2. **Exportar SVGs canonicos do logo Emprega+** do Canva (DAHFDuSkSXE) pra `brands/emprega-mais/assets/logo/`. Bloqueia uso em apps/emails.
+3. **`brands/resultx/` — promover do stub.** Marcos preencher TBDs (paleta, tagline, URL oficial, tom de voz, hospedar logo). E a marca-mae legal — merece ser primeira-classe.
+4. **Rasterizar PNGs do logo Electia** (favicon, email header/icon, OG cover) — SVGs v1 ja gerados em `electia/assets/logo/`.
+5. **Confirmar com Marcos** as 2 duvidas TODO ainda em aberto:
+   - Vinculo da newsletter "Empregabilidade" (PdV, Emprega+ ou ResultX?)
+   - Site proprio PdV ou subpath Emprega+
+6. **Refatorar `tokens/tokens.json` raiz:** renomear key `emprega-app` para `base` ou `resultx` (legado de quando o DS era app-specifico).
 
 **Removido do roadmap:** ~~`brands/imo/`~~ e ~~`brands/editais/`~~ não serão criados — herdam 100% Emprega+ (decisão Marcos 2026-05-11).

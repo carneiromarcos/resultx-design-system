@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Electia v2.5 — Logo preview (roxo #6f32b1)</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #1B2A4A;
+    color: #fff;
+    padding: 60px 40px;
+  }
+  h1 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+  .sub {
+    color: #a55eea;
+    font-size: 14px;
+    margin-bottom: 48px;
+    letter-spacing: 0.05em;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .card {
+    background: #1c2a4a;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .card.light {
+    background: #fff;
+    color: #1B2A4A;
+    border-color: #e0e6eb;
+  }
+  .card img {
+    max-height: 80px;
+    max-width: 100%;
+  }
+  .card .name {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+  }
+  .card .meta {
+    font-size: 11px;
+    color: #a0a0ac;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .header {
+    margin-bottom: 32px;
+  }
+  .palette {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 48px;
+    align-items: center;
+  }
+  .swatch {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 6px;
+    font-size: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>Electia v2.5 — Logo Preview</h1>
+    <div class="sub">PALETA ROXO PROFUNDO · #6f32b1 · sinergia ecossistema</div>
+  </div>
+
+  <div class="palette">
+    <div class="swatch" style="background:#a55eea">a55eea<br>light</div>
+    <div class="swatch" style="background:#6f32b1">6f32b1<br>DEFAULT</div>
+    <div class="swatch" style="background:#5a2890">5a2890<br>dark</div>
+    <div class="swatch" style="background:#3d1a64">3d1a64<br>muted</div>
+    <div class="swatch" style="background:#1B2A4A">1B2A4A<br>navy</div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <img src="../assets/logo/electia-monogram-purple.svg" alt="">
+      <div class="name">electia-monogram-purple</div>
+      <div class="meta">símbolo · roxo</div>
+    </div>
+    <div class="card">
+      <img src="../assets/logo/electia-monogram.svg" alt="">
+      <div class="name">electia-monogram</div>
+      <div class="meta">símbolo · roxo (default)</div>
+    </div>
+    <div class="card">
+      <img src="../assets/logo/electia-short.svg" alt="">
+      <div class="name">electia-short</div>
+      <div class="meta">wordmark · light</div>
+    </div>
+    <div class="card">
+      <img src="../assets/logo/electia-wordmark.svg" alt="">
+      <div class="name">electia-wordmark</div>
+      <div class="meta">wordmark · light</div>
+    </div>
+    <div class="card">
+      <img src="../assets/logo/electia-wordmark-accent.svg" alt="">
+      <div class="name">electia-wordmark-accent</div>
+      <div class="meta">wordmark · com accent roxo</div>
+    </div>
+    <div class="card light">
+      <img src="../assets/logo/electia-wordmark-light.svg" alt="">
+      <div class="name">electia-wordmark-light</div>
+      <div class="meta">wordmark · sobre branco</div>
+    </div>
+    <div class="card" style="grid-column: span 3;">
+      <img src="../assets/logo/electia-lockup-vertical.svg" alt="" style="max-height:140px">
+      <div class="name">electia-lockup-vertical</div>
+      <div class="meta">lockup vertical completo · by Emprega+</div>
+    </div>
+  </div>
+</body>
+</html>

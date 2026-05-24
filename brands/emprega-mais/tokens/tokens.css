@@ -1,0 +1,72 @@
+/* ============================================
+   EMPREGA+ — Design Tokens v0.3
+   Generated from tokens.json (Brand Book)
+   Marca-mae do ecossistema (Emprega+, IMO, Editais)
+   Canonizado 2026-05-23 alinhando ao site live empregamais.me
+   ============================================ */
+
+:root {
+  /* ---- Gold (cor de marca — accents) ---- */
+  /* Fonte: --color-brand-dark e --color-brand-light do site live */
+  --emp-gold-light: #d4ae54;
+  --emp-gold: #c4993b;
+  --emp-gold-warm: #c49a3c;
+  --emp-gold-dark: #a07b2a;
+
+  /* ---- Backgrounds (navy — theme-color oficial) ---- */
+  --emp-bg: #1B2A4A;
+  --emp-surface-1: #1c2a4a;
+  --emp-surface-deep: #0f1117;
+
+  /* ---- Light surfaces (Gov, Editais, light glass) ---- */
+  --emp-light-bg: #FFFFFF;
+  --emp-light-subtle: #f5f7f9;
+  --emp-light-muted: #f0f4f8;
+  --emp-light-border: #e0e6eb;
+
+  /* ---- Glass effects (Light Glass — sistema oficial Emprega+) ---- */
+  --emp-glass-bg: rgba(255, 255, 255, 0.7);
+  --emp-glass-border: rgba(28, 42, 74, 0.08);
+  --emp-glass-border-hover: rgba(28, 42, 74, 0.15);
+
+  /* ---- Text (em fundo dark) ---- */
+  --emp-text: #FFFFFF;
+  --emp-text-secondary: #bfd0ec;
+  --emp-text-muted: #5a6b7c;
+  --emp-text-subtle: #71717a;
+  --emp-text-inverse: #1B2A4A;
+
+  /* ---- Semantic (tailwind-aligned) ---- */
+  --emp-success: #16a34a;
+  --emp-success-dark: #0d7a30;
+  --emp-error: #ef4343;
+  --emp-error-dark: #b91c1c;
+  --emp-warning: #d97706;
+
+  /* ---- Typography ---- */
+  --emp-font-heading: 'Sora', system-ui, sans-serif;
+  --emp-font-sans: 'Inter', system-ui, sans-serif;
+  --emp-font-mono: 'JetBrains Mono', monospace;
+
+  --emp-weight-regular: 400;
+  --emp-weight-medium: 500;
+  --emp-weight-semibold: 600;
+  --emp-weight-bold: 700;
+  --emp-weight-extrabold: 800;
+
+  /* ---- Radius ---- */
+  --emp-radius-sm: 0.25rem;
+  --emp-radius-md: 0.5rem;
+  --emp-radius-lg: 0.75rem;
+  --emp-radius-xl: 1rem;
+}
+
+/* ---- Utility: Light Glass effect (padrao oficial Emprega+) ---- */
+.emp-glass {
+  background: var(--emp-glass-bg);
+  border: 1px solid var(--emp-glass-border);
+  backdrop-filter: blur(12px);
+}
+.emp-glass:hover {
+  border-color: var(--emp-glass-border-hover);
+}

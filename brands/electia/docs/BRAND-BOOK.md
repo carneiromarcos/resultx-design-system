@@ -1,6 +1,9 @@
 # Brand Book — Electia by Emprega+
 
-**Versão:** 1.3 | **Data:** 2026-05-11 | **Classificação:** Interno
+**Versão BB (conteúdo editorial §1-16):** 1.3 · **Data:** 2026-05-11 · **Classificação:** Interno
+**Versão Brand Kit (este diretório):** 1.7.1 · **Data:** 2026-05-12 · ver [CHANGELOG.md](./CHANGELOG.md)
+
+> **Escopo de versionamento.** O **header do Brand Book** versiona apenas o conteúdo editorial das seções §1-16 abaixo — desde a v1.3 (11/05) nada mudou no texto. O **CHANGELOG.md** versiona o brand-kit inteiro (mockups, wireframes, specs, tokens, decisões D1-D6). Se você abriu este doc procurando o estado atual do brand-kit, vá direto ao CHANGELOG. Se procura a especificação visual oficial, está aqui.
 
 ---
 
