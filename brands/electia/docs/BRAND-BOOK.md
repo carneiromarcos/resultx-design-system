@@ -909,4 +909,199 @@ Sempre que este Brand Book virar v1.4, v1.5, etc:
 
 ---
 
+## 17. Diretrizes de Aplicação Visual
+
+> Adicionado 2026-05-25. Regras de uso prático pra peças, materiais e qualquer criação visual Electia.
+
+### 17.1 Cores — quando usar cada uma
+
+#### Roxo `#6f32b1` (Purple canonical)
+
+**USE EM:**
+- ✅ CTAs principais ("Começar grátis", "Criar conta") — fill sólido com texto branco
+- ✅ Links inline em texto corrido
+- ✅ Eyebrows (rótulos uppercase pequenos acima de títulos)
+- ✅ Bordas/ícones de destaque
+- ✅ Wordmark "electia" sobre fundo navy
+- ✅ Glow effect (`box-shadow: 0 0 30px rgba(111,50,177,0.35)`)
+
+**NÃO USE EM:**
+- ❌ Texto corpo (parágrafos) — usar branco/gray
+- ❌ Backgrounds grandes (fica pesado) — usar navy
+- ❌ Cor de erro/aviso — usar semantic colors
+
+#### Roxo Light `#a55eea`
+
+**USE EM:**
+- ✅ Hover state de CTAs (mostra que botão acordou)
+- ✅ Highlights em textos pequenos sobre fundo dark
+- ✅ Focus ring (passa WCAG 2.4.11)
+
+#### Navy Base `#1B2A4A`
+
+**USE EM:**
+- ✅ Background principal de TODA peça dark
+- ✅ Cards principais
+- ✅ Texto inverso (sobre fundo branco)
+
+**NÃO USE EM:**
+- ❌ Texto sobre dark (vai sumir)
+
+#### White `#FFFFFF`
+
+**USE EM:**
+- ✅ Texto principal sobre navy
+- ✅ Logo wordmark sobre navy
+- ✅ Headlines
+
+**NÃO USE EM:**
+- ❌ Backgrounds grandes — peça fica "espacial demais"
+
+#### Semantic (Success/Error/Warning)
+
+**USE APENAS EM:**
+- Confirmações de form/CTA submetido (Success)
+- Mensagens de erro de validação (Error)
+- Avisos contextuais (Warning)
+
+**NÃO USE EM:**
+- ❌ Peças de marketing/social — quebra a paleta brand
+- ❌ Decoração — usar só funcionalmente
+
+### 17.2 Gradients — uso seletivo
+
+#### B — Default (`#6f32b1 → #2040a0` Royal Blue)
+
+**USE EM:**
+- ✅ Hero CTA principal (1 por peça)
+- ✅ Badges destacados
+- ✅ Background hero de seções
+
+**FREQUÊNCIA:** alta — pode aparecer em 30-50% das peças
+
+#### C — Premium (`#6f32b1 → #b29442` Ouro)
+
+**USE APENAS EM:**
+- ✅ Badge "Recomendado" no pricing
+- ✅ Indicador de plano enterprise
+- ✅ Upgrade banners
+- ✅ Certificações/achievements
+
+**FREQUÊNCIA:** baixa — máximo 5% das peças (raro = especial)
+
+#### Regra de ouro sobre gradients
+
+❌ **NUNCA aplique gradient em texto pequeno** (corpo, captions, labels). O olho não lê tons que variam.
+✅ Gradient só em texto **GRANDE** (h1, h2 hero) ou em **fills** (botões, badges, backgrounds).
+
+### 17.3 Fontes — hierarquia tipográfica
+
+#### Sora (Heading)
+**USE EM:**
+- H1 hero (peso 800, 76px desktop / 40px mobile)
+- H2 seções (peso 700, 44px desktop / 28px mobile)
+- H3 títulos (peso 700, 24px desktop)
+- Eyebrows (peso 600, 12px, uppercase, letter-spacing 0.15em)
+
+#### Inter (Body)
+**USE EM:**
+- Parágrafos corpo (peso 400, 16px)
+- Subtítulos (peso 500, 20px)
+- UI labels, captions (peso 500, 13px)
+- Botões (peso 600, 14-16px)
+
+#### JetBrains Mono (Mono)
+**USE EM:**
+- ✅ Wordmark "electia" (peso 600/Semibold) — caso especial canônico
+- ✅ Dados técnicos: hex codes, scores numéricos, IDs
+- ✅ Swatches de cor
+- ✅ Code blocks
+- ❌ NÃO usar em copy/marketing — fica "muito técnico"
+
+### 17.4 Logos — qual usar em qual contexto
+
+| Contexto | Logo recomendado |
+|---|---|
+| Header website (dark) | `electia-wordmark.svg` |
+| Header website (light) | `electia-wordmark-light.svg` |
+| Footer | `electia-wordmark.svg` (menor) |
+| Favicon | `electia-monogram.svg` (32×32, 64×64) |
+| Avatar redes sociais | `electia-monogram-purple.svg` |
+| Splash/Hero apresentação | `electia-lockup-vertical.svg` |
+| Mobile nav apertado | `electia-short.svg` |
+| Co-branding c/ parceiro | `electia-wordmark-accent.svg` |
+| Email header | `electia-wordmark.svg` (440×120) |
+
+#### Área de proteção (clear space)
+
+Margem mínima ao redor do wordmark = **altura da letra "e"** do "electia". Nada (texto, imagem, borda) pode invadir esse espaço.
+
+#### Tamanho mínimo
+
+| Logo | Tamanho mínimo |
+|---|---|
+| Wordmark full | 120px largura |
+| Monogram | 32px |
+| Lockup vertical | 80px altura |
+
+#### NUNCA faça com o logo
+
+- ❌ Mudar a cor (sair de roxo/branco canonical)
+- ❌ Esticar/comprimir desproporcional
+- ❌ Adicionar sombra, outline, glow não-oficial
+- ❌ Rotacionar
+- ❌ Colocar sobre fundo de cor concorrente (gold, verde, etc)
+- ❌ Adicionar elementos colados (ícones, taglines não-oficiais)
+- ❌ Reproduzir o wordmark digitando o texto à mão — sempre usar SVG canonical
+
+### 17.5 Combinações — paletas permitidas por contexto
+
+#### Combinação 1: Hero corporativo (default)
+- Background: Navy base `#1B2A4A`
+- Headline: White `#FFFFFF` (Sora 800, com palavra-destaque em gradient B)
+- Body: Gray 100 `#E8E8EC` (Inter 400)
+- CTA: gradient B (roxo→azul) com texto branco
+- Logo: `electia-wordmark.svg` (canto)
+
+#### Combinação 2: Quote vibrante
+- Background: Gradient B `#6f32b1 → #2040a0`
+- Headline: White (Sora 700)
+- Tagline: Inter 500 opacity 0.85
+- Logo: `electia-wordmark.svg` (branco, canto)
+
+#### Combinação 3: Light editorial (Gov/Editais)
+- Background: White `#FFFFFF`
+- Headline: Navy `#1B2A4A` (Sora 800)
+- Body: Gray 500 `#5A5A66` (Inter 400)
+- Accent: Roxo `#6f32b1` em links/destaques
+- Logo: `electia-wordmark-light.svg`
+
+#### Combinação 4: Dado/KPI
+- Background: Navy base
+- Numeral grande: White ou gradient B (Sora 800, 120px+)
+- Label embaixo: Gray 300 uppercase (Inter 500 + letter-spacing)
+- Logo: monogram canto inferior direito
+
+#### Combinação 5: Premium/Recomendado
+- Background: Navy base
+- Badge "RECOMENDADO": gradient C (roxo→ouro) com texto branco + glow ouro
+- Resto da peça: paleta padrão
+
+### 17.6 Checklist pré-publicação
+
+Antes de exportar/postar qualquer peça:
+
+- [ ] Background está em paleta brand (navy / branco / gradient B)?
+- [ ] Roxo `#6f32b1` é o único acento de marca? (sem verdes/azuis aleatórios)
+- [ ] Fonte é **Sora/Inter/JetBrains Mono** (não outras)?
+- [ ] Gradient C aparece SÓ se peça é premium/upgrade? (não como decoração)
+- [ ] Texto pequeno NÃO usa gradient?
+- [ ] Logo está em variante correta pro fundo (light/dark)?
+- [ ] Logo tem área de proteção respeitada?
+- [ ] Contraste texto/fundo passa WCAG AA (mínimo 4.5:1)?
+- [ ] Sem efeitos não-oficiais (sombra extrema, outline, fotos com filtro)?
+- [ ] Logo no canto, não centralizado (a menos que seja lockup central proposital)?
+
+---
+
 *Electia by Emprega+ — A pessoa certa no lugar certo.*
