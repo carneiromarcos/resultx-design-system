@@ -8,6 +8,10 @@
    - Glass scale rgba: dark (14,14,17) → navy (28,42,74)
    - Glow-brand: gold rgba → purple rgba
    - DNA preservado: Sora+Inter, glass scale 3-niveis, transitions, utility classes
+   Extensao 2026-05-28 (aditiva, nada removido):
+   - Ramp OKLCH purple-50..950 (700 = --purple canonical #6f32b1)
+   - Sinergia ResultX: --royal-blue-* (acento CTAs) + --gold-* (acento pricing) com ramps OKLCH
+   - Gradientes --gradient-purple-vibrant (roxo→royal-blue) e --gradient-purple-premium (roxo→ouro) — nomes iguais aos do app (globals.css)
    ============================================ */
 
 :root {
@@ -16,6 +20,47 @@
   --purple: #6f32b1;
   --purple-dark: #5a2890;
   --purple-muted: #3d1a64;
+
+  /* ---- Purple ramp (OKLCH, perceptualmente uniforme; 700 = --purple canonical) ---- */
+  --purple-50: #f7f3ff;
+  --purple-100: #eee5ff;
+  --purple-200: #e0ceff;
+  --purple-300: #ccadff;
+  --purple-400: #b784ff;
+  --purple-500: #a15bf5;
+  --purple-600: #8842d6;
+  --purple-700: #6f32b1;
+  --purple-800: #562789;
+  --purple-900: #3d1c63;
+  --purple-950: #291145;
+
+  /* ---- Royal Blue (sinergia ResultX — acento CTAs; 800 = #2040a0). NAO e primary ---- */
+  --royal-blue: #2040a0;
+  --royal-blue-50: #f1f5ff;
+  --royal-blue-100: #e0eaff;
+  --royal-blue-200: #c6d8ff;
+  --royal-blue-300: #a0beff;
+  --royal-blue-400: #779fff;
+  --royal-blue-500: #4c7dff;
+  --royal-blue-600: #315fef;
+  --royal-blue-700: #244bc6;
+  --royal-blue-800: #2040a0;
+  --royal-blue-900: #12296f;
+  --royal-blue-950: #0a1b4e;
+
+  /* ---- Gold / Ouro (sinergia ResultX — acento pricing 'Recomendado'; 400 = #b29442) ---- */
+  --gold: #b29442;
+  --gold-50: #fbf5e5;
+  --gold-100: #f4e9ce;
+  --gold-200: #e9d7a7;
+  --gold-300: #d6bc7a;
+  --gold-400: #b29442;
+  --gold-500: #a38428;
+  --gold-600: #8a6c08;
+  --gold-700: #705701;
+  --gold-800: #564302;
+  --gold-900: #3e2f04;
+  --gold-950: #2a1f02;
 
   /* ---- Background Scale (navy ecossistema — alinhado theme-color Emprega+) ---- */
   --bg: #1B2A4A;
@@ -121,6 +166,12 @@
   --gradient-brand-subtle: linear-gradient(135deg, rgba(111,50,177,0.12) 0%, rgba(90,40,144,0.12) 100%);
   --gradient-purple-line: linear-gradient(90deg, transparent 0%, #6f32b1 30%, transparent 100%);
   --gradient-radial-glow: radial-gradient(ellipse at center, rgba(111,50,177,0.15) 0%, transparent 70%);
+
+  /* ---- Gradientes de sinergia ResultX (nomes alinhados ao app: globals.css) ----
+     vibrant = B (roxo→royal-blue) — DEFAULT em CTAs/badges/headlines
+     premium = C (roxo→ouro)       — pontual em pricing 'Recomendado'/upgrade */
+  --gradient-purple-vibrant: linear-gradient(135deg, #6f32b1 0%, #2040a0 100%);
+  --gradient-purple-premium: linear-gradient(135deg, #6f32b1 0%, #b29442 100%);
 
   /* ---- Transitions ---- */
   --transition-fast: 150ms ease;
