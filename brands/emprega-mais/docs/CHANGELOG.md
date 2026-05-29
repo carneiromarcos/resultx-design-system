@@ -3,6 +3,34 @@
 Todas as mudancas notaveis neste design system serao documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
+## [1.0.0] - 2026-05-27
+
+### Brand Book → v1.0 (todos os TBDs preenchidos)
+- **§3 Logo e Variações** — wordmark Sora 800 + gold `+`, 3 variantes (completa/invertida/mono), 4 variantes favicon, área de proteção, do's/don'ts.
+- **§5 Tipografia** — escala completa (9 roles: Display→Code), famílias com pesos, `font-display: swap`.
+- **§8 Aplicações** — 7 contextos (site, app, jobs, social, apresentações, email mkt, impresso).
+- **§9 Diretrizes Fotográficas** — estilo editorial brasileiro, iluminação, tratamento de cor, don'ts.
+- **§10 Origem da Marca** — história 2022→hoje, 4 marcos, significado do nome.
+
+### Design System → v1.0 (todos os TBDs preenchidos)
+- §1 Componentes (buttons, cards, inputs, badges, navbar, tables), §2 Color zones (dual-theme), §3 Tipografia (escala), §4 Motion, §5 Surface+elevation, §6 Estados, §7 Acessibilidade, §8 Stack.
+
+### Motion Guide → v1.0
+- Princípios, tokens, scroll reveal, hover effects, glow pulse, page transitions, glass animations, performance checklist.
+
+### Tokens → v1.0 (CSS + JSON)
+- Motion (6 tokens), typography scale (9), spacing (8), shadows (5). Utilities: `.emp-reveal` + `prefers-reduced-motion`.
+
+### Social Media Guide → v1.0
+- 9 categorias visuais, 5 eixos temáticos, cadência por canal, pipeline de produção, 6 templates a criar.
+
+### Image Prompts → v1.0
+- Prompt-base Midjourney/DALL-E, 4 categorias, prompts de vídeo, color grading preset, bancos recomendados, lista proibida.
+
+### Pendentes (não bloqueantes)
+- `assets/logo/` — SVGs canônicos a exportar do Canva master `DAHFDuSkSXE`.
+- Templates HTML de social media a criar.
+
 ## [0.1.0] - 2026-05-23
 
 ### Added

@@ -1,8 +1,6 @@
 # Brand Book — Emprega+
 
-**Versão:** 0.3 | **Data:** 2026-05-23 | **Classificação:** Interno
-
-> ✅ **Atualizado 2026-05-23.** Essencia (§1), Tipografia (§5), Tom e Voz (§6), Iconografia (§7) e Paleta (§4) preenchidas com material real extraido de `empregamais.me` + `previews/brand-guidelines.html`. Faltam: §3 Logo (referencia Canva DAHFDuSkSXE — 6 variantes a exportar) e §10 Origem (precisa input Marcos sobre cronologia 2022→hoje).
+**Versão:** 1.0 | **Data:** 2026-05-27 | **Classificação:** Interno
 
 ---
 
@@ -76,14 +74,62 @@ Emprega+ (marca-mãe — ecossistema empregabilidade)
 
 ## 3. Logo e Variações
 
-`[TBD — popular após gerar SVGs canônicos em ../assets/logo/]`
+### Wordmark
 
-Variações esperadas (referência: `previews/brand-guidelines.html` seção "Logo e Variações"):
-- Wordmark completo `emprega+`
-- Variante gold sobre navy (uso padrão dark)
-- Variante navy sobre branco (uso light)
-- Monograma `e+` para favicons/avatares
-- Versão em gradient brand
+O logo da Emprega+ é um wordmark tipográfico: **`emprega+`** composto em **Sora Extra Bold (800)**. O sinal `+` é o elemento distintivo da marca e deve sempre aparecer em gold (`#c4993b`), independentemente da variante.
+
+### 3 Variantes principais
+
+| Variante | Texto | Sinal `+` | Fundo recomendado | Uso |
+|----------|-------|-----------|-------------------|-----|
+| **Completa** | Navy `#1B2A4A` | Gold `#c4993b` | Branco / light | Uso primário — site, docs, apresentações |
+| **Invertida** | Branco `#FFFFFF` | Gold `#c4993b` | Navy `#1B2A4A` / dark | Headers dark, banners, redes sociais |
+| **Monocromática** | Cinza `#6b7280` | Cinza `#6b7280` | Qualquer neutro | Impressão P&B, marcas d'água, monotone |
+
+### Favicon e App Icon
+
+Ícone reduzido: apenas o símbolo `+` extraído do wordmark.
+
+| Variante | Fundo | Símbolo | Uso |
+|----------|-------|---------|-----|
+| Gradient | Gold gradient `#c4993b → #d4ae54` | Branco | Favicon padrão, app icon |
+| Navy | Navy `#1B2A4A` | Gold `#c4993b` | Ícones em contextos dark |
+| Light | Branco `#FFFFFF` | Gold `#c4993b` | Ícones em contextos light |
+| Mono | Cinza `#f5f7f9` | Cinza `#6b7280` | Contextos monotone |
+
+### Área de proteção
+
+Espaço mínimo ao redor do logo: equivalente à **altura do caractere `+`** em todas as direções. Nenhum elemento gráfico, texto ou borda pode invadir essa área.
+
+### Uso correto (Do's)
+
+- Usar exclusivamente as cores oficiais (§4)
+- Manter as proporções originais do wordmark
+- Respeitar a área de proteção em todos os contextos
+- Aplicar sobre fundos brancos, navy ou neutros claros
+- Manter o `+` sempre destacado em gold (exceto variante mono)
+
+### Uso incorreto (Don'ts)
+
+- Alterar as cores do logo para tons não oficiais
+- Distorcer, rotacionar ou inclinar o wordmark
+- Adicionar sombras, contornos, efeitos 3D ou brilhos
+- Aplicar sobre fundos que comprometam a legibilidade (fotos ruidosas, gradientes conflitantes)
+- Separar o `+` da palavra `emprega`
+- Substituir a tipografia Sora por outra fonte
+
+### Assets
+
+Localização: `../assets/logo/` (SVGs a serem exportados do Canva master `DAHFDuSkSXE`).
+
+Arquivos esperados:
+- `empregamais-completa.svg` — variante completa
+- `empregamais-invertida.svg` — variante invertida
+- `empregamais-mono.svg` — variante monocromática
+- `empregamais-favicon-gradient.svg` — favicon gold gradient
+- `empregamais-favicon-navy.svg` — favicon navy
+- `empregamais-favicon-light.svg` — favicon light
+- `empregamais-favicon-mono.svg` — favicon mono
 
 ---
 
@@ -141,11 +187,36 @@ Utility: `.emp-glass` com `backdrop-filter: blur(12px)`.
 
 ## 5. Tipografia
 
-- **Heading:** Sora (700/800)
-- **Body:** Inter (400/500/600)
-- **Mono:** JetBrains Mono
+### Famílias
 
-`[TBD — escala completa de tamanhos. Extrair de previews/brand-guidelines.html seção "Fontes e Escala Tipográfica"]`
+| Família | Papel | Pesos utilizados |
+|---------|-------|-----------------|
+| **Sora** | Headings, display, eyebrows | 600, 700, 800 |
+| **Inter** | Body text, labels, UI | 400, 500, 600 |
+| **JetBrains Mono** | Code blocks, tokens | 400 |
+
+### Escala tipográfica
+
+| Role | Fonte | Tamanho | Peso | Line-height | Notas |
+|------|-------|---------|------|-------------|-------|
+| Display | Sora | `clamp(2.5rem, 6vw, 4.5rem)` | 800 | 1.1 | Hero headings — responsivo |
+| H1 | Sora | `2.5rem` (40px) | 700 | 1.2 | Títulos de página |
+| H2 | Sora | `2rem` (32px) | 700 | 1.2 | Títulos de seção |
+| H3 | Sora | `1.25rem` (20px) | 700 | 1.3 | Títulos de card / subseção |
+| Eyebrow | Sora | `0.75rem` (12px) | 600 | — | `text-transform: uppercase`, `letter-spacing: 0.15em`, cor gold |
+| Body Large | Inter | `1.25rem` (20px) | 400 | 1.7 | Parágrafos de introdução, lead text |
+| Body | Inter | `1rem` (16px) | 400 | 1.7 | Texto padrão |
+| Small | Inter | `0.875rem` (14px) | 400 | 1.6 | Labels, descrições, metadados |
+| Code | JetBrains Mono | `0.8125rem` (13px) | 400 | — | Blocos de código, valores de tokens |
+
+### Regras de uso
+
+- **Headings** usam exclusivamente Sora. Nunca usar Inter para títulos.
+- **Body** usa exclusivamente Inter. Nunca usar Sora para texto corrido.
+- **Eyebrow** sempre em uppercase com letter-spacing expandido — funciona como rótulo de contexto acima de headings.
+- **Display** é reservado para hero sections e momentos de alto impacto. Não usar em páginas internas genéricas.
+- Máximo 2 famílias tipográficas por superfície (Sora + Inter). JetBrains Mono aparece apenas em contextos técnicos.
+- `font-display: swap` obrigatório para todas as fontes web.
 
 ---
 
@@ -237,16 +308,150 @@ Regerar com `node scripts/render-dashboards.mjs` (no design-system root).
 
 ## 8. Aplicações
 
-`[TBD]` — Site, app, materiais impressos, eventos. Referência: seção "Aplicações da Marca" em previews.
+### Site institucional — empregamais.me
+
+- **Tema:** Light com glass effects (`.emp-glass`)
+- **Background:** Branco `#FFFFFF` com seções alternadas em `#f5f7f9`
+- **CTAs:** Gold gradient (`#c4993b → #d4ae54`), texto branco, hover com `#d4ae54`
+- **Headings:** Sora 700/800, cor navy `#1B2A4A`
+- **Body:** Inter 400, cor `#374151`
+- **Cards:** Light glass com `backdrop-filter: blur(12px)`, borda `rgba(28,42,74,0.08)`
+- **Nav:** Fixa no topo, glass effect, logo completa à esquerda
+
+### Plataforma app — app.empregamais.me
+
+- **Back-office (Gov/IMO):** Tema navy dark — background `#1B2A4A`, surfaces `#1c2a4a`, texto branco
+- **Editais (C&S):** Tema light — background branco, cards com bordas `#e0e6eb`, badges por status
+- **Sidebar:** Navy com ícones Lucide em gold
+- **Tabelas e formulários:** Inter 400/500, espaçamento generoso, estados de erro em `#ef4343`
+
+### Plataforma jobs — jobs-v2.empregamais.me
+
+- **Stack:** Next.js frontend, dark/light adaptive
+- **Modo light:** Background branco, cards glass, CTAs gold
+- **Modo dark:** Background navy, surfaces elevadas `#1c2a4a`, CTAs gold mantidos
+- **Vagas:** Cards com badge de produto (gradient por tipo — ver §7 Gradientes)
+- **Perfil candidato:** Layout limpo, Inter body, Sora para nome e headings
+
+### Social media — @empregamais
+
+- **Plataformas:** Instagram + LinkedIn (primárias), Facebook (secundária)
+- **Paleta:** Gold `#c4993b` + Navy `#1B2A4A` como par dominante
+- **Headings em posts:** Sora 700, branco sobre navy ou navy sobre branco
+- **Templates:** Padronizados no Canva — ver `SOCIAL-MEDIA-GUIDE.md`
+- **Formato carrossel:** Capa navy com título gold, slides internos light com body Inter
+- **Stories:** Fundo navy ou gold gradient, texto branco, Sora bold
+
+### Apresentações (slides)
+
+- **Fundo padrão:** Branco com accent gold
+- **Fundo alternativo:** Navy com texto branco e accent gold
+- **Headings:** Sora 700, navy ou branco conforme fundo
+- **Body:** Inter 400, `#374151` (light) ou `#e5e7eb` (dark)
+- **Gráficos:** Usar paleta semântica (success, error, warning) + gold como destaque
+- **Rodapé:** Logo completa (light) ou invertida (dark), tagline opcional
+
+### Email marketing
+
+- **Transacional:** Inline CSS (sem classes externas). Logo completa no header, texto Inter 16px, CTA gold com cantos arredondados `8px`
+- **Campanhas:** Header navy com logo invertida, body light com Inter, CTA gold gradient, rodapé cinza com links de descadastro
+- **Largura máxima:** 600px
+- **Fontes fallback:** Arial, Helvetica, sans-serif (email clients não carregam Sora/Inter)
+
+### Material impresso
+
+- **Cartões de visita:** Frente navy com logo invertida e dados em branco. Verso branco com logo completa
+- **Folders/flyers:** Sora para títulos, Inter para corpo. Gold como cor de destaque em CTAs e destaques
+- **Conversão CMYK do gold:** `#c4993b` ≈ C:0 M:25 Y:75 K:25 — validar em prova de cor antes de impressão em escala
+- **Papel:** Mínimo 250g/m² couché fosco para cartões. 150g/m² para folders
+- **Acabamento:** Laminação fosca preferencial. Verniz localizado no logo e no `+` (opcional, para premium)
 
 ---
 
 ## 9. Diretrizes Fotográficas
 
-`[TBD]` — Estilo de imagens, pessoas, contexto. Já existe seção "Diretrizes Fotográficas" em previews.
+### Estilo
+
+Editorial corporativo brasileiro. Imagens devem transmitir realidade, competência e diversidade — nunca parecer stock genérico.
+
+### Iluminação
+
+- Natural ou estúdio com temperatura quente
+- Evitar iluminação fria, clínica ou fluorescente
+- Sombras suaves, sem contraste excessivo
+
+### Temas e cenários
+
+| Categoria | Exemplos |
+|-----------|----------|
+| **Profissionais trabalhando** | Escritórios, fábricas, comércios, canteiros — diversidade de setores |
+| **Colaboração** | Reuniões, duplas trabalhando, mentorias, entrevistas |
+| **Serviço público** | Balcões de atendimento, feiras de emprego, postos do trabalhador |
+| **Desenvolvimento** | Treinamentos, workshops, eventos de capacitação |
+| **Conquista** | Primeiro emprego, contratação, certificação — momentos reais |
+
+### Tratamento de cor
+
+- Tons quentes que harmonizem com a paleta gold + navy
+- Leve desaturação para sofisticação (não exagerar — manter pele natural)
+- Evitar filtros frios (azulados) ou saturação excessiva
+
+### Representatividade
+
+- Diversidade racial, etária e de gênero é obrigatória
+- Incluir pessoas com deficiência quando o contexto permitir
+- Representar diferentes níveis hierárquicos e setores econômicos
+- Contexto brasileiro real — não replicar estética corporativa americana
+
+### Don'ts fotográficos
+
+- Apertos de mão genéricos em fundo branco
+- Ambientes corporativos all-white sem identidade
+- Poses excessivamente encenadas ou forçadas
+- Clichê de "pessoas felizes apontando para tela"
+- Imagens com marcas d'água ou baixa resolução
+- Fotos que não representem o público brasileiro
+
+### Imagens geradas por IA
+
+Quando usar Midjourney, DALL-E ou similares:
+- Aplicar o prompt base definido em `IMAGE-PROMPTS.md`
+- Manter consistência com as diretrizes acima (iluminação quente, diversidade, contexto brasileiro)
+- Sempre revisar rostos e mãos — corrigir artefatos antes de publicar
+- Não usar imagens de IA para representar pessoas reais da equipe ou clientes
 
 ---
 
 ## 10. Origem da Marca
 
-`[TBD]` — História da Emprega+ (fundada 2022, B2C/B2G empregabilidade, etc).
+### Fundação
+
+Emprega+ foi fundada em 2022 por Marcos Carneiro. A marca nasceu da experiência direta de Marcos como Secretário de Trabalho em uma das cidades mais violentas do Brasil, onde ele testemunhou a face perversa da exploração do emprego — intermediação precária, falta de dados, e desconexão total entre quem oferece e quem busca trabalho.
+
+### Evolução
+
+| Ano | Marco |
+|-----|-------|
+| **2022** | Início como intermediação de mão de obra B2G (IMO) para prefeituras — conectando governos municipais a profissionais qualificados |
+| **2023** | Expansão para C&S (concursos e seleções) — gestão completa de processos seletivos públicos |
+| **2024** | Lançamento da comunidade PdV (Profissional de Valor) — desenvolvimento profissional B2C |
+| **2025** | Entrada no B2B SaaS com Electia — assessments comportamentais (DISC, Big Five, MBTI, Eneagrama, Le Senne) para empresas privadas |
+
+### O nome
+
+**"Emprega+"** é a contração de **"emprega mais"** — empregue mais pessoas, com mais qualidade, com mais dados. O sinal `+` representa:
+
+- **Conexão** — o elo entre governo, empresa e profissional
+- **Crescimento** — cada interação adiciona valor ao ecossistema
+- **Adição** — produtos complementares que se somam numa plataforma única
+
+### Hoje
+
+Emprega+ opera 4 produtos sob uma marca-mãe, cobrindo o ciclo completo da empregabilidade brasileira:
+
+1. **Gov / IMO B2G** — portal de vagas e intermediação para prefeituras
+2. **Editais / C&S** — gestão de concursos e processos seletivos públicos
+3. **Electia B2B SaaS** — assessments comportamentais para empresas privadas
+4. **PdV B2C** — comunidade de desenvolvimento profissional
+
+A infraestrutura digital que conecta governos, empresas e profissionais — esse é o propósito que deu origem à marca e continua guiando cada decisão.

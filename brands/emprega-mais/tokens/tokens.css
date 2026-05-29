@@ -1,8 +1,8 @@
 /* ============================================
-   EMPREGA+ — Design Tokens v0.3
-   Generated from tokens.json (Brand Book)
+   EMPREGA+ — Design Tokens v1.0
+   Source of truth: tokens.json (W3C Design Tokens)
+   Synced with Stitch project 15906106681978017496
    Marca-mae do ecossistema (Emprega+, IMO, Editais)
-   Canonizado 2026-05-23 alinhando ao site live empregamais.me
    ============================================ */
 
 :root {
@@ -54,11 +54,73 @@
   --emp-weight-bold: 700;
   --emp-weight-extrabold: 800;
 
+  /* ---- Motion ---- */
+  --emp-duration-fast: 150ms;
+  --emp-duration-normal: 300ms;
+  --emp-duration-slow: 500ms;
+  --emp-duration-reveal: 700ms;
+  --emp-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --emp-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ---- Typography Scale ---- */
+  --emp-text-display: clamp(2.5rem, 6vw, 4.5rem);
+  --emp-text-h1: 2.5rem;
+  --emp-text-h2: 2rem;
+  --emp-text-h3: 1.25rem;
+  --emp-text-eyebrow: 0.75rem;
+  --emp-text-body-lg: 1.25rem;
+  --emp-text-body: 1rem;
+  --emp-text-small: 0.875rem;
+  --emp-text-code: 0.8125rem;
+
+  /* ---- Spacing ---- */
+  --emp-space-xs: 0.25rem;
+  --emp-space-sm: 0.5rem;
+  --emp-space-md: 1rem;
+  --emp-space-lg: 1.5rem;
+  --emp-space-xl: 2rem;
+  --emp-space-2xl: 3rem;
+  --emp-space-3xl: 5rem;
+  --emp-space-section: clamp(4rem, 3rem + 5vw, 10rem);
+
+  /* ---- Shadows (navy-tinted per Stitch elevation system) ---- */
+  --emp-shadow-sm: 0 4px 20px rgba(27, 42, 74, 0.05);
+  --emp-shadow-md: 0 4px 12px rgba(27, 42, 74, 0.08);
+  --emp-shadow-lg: 0 10px 30px rgba(27, 42, 74, 0.12);
+  --emp-glow-brand: 0 0 20px rgba(196, 153, 59, 0.20);
+  --emp-glow-brand-lg: 0 0 40px rgba(196, 153, 59, 0.25), 0 0 80px rgba(196, 153, 59, 0.10);
+
+  /* ---- Layout (synced from Stitch) ---- */
+  --emp-container-max: 1200px;
+  --emp-gutter: 1.5rem;
+  --emp-margin-mobile: 1rem;
+  --emp-margin-desktop: 2.5rem;
+
   /* ---- Radius ---- */
   --emp-radius-sm: 0.25rem;
   --emp-radius-md: 0.5rem;
   --emp-radius-lg: 0.75rem;
   --emp-radius-xl: 1rem;
+}
+
+/* ---- Animation: Scroll Reveal ---- */
+@keyframes emp-fade-in-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.emp-reveal {
+  animation: emp-fade-in-up var(--emp-duration-reveal) var(--emp-ease-out-expo) forwards;
+}
+.emp-reveal.d1 { animation-delay: 100ms; opacity: 0; }
+.emp-reveal.d2 { animation-delay: 200ms; opacity: 0; }
+.emp-reveal.d3 { animation-delay: 300ms; opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .emp-reveal, .emp-reveal.d1, .emp-reveal.d2, .emp-reveal.d3 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* ---- Utility: Light Glass effect (padrao oficial Emprega+) ---- */
