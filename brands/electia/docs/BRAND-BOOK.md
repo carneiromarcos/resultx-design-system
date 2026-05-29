@@ -1,9 +1,11 @@
 # Brand Book — Electia by Emprega+
 
-**Versão BB (conteúdo editorial §1-16):** 1.3 · **Data:** 2026-05-11 · **Classificação:** Interno
+**Versão BB (conteúdo editorial §1-17):** 2.0 · **Data:** 2026-05-27 · **Classificação:** Interno
 **Versão Brand Kit (este diretório):** 1.7.1 · **Data:** 2026-05-12 · ver [CHANGELOG.md](./CHANGELOG.md)
 
-> **Escopo de versionamento.** O **header do Brand Book** versiona apenas o conteúdo editorial das seções §1-16 abaixo — desde a v1.3 (11/05) nada mudou no texto. O **CHANGELOG.md** versiona o brand-kit inteiro (mockups, wireframes, specs, tokens, decisões D1-D6). Se você abriu este doc procurando o estado atual do brand-kit, vá direto ao CHANGELOG. Se procura a especificação visual oficial, está aqui.
+> **Escopo de versionamento.** O **header do Brand Book** versiona apenas o conteúdo editorial das seções §1-17 abaixo. O **CHANGELOG.md** versiona o brand-kit inteiro (mockups, wireframes, specs, tokens, decisões D1-D6). Se você abriu este doc procurando o estado atual do brand-kit, vá direto ao CHANGELOG. Se procura a especificação visual oficial, está aqui.
+>
+> **BB 2.0 (27/05) — Purple Refactor.** Migração completa de teal `#2DD4BF` para roxo `#6f32b1` como cor de acento primária da marca. Commit `8e4cadb` em produção (24/05), 126 arquivos atualizados. Gradients de sinergia ResultX: B (roxo→Royal Blue `#2040a0`) em CTAs + C (roxo→Ouro `#b29442`) em pricing "Recomendado". Navy `#1B2A4A` substituiu `#0B0E14` como background base do ecossistema. WCAG 2.2 (1.4.3/1.4.11/2.4.11) validado.
 
 ---
 
@@ -84,7 +86,7 @@ electia by emprega+
 
 | Trecho | Fonte | Peso | Estilo | Notas |
 |--------|-------|------|--------|-------|
-| `electia` | **JetBrains Mono** | 600 (Semibold) | Normal | Tudo minúsculo. Letter-spacing: `-0.04em`. Cor: branco `#E6EDF3` ou accent teal `#2DD4BF` em destaque |
+| `electia` | **JetBrains Mono** | 600 (Semibold) | Normal | Tudo minúsculo. Letter-spacing: `-0.04em`. Cor: branco `#E6EDF3` ou accent roxo `#6f32b1` em destaque |
 | `by` | Sora | 400 (Regular) | Normal | Tamanho ~30% do `electia`. Cor: `rgba(230,237,243,0.55)` |
 | `emprega+` | **Sora ExtraBold** | 800 | Normal | Mesma fonte oficial da marca-mae Emprega+. Tamanho ~50% do `electia`. Cor: `rgba(230,237,243,0.85)` |
 
@@ -99,7 +101,7 @@ electia by emprega+
 | **Completo** | Site, LP, materiais oficiais, header. Composição: `electia by emprega+` |
 | **Curto** | Espacos com pouca largura, segundo uso na mesma pagina. Composição: `electia` (sozinho, sem endosso) |
 | **Lockup vertical** | Social média quadrado, papelaria. `electia` em cima, `by emprega+` embaixo centralizado |
-| **Monocromatico** | Fundos complexos, impressao. Versão single-color (branco ou teal) |
+| **Monocromatico** | Fundos complexos, impressao. Versão single-color (branco ou roxo) |
 
 ### Favicon e avatar — helper "e"
 
@@ -111,7 +113,7 @@ Quando o espaço e tao pequeno que não cabe nem `electia` (16-48px), usa-se um 
 - Forma: quadrado arredondado, `border-radius: 24%` (proporcional ao tamanho)
 - Tamanho minimo: 32x32px (favicon)
 - Padding interno: 22% do tamanho
-- Fundo: opção A `--bg` (#0B0E14) com letra teal · opção B `--teal` (#2DD4BF) com letra dark · opção C `rgba(45,212,191,0.15)` (teal/15) com letra teal
+- Fundo: opção A `--bg` (#1B2A4A) com letra roxa · opção B `--purple` (#6f32b1) com letra branca · opção C `rgba(111,50,177,0.15)` (purple/15) com letra roxa
 
 ### Tamanhos e proporcoes do wordmark
 
@@ -128,10 +130,10 @@ Quando o espaço e tao pequeno que não cabe nem `electia` (16-48px), usa-se um 
 
 | Variante | `electia` | `by` | `emprega+` | Fundo |
 |----------|-----------|------|------------|-------|
-| **Padrão dark** | `#E6EDF3` (branco) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#0B0E14` |
-| **Accent dark** | `#2DD4BF` (teal) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#0B0E14` |
-| **Accent glow** | `#2DD4BF` + text-shadow teal blur 32px 45% | idem | idem | `#0B0E14` ou gradient |
-| **Light** | `#0B0E14` (dark) | `rgba(11,14,20,0.65)` | `rgba(11,14,20,0.85)` | `#FFFFFF` ou `#F5F7FA` |
+| **Padrão dark** | `#E6EDF3` (branco) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#1B2A4A` |
+| **Accent dark** | `#6f32b1` (roxo) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#1B2A4A` |
+| **Accent glow** | `#6f32b1` + text-shadow purple blur 32px 45% | idem | idem | `#1B2A4A` ou gradient |
+| **Light** | `#1B2A4A` (navy) | `rgba(27,42,74,0.65)` | `rgba(27,42,74,0.85)` | `#FFFFFF` ou `#F5F7FA` |
 
 ### Área de protecao
 
@@ -143,7 +145,7 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 - Não usar cores fora da paleta
 - Não colocar sobre fundos que comprometam legibilidade
 - Não rotacionar
-- Não adicionar sombras, brilhos ou efeitos (exceto o glow teal oficial)
+- Não adicionar sombras, brilhos ou efeitos (exceto o glow purple oficial)
 - Não escrever `Electia` com E maiúsculo em wordmark (so minúsculo)
 - Não usar `electia by ResultX` em materiais públicos
 - Não trocar a fonte do `electia` (so JetBrains Mono Semibold 600)
@@ -159,17 +161,18 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 
 | Nome | Hex | Uso |
 |------|-----|-----|
-| **Accent Teal** | `#2DD4BF` | Cor principal da marca. CTAs, links, destaques, logo |
-| **Accent Teal Hover** | `#5EEAD4` | Hover states, interacoes |
-| **Accent Teal Muted** | `rgba(45, 212, 191, 0.15)` | Backgrounds sutis, selecoes, badges |
+| **Accent Purple** | `#6f32b1` | Cor principal da marca. CTAs, links, destaques, wordmark |
+| **Accent Purple Light** | `#a55eea` | Hover states, focus ring, interacoes |
+| **Accent Purple Dark** | `#5a2890` | Pressed states, bordas ativas em dark |
+| **Accent Purple Muted** | `rgba(111, 50, 177, 0.15)` | Backgrounds sutis, selecoes, badges |
 
 ### Cores de Fundo (Dark Theme)
 
 | Nome | Hex | Uso |
 |------|-----|-----|
-| **BG Base** | `#0B0E14` | Fundo principal da aplicação e LP |
-| **BG Surface** | `#161B26` | Cards, paineis, modais |
-| **BG Surface Hover** | `#1C2333` | Hover de cards e elementos interativos |
+| **BG Base (Navy)** | `#1B2A4A` | Fundo principal da aplicação e LP |
+| **BG Surface** | `#243352` | Cards, paineis, modais |
+| **BG Surface Hover** | `#2D3D5E` | Hover de cards e elementos interativos |
 
 ### Cores de Texto
 
@@ -184,7 +187,7 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 | Nome | Hex | Uso |
 |------|-----|-----|
 | **Border Default** | `#2A3444` | Bordas de cards, inputs, divisores |
-| **Border Focus** | `#2DD4BF` | Focus ring, borda ativa |
+| **Border Focus** | `#6f32b1` | Focus ring, borda ativa |
 
 ### Cores Semanticas
 
@@ -286,12 +289,12 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 
 - **Biblioteca:** Lucide React (ja em uso no app)
 - **Estilo:** Outline, stroke 1.5-2px
-- **Cor padrão:** var(--text-muted) para inativo, var(--accent-teal) para ativo/destaque
+- **Cor padrão:** var(--text-muted) para inativo, var(--accent-purple) para ativo/destaque
 - **Tamanho padrão:** 20x20px (UI), 24x24px (destaque), 40x40px (hero/feature)
 
 ### Containers de ícone
 
-- Background: accent-teal/15% (teal sutil)
+- Background: accent-purple/15% (roxo sutil)
 - Border-radius: 12px (rounded-xl)
 - Padding: proporcional ao tamanho do ícone
 
@@ -306,7 +309,7 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 
 | Variante | Background | Texto | Borda |
 |----------|-----------|-------|-------|
-| **Primário** | var(--accent-teal) | var(--bg-primary) (escuro) | nenhuma |
+| **Primário** | var(--accent-purple) | branco `#FFFFFF` | nenhuma |
 | **Secundario** | transparente | var(--text-secondary) | var(--border-default) |
 | **Ghost** | transparente | var(--text-muted) | nenhuma |
 | **Danger** | var(--danger) | branco | nenhuma |
@@ -322,29 +325,29 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 ### Landing Page
 
 - Fundo: var(--bg-primary) — dark
-- Hero: headline em Sora ExtraBold, accent teal no CTA
+- Hero: headline em Sora ExtraBold, accent purple no CTA
 - Seções alternam entre bg-primary e bg-card para ritmo visual
 - Imagens: screenshots do produto com borda sutil, nunca mockups genéricos
 
 ### App (Dashboard)
 
-- Sidebar: bg-card com items em text-muted, ativo em accent-teal
+- Sidebar: bg-card com items em text-muted, ativo em accent-purple
 - Cards de dados: bg-card com borda, hover interativo
 - Graficos: cores por teoria (6 cores distintas, sem repetir)
-- Formularios: inputs com bg-primary, borda default, focus teal
+- Formularios: inputs com bg-primary, borda default, focus purple
 
 ### Email (Brevo)
 
-- Fundo: #0B0E14 (dark, consistente com app)
+- Fundo: #1B2A4A (navy, consistente com app)
 - Texto: #E6EDF3 (primary)
-- CTA: botao teal (#2DD4BF) com texto escuro
+- CTA: botao purple (#6f32b1) com texto branco
 - Logo: Electia by Emprega+ no header
 
 ### Redes Sociais
 
-- Posts: fundo dark (#0B0E14) com accent teal para destaques
+- Posts: fundo navy (#1B2A4A) com accent purple para destaques
 - Tipografia: Sora Bold para frases de impacto
-- Elementos gráficos: linhas e shapes em teal/15%
+- Elementos gráficos: linhas e shapes em purple/15%
 - Nunca usar fotos de banco de imagens genéricas
 
 ### PDF / Relatórios
@@ -390,7 +393,7 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 | Público | Candidatos, editais, vagas | Gestores, RH, diretoria |
 | Modelo | B2C (gratuito) | B2B SaaS (assinatura) |
 | Tom | Acolhedor, motivacional | Direto, provocativo, inteligente |
-| Paleta | Accent teal (compartilhado) | Dark theme dominante (mais tech) |
+| Paleta | Gold + navy light (institucional) | Purple + navy dark (identidade própria) |
 | Complexidade | Simples, acessível | Profundo, dados, IA |
 
 O Electia herda a credibilidade da Emprega+ mas se posiciona como produto premium para decisores corporativos.
@@ -587,11 +590,11 @@ Electia não usa fotografia tradicional de RH (sorrisos corporativos, salas relu
 
 | Aspecto | Diretriz |
 |---------|----------|
-| **Iluminacao** | Dark mode dominante. Contraste alto. Glows teal sutis |
-| **Temperatura** | Frias. Tons teal, cyan, navy. Acentos sutis em ambar (saúde mental) |
+| **Iluminacao** | Dark mode dominante (navy). Contraste alto. Glows purple sutis |
+| **Temperatura** | Frias. Tons purple, navy, royal blue. Acentos sutis em ambar (saúde mental) |
 | **Movimento** | Lento, organico, "silk-flow". Nunca frenetico |
 | **Densidade** | Limpa, com whitespace. Dado e protagonista — texto e suporte |
-| **Cor dominante** | Tons escuros (#0B0E14 base) com acentos teal (#2DD4BF) e amber em estados especiais |
+| **Cor dominante** | Navy (#1B2A4A base) com acentos purple (#6f32b1) e amber em estados especiais |
 
 ### Categorias de imagem
 
@@ -608,10 +611,10 @@ Electia não usa fotografia tradicional de RH (sorrisos corporativos, salas relu
 ```css
 background: linear-gradient(
   180deg,
-  rgba(11, 14, 20, 0.55) 0%,
-  rgba(11, 14, 20, 0.20) 35%,
-  rgba(11, 14, 20, 0.20) 65%,
-  rgba(11, 14, 20, 0.92) 100%
+  rgba(27, 42, 74, 0.55) 0%,
+  rgba(27, 42, 74, 0.20) 35%,
+  rgba(27, 42, 74, 0.20) 65%,
+  rgba(27, 42, 74, 0.92) 100%
 );
 ```
 
@@ -623,7 +626,7 @@ filter: brightness(0.38) saturate(0.55) hue-rotate(-12deg) contrast(1.10);
 #### Color grade fotográfico
 - **Saturacao**: Reduzir 30-40%
 - **Contraste**: Alto (+15%)
-- **Sombras**: Empurrar para frio (azul/teal)
+- **Sombras**: Empurrar para frio (navy/purple)
 - **Highlights**: Manter neutros
 - **Referência**: Look tech moderno, não editorial
 
@@ -645,9 +648,9 @@ Antes de publicar qualquer material visual:
 
 - [ ] Fundo escuro (não branco)?
 - [ ] Fonte correta (Sora titulos, Inter corpo)?
-- [ ] Cores dentro da paleta Electia (teal #2DD4BF, neutros escuros, branco)?
-- [ ] ZERO gold/amber como destaque primário (gold só em estados ambar específicos, ex: warning)?
-- [ ] Teal como UNICA cor de destaque primária?
+- [ ] Cores dentro da paleta Electia (roxo #6f32b1, navy #1B2A4A, branco)?
+- [ ] ZERO gold/amber como destaque primário (ouro só em gradient C premium, ex: badge "Recomendado")?
+- [ ] Roxo como UNICA cor de destaque primária?
 - [ ] Logo presente com área de protecao respeitada?
 - [ ] Tom de voz alinhado (científico, direto, sem motivacional vazio)?
 - [ ] CTA digno e claro (máximo 2 por peca)?
@@ -712,7 +715,7 @@ O DS multi-brand vive em `resultx-design-system` (NPM). Ordem de import:
 /* 1. Tokens base do DS root (cores genéricas, escalas) */
 @import 'resultx-design-system/tokens';
 
-/* 2. Override Electia (paleta teal + tokens específicos) */
+/* 2. Override Electia (paleta purple + tokens específicos) */
 @import 'resultx-design-system/brands/electia/tokens/tokens.css';
 ```
 
@@ -723,7 +726,7 @@ Ou se o código viver no mesmo monorepo, importar por path relativo:
 @import '../../design-system/brands/electia/tokens/tokens.css';
 ```
 
-Apos isso, todas as CSS variables ficam disponíveis: `var(--bg)`, `var(--teal)`, `var(--text-primary)`, `var(--surface-1)`, etc.
+Apos isso, todas as CSS variables ficam disponíveis: `var(--bg)`, `var(--purple)`, `var(--text-primary)`, `var(--surface-1)`, etc.
 
 ### 16.4 Aplicar o wordmark
 
@@ -735,7 +738,7 @@ cp brands/electia/assets/logo/electia-wordmark-accent.svg   electia-app/public/b
 cp brands/electia/assets/logo/electia-wordmark-light.svg    electia-app/public/brand/
 cp brands/electia/assets/logo/electia-short.svg             electia-app/public/brand/
 cp brands/electia/assets/logo/electia-monogram.svg          electia-app/public/brand/
-cp brands/electia/assets/logo/electia-monogram-teal.svg     electia-app/public/brand/
+cp brands/electia/assets/logo/electia-monogram-purple.svg   electia-app/public/brand/
 cp brands/electia/assets/logo/electia-lockup-vertical.svg   electia-app/public/brand/
 ```
 
@@ -829,8 +832,8 @@ CSS aplicado (modo Electia Subtle oficial):
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at center, rgba(45, 212, 191, 0.06) 0%, transparent 45%, rgba(11, 14, 20, 0.55) 75%),
-    linear-gradient(180deg, rgba(11, 14, 20, 0.65) 0%, rgba(11, 14, 20, 0.35) 40%, rgba(11, 14, 20, 0.40) 60%, rgba(11, 14, 20, 0.96) 100%);
+    radial-gradient(ellipse at center, rgba(111, 50, 177, 0.06) 0%, transparent 45%, rgba(27, 42, 74, 0.55) 75%),
+    linear-gradient(180deg, rgba(27, 42, 74, 0.65) 0%, rgba(27, 42, 74, 0.35) 40%, rgba(27, 42, 74, 0.40) 60%, rgba(27, 42, 74, 0.96) 100%);
 }
 .aurora-hero-frame .content {
   position: relative;
@@ -856,7 +859,7 @@ CSS aplicado (modo Electia Subtle oficial):
 
 ### 16.6 Email Brevo
 
-Os 4 templates em `brands/electia/templates/email/` (electia-email-base, newsletter, product-cta, brevo-base.yaml) já estao com paleta teal e grafia lowercase. Subir direto no painel Brevo via importacao YAML.
+Os 4 templates em `brands/electia/templates/email/` (electia-email-base, newsletter, product-cta, brevo-base.yaml) já estao com paleta purple e grafia lowercase. Subir direto no painel Brevo via importacao YAML.
 
 ### 16.7 Checklist por surface
 
@@ -873,7 +876,7 @@ Os 4 templates em `brands/electia/templates/email/` (electia-email-base, newslet
 - [ ] `prefers-reduced-motion` respeitado em vídeos/animacoes
 - [ ] Grafia "electia" minuscula em todo copy
 - [ ] Endorsement "by emprega+" presente onde aplicável
-- [ ] CTA usa cor `var(--teal)` ou variante accent
+- [ ] CTA usa cor `var(--purple)` ou gradient B (roxo→royal blue)
 - [ ] WCAG AA: contraste 4.5:1 mínimo testado
 
 ### 16.8 Mapa de onde cada arquivo vive
@@ -900,7 +903,7 @@ resultx/electia/                         <- consumidor (LP + plataforma)
 
 ### 16.9 Atualizar quando o Brand muda
 
-Sempre que este Brand Book virar v1.4, v1.5, etc:
+Sempre que este Brand Book virar v2.1, v2.2, etc:
 1. Atualizar `brands/electia/` (fonte da verdade)
 2. Bump versão no `package.json` do DS root
 3. Republicar NPM se for um consumidor externo
