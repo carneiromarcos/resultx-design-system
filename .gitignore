@@ -13,3 +13,5 @@ social-media-png/
 # Playwright Test artifacts (snapshots in tests/visual/*-snapshots/ ARE committed)
 test-results/
 playwright-report/
+ds-bundle/
+.design-sync/.cache/

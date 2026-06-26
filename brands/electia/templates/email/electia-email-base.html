@@ -21,7 +21,7 @@
   <style>
     /* ═══════════════════════════════════════════
        Electia EMAIL DESIGN SYSTEM — Base Tokens
-       Brand Book v2.2 — Teal + Dark Neutral
+       Brand Book v2.6 — Roxo + Grafite
     ═══════════════════════════════════════════ */
 
     :root {
@@ -37,10 +37,11 @@
 
     /* ── Brand Tokens ── */
     /*
-      Teal Primary:  #2DD4BF  hsl(41 54% 50%)
-      Teal Light:    #5EEAD4  hsl(42 60% 58%)
-      Background:    #08080A  hsl(240 11% 4%)
-      Surface 1:     #0E0E11  hsl(240 10% 6%)
+      Roxo Primary:  #6f32b1
+      Roxo Light:    #a55eea
+      Roxo on Dark:  #c084fc  (texto/acento sobre #0B0E14, 7.1:1 AA)
+      Background:    #0B0E14  hsl(240 11% 4%)
+      Surface 1:     #0B0E14  hsl(240 10% 6%)
       Surface 2:     #131316  hsl(240 7% 8%)
       Border:        #26262D  hsl(240 6% 16%)
       Text Primary:  #FFFFFF
@@ -53,19 +54,19 @@
     .font-body    { font-family: 'Inter', 'SF Pro Text', 'Segoe UI', Arial, sans-serif; }
 
     /* ── Dark mode enforcement (Gmail, Apple Mail) ── */
-    u + .body { background-color: #08080A !important; }
+    u + .body { background-color: #0B0E14 !important; }
 
-    [data-ogsc] .dark-bg { background-color: #08080A !important; }
-    [data-ogsc] .surface-1 { background-color: #0E0E11 !important; }
+    [data-ogsc] .dark-bg { background-color: #0B0E14 !important; }
+    [data-ogsc] .surface-1 { background-color: #0B0E14 !important; }
     [data-ogsc] .surface-2 { background-color: #131316 !important; }
     [data-ogsc] .text-white { color: #FFFFFF !important; }
-    [data-ogsc] .text-teal { color: #2DD4BF !important; }
+    [data-ogsc] .text-purple { color: #c084fc !important; }
     [data-ogsc] .text-muted { color: #8A8A96 !important; }
 
     /* ── CTA Button ── */
     .cta-primary {
-      background-color: #2DD4BF;
-      color: #08080A !important;
+      background-color: #6f32b1;
+      color: #FFFFFF !important;
       font-family: 'Sora', 'SF Pro Display', Arial, sans-serif;
       font-size: 16px;
       font-weight: 700;
@@ -76,31 +77,31 @@
       mso-padding-alt: 0;
       text-align: center;
     }
-    .cta-primary:hover { background-color: #5EEAD4; }
+    .cta-primary:hover { background-color: #a55eea; }
 
     .cta-secondary {
       background-color: transparent;
-      color: #2DD4BF !important;
+      color: #c084fc !important;
       font-family: 'Sora', 'SF Pro Display', Arial, sans-serif;
       font-size: 14px;
       font-weight: 600;
       text-decoration: none;
       padding: 12px 28px;
       border-radius: 8px;
-      border: 1px solid #2DD4BF;
+      border: 1px solid #6f32b1;
       display: inline-block;
       text-align: center;
     }
     .cta-secondary:hover { background-color: rgba(196, 154, 60, 0.1); }
 
     /* ── Links ── */
-    a { color: #2DD4BF; text-decoration: underline; }
-    a:hover { color: #5EEAD4; }
+    a { color: #c084fc; text-decoration: underline; }
+    a:hover { color: #a55eea; }
 
     /* ── Highlight / Quote Block ── */
     .highlight-block {
-      background-color: #0E0E11;
-      border-left: 3px solid #2DD4BF;
+      background-color: #0B0E14;
+      border-left: 3px solid #6f32b1;
       padding: 20px 24px;
       border-radius: 0 8px 8px 0;
       margin: 24px 0;
@@ -135,7 +136,7 @@
   </style>
 </head>
 
-<body class="body" style="margin:0; padding:0; background-color:#08080A; -webkit-font-smoothing:antialiased;">
+<body class="body" style="margin:0; padding:0; background-color:#0B0E14; -webkit-font-smoothing:antialiased;">
 
   <!-- PREHEADER (hidden preview text) -->
   <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
@@ -144,7 +145,7 @@
   </div>
 
   <!-- OUTER WRAPPER (forces dark bg) -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="dark-bg" style="background-color:#08080A;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="dark-bg" style="background-color:#0B0E14;">
     <tr>
       <td align="center" style="padding: 0;">
 
@@ -152,16 +153,16 @@
         <table role="presentation" class="email-wrapper" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; width:100%; margin:0 auto;">
 
           <!-- ═══════════════════════════════════════
-               HEADER — Logo + Teal line
+               HEADER — Logo + Roxo line
           ═══════════════════════════════════════ -->
           <tr>
-            <td class="header-cell" align="center" style="padding: 40px 40px 24px; background-color:#08080A;">
+            <td class="header-cell" align="center" style="padding: 40px 40px 24px; background-color:#0B0E14;">
               <!-- Logo -->
               <a href="https://profissional.empregamais.me" target="_blank" style="text-decoration:none;">
                 <img src="https://raw.githubusercontent.com/empregamais/emprega-mais-electia/main/design-system/assets/logo/electia-email-header-440x120.png" width="220" height="40" alt="Electia by Emprega+" style="display:block; margin:0 auto; border:0;" />
               </a>
-              <!-- Teal accent line -->
-              <div style="width:60px; height:2px; background-color:#2DD4BF; margin:20px auto 0; border-radius:1px;"></div>
+              <!-- Roxo accent line -->
+              <div style="width:60px; height:2px; background-color:#6f32b1; margin:20px auto 0; border-radius:1px;"></div>
             </td>
           </tr>
 
@@ -169,7 +170,7 @@
                BODY — Main content
           ═══════════════════════════════════════ -->
           <tr>
-            <td class="content-cell" style="padding: 8px 40px 32px; background-color:#08080A;">
+            <td class="content-cell" style="padding: 8px 40px 32px; background-color:#0B0E14;">
 
               <!-- Greeting -->
               <p class="font-body" style="font-family:'Inter','SF Pro Text',Arial,sans-serif; font-size:16px; line-height:26px; color:#FFFFFF; margin:0 0 24px;">
@@ -182,9 +183,9 @@
               </p>
 
               <!-- Highlight block (optional — use for key quotes or data) -->
-              <div class="highlight-block" style="background-color:#0E0E11; border-left:3px solid #2DD4BF; padding:20px 24px; border-radius:0 8px 8px 0; margin:24px 0;">
+              <div class="highlight-block" style="background-color:#0B0E14; border-left:3px solid #6f32b1; padding:20px 24px; border-radius:0 8px 8px 0; margin:24px 0;">
                 <p class="font-body" style="font-family:'Inter','SF Pro Text',Arial,sans-serif; font-size:16px; line-height:26px; color:#FFFFFF; margin:0;">
-                  <strong style="color:#2DD4BF;">@@HIGHLIGHT_LABEL@@</strong><br>
+                  <strong style="color:#c084fc;">@@HIGHLIGHT_LABEL@@</strong><br>
                   @@HIGHLIGHT_TEXT@@
                 </p>
               </div>
@@ -198,14 +199,14 @@
                 <tr>
                   <td align="center">
                     <!--[if mso]>
-                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="@@CTA_URL@@" style="height:48px;v-text-anchor:middle;width:280px;" arcsize="17%" fillcolor="#2DD4BF" stroke="f">
+                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" href="@@CTA_URL@@" style="height:48px;v-text-anchor:middle;width:280px;" arcsize="17%" fillcolor="#6f32b1" stroke="f">
                       <v:textbox inset="0,0,0,0">
-                        <center style="font-family:'Sora',Arial,sans-serif;font-size:16px;font-weight:700;color:#08080A;">@@CTA_TEXT@@</center>
+                        <center style="font-family:'Sora',Arial,sans-serif;font-size:16px;font-weight:700;color:#FFFFFF;">@@CTA_TEXT@@</center>
                       </v:textbox>
                     </v:roundrect>
                     <![endif]-->
                     <!--[if !mso]><!-->
-                    <a href="@@CTA_URL@@" target="_blank" class="cta-primary" style="background-color:#2DD4BF; color:#08080A; font-family:'Sora','SF Pro Display',Arial,sans-serif; font-size:16px; font-weight:700; text-decoration:none; padding:14px 32px; border-radius:8px; display:inline-block;">
+                    <a href="@@CTA_URL@@" target="_blank" class="cta-primary" style="background-color:#6f32b1; color:#FFFFFF; font-family:'Sora','SF Pro Display',Arial,sans-serif; font-size:16px; font-weight:700; text-decoration:none; padding:14px 32px; border-radius:8px; display:inline-block;">
                       @@CTA_TEXT@@
                     </a>
                     <!--<![endif]-->
@@ -224,7 +225,7 @@
               <p class="font-body" style="font-family:'Inter','SF Pro Text',Arial,sans-serif; font-size:13px; line-height:20px; color:#8A8A96; margin:0 0 2px;">
                 Fundador, Electia by Emprega+
               </p>
-              <p class="font-body" style="font-family:'Inter','SF Pro Text',Arial,sans-serif; font-size:13px; line-height:20px; color:#2DD4BF; margin:0; font-style:italic;">
+              <p class="font-body" style="font-family:'Inter','SF Pro Text',Arial,sans-serif; font-size:13px; line-height:20px; color:#c084fc; margin:0; font-style:italic;">
                 [Tagline Electia a definir].
               </p>
 
@@ -235,7 +236,7 @@
                FOOTER — Links + Unsubscribe
           ═══════════════════════════════════════ -->
           <tr>
-            <td class="footer-cell" style="padding:32px 40px 40px; background-color:#08080A; border-top:1px solid #26262D;">
+            <td class="footer-cell" style="padding:32px 40px 40px; background-color:#0B0E14; border-top:1px solid #26262D;">
 
               <!-- Social links -->
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto 20px;">

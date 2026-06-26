@@ -15,14 +15,14 @@ PRIMÁRIA — Purple
   #5a2890  dark     → outline, borders
   #3d1a64  muted    → badges sutis
 
-BACKGROUNDS — Navy
-  #1B2A4A  base     → fundo principal toda peça dark
-  #1c2a4a  surface  → cards
-  #243661  alt      → hover, alternating
-  #2d4378  deep     → inputs
+BACKGROUNDS — Grafite
+  #0B0E14  base     → fundo principal toda peça dark
+  #161B26  surface  → cards
+  #1C2333  alt      → hover, alternating
+  #232B3B  deep     → inputs
 
 TEXTO
-  #FFFFFF  white    → texto sobre navy
+  #FFFFFF  white    → texto sobre grafite
   #E8E8EC  gray-100 → body importante
   #A0A0AC  gray-300 → secundário
   #5A5A66  gray-500 → metadados
@@ -106,8 +106,8 @@ Margem ao redor = altura da letra "e" do wordmark. Nada invade.
 | ✅ Faça | ❌ Não faça |
 |---|---|
 | Roxo `#6f32b1` em CTA principal | Roxo em parágrafos longos |
-| Navy `#1B2A4A` como fundo padrão | Navy em texto sobre navy |
-| White em headlines sobre navy | White em backgrounds grandes |
+| Grafite `#0B0E14` como fundo padrão | Grafite em texto sobre grafite |
+| White em headlines sobre grafite | White em backgrounds grandes |
 | Success/Error só funcionalmente | Verde decorativo (vai contra brand) |
 
 ### Gradients
@@ -141,7 +141,7 @@ Margem ao redor = altura da letra "e" do wordmark. Nada invade.
 ## 🎯 Combinações prontas (template-padrão por uso)
 
 ### 1. Hero corporativo
-- Fundo: navy `#1B2A4A`
+- Fundo: grafite `#0B0E14`
 - H1: white Sora 800 (palavra-chave em gradient B)
 - Body: gray-100 Inter 400
 - CTA: gradient B + texto branco
@@ -155,19 +155,19 @@ Margem ao redor = altura da letra "e" do wordmark. Nada invade.
 
 ### 3. Light editorial (Gov/Editais)
 - Fundo: white
-- H1: navy Sora 800
+- H1: grafite Sora 800
 - Body: gray-500 Inter 400
 - Accent: roxo `#6f32b1` em links
 - Logo: wordmark-light
 
 ### 4. Dado/KPI
-- Fundo: navy
+- Fundo: grafite
 - Numeral grande: white ou gradient B (Sora 800, 120px+)
 - Label: gray-300 uppercase Inter 500 + letter-spacing
 - Logo: monogram canto
 
 ### 5. Premium/Recomendado
-- Fundo: navy
+- Fundo: grafite
 - Badge "RECOMENDADO": gradient C + white + glow ouro
 - Resto: paleta padrão
 
@@ -175,7 +175,7 @@ Margem ao redor = altura da letra "e" do wordmark. Nada invade.
 
 ## 📋 Checklist antes de exportar
 
-- [ ] Fundo brand (navy / branco / gradient B)?
+- [ ] Fundo brand (grafite / branco / gradient B)?
 - [ ] Roxo `#6f32b1` é o único acento? (sem verdes/azuis aleatórios)
 - [ ] Fonte é Sora / Inter / JetBrains Mono?
 - [ ] Gradient C só se peça é premium/upgrade?

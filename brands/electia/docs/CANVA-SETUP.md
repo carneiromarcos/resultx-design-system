@@ -47,14 +47,14 @@
 | Purple Dark | `#5a2890` | Outline, borders de destaque |
 | Purple Muted | `#3d1a64` | Badges premium, detalhes sutis |
 
-### 🌑 Navy (backgrounds)
+### 🌑 Grafite (backgrounds)
 
 | Nome | Hex | Uso |
 |---|---|---|
-| **Navy Base** ⭐ | **`#1B2A4A`** | Background principal (theme-color) |
-| Navy Surface 1 | `#1c2a4a` | Cards, surfaces elevadas |
-| Navy Surface 2 | `#243661` | Hover, alternating sections |
-| Navy Surface 3 | `#2d4378` | Inputs, bordas ativas |
+| **Grafite Base** ⭐ | **`#0B0E14`** | Background principal (theme-color) |
+| Grafite Surface 1 | `#161B26` | Cards, surfaces elevadas |
+| Grafite Surface 2 | `#1C2333` | Hover, alternating sections |
+| Grafite Surface 3 | `#232B3B` | Inputs, bordas ativas |
 
 ### ⚪ Texto
 
@@ -137,23 +137,23 @@ Crie estes 5 templates como **Brand Templates** (Canva Pro permite marcar como t
 
 ### Template 1 — Instagram Post (1080×1080)
 - **Nome:** `Electia · IG Post · Quote Navy`
-- **Layout:** Navy base + headline branca (Sora 700) + tagline gold/purple (Sora 600) + logo electia-wordmark canto inferior direito + glow purple sutil
+- **Layout:** Grafite base + headline branca (Sora 700) + tagline gold/purple (Sora 600) + logo electia-wordmark canto inferior direito + glow purple sutil
 
 ### Template 2 — Instagram Story (1080×1920)
 - **Nome:** `Electia · IG Story · Conceito`
-- **Layout:** Navy base + headline branca + ícone Lucide centralizado + CTA "saiba mais →" branco + logo canto superior
+- **Layout:** Grafite base + headline branca + ícone Lucide centralizado + CTA "saiba mais →" branco + logo canto superior
 
 ### Template 3 — LinkedIn Post (1200×627)
 - **Nome:** `Electia · LinkedIn Post · B2B`
-- **Layout:** Navy + headline executiva (Sora 700) + subtítulo (Inter 500) + ícone roxo + logo electia-wordmark + faixa "by emprega+" sutil
+- **Layout:** Grafite + headline executiva (Sora 700) + subtítulo (Inter 500) + ícone roxo + logo electia-wordmark + faixa "by emprega+" sutil
 
 ### Template 4 — LinkedIn Banner Empresa (1584×396)
 - **Nome:** `Electia · LinkedIn Banner Empresa`
-- **Layout:** Navy gradient (Navy base → Surface 1) + logo electia-wordmark-light alinhado à esquerda + headline "Sistema operacional de pessoas com IA" à direita + accent roxo
+- **Layout:** Grafite gradient (Grafite base → Surface 1) + logo electia-wordmark-light alinhado à esquerda + headline "Sistema operacional de pessoas com IA" à direita + accent roxo
 
 ### Template 5 — Email Header (440×120)
 - **Nome:** `Electia · Email Header`
-- **Layout:** Navy base + electia-wordmark centralizado + linha roxa sutil abaixo + spacing equilibrado
+- **Layout:** Grafite base + electia-wordmark centralizado + linha roxa sutil abaixo + spacing equilibrado
 
 ### Naming convention pros templates:
 ```
@@ -186,8 +186,8 @@ Electia · Email · Newsletter Mensal
 ## ✅ Checklist final
 
 - [ ] Brand Kit "Electia by Emprega+" criado
-- [ ] 4 cores principais adicionadas (Purple + Navy + variantes)
-- [ ] 4 surfaces navy adicionadas
+- [ ] 4 cores principais adicionadas (Purple + Grafite + variantes)
+- [ ] 4 surfaces grafite adicionadas
 - [ ] Brand gradients B + C criados (se Canva suportar gradient salvo)
 - [ ] 3 fontes adicionadas (Sora, Inter, JetBrains Mono)
 - [ ] 7 logos uploadados de `electia/assets/logo/`
@@ -225,7 +225,7 @@ Electia · Email · Newsletter Mensal
 #### 2. Background (1 camada)
 - Inserir → Elementos → Retângulo
 - Tamanho: 1080×1080 (cobre tela inteira)
-- Cor de preenchimento: **`#1B2A4A`** (navy canonical)
+- Cor de preenchimento: **`#0B0E14`** (grafite canonical)
 - **NÃO** fundir com outra camada (mantém separado pra MCP poder trocar cor depois)
 
 #### 3. Wordmark "electia" (1 camada de TEXTO, não imagem)
@@ -296,7 +296,7 @@ A partir do seu master anatômico, vou gerar variações como:
 |---|---|
 | `Electia · IG Post · Hero Statement` | cor texto → gradient B (roxo→azul) |
 | `Electia · IG Post · Quote Roxa Solid` | texto roxo sólido `#6f32b1` |
-| `Electia · IG Post · Dados Light` | bg invertido → branco, texto navy |
+| `Electia · IG Post · Dados Light` | bg invertido → branco, texto grafite |
 | `Electia · IG Post · Premium` | gradient C (roxo→ouro) em accent |
 | `Electia · Story 1080×1920` | resize + reposicionamento |
 | `Electia · LinkedIn 1200×627` | resize + crop |

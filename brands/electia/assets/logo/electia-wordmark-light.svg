@@ -3,9 +3,9 @@
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&amp;family=Sora:wght@400;800&amp;display=swap');
-      .electia { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 64px; letter-spacing: -0.04em; fill: #1B2A4A; }
-      .by      { font-family: 'Sora', sans-serif; font-weight: 400; font-size: 18px; fill: #1B2A4A; opacity: 0.55; }
-      .empregamais { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 32px; letter-spacing: -0.01em; fill: #1B2A4A; opacity: 0.88; }
+      .electia { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 64px; letter-spacing: -0.04em; fill: #0F1729; }
+      .by      { font-family: 'Sora', sans-serif; font-weight: 400; font-size: 18px; fill: #0F1729; opacity: 0.55; }
+      .empregamais { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 32px; letter-spacing: -0.01em; fill: #0F1729; opacity: 0.88; }
     </style>
   </defs>
   <rect width="560" height="120" fill="#FFFFFF"/>

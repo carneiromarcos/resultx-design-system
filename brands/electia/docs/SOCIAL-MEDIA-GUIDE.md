@@ -10,7 +10,7 @@
 
 Toda peca de social média deve respeitar:
 
-1. **Fundo**: Sempre escuro (`#08080A` ou `#0E0E11`). NUNCA fundo branco
+1. **Fundo**: Sempre escuro (`#0B0E14` ou `#0B0E14`). NUNCA fundo branco
 2. **Titulo**: Sora Bold, branco ou ouro. Máximo 2 linhas
 3. **Texto de apoio**: Inter Regular, `gray-300` (`#A0A0AC`)
 4. **Ouro**: Unica cor de destaque (`#2DD4BF`). Máximo 1 gradiente por peca
@@ -172,7 +172,7 @@ SCN-1b Planner → SCN-NEW Script → Gravacao → SCN-UPLOAD Metadata → SCN-C
 Templates HTML renderizaveis via Playwright: `social-media-templates.html`
 Renderer: `render-templates.mjs`
 
-*Nota: templates visuais seguem a paleta navy+teal do Electia (material de comúnicação/brand), não o App DS (teal/dark do produto SaaS).*
+*Nota: templates visuais seguem a paleta grafite+teal do Electia (material de comúnicação/brand), não o App DS (teal/dark do produto SaaS).*
 
 ---
 

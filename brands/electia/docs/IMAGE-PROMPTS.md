@@ -4,7 +4,7 @@
 > Todas as imagens devem refletir a estética dark premium da marca.
 
 > ⚠️ **TO-DO (2026-05-10) — Rewrite editorial pendente.** Este arquivo foi clonado do PdV (estética mountain + golden hour + warm gold accents) e ainda descreve imagens com paleta dourada/amber. Para Electia a estética visual e **diferente**: cyan/teal, energy core, tech moderna, fios fluidos (vide aurora-hero-v1 aprovado em sessao de 2026-05-10). **Reescrever os prompts** das seções 1 a 4 com vocabulario coerente:
-> - "warm golden tones" -> "cool teal/cyan tones, dark navy backgrounds"
+> - "warm golden tones" -> "cool teal/cyan tones, dark graphite backgrounds"
 > - "mountain peak / golden hour" -> "energy field / data visualization / abstract tech"
 > - "fog rolling below" -> "particle systems / circuit-like flows"
 
@@ -324,7 +324,7 @@ Aplicar em TODA imagem gerada:
 
 ```
 Layout:
-- Fundo: #08080A solido
+- Fundo: #0B0E14 solido
 - Texto principal: Sora Bold 64px, branco, centralizado
 - Palavra destaque: cor ouro #2DD4BF
 - Barra inferior: 3px gold, 48px de largura
@@ -337,7 +337,7 @@ Layout:
 
 ```
 Layout:
-- Fundo: #0E0E11 (surface-1)
+- Fundo: #0B0E14 (surface-1)
 - Numero: Sora Bold 120px, ouro #2DD4BF, centralizado superior
 - Contexto: Inter 500 20px, gray-200, abaixo do numero
 - Fonte: Inter 12px, gray-500, abaixo do contexto
@@ -351,7 +351,7 @@ Layout:
 ```
 Layout:
 - Fundo: ouro #2DD4BF solido
-- Titulo: Sora Bold 56px, #08080A (preto)
+- Titulo: Sora Bold 56px, #0B0E14 (preto)
 - Subtitulo: Inter 16px, #3D2E0F (marrom escuro)
 - Logo: ícone montanha escura, inferior direito, opacity 0.6
 - "Deslize →": Inter 11px, inferior esquerdo, #5C4518
@@ -362,7 +362,7 @@ Layout:
 
 ```
 Layout:
-- Fundo: #08080A
+- Fundo: #0B0E14
 - Número do slide: Sora Bold 24px, ouro, superior esquerdo (ex: "01")
 - Titulo do ponto: Sora 600 28px, branco, abaixo do numero
 - Texto explicativo: Inter 400 18px, gray-300, abaixo do titulo
@@ -375,7 +375,7 @@ Layout:
 
 ```
 Layout:
-- Fundo: #08080A
+- Fundo: #0B0E14
 - Badge: "GRATUITO", badge-gold-solid, superior
 - Label: "WORKSHOP AO VIVO", Inter 600 12px, ouro, uppercase, 0.1em spacing
 - Titulo: Sora Bold 36px, branco, 2-3 linhas
@@ -401,7 +401,7 @@ Layout:
 
 ```
 Layout:
-- Fundo: #08080A
+- Fundo: #0B0E14
 - Layout split: esquerda texto (60%), direita imagem (40%) com overlay
 - Titulo: Sora Bold 36px, branco, até 3 linhas
 - Subtitulo: Inter 400 16px, gray-300
@@ -427,7 +427,7 @@ Layout:
 
 ```
 Layout:
-- Fundo: #08080A ou foto com overlay forte
+- Fundo: #0B0E14 ou foto com overlay forte
 - Titulo: Sora Bold 48px, branco, centralizado, 2-3 linhas
 - Palavra destaque: ouro
 - CTA: badge-gold ou btn-gold na parte inferior
@@ -528,7 +528,7 @@ Margem: 64px
 
 ```
 Split: 55% texto (esquerda) | 45% retrato (direita)
-Lado esquerdo: fundo #08080A solido
+Lado esquerdo: fundo #0B0E14 solido
   Eyebrow: ouro, uppercase
   Titulo: Sora Bold 36px, branco, max 3 linhas
   Barra gold vertical: 3px larga, 48px alta, borda esquerda
@@ -623,7 +623,7 @@ SEM bordas, setas, emojis — minimalismo total
 
 ```
 Formato: ~2:1
-Split: 60% texto (esquerda, #08080A) | 40% foto (direita, com overlay)
+Split: 60% texto (esquerda, #0B0E14) | 40% foto (direita, com overlay)
 Esquerda:
   Eyebrow: ouro, uppercase
   Titulo: Sora Bold 32px, branco, max 3 linhas

@@ -19,8 +19,8 @@ body:
     320px:
       width: 320px
     default:
-      background-color: '#08080A'
-      wrapper-background-color: '#08080A'
+      background-color: '#0B0E14'
+      wrapper-background-color: '#0B0E14'
       wrapper-width: 600px
   content:
     -
@@ -53,7 +53,7 @@ body:
               width: 100%
             default:
               align: center
-              background-color: '#08080A'
+              background-color: '#0B0E14'
               display: none
               full-width: true
               padding-bottom: 5px
@@ -93,7 +93,7 @@ body:
                   content: "<p><a href=\"{{ mirror }}\">\n                      <span style=\"font-family: arial,helvetica,sans-serif;color:#8A8A96;font-size: 12px; text-decoration: underline;\">\n                      Ver no navegador</span></a></p>"
 
         # ═══════════════════════════════════════════
-        # ROW 2 — Header (Logo + Teal accent line)
+        # ROW 2 — Header (Logo + Roxo accent line)
         # ═══════════════════════════════════════════
         -
           align: top
@@ -112,7 +112,7 @@ body:
               width: 100%
             default:
               align: center
-              background-color: '#08080A'
+              background-color: '#0B0E14'
               full-width: false
               padding-bottom: 10px
               padding-top: 40px
@@ -159,16 +159,16 @@ body:
                     href: 'https://profissional.empregamais.me'
 
         # ═══════════════════════════════════════════
-        # ROW 3 — Teal accent line
+        # ROW 3 — Roxo accent line
         # ═══════════════════════════════════════════
         -
           align: top
           dist: '12'
           gutter: 0px
-          id: teal-accent-line-row
+          id: purple-accent-line-row
           moduleName: grid-row12
           thumbnail: /assets/img/editor/grid_12.svg
-          title: 'Teal Line'
+          title: 'Roxo Line'
           type: grid-row
           layout:
             320px:
@@ -176,14 +176,14 @@ body:
               width: 100%
             default:
               align: center
-              background-color: '#08080A'
+              background-color: '#0B0E14'
               padding-bottom: 20px
               padding-top: 10px
               valign: top
               width: 100%
           content:
             -
-              id: teal-accent-line-col
+              id: purple-accent-line-col
               isEmpty: false
               label: 'Drop content here'
               title: 'column 1'
@@ -196,8 +196,8 @@ body:
                   valign: top
               content:
                 -
-                  id: teal-accent-line-text
-                  title: 'Teal Line'
+                  id: purple-accent-line-text
+                  title: 'Roxo Line'
                   type: text
                   layout:
                     320px:
@@ -206,7 +206,7 @@ body:
                       align: center
                       text-align: center
                       width: 100%
-                  content: '<p style="text-align:center;"><span style="display:inline-block;width:60px;height:2px;background-color:#2DD4BF;border-radius:1px;line-height:2px;font-size:2px;">&nbsp;</span></p>'
+                  content: '<p style="text-align:center;"><span style="display:inline-block;width:60px;height:2px;background-color:#6f32b1;border-radius:1px;line-height:2px;font-size:2px;">&nbsp;</span></p>'
 
         # ═══════════════════════════════════════════
         # ROW 4 — Greeting
@@ -226,7 +226,7 @@ body:
               width: 100%
             default:
               align: center
-              background-color: '#08080A'
+              background-color: '#0B0E14'
               padding-bottom: 0px
               padding-left: 0px
               padding-right: 0px
@@ -283,7 +283,7 @@ body:
               width: 100%
             default:
               align: center
-              background-color: '#08080A'
+              background-color: '#0B0E14'
               padding-bottom: 0px
               padding-left: 0px
               padding-right: 0px
@@ -323,7 +323,7 @@ body:
                   content: '<p><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px; line-height: 1.6;">Escreva aqui o corpo do email. Use paragrafos curtos. Tom de carta pessoal.</span></p><p>&nbsp;</p><p><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px; line-height: 1.6;">Segundo paragrafo. <strong style="color: #FFFFFF;">Destaque palavras-chave em negrito.</strong></span></p>'
 
         # ═══════════════════════════════════════════
-        # ROW 6 — Highlight block (teal left border)
+        # ROW 6 — Highlight block (roxo left border)
         # ═══════════════════════════════════════════
         -
           align: top
@@ -340,7 +340,7 @@ body:
               width: 100%
             default:
               align: center
-              background-color: '#08080A'
+              background-color: '#0B0E14'
               padding-bottom: 10px
               padding-left: 0px
               padding-right: 0px
@@ -377,7 +377,7 @@ body:
                       text-valign: top
                       valign: top
                       width: 100%
-                  content: '<div style="background-color:#0E0E11; border-left:3px solid #2DD4BF; padding:20px 24px; border-radius:0 8px 8px 0;"><p><span style="color: #2DD4BF; font-family: arial,helvetica,sans-serif; font-size: 14px; font-weight: bold;">DESTAQUE</span></p><p><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px; line-height: 1.6;">Insira aqui uma citacao, dado impactante ou frase-chave do email.</span></p></div>'
+                  content: '<div style="background-color:#0B0E14; border-left:3px solid #6f32b1; padding:20px 24px; border-radius:0 8px 8px 0;"><p><span style="color: #c084fc; font-family: arial,helvetica,sans-serif; font-size: 14px; font-weight: bold;">DESTAQUE</span></p><p><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px; line-height: 1.6;">Insira aqui uma citacao, dado impactante ou frase-chave do email.</span></p></div>'
 
         # ═══════════════════════════════════════════
         # ROW 7 — More body text
@@ -397,7 +397,7 @@ body:
               width: 100%
             default:
               align: center
-              background-color: '#08080A'
+              background-color: '#0B0E14'
               padding-bottom: 10px
               padding-left: 0px
               padding-right: 0px
@@ -437,7 +437,7 @@ body:
                   content: '<p><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px; line-height: 1.6;">Paragrafo de transicao antes do CTA. Conecte o conteudo a acao desejada.</span></p>'
 
         # ═══════════════════════════════════════════
-        # ROW 8 — CTA Button (teal)
+        # ROW 8 — CTA Button (roxo)
         # ═══════════════════════════════════════════
         -
           align: top
@@ -454,7 +454,7 @@ body:
               width: 100%
             default:
               align: center
-              background-color: '#08080A'
+              background-color: '#0B0E14'
               padding-bottom: 20px
               padding-left: 0px
               padding-right: 0px
@@ -477,7 +477,7 @@ body:
               content:
                 -
                   id: cta-button
-                  text: '<p><span style="color: #08080A; font-size: 16px;"><strong>Chamada para acao</strong></span></p>'
+                  text: '<p><span style="color: #FFFFFF; font-size: 16px;"><strong>Chamada para acao</strong></span></p>'
                   thumbnail: /assets/img/editor/element_button.svg
                   title: Button
                   type: text-button
@@ -486,8 +486,8 @@ body:
                       width: 100%
                     default:
                       align: center
-                      background-color: '#2DD4BF'
-                      border-color: '#2DD4BF'
+                      background-color: '#6f32b1'
+                      border-color: '#6f32b1'
                       border-radius: 8px
                       border-width: 0px
                       item-height: 52px
@@ -502,7 +502,7 @@ body:
                       valign: top
                       width: 60%
                   content:
-                    text: '<p><span style="color: #08080A; font-size: 16px;"><strong>Chamada para acao</strong></span></p>'
+                    text: '<p><span style="color: #FFFFFF; font-size: 16px;"><strong>Chamada para acao</strong></span></p>'
 
         # ═══════════════════════════════════════════
         # ROW 9 — Signature
@@ -522,7 +522,7 @@ body:
               width: 100%
             default:
               align: center
-              background-color: '#08080A'
+              background-color: '#0B0E14'
               padding-bottom: 30px
               padding-left: 0px
               padding-right: 0px
@@ -559,7 +559,7 @@ body:
                       text-valign: top
                       valign: top
                       width: 100%
-                  content: '<p><strong><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px;">Marcos Carneiro</span></strong></p><p><span style="color: #8A8A96; font-family: arial,helvetica,sans-serif; font-size: 13px;">Fundador, Electia by Emprega+</span></p><p><em><span style="color: #2DD4BF; font-family: arial,helvetica,sans-serif; font-size: 13px;">[Tagline Electia a definir].</span></em></p>'
+                  content: '<p><strong><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px;">Marcos Carneiro</span></strong></p><p><span style="color: #8A8A96; font-family: arial,helvetica,sans-serif; font-size: 13px;">Fundador, Electia by Emprega+</span></p><p><em><span style="color: #c084fc; font-family: arial,helvetica,sans-serif; font-size: 13px;">[Tagline Electia a definir].</span></em></p>'
 
         # ═══════════════════════════════════════════
         # ROW 10 — Divider
@@ -579,7 +579,7 @@ body:
               width: 100%
             default:
               align: center
-              background-color: '#08080A'
+              background-color: '#0B0E14'
               padding-bottom: 0px
               padding-top: 0px
               valign: top
@@ -631,7 +631,7 @@ body:
               width: 100%
             default:
               align: center
-              background-color: '#0E0E11'
+              background-color: '#0B0E14'
               full-width: false
               padding-bottom: 30px
               padding-left: 0px
@@ -787,10 +787,10 @@ styles:
     title: Paragraph
   default-button:
     properties:
-      background-color: '#2DD4BF'
+      background-color: '#6f32b1'
       border-radius: 8px
       border-width: 0px
-      color: '#08080A'
+      color: '#FFFFFF'
       font-family: 'arial,helvetica,sans-serif'
       font-size: 16px
       remove-vml-button: optional
@@ -819,13 +819,13 @@ styles:
     title: 'Heading 3'
   default-heading4:
     properties:
-      color: '#2DD4BF'
+      color: '#c084fc'
       font-family: 'arial,helvetica,sans-serif'
       font-size: 14px
       font-weight: '700'
     title: 'Heading 4'
   default-link:
     properties:
-      color: '#2DD4BF'
+      color: '#c084fc'
       text-decoration: underline
     title: Link

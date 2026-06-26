@@ -5,7 +5,9 @@
 
 > **Escopo de versionamento.** O **header do Brand Book** versiona apenas o conteúdo editorial das seções §1-17 abaixo. O **CHANGELOG.md** versiona o brand-kit inteiro (mockups, wireframes, specs, tokens, decisões D1-D6). Se você abriu este doc procurando o estado atual do brand-kit, vá direto ao CHANGELOG. Se procura a especificação visual oficial, está aqui.
 >
-> **BB 2.0 (27/05) — Purple Refactor.** Migração completa de teal `#2DD4BF` para roxo `#6f32b1` como cor de acento primária da marca. Commit `8e4cadb` em produção (24/05), 126 arquivos atualizados. Gradients de sinergia ResultX: B (roxo→Royal Blue `#2040a0`) em CTAs + C (roxo→Ouro `#b29442`) em pricing "Recomendado". Navy `#1B2A4A` substituiu `#0B0E14` como background base do ecossistema. WCAG 2.2 (1.4.3/1.4.11/2.4.11) validado.
+> **BB 2.0 (27/05) — Purple Refactor.** Migração completa de teal `#2DD4BF` para roxo `#6f32b1` como cor de acento primária da marca. Commit `8e4cadb` em produção (24/05), 126 arquivos atualizados. Gradients de sinergia ResultX: B (roxo→Royal Blue `#2040a0`) em CTAs + C (roxo→Ouro `#b29442`) em pricing "Recomendado". WCAG 2.2 (1.4.3/1.4.11/2.4.11) validado.
+>
+> **BB 2.1 (26/06) — Grafite canonical.** O experimento navy `#1B2A4A` (adotado em 24/05) foi **APOSENTADO**: grafite `#0B0E14` é a base única do ecossistema em tudo (tokens, web, social, Canva, e-mail, image-prompts), alinhada à LP real em produção. Adicionado o token `purple.on-dark` `#c084fc` (texto/ícone/borda roxo sobre fundo escuro — 7.1:1 vs `#0B0E14`, destaque do hero, nunca fill de botão). Tema light (`data-theme="light"`) documentado nos tokens. Semânticos alinhados aos vivos da LP.
 
 ---
 
@@ -113,7 +115,7 @@ Quando o espaço e tao pequeno que não cabe nem `electia` (16-48px), usa-se um 
 - Forma: quadrado arredondado, `border-radius: 24%` (proporcional ao tamanho)
 - Tamanho minimo: 32x32px (favicon)
 - Padding interno: 22% do tamanho
-- Fundo: opção A `--bg` (#1B2A4A) com letra roxa · opção B `--purple` (#6f32b1) com letra branca · opção C `rgba(111,50,177,0.15)` (purple/15) com letra roxa
+- Fundo: opção A `--bg` (#0B0E14) com letra roxa · opção B `--purple` (#6f32b1) com letra branca · opção C `rgba(111,50,177,0.15)` (purple/15) com letra roxa
 
 ### Tamanhos e proporcoes do wordmark
 
@@ -130,10 +132,10 @@ Quando o espaço e tao pequeno que não cabe nem `electia` (16-48px), usa-se um 
 
 | Variante | `electia` | `by` | `emprega+` | Fundo |
 |----------|-----------|------|------------|-------|
-| **Padrão dark** | `#E6EDF3` (branco) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#1B2A4A` |
-| **Accent dark** | `#6f32b1` (roxo) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#1B2A4A` |
-| **Accent glow** | `#6f32b1` + text-shadow purple blur 32px 45% | idem | idem | `#1B2A4A` ou gradient |
-| **Light** | `#1B2A4A` (navy) | `rgba(27,42,74,0.65)` | `rgba(27,42,74,0.85)` | `#FFFFFF` ou `#F5F7FA` |
+| **Padrão dark** | `#E6EDF3` (branco) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#0B0E14` |
+| **Accent dark** | `#6f32b1` (roxo) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#0B0E14` |
+| **Accent glow** | `#6f32b1` + text-shadow purple blur 32px 45% | idem | idem | `#0B0E14` ou gradient |
+| **Light** | `#0F1729` (grafite escuro) | `rgba(15,23,41,0.65)` | `rgba(15,23,41,0.85)` | `#FFFFFF` ou `#F8FAFB` |
 
 ### Área de protecao
 
@@ -165,14 +167,15 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 | **Accent Purple Light** | `#a55eea` | Hover states, focus ring, interacoes |
 | **Accent Purple Dark** | `#5a2890` | Pressed states, bordas ativas em dark |
 | **Accent Purple Muted** | `rgba(111, 50, 177, 0.15)` | Backgrounds sutis, selecoes, badges |
+| **Accent Purple On-Dark** | `#c084fc` | Texto/ícone/borda roxo sobre fundo grafite — 7.1:1 vs `#0B0E14` (AA normal text). Destaque do hero. NÃO usar como fill de botão |
 
 ### Cores de Fundo (Dark Theme)
 
 | Nome | Hex | Uso |
 |------|-----|-----|
-| **BG Base (Navy)** | `#1B2A4A` | Fundo principal da aplicação e LP |
-| **BG Surface** | `#243352` | Cards, paineis, modais |
-| **BG Surface Hover** | `#2D3D5E` | Hover de cards e elementos interativos |
+| **BG Base (Grafite)** | `#0B0E14` | Fundo principal da aplicação e LP |
+| **BG Surface** | `#161B26` | Cards, paineis, modais |
+| **BG Surface Hover** | `#1C2333` | Hover de cards e elementos interativos |
 
 ### Cores de Texto
 
@@ -338,14 +341,14 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 
 ### Email (Brevo)
 
-- Fundo: #1B2A4A (navy, consistente com app)
+- Fundo: #0B0E14 (grafite, consistente com app)
 - Texto: #E6EDF3 (primary)
 - CTA: botao purple (#6f32b1) com texto branco
 - Logo: Electia by Emprega+ no header
 
 ### Redes Sociais
 
-- Posts: fundo navy (#1B2A4A) com accent purple para destaques
+- Posts: fundo grafite (#0B0E14) com accent purple para destaques
 - Tipografia: Sora Bold para frases de impacto
 - Elementos gráficos: linhas e shapes em purple/15%
 - Nunca usar fotos de banco de imagens genéricas
@@ -393,7 +396,7 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 | Público | Candidatos, editais, vagas | Gestores, RH, diretoria |
 | Modelo | B2C (gratuito) | B2B SaaS (assinatura) |
 | Tom | Acolhedor, motivacional | Direto, provocativo, inteligente |
-| Paleta | Gold + navy light (institucional) | Purple + navy dark (identidade própria) |
+| Paleta | Gold + grafite light (institucional) | Purple + grafite dark (identidade própria) |
 | Complexidade | Simples, acessível | Profundo, dados, IA |
 
 O Electia herda a credibilidade da Emprega+ mas se posiciona como produto premium para decisores corporativos.
@@ -590,11 +593,11 @@ Electia não usa fotografia tradicional de RH (sorrisos corporativos, salas relu
 
 | Aspecto | Diretriz |
 |---------|----------|
-| **Iluminacao** | Dark mode dominante (navy). Contraste alto. Glows purple sutis |
-| **Temperatura** | Frias. Tons purple, navy, royal blue. Acentos sutis em ambar (saúde mental) |
+| **Iluminacao** | Dark mode dominante (grafite). Contraste alto. Glows purple sutis |
+| **Temperatura** | Frias. Tons purple, grafite, royal blue. Acentos sutis em ambar (saúde mental) |
 | **Movimento** | Lento, organico, "silk-flow". Nunca frenetico |
 | **Densidade** | Limpa, com whitespace. Dado e protagonista — texto e suporte |
-| **Cor dominante** | Navy (#1B2A4A base) com acentos purple (#6f32b1) e amber em estados especiais |
+| **Cor dominante** | Grafite (#0B0E14 base) com acentos purple (#6f32b1) e amber em estados especiais |
 
 ### Categorias de imagem
 
@@ -626,7 +629,7 @@ filter: brightness(0.38) saturate(0.55) hue-rotate(-12deg) contrast(1.10);
 #### Color grade fotográfico
 - **Saturacao**: Reduzir 30-40%
 - **Contraste**: Alto (+15%)
-- **Sombras**: Empurrar para frio (navy/purple)
+- **Sombras**: Empurrar para frio (grafite/purple)
 - **Highlights**: Manter neutros
 - **Referência**: Look tech moderno, não editorial
 
@@ -648,7 +651,7 @@ Antes de publicar qualquer material visual:
 
 - [ ] Fundo escuro (não branco)?
 - [ ] Fonte correta (Sora titulos, Inter corpo)?
-- [ ] Cores dentro da paleta Electia (roxo #6f32b1, navy #1B2A4A, branco)?
+- [ ] Cores dentro da paleta Electia (roxo #6f32b1, grafite #0B0E14, branco)?
 - [ ] ZERO gold/amber como destaque primário (ouro só em gradient C premium, ex: badge "Recomendado")?
 - [ ] Roxo como UNICA cor de destaque primária?
 - [ ] Logo presente com área de protecao respeitada?
@@ -925,12 +928,12 @@ Sempre que este Brand Book virar v2.1, v2.2, etc:
 - ✅ Links inline em texto corrido
 - ✅ Eyebrows (rótulos uppercase pequenos acima de títulos)
 - ✅ Bordas/ícones de destaque
-- ✅ Wordmark "electia" sobre fundo navy
+- ✅ Wordmark "electia" sobre fundo grafite
 - ✅ Glow effect (`box-shadow: 0 0 30px rgba(111,50,177,0.35)`)
 
 **NÃO USE EM:**
 - ❌ Texto corpo (parágrafos) — usar branco/gray
-- ❌ Backgrounds grandes (fica pesado) — usar navy
+- ❌ Backgrounds grandes (fica pesado) — usar grafite
 - ❌ Cor de erro/aviso — usar semantic colors
 
 #### Roxo Light `#a55eea`
@@ -940,7 +943,7 @@ Sempre que este Brand Book virar v2.1, v2.2, etc:
 - ✅ Highlights em textos pequenos sobre fundo dark
 - ✅ Focus ring (passa WCAG 2.4.11)
 
-#### Navy Base `#1B2A4A`
+#### Grafite Base `#0B0E14`
 
 **USE EM:**
 - ✅ Background principal de TODA peça dark
@@ -953,8 +956,8 @@ Sempre que este Brand Book virar v2.1, v2.2, etc:
 #### White `#FFFFFF`
 
 **USE EM:**
-- ✅ Texto principal sobre navy
-- ✅ Logo wordmark sobre navy
+- ✅ Texto principal sobre grafite
+- ✅ Logo wordmark sobre grafite
 - ✅ Headlines
 
 **NÃO USE EM:**
@@ -1060,7 +1063,7 @@ Margem mínima ao redor do wordmark = **altura da letra "e"** do "electia". Nada
 ### 17.5 Combinações — paletas permitidas por contexto
 
 #### Combinação 1: Hero corporativo (default)
-- Background: Navy base `#1B2A4A`
+- Background: Grafite base `#0B0E14`
 - Headline: White `#FFFFFF` (Sora 800, com palavra-destaque em gradient B)
 - Body: Gray 100 `#E8E8EC` (Inter 400)
 - CTA: gradient B (roxo→azul) com texto branco
@@ -1074,19 +1077,19 @@ Margem mínima ao redor do wordmark = **altura da letra "e"** do "electia". Nada
 
 #### Combinação 3: Light editorial (Gov/Editais)
 - Background: White `#FFFFFF`
-- Headline: Navy `#1B2A4A` (Sora 800)
+- Headline: Grafite `#0B0E14` (Sora 800)
 - Body: Gray 500 `#5A5A66` (Inter 400)
 - Accent: Roxo `#6f32b1` em links/destaques
 - Logo: `electia-wordmark-light.svg`
 
 #### Combinação 4: Dado/KPI
-- Background: Navy base
+- Background: Grafite base
 - Numeral grande: White ou gradient B (Sora 800, 120px+)
 - Label embaixo: Gray 300 uppercase (Inter 500 + letter-spacing)
 - Logo: monogram canto inferior direito
 
 #### Combinação 5: Premium/Recomendado
-- Background: Navy base
+- Background: Grafite base
 - Badge "RECOMENDADO": gradient C (roxo→ouro) com texto branco + glow ouro
 - Resto da peça: paleta padrão
 
@@ -1094,7 +1097,7 @@ Margem mínima ao redor do wordmark = **altura da letra "e"** do "electia". Nada
 
 Antes de exportar/postar qualquer peça:
 
-- [ ] Background está em paleta brand (navy / branco / gradient B)?
+- [ ] Background está em paleta brand (grafite / branco / gradient B)?
 - [ ] Roxo `#6f32b1` é o único acento de marca? (sem verdes/azuis aleatórios)
 - [ ] Fonte é **Sora/Inter/JetBrains Mono** (não outras)?
 - [ ] Gradient C aparece SÓ se peça é premium/upgrade? (não como decoração)

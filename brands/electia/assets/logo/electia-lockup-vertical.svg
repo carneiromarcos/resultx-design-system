@@ -8,7 +8,7 @@
       .empregamais { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 32px; letter-spacing: -0.01em; fill: #E6EDF3; opacity: 0.85; }
     </style>
   </defs>
-  <rect width="360" height="180" fill="#1B2A4A"/>
+  <rect width="360" height="180" fill="#0B0E14"/>
   <text class="electia" x="180" y="84" text-anchor="middle">electia</text>
   <g transform="translate(110, 130)">
     <text class="by" x="0" y="0">by</text>

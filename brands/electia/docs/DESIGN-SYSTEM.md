@@ -18,8 +18,8 @@
 **Fonte da verdade:** `tokens/tokens.json` (W3C Design Tokens format) → gera `tokens/tokens.css` no build.
 
 Principais grupos:
-- `color.purple` — `#a55eea` (light) / `#6f32b1` (DEFAULT/accent-primary) / `#5a2890` (dark) / `#3d1a64` (muted)
-- `color.bg` — `#1B2A4A` (base) → `#243661` → `#2d4378` (3 níveis de surface)
+- `color.purple` — `#a55eea` (light) / `#6f32b1` (DEFAULT/accent-primary) / `#5a2890` (dark) / `#3d1a64` (muted) / `#c084fc` (on-dark — texto/ícone/borda roxo sobre fundo escuro, 7.1:1 vs `#0B0E14`, nunca fill de botão)
+- `color.bg` — `#0B0E14` (base, grafite canonical — navy `#1B2A4A` aposentado 26/06) → `#161B26` (surface-1/card) → `#1C2333` (surface-2/card-hover) → `#232B3B` → `#2A3444` (= border)
 - `color.text` — `#E6EDF3` (primary) / `#8B949E` (secondary) / `#6E7681` (muted)
 - `color.border` — `#2A3444` (default) / `#6f32b1` (focus ring purple)
 - `color.semantic` — success `#22C55E` / warning `#F59E0B` / danger `#EF4444`

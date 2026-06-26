@@ -7,6 +7,35 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ---
 
+## [2.6.0] - 2026-06-26 — Grafite canonical: navy aposentado
+
+### Changed — Base única: navy #1B2A4A → grafite #0B0E14
+
+Navy `#1B2A4A` (experimento de 24/05, alinhamento com theme-color Emprega+) foi **APOSENTADO**. Grafite `#0B0E14` passa a ser a **base canônica única** em tudo — tokens, web, social, Canva, e-mail, image-prompts — em alinhamento com a LP real em produção (`electia/src/app/globals.css`), que nunca adotou o navy.
+
+**Fundação rebaseada (`tokens.json` + `tokens.css`):**
+- `color.bg.base`: `#1B2A4A` → **`#0B0E14`**
+- Surfaces: `#1c2a4a`/`#243661`/`#2d4378`/`#36508f` → **`#161B26`** (surface-1/card) / **`#1C2333`** (surface-2/card-hover) / **`#232B3B`** (derivado) / **`#2A3444`** (= border)
+- `color.text` alinhada à LP: primary `#E6EDF3`, secondary `#8B949E`, muted `#6E7681` (gray-200 `#C9D1D9` e gray-500 `#545D68` derivados)
+- `color.border`: default `#2A3444`, hover `#3A4554`, + **focus `#6f32b1`**
+- Glass scale rgba rebaseada: navy `rgba(28,42,74,*)` → grafite `rgba(22,27,38,*)` (= `#161B26`)
+
+### Added
+- **Token `color.purple.on-dark` = `#c084fc`** — texto/ícone/borda roxo sobre fundo escuro (7.1:1 vs `#0B0E14`, AA). Destaque do hero "pessoa certa no lugar certo" (= LP `--accent-on-dark`). **Nunca** como fill de botão.
+- **`gradient.purple-deep`** = `linear-gradient(135deg, #5a2890 0%, #6f32b1 100%)` (roxo profundo → canonical, fundos de section).
+- **Tema light documentado** (`color.light` no json + bloco `[data-theme="light"]` no css): bg `#FFFFFF`, card `#F8FAFB`/`#F0F3F5`, border `#D1D9E0`, accent `#6f32b1`/`#7c3aed`, text `#0F1729`/`#4B5563`/`#6B7280`, semânticos `#16A34A`/`#D97706`/`#DC2626`.
+
+### Semantic — alinhados aos vivos da LP
+- success `#2D8B5C` → **`#22C55E`** · warning `#B8862A` → **`#F59E0B`** · error `#B83A3A` → **`#EF4444`**
+
+### Migrated — docs/templates
+- BRAND-BOOK, DESIGN-SYSTEM, SOCIAL-MEDIA-GUIDE, CANVA-SETUP, CANVA-BRAND-GUIDELINES, IMAGE-PROMPTS e previews: fundo navy `#1B2A4A` e preto pré-navy `#08080A`/`#0E0E11` normalizados para grafite `#0B0E14`; surfaces e glass rebaseados; menções "navy" → "grafite" (exceto o nome literal do template Canva "Quote Navy").
+
+### Marca — inalterada
+Purple `#6f32b1` (DEFAULT), ramps purple/royal-blue/gold, gradientes purple-vibrant/premium, tipografia Sora/Inter, spacing, radius, transitions: sem mudança.
+
+---
+
 ## [2.5.0] - 2026-05-24 — Sinergia ecossistema: teal → roxo
 
 ### Changed — Cor primary: teal #2DD4BF → roxo profundo #6f32b1

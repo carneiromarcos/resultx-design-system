@@ -6,6 +6,6 @@
       .e { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 96px; letter-spacing: -0.04em; fill: #6f32b1; }
     </style>
   </defs>
-  <rect width="128" height="128" rx="30" fill="#1B2A4A"/>
+  <rect width="128" height="128" rx="30" fill="#0B0E14"/>
   <text class="e" x="64" y="88" text-anchor="middle">e</text>
 </svg>

@@ -1,17 +1,19 @@
 /* ============================================
-   ELECTIA BY EMPREGA+ — Design Tokens v2.5
+   ELECTIA BY EMPREGA+ — Design Tokens v2.6
    Generated from tokens.json (Brand Book)
-   Sinergia ecossistema 2026-05-24:
-   - Cor primary: teal (#2DD4BF) → roxo profundo (#6f32b1) — canonical Electia no CSS empregamais.me
-   - Vars renomeadas: --teal-* → --purple-* (BREAKING — refactor no app required, task #18)
-   - bg: dark puro (#08080A) → navy ecossistema (#1B2A4A — alinhado theme-color Emprega+)
-   - Glass scale rgba: dark (14,14,17) → navy (28,42,74)
-   - Glow-brand: gold rgba → purple rgba
+   Atualizacao 2026-06-26 (v2.6 — alinhamento DS↔LP real):
+   - Navy #1B2A4A APOSENTADO → grafite #0B0E14 canonical (base unica em tudo: tokens, web, social, Canva, e-mail, image-prompts)
+   - Surface scale rebaseada sobre grafite: #161B26 / #1C2333 / #232B3B / #2A3444 (= LP --bg-card / --bg-card-hover / derivados / border)
+   - Text alinhada a LP: --text-primary #E6EDF3, --text-secondary #8B949E, --text-muted #6E7681 (gray-200/gray-500 derivados)
+   - Border: default #2A3444, hover #3A4554, + novo --border-focus #6f32b1
+   - Semanticos VIVOS (LP): --success #22C55E, --warning #F59E0B, --error #EF4444
+   - Glass scale rgba rebaseada navy (28,42,74) → grafite (22,27,38 = #161B26)
+   - NOVO --purple-on-dark #c084fc (destaque hero, 7.1:1 vs #0B0E14, AA — NAO usar como fill de botao)
+   - NOVO --gradient-purple-deep (roxo profundo → canonical)
+   - NOVO bloco [data-theme="light"] (tema light opt-in, espelha LP globals.css)
+   Historico:
+   - v2.5 (2026-05-24): teal (#2DD4BF) → roxo (#6f32b1); --teal-* → --purple-*; ramps OKLCH purple/royal-blue/gold; gradientes vibrant/premium
    - DNA preservado: Sora+Inter, glass scale 3-niveis, transitions, utility classes
-   Extensao 2026-05-28 (aditiva, nada removido):
-   - Ramp OKLCH purple-50..950 (700 = --purple canonical #6f32b1)
-   - Sinergia ResultX: --royal-blue-* (acento CTAs) + --gold-* (acento pricing) com ramps OKLCH
-   - Gradientes --gradient-purple-vibrant (roxo→royal-blue) e --gradient-purple-premium (roxo→ouro) — nomes iguais aos do app (globals.css)
    ============================================ */
 
 :root {
@@ -62,30 +64,33 @@
   --gold-900: #3e2f04;
   --gold-950: #2a1f02;
 
-  /* ---- Background Scale (navy ecossistema — alinhado theme-color Emprega+) ---- */
-  --bg: #1B2A4A;
-  --surface-1: #1c2a4a;
-  --surface-2: #243661;
-  --surface-3: #2d4378;
-  --surface-4: #36508f;
+  /* ---- Background Scale (grafite canonical — base unica do ecossistema; navy #1B2A4A aposentado 2026-06-26) ---- */
+  --bg: #0B0E14;
+  --surface-1: #161B26;   /* = LP --bg-card */
+  --surface-2: #1C2333;   /* = LP --bg-card-hover */
+  --surface-3: #232B3B;   /* derivado */
+  --surface-4: #2A3444;   /* = --border */
 
-  /* ---- Text ---- */
+  /* ---- Text (alinhada a LP globals.css) ---- */
   --white: #FFFFFF;
-  --gray-100: #E8E8EC;
-  --gray-200: #C8C8D0;
-  --gray-300: #A0A0AC;
-  --gray-400: #7E7E8A;
-  --gray-500: #5A5A66;
-  --gray-600: #2E2E36;
+  --text-primary: #E6EDF3;
+  --text-secondary: #8B949E;
+  --text-muted: #6E7681;
+  --gray-200: #C9D1D9;    /* derivado — texto de corpo claro */
+  --gray-500: #545D68;    /* derivado — labels sutis, timestamps */
 
   /* ---- Border ---- */
-  --border: #26262D;
-  --border-hover: #36363F;
+  --border: #2A3444;
+  --border-hover: #3A4554;
+  --border-focus: #6f32b1;   /* focus ring / borda de foco (purple canonical) */
 
-  /* ---- Semantic (apenas estados UI) ---- */
-  --success: #2D8B5C;
-  --error: #B83A3A;
-  --warning: #B8862A;
+  /* ---- Purple on dark (destaque hero) ---- */
+  --purple-on-dark: #c084fc;   /* texto/icone/borda roxo sobre fundo escuro — 7.1:1 vs #0B0E14 (AA). NAO usar como fill de botao */
+
+  /* ---- Semantic (vivos — alinhados a LP) ---- */
+  --success: #22C55E;
+  --error: #EF4444;
+  --warning: #F59E0B;
 
   /* ---- Typography ---- */
   --font-heading: 'Sora', sans-serif;
@@ -148,16 +153,16 @@
   --glow-brand: 0 0 20px rgba(111,50,177,0.25);
   --glow-brand-lg: 0 0 40px rgba(111,50,177,0.35), 0 0 80px rgba(111,50,177,0.15);
 
-  /* ---- Glassmorphism (rgba base navy ecossistema #1c2a4a = rgb(28,42,74)) ---- */
-  --glass-subtle-bg: rgba(28,42,74,0.4);
+  /* ---- Glassmorphism (rgba base grafite #161B26 = rgb(22,27,38)) ---- */
+  --glass-subtle-bg: rgba(22,27,38,0.4);
   --glass-subtle-blur: 12px;
   --glass-subtle-border: rgba(255,255,255,0.04);
 
-  --glass-bg: rgba(28,42,74,0.6);
+  --glass-bg: rgba(22,27,38,0.6);
   --glass-blur: 16px;
   --glass-border: rgba(255,255,255,0.06);
 
-  --glass-strong-bg: rgba(28,42,74,0.85);
+  --glass-strong-bg: rgba(22,27,38,0.85);
   --glass-strong-blur: 24px;
   --glass-strong-border: rgba(255,255,255,0.08);
 
@@ -172,6 +177,7 @@
      premium = C (roxo→ouro)       — pontual em pricing 'Recomendado'/upgrade */
   --gradient-purple-vibrant: linear-gradient(135deg, #6f32b1 0%, #2040a0 100%);
   --gradient-purple-premium: linear-gradient(135deg, #6f32b1 0%, #b29442 100%);
+  --gradient-purple-deep: linear-gradient(135deg, #5a2890 0%, #6f32b1 100%);   /* roxo profundo → canonical (fundos de section) */
 
   /* ---- Transitions ---- */
   --transition-fast: 150ms ease;
@@ -179,6 +185,37 @@
   --transition-slow: 300ms ease-out;
   --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
   --transition-reveal: 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================
+   TEMA LIGHT — opt-in via data-theme="light"
+   Espelha a LP real (globals.css). Default (sem atributo) = dark/grafite acima.
+   WCAG AA: text-primary 16:1, accent 6.86:1 (sobre branco).
+   ============================================ */
+[data-theme="light"] {
+  /* ---- Background Scale (light) ---- */
+  --bg: #FFFFFF;
+  --surface-1: #F8FAFB;   /* card */
+  --surface-2: #F0F3F5;   /* card hover */
+
+  /* ---- Border (light) ---- */
+  --border: #D1D9E0;
+  --border-focus: #6f32b1;
+
+  /* ---- Accent (light) — purple canonical ---- */
+  --purple: #6f32b1;
+  --purple-light: #7c3aed;   /* accent hover */
+  --purple-on-dark: #6f32b1; /* sobre fundo claro, mantem identidade roxa — 6.86:1 sobre branco */
+
+  /* ---- Text (light) ---- */
+  --text-primary: #0F1729;
+  --text-secondary: #4B5563;
+  --text-muted: #6B7280;
+
+  /* ---- Semantic (light) ---- */
+  --success: #16A34A;
+  --warning: #D97706;
+  --error: #DC2626;
 }
 
 /* ---- Utility classes ---- */
