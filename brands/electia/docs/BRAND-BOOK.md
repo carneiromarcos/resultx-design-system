@@ -1,6 +1,6 @@
 # Brand Book — Electia by Emprega+
 
-**Versão BB (conteúdo editorial §1-17):** 2.0 · **Data:** 2026-05-27 · **Classificação:** Interno
+**Versão BB (conteúdo editorial §1-17):** 2.2 · **Data:** 2026-06-27 · **Classificação:** Interno
 **Versão Brand Kit (este diretório):** 1.7.1 · **Data:** 2026-05-12 · ver [CHANGELOG.md](./CHANGELOG.md)
 
 > **Escopo de versionamento.** O **header do Brand Book** versiona apenas o conteúdo editorial das seções §1-17 abaixo. O **CHANGELOG.md** versiona o brand-kit inteiro (mockups, wireframes, specs, tokens, decisões D1-D6). Se você abriu este doc procurando o estado atual do brand-kit, vá direto ao CHANGELOG. Se procura a especificação visual oficial, está aqui.
@@ -8,6 +8,8 @@
 > **BB 2.0 (27/05) — Purple Refactor.** Migração completa de teal `#2DD4BF` para roxo `#6f32b1` como cor de acento primária da marca. Commit `8e4cadb` em produção (24/05), 126 arquivos atualizados. Gradients de sinergia ResultX: B (roxo→Royal Blue `#2040a0`) em CTAs + C (roxo→Ouro `#b29442`) em pricing "Recomendado". WCAG 2.2 (1.4.3/1.4.11/2.4.11) validado.
 >
 > **BB 2.1 (26/06) — Grafite canonical.** O experimento navy `#1B2A4A` (adotado em 24/05) foi **APOSENTADO**: grafite `#0B0E14` é a base única do ecossistema em tudo (tokens, web, social, Canva, e-mail, image-prompts), alinhada à LP real em produção. Adicionado o token `purple.on-dark` `#c084fc` (texto/ícone/borda roxo sobre fundo escuro — 7.1:1 vs `#0B0E14`, destaque do hero, nunca fill de botão). Tema light (`data-theme="light"`) documentado nos tokens. Semânticos alinhados aos vivos da LP.
+>
+> **BB 2.2 (27/06) — Theory colors OKLCH.** A tabela de cores por teoria comportamental (§4) foi alinhada aos valores canônicos **OKLCH** dos tokens (`--theory-*`) usados pelo DS/preview, substituindo os hex Tailwind `-400` legados. Famílias de cor preservadas (DISC azul, Tipologia Cognitiva violeta, Eneagrama âmbar, Big Five verde, Le Senne rosa, Motivadores ciano); apenas precisão/fonte atualizadas.
 
 ---
 
@@ -202,14 +204,16 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 
 ### Cores por Teoria Comportamental
 
-| Teoria | Cor | Hex | Tailwind |
-|--------|-----|-----|----------|
-| DISC | Azul | `#60A5FA` | blue-400 |
-| Tipologia Cognitiva | Roxo | `#A78BFA` | purple-400 |
-| Eneagrama | Ambar | `#FBBF24` | amber-400 |
-| Big Five | Verde | `#4ADE80` | green-400 |
-| Le Senne | Rosa | `#FB7185` | rose-400 |
-| Motivadores | Ciano | `#22D3EE` | cyan-400 |
+Valores canônicos em **OKLCH** (token-driven), alinhados ao DS/preview — usados em badges, barras, gráficos e cards. Tema dark; o light usa variantes mais escuras dos mesmos tokens.
+
+| Teoria | Família | OKLCH (dark) | Token |
+|--------|---------|--------------|-------|
+| DISC | Azul | `oklch(72% 0.18 240)` | `--theory-disc` |
+| Tipologia Cognitiva | Violeta | `oklch(75% 0.18 305)` | `--theory-mbti` |
+| Eneagrama | Âmbar | `oklch(78% 0.14 75)` | `--theory-enneagram` |
+| Big Five | Verde | `oklch(72% 0.16 145)` | `--theory-big-five` |
+| Le Senne | Rosa | `oklch(75% 0.14 10)` | `--theory-le-senne` |
+| Motivadores | Ciano | `oklch(60% 0.14 195)` | `--theory-motivadores` |
 
 ### Cores por Macro-Dimensão (Testes Situacionais)
 
