@@ -2,6 +2,8 @@
 
 > Mapa canônico de marcas, canais e relacionamentos. Atualizado em 2026-05-11.
 
+> Ponto de partida prático por marca: [STARTING-POINT.md](./STARTING-POINT.md)
+
 ---
 
 ## Entidade legal vs marcas comerciais
