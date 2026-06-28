@@ -1114,4 +1114,125 @@ Antes de exportar/postar qualquer peça:
 
 ---
 
+## 18. Identidade para Postagens Sociais
+
+> Esta seção extrai apenas a linguagem visual das referências: clima, cor, luz, profundidade e composição. Não extrai tipografia nem estilo de escrita.
+
+### 18.1 O que extraímos das referências
+
+- Atmosfera cinematográfica, escura e de alto contraste.
+- Luzes de recorte e contaminação de cor nas bordas da cena.
+- Fundo com profundidade: blur, bokeh, partículas, névoa e glow.
+- Cena humana como eixo principal: retratos, close-ups, grupos, perfis e olhares.
+- Sensação de movimento e conquista, sem parecer publicidade genérica.
+- Camadas visuais sobre a imagem, em vez de texto “solto” diretamente no fundo.
+
+### 18.2 O que não extraímos
+
+- Fontes da referência.
+- Tom de linguagem da peça.
+- Copy promocional ou vocabulário da marca de origem.
+- Paleta quente como identidade principal.
+- Visual de RH stock, sorriso forçado, sala corporativa limpa demais.
+
+### 18.3 Princípios de composição
+
+| Elemento | Diretriz |
+|----------|----------|
+| **Base** | Grafite profundo como fundo dominante |
+| **Foco** | Uma imagem principal por peça, com leitura imediata |
+| **Assimetria** | Texto e sujeito podem dividir a tela, mas sem competição visual |
+| **Profundidade** | Fundo desfocado, sujeito mais nítido, luz de borda e glow controlado |
+| **Volume** | Sobreposição de cards, faixas e molduras para dar peso editorial |
+| **Respiro** | Espaço negativo suficiente para a headline respirar |
+
+### 18.4 Como o texto aparece sobre a imagem
+
+- Headline curta, grande e com leitura imediata.
+- Texto principal preferencialmente em bloco único, no máximo 2 blocos por peça.
+- Alinhamento mais comum: esquerda, com exceção de layouts centralizados ou de capa.
+- Destaque de 1 a 3 palavras em roxo `#6f32b1`, azul elétrico ou lavanda `#c084fc` sobre fundo escuro.
+- Texto de apoio entra em card translúcido com blur, não direto em cima da área mais carregada da foto.
+- Bordas com stroke fino em gradient ou roxo suave, nunca semântica aleatória.
+- Quando houver número, data, contagem de série ou indicador de carrossel, ele entra em pill discreto no canto superior direito.
+
+### 18.5 Tratamento de imagem
+
+| Tratamento | Diretriz |
+|-----------|----------|
+| **Exposição** | Escurecer a base para dar leitura ao texto |
+| **Contraste** | Alto, com pretos profundos e highlights controlados |
+| **Saturação** | Reduzida; a cor aparece como luz, não como filtro inteiro |
+| **Glow** | Sutil, concentrado em bordas, olhos, telas ou elementos de destaque |
+| **Desfoque** | Usar em fundo, partículas e áreas periféricas |
+| **Recorte** | Preferir cortes próximos e dramáticos, não cenas abertas genéricas |
+
+### 18.6 Paleta visual das postagens
+
+| Papel | Cor | Uso |
+|------|-----|-----|
+| **Dominante** | Grafite `#0B0E14` | Fundo e massa visual |
+| **Texto** | Branco / off-white | Headline e corpo sobre fundo escuro |
+| **Marca** | Roxo `#6f32b1` | Destaques, bordas, links, ênfase |
+| **Apoio frio** | Azul elétrico / ciano / lavanda | Luz, aura, profundidade, não branding fixo |
+| **Premiação** | Âmbar / ouro | Só em badges de conquista, certificação ou status premium |
+
+### 18.7 Padrões de layout
+
+| Tipo de peça | Estrutura recomendada |
+|--------------|-----------------------|
+| **Cover de carrossel** | Imagem forte + headline grande + contador no canto superior direito |
+| **Manifesto** | Fundo escuro + frase curta + uma palavra destacada |
+| **Educacional** | Título grande + subtexto em card + 3 a 5 pontos curtos |
+| **Oportunidade / recrutamento** | Retrato humano + bloco de requisitos + CTA discreto |
+| **Anúncio de produto** | Dashboard / tela / mockup + headline + label de contexto |
+
+### 18.8 Regras de consistência
+
+- A peça precisa parecer parte da mesma família, mesmo mudando o assunto.
+- Cada post deve ter uma hierarquia clara: foco, mensagem, suporte e ação.
+- A imagem não pode disputar com o texto.
+- O brilho existe para guiar o olhar, não para decorar.
+- Se a peça precisar de mais de dois blocos longos de texto, o layout está errado.
+
+### 18.9 Templates base de postagem
+
+#### Template A: Capa de carrossel
+
+- Fundo: retrato ou cena humana em close, com contraste alto.
+- Composição: sujeito em um lado, headline no outro, sem centralizar tudo.
+- Texto: 1 frase principal + 1 apoio curto.
+- Destaque: 1 palavra em roxo ou lavanda para criar ancoragem visual.
+- Sinalização: pill discreto com `01` ou `1/5` no canto superior direito.
+- Uso: abertura de série, manifesto, teaser de conteúdo.
+
+#### Template B: Peça manifesto
+
+- Fundo: grafite com textura, partículas ou luz abstrata.
+- Composição: bloco de texto dominante com pouco ruído visual.
+- Texto: frase curta e forte, ocupando a área central ou superior.
+- Destaque: uma palavra em cor de acento, nunca mais que duas.
+- Sinalização: opcional, somente se a peça fizer parte de uma sequência.
+- Uso: posicionamento, opinião, virada de percepção.
+
+#### Template C: Oportunidade ou anúncio
+
+- Fundo: retrato profissional ou cena de trabalho, com recorte dramático.
+- Composição: imagem ocupando metade ou mais da peça, com card textual sobreposto.
+- Texto: título claro + bloco de requisitos ou contexto + CTA discreto.
+- Destaque: ênfase controlada em uma linha só, para não virar peça comercial genérica.
+- Sinalização: selo pequeno de contexto, como vaga, área ou etapa.
+- Uso: recrutamento, chamada de ação, anúncio de disponibilidade.
+
+#### Template D: Educacional
+
+- Fundo: imagem tecnológica, dashboard, interface ou detalhe de produto.
+- Composição: texto em bloco superior ou lateral, com espaço para leitura.
+- Texto: título + 3 pontos curtos + fechamento direto.
+- Destaque: número, dado ou palavra-chave em roxo.
+- Sinalização: se houver série, usar indicador discreto no canto.
+- Uso: explicação de conceito, feature, dado ou insight.
+
+---
+
 *Electia by Emprega+ — A pessoa certa no lugar certo.*

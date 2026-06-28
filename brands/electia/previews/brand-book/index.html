@@ -18,8 +18,11 @@
     --text: #E6EDF3;
     --text-secondary: #8B949E;
     --text-muted: #6E7681;
-    --teal: #2DD4BF;
-    --teal-light: #5EEAD4;
+    --accent: #6f32b1;
+    --accent-hover: #a55eea;
+    --accent-on-dark: #c084fc;
+    --accent-muted: rgba(111, 50, 177, 0.15);
+    --gradient-vibrant: linear-gradient(135deg, #6f32b1 0%, #2040a0 100%);
   }
   html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
   body { font-size: 15px; line-height: 1.65; }
@@ -35,7 +38,8 @@
   .brand-bar .wm { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 22px; letter-spacing: -0.04em; color: var(--text); }
   .brand-bar .by { font-family: 'Sora', sans-serif; font-weight: 400; font-size: 12px; color: var(--text); opacity: 0.55; }
   .brand-bar .em { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 14px; color: var(--text); opacity: 0.85; letter-spacing: -0.01em; }
-  .brand-bar .badge { margin-left: auto; font-family: 'Sora', sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-light); border: 1px solid rgba(45,212,191,0.4); padding: 4px 10px; border-radius: 999px; }
+  .brand-bar::after { content: ""; position: absolute; inset: auto 0 -1px; height: 1px; background: var(--gradient-vibrant); opacity: 0.7; }
+  .brand-bar .badge { margin-left: auto; font-family: 'Sora', sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-on-dark); border: 1px solid rgba(165,94,234,0.45); background: var(--accent-muted); padding: 4px 10px; border-radius: 999px; }
 
   .layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); max-width: 1300px; margin: 0 auto; gap: 40px; padding: 32px 24px 80px; }
 
@@ -47,22 +51,22 @@
     font-size: 12px;
     line-height: 1.7;
   }
-  .toc h2 { font-family: 'Sora', sans-serif; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 14px; font-weight: 600; }
+  .toc h2 { font-family: 'Sora', sans-serif; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-on-dark); margin-bottom: 14px; font-weight: 600; }
   .toc a { display: block; padding: 4px 10px; color: var(--text-secondary); text-decoration: none; border-left: 2px solid transparent; border-radius: 0 4px 4px 0; transition: all 0.15s; }
-  .toc a:hover { color: var(--text); border-left-color: var(--teal); background: rgba(45,212,191,0.06); }
-  .toc a.active { color: var(--teal-light); border-left-color: var(--teal); background: rgba(45,212,191,0.1); font-weight: 500; }
+  .toc a:hover { color: var(--text); border-left-color: var(--accent-hover); background: var(--accent-muted); }
+  .toc a.active { color: var(--accent-on-dark); border-left-color: var(--accent-hover); background: var(--accent-muted); font-weight: 500; }
 
   .content { max-width: 760px; }
   .content h1 { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 34px; letter-spacing: -0.02em; margin-bottom: 12px; line-height: 1.2; }
   .content h2 { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 24px; letter-spacing: -0.01em; margin-top: 56px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); scroll-margin-top: 90px; }
   .content h3 { font-family: 'Sora', sans-serif; font-weight: 600; font-size: 18px; margin-top: 32px; margin-bottom: 12px; color: var(--text); }
-  .content h4 { font-family: 'Sora', sans-serif; font-weight: 600; font-size: 15px; margin-top: 20px; margin-bottom: 8px; color: var(--teal-light); }
+  .content h4 { font-family: 'Sora', sans-serif; font-weight: 600; font-size: 15px; margin-top: 20px; margin-bottom: 8px; color: var(--accent-on-dark); }
   .content p { margin-bottom: 14px; color: var(--text); }
   .content p strong { color: var(--text); font-weight: 600; }
-  .content em { color: var(--teal-light); font-style: normal; font-weight: 500; }
+  .content em { color: var(--accent-on-dark); font-style: normal; font-weight: 500; }
   .content blockquote {
-    border-left: 3px solid var(--teal);
-    background: rgba(45,212,191,0.06);
+    border-left: 3px solid var(--accent-hover);
+    background: var(--accent-muted);
     padding: 14px 18px; margin: 18px 0;
     border-radius: 0 8px 8px 0;
     color: var(--text);
@@ -74,7 +78,7 @@
     background: var(--surface-2);
     padding: 2px 6px;
     border-radius: 4px;
-    color: var(--teal-light);
+    color: var(--accent-on-dark);
   }
   .content pre {
     background: var(--surface-1);
@@ -98,11 +102,11 @@
     overflow: hidden;
     border: 1px solid var(--border);
   }
-  .content th { background: var(--surface-2); padding: 10px 14px; text-align: left; font-family: 'Sora', sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--teal-light); border-bottom: 1px solid var(--border); }
+  .content th { background: var(--surface-2); padding: 10px 14px; text-align: left; font-family: 'Sora', sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-on-dark); border-bottom: 1px solid var(--border); }
   .content td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
   .content tr:last-child td { border-bottom: none; }
-  .content tr:hover td { background: rgba(45,212,191,0.02); }
-  .content a { color: var(--teal-light); text-decoration: none; border-bottom: 1px dashed rgba(94,234,212,0.4); }
+  .content tr:hover td { background: rgba(111,50,177,0.04); }
+  .content a { color: var(--accent-on-dark); text-decoration: none; border-bottom: 1px dashed rgba(192,132,252,0.45); }
   .content a:hover { border-bottom-style: solid; }
   .content hr { border: none; border-top: 1px solid var(--border); margin: 56px 0; }
 
@@ -120,7 +124,7 @@
   <span class="wm">electia</span>
   <span class="by">by</span>
   <span class="em">emprega+</span>
-  <span class="badge">Brand Book v1.3</span>
+  <span class="badge">Brand Book v2.1</span>
 </div>
 
 <div class="layout">
@@ -140,7 +144,7 @@
 <script>
   async function loadBrandBook() {
     try {
-      const resp = await fetch('../docs/BRAND-BOOK.md');
+      const resp = await fetch('../../docs/BRAND-BOOK.md');
       if (!resp.ok) throw new Error('HTTP ' + resp.status);
       const md = await resp.text();
       const html = marked.parse(md, { gfm: true, breaks: false });
