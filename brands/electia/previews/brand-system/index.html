@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 <title>Electia · Design System + Brand Book</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236f32b1'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='monospace' font-size='38' font-weight='700' fill='white'%3Ee%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -181,7 +184,7 @@
 <body>
 <header class="topbar">
   <span class="wordmark">electia</span><span class="by">by</span><span class="parent-brand">emprega+</span>
-  <span class="doc-badge">Brand System · v2.6</span>
+  <span class="doc-badge">Brand System · v2.7</span>
   <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐ <span id="themeLabel">dark</span></button>
 </header>
 
@@ -199,10 +202,65 @@
   </div>
 </section>
 
+<section class="hero" style="padding:24px 24px 8px;border-bottom:0;">
+  <div class="hero-inner" id="hub">
+    <p class="eyebrow">Hub principal · uma página só</p>
+    <h2 style="max-width:860px;font-size:clamp(2rem,4vw,3rem);margin-top:6px;">Brand Book, Design System, Screens e References em um único lugar.</h2>
+    <p class="hero-copy">Este é o ponto de acesso que você deve consultar primeiro. Os quatro blocos abaixo concentram o que está validado para a Electia e evitam espalhar o trabalho em versões soltas.</p>
+    <div class="hero-meta">
+      <span class="pill">1 página <b>única</b></span>
+      <span class="pill">4 blocos <b>canônicos</b></span>
+      <span class="pill">screens <b>validadas</b></span>
+      <span class="pill">ref. local <b>central</b></span>
+    </div>
+  </div>
+</section>
+
+<section style="max-width:1120px;margin:0 auto;padding:0 24px 18px;">
+  <div class="cards">
+    <div class="card">
+      <h3>1. Brand Book</h3>
+      <p>Identidade, narrativa, uso do nome, logo e direção verbal da Electia.</p>
+      <div class="button-row" style="margin-top:14px;">
+        <a class="btn btn-primary" href="#brand-book">Abrir Brand Book</a>
+        <a class="btn btn-secondary" href="#ds-components">Ir para DS</a>
+      </div>
+    </div>
+    <div class="card">
+      <h3>2. Design System</h3>
+      <p>Tokens, superfícies, tipografia, botões e componentes que já viraram padrão.</p>
+      <div class="button-row" style="margin-top:14px;">
+        <a class="btn btn-primary" href="#ds-components">Abrir componentes</a>
+        <a class="btn btn-secondary" href="#ds-surfaces">Ver tokens</a>
+      </div>
+    </div>
+    <div class="card">
+      <h3>3. Screens</h3>
+      <p>Telas validadas como parte da Electia. A base aqui é a navegação real do produto.</p>
+      <div class="button-row" style="margin-top:14px; gap:8px;">
+        <a class="btn btn-secondary" href="http://127.0.0.1:8766/resultx/design-system/demos/login.html" target="_blank" rel="noreferrer">Login</a>
+        <a class="btn btn-secondary" href="http://127.0.0.1:8766/resultx/design-system/demos/dashboard.html" target="_blank" rel="noreferrer">Dashboard</a>
+        <a class="btn btn-secondary" href="http://127.0.0.1:8766/resultx/design-system/demos/candidatos.html" target="_blank" rel="noreferrer">Candidatos</a>
+        <a class="btn btn-secondary" href="http://127.0.0.1:8766/resultx/design-system/demos/triagem.html" target="_blank" rel="noreferrer">Triagem</a>
+        <a class="btn btn-secondary" href="http://127.0.0.1:8766/resultx/design-system/demos/employer-jobs.html" target="_blank" rel="noreferrer">Vagas</a>
+        <a class="btn btn-secondary" href="http://127.0.0.1:8766/resultx/design-system/demos/employer-job-applicants.html" target="_blank" rel="noreferrer">Na vaga</a>
+      </div>
+    </div>
+    <div class="card">
+      <h3>4. References</h3>
+      <p>Moodboard, referências visuais e a triagem local para não se perder entre versões.</p>
+      <div class="button-row" style="margin-top:14px;">
+        <a class="btn btn-primary" href="#social-moodboard">Abrir moodboard</a>
+        <a class="btn btn-secondary" href="http://127.0.0.1:8766/_triagem-marcas/index.html" target="_blank" rel="noreferrer">Triagem local</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="shell">
   <nav class="toc" aria-label="Navegação da documentação">
     <p class="toc-label">Design System</p>
-    <a href="#ds-surfaces">01 · Superfícies</a><a href="#ds-accent">02 · Accent & texto</a><a href="#ds-semantic">03 · Semânticas</a><a href="#ds-gradients">04 · Gradientes</a><a href="#ds-theory">05 · Theory colors</a><a href="#ds-type">06 · Tipografia</a><a href="#ds-buttons">07 · Botões</a><a href="#ds-components">08 · Componentes</a>
+    <a href="#hub">00 · Hub</a><a href="#ds-surfaces">01 · Superfícies</a><a href="#ds-accent">02 · Accent & texto</a><a href="#ds-semantic">03 · Semânticas</a><a href="#ds-gradients">04 · Gradientes</a><a href="#ds-theory">05 · Theory colors</a><a href="#ds-type">06 · Tipografia</a><a href="#ds-buttons">07 · Botões</a><a href="#ds-components">08 · Componentes</a>
     <p class="toc-label">Aplicações</p>
     <a href="#social-moodboard">09 · Social & moodboard</a><a href="#formats">10 · Formatos & banners</a>
     <p class="toc-label">Brand Book</p>
@@ -217,7 +275,7 @@
     <section class="ds-section" id="ds-theory"><div class="section-head"><span class="section-num">05</span><div><h2>Theory colors</h2><p class="section-desc">Cor semântica por teoria comportamental para badges, barras, gráficos e cards.</p></div></div><div class="badges" id="theoryBadges"></div></section>
     <section class="ds-section" id="ds-type"><div class="section-head"><span class="section-num">06</span><div><h2>Tipografia</h2><p class="section-desc">Sora para display, Inter para corpo/UI e JetBrains Mono para dados, wordmark e IDs.</p></div></div><div class="type-row"><span class="type-label">Sora · display · 800</span><span style="font:800 3rem 'Sora'">Avalie com profundidade</span></div><div class="type-row"><span class="type-label">Sora · headline · 700</span><span style="font:700 1.75rem 'Sora'">Perfil comportamental do candidato</span></div><div class="type-row"><span class="type-label">Inter · body · 400</span><span style="font-size:1.0625rem">Inter sustenta corpo, labels e controles em telas densas de dados.</span></div><div class="type-row"><span class="type-label">JetBrains Mono · 500</span><span class="mono" style="color:var(--accent-on-dark)">electia · APEX 8.5 /100 · #6f32b1 · id_4f8a</span></div></section>
     <section class="ds-section" id="ds-buttons"><div class="section-head"><span class="section-num">07</span><div><h2>Botões</h2><p class="section-desc">Primary usa o gradiente Vibrant com glow roxo.</p></div></div><div class="button-row"><button class="btn btn-primary">Primary</button><button class="btn btn-secondary">Secondary</button><button class="btn btn-danger">Danger</button><button class="btn btn-ghost">Ghost</button><button class="btn btn-primary" disabled>Disabled</button></div></section>
-    <section class="ds-section" id="ds-components"><div class="section-head"><span class="section-num">08</span><div><h2>Componentes</h2><p class="section-desc">Cards, inputs, progress bars por teoria e score display.</p></div></div><div class="cards"><div class="card"><h3>Card padrão</h3><p>bg-card · border-default · radius 16 · padding 24</p><input class="field" placeholder="Input — foco mostra ring roxo" /><input class="field" placeholder="Outro campo…" /></div><div class="card"><h3>Resultados</h3><p>Escalas preservam a cor semântica da teoria.</p><div class="progress"><div class="progress-label"><span>DISC · Dominância</span><span class="mono">82</span></div><div class="track"><div class="fill" style="width:82%;background:var(--theory-disc)"></div></div></div><div class="progress"><div class="progress-label"><span>Big Five · Abertura</span><span class="mono">67</span></div><div class="track"><div class="fill" style="width:67%;background:var(--theory-bigfive)"></div></div></div></div><div class="card"><span class="mono" style="color:var(--text-muted);font-size:11px;letter-spacing:.1em">APEX SCORE</span><div class="score">8.5<small> /100</small></div><div class="progress"><div class="track"><div class="fill" style="width:85%;background:var(--grad-vibrant)"></div></div></div></div></div></section>
+    <section class="ds-section" id="ds-components"><div class="section-head"><span class="section-num">08</span><div><h2>Componentes</h2><p class="section-desc">Cards, inputs, progress bars por teoria, score display e telas canônicas do produto.</p></div></div><div class="cards"><div class="card"><h3>Card padrão</h3><p>bg-card · border-default · radius 16 · padding 24</p><input class="field" placeholder="Input — foco mostra ring roxo" /><input class="field" placeholder="Outro campo…" /></div><div class="card"><h3>Resultados</h3><p>Escalas preservam a cor semântica da teoria.</p><div class="progress"><div class="progress-label"><span>DISC · Dominância</span><span class="mono">82</span></div><div class="track"><div class="fill" style="width:82%;background:var(--theory-disc)"></div></div></div><div class="progress"><div class="progress-label"><span>Big Five · Abertura</span><span class="mono">67</span></div><div class="track"><div class="fill" style="width:67%;background:var(--theory-bigfive)"></div></div></div></div><div class="card"><span class="mono" style="color:var(--text-muted);font-size:11px;letter-spacing:.1em">APEX SCORE</span><div class="score">8.5<small> /100</small></div><div class="progress"><div class="track"><div class="fill" style="width:85%;background:var(--grad-vibrant)"></div></div></div></div></div><div class="cards" style="margin-top:18px"><div class="card"><h3>Telas Electia</h3><p>Entradas canônicas já validadas para o DS visual.</p><ul style="padding-left:18px;margin:0;line-height:1.8"><li><a href="../../../../demos/login.html">Login — Electia</a></li><li><a href="../../../../demos/dashboard.html">Dashboard — Electia</a></li><li><a href="../../../../demos/candidatos.html">Candidatos — Electia</a></li><li><a href="../../../../demos/triagem.html">Triagem — Electia</a></li><li><a href="../../../../demos/employer-jobs.html">Vagas — Electia + IMO</a></li><li><a href="../../../../demos/employer-job-applicants.html">Candidatos na vaga — Electia + IMO</a></li></ul></div><div class="card"><h3>Leitura operacional</h3><p>Essas telas não são apenas mockups: elas já representam o padrão de navegação, hierarquia e densidade que a Electia precisa manter no app.</p><p style="color:var(--text-muted);margin-top:12px">O próximo passo é tratar essas páginas como catálogo visual vivo, para você consultar sem abrir manualmente arquivo por arquivo.</p></div></div></section>
 
     <section class="ds-section" id="social-moodboard">
       <div class="section-head"><span class="section-num">09</span><div><h2>Social &amp; moodboard</h2><p class="section-desc">Foto real dessaturada + toque de luz tech no canto (sem duotone pesado) + texto sobre imagem. Cada peça usa uma cor do DS (roxo · azul · ouro). Fontes sempre as nossas; copy é placeholder — a voz definimos depois.</p></div></div>
