@@ -290,7 +290,12 @@
   background: var(--bg-surface-1);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  /* overflow-x: auto (era `overflow: hidden`) — tabelas largas precisam rolar
+     em telas estreitas. Com `hidden`, o conteúdo excedente ficava inacessível:
+     sem barra de rolagem e sem gesto de swipe, o usuário perdia as colunas da
+     direita. overflow-y segue `hidden` para preservar o clip do border-radius. */
+  overflow-x: auto;
+  overflow-y: hidden;
   box-shadow: var(--elevation-1);
 }
 .dl-table {

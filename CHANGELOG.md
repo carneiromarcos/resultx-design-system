@@ -5,6 +5,21 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+## [2.1.2] - 2026-07-27
+
+### Fixed
+- **`.dl-table-wrap` — tabelas largas voltam a rolar em telas estreitas.** A regra usava `overflow: hidden`, que suprime barra de rolagem *e* gesto de swipe: o conteúdo excedente existia no DOM mas ficava inalcançável para o usuário. Medido no FinanceX (tela de Lançamentos, 7 colunas) a 390px de largura: `clientWidth` 324px contra `scrollWidth` 881px — **63% da tabela inacessível**, incluindo as colunas de status, valor e ações. Agora `overflow-x: auto` + `overflow-y: hidden` (o eixo Y segue clipado para preservar o `border-radius`).
+- **`version` no `package.json` ressincronizada.** A tag `v2.1.1` foi publicada carregando `version: 2.1.0` internamente. Corrigido para `2.1.2`.
+
+### Notas de compatibilidade
+- Mudança isolada em `.dl-table-wrap`. Consumidores: **FinanceX** (15 usos) e **Electia** (0 usos — importa `components/data-cards.css` mas não usa a classe). Nenhuma outra regra foi tocada.
+- ⚠️ **Dívida de histórico:** `components/data-cards.css` não existe em `main`. A tag `v2.1.1` — que os dois produtos consomem — está fora da linha da `main`, e esta `v2.1.2` foi cortada a partir dela para não remover o arquivo dos produtos. A reconciliação de `main` com a linha de release segue pendente.
+
+## [2.1.1] - 2026-04-26
+
+### Fixed
+- `components/data-cards.css` adicionado ao array `files` do `package.json` (commit `bd06bd2`), permitindo que os produtos importem `resultx-design-system/components/data-cards`. Entrada registrada retroativamente — a tag original não trouxe changelog nem bump de versão.
+
 ## [2.1.0] - 2026-04-25
 
 Adiciona **camada Data Layer** ao DS: 3 themes opt-in (premium-light, sober-dark, vibrant-dark) e 10 componentes essenciais para dashboards/visualização de dados, inspirados em TalentaSync, Tivo e AdminDASH.
