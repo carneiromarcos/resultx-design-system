@@ -12,6 +12,9 @@
   --emp-gold: #c4993b;
   --emp-gold-warm: #c49a3c;
   --emp-gold-dark: #a07b2a;
+  --emp-purple: #7c3aed;
+  --emp-purple-light: #a855f7;
+  --emp-purple-soft: rgba(124, 58, 237, 0.12);
 
   /* ---- Backgrounds (navy — theme-color oficial) ---- */
   --emp-bg: #1B2A4A;
@@ -89,6 +92,8 @@
   --emp-shadow-lg: 0 10px 30px rgba(27, 42, 74, 0.12);
   --emp-glow-brand: 0 0 20px rgba(196, 153, 59, 0.20);
   --emp-glow-brand-lg: 0 0 40px rgba(196, 153, 59, 0.25), 0 0 80px rgba(196, 153, 59, 0.10);
+  --emp-glow-purple: 0 0 20px rgba(124, 58, 237, 0.20);
+  --emp-glow-purple-lg: 0 0 40px rgba(124, 58, 237, 0.28), 0 0 80px rgba(124, 58, 237, 0.12);
 
   /* ---- Layout (synced from Stitch) ---- */
   --emp-container-max: 1200px;

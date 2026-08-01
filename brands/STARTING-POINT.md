@@ -19,6 +19,7 @@ Marca-mãe do ecossistema de empregabilidade. Base visual compartilhada com IMO 
 ### Canonical
 
 - [Brand Book Emprega+](./emprega-mais/docs/BRAND-BOOK.md)
+- [Creative Models Emprega+](../../emprega-mais/emprega-mais-imo/public/docs/creative-system/)
 - [Design System Emprega+](./emprega-mais/docs/DESIGN-SYSTEM.md)
 - [Social Media Guide](./emprega-mais/docs/SOCIAL-MEDIA-GUIDE.md)
 - [Image Prompts](./emprega-mais/docs/IMAGE-PROMPTS.md)
@@ -57,9 +58,10 @@ Produto de editais, concursos e processos seletivos. Visual atual deve herdar a 
 ### Canonical
 
 - [Brand doc](../../emprega-mais/edital-hub/EditalHub%20_%20Gest%C3%A3o%20Inteligente%20de%20Processos%20Seletivos.md)
-- [Design System Emprega+ Editais](../../emprega-mais/edital-hub/docs/design-system/editais-ds.md)
+- [Design System EditalHub](../../emprega-mais/edital-hub/docs/design-system/editais-ds.md)
 - [Concursos Design System](../../emprega-mais/edital-hub/docs/design-system/concursos-design-system.md)
 - [Preview do DS](../../emprega-mais/edital-hub/docs/design-system/preview.html)
+- [Creative Models EditalHub](../../emprega-mais/edital-hub/public/docs/creative-system/)
 - [README do projeto](../../emprega-mais/edital-hub/README.md)
 - [AGENTS.md do projeto](../../emprega-mais/edital-hub/AGENTS.md)
 
@@ -148,13 +150,13 @@ Marca comercial da consultoria. Brand kit ainda está em estágio inicial, mas h
 
 ### Adjacent
 
-- `../../consulting/tetra-tech/CLAUDE.md`
-- `../../consulting/tetra-tech/portfolio/docs/`
-- `../../consulting/tetra-tech/credit-risk/docs/`
-- `../../consulting/tetra-tech/receivables-recovery/docs/`
-- `../../consulting/tetra-tech/logistics/docs/`
-- `../../consulting/tetra-tech/kpis/docs/`
-- `../../consulting/tetra-tech/platform/tetra-app/README.md`
+- `../../resultx/consultoria/tetra-tech/CLAUDE.md`
+- `../../resultx/consultoria/tetra-tech/portfolio/docs/`
+- `../../resultx/consultoria/tetra-tech/credit-risk/docs/`
+- `../../resultx/consultoria/tetra-tech/receivables-recovery/docs/`
+- `../../resultx/consultoria/tetra-tech/logistics/docs/`
+- `../../resultx/consultoria/tetra-tech/kpis/docs/`
+- `../../resultx/consultoria/tetra-tech/platform/tetra-app/README.md`
 - `../../consulting/mater-pizza/`
 
 ### O que já existe de bom

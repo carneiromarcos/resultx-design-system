@@ -10,7 +10,7 @@
   <style>
     /* ============================================
        EMPREGA+ BRAND GUIDELINES v1.0
-       Theme: Light (white + gold/navy accents)
+       Theme: Light (white + gold/navy accents + Electia purple)
        Extracted from design-system.html tokens
        ============================================ */
 
@@ -30,6 +30,9 @@
       --navy: hsl(221 46% 20%);
       --navy-dark: hsl(219 51% 12%);
       --gold: hsl(46 65% 52%);
+      --electia-purple: hsl(267 78% 58%);
+      --electia-purple-light: hsl(272 90% 68%);
+      --electia-purple-dark: hsl(263 55% 40%);
       --green: hsl(136 53% 43%);
       --gray: hsl(210 19% 60%);
       --text-primary: hsl(221 46% 20%);
@@ -43,6 +46,8 @@
       /* Gradients */
       --gradient-brand: linear-gradient(135deg, hsl(41 54% 50%) 0%, hsl(42 60% 58%) 100%);
       --gradient-brand-subtle: linear-gradient(135deg, hsl(41 54% 50% / 0.08) 0%, hsl(42 60% 58% / 0.08) 100%);
+      --gradient-electia: linear-gradient(135deg, hsl(263 55% 40%) 0%, hsl(267 78% 58%) 100%);
+      --gradient-electia-subtle: linear-gradient(135deg, hsl(263 55% 40% / 0.08) 0%, hsl(267 78% 58% / 0.08) 100%);
 
       /* Glassmorphism */
       --glass-bg: hsl(0 0% 100% / 0.7);
@@ -54,6 +59,8 @@
       /* Glow */
       --glow-brand: 0 0 20px hsl(41 54% 50% / 0.20);
       --glow-brand-lg: 0 0 40px hsl(41 54% 50% / 0.25), 0 0 80px hsl(41 54% 50% / 0.10);
+      --glow-electia: 0 0 20px hsl(267 78% 58% / 0.20);
+      --glow-electia-lg: 0 0 40px hsl(267 78% 58% / 0.25), 0 0 80px hsl(267 78% 58% / 0.10);
 
       /* Radius */
       --radius: 0.5rem;
@@ -202,6 +209,7 @@
       font-size: 0.625rem; font-weight: 600; vertical-align: middle;
     }
     .badge-b { background: var(--brand-dark); color: #fff; }
+    .badge-p { background: var(--electia-purple); color: #fff; }
 
     /* ---- GUIDELINE BLOCK ---- */
     .gblock {
@@ -227,6 +235,13 @@
       padding: 3rem; border-radius: var(--radius-xl); border: 1px solid var(--border);
     }
     .ltxt { font-family: var(--font-heading); font-weight: 800; text-decoration: none; }
+    .logo-mark {
+      display: block;
+      width: 100%;
+      max-width: 112px;
+      height: auto;
+      object-fit: contain;
+    }
 
     /* ---- CO-BRANDING ---- */
     .btree { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
@@ -405,15 +420,18 @@
   <div class="inner">
     <div class="slabel">02 / Logo</div>
     <h2 class="sheading">Logo e Variacoes</h2>
-    <p class="sdesc mb3">O logo Emprega+ e construido com a fonte Sora Extra Bold. O sinal "+" em gold e o elemento distintivo da marca, representando conexao e crescimento.</p>
+    <p class="sdesc mb3">O sistema de marca usa um wordmark tipografico para a assinatura Emprega+ e uma logomarca real para aplicacoes compactas. O gold continua como accent principal, e o roxo entra como cor de produto para Electia.</p>
 
     <div class="sub">Variacoes do Logo</div>
     <div class="g3" style="gap: 1.5rem; margin-bottom: 3rem;">
       <div>
-        <div class="lshow" style="background: var(--background); min-height: 140px;"><span class="ltxt" style="font-size: 2.5rem; color: var(--navy);">emprega<span style="color: var(--brand-dark);">+</span></span></div>
+        <div class="lshow" style="background: var(--background); min-height: 140px; flex-direction: column; gap: 1rem;">
+          <img class="logo-mark" src="../assets/emprega-plus-mark.png" alt="Logomarca real Emprega+">
+          <span class="ltxt" style="font-size: 2rem; color: var(--navy);">emprega<span style="color: var(--brand-dark);">+</span></span>
+        </div>
         <div style="margin-top: 0.75rem; text-align: center;">
-          <div style="font-family: var(--font-heading); font-weight: 600; font-size: 0.875rem;">Completa</div>
-          <div style="font-size: 0.75rem; color: var(--text-secondary);">Uso principal em fundos claros</div>
+          <div style="font-family: var(--font-heading); font-weight: 600; font-size: 0.875rem;">Logo real + wordmark</div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary);">Uso principal em fundos claros e institucionais</div>
         </div>
       </div>
       <div>
@@ -424,10 +442,13 @@
         </div>
       </div>
       <div>
-        <div class="lshow" style="background: var(--surface-1); min-height: 140px;"><span class="ltxt" style="font-size: 2.5rem; color: var(--gray);">emprega<span style="color: var(--gray);">+</span></span></div>
+        <div class="lshow" style="background: var(--surface-1); min-height: 140px; flex-direction: column; gap: 0.75rem;">
+          <span class="ltxt" style="font-size: 1.25rem; color: var(--navy); letter-spacing: 0.08em;">ELECTIA</span>
+          <div style="width: 64px; height: 64px; border-radius: 1rem; background: var(--gradient-electia); box-shadow: var(--glow-electia); display: flex; align-items: center; justify-content: center; color: #fff; font-family: var(--font-heading); font-size: 2rem; font-weight: 800;">+</div>
+        </div>
         <div style="margin-top: 0.75rem; text-align: center;">
-          <div style="font-family: var(--font-heading); font-weight: 600; font-size: 0.875rem;">Monocromatica</div>
-          <div style="font-size: 0.75rem; color: var(--text-secondary);">Contextos monocromaticos</div>
+          <div style="font-family: var(--font-heading); font-weight: 600; font-size: 0.875rem;">Electia</div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary);">Acento roxo para o produto B2B</div>
         </div>
       </div>
     </div>
@@ -449,6 +470,12 @@
       <div style="text-align: center;">
         <div class="lshow" style="width: 80px; height: 80px; margin: 0 auto; background: var(--surface-1); border-radius: var(--radius-xl);"><span class="ltxt" style="font-size: 2rem; color: var(--gray);">+</span></div>
         <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.5rem;">Mono</div>
+      </div>
+      <div style="text-align: center;">
+        <div class="lshow" style="width: 80px; height: 80px; margin: 0 auto; background: var(--gradient-electia); border-radius: var(--radius-xl); box-shadow: var(--glow-electia);">
+          <span class="ltxt" style="font-size: 1.6rem; color: #fff;">+</span>
+        </div>
+        <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.5rem;">Electia roxo</div>
       </div>
     </div>
 
@@ -474,6 +501,7 @@
           <li>Respeitar a area de protecao minima</li>
           <li>Usar fundo branco ou navy para contraste</li>
           <li>Manter o "+" sempre em destaque (gold ou branco)</li>
+          <li>Usar roxo somente nos contextos de produto Electia</li>
         </ul>
       </div>
       <div class="dont-b">
@@ -485,6 +513,7 @@
           <li>Usar sobre fundos que prejudiquem a legibilidade</li>
           <li>Separar o "+" do texto "emprega"</li>
           <li>Alterar a tipografia do logotipo</li>
+          <li>Trocar o gold da marca-mae pelo roxo do produto</li>
         </ul>
       </div>
     </div>
@@ -504,6 +533,14 @@
       <div class="sw"><div class="sw-c" style="background: hsl(42 60% 58%);"></div><div class="sw-i"><div class="sw-n">Brand Light</div><div class="sw-v">#D4AD55<br>hsl(42 60% 58%)</div></div></div>
       <div class="sw"><div class="sw-c" style="background: hsl(46 65% 52%);"></div><div class="sw-i"><div class="sw-n">Gold</div><div class="sw-v">#D4A928<br>hsl(46 65% 52%)</div></div></div>
       <div class="sw"><div class="sw-c" style="background: linear-gradient(135deg, hsl(41 54% 50%), hsl(42 60% 58%));"></div><div class="sw-i"><div class="sw-n">Gradient Brand</div><div class="sw-v">135deg Dark to Light</div></div></div>
+    </div>
+
+    <div class="sub">Sub-brand / Electia</div>
+    <div class="swatches" style="margin-bottom: 2.5rem;">
+      <div class="sw"><div class="sw-c" style="background: hsl(263 55% 40%);"></div><div class="sw-i"><div class="sw-n">Electia Purple Dark</div><div class="sw-v">#5B2E91<br>hsl(263 55% 40%)</div></div></div>
+      <div class="sw"><div class="sw-c" style="background: hsl(267 78% 58%);"></div><div class="sw-i"><div class="sw-n">Electia Purple</div><div class="sw-v">#8A3FF0<br>hsl(267 78% 58%)</div></div></div>
+      <div class="sw"><div class="sw-c" style="background: hsl(272 90% 68%);"></div><div class="sw-i"><div class="sw-n">Electia Purple Light</div><div class="sw-v">#B36CFF<br>hsl(272 90% 68%)</div></div></div>
+      <div class="sw"><div class="sw-c" style="background: linear-gradient(135deg, hsl(263 55% 40%), hsl(267 78% 58%));"></div><div class="sw-i"><div class="sw-n">Gradient Electia</div><div class="sw-v">135deg Dark to Light</div></div></div>
     </div>
 
     <div class="sub">Cores de Texto (Navy)</div>
@@ -799,7 +836,7 @@
   <div class="inner">
     <div class="slabel">10 / Co-branding</div>
     <h2 class="sheading">Arquitetura de Marca</h2>
-    <p class="sdesc mb3">Emprega+ e a marca-mae que abriga todos os produtos do ecossistema. Cada sub-marca herda os tokens visuais (paleta gold/navy, tipografia, glassmorphism) com diferenciacoes sutis.</p>
+    <p class="sdesc mb3">Emprega+ e a marca-mae que abriga todos os produtos do ecossistema. Cada sub-marca herda os tokens visuais principais (tipografia, glassmorphism, estrutura e consistencia), enquanto o gold continua como base e o roxo assume a diferenca de produto para Electia.</p>
 
     <div class="btree" style="margin-bottom: 3rem;">
       <div class="btree-parent">emprega<span style="opacity: 0.9;">+</span></div>
@@ -808,7 +845,7 @@
         <div class="bchild"><div class="bchild-t">B2G</div><div class="bchild-n">Gov</div><div class="bchild-d">IMO - Vagas para governos</div></div>
         <div class="bchild"><div class="bchild-t">C&amp;S</div><div class="bchild-n">Editais</div><div class="bchild-d">Concursos e seletivos</div></div>
         <div class="bchild"><div class="bchild-t">B2C</div><div class="bchild-n">PdV</div><div class="bchild-d">Profissional de Valor</div></div>
-        <div class="bchild"><div class="bchild-t">B2B</div><div class="bchild-n">Electia</div><div class="bchild-d">Assessments SaaS</div></div>
+        <div class="bchild" style="border-color: hsl(267 78% 58% / 0.25); box-shadow: 0 0 0 1px hsl(267 78% 58% / 0.08) inset;"><div class="bchild-t" style="color: var(--electia-purple);">B2B</div><div class="bchild-n">Electia</div><div class="bchild-d">Assessments SaaS / roxo</div></div>
       </div>
     </div>
 
@@ -830,7 +867,7 @@
             <li><strong>Gov:</strong> Enfase em navy, tom mais institucional</li>
             <li><strong>Editais:</strong> Foco em brand-dark, tom tecnico</li>
             <li><strong>PdV:</strong> Glassmorphism dark (tema proprio), tom motivacional</li>
-            <li><strong>Electia:</strong> Pode usar cor de acento propria mantendo gold como base</li>
+            <li><strong>Electia:</strong> Pode usar acento roxo proprio mantendo a arquitetura Emprega+ como base</li>
           </ul>
         </div>
       </div>
@@ -843,7 +880,7 @@
         <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.625rem 0; font-weight: 600;">Gov</td><td style="padding: 0.625rem 0; color: var(--text-secondary);">Emprega+ Gov ou apenas "Gov" em contexto interno</td></tr>
         <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.625rem 0; font-weight: 600;">Editais</td><td style="padding: 0.625rem 0; color: var(--text-secondary);">Emprega+ Editais ou "Concursos e Seletivos"</td></tr>
         <tr style="border-bottom: 1px solid var(--border);"><td style="padding: 0.625rem 0; font-weight: 600;">PdV</td><td style="padding: 0.625rem 0; color: var(--text-secondary);">Profissional de Valor (nunca abreviar em materiais externos)</td></tr>
-        <tr><td style="padding: 0.625rem 0; font-weight: 600;">Electia</td><td style="padding: 0.625rem 0; color: var(--text-secondary);">Electia by Emprega+ (em lancamento) ou apenas "Electia"</td></tr>
+        <tr><td style="padding: 0.625rem 0; font-weight: 600;">Electia</td><td style="padding: 0.625rem 0; color: var(--text-secondary);">Electia by Emprega+ (em lancamento) ou apenas "Electia" com acento roxo</td></tr>
       </table>
     </div>
   </div>
@@ -895,6 +932,19 @@
           <div class="mockup-d">Cartoes, folders, banners. Fundo branco, faixa gold no topo.</div>
         </div>
       </div>
+      <div class="mockup">
+        <div style="width: 100%; max-width: 240px;">
+          <div style="aspect-ratio: 1/1; background: var(--gradient-electia); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; position: relative; overflow: hidden; box-shadow: var(--glow-electia);">
+            <div style="position: absolute; inset: 0; background: radial-gradient(circle at 70% 20%, hsl(272 90% 68% / 0.35), transparent 40%);"></div>
+            <div style="text-align: center; color: #fff; position: relative; z-index: 1;">
+              <div style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800;">Electia</div>
+              <div style="font-size: 0.625rem; opacity: 0.85; margin-top: 0.25rem;">Assessments B2B</div>
+            </div>
+          </div>
+          <div class="mockup-l">Electia / Sub-brand</div>
+          <div class="mockup-d">Template de produto com roxo como cor de destaque e gold apenas como heranca da marca-mae.</div>
+        </div>
+      </div>
     </div>
 
     <div class="gblock" style="margin-bottom: 0;">
@@ -908,6 +958,7 @@
             <li>Glassmorphism em cards e overlays</li>
             <li>Manter contraste WCAG AA minimo</li>
             <li>Usar glow-brand em CTAs e elementos focais</li>
+            <li>Para Electia, trocar glow-brand por glow-electia e usar roxo como accent</li>
           </ul>
         </div>
         <div>

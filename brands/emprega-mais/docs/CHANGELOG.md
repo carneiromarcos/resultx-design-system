@@ -3,6 +3,30 @@
 Todas as mudancas notaveis neste design system serao documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
+## [1.2.0] - 2026-06-30
+
+### Brand Book → v1.2
+- Consolidada a leitura da marca-mãe Emprega+ com a família visual compartilhada IMO + EditalHub.
+- Padronizada a nomenclatura EditalHub no lugar de "Editais" nas camadas editoriais e de arquitetura.
+- Registrados os SVGs canônicos definidos neste ciclo para EditalHub e para a assinatura Emprega+.
+- Limpo o checklist canônico para refletir apenas Emprega+, IMO, EditalHub e Electia nos pontos de decisão.
+
+### Pendentes
+- Exportar os assets canônicos de logo para `assets/logo/` a partir do lockup aprovado.
+- Finalizar a sincronia visual de todos os previews públicos com a nomenclatura atual.
+
+## [1.1.0] - 2026-06-29
+
+### Brand Book → v1.1
+- Incorporada a leitura dos 7 SVGs de identidade recebidos neste ciclo.
+- Atualizado o sistema de logo para refletir o lockup premium preto/branco e o descriptor editorial “Concursos & Seleção”.
+- Adicionada a leitura visual de campanhas: navy/preto como base, gold como acento único, texto sobre foto com overlays suaves.
+- Criado o checklist canônico de consistência para validar peças Emprega+, IMO, Editais, Electia e PdV.
+
+### Pending
+- Exportar os assets canônicos de logo para `assets/logo/` a partir do lockup aprovado.
+- Atualizar os templates de campanha da frente Editais / Concursos & Seleção com a nova leitura premium.
+
 ## [1.0.0] - 2026-05-27
 
 ### Brand Book → v1.0 (todos os TBDs preenchidos)

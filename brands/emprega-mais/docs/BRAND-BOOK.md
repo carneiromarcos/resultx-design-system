@@ -1,6 +1,11 @@
 # Brand Book — Emprega+
 
-**Versão:** 1.0 | **Data:** 2026-05-27 | **Classificação:** Interno
+**Versão BB (conteúdo editorial §1-11):** 1.2 · **Data:** 2026-06-30 · **Classificação:** Interno
+**Versão Brand Kit (este diretório):** 1.2.0 · **Data:** 2026-06-30
+
+> **Escopo deste documento.** Este brand book consolida a identidade da marca-mãe Emprega+ e da sua família visual compartilhada: IMO e EditalHub. A estrutura segue a mesma lógica do brand book de Electia: essência, arquitetura, logo, paleta, tipografia, tom, sistema visual, aplicações e origem.
+>
+> **Base visual nova.** As referências SVG analisadas neste ciclo reforçam dois comportamentos permitidos para a família: lockup isolado e lockup com `by Emprega+`. A marca visual usa navy escuro/preto editorial como base, gold como único destaque e texto sobre imagem com caixas/overlays suaves.
 
 ---
 
@@ -22,6 +27,16 @@ A tagline acompanha a marca em materiais institucionais. Pode aparecer abaixo do
 
 Emprega+ existe pra ser a **infraestrutura digital da empregabilidade brasileira** — conectando os 3 lados (governos, empresas, profissionais) num so ecossistema, ate aqui dispersos em ferramentas isoladas e processos burocraticos.
 
+### Leitura da identidade visual
+
+O sistema visual da Emprega+ precisa sustentar três ideias ao mesmo tempo:
+
+1. **Autoridade institucional** — a marca conversa com governo, RH e lideranças, então precisa parecer confiável e madura.
+2. **Energia de campanha** — posts, anúncios e banners precisam ter impacto rápido, com contraste alto e chamadas diretas.
+3. **Clareza operacional** — a interface e o material editorial precisam organizar informação sem ruído.
+
+As referências recentes deixam isso explícito: wordmark branco sobre fundo preto/navy, descriptor editorial em serif, gold como acento e fotos com overlay escuro para texto legível.
+
 ### Missao
 
 Conectar pessoas ao trabalho certo, com transparencia e agilidade — para o gestor publico, para a empresa e para o candidato.
@@ -34,16 +49,17 @@ Ser a infraestrutura padrao da empregabilidade no Brasil — onde prefeituras, e
 
 > Conexao com transparencia. Decisao com dados. Resultado real — nao promessa.
 
-### 4 frentes do ecossistema
+### Família visual compartilhada
 
-Emprega+ se materializa em 4 produtos complementares:
+Emprega+ se materializa como marca-mãe e ponto de origem da família visual compartilhada:
 
-| Produto | Publico | O que faz |
-|---------|---------|-----------|
-| **Gov / IMO B2G** | Prefeituras e governos | Portal de vagas + intermediacao mao de obra setor publico |
-| **Editais / C&S** | Setor publico | Gestao completa de concursos e processos seletivos |
-| **Electia B2B SaaS** | Empresas privadas | Assessments comportamentais (DISC, Big Five, MBTI, Eneagrama, Le Senne) |
-| **PdV B2C** | Profissionais | Comunidade de desenvolvimento profissional (workshops, conteudo, networking) |
+| Marca / frente | Público | Nome de uso | O que faz |
+|----------------|---------|-------------|-----------|
+| **Emprega+** | Ecossistema / institucional | Emprega+ | Infraestrutura digital da empregabilidade |
+| **IMO** | Prefeituras e governos | Emprega+ IMO | Portal de vagas + intermediação de mão de obra setor público |
+| **EditalHub** | Setor público | EditalHub ou EditalHub by Emprega+ | Gestão de editais, concursos e processos seletivos |
+
+> Electia tem brand book próprio e linguagem própria. Não entra neste documento de forma operacional.
 
 ### Valores
 
@@ -61,75 +77,109 @@ Emprega+ se materializa em 4 produtos complementares:
 ```
 Emprega+ (marca-mãe — ecossistema empregabilidade)
 ├── IMO         (B2G empregabilidade municipal — herda visual Emprega+)
-├── Editais     (concursos públicos — herda visual Emprega+, em reformulação)
-└── Electia by Emprega+  (B2B SaaS assessments — identidade própria com endosso)
+└── EditalHub   (concursos públicos — herda visual Emprega+; pode usar by Emprega+)
 ```
 
 **Regras de co-branding** (ver também `brands/README.md`):
-- IMO e Editais usam visual Emprega+ direto (sem brand kit próprio)
-- Electia usa identidade própria (teal + JetBrains Mono) com endosso "by Emprega+"
-- PdV não é produto Emprega+ — é personal-brand separada (vive no perfil pessoal Marcos)
+- IMO usa visual Emprega+ direto (sem brand kit próprio)
+- EditalHub usa a mesma família visual Emprega+ e pode aparecer com ou sem endosso “by Emprega+”
+- Electia usa identidade própria (brand book próprio) com endosso "by Emprega+"
+
+### Linguagem por frente
+
+| Frente | Palavra-chave | Tom de uso | Exemplo de descriptor |
+|--------|---------------|------------|-----------------------|
+| IMO | Serviço público | Institucional, objetivo, útil | “gestão de vagas e encaminhamento” |
+| EditalHub | Processo seletivo | Técnico, claro, organizado | “gestão de editais e concursos” |
+| Emprega+ institucional | Ecossistema | Autoritativo, claro, amplo | “infraestrutura digital da empregabilidade” |
 
 ---
 
 ## 3. Logo e Variações
 
-### Wordmark
+### Sistema de wordmark
 
-O logo da Emprega+ é um wordmark tipográfico: **`emprega+`** composto em **Sora Extra Bold (800)**. O sinal `+` é o elemento distintivo da marca e deve sempre aparecer em gold (`#c4993b`), independentemente da variante.
+O wordmark oficial da Emprega+ é o lockup tipográfico **`emprega+`**. A marca se apoia em duas camadas:
 
-### 3 Variantes principais
+- **wordmark principal:** `emprega+`
+- **descriptor editorial:** `EditalHub` ou `EditalHub by Emprega+` quando o contexto pede a frente de editais/processos seletivos
 
-| Variante | Texto | Sinal `+` | Fundo recomendado | Uso |
-|----------|-------|-----------|-------------------|-----|
-| **Completa** | Navy `#1B2A4A` | Gold `#c4993b` | Branco / light | Uso primário — site, docs, apresentações |
-| **Invertida** | Branco `#FFFFFF` | Gold `#c4993b` | Navy `#1B2A4A` / dark | Headers dark, banners, redes sociais |
-| **Monocromática** | Cinza `#6b7280` | Cinza `#6b7280` | Qualquer neutro | Impressão P&B, marcas d'água, monotone |
+As referências SVG mostraram claramente essa direção: wordmark branco, descriptor serifado, separador vertical fino e fundo preto total. Isso define o estilo de alto contraste da marca. O descriptor não é um logo independente; ele é uma assinatura contextual.
 
-### Favicon e App Icon
+### Regra de uso da assinatura `by Emprega+`
 
-Ícone reduzido: apenas o símbolo `+` extraído do wordmark.
+- Quando a assinatura `by Emprega+` aparecer, ela deve usar a **logomarca oficial da Emprega+**.
+- A assinatura não substitui o logo da marca principal do produto.
+- `by Emprega+` funciona como endosso de marca, não como título de seção.
+- Em peças do EditalHub, o produto pode aparecer sozinho ou com endosso: `EditalHub` / `EditalHub by Emprega+`.
+
+### Variantes principais
+
+| Variante | Composição | Fundo recomendado | Uso |
+|----------|------------|-------------------|-----|
+| **Completa institucional** | `emprega+` + descriptor curto | Branco / light | Site, docs, apresentações, peças institucionais |
+| **Invertida premium** | `emprega+` branco + descriptor branco | Preto / navy escuro | Capa, hero, posts premium, banners escuros |
+| **EditalHub** | `EditalHub` + `by Emprega+` opcional | Preto / navy ou branco limpo | Material público de editais e concursos |
+| **Monocromática** | Uma cor só, sem gradiente | Qualquer neutro | Impressão P&B, marca d'água, contextos técnicos |
+
+### Regras visuais do lockup
+
+- O **`+` é parte estrutural da marca**. Nunca deve ser removido, substituído ou isolado como ícone principal.
+- O **descriptor de produto** deve usar tratamento editorial, com contraste e presença menores que o wordmark principal.
+- Separador vertical fino é permitido apenas no lockup completo.
+- O logo deve aparecer preferencialmente em **cantos** ou no topo; no centro só quando o objetivo for assinatura de capa.
+- Em campanhas sociais, o logo pode ficar pequeno e discreto, deixando a imagem e a mensagem liderarem.
+
+### Favicon e app icon
+
+Ícone reduzido: apenas o símbolo `+` ou uma forma mínima derivada do lockup, sempre legível em 16px.
 
 | Variante | Fundo | Símbolo | Uso |
 |----------|-------|---------|-----|
-| Gradient | Gold gradient `#c4993b → #d4ae54` | Branco | Favicon padrão, app icon |
-| Navy | Navy `#1B2A4A` | Gold `#c4993b` | Ícones em contextos dark |
-| Light | Branco `#FFFFFF` | Gold `#c4993b` | Ícones em contextos light |
-| Mono | Cinza `#f5f7f9` | Cinza `#6b7280` | Contextos monotone |
+| **Gold** | `#c4993b` | Branco | Favicon padrão, app icon |
+| **Navy** | `#1B2A4A` | Gold | Ícones em contextos dark |
+| **Light** | Branco | Gold | Ícones em contextos light |
+| **Mono** | Cinza claro | Grafite | Contextos monotone e documentos técnicos |
 
 ### Área de proteção
 
-Espaço mínimo ao redor do logo: equivalente à **altura do caractere `+`** em todas as direções. Nenhum elemento gráfico, texto ou borda pode invadir essa área.
+Espaço mínimo ao redor do logo: equivalente à **altura do caractere `+`** em todas as direções. Nenhum texto, borda, box ou outro elemento pode invadir essa área.
 
 ### Uso correto (Do's)
 
 - Usar exclusivamente as cores oficiais (§4)
 - Manter as proporções originais do wordmark
 - Respeitar a área de proteção em todos os contextos
-- Aplicar sobre fundos brancos, navy ou neutros claros
-- Manter o `+` sempre destacado em gold (exceto variante mono)
+- Aplicar sobre fundos escuros limpos ou superfícies claras neutras
+- Usar o descriptor/endosso apenas em contexto editorial/institucional do EditalHub
 
 ### Uso incorreto (Don'ts)
 
 - Alterar as cores do logo para tons não oficiais
 - Distorcer, rotacionar ou inclinar o wordmark
 - Adicionar sombras, contornos, efeitos 3D ou brilhos
-- Aplicar sobre fundos que comprometam a legibilidade (fotos ruidosas, gradientes conflitantes)
+- Aplicar sobre fundos que comprometam a legibilidade
 - Separar o `+` da palavra `emprega`
-- Substituir a tipografia Sora por outra fonte
+- Transformar o endosso em segundo logo concorrente
 
 ### Assets
 
-Localização: `../assets/logo/` (SVGs a serem exportados do Canva master `DAHFDuSkSXE`).
+Localização: `../assets/logo/`.
 
 Arquivos esperados:
-- `empregamais-completa.svg` — variante completa
-- `empregamais-invertida.svg` — variante invertida
-- `empregamais-mono.svg` — variante monocromática
-- `empregamais-favicon-gradient.svg` — favicon gold gradient
-- `empregamais-favicon-navy.svg` — favicon navy
-- `empregamais-favicon-light.svg` — favicon light
-- `empregamais-favicon-mono.svg` — favicon mono
+- `empregamais-wordmark-light.svg`
+- `empregamais-wordmark-dark.svg`
+- `empregamais-wordmark-editorial.svg`
+- `empregamais-favicon-gold.svg`
+- `empregamais-favicon-navy.svg`
+- `empregamais-favicon-light.svg`
+- `empregamais-favicon-mono.svg`
+
+Assets de EditalHub devem seguir a mesma regra, com exportação própria em `../edital-hub/` quando o logo estiver validado.
+
+Referências SVG definidas neste ciclo:
+- EditalHub: `logo-edital-hub.svg`, `2.svg`, `3.svg`, `4.svg`
+- Emprega+ assinatura: `1.svg`, `2.svg`
 
 ---
 
@@ -156,7 +206,14 @@ Fonte canônica: `../tokens/tokens.json` e `../tokens/tokens.css`.
 | `--emp-surface-1` | `#1c2a4a` | Cards, surfaces elevadas |
 | `--emp-surface-deep` | `#0f1117` | Backgrounds profundos pontuais |
 
-### Light surfaces (Gov, Editais, light glass)
+### Black editorial (campanhas e capas premium)
+
+| Token | Hex | Uso |
+|-------|-----|-----|
+| `--emp-editorial-black` | `#000000` | Capa premium, lockups de altíssimo contraste |
+| `--emp-editorial-ink` | `#0B0E14` | Fundo profundo com menos dureza que preto puro |
+
+### Light surfaces (Gov, EditalHub, light glass)
 
 | Token | Hex | Uso |
 |-------|-----|-----|
@@ -224,7 +281,7 @@ Utility: `.emp-glass` com `backdrop-filter: blur(12px)`.
 
 > **Como a Emprega+ Fala** (cristalizado de `previews/brand-guidelines.html`)
 
-**Profissional, acessivel e otimista — mas sempre realista.** Nossa comunicacao foca em empregabilidade, governos, empresas e desenvolvimento de carreira.
+**Profissional, acessivel e otimista — mas sempre realista.** Nossa comunicacao foca em empregabilidade, governos, empresas e processos seletivos públicos.
 
 ### 4 Atributos de voz
 
@@ -239,10 +296,9 @@ Utility: `.emp-glass` com `backdrop-filter: blur(12px)`.
 
 | Contexto | Exemplo |
 |----------|---------|
-| **Site Institucional** | "Conectamos prefeituras a profissionais qualificados, com transparencia e agilidade que o servico publico merece." |
-| **Editais / C&S** | "Gerencie todo o ciclo do processo seletivo em um so lugar — da publicacao do edital ao resultado final." |
-| **SaaS / Empresas (Electia)** | "Descubra o perfil comportamental dos seus candidatos antes de contratar. Decisoes baseadas em dados, nao em intuicao." |
-| **Comunidade PdV** | "Seu proximo passo profissional comeca aqui. Workshops semanais, conteudo pratico e uma comunidade que cresce junto." |
+| **Emprega+ institucional** | "Conectamos prefeituras a profissionais qualificados, com transparência e agilidade que o serviço público merece." |
+| **EditalHub** | "Gerencie todo o ciclo do processo seletivo em um só lugar — da publicação do edital ao resultado final." |
+| **IMO** | "Mais vagas preenchidas, menos ruído operacional." |
 
 ### Devemos
 
@@ -250,7 +306,7 @@ Utility: `.emp-glass` com `backdrop-filter: blur(12px)`.
 - Focar em **beneficios**, nao em funcionalidades
 - Incluir **dados e metricas** quando possivel
 - Ser **direto e objetivo** em CTAs
-- Tratar o usuario como **parceiro**
+- Tratar o usuário como **parceiro**
 
 ### Evitamos
 
@@ -270,6 +326,33 @@ Utility: `.emp-glass` com `backdrop-filter: blur(12px)`.
 - Cor de destaque: `--emp-gold` (`#c4993b`)
 - Cor neutra: `--emp-text-muted` (`#5a6b7c`)
 - Icones canonicos do brand-guidelines: `user`, `briefcase`, `file-text`, `search`, `building`, `check`, `bar-chart`
+
+### Sistema de composição editorial
+
+As referências SVG recentes confirmam uma direção visual mais editorial e menos “produto genérico”. A composição base da Emprega+ deve seguir estes padrões:
+
+| Padrão | Estrutura | Quando usar |
+|--------|-----------|-------------|
+| **Hero premium** | imagem full-bleed + overlay escuro + texto grande alinhado à esquerda | capas, aberturas, anúncios, apresentações |
+| **Card de depoimento** | bloco navy sólido + aspas gold + quote central | prova social, cases, testimonial |
+| **Headline com foto** | foto lateral + coluna de texto com espaço negativo | post de campanha, convidar para ação |
+| **Workshop / evento** | imagem escurecida + badge gold + CTA em pill | eventos, lives, convites |
+| **Informação institucional** | fundo claro com glass leve + hierarquia limpa | site, docs, materiais oficiais |
+
+### Regras de overlay e legibilidade
+
+- Texto sobre foto deve usar overlay de navy/preto entre **45% e 75%** de opacidade, conforme o ruído da imagem.
+- O texto principal entra quase sempre **alinhado à esquerda**.
+- Títulos grandes podem usar 1 linha forte + 1 linha de apoio menor.
+- O gold entra como **único acento**, nunca como cor de massa para grandes blocos de texto.
+- Bordas, pills e caixas devem ser discretas: cantos arredondados, borda suave, sem excesso de sombra.
+
+### Tratamento de imagem
+
+- Priorizar fotografia real, com profundidade e leitura humana.
+- Usar vinheta ou dark scrub quando a foto tiver muitos detalhes no fundo.
+- Aceitar textura/grão leve para dar densidade premium.
+- Evitar “foto limpa demais” em posts de campanha; a marca ganha força quando a imagem carrega contexto.
 
 ### Light Glass (efeito oficial)
 
@@ -292,10 +375,19 @@ Gradients por produto (tailwind-generated no site live, usados em badges/CTAs):
 | Produto | Gradient |
 |---------|---------|
 | Gov / IMO B2G | green: `#16a34a → #0d7a30` |
-| Editais C&S | cyan: `#0891b2 → #0e7490` |
-| Electia | purple: `#6f32b1 → #5a2890` |
-| Marca-mae / PdV | gold: `#c49a3c → #a07b2a` |
+| EditalHub | cyan: `#0891b2 → #0e7490` |
+| Electia | purple: `#5B2E91 → #8A3FF0` |
+| Marca-mãe | gold: `#c49a3c → #a07b2a` |
 | Institucional | blue: `#1d4ed8 → #1540b0` ou `#4f46e5 → #4338ca` |
+
+### Texturas e fundos
+
+| Recurso | Uso | Regra |
+|---------|-----|-------|
+| **Preto editorial** | Capa premium e lockup de impacto | Não usar como fundo padrão de UI |
+| **Navy profundo** | Base de comunicação do ecossistema | Fundo padrão de campanha e produto |
+| **Ruído/grain sutil** | Adicionar densidade visual | Sempre leve, nunca competir com texto |
+| **Vignette escura** | Dirigir atenção ao conteúdo | Usar em posts e hero sections com foto |
 
 ### Galeria visual
 
@@ -321,7 +413,7 @@ Regerar com `node scripts/render-dashboards.mjs` (no design-system root).
 ### Plataforma app — app.empregamais.me
 
 - **Back-office (Gov/IMO):** Tema navy dark — background `#1B2A4A`, surfaces `#1c2a4a`, texto branco
-- **Editais (C&S):** Tema light — background branco, cards com bordas `#e0e6eb`, badges por status
+- **EditalHub:** Tema light — background branco, cards com bordas `#e0e6eb`, badges por status
 - **Sidebar:** Navy com ícones Lucide em gold
 - **Tabelas e formulários:** Inter 400/500, espaçamento generoso, estados de erro em `#ef4343`
 
@@ -336,16 +428,18 @@ Regerar com `node scripts/render-dashboards.mjs` (no design-system root).
 ### Social media — @empregamais
 
 - **Plataformas:** Instagram + LinkedIn (primárias), Facebook (secundária)
-- **Paleta:** Gold `#c4993b` + Navy `#1B2A4A` como par dominante
-- **Headings em posts:** Sora 700, branco sobre navy ou navy sobre branco
+- **Paleta:** Gold `#c4993b` + Navy `#1B2A4A` + preto editorial como base de campanha
+- **Headings em posts:** Sora 700, branco sobre navy/preto ou navy sobre branco
 - **Templates:** Padronizados no Canva — ver `SOCIAL-MEDIA-GUIDE.md`
-- **Formato carrossel:** Capa navy com título gold, slides internos light com body Inter
-- **Stories:** Fundo navy ou gold gradient, texto branco, Sora bold
+- **Formato carrossel:** Capa navy/preto com título gold, slides internos light com body Inter
+- **Stories:** Fundo navy, preto editorial ou gold gradient, texto branco, Sora bold
+- **Descritor de campanha:** quando houver frente EditalHub, usar a assinatura oficial do produto com ou sem endosso `by Emprega+`
 
 ### Apresentações (slides)
 
 - **Fundo padrão:** Branco com accent gold
 - **Fundo alternativo:** Navy com texto branco e accent gold
+- **Capa premium:** Preto editorial com lockup branco e assinatura editorial do produto
 - **Headings:** Sora 700, navy ou branco conforme fundo
 - **Body:** Inter 400, `#374151` (light) ou `#e5e7eb` (dark)
 - **Gráficos:** Usar paleta semântica (success, error, warning) + gold como destaque
@@ -361,6 +455,7 @@ Regerar com `node scripts/render-dashboards.mjs` (no design-system root).
 ### Material impresso
 
 - **Cartões de visita:** Frente navy com logo invertida e dados em branco. Verso branco com logo completa
+- **Materiais de EditalHub:** capas com preto editorial / navy e assinatura oficial do produto
 - **Folders/flyers:** Sora para títulos, Inter para corpo. Gold como cor de destaque em CTAs e destaques
 - **Conversão CMYK do gold:** `#c4993b` ≈ C:0 M:25 Y:75 K:25 — validar em prova de cor antes de impressão em escala
 - **Papel:** Mínimo 250g/m² couché fosco para cartões. 150g/m² para folders
@@ -420,6 +515,19 @@ Quando usar Midjourney, DALL-E ou similares:
 - Sempre revisar rostos e mãos — corrigir artefatos antes de publicar
 - Não usar imagens de IA para representar pessoas reais da equipe ou clientes
 
+### Leitura dos ativos SVG analisados
+
+Os 7 SVGs recebidos neste ciclo mostram o seguinte padrão:
+
+- lockup de alto contraste em preto/branco
+- duas variantes de assinatura: solo e `by Emprega+`
+- fundo navy/preto como base de campanha
+- gold como destaque único
+- uso de caixas, pills e overlays suaves para texto sobre imagem
+- fotografia real com profundidade e storytelling, não apenas fundo decorativo
+
+Essas referências servem como norte para qualquer novo material da frente EditalHub e da comunicação da Emprega+.
+
 ---
 
 ## 10. Origem da Marca
@@ -447,11 +555,27 @@ Emprega+ foi fundada em 2022 por Marcos Carneiro. A marca nasceu da experiência
 
 ### Hoje
 
-Emprega+ opera 4 produtos sob uma marca-mãe, cobrindo o ciclo completo da empregabilidade brasileira:
+Emprega+ opera como marca-mãe da empregabilidade pública e institucional:
 
 1. **Gov / IMO B2G** — portal de vagas e intermediação para prefeituras
-2. **Editais / C&S** — gestão de concursos e processos seletivos públicos
-3. **Electia B2B SaaS** — assessments comportamentais para empresas privadas
-4. **PdV B2C** — comunidade de desenvolvimento profissional
+2. **EditalHub** — gestão de concursos, editais e processos seletivos públicos
 
 A infraestrutura digital que conecta governos, empresas e profissionais — esse é o propósito que deu origem à marca e continua guiando cada decisão.
+
+---
+
+## 11. Checklist canônico
+
+Antes de fechar qualquer peça da Emprega+, validar:
+
+- [ ] A peça deixa claro se pertence a Emprega+, IMO ou EditalHub?
+- [ ] O lockup correto foi usado? (`emprega+` simples, `EditalHub`, ou `Electia by Emprega+`)
+- [ ] A cor de destaque é gold e não outra cor aleatória?
+- [ ] Se for Electia, o destaque roxo foi usado sem contaminar a marca-mãe?
+- [ ] O fundo é navy, preto editorial ou light neutro dentro da paleta?
+- [ ] O texto sobre imagem está legível em desktop e mobile?
+- [ ] O descriptor do produto aparece apenas quando faz sentido?
+- [ ] O conteúdo respeita o tom profissional, acessível, otimista e realista?
+- [ ] Não existe excesso de efeitos, sombras ou ruído visual?
+- [ ] As regras de fotografia e representatividade foram respeitadas?
+- [ ] A peça pode ser reutilizada sem criar uma segunda versão divergente?

@@ -37,12 +37,12 @@
 ├─ 🟢 Emprega+                      Marca-mãe · plataforma empregabilidade
 │   ├─ Site: empregamais.me
 │   ├─ Canais: ✅ Instagram + LinkedIn (@empregamais)
-│   ├─ Identidade visual: paleta gold + navy (a verificar/canonizar)
-│   ├─ Produtos que COMPARTILHAM identidade Emprega+ (sem brand kit próprio):
+│   ├─ Identidade visual: paleta gold + navy
+│   ├─ Produtos que COMPARTILHAM identidade Emprega+:
 │   │   ├─ 🟢 IMO                  B2G empregabilidade municipal — usa visual Emprega+
-│   │   └─ 🟢 Editais              Concursos públicos — usa visual Emprega+ (parado, reformulação)
+│   │   └─ 🟢 EditalHub            Concursos e seletivos — usa visual Emprega+ com brand book próprio
 │   └─ Produto com identidade PRÓPRIA (sub-brand visual distinta):
-│       └─ 🔷 Electia by Emprega+  B2B SaaS · paleta teal + JetBrains Mono · brand kit próprio
+│       └─ 🔷 Electia by Emprega+  B2B SaaS · paleta roxo + JetBrains Mono · brand kit próprio
 │
 └─ 🟡 PdV (Profissional de Valor)   Comunidade · personal-brand do Marcos
     ├─ Canais próprios: ❌ sem redes próprias
@@ -55,10 +55,10 @@
 ### Regras-chave
 
 1. **PdV é personal-brand.** Sem CNPJ próprio aparente, sem redes próprias. O canal É o Marcos.
-2. **IMO e Editais COMPARTILHAM identidade visual Emprega+.** Não têm brand kit próprio, não têm logo próprio, não têm canais próprios — herdam tudo da Emprega+.
+2. **IMO e EditalHub COMPARTILHAM identidade visual Emprega+.** IMO herda tudo da Emprega+. EditalHub usa a mesma base visual, mas possui brand book próprio e pode usar endosso “by Emprega+”.
 3. **Electia é o ÚNICO produto Emprega+ com identidade visual própria.** Paleta teal + JetBrains Mono + wordmark `electia by emprega+`. Mantém endorsement "by Emprega+".
 4. **ResultX é marca separada da Emprega+.** Consultoria de transformação digital — não pertence ao funil Emprega+.
-5. **Co-branding "by Emprega+"** aparece em: Electia (obrigatório). NÃO se aplica a IMO/Editais (eles SÃO Emprega+, não "by").
+5. **Co-branding "by Emprega+"** aparece em: Electia (obrigatório). NÃO se aplica a IMO/EditalHub (eles SÃO Emprega+, não "by").
 
 ---
 
@@ -69,7 +69,7 @@
 | **ResultX** | ✅ existe | 🔜 @resultxdigital (a criar) | 🔜 resultx (a criar) | — (sem newsletter por enquanto) | — |
 | **Emprega+** | ✅ empregamais.me | ✅ @empregamais.me | ✅ empregamais | ✅ "Empregabilidade" (na conta @empregamais) | — |
 | **IMO** | herda Emprega+ | herda @empregamais.me | herda empregamais | herda Emprega+ | — |
-| **Editais** | herda Emprega+ | herda @empregamais.me | herda empregamais | herda Emprega+ | — |
+| **EditalHub** | herda Emprega+ | herda @empregamais.me | herda empregamais | herda Emprega+ | — |
 | **Electia by Emprega+** | identidade propria, via Emprega+ | compartilha @empregamais.me | compartilha empregamais | — (tem mala direta propria) | — |
 | **PdV** | ✅ profissional.empregamais.me | via @marcosxcarneirox (Marcos pessoal) | via carneiromarcos (Marcos pessoal) | ✅ "Profissional de Valor" (na conta Marcos) | ✅ Marcos pessoal |
 | **Marcos Carneiro** | — | @marcosxcarneirox (canal PdV) | carneiromarcos (canal PdV) | — | — |
@@ -80,6 +80,7 @@
 |-------|--------|---------|------|
 | **ResultX** | — | — | — |
 | **Emprega+** | — | 🔜 empregamais (a criar) | ✅ dentro do portal jobs (futuro `app.empregamais.me`) |
+| **EditalHub** | — | — | ✅ dentro do portal jobs |
 | **Electia by Emprega+** | — | — (sem YT) | ✅ dentro do portal jobs |
 | **PdV** | @marcoscarneiro (canal Marcos pessoal) | carneiromarcos (canal Marcos pessoal) | ✅ dentro do portal jobs |
 
@@ -88,6 +89,7 @@
 | Marca | Email mkt |
 |-------|----------|
 | **Emprega+** | proprio |
+| **EditalHub** | compartilha a base Emprega+ |
 | **Electia by Emprega+** | **mala direta propria** (canal independente do Emprega+) |
 | **PdV** | proprio |
 | **ResultX** | — (sem email mkt por enquanto) |
@@ -105,11 +107,11 @@
 
 | Brand | Pasta | Status | Versão |
 |-------|-------|--------|--------|
-| Emprega+ | `emprega-mais/` | 🟡 Estruturada (tokens ✅ · 5 docs com `[TBD]` · logos pendentes) — atende Emprega+ + IMO + Editais | v0.2 (2026-05-23) |
+| Emprega+ | `emprega-mais/` | 🟡 Estruturada (tokens ✅ · 5 docs com `[TBD]` · logos pendentes) — atende Emprega+ + IMO + EditalHub | v0.2 (2026-05-23) |
 | PdV | `pdv/` | ✅ Completo | Brand Book v2.4 |
 | Electia | `electia/` | ✅ Completo · logos canonicos agora em `electia/assets/logo/` (movidos do app 2026-05-23) | Brand Book v1.2 · DS v1.0 |
 | IMO | (não tem) | N/A — herda Emprega+ (visual + canais) | — |
-| Editais | (não tem) | N/A — herda Emprega+ (visual + canais) | — |
+| EditalHub | (não tem) | N/A — herda Emprega+ (visual + canais) | — |
 | ResultX | `resultx/` | 🟡 Inicial (rascunho v0.1 com TBDs) | Brand Book v0.1 (2026-05-11) |
 
 ---
@@ -122,7 +124,7 @@
 | **Emprega+** | Gold + Navy (canonizado 2026-05-23) | `#D4A928` (+ navy `#0F1A2E`) — extraido de `emprega-mais/previews/brand-guidelines.html` | Empregabilidade |
 | **PdV** | Gold | `#D4A928` (+ navy `#0F1A2E`) | Forjar, montanha |
 | **IMO** | — | — | Herda 100% Emprega+ |
-| **Editais** | — | — | Herda 100% Emprega+ |
+| **EditalHub** | — | — | Herda 100% Emprega+ |
 | **Electia** | **Teal** | `#2DD4BF` (+ dark `#0B0E14`) | Tech, ciência |
 
 > ✅ **Paleta Emprega+ canonizada 2026-05-23.** Gold + navy confirmados extraindo de `emprega-mais/previews/brand-guidelines.html` (96KB). Tokens cristalizados em `emprega-mais/tokens/tokens.json` + `tokens.css` (prefixo `--emp-*`). PdV reutiliza o navy `#0F1A2E` como `bg.base` (descrito como "navy escuro Emprega+" no tokens.json do PdV) — confirmando que o navy e canonico do ecossistema, herdado pela personal-brand.
@@ -135,7 +137,7 @@
 |------------|-----------|-------|
 | **Electia + by Emprega+** | ✅ | Endosso obrigatório no footer + canais Emprega+. Electia tem identidade própria mas declara herança |
 | **IMO** (sozinho como nome) | ✅ | IMO é Emprega+. Visual = Emprega+. Não precisa "by Emprega+" porque ele É Emprega+ |
-| **Editais** (sozinho como nome) | ✅ | Idem IMO — é Emprega+, visual = Emprega+ |
+| **EditalHub** (sozinho como nome) | ✅ | Idem IMO — é Emprega+, visual = Emprega+ |
 | **PdV + by Emprega+** | ❌ | PdV é personal-brand. Não usa endorsement Emprega+ |
 | **PdV + by Marcos Carneiro** | ✅ | Implícito — Marcos é o canal |
 | **ResultX + by Emprega+** | ❌ | ResultX é marca separada (consultoria) |
@@ -153,7 +155,7 @@
 | ResultX | ⚠️ | (a confirmar localização — `brands/resultx/assets/logo/` so tem README placeholder) |
 | Electia | ✅ | `brands/electia/assets/logo/` (7 SVGs canonicos — movidos do app 2026-05-23). App Next.js mantem copia em `resultx/electia/public/brand/` por compat. |
 | IMO | — | Usa logo Emprega+ (mesma marca visual) |
-| Editais | — | Usa logo Emprega+ (mesma marca visual) |
+| EditalHub | — | Usa logo Emprega+ (mesma marca visual) |
 
 ### Direção para logo Electia by Emprega+
 

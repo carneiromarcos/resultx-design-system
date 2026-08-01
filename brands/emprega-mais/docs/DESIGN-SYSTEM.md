@@ -27,6 +27,16 @@ Os design tokens vivem em `../tokens/tokens.css` (CSS custom properties) e `../t
 
 Gradient de marca: `linear-gradient(135deg, #c4993b 0%, #d4ae54 100%)`
 
+#### Electia (sub-brand accent)
+
+| Token | Hex | Uso |
+|-------|-----|-----|
+| `--emp-purple-dark` | `#5B2E91` | Fundo escuro / base de produto |
+| `--emp-purple` | `#8A3FF0` | Accent principal Electia |
+| `--emp-purple-light` | `#B36CFF` | Hover, highlights e gradientes |
+
+Gradient de produto: `linear-gradient(135deg, #5B2E91 0%, #8A3FF0 100%)`
+
 #### Navy (backgrounds dark)
 
 | Token | Hex | Uso |
@@ -161,7 +171,7 @@ Placeholder: `color: --emp-text-muted`.
 | **Warning** | `#d97706` | `#FFFFFF` | Pendente, atencao |
 | **Gov** | `#16a34a → #0d7a30` gradient | `#FFFFFF` | Produto Gov/IMO B2G |
 | **Editais** | `#0891b2 → #0e7490` gradient | `#FFFFFF` | Produto Editais C&S |
-| **Electia** | `#6f32b1 → #5a2890` gradient | `#FFFFFF` | Produto Electia B2B |
+| **Electia** | `#5B2E91 → #8A3FF0` gradient | `#FFFFFF` | Produto Electia B2B |
 | **PdV** | `#c49a3c → #a07b2a` gradient | `#FFFFFF` | Marca-mae / Profissional de Valor |
 
 Badges: `border-radius: --emp-radius-md`, `padding: 0.125rem 0.625rem`, `font-size: 0.625rem`, `font-weight: 600`.
