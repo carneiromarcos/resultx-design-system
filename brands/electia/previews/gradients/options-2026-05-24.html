@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Electia × ResultX — Gradient options</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #0B0E14;
+    color: #fff;
+    padding: 40px 32px;
+  }
+  h1 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    margin-bottom: 6px;
+  }
+  .sub {
+    color: #c084fc;
+    font-size: 13px;
+    margin-bottom: 32px;
+    letter-spacing: 0.04em;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .card {
+    background: rgba(22,27,38,0.4);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-height: 320px;
+  }
+  .label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .label .opt {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #c084fc;
+  }
+  .label .name {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+  }
+  .headline {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 1.1;
+  }
+  .gradient-text {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+  .btn {
+    align-self: start;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .palette {
+    display: flex;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .sw {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 9px;
+    color: #fff;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 3px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .header {
+    max-width: 1280px;
+    margin: 0 auto 32px;
+  }
+
+  /* OPTION A: Roxo → Cyan */
+  .gA { background: linear-gradient(135deg, #6f32b1 0%, #00afef 100%); }
+  .gA-text { background: linear-gradient(135deg, #a55eea 0%, #18c4ff 100%); }
+
+  /* OPTION B: Roxo → Royal Blue */
+  .gB { background: linear-gradient(135deg, #6f32b1 0%, #2040a0 100%); }
+  .gB-text { background: linear-gradient(135deg, #a55eea 0%, #4a6cf7 100%); }
+
+  /* OPTION C: Roxo → Ouro */
+  .gC { background: linear-gradient(135deg, #6f32b1 0%, #b29442 100%); }
+  .gC-text { background: linear-gradient(135deg, #a55eea 0%, #d4af5a 100%); }
+
+  /* OPTION D: 3-stop Cyan → Roxo → Gold */
+  .gD { background: linear-gradient(135deg, #00afef 0%, #6f32b1 50%, #b29442 100%); }
+  .gD-text { background: linear-gradient(135deg, #18c4ff 0%, #a55eea 50%, #d4af5a 100%); }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>Electia × ResultX — gradient options</h1>
+    <div class="sub">ROXO + COR DA HOLDING · CRIA SINERGIA CROSS-BRAND</div>
+  </div>
+
+  <div class="grid">
+    <!-- A -->
+    <div class="card">
+      <div class="label">
+        <span class="opt">A · TECH SCI-FI</span>
+        <span class="name">Roxo → Cyan</span>
+      </div>
+      <h2 class="headline">
+        Times de alta performance começam com a
+        <span class="gradient-text gA-text">pessoa certa no lugar certo.</span>
+      </h2>
+      <a class="btn gA">Começar grátis →</a>
+      <div class="palette">
+        <div class="sw" style="background:#6f32b1">6f32b1</div>
+        <div class="sw" style="background:#00afef">00afef</div>
+      </div>
+    </div>
+
+    <!-- B -->
+    <div class="card">
+      <div class="label">
+        <span class="opt">B · PREMIUM B2B</span>
+        <span class="name">Roxo → Royal Blue</span>
+      </div>
+      <h2 class="headline">
+        Times de alta performance começam com a
+        <span class="gradient-text gB-text">pessoa certa no lugar certo.</span>
+      </h2>
+      <a class="btn gB">Começar grátis →</a>
+      <div class="palette">
+        <div class="sw" style="background:#6f32b1">6f32b1</div>
+        <div class="sw" style="background:#2040a0">2040a0</div>
+      </div>
+    </div>
+
+    <!-- C -->
+    <div class="card">
+      <div class="label">
+        <span class="opt">C · LUXO / ALQUIMIA</span>
+        <span class="name">Roxo → Ouro</span>
+      </div>
+      <h2 class="headline">
+        Times de alta performance começam com a
+        <span class="gradient-text gC-text">pessoa certa no lugar certo.</span>
+      </h2>
+      <a class="btn gC">Começar grátis →</a>
+      <div class="palette">
+        <div class="sw" style="background:#6f32b1">6f32b1</div>
+        <div class="sw" style="background:#b29442">b29442</div>
+      </div>
+    </div>
+
+    <!-- D -->
+    <div class="card">
+      <div class="label">
+        <span class="opt">D · 3-STOP HOLDING</span>
+        <span class="name">Cyan → Roxo → Gold</span>
+      </div>
+      <h2 class="headline">
+        Times de alta performance começam com a
+        <span class="gradient-text gD-text">pessoa certa no lugar certo.</span>
+      </h2>
+      <a class="btn gD">Começar grátis →</a>
+      <div class="palette">
+        <div class="sw" style="background:#00afef">00afef</div>
+        <div class="sw" style="background:#6f32b1">6f32b1</div>
+        <div class="sw" style="background:#b29442">b29442</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -308,7 +308,7 @@
 
   <!-- WIREFRAME BANNER -->
   <div class="wf-banner">
-    <span>Wireframe v0.4 · Página do Colaborador · 5 de 7 testes realizados (DISC, MBTI, Big Five, Eneagrama, Temperamentos)</span>
+    <span>Wireframe v0.5 · Página do Colaborador · 7 de 7 testes realizados (DISC, MBTI, Big Five, Eneagrama, Temperamentos, Motivadores, Bem-Estar)</span>
   </div>
 
   <!-- HERO -->
@@ -317,7 +317,7 @@
     <div class="hero-info">
       <h1>Marcos Carneiro</h1>
       <div class="role">Comercial Sênior · Tech Solutions LTDA</div>
-      <span class="hero-summary">Alinhado ao cargo · 5 de 7 testes realizados</span>
+      <span class="hero-summary">Alinhado ao cargo · 7 de 7 testes realizados</span>
     </div>
     <div class="hero-actions">
       <button class="btn">Compartilhar link</button>
@@ -347,13 +347,13 @@
       <span class="pill-label">Temperamentos</span>
       <span class="pill-value">Colérico-Melancólico</span>
     </a>
-    <a href="#motivadores" class="theory-pill" data-theory="motivadores" data-completed="false">
+    <a href="#motivadores" class="theory-pill" data-theory="motivadores" data-completed="true">
       <span class="pill-label">Motivadores</span>
-      <span class="pill-value">Realização · Poder</span>
+      <span class="pill-value">Executivo</span>
     </a>
-    <a href="#bat" class="theory-pill" data-theory="bat" data-completed="false">
+    <a href="#bat" class="theory-pill" data-theory="bat" data-completed="true">
       <span class="pill-label">Bem-Estar</span>
-      <span class="pill-value">Saudável</span>
+      <span class="pill-value">Atenção</span>
     </a>
   </section>
 
@@ -364,8 +364,8 @@
     <a href="#bigfive" data-completed="true">Big Five</a>
     <a href="#eneagrama" data-completed="true">Eneagrama</a>
     <a href="#temperamentos" data-completed="true">Temperamentos</a>
-    <a href="#motivadores" data-completed="false">Motivadores</a>
-    <a href="#bat" data-completed="false">Bem-Estar</a>
+    <a href="#motivadores" data-completed="true">Motivadores</a>
+    <a href="#bat" data-completed="true">Bem-Estar</a>
   </nav>
 
   <!-- 1. DISC -->
@@ -529,86 +529,84 @@
     </div>
   </section>
 
-  <!-- 6. MOTIVADORES (placeholder) -->
-  <section id="motivadores" class="theory-section" data-theory="motivadores" data-completed="false">
+  <!-- 6. MOTIVADORES -->
+  <section id="motivadores" class="theory-section" data-theory="motivadores" data-completed="true">
     <div class="theory-header">
       <div class="theory-header-text">
         <h2>Motivadores</h2>
-        <p>Hierarquia de impulsionadores · ranking dimensional</p>
+        <p>6 valores profissionais · ranking dimensional Ideal × Realizado · Spranger/AVL adaptado pt-BR</p>
       </div>
-      <span class="theory-status placeholder">⏳ Mockup pendente</span>
+      <span class="theory-status">✓ Aprovado · v0.1</span>
     </div>
     <div class="theory-content">
       <div class="card-frame">
-        <div class="card-placeholder">
-          <div>
-            <strong>Motivadores card · em produção</strong>
-            <span>Bar ranked horizontal · top motivadores ideal × realizado · padrão dimensional (similar Big Five)</span>
-          </div>
-        </div>
+        <iframe src="../mockups/motivadores-card.html" loading="lazy" title="Motivadores card"></iframe>
       </div>
       <aside class="insights-panel">
         <div class="insights-section">
           <div class="insights-title">Insights IA</div>
           <ul class="insights-list">
-            <li>Top 3 motivadores</li>
-            <li>Match cargo × pessoa</li>
-            <li>Riscos de desengajamento</li>
+            <li><strong>Executivo (Econômico + Reconhecimento):</strong> performa onde resultado e visibilidade andam juntos</li>
+            <li><strong>Match 3/3 no top:</strong> Econômico, Reconhecimento e Conhecimento alinhados ao cargo</li>
+            <li><strong>Conhecimento acima (+5):</strong> propensão a aprofundamento — diferencial em venda consultiva</li>
+            <li><strong>Harmonia acima (+15):</strong> ritmo sustentável, cuidado com qualidade de vida</li>
+            <li><strong>Atenção:</strong> baixo Altruísmo · evitar narrativas de "servir o cliente" — não engaja</li>
           </ul>
+        </div>
+        <div class="insights-section">
+          <div class="insights-title">Próximas ações</div>
+          <button class="action-btn">Plano de retenção</button>
+          <button class="action-btn">Estruturar reconhecimento</button>
+          <button class="action-btn">Saiba mais sobre Executivo</button>
         </div>
       </aside>
     </div>
   </section>
 
-  <!-- 7. BAT / BEM-ESTAR (placeholder) -->
-  <section id="bat" class="theory-section" data-theory="bat" data-completed="false">
+  <!-- 7. BAT / BEM-ESTAR -->
+  <section id="bat" class="theory-section" data-theory="bat" data-completed="true">
     <div class="theory-header">
       <div class="theory-header-text">
         <h2>Bem-Estar · BAT</h2>
-        <p>Saúde mental ocupacional · modo individual com gate de psicólogo (CRP)</p>
+        <p>Saúde mental ocupacional · gauge 3 zonas · modo individual com gate de psicólogo (CRP) · ADR-018</p>
       </div>
-      <span class="theory-status placeholder">⏳ Mockup pendente</span>
+      <span class="theory-status">✓ Aprovado · v0.1</span>
     </div>
     <div class="theory-content">
       <div class="card-frame">
-        <div class="card-placeholder">
-          <div>
-            <strong>Bem-Estar card · em produção</strong>
-            <span>Gauge zonas (saudável / atenção / alerta) · padrão dimensional com risk colors · acesso restrito ACL</span>
-          </div>
-        </div>
+        <iframe src="../mockups/bat-card.html" loading="lazy" title="Bem-Estar card"></iframe>
       </div>
       <aside class="insights-panel">
         <div class="insights-section">
           <div class="insights-title">Insights IA</div>
           <ul class="insights-list">
-            <li>Estado geral de bem-estar</li>
-            <li>Zonas de atenção</li>
-            <li>Recursos de apoio (CAPS, APP)</li>
+            <li><strong>Zona Atenção (58/100):</strong> sinais que merecem cuidado, não diagnóstico</li>
+            <li><strong>Exaustão alta (65):</strong> principal indicador a observar</li>
+            <li><strong>Estabilidade emocional preservada:</strong> contrapeso aos sinais de fadiga</li>
+            <li><strong>Resultado individual:</strong> visível só pra colaborador + psicólogo cadastrado · admin NÃO vê</li>
           </ul>
+        </div>
+        <div class="insights-section">
+          <div class="insights-title">Próximas ações</div>
+          <button class="action-btn">Conversar com saúde</button>
+          <button class="action-btn">Solicitar acompanhamento</button>
+          <button class="action-btn">Recursos de apoio</button>
         </div>
       </aside>
     </div>
   </section>
 
-  <!-- PRÓXIMOS PASSOS — testes ainda não realizados (não interfere nos resultados acima) -->
-  <section class="next-steps" aria-label="Avaliações pendentes">
+  <!-- PRÓXIMOS PASSOS — vazio nesta cena (7/7 concluídos). Em produção: aparece quando colaborador tem testes pendentes -->
+  <section class="next-steps" aria-label="Avaliações pendentes" hidden>
     <div class="next-steps-header">
       <div>
         <h3>Próximos testes</h3>
         <p>Avaliações que ainda não foram realizadas — você decide quando responder.</p>
       </div>
-      <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">5 de 7 concluídos</span>
+      <span style="font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted)">7 de 7 concluídos</span>
     </div>
     <ul class="next-list">
-      <li data-theory="motivadores">
-        <span class="next-name">Motivadores</span>
-        <button class="next-cta" type="button">Iniciar</button>
-      </li>
-      <li data-theory="bat">
-        <span class="next-name">Bem-Estar</span>
-        <button class="next-cta" type="button">Iniciar</button>
-      </li>
+      <!-- Em produção, cada teste pendente vira um <li data-theory="X"> aqui. Cena atual: lista vazia -->
     </ul>
   </section>
 

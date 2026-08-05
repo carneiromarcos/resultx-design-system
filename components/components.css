@@ -76,6 +76,9 @@ body {
   font-size: var(--text-sm); font-weight: var(--font-medium);
   color: var(--sidebar-text);
   cursor: pointer;
+  /* Navegação deve ser <a>, não <div>. Sem este reset o link chega sublinhado
+     e o item só fica correto com markup não semântico. */
+  text-decoration: none;
   transition: all 150ms var(--spring-snappy);
   border-radius: var(--radius-md);
 }
@@ -131,6 +134,11 @@ body {
 .main {
   margin-left: var(--sidebar-width);
   flex: 1;
+  /* `body` é flex e `.main` é flex item: sem min-width:0 ele nunca encolhe
+     abaixo do min-content do próprio conteúdo. Qualquer linha que não quebra
+     (tabs, toolbar, tabela) trava a largura acima da viewport e gera scroll
+     horizontal na página inteira. */
+  min-width: 0;
   min-height: 100vh;
 }
 
@@ -249,6 +257,9 @@ body {
 }
 .btn-secondary.btn-loading::after,
 .btn-ghost.btn-loading::after { border-color: var(--text-primary); border-right-color: transparent; }
+
+/* .btn-icon vive em components/icons.css, junto do dono do componente.
+   Nao redefinir aqui: icons.min.css carrega depois e venceria a cascata. */
 
 /* ══════════════════════════════════════════════════════════════════
    CARDS
@@ -446,6 +457,15 @@ body {
 .toast-error { background: var(--color-error-bg); border-left: 3px solid var(--color-error); color: var(--text-primary); }
 .toast-info { background: var(--color-info-bg); border-left: 3px solid var(--color-info); color: var(--text-primary); }
 .toast-container { max-width: 500px; }
+/* Toast acionavel: sem estes ganchos o .toast so comunica, nunca oferece saida
+   ("Desfazer", "Ver detalhes") nem pode ser dispensado. Ambos compoem com
+   .btn / .btn-icon — aqui so o posicionamento.
+   Sozinho, o dismiss encosta a direita; com acao, a acao e que encosta. */
+.toast-action { margin-left: auto; }
+.toast-dismiss { margin-left: auto; }
+.toast-action ~ .toast-dismiss { margin-left: var(--space-1); }
+/* .toast define display:flex, que vence o [hidden] padrao do navegador. */
+.toast[hidden] { display: none; }
 
 /* ══════════════════════════════════════════════════════════════════
    TABS
@@ -494,6 +514,41 @@ body {
 .form-input:focus-visible { border-color: var(--accent-primary); box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color); }
 .form-input:disabled { opacity: 0.5; cursor: not-allowed; background: var(--bg-surface-2); }
 .form-hint { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-1); }
+
+/* Textarea — o DS tinha .form-input e nenhum campo de texto longo.
+   Herda o contrato visual do .form-input; muda o que e proprio de campo
+   multilinha: padding vertical, line-height legivel, resize e altura minima. */
+.form-textarea {
+  width: 100%; padding: var(--space-3) var(--space-4);
+  background: var(--bg-base);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  min-height: 88px;
+  resize: vertical;
+  transition: all 150ms var(--spring-snappy);
+  outline: none;
+}
+.form-textarea::placeholder { color: var(--text-muted); }
+.form-textarea:focus-visible { border-color: var(--accent-primary); box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color); }
+.form-textarea:disabled { opacity: 0.5; cursor: not-allowed; background: var(--bg-surface-2); }
+
+/* Tecla de atalho — para <kbd>. Sem isto, "⌘K" e "Enter" viram texto solto e
+   cada produto inventa o proprio estilo. */
+.kbd {
+  display: inline-flex; align-items: center;
+  padding: 1px 6px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+}
 
 /* Toggle */
 .toggle { position: relative; width: 44px; height: 24px; cursor: pointer; }
@@ -980,6 +1035,21 @@ tr:hover td { background: var(--bg-surface-1); }
   margin-bottom: var(--space-5);
 }
 
+/* Estado vazio compacto — para slot, nao para pagina.
+   O .empty-state cheio usa icone de 80px e padding --space-16: estoura coluna
+   de kanban, painel lateral e card de dashboard. A borda tracejada tambem
+   comunica area que recebe conteudo (alvo de drop). */
+.empty-state-inline {
+  padding: var(--space-6) var(--space-4);
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+.empty-state-inline .empty-state-icon { display: none; }
+.empty-state-inline .empty-state-title { font-size: var(--text-base); margin-bottom: var(--space-1); }
+.empty-state-inline .empty-state-text { margin-bottom: 0; }
+
 /* ══════════════════════════════════════════════════════════════════
    SKELETON / LOADING
    ══════════════════════════════════════════════════════════════════ */
@@ -1046,6 +1116,27 @@ tr:hover td { background: var(--bg-surface-1); }
 }
 .tooltip-bottom { bottom: auto; top: calc(100% + 8px); }
 .tooltip-bottom::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: var(--text-primary); }
+
+/* Posicoes laterais — o tooltip so tinha topo e base, o que nao serve a
+   navegacao em rail: o rotulo precisa sair para o lado do icone. */
+.tooltip-right {
+  bottom: auto; top: 50%; left: calc(100% + 8px);
+  transform: translateY(-50%);
+}
+.tooltip-right::after {
+  top: 50%; left: auto; right: 100%;
+  transform: translateY(-50%);
+  border-top-color: transparent; border-right-color: var(--text-primary);
+}
+.tooltip-left {
+  bottom: auto; top: 50%; left: auto; right: calc(100% + 8px);
+  transform: translateY(-50%);
+}
+.tooltip-left::after {
+  top: 50%; left: 100%;
+  transform: translateY(-50%);
+  border-top-color: transparent; border-left-color: var(--text-primary);
+}
 .tooltip-wrapper:hover .tooltip { opacity: 1; }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -1858,6 +1949,10 @@ tr:hover td { background: var(--bg-surface-1); }
 }
 @media (max-width: 768px) {
   .stat-grid { grid-template-columns: 1fr; }
+  /* .header usa padding lateral --space-8 (32px de cada lado). Em 320px isso
+     consome 20% da largura e o bloco de identidade não cabe — alinhado ao
+     .content, que já reduz o padding neste breakpoint. */
+  .header { padding: 0 var(--space-4); }
   .kanban { flex-direction: column; }
   .kanban-column { max-width: 100%; min-width: 100%; }
   .btn { min-height: 48px; padding: var(--space-3) var(--space-5); }

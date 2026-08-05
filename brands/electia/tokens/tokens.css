@@ -1,39 +1,96 @@
 /* ============================================
-   ELECTIA BY EMPREGA+ — Design Tokens v2.3
+   ELECTIA BY EMPREGA+ — Design Tokens v2.6
    Generated from tokens.json (Brand Book)
+   Atualizacao 2026-06-26 (v2.6 — alinhamento DS↔LP real):
+   - Navy #1B2A4A APOSENTADO → grafite #0B0E14 canonical (base unica em tudo: tokens, web, social, Canva, e-mail, image-prompts)
+   - Surface scale rebaseada sobre grafite: #161B26 / #1C2333 / #232B3B / #2A3444 (= LP --bg-card / --bg-card-hover / derivados / border)
+   - Text alinhada a LP: --text-primary #E6EDF3, --text-secondary #8B949E, --text-muted #6E7681 (gray-200/gray-500 derivados)
+   - Border: default #2A3444, hover #3A4554, + novo --border-focus #6f32b1
+   - Semanticos VIVOS (LP): --success #22C55E, --warning #F59E0B, --error #EF4444
+   - Glass scale rgba rebaseada navy (28,42,74) → grafite (22,27,38 = #161B26)
+   - NOVO --purple-on-dark #c084fc (destaque hero, 7.1:1 vs #0B0E14, AA — NAO usar como fill de botao)
+   - NOVO --gradient-purple-deep (roxo profundo → canonical)
+   - NOVO bloco [data-theme="light"] (tema light opt-in, espelha LP globals.css)
+   Historico:
+   - v2.5 (2026-05-24): teal (#2DD4BF) → roxo (#6f32b1); --teal-* → --purple-*; ramps OKLCH purple/royal-blue/gold; gradientes vibrant/premium
+   - DNA preservado: Sora+Inter, glass scale 3-niveis, transitions, utility classes
    ============================================ */
 
 :root {
-  /* ---- Teal (cor de destaque primaria) ---- */
-  --teal-light: #5EEAD4;
-  --teal: #2DD4BF;
-  --teal-dark: #14B8A6;
-  --teal-muted: #0F766E;
+  /* ---- Purple (cor primary Electia — canonical no ecossistema) ---- */
+  --purple-light: #a55eea;
+  --purple: #6f32b1;
+  --purple-dark: #5a2890;
+  --purple-muted: #3d1a64;
 
-  /* ---- Background Scale ---- */
-  --bg: #08080A;
-  --surface-1: #0E0E11;
-  --surface-2: #141417;
-  --surface-3: #1C1C20;
-  --surface-4: #24242A;
+  /* ---- Purple ramp (OKLCH, perceptualmente uniforme; 700 = --purple canonical) ---- */
+  --purple-50: #f7f3ff;
+  --purple-100: #eee5ff;
+  --purple-200: #e0ceff;
+  --purple-300: #ccadff;
+  --purple-400: #b784ff;
+  --purple-500: #a15bf5;
+  --purple-600: #8842d6;
+  --purple-700: #6f32b1;
+  --purple-800: #562789;
+  --purple-900: #3d1c63;
+  --purple-950: #291145;
 
-  /* ---- Text ---- */
+  /* ---- Royal Blue (sinergia ResultX — acento CTAs; 800 = #2040a0). NAO e primary ---- */
+  --royal-blue: #2040a0;
+  --royal-blue-50: #f1f5ff;
+  --royal-blue-100: #e0eaff;
+  --royal-blue-200: #c6d8ff;
+  --royal-blue-300: #a0beff;
+  --royal-blue-400: #779fff;
+  --royal-blue-500: #4c7dff;
+  --royal-blue-600: #315fef;
+  --royal-blue-700: #244bc6;
+  --royal-blue-800: #2040a0;
+  --royal-blue-900: #12296f;
+  --royal-blue-950: #0a1b4e;
+
+  /* ---- Gold / Ouro (sinergia ResultX — acento pricing 'Recomendado'; 400 = #b29442) ---- */
+  --gold: #b29442;
+  --gold-50: #fbf5e5;
+  --gold-100: #f4e9ce;
+  --gold-200: #e9d7a7;
+  --gold-300: #d6bc7a;
+  --gold-400: #b29442;
+  --gold-500: #a38428;
+  --gold-600: #8a6c08;
+  --gold-700: #705701;
+  --gold-800: #564302;
+  --gold-900: #3e2f04;
+  --gold-950: #2a1f02;
+
+  /* ---- Background Scale (grafite canonical — base unica do ecossistema; navy #1B2A4A aposentado 2026-06-26) ---- */
+  --bg: #0B0E14;
+  --surface-1: #161B26;   /* = LP --bg-card */
+  --surface-2: #1C2333;   /* = LP --bg-card-hover */
+  --surface-3: #232B3B;   /* derivado */
+  --surface-4: #2A3444;   /* = --border */
+
+  /* ---- Text (alinhada a LP globals.css) ---- */
   --white: #FFFFFF;
-  --gray-100: #E8E8EC;
-  --gray-200: #C8C8D0;
-  --gray-300: #A0A0AC;
-  --gray-400: #7E7E8A;
-  --gray-500: #5A5A66;
-  --gray-600: #2E2E36;
+  --text-primary: #E6EDF3;
+  --text-secondary: #8B949E;
+  --text-muted: #6E7681;
+  --gray-200: #C9D1D9;    /* derivado — texto de corpo claro */
+  --gray-500: #545D68;    /* derivado — labels sutis, timestamps */
 
   /* ---- Border ---- */
-  --border: #26262D;
-  --border-hover: #36363F;
+  --border: #2A3444;
+  --border-hover: #3A4554;
+  --border-focus: #6f32b1;   /* focus ring / borda de foco (purple canonical) */
 
-  /* ---- Semantic (apenas estados UI) ---- */
-  --success: #2D8B5C;
-  --error: #B83A3A;
-  --warning: #B8862A;
+  /* ---- Purple on dark (destaque hero) ---- */
+  --purple-on-dark: #c084fc;   /* texto/icone/borda roxo sobre fundo escuro — 7.1:1 vs #0B0E14 (AA). NAO usar como fill de botao */
+
+  /* ---- Semantic (vivos — alinhados a LP) ---- */
+  --success: #22C55E;
+  --error: #EF4444;
+  --warning: #F59E0B;
 
   /* ---- Typography ---- */
   --font-heading: 'Sora', sans-serif;
@@ -89,31 +146,38 @@
   --radius-2xl: 24px;
   --radius-full: 9999px;
 
-  /* ---- Shadows ---- */
+  /* ---- Shadows (glow-brand agora em purple rgba(111,50,177,*)) ---- */
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
   --shadow-lg: 0 8px 24px rgba(0,0,0,0.6);
-  --glow-brand: 0 0 20px rgba(196,154,60,0.25);
-  --glow-brand-lg: 0 0 40px rgba(196,154,60,0.35), 0 0 80px rgba(196,154,60,0.15);
+  --glow-brand: 0 0 20px rgba(111,50,177,0.25);
+  --glow-brand-lg: 0 0 40px rgba(111,50,177,0.35), 0 0 80px rgba(111,50,177,0.15);
 
-  /* ---- Glassmorphism ---- */
-  --glass-subtle-bg: rgba(14,14,17,0.4);
+  /* ---- Glassmorphism (rgba base grafite #161B26 = rgb(22,27,38)) ---- */
+  --glass-subtle-bg: rgba(22,27,38,0.4);
   --glass-subtle-blur: 12px;
   --glass-subtle-border: rgba(255,255,255,0.04);
 
-  --glass-bg: rgba(14,14,17,0.6);
+  --glass-bg: rgba(22,27,38,0.6);
   --glass-blur: 16px;
   --glass-border: rgba(255,255,255,0.06);
 
-  --glass-strong-bg: rgba(14,14,17,0.85);
+  --glass-strong-bg: rgba(22,27,38,0.85);
   --glass-strong-blur: 24px;
   --glass-strong-border: rgba(255,255,255,0.08);
 
-  /* ---- Gradients ---- */
-  --gradient-brand: linear-gradient(135deg, #2DD4BF 0%, #5EEAD4 100%);
-  --gradient-brand-subtle: linear-gradient(135deg, rgba(196,154,60,0.12) 0%, rgba(139,107,42,0.12) 100%);
-  --gradient-teal-line: linear-gradient(90deg, transparent 0%, #2DD4BF 30%, transparent 100%);
-  --gradient-radial-glow: radial-gradient(ellipse at center, rgba(196,154,60,0.15) 0%, transparent 70%);
+  /* ---- Gradients (alinhados ao novo purple) ---- */
+  --gradient-brand: linear-gradient(135deg, #6f32b1 0%, #a55eea 100%);
+  --gradient-brand-subtle: linear-gradient(135deg, rgba(111,50,177,0.12) 0%, rgba(90,40,144,0.12) 100%);
+  --gradient-purple-line: linear-gradient(90deg, transparent 0%, #6f32b1 30%, transparent 100%);
+  --gradient-radial-glow: radial-gradient(ellipse at center, rgba(111,50,177,0.15) 0%, transparent 70%);
+
+  /* ---- Gradientes de sinergia ResultX (nomes alinhados ao app: globals.css) ----
+     vibrant = B (roxo→royal-blue) — DEFAULT em CTAs/badges/headlines
+     premium = C (roxo→ouro)       — pontual em pricing 'Recomendado'/upgrade */
+  --gradient-purple-vibrant: linear-gradient(135deg, #6f32b1 0%, #2040a0 100%);
+  --gradient-purple-premium: linear-gradient(135deg, #6f32b1 0%, #b29442 100%);
+  --gradient-purple-deep: linear-gradient(135deg, #5a2890 0%, #6f32b1 100%);   /* roxo profundo → canonical (fundos de section) */
 
   /* ---- Transitions ---- */
   --transition-fast: 150ms ease;
@@ -121,12 +185,37 @@
   --transition-slow: 300ms ease-out;
   --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
   --transition-reveal: 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-  /* ---- Breakpoints (reference only — use in @media) ---- */
-  /* --bp-sm: 640px; */
-  /* --bp-md: 768px; */
-  /* --bp-lg: 1024px; */
-  /* --bp-xl: 1280px; */
+/* ============================================
+   TEMA LIGHT — opt-in via data-theme="light"
+   Espelha a LP real (globals.css). Default (sem atributo) = dark/grafite acima.
+   WCAG AA: text-primary 16:1, accent 6.86:1 (sobre branco).
+   ============================================ */
+[data-theme="light"] {
+  /* ---- Background Scale (light) ---- */
+  --bg: #FFFFFF;
+  --surface-1: #F8FAFB;   /* card */
+  --surface-2: #F0F3F5;   /* card hover */
+
+  /* ---- Border (light) ---- */
+  --border: #D1D9E0;
+  --border-focus: #6f32b1;
+
+  /* ---- Accent (light) — purple canonical ---- */
+  --purple: #6f32b1;
+  --purple-light: #7c3aed;   /* accent hover */
+  --purple-on-dark: #6f32b1; /* sobre fundo claro, mantem identidade roxa — 6.86:1 sobre branco */
+
+  /* ---- Text (light) ---- */
+  --text-primary: #0F1729;
+  --text-secondary: #4B5563;
+  --text-muted: #6B7280;
+
+  /* ---- Semantic (light) ---- */
+  --success: #16A34A;
+  --warning: #D97706;
+  --error: #DC2626;
 }
 
 /* ---- Utility classes ---- */
@@ -180,5 +269,5 @@
   font-weight: var(--weight-semibold);
   text-transform: uppercase;
   letter-spacing: var(--tracking-eyebrow);
-  color: var(--teal);
+  color: var(--purple);
 }

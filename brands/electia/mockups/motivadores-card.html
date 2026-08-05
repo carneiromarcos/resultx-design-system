@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Electia Viz — Motivadores v0.1 (top-3 duplo Ideal × Realizado)</title>
+  <link rel="preconnect" href="https://rsms.me/" />
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+  <style>
+    :root {
+      --bg: oklch(96% 0 0);
+      --text: oklch(18% 0 0);
+      --text-muted: oklch(45% 0 0);
+      --viz-card-padding: clamp(20px, 4vw, 28px);
+      --viz-card-radius: 16px;
+      --viz-card-bg: oklch(98.5% 0 0);
+      --viz-card-border: 1px solid oklch(92% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.04), 0 4px 12px oklch(0% 0 0 / 0.06);
+
+      /* Theory color — cyan canônico */
+      --theory: oklch(60% 0.14 195);
+
+      /* Ideal × Realizado */
+      --ideal-stroke: oklch(60% 0.18 145);
+      --ideal-fill: oklch(60% 0.18 145 / 0.18);
+      --real-stroke: var(--theory);
+      --real-fill: oklch(60% 0.14 195 / 0.22);
+
+      /* Cores por motivador (saturadas, estilo Adioma) */
+      --mot-conhecimento:   oklch(60% 0.14 195);  /* cyan */
+      --mot-altruismo:      oklch(60% 0.18 145);  /* verde */
+      --mot-economico:      oklch(70% 0.16 75);   /* âmbar */
+      --mot-reconhecimento: oklch(58% 0.20 295);  /* roxo */
+      --mot-harmonia:       oklch(62% 0.16 10);   /* rose */
+      --mot-causa:          oklch(55% 0.16 240);  /* azul profundo */
+
+      --track-bg: oklch(92% 0 0);
+
+      --label-on-light: oklch(20% 0 0);
+      --label-on-dark:  oklch(98% 0 0);
+
+      --viz-motion-entry-duration: 600ms;
+      --viz-motion-entry-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --viz-motion-stagger: 80ms;
+      --viz-motion-hover: 150ms;
+    }
+
+    [data-theme="dark"] {
+      --bg: oklch(12% 0 0);
+      --text: oklch(94% 0 0);
+      --text-muted: oklch(70% 0 0);
+      --viz-card-bg: oklch(16% 0 0);
+      --viz-card-border: 1px solid oklch(22% 0 0);
+      --viz-card-shadow: 0 1px 2px oklch(0% 0 0 / 0.3);
+
+      --theory: oklch(72% 0.14 195);
+
+      --ideal-stroke: oklch(72% 0.16 145);
+      --ideal-fill: oklch(72% 0.16 145 / 0.22);
+      --real-stroke: var(--theory);
+      --real-fill: oklch(72% 0.14 195 / 0.24);
+
+      --mot-conhecimento:   oklch(72% 0.14 195);
+      --mot-altruismo:      oklch(72% 0.16 145);
+      --mot-economico:      oklch(78% 0.13 75);
+      --mot-reconhecimento: oklch(72% 0.18 295);
+      --mot-harmonia:       oklch(75% 0.14 10);
+      --mot-causa:          oklch(72% 0.14 240);
+
+      --track-bg: oklch(24% 0 0);
+
+      --label-on-light: oklch(15% 0 0);
+      --label-on-dark:  oklch(98% 0 0);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; transition: background 200ms ease, color 200ms ease; }
+    body { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px; }
+    .stage { max-width: 620px; width: 100%; }
+
+    .toggle-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 12px; color: var(--text-muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .theme-btn { appearance: none; border: 1px solid var(--viz-card-border); background: var(--viz-card-bg); color: var(--text); font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 999px; cursor: pointer; transition: all var(--viz-motion-hover) ease; }
+    .theme-btn:hover { transform: translateY(-1px); }
+    .theme-btn:focus-visible { outline: 2px solid var(--theory); outline-offset: 2px; }
+
+    .viz-card { background: var(--viz-card-bg); border: var(--viz-card-border); border-radius: var(--viz-card-radius); padding: var(--viz-card-padding); box-shadow: var(--viz-card-shadow); animation: cardEnter 200ms var(--viz-motion-entry-ease) both; }
+    @keyframes cardEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .card-title { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+    .card-icon { width: 24px; height: 24px; border-radius: 6px; background: oklch(from var(--theory) l c h / 0.18); display: grid; place-items: center; color: var(--theory); font-weight: 700; font-size: 11px; }
+    .card-help { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--viz-card-border); background: transparent; color: var(--text-muted); font-size: 12px; cursor: help; }
+    .card-help:hover { color: var(--theory); border-color: var(--theory); }
+
+    .match-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      background: oklch(from var(--ideal-stroke) l c h / 0.12);
+      border: 1px solid oklch(from var(--ideal-stroke) l c h / 0.4);
+      border-radius: 999px;
+      color: var(--ideal-stroke);
+      font-size: 12px; font-weight: 600;
+      margin-bottom: 12px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 200ms both;
+    }
+    .match-badge::before { content: "✓"; font-size: 14px; }
+
+    .hero { text-align: center; margin-bottom: 12px; animation: fadeUp 400ms var(--viz-motion-entry-ease) 100ms both; }
+    .hero-pattern { font-size: clamp(32px, 6vw, 40px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; color: var(--theory); }
+    .hero-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+    .viz-wrap { display: grid; place-items: center; margin: 0 0 14px; animation: fadeIn 600ms var(--viz-motion-entry-ease) 200ms both; }
+    .viz-wrap svg { display: block; max-width: 100%; height: auto; }
+
+    .col-header { fill: var(--text-muted); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; animation: fadeIn 300ms ease 300ms both; }
+    .col-header-ideal { fill: var(--ideal-stroke); }
+    .col-header-real { fill: var(--theory); }
+
+    .col-divider { stroke: var(--viz-card-border); stroke-width: 1; stroke-dasharray: 3 3; animation: fadeIn 300ms ease 300ms both; }
+
+    .rank-pill {
+      fill: oklch(from var(--text) l c h / 0.06);
+      stroke: var(--viz-card-border);
+      stroke-width: 1;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) both;
+    }
+    .rank-num { fill: var(--text-muted); font-size: 10px; font-weight: 700; font-feature-settings: 'tnum' 1; animation: fadeIn 200ms ease both; }
+
+    .bar-label { fill: var(--label-on-light); font-size: 12px; font-weight: 600; letter-spacing: -0.01em; animation: fadeIn 200ms ease both; }
+    [data-theme="dark"] .bar-label { fill: var(--label-on-dark); }
+
+    .bar-track { fill: var(--track-bg); animation: fadeIn 300ms ease both; }
+
+    .bar-fill {
+      transform-origin: left center;
+      animation: barGrow 700ms var(--viz-motion-entry-ease) both;
+    }
+    @keyframes barGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+    .bar-score { fill: var(--text); font-size: 12px; font-weight: 700; font-feature-settings: 'tnum' 1; letter-spacing: -0.02em; animation: fadeIn 300ms ease both; }
+
+    /* match indicator: arrow entre ideal e realizado quando coincidem na posição */
+    .match-arrow {
+      stroke: var(--ideal-stroke);
+      stroke-width: 1.5;
+      fill: none;
+      stroke-dasharray: 2 2;
+      opacity: 0.7;
+      animation: fadeIn 400ms ease 1400ms both;
+    }
+    .match-arrow-cap { fill: var(--ideal-stroke); animation: fadeIn 400ms ease 1500ms both; }
+
+    .compare-row {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 10px 14px;
+      background: oklch(from var(--ideal-stroke) l c h / 0.06);
+      border-radius: 10px;
+      margin-bottom: 14px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 1600ms both;
+    }
+    .compare-cell { flex: 1; }
+    .compare-label { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    .compare-value { font-size: 15px; font-weight: 600; color: var(--theory); margin-top: 2px; }
+    .compare-divider { width: 1px; background: var(--viz-card-border); margin: 4px 0; }
+
+    .dim-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 12px; animation: fadeUp 400ms var(--viz-motion-entry-ease) 1700ms both; }
+    .dim-table th, .dim-table td { padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--viz-card-border); }
+    .dim-table th { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    .dim-table td.mot { display: flex; align-items: center; gap: 8px; }
+    .dim-table td.mot::before {
+      content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--dot, var(--theory));
+      display: inline-block; flex-shrink: 0;
+    }
+    .dim-table tr[data-mot="conhecimento"]   td.mot { --dot: var(--mot-conhecimento); }
+    .dim-table tr[data-mot="altruismo"]      td.mot { --dot: var(--mot-altruismo); }
+    .dim-table tr[data-mot="economico"]      td.mot { --dot: var(--mot-economico); }
+    .dim-table tr[data-mot="reconhecimento"] td.mot { --dot: var(--mot-reconhecimento); }
+    .dim-table tr[data-mot="harmonia"]       td.mot { --dot: var(--mot-harmonia); }
+    .dim-table tr[data-mot="causa"]          td.mot { --dot: var(--mot-causa); }
+    .dim-table td.score { text-align: right; font-weight: 600; font-feature-settings: 'tnum' 1; color: var(--text); }
+    .dim-table td.score.real { color: var(--theory); }
+    .dim-table td.delta { text-align: right; font-size: 11px; color: var(--text-muted); font-feature-settings: 'tnum' 1; }
+    .dim-table td.delta.pos { color: oklch(50% 0.15 145); }
+    .dim-table td.delta.neg { color: oklch(55% 0.18 30); }
+    [data-theme="dark"] .dim-table td.delta.pos { color: oklch(75% 0.15 145); }
+    [data-theme="dark"] .dim-table td.delta.neg { color: oklch(75% 0.18 30); }
+
+    .narrative { font-size: 13px; line-height: 1.55; color: var(--text); margin-bottom: 14px; padding: 10px 12px; background: oklch(from var(--text) l c h / 0.04); border-radius: 10px; border-left: 2px solid var(--theory); animation: fadeUp 400ms var(--viz-motion-entry-ease) 1800ms both; }
+
+    .cta-row { display: flex; justify-content: flex-end; margin-top: 4px; animation: fadeIn 300ms ease 1900ms both; }
+    .cta { appearance: none; background: transparent; border: 1px solid var(--theory); color: var(--theory); font: inherit; font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: all var(--viz-motion-hover) ease; }
+    .cta:hover { background: oklch(from var(--theory) l c h / 0.1); transform: translateX(2px); }
+    .cta:focus-visible { outline: 2px solid var(--theory); outline-offset: 2px; }
+
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0ms !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0ms !important;
+      }
+    }
+
+    .footer-note { margin-top: 16px; font-size: 11px; color: var(--text-muted); text-align: center; letter-spacing: 0.02em; }
+    .footer-note a { color: var(--theory); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="toggle-row">
+      <span>Mockup v0.1 · Motivadores · top-3 duplo Ideal × Realizado</span>
+      <button class="theme-btn" id="themeBtn" aria-label="Alternar tema claro/escuro">🌙 Dark</button>
+    </div>
+
+    <article class="viz-card" aria-labelledby="card-title">
+      <header class="card-header">
+        <div class="card-title">
+          <span class="card-icon" aria-hidden="true">M</span>
+          <span id="card-title">Motivadores · Valores Profissionais</span>
+        </div>
+        <button class="card-help" aria-label="Como ler este perfil">?</button>
+      </header>
+
+      <div class="match-badge" role="status">Alinhado ao cargo Comercial Sr.</div>
+
+      <div class="hero">
+        <div class="hero-pattern">Executivo</div>
+        <div class="hero-subtitle">Econômico + Reconhecimento · perfil composto dos 2 motivadores mais altos</div>
+      </div>
+
+      <div class="viz-wrap">
+        <svg viewBox="0 0 600 270" width="600" height="270"
+             role="img" aria-labelledby="mot-svg-title mot-svg-desc">
+          <title id="mot-svg-title">Motivadores · top 3 ideal do cargo vs top 3 realizado pelo colaborador</title>
+          <desc id="mot-svg-desc">
+            Comparativo lado a lado entre o ranking ideal do cargo Comercial Sr. (à esquerda) e o ranking realizado pelo colaborador (à direita).
+            Cargo: 1º Econômico 85, 2º Reconhecimento 80, 3º Conhecimento 65.
+            Colaborador: 1º Econômico 82, 2º Reconhecimento 75, 3º Conhecimento 70.
+            Top 3 idêntico — perfil Executivo alinhado em ambos os lados.
+          </desc>
+
+          <!-- Header das colunas -->
+          <text class="col-header col-header-ideal" x="40" y="20" text-anchor="start">Ideal · Cargo</text>
+          <text class="col-header col-header-real"  x="330" y="20" text-anchor="start">Realizado · Você</text>
+
+          <!-- Divisor central tracejado -->
+          <line class="col-divider" x1="300" y1="40" x2="300" y2="220" />
+
+          <!-- ============================ COLUNA IDEAL ============================ -->
+          <g class="ideal-col">
+            <!-- Linha 1 — Econômico 85 -->
+            <g transform="translate(40, 50)">
+              <rect class="rank-pill" x="0" y="6" width="22" height="22" rx="11" style="animation-delay: 400ms" />
+              <text class="rank-num" x="11" y="22" text-anchor="middle" style="animation-delay: 450ms">1</text>
+              <text class="bar-label" x="32" y="14" style="animation-delay: 500ms">Econômico</text>
+              <rect class="bar-track" x="32" y="22" width="200" height="10" rx="5" style="animation-delay: 500ms" />
+              <rect class="bar-fill" x="32" y="22" width="170" height="10" rx="5" fill="var(--mot-economico)" style="animation-delay: 550ms; animation-duration: 700ms" />
+              <text class="bar-score" x="240" y="30" text-anchor="end" style="animation-delay: 1100ms">85</text>
+            </g>
+
+            <!-- Linha 2 — Reconhecimento 80 -->
+            <g transform="translate(40, 100)">
+              <rect class="rank-pill" x="0" y="6" width="22" height="22" rx="11" style="animation-delay: 480ms" />
+              <text class="rank-num" x="11" y="22" text-anchor="middle" style="animation-delay: 530ms">2</text>
+              <text class="bar-label" x="32" y="14" style="animation-delay: 580ms">Reconhecimento</text>
+              <rect class="bar-track" x="32" y="22" width="200" height="10" rx="5" style="animation-delay: 580ms" />
+              <rect class="bar-fill" x="32" y="22" width="160" height="10" rx="5" fill="var(--mot-reconhecimento)" style="animation-delay: 630ms; animation-duration: 700ms" />
+              <text class="bar-score" x="240" y="30" text-anchor="end" style="animation-delay: 1180ms">80</text>
+            </g>
+
+            <!-- Linha 3 — Conhecimento 65 -->
+            <g transform="translate(40, 150)">
+              <rect class="rank-pill" x="0" y="6" width="22" height="22" rx="11" style="animation-delay: 560ms" />
+              <text class="rank-num" x="11" y="22" text-anchor="middle" style="animation-delay: 610ms">3</text>
+              <text class="bar-label" x="32" y="14" style="animation-delay: 660ms">Conhecimento</text>
+              <rect class="bar-track" x="32" y="22" width="200" height="10" rx="5" style="animation-delay: 660ms" />
+              <rect class="bar-fill" x="32" y="22" width="130" height="10" rx="5" fill="var(--mot-conhecimento)" style="animation-delay: 710ms; animation-duration: 700ms" />
+              <text class="bar-score" x="240" y="30" text-anchor="end" style="animation-delay: 1260ms">65</text>
+            </g>
+          </g>
+
+          <!-- ============================ COLUNA REALIZADO ============================ -->
+          <g class="real-col">
+            <!-- Linha 1 — Econômico 82 -->
+            <g transform="translate(330, 50)">
+              <rect class="rank-pill" x="0" y="6" width="22" height="22" rx="11" style="animation-delay: 400ms" />
+              <text class="rank-num" x="11" y="22" text-anchor="middle" style="animation-delay: 450ms">1</text>
+              <text class="bar-label" x="32" y="14" style="animation-delay: 500ms">Econômico</text>
+              <rect class="bar-track" x="32" y="22" width="200" height="10" rx="5" style="animation-delay: 500ms" />
+              <rect class="bar-fill" x="32" y="22" width="164" height="10" rx="5" fill="var(--mot-economico)" style="animation-delay: 550ms; animation-duration: 700ms" />
+              <text class="bar-score" x="240" y="30" text-anchor="end" style="animation-delay: 1100ms">82</text>
+            </g>
+
+            <!-- Linha 2 — Reconhecimento 75 -->
+            <g transform="translate(330, 100)">
+              <rect class="rank-pill" x="0" y="6" width="22" height="22" rx="11" style="animation-delay: 480ms" />
+              <text class="rank-num" x="11" y="22" text-anchor="middle" style="animation-delay: 530ms">2</text>
+              <text class="bar-label" x="32" y="14" style="animation-delay: 580ms">Reconhecimento</text>
+              <rect class="bar-track" x="32" y="22" width="200" height="10" rx="5" style="animation-delay: 580ms" />
+              <rect class="bar-fill" x="32" y="22" width="150" height="10" rx="5" fill="var(--mot-reconhecimento)" style="animation-delay: 630ms; animation-duration: 700ms" />
+              <text class="bar-score" x="240" y="30" text-anchor="end" style="animation-delay: 1180ms">75</text>
+            </g>
+
+            <!-- Linha 3 — Conhecimento 70 -->
+            <g transform="translate(330, 150)">
+              <rect class="rank-pill" x="0" y="6" width="22" height="22" rx="11" style="animation-delay: 560ms" />
+              <text class="rank-num" x="11" y="22" text-anchor="middle" style="animation-delay: 610ms">3</text>
+              <text class="bar-label" x="32" y="14" style="animation-delay: 660ms">Conhecimento</text>
+              <rect class="bar-track" x="32" y="22" width="200" height="10" rx="5" style="animation-delay: 660ms" />
+              <rect class="bar-fill" x="32" y="22" width="140" height="10" rx="5" fill="var(--mot-conhecimento)" style="animation-delay: 710ms; animation-duration: 700ms" />
+              <text class="bar-score" x="240" y="30" text-anchor="end" style="animation-delay: 1260ms">70</text>
+            </g>
+          </g>
+
+          <!-- ============================ MATCH ARROWS (3 conexões idênticas) ============================ -->
+          <!-- linha 1 ↔ linha 1 — Econômico match -->
+          <path class="match-arrow" d="M 282 71 L 318 71" />
+          <polygon class="match-arrow-cap" points="318,71 312,68 312,74" />
+          <polygon class="match-arrow-cap" points="282,71 288,68 288,74" />
+
+          <!-- linha 2 ↔ linha 2 — Reconhecimento match -->
+          <path class="match-arrow" d="M 282 121 L 318 121" />
+          <polygon class="match-arrow-cap" points="318,121 312,118 312,124" />
+          <polygon class="match-arrow-cap" points="282,121 288,118 288,124" />
+
+          <!-- linha 3 ↔ linha 3 — Conhecimento match -->
+          <path class="match-arrow" d="M 282 171 L 318 171" />
+          <polygon class="match-arrow-cap" points="318,171 312,168 312,174" />
+          <polygon class="match-arrow-cap" points="282,171 288,168 288,174" />
+
+          <!-- Footer status -->
+          <text class="col-header" x="300" y="245" text-anchor="middle" fill="var(--ideal-stroke)" style="animation-delay: 1500ms">3 de 3 motivadores alinhados</text>
+        </svg>
+      </div>
+
+      <div class="compare-row" aria-label="Comparativo cargo vs colaborador">
+        <div class="compare-cell">
+          <div class="compare-label">Ideal · Cargo</div>
+          <div class="compare-value">Executivo</div>
+        </div>
+        <div class="compare-divider"></div>
+        <div class="compare-cell">
+          <div class="compare-label">Realizado · Você</div>
+          <div class="compare-value">Executivo</div>
+        </div>
+      </div>
+
+      <table class="dim-table" aria-label="Scores Motivadores por valor (6 dimensões)">
+        <thead>
+          <tr>
+            <th>Motivador</th>
+            <th style="text-align:right">Ideal</th>
+            <th style="text-align:right">Realizado</th>
+            <th style="text-align:right">Δ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-mot="economico">
+            <td class="mot">Econômico</td>
+            <td class="score">85</td>
+            <td class="score real">82</td>
+            <td class="delta neg">−3</td>
+          </tr>
+          <tr data-mot="reconhecimento">
+            <td class="mot">Reconhecimento</td>
+            <td class="score">80</td>
+            <td class="score real">75</td>
+            <td class="delta neg">−5</td>
+          </tr>
+          <tr data-mot="conhecimento">
+            <td class="mot">Conhecimento</td>
+            <td class="score">65</td>
+            <td class="score real">70</td>
+            <td class="delta pos">+5</td>
+          </tr>
+          <tr data-mot="harmonia">
+            <td class="mot">Harmonia</td>
+            <td class="score">30</td>
+            <td class="score real">45</td>
+            <td class="delta pos">+15</td>
+          </tr>
+          <tr data-mot="causa">
+            <td class="mot">Causa</td>
+            <td class="score">40</td>
+            <td class="score real">40</td>
+            <td class="delta">±0</td>
+          </tr>
+          <tr data-mot="altruismo">
+            <td class="mot">Altruísmo</td>
+            <td class="score">35</td>
+            <td class="score real">38</td>
+            <td class="delta pos">+3</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="narrative">
+        Perfil <strong>Executivo</strong> · top 2 motivadores <strong>Econômico + Reconhecimento</strong>
+        alinhados ao cargo Comercial Sr. <strong>Conhecimento</strong> levemente acima do esperado (+5) indica
+        propensão a aprofundamento técnico — diferencial em vendas consultivas. <strong>Harmonia</strong> também
+        acima (+15) sugere ritmo sustentável e cuidado com qualidade de vida, valor adicional não exigido pelo cargo.
+      </p>
+
+      <table class="sr-only">
+        <caption>Motivadores — ranking completo Ideal × Realizado (6 valores)</caption>
+        <thead><tr><th>Rank Ideal</th><th>Motivador</th><th>Score Ideal</th><th>Score Realizado</th><th>Δ</th><th>Match</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Econômico</td><td>85</td><td>82</td><td>−3</td><td>Dentro</td></tr>
+          <tr><td>2</td><td>Reconhecimento</td><td>80</td><td>75</td><td>−5</td><td>Dentro</td></tr>
+          <tr><td>3</td><td>Conhecimento</td><td>65</td><td>70</td><td>+5</td><td>Dentro</td></tr>
+          <tr><td>4</td><td>Causa</td><td>40</td><td>40</td><td>±0</td><td>Dentro</td></tr>
+          <tr><td>5</td><td>Altruísmo</td><td>35</td><td>38</td><td>+3</td><td>Dentro</td></tr>
+          <tr><td>6</td><td>Harmonia</td><td>30</td><td>45</td><td>+15</td><td>Próximo</td></tr>
+        </tbody>
+      </table>
+
+      <div class="cta-row"><button class="cta" type="button">Saiba mais →</button></div>
+    </article>
+
+    <p class="footer-note">
+      Mockup v0.1 · Motivadores · top-3 duplo + tabela completa · spec em <a href="../docs/DESIGN-SYSTEM.md">DESIGN-SYSTEM.md</a> · valores fictícios
+    </p>
+  </div>
+
+  <script>
+    const btn = document.getElementById('themeBtn');
+    const root = document.documentElement;
+    btn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+      root.dataset.theme = next;
+      btn.textContent = next === 'light' ? '🌙 Dark' : '☀️ Light';
+    });
+  </script>
+</body>
+</html>

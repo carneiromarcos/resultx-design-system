@@ -4,7 +4,7 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const outDir = join(__dirname, 'social-media-png');
+const outDir = join(__dirname, '..', 'templates', 'social-media');
 
 // Emprega+ Design Tokens (Light theme — navy + gold)
 const t = {

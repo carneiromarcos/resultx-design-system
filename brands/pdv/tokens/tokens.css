@@ -1,21 +1,24 @@
 /* ============================================
-   PROFISSIONAL DE VALOR — Design Tokens v2.3
+   PROFISSIONAL DE VALOR — Design Tokens v2.5
    Generated from tokens.json (Brand Book)
+   Sinergia ecossistema 2026-05-23: paleta alinhada Emprega+
+   (gold #c4993b, bg navy #1B2A4A) — DNA PdV mantido (Sora+Inter,
+   glass scale, gradient brand, glow-brand).
    ============================================ */
 
 :root {
-  /* ---- Gold (unica cor de destaque) ---- */
-  --gold-light: #D4AD55;
-  --gold: #C49A3C;
-  --gold-dark: #A07D2E;
+  /* ---- Gold (unica cor de destaque — alinhado --emp-gold do ecossistema) ---- */
+  --gold-light: #d4ae54;
+  --gold: #c4993b;
+  --gold-dark: #a07b2a;
   --gold-muted: #8B6B2A;
 
-  /* ---- Background Scale ---- */
-  --bg: #08080A;
-  --surface-1: #0E0E11;
-  --surface-2: #141417;
-  --surface-3: #1C1C20;
-  --surface-4: #24242A;
+  /* ---- Background Scale (navy ecossistema — alinhado theme-color Emprega+) ---- */
+  --bg: #1B2A4A;
+  --surface-1: #1c2a4a;
+  --surface-2: #243661;
+  --surface-3: #2d4378;
+  --surface-4: #36508f;
 
   /* ---- Text ---- */
   --white: #FFFFFF;
@@ -96,24 +99,24 @@
   --glow-brand: 0 0 20px rgba(196,154,60,0.25);
   --glow-brand-lg: 0 0 40px rgba(196,154,60,0.35), 0 0 80px rgba(196,154,60,0.15);
 
-  /* ---- Glassmorphism ---- */
-  --glass-subtle-bg: rgba(14,14,17,0.4);
+  /* ---- Glassmorphism (rgba base navy ecossistema #1c2a4a = rgb(28,42,74)) ---- */
+  --glass-subtle-bg: rgba(28,42,74,0.4);
   --glass-subtle-blur: 12px;
   --glass-subtle-border: rgba(255,255,255,0.04);
 
-  --glass-bg: rgba(14,14,17,0.6);
+  --glass-bg: rgba(28,42,74,0.6);
   --glass-blur: 16px;
   --glass-border: rgba(255,255,255,0.06);
 
-  --glass-strong-bg: rgba(14,14,17,0.85);
+  --glass-strong-bg: rgba(28,42,74,0.85);
   --glass-strong-blur: 24px;
   --glass-strong-border: rgba(255,255,255,0.08);
 
-  /* ---- Gradients ---- */
-  --gradient-brand: linear-gradient(135deg, #C49A3C 0%, #D4AD55 100%);
-  --gradient-brand-subtle: linear-gradient(135deg, rgba(196,154,60,0.12) 0%, rgba(139,107,42,0.12) 100%);
-  --gradient-gold-line: linear-gradient(90deg, transparent 0%, #C49A3C 30%, transparent 100%);
-  --gradient-radial-glow: radial-gradient(ellipse at center, rgba(196,154,60,0.15) 0%, transparent 70%);
+  /* ---- Gradients (alinhados ao novo gold #c4993b) ---- */
+  --gradient-brand: linear-gradient(135deg, #c4993b 0%, #d4ae54 100%);
+  --gradient-brand-subtle: linear-gradient(135deg, rgba(196,153,59,0.12) 0%, rgba(139,107,42,0.12) 100%);
+  --gradient-gold-line: linear-gradient(90deg, transparent 0%, #c4993b 30%, transparent 100%);
+  --gradient-radial-glow: radial-gradient(ellipse at center, rgba(196,153,59,0.15) 0%, transparent 70%);
 
   /* ---- Transitions ---- */
   --transition-fast: 150ms ease;

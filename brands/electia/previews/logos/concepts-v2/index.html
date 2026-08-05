@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Logo Electia v2.2 — wordmark + Emprega+ logo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&family=Sora:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal-v1: #14B8A6;
+      --teal-old: #2DD4BF;
+      --bg: #0B0E14;
+      --surface: #161B26;
+      --border: #2A3444;
+      --text: #E6EDF3;
+      --text-muted: #8B949E;
+      --light-bg: #F5F7FA;
+      --light-text: #0B0E14;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 48px 24px;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      line-height: 1.5;
+    }
+    header { max-width: 1200px; margin: 0 auto 56px; }
+    header h1 {
+      font-family: 'Sora', sans-serif; font-weight: 800;
+      font-size: clamp(28px, 4vw, 44px); margin: 0 0 8px;
+      letter-spacing: -0.02em;
+    }
+    header p { color: var(--text-muted); margin: 0; max-width: 760px; }
+    .badge {
+      display: inline-block; padding: 4px 10px; border-radius: 999px;
+      background: rgba(20,184,166,0.15); color: var(--teal-v1);
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+      margin-right: 8px;
+    }
+    main { max-width: 1200px; margin: 0 auto; display: grid; gap: 64px; }
+
+    section h2 {
+      font-family: 'Sora', sans-serif; font-weight: 700;
+      font-size: 24px; margin: 0 0 4px; letter-spacing: -0.01em;
+    }
+    section .concept-meta {
+      color: var(--text-muted); margin: 0 0 24px; font-size: 14px;
+    }
+    section .concept-meta strong { color: var(--text); }
+    section .concept-meta code {
+      background: var(--surface); padding: 2px 6px; border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .card {
+      border: 1px solid var(--border); border-radius: 14px;
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 10px 16px; font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: var(--text-muted); border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .card-body {
+      padding: 44px 32px; display: grid; place-items: center; min-height: 200px;
+    }
+    .card.dark { background: var(--bg); }
+    .card.light { background: var(--light-bg); }
+    .card.light .card-header { color: var(--light-text); border-bottom-color: rgba(11,14,20,0.15); }
+
+    /* ============ LOCKUP HORIZONTAL ============ */
+    .lockup-h {
+      display: inline-flex;
+      align-items: center;
+      gap: 32px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .lockup-h .wordmark {
+      font-weight: 600;
+      font-size: 56px;
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+    .lockup-h .by {
+      font-family: 'Sora', sans-serif;
+      font-weight: 400;
+      font-size: 15px;
+      opacity: 0.55;
+      letter-spacing: 0;
+    }
+    .lockup-h .emp-logo {
+      height: 56px;
+      width: auto;
+      display: block;
+    }
+
+    /* ============ LOCKUP VERTICAL (electia em cima, by + logo embaixo) ============ */
+    .lockup-v {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .lockup-v .wordmark {
+      font-weight: 600;
+      font-size: 64px;
+      letter-spacing: -2.4px;
+      line-height: 1;
+    }
+    .lockup-v .endorsement {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding-left: 4px;
+    }
+    .lockup-v .endorsement .by {
+      font-family: 'Sora', sans-serif;
+      font-weight: 400;
+      font-size: 13px;
+      opacity: 0.55;
+    }
+    .lockup-v .endorsement .emp-logo {
+      height: 24px;
+      width: auto;
+      display: block;
+    }
+
+    /* ============ LOCKUP SOLO ============ */
+    .lockup-solo .wordmark {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      font-size: 64px;
+      letter-spacing: -2.4px;
+      line-height: 1;
+    }
+
+    /* ============ TEMAS DE COR (padrão vs accent) ============ */
+    /* Padrão: elect=neutro · ia=teal */
+    .v-padrao.on-dark .wordmark { color: var(--text); }
+    .v-padrao.on-dark .ia { color: var(--teal-v1); }
+    .v-padrao.on-light .wordmark { color: var(--light-text); }
+    .v-padrao.on-light .ia { color: var(--teal-v1); }
+    /* Accent: elect=teal · ia=neutro */
+    .v-accent.on-dark .wordmark { color: var(--teal-v1); }
+    .v-accent.on-dark .ia { color: var(--text); }
+    .v-accent.on-light .wordmark { color: var(--teal-v1); }
+    .v-accent.on-light .ia { color: var(--light-text); }
+    /* Cor do "by" depende do fundo */
+    .on-dark .by { color: var(--text); }
+    .on-light .by { color: var(--light-text); }
+
+    .swatches-row { display: flex; gap: 12px; flex-wrap: wrap; margin: 12px 0 24px; }
+    .sw {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 14px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    }
+    .sw .dot { width: 16px; height: 16px; border-radius: 4px; }
+
+    footer {
+      max-width: 1200px; margin: 64px auto 0; padding-top: 32px;
+      border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px;
+    }
+
+    .rule-box {
+      background: rgba(20,184,166,0.08); border: 1px solid rgba(20,184,166,0.35);
+      border-radius: 12px; padding: 16px 20px; margin-top: 12px;
+    }
+    .rule-box strong { color: var(--teal-v1); }
+    .rule-box code {
+      background: var(--surface); padding: 2px 6px; border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    }
+
+    .lockup-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      color: var(--text-muted); letter-spacing: 0.04em; margin-bottom: 8px;
+    }
+
+    .logo-test {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+      margin-bottom: 24px;
+    }
+    .logo-test .tile {
+      border: 1px solid var(--border); border-radius: 10px; padding: 24px;
+      display: grid; place-items: center; min-height: 100px;
+    }
+    .logo-test .tile.dark { background: var(--bg); }
+    .logo-test .tile.light { background: var(--light-bg); }
+    .logo-test img { height: 48px; width: auto; }
+    .logo-test .caption {
+      font-family: 'JetBrains Mono', monospace; font-size: 10px;
+      color: var(--text-muted); text-align: center; margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Logo Electia v2.2 — wordmark + Emprega+ logo</h1>
+    <p>
+      <span class="badge">v2.2 FINAL</span>
+      Texto "emprega+" substituído pela <strong>logomarca oficial Emprega+</strong> (SVGs do Marcos).
+      Wordmark <code style="background:rgba(20,184,166,0.15);color:var(--teal-v1);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace">electia</code>
+      mantém a regra "ia em cor contrária". <strong>3 lockups:</strong> horizontal (electia by [logo]) · vertical (electia em cima, by [logo] embaixo) · solo (electia sozinho).
+    </p>
+    <div class="swatches-row" aria-label="Paleta principal">
+      <span class="sw"><span class="dot" style="background:#14B8A6"></span>teal · #14B8A6</span>
+      <span class="sw"><span class="dot" style="background:#E6EDF3;border:1px solid #2A3444"></span>off-white · #E6EDF3</span>
+      <span class="sw"><span class="dot" style="background:#0B0E14;border:1px solid #2A3444"></span>ink · #0B0E14</span>
+      <span class="sw"><span class="dot" style="background:#F5F7FA;border:1px solid #2A3444"></span>paper · #F5F7FA</span>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============================================================
+         TESTE — qual SVG do logo Emprega+ funciona em qual fundo
+         ============================================================ -->
+    <section>
+      <h2>🔍 Teste — qual logo Emprega+ em qual fundo</h2>
+      <p class="concept-meta">
+        Os 2 SVGs originais (<code>emprega-mais-logo-1.svg</code> e <code>emprega-mais-logo-2.svg</code>) são raster (PNG embarcado) — não dá pra mudar cor por vetor.
+        Confira abaixo qual versão fica bem em dark vs light e me diga: <strong>logo-1 em fundo X, logo-2 em fundo Y</strong> — eu plugo no lockup oficial.
+      </p>
+      <div class="logo-test">
+        <div>
+          <div class="tile dark"><img src="emprega-mais-logo-1.svg" alt="logo-1 em dark" /></div>
+          <div class="caption">logo-1 · fundo dark</div>
+        </div>
+        <div>
+          <div class="tile light"><img src="emprega-mais-logo-1.svg" alt="logo-1 em light" /></div>
+          <div class="caption">logo-1 · fundo light</div>
+        </div>
+        <div>
+          <div class="tile dark"><img src="emprega-mais-logo-2.svg" alt="logo-2 em dark" /></div>
+          <div class="caption">logo-2 · fundo dark</div>
+        </div>
+        <div>
+          <div class="tile light"><img src="emprega-mais-logo-2.svg" alt="logo-2 em light" /></div>
+          <div class="caption">logo-2 · fundo light</div>
+        </div>
+      </div>
+      <p class="concept-meta" style="margin-top:8px">
+        <em>Default por enquanto:</em> uso <code>logo-1</code> em fundos light + <code>logo-2</code> em fundos dark (palpite educado).
+        Se inverter, é troca de 1 string no HTML.
+      </p>
+    </section>
+
+    <!-- ============================================================
+         LOCKUP 1 — Horizontal (electia · by · [logo Emprega+])
+         ============================================================ -->
+    <section>
+      <h2>Lockup 1 — Horizontal · electia <span style="color:var(--text-muted);font-weight:400">by</span> [logo Emprega+]</h2>
+      <p class="concept-meta">
+        <strong>Uso:</strong> site institucional, materiais B2B, decks comerciais, rodapé do produto, header de e-mail.<br>
+        <strong>Estrutura:</strong> <code>electia</code> (JetBrains Mono Semibold 56px) + gap 32px + <code>by</code> (Sora 400, 55% opacity) + gap 32px + <strong>logomarca Emprega+</strong> (height 56px). Espaços iguais entre as 3 peças.
+      </p>
+
+      <p class="lockup-label">VARIAÇÃO PADRÃO — <code style="font-family:inherit">elect</code> neutro · <code style="font-family:inherit">ia</code> teal</p>
+      <div class="grid-2" style="margin-bottom:24px">
+        <div class="card dark">
+          <div class="card-header"><span>dark padrão</span><span>elect=off-white · ia=teal</span></div>
+          <div class="card-body">
+            <div class="lockup-h v-padrao on-dark">
+              <span class="wordmark">elect<span class="ia">ia</span></span>
+              <span class="by">by</span>
+              <img class="emp-logo" src="emprega-mais-logo-2.svg" alt="logomarca Emprega+" />
+            </div>
+          </div>
+        </div>
+        <div class="card light">
+          <div class="card-header"><span>light padrão</span><span>elect=ink · ia=teal</span></div>
+          <div class="card-body">
+            <div class="lockup-h v-padrao on-light">
+              <span class="wordmark">elect<span class="ia">ia</span></span>
+              <span class="by">by</span>
+              <img class="emp-logo" src="emprega-mais-logo-1.svg" alt="logomarca Emprega+" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="lockup-label">VARIAÇÃO ACCENT — <code style="font-family:inherit">elect</code> teal · <code style="font-family:inherit">ia</code> neutro</p>
+      <div class="grid-2">
+        <div class="card dark">
+          <div class="card-header"><span>dark accent</span><span>elect=teal · ia=off-white</span></div>
+          <div class="card-body">
+            <div class="lockup-h v-accent on-dark">
+              <span class="wordmark">elect<span class="ia">ia</span></span>
+              <span class="by">by</span>
+              <img class="emp-logo" src="emprega-mais-logo-2.svg" alt="logomarca Emprega+" />
+            </div>
+          </div>
+        </div>
+        <div class="card light">
+          <div class="card-header"><span>light accent</span><span>elect=teal · ia=ink</span></div>
+          <div class="card-body">
+            <div class="lockup-h v-accent on-light">
+              <span class="wordmark">elect<span class="ia">ia</span></span>
+              <span class="by">by</span>
+              <img class="emp-logo" src="emprega-mais-logo-1.svg" alt="logomarca Emprega+" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         LOCKUP 2 — Vertical (electia em cima, by + logo embaixo)
+         ============================================================ -->
+    <section>
+      <h2>Lockup 2 — Vertical · electia <span style="color:var(--text-muted);font-weight:400">em cima</span>, by [logo] <span style="color:var(--text-muted);font-weight:400">embaixo</span></h2>
+      <p class="concept-meta">
+        <strong>Uso:</strong> assinatura quadrada (Avatar de social, cover de slide, header app icon, sticker, watermark), formato 1:1 ou quase.
+        Onde o lockup horizontal fica largo demais e seria reduzido perdendo legibilidade.<br>
+        <strong>Estrutura:</strong> <code>electia</code> (64px) em cima, <code>by</code> (13px) + <strong>logomarca Emprega+</strong> (height 24px, ≈37% do wordmark) embaixo, alinhados pela esquerda com pequeno padding-left no endorsement.
+      </p>
+
+      <p class="lockup-label">VARIAÇÃO PADRÃO — <code style="font-family:inherit">elect</code> neutro · <code style="font-family:inherit">ia</code> teal</p>
+      <div class="grid-2" style="margin-bottom:24px">
+        <div class="card dark">
+          <div class="card-header"><span>dark padrão</span><span>elect=off-white · ia=teal</span></div>
+          <div class="card-body">
+            <div class="lockup-v v-padrao on-dark">
+              <span class="wordmark">elect<span class="ia">ia</span></span>
+              <span class="endorsement">
+                <span class="by">by</span>
+                <img class="emp-logo" src="emprega-mais-logo-2.svg" alt="logomarca Emprega+" />
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="card light">
+          <div class="card-header"><span>light padrão</span><span>elect=ink · ia=teal</span></div>
+          <div class="card-body">
+            <div class="lockup-v v-padrao on-light">
+              <span class="wordmark">elect<span class="ia">ia</span></span>
+              <span class="endorsement">
+                <span class="by">by</span>
+                <img class="emp-logo" src="emprega-mais-logo-1.svg" alt="logomarca Emprega+" />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="lockup-label">VARIAÇÃO ACCENT — <code style="font-family:inherit">elect</code> teal · <code style="font-family:inherit">ia</code> neutro</p>
+      <div class="grid-2">
+        <div class="card dark">
+          <div class="card-header"><span>dark accent</span><span>elect=teal · ia=off-white</span></div>
+          <div class="card-body">
+            <div class="lockup-v v-accent on-dark">
+              <span class="wordmark">elect<span class="ia">ia</span></span>
+              <span class="endorsement">
+                <span class="by">by</span>
+                <img class="emp-logo" src="emprega-mais-logo-2.svg" alt="logomarca Emprega+" />
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="card light">
+          <div class="card-header"><span>light accent</span><span>elect=teal · ia=ink</span></div>
+          <div class="card-body">
+            <div class="lockup-v v-accent on-light">
+              <span class="wordmark">elect<span class="ia">ia</span></span>
+              <span class="endorsement">
+                <span class="by">by</span>
+                <img class="emp-logo" src="emprega-mais-logo-1.svg" alt="logomarca Emprega+" />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         LOCKUP 3 — Solo
+         ============================================================ -->
+    <section>
+      <h2>Lockup 3 — Solo · electia <span style="color:var(--text-muted);font-weight:400">sozinho</span></h2>
+      <p class="concept-meta">
+        <strong>Uso:</strong> dentro do app (header, login, e-mails do produto), favicons, app icon, qualquer contexto onde o usuário já está no produto e o endorsement Emprega+ é redundante.<br>
+        <strong>Estrutura:</strong> só <code>electia</code> (JetBrains Mono Semibold 64px).
+      </p>
+
+      <p class="lockup-label">VARIAÇÃO PADRÃO — <code style="font-family:inherit">elect</code> neutro · <code style="font-family:inherit">ia</code> teal</p>
+      <div class="grid-2" style="margin-bottom:24px">
+        <div class="card dark">
+          <div class="card-header"><span>dark padrão</span><span>elect=off-white · ia=teal</span></div>
+          <div class="card-body">
+            <div class="lockup-solo v-padrao on-dark">
+              <span class="wordmark">elect<span class="ia">ia</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="card light">
+          <div class="card-header"><span>light padrão</span><span>elect=ink · ia=teal</span></div>
+          <div class="card-body">
+            <div class="lockup-solo v-padrao on-light">
+              <span class="wordmark">elect<span class="ia">ia</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="lockup-label">VARIAÇÃO ACCENT — <code style="font-family:inherit">elect</code> teal · <code style="font-family:inherit">ia</code> neutro</p>
+      <div class="grid-2">
+        <div class="card dark">
+          <div class="card-header"><span>dark accent</span><span>elect=teal · ia=off-white</span></div>
+          <div class="card-body">
+            <div class="lockup-solo v-accent on-dark">
+              <span class="wordmark">elect<span class="ia">ia</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="card light">
+          <div class="card-header"><span>light accent</span><span>elect=teal · ia=ink</span></div>
+          <div class="card-body">
+            <div class="lockup-solo v-accent on-light">
+              <span class="wordmark">elect<span class="ia">ia</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         REGRA DE MARCA
+         ============================================================ -->
+    <section>
+      <h2>Regra tipográfica oficial — "ia" em cor contrária</h2>
+      <p class="concept-meta">
+        Em <strong>qualquer</strong> renderização do wordmark (impresso, web, vídeo, social, signature, favicon, watermark),
+        as duas últimas letras <code>ia</code> ficam em cor distinta do restante de <code>elect</code>.
+        Cria gancho visual consistente + leitura sutil de "IA" (Inteligência Artificial — categoria do produto).
+        Versão <strong>padrão</strong>: corpo neutro + <code>ia</code> teal. Versão <strong>accent</strong>: corpo teal + <code>ia</code> neutro
+        (use em hero, capas, momentos de destaque — não como default).
+      </p>
+      <div class="rule-box">
+        <strong>NUNCA:</strong> wordmark monocromático sem contraste entre <code>elect</code> e <code>ia</code>.
+        Se o canal não suporta 2 cores (fax, gravação a laser, 1-cor em silk), use o lockup solo todo em teal sobre branco — nesse caso a regra é dispensada por restrição técnica.
+      </div>
+    </section>
+
+    <!-- ============================================================
+         VERDE V1 vs V0 (mantido pra calibração)
+         ============================================================ -->
+    <section>
+      <h2>Verde V1 #14B8A6 vs. V0 #2DD4BF (calibração)</h2>
+      <p class="concept-meta">
+        V1 é 1 passo mais escuro que o V0 atual. Mais sério, ainda na família teal. Aplicado a botão + URL pra ver impacto no produto.
+      </p>
+      <div class="grid-2">
+        <div class="card dark">
+          <div class="card-header"><span>V0 atual · #2DD4BF</span><span>teal-400</span></div>
+          <div class="card-body" style="gap:16px;flex-direction:column;display:flex;align-items:center">
+            <button style="background:#2DD4BF;color:#0B0E14;border:none;padding:14px 28px;border-radius:10px;font-family:'Sora',sans-serif;font-weight:600;font-size:15px">Ir para o Dashboard</button>
+            <code style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#2DD4BF">electia.empregamais.me</code>
+          </div>
+        </div>
+        <div class="card dark" style="border-color:rgba(20,184,166,0.5)">
+          <div class="card-header" style="color:#14B8A6"><span>V1 escolhido · #14B8A6</span><span>teal-500</span></div>
+          <div class="card-body" style="gap:16px;flex-direction:column;display:flex;align-items:center">
+            <button style="background:#14B8A6;color:#0B0E14;border:none;padding:14px 28px;border-radius:10px;font-family:'Sora',sans-serif;font-weight:600;font-size:15px">Ir para o Dashboard</button>
+            <code style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#14B8A6">electia.empregamais.me</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <strong>Próximos passos.</strong>
+    (1) Veja a seção 🔍 Teste no topo — me diga qual logo (1 ou 2) vai em qual fundo.
+    (2) Aprove os 3 lockups + a regra → atualizo o BB v1.5 e gero exports finais (PNG + SVG por variação + favicons).<br>
+    <span style="margin-top:8px;display:inline-block">Path: <code>~/meus-projetos/resultx/design-system/brands/electia/previews/logo-v2-concepts/index.html</code></span>
+  </footer>
+
+</body>
+</html>

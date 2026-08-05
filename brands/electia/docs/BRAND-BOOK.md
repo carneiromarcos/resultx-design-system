@@ -1,6 +1,15 @@
 # Brand Book — Electia by Emprega+
 
-**Versão:** 1.3 | **Data:** 2026-05-11 | **Classificação:** Interno
+**Versão BB (conteúdo editorial §1-17):** 2.2 · **Data:** 2026-06-27 · **Classificação:** Interno
+**Versão Brand Kit (este diretório):** 1.7.1 · **Data:** 2026-05-12 · ver [CHANGELOG.md](./CHANGELOG.md)
+
+> **Escopo de versionamento.** O **header do Brand Book** versiona apenas o conteúdo editorial das seções §1-17 abaixo. O **CHANGELOG.md** versiona o brand-kit inteiro (mockups, wireframes, specs, tokens, decisões D1-D6). Se você abriu este doc procurando o estado atual do brand-kit, vá direto ao CHANGELOG. Se procura a especificação visual oficial, está aqui.
+>
+> **BB 2.0 (27/05) — Purple Refactor.** Migração completa de teal `#2DD4BF` para roxo `#6f32b1` como cor de acento primária da marca. Commit `8e4cadb` em produção (24/05), 126 arquivos atualizados. Gradients de sinergia ResultX: B (roxo→Royal Blue `#2040a0`) em CTAs + C (roxo→Ouro `#b29442`) em pricing "Recomendado". WCAG 2.2 (1.4.3/1.4.11/2.4.11) validado.
+>
+> **BB 2.1 (26/06) — Grafite canonical.** O experimento navy `#1B2A4A` (adotado em 24/05) foi **APOSENTADO**: grafite `#0B0E14` é a base única do ecossistema em tudo (tokens, web, social, Canva, e-mail, image-prompts), alinhada à LP real em produção. Adicionado o token `purple.on-dark` `#c084fc` (texto/ícone/borda roxo sobre fundo escuro — 7.1:1 vs `#0B0E14`, destaque do hero, nunca fill de botão). Tema light (`data-theme="light"`) documentado nos tokens. Semânticos alinhados aos vivos da LP.
+>
+> **BB 2.2 (27/06) — Theory colors OKLCH.** A tabela de cores por teoria comportamental (§4) foi alinhada aos valores canônicos **OKLCH** dos tokens (`--theory-*`) usados pelo DS/preview, substituindo os hex Tailwind `-400` legados. Famílias de cor preservadas (DISC azul, Tipologia Cognitiva violeta, Eneagrama âmbar, Big Five verde, Le Senne rosa, Motivadores ciano); apenas precisão/fonte atualizadas.
 
 ---
 
@@ -81,7 +90,7 @@ electia by emprega+
 
 | Trecho | Fonte | Peso | Estilo | Notas |
 |--------|-------|------|--------|-------|
-| `electia` | **JetBrains Mono** | 600 (Semibold) | Normal | Tudo minúsculo. Letter-spacing: `-0.04em`. Cor: branco `#E6EDF3` ou accent teal `#2DD4BF` em destaque |
+| `electia` | **JetBrains Mono** | 600 (Semibold) | Normal | Tudo minúsculo. Letter-spacing: `-0.04em`. Cor: branco `#E6EDF3` ou accent roxo `#6f32b1` em destaque |
 | `by` | Sora | 400 (Regular) | Normal | Tamanho ~30% do `electia`. Cor: `rgba(230,237,243,0.55)` |
 | `emprega+` | **Sora ExtraBold** | 800 | Normal | Mesma fonte oficial da marca-mae Emprega+. Tamanho ~50% do `electia`. Cor: `rgba(230,237,243,0.85)` |
 
@@ -96,7 +105,7 @@ electia by emprega+
 | **Completo** | Site, LP, materiais oficiais, header. Composição: `electia by emprega+` |
 | **Curto** | Espacos com pouca largura, segundo uso na mesma pagina. Composição: `electia` (sozinho, sem endosso) |
 | **Lockup vertical** | Social média quadrado, papelaria. `electia` em cima, `by emprega+` embaixo centralizado |
-| **Monocromatico** | Fundos complexos, impressao. Versão single-color (branco ou teal) |
+| **Monocromatico** | Fundos complexos, impressao. Versão single-color (branco ou roxo) |
 
 ### Favicon e avatar — helper "e"
 
@@ -108,7 +117,7 @@ Quando o espaço e tao pequeno que não cabe nem `electia` (16-48px), usa-se um 
 - Forma: quadrado arredondado, `border-radius: 24%` (proporcional ao tamanho)
 - Tamanho minimo: 32x32px (favicon)
 - Padding interno: 22% do tamanho
-- Fundo: opção A `--bg` (#0B0E14) com letra teal · opção B `--teal` (#2DD4BF) com letra dark · opção C `rgba(45,212,191,0.15)` (teal/15) com letra teal
+- Fundo: opção A `--bg` (#0B0E14) com letra roxa · opção B `--purple` (#6f32b1) com letra branca · opção C `rgba(111,50,177,0.15)` (purple/15) com letra roxa
 
 ### Tamanhos e proporcoes do wordmark
 
@@ -126,9 +135,9 @@ Quando o espaço e tao pequeno que não cabe nem `electia` (16-48px), usa-se um 
 | Variante | `electia` | `by` | `emprega+` | Fundo |
 |----------|-----------|------|------------|-------|
 | **Padrão dark** | `#E6EDF3` (branco) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#0B0E14` |
-| **Accent dark** | `#2DD4BF` (teal) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#0B0E14` |
-| **Accent glow** | `#2DD4BF` + text-shadow teal blur 32px 45% | idem | idem | `#0B0E14` ou gradient |
-| **Light** | `#0B0E14` (dark) | `rgba(11,14,20,0.65)` | `rgba(11,14,20,0.85)` | `#FFFFFF` ou `#F5F7FA` |
+| **Accent dark** | `#6f32b1` (roxo) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#0B0E14` |
+| **Accent glow** | `#6f32b1` + text-shadow purple blur 32px 45% | idem | idem | `#0B0E14` ou gradient |
+| **Light** | `#0F1729` (grafite escuro) | `rgba(15,23,41,0.65)` | `rgba(15,23,41,0.85)` | `#FFFFFF` ou `#F8FAFB` |
 
 ### Área de protecao
 
@@ -140,7 +149,7 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 - Não usar cores fora da paleta
 - Não colocar sobre fundos que comprometam legibilidade
 - Não rotacionar
-- Não adicionar sombras, brilhos ou efeitos (exceto o glow teal oficial)
+- Não adicionar sombras, brilhos ou efeitos (exceto o glow purple oficial)
 - Não escrever `Electia` com E maiúsculo em wordmark (so minúsculo)
 - Não usar `electia by ResultX` em materiais públicos
 - Não trocar a fonte do `electia` (so JetBrains Mono Semibold 600)
@@ -156,15 +165,17 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 
 | Nome | Hex | Uso |
 |------|-----|-----|
-| **Accent Teal** | `#2DD4BF` | Cor principal da marca. CTAs, links, destaques, logo |
-| **Accent Teal Hover** | `#5EEAD4` | Hover states, interacoes |
-| **Accent Teal Muted** | `rgba(45, 212, 191, 0.15)` | Backgrounds sutis, selecoes, badges |
+| **Accent Purple** | `#6f32b1` | Cor principal da marca. CTAs, links, destaques, wordmark |
+| **Accent Purple Light** | `#a55eea` | Hover states, focus ring, interacoes |
+| **Accent Purple Dark** | `#5a2890` | Pressed states, bordas ativas em dark |
+| **Accent Purple Muted** | `rgba(111, 50, 177, 0.15)` | Backgrounds sutis, selecoes, badges |
+| **Accent Purple On-Dark** | `#c084fc` | Texto/ícone/borda roxo sobre fundo grafite — 7.1:1 vs `#0B0E14` (AA normal text). Destaque do hero. NÃO usar como fill de botão |
 
 ### Cores de Fundo (Dark Theme)
 
 | Nome | Hex | Uso |
 |------|-----|-----|
-| **BG Base** | `#0B0E14` | Fundo principal da aplicação e LP |
+| **BG Base (Grafite)** | `#0B0E14` | Fundo principal da aplicação e LP |
 | **BG Surface** | `#161B26` | Cards, paineis, modais |
 | **BG Surface Hover** | `#1C2333` | Hover de cards e elementos interativos |
 
@@ -181,7 +192,7 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 | Nome | Hex | Uso |
 |------|-----|-----|
 | **Border Default** | `#2A3444` | Bordas de cards, inputs, divisores |
-| **Border Focus** | `#2DD4BF` | Focus ring, borda ativa |
+| **Border Focus** | `#6f32b1` | Focus ring, borda ativa |
 
 ### Cores Semanticas
 
@@ -193,14 +204,16 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 
 ### Cores por Teoria Comportamental
 
-| Teoria | Cor | Hex | Tailwind |
-|--------|-----|-----|----------|
-| DISC | Azul | `#60A5FA` | blue-400 |
-| Tipologia Cognitiva | Roxo | `#A78BFA` | purple-400 |
-| Eneagrama | Ambar | `#FBBF24` | amber-400 |
-| Big Five | Verde | `#4ADE80` | green-400 |
-| Le Senne | Rosa | `#FB7185` | rose-400 |
-| Motivadores | Ciano | `#22D3EE` | cyan-400 |
+Valores canônicos em **OKLCH** (token-driven), alinhados ao DS/preview — usados em badges, barras, gráficos e cards. Tema dark; o light usa variantes mais escuras dos mesmos tokens.
+
+| Teoria | Família | OKLCH (dark) | Token |
+|--------|---------|--------------|-------|
+| DISC | Azul | `oklch(72% 0.18 240)` | `--theory-disc` |
+| Tipologia Cognitiva | Violeta | `oklch(75% 0.18 305)` | `--theory-mbti` |
+| Eneagrama | Âmbar | `oklch(78% 0.14 75)` | `--theory-enneagram` |
+| Big Five | Verde | `oklch(72% 0.16 145)` | `--theory-big-five` |
+| Le Senne | Rosa | `oklch(75% 0.14 10)` | `--theory-le-senne` |
+| Motivadores | Ciano | `oklch(60% 0.14 195)` | `--theory-motivadores` |
 
 ### Cores por Macro-Dimensão (Testes Situacionais)
 
@@ -283,12 +296,12 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 
 - **Biblioteca:** Lucide React (ja em uso no app)
 - **Estilo:** Outline, stroke 1.5-2px
-- **Cor padrão:** var(--text-muted) para inativo, var(--accent-teal) para ativo/destaque
+- **Cor padrão:** var(--text-muted) para inativo, var(--accent-purple) para ativo/destaque
 - **Tamanho padrão:** 20x20px (UI), 24x24px (destaque), 40x40px (hero/feature)
 
 ### Containers de ícone
 
-- Background: accent-teal/15% (teal sutil)
+- Background: accent-purple/15% (roxo sutil)
 - Border-radius: 12px (rounded-xl)
 - Padding: proporcional ao tamanho do ícone
 
@@ -303,7 +316,7 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 
 | Variante | Background | Texto | Borda |
 |----------|-----------|-------|-------|
-| **Primário** | var(--accent-teal) | var(--bg-primary) (escuro) | nenhuma |
+| **Primário** | var(--accent-purple) | branco `#FFFFFF` | nenhuma |
 | **Secundario** | transparente | var(--text-secondary) | var(--border-default) |
 | **Ghost** | transparente | var(--text-muted) | nenhuma |
 | **Danger** | var(--danger) | branco | nenhuma |
@@ -319,29 +332,29 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 ### Landing Page
 
 - Fundo: var(--bg-primary) — dark
-- Hero: headline em Sora ExtraBold, accent teal no CTA
+- Hero: headline em Sora ExtraBold, accent purple no CTA
 - Seções alternam entre bg-primary e bg-card para ritmo visual
 - Imagens: screenshots do produto com borda sutil, nunca mockups genéricos
 
 ### App (Dashboard)
 
-- Sidebar: bg-card com items em text-muted, ativo em accent-teal
+- Sidebar: bg-card com items em text-muted, ativo em accent-purple
 - Cards de dados: bg-card com borda, hover interativo
 - Graficos: cores por teoria (6 cores distintas, sem repetir)
-- Formularios: inputs com bg-primary, borda default, focus teal
+- Formularios: inputs com bg-primary, borda default, focus purple
 
 ### Email (Brevo)
 
-- Fundo: #0B0E14 (dark, consistente com app)
+- Fundo: #0B0E14 (grafite, consistente com app)
 - Texto: #E6EDF3 (primary)
-- CTA: botao teal (#2DD4BF) com texto escuro
+- CTA: botao purple (#6f32b1) com texto branco
 - Logo: Electia by Emprega+ no header
 
 ### Redes Sociais
 
-- Posts: fundo dark (#0B0E14) com accent teal para destaques
+- Posts: fundo grafite (#0B0E14) com accent purple para destaques
 - Tipografia: Sora Bold para frases de impacto
-- Elementos gráficos: linhas e shapes em teal/15%
+- Elementos gráficos: linhas e shapes em purple/15%
 - Nunca usar fotos de banco de imagens genéricas
 
 ### PDF / Relatórios
@@ -387,7 +400,7 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 | Público | Candidatos, editais, vagas | Gestores, RH, diretoria |
 | Modelo | B2C (gratuito) | B2B SaaS (assinatura) |
 | Tom | Acolhedor, motivacional | Direto, provocativo, inteligente |
-| Paleta | Accent teal (compartilhado) | Dark theme dominante (mais tech) |
+| Paleta | Gold + grafite light (institucional) | Purple + grafite dark (identidade própria) |
 | Complexidade | Simples, acessível | Profundo, dados, IA |
 
 O Electia herda a credibilidade da Emprega+ mas se posiciona como produto premium para decisores corporativos.
@@ -584,11 +597,11 @@ Electia não usa fotografia tradicional de RH (sorrisos corporativos, salas relu
 
 | Aspecto | Diretriz |
 |---------|----------|
-| **Iluminacao** | Dark mode dominante. Contraste alto. Glows teal sutis |
-| **Temperatura** | Frias. Tons teal, cyan, navy. Acentos sutis em ambar (saúde mental) |
+| **Iluminacao** | Dark mode dominante (grafite). Contraste alto. Glows purple sutis |
+| **Temperatura** | Frias. Tons purple, grafite, royal blue. Acentos sutis em ambar (saúde mental) |
 | **Movimento** | Lento, organico, "silk-flow". Nunca frenetico |
 | **Densidade** | Limpa, com whitespace. Dado e protagonista — texto e suporte |
-| **Cor dominante** | Tons escuros (#0B0E14 base) com acentos teal (#2DD4BF) e amber em estados especiais |
+| **Cor dominante** | Grafite (#0B0E14 base) com acentos purple (#6f32b1) e amber em estados especiais |
 
 ### Categorias de imagem
 
@@ -605,10 +618,10 @@ Electia não usa fotografia tradicional de RH (sorrisos corporativos, salas relu
 ```css
 background: linear-gradient(
   180deg,
-  rgba(11, 14, 20, 0.55) 0%,
-  rgba(11, 14, 20, 0.20) 35%,
-  rgba(11, 14, 20, 0.20) 65%,
-  rgba(11, 14, 20, 0.92) 100%
+  rgba(27, 42, 74, 0.55) 0%,
+  rgba(27, 42, 74, 0.20) 35%,
+  rgba(27, 42, 74, 0.20) 65%,
+  rgba(27, 42, 74, 0.92) 100%
 );
 ```
 
@@ -620,7 +633,7 @@ filter: brightness(0.38) saturate(0.55) hue-rotate(-12deg) contrast(1.10);
 #### Color grade fotográfico
 - **Saturacao**: Reduzir 30-40%
 - **Contraste**: Alto (+15%)
-- **Sombras**: Empurrar para frio (azul/teal)
+- **Sombras**: Empurrar para frio (grafite/purple)
 - **Highlights**: Manter neutros
 - **Referência**: Look tech moderno, não editorial
 
@@ -642,9 +655,9 @@ Antes de publicar qualquer material visual:
 
 - [ ] Fundo escuro (não branco)?
 - [ ] Fonte correta (Sora titulos, Inter corpo)?
-- [ ] Cores dentro da paleta Electia (teal #2DD4BF, neutros escuros, branco)?
-- [ ] ZERO gold/amber como destaque primário (gold só em estados ambar específicos, ex: warning)?
-- [ ] Teal como UNICA cor de destaque primária?
+- [ ] Cores dentro da paleta Electia (roxo #6f32b1, grafite #0B0E14, branco)?
+- [ ] ZERO gold/amber como destaque primário (ouro só em gradient C premium, ex: badge "Recomendado")?
+- [ ] Roxo como UNICA cor de destaque primária?
 - [ ] Logo presente com área de protecao respeitada?
 - [ ] Tom de voz alinhado (científico, direto, sem motivacional vazio)?
 - [ ] CTA digno e claro (máximo 2 por peca)?
@@ -670,7 +683,7 @@ Como instalar e aplicar este Brand Book no código real da LP (electia.empregama
 |---------|---------------|------------------|
 | **LP institucional** | Next.js + Tailwind | `resultx/electia/` (Next 16 app router) |
 | **Plataforma SaaS** | Next.js + Supabase | `resultx/electia/` (mesmo repo, área autenticada) |
-| **Email Brevo** | HTML estatico | usa `brands/electia/email-templates/*` |
+| **Email Brevo** | HTML estatico | usa `brands/electia/templates/email/*` |
 
 ### 16.2 Importar fontes (Google Fonts)
 
@@ -709,7 +722,7 @@ O DS multi-brand vive em `resultx-design-system` (NPM). Ordem de import:
 /* 1. Tokens base do DS root (cores genéricas, escalas) */
 @import 'resultx-design-system/tokens';
 
-/* 2. Override Electia (paleta teal + tokens específicos) */
+/* 2. Override Electia (paleta purple + tokens específicos) */
 @import 'resultx-design-system/brands/electia/tokens/tokens.css';
 ```
 
@@ -720,7 +733,7 @@ Ou se o código viver no mesmo monorepo, importar por path relativo:
 @import '../../design-system/brands/electia/tokens/tokens.css';
 ```
 
-Apos isso, todas as CSS variables ficam disponíveis: `var(--bg)`, `var(--teal)`, `var(--text-primary)`, `var(--surface-1)`, etc.
+Apos isso, todas as CSS variables ficam disponíveis: `var(--bg)`, `var(--purple)`, `var(--text-primary)`, `var(--surface-1)`, etc.
 
 ### 16.4 Aplicar o wordmark
 
@@ -732,7 +745,7 @@ cp brands/electia/assets/logo/electia-wordmark-accent.svg   electia-app/public/b
 cp brands/electia/assets/logo/electia-wordmark-light.svg    electia-app/public/brand/
 cp brands/electia/assets/logo/electia-short.svg             electia-app/public/brand/
 cp brands/electia/assets/logo/electia-monogram.svg          electia-app/public/brand/
-cp brands/electia/assets/logo/electia-monogram-teal.svg     electia-app/public/brand/
+cp brands/electia/assets/logo/electia-monogram-purple.svg   electia-app/public/brand/
 cp brands/electia/assets/logo/electia-lockup-vertical.svg   electia-app/public/brand/
 ```
 
@@ -826,8 +839,8 @@ CSS aplicado (modo Electia Subtle oficial):
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at center, rgba(45, 212, 191, 0.06) 0%, transparent 45%, rgba(11, 14, 20, 0.55) 75%),
-    linear-gradient(180deg, rgba(11, 14, 20, 0.65) 0%, rgba(11, 14, 20, 0.35) 40%, rgba(11, 14, 20, 0.40) 60%, rgba(11, 14, 20, 0.96) 100%);
+    radial-gradient(ellipse at center, rgba(111, 50, 177, 0.06) 0%, transparent 45%, rgba(27, 42, 74, 0.55) 75%),
+    linear-gradient(180deg, rgba(27, 42, 74, 0.65) 0%, rgba(27, 42, 74, 0.35) 40%, rgba(27, 42, 74, 0.40) 60%, rgba(27, 42, 74, 0.96) 100%);
 }
 .aurora-hero-frame .content {
   position: relative;
@@ -853,7 +866,7 @@ CSS aplicado (modo Electia Subtle oficial):
 
 ### 16.6 Email Brevo
 
-Os 4 templates em `brands/electia/email-templates/` (electia-email-base, newsletter, product-cta, brevo-base.yaml) já estao com paleta teal e grafia lowercase. Subir direto no painel Brevo via importacao YAML.
+Os 4 templates em `brands/electia/templates/email/` (electia-email-base, newsletter, product-cta, brevo-base.yaml) já estao com paleta purple e grafia lowercase. Subir direto no painel Brevo via importacao YAML.
 
 ### 16.7 Checklist por surface
 
@@ -870,7 +883,7 @@ Os 4 templates em `brands/electia/email-templates/` (electia-email-base, newslet
 - [ ] `prefers-reduced-motion` respeitado em vídeos/animacoes
 - [ ] Grafia "electia" minuscula em todo copy
 - [ ] Endorsement "by emprega+" presente onde aplicável
-- [ ] CTA usa cor `var(--teal)` ou variante accent
+- [ ] CTA usa cor `var(--purple)` ou gradient B (roxo→royal blue)
 - [ ] WCAG AA: contraste 4.5:1 mínimo testado
 
 ### 16.8 Mapa de onde cada arquivo vive
@@ -882,7 +895,7 @@ brands/electia/                          <- fonte da verdade (este DS)
 ├── tokens/tokens.json                   <- W3C tokens (para build tools)
 ├── assets/logo/*.svg                    <- copiar para public/brand/
 ├── assets/hero/aurora-hero-v1.*         <- copiar para public/hero/
-└── email-templates/*                    <- importar no Brevo
+└── templates/email/*                    <- importar no Brevo
 
 resultx/electia/                         <- consumidor (LP + plataforma)
 ├── public/
@@ -897,12 +910,328 @@ resultx/electia/                         <- consumidor (LP + plataforma)
 
 ### 16.9 Atualizar quando o Brand muda
 
-Sempre que este Brand Book virar v1.4, v1.5, etc:
+Sempre que este Brand Book virar v2.1, v2.2, etc:
 1. Atualizar `brands/electia/` (fonte da verdade)
 2. Bump versão no `package.json` do DS root
 3. Republicar NPM se for um consumidor externo
 4. Na LP/plataforma, atualizar imports + copiar novos assets
 5. Documentar mudanças no CHANGELOG.md do Electia + da LP/plataforma
+
+---
+
+## 17. Diretrizes de Aplicação Visual
+
+> Adicionado 2026-05-25. Regras de uso prático pra peças, materiais e qualquer criação visual Electia.
+
+### 17.1 Cores — quando usar cada uma
+
+#### Roxo `#6f32b1` (Purple canonical)
+
+**USE EM:**
+- ✅ CTAs principais ("Começar grátis", "Criar conta") — fill sólido com texto branco
+- ✅ Links inline em texto corrido
+- ✅ Eyebrows (rótulos uppercase pequenos acima de títulos)
+- ✅ Bordas/ícones de destaque
+- ✅ Wordmark "electia" sobre fundo grafite
+- ✅ Glow effect (`box-shadow: 0 0 30px rgba(111,50,177,0.35)`)
+
+**NÃO USE EM:**
+- ❌ Texto corpo (parágrafos) — usar branco/gray
+- ❌ Backgrounds grandes (fica pesado) — usar grafite
+- ❌ Cor de erro/aviso — usar semantic colors
+
+#### Roxo Light `#a55eea`
+
+**USE EM:**
+- ✅ Hover state de CTAs (mostra que botão acordou)
+- ✅ Highlights em textos pequenos sobre fundo dark
+- ✅ Focus ring (passa WCAG 2.4.11)
+
+#### Grafite Base `#0B0E14`
+
+**USE EM:**
+- ✅ Background principal de TODA peça dark
+- ✅ Cards principais
+- ✅ Texto inverso (sobre fundo branco)
+
+**NÃO USE EM:**
+- ❌ Texto sobre dark (vai sumir)
+
+#### White `#FFFFFF`
+
+**USE EM:**
+- ✅ Texto principal sobre grafite
+- ✅ Logo wordmark sobre grafite
+- ✅ Headlines
+
+**NÃO USE EM:**
+- ❌ Backgrounds grandes — peça fica "espacial demais"
+
+#### Semantic (Success/Error/Warning)
+
+**USE APENAS EM:**
+- Confirmações de form/CTA submetido (Success)
+- Mensagens de erro de validação (Error)
+- Avisos contextuais (Warning)
+
+**NÃO USE EM:**
+- ❌ Peças de marketing/social — quebra a paleta brand
+- ❌ Decoração — usar só funcionalmente
+
+### 17.2 Gradients — uso seletivo
+
+#### B — Default (`#6f32b1 → #2040a0` Royal Blue)
+
+**USE EM:**
+- ✅ Hero CTA principal (1 por peça)
+- ✅ Badges destacados
+- ✅ Background hero de seções
+
+**FREQUÊNCIA:** alta — pode aparecer em 30-50% das peças
+
+#### C — Premium (`#6f32b1 → #b29442` Ouro)
+
+**USE APENAS EM:**
+- ✅ Badge "Recomendado" no pricing
+- ✅ Indicador de plano enterprise
+- ✅ Upgrade banners
+- ✅ Certificações/achievements
+
+**FREQUÊNCIA:** baixa — máximo 5% das peças (raro = especial)
+
+#### Regra de ouro sobre gradients
+
+❌ **NUNCA aplique gradient em texto pequeno** (corpo, captions, labels). O olho não lê tons que variam.
+✅ Gradient só em texto **GRANDE** (h1, h2 hero) ou em **fills** (botões, badges, backgrounds).
+
+### 17.3 Fontes — hierarquia tipográfica
+
+#### Sora (Heading)
+**USE EM:**
+- H1 hero (peso 800, 76px desktop / 40px mobile)
+- H2 seções (peso 700, 44px desktop / 28px mobile)
+- H3 títulos (peso 700, 24px desktop)
+- Eyebrows (peso 600, 12px, uppercase, letter-spacing 0.15em)
+
+#### Inter (Body)
+**USE EM:**
+- Parágrafos corpo (peso 400, 16px)
+- Subtítulos (peso 500, 20px)
+- UI labels, captions (peso 500, 13px)
+- Botões (peso 600, 14-16px)
+
+#### JetBrains Mono (Mono)
+**USE EM:**
+- ✅ Wordmark "electia" (peso 600/Semibold) — caso especial canônico
+- ✅ Dados técnicos: hex codes, scores numéricos, IDs
+- ✅ Swatches de cor
+- ✅ Code blocks
+- ❌ NÃO usar em copy/marketing — fica "muito técnico"
+
+### 17.4 Logos — qual usar em qual contexto
+
+| Contexto | Logo recomendado |
+|---|---|
+| Header website (dark) | `electia-wordmark.svg` |
+| Header website (light) | `electia-wordmark-light.svg` |
+| Footer | `electia-wordmark.svg` (menor) |
+| Favicon | `electia-monogram.svg` (32×32, 64×64) |
+| Avatar redes sociais | `electia-monogram-purple.svg` |
+| Splash/Hero apresentação | `electia-lockup-vertical.svg` |
+| Mobile nav apertado | `electia-short.svg` |
+| Co-branding c/ parceiro | `electia-wordmark-accent.svg` |
+| Email header | `electia-wordmark.svg` (440×120) |
+
+#### Área de proteção (clear space)
+
+Margem mínima ao redor do wordmark = **altura da letra "e"** do "electia". Nada (texto, imagem, borda) pode invadir esse espaço.
+
+#### Tamanho mínimo
+
+| Logo | Tamanho mínimo |
+|---|---|
+| Wordmark full | 120px largura |
+| Monogram | 32px |
+| Lockup vertical | 80px altura |
+
+#### NUNCA faça com o logo
+
+- ❌ Mudar a cor (sair de roxo/branco canonical)
+- ❌ Esticar/comprimir desproporcional
+- ❌ Adicionar sombra, outline, glow não-oficial
+- ❌ Rotacionar
+- ❌ Colocar sobre fundo de cor concorrente (gold, verde, etc)
+- ❌ Adicionar elementos colados (ícones, taglines não-oficiais)
+- ❌ Reproduzir o wordmark digitando o texto à mão — sempre usar SVG canonical
+
+### 17.5 Combinações — paletas permitidas por contexto
+
+#### Combinação 1: Hero corporativo (default)
+- Background: Grafite base `#0B0E14`
+- Headline: White `#FFFFFF` (Sora 800, com palavra-destaque em gradient B)
+- Body: Gray 100 `#E8E8EC` (Inter 400)
+- CTA: gradient B (roxo→azul) com texto branco
+- Logo: `electia-wordmark.svg` (canto)
+
+#### Combinação 2: Quote vibrante
+- Background: Gradient B `#6f32b1 → #2040a0`
+- Headline: White (Sora 700)
+- Tagline: Inter 500 opacity 0.85
+- Logo: `electia-wordmark.svg` (branco, canto)
+
+#### Combinação 3: Light editorial (Gov/Editais)
+- Background: White `#FFFFFF`
+- Headline: Grafite `#0B0E14` (Sora 800)
+- Body: Gray 500 `#5A5A66` (Inter 400)
+- Accent: Roxo `#6f32b1` em links/destaques
+- Logo: `electia-wordmark-light.svg`
+
+#### Combinação 4: Dado/KPI
+- Background: Grafite base
+- Numeral grande: White ou gradient B (Sora 800, 120px+)
+- Label embaixo: Gray 300 uppercase (Inter 500 + letter-spacing)
+- Logo: monogram canto inferior direito
+
+#### Combinação 5: Premium/Recomendado
+- Background: Grafite base
+- Badge "RECOMENDADO": gradient C (roxo→ouro) com texto branco + glow ouro
+- Resto da peça: paleta padrão
+
+### 17.6 Checklist pré-publicação
+
+Antes de exportar/postar qualquer peça:
+
+- [ ] Background está em paleta brand (grafite / branco / gradient B)?
+- [ ] Roxo `#6f32b1` é o único acento de marca? (sem verdes/azuis aleatórios)
+- [ ] Fonte é **Sora/Inter/JetBrains Mono** (não outras)?
+- [ ] Gradient C aparece SÓ se peça é premium/upgrade? (não como decoração)
+- [ ] Texto pequeno NÃO usa gradient?
+- [ ] Logo está em variante correta pro fundo (light/dark)?
+- [ ] Logo tem área de proteção respeitada?
+- [ ] Contraste texto/fundo passa WCAG AA (mínimo 4.5:1)?
+- [ ] Sem efeitos não-oficiais (sombra extrema, outline, fotos com filtro)?
+- [ ] Logo no canto, não centralizado (a menos que seja lockup central proposital)?
+
+---
+
+## 18. Identidade para Postagens Sociais
+
+> Esta seção extrai apenas a linguagem visual das referências: clima, cor, luz, profundidade e composição. Não extrai tipografia nem estilo de escrita.
+
+### 18.1 O que extraímos das referências
+
+- Atmosfera cinematográfica, escura e de alto contraste.
+- Luzes de recorte e contaminação de cor nas bordas da cena.
+- Fundo com profundidade: blur, bokeh, partículas, névoa e glow.
+- Cena humana como eixo principal: retratos, close-ups, grupos, perfis e olhares.
+- Sensação de movimento e conquista, sem parecer publicidade genérica.
+- Camadas visuais sobre a imagem, em vez de texto “solto” diretamente no fundo.
+
+### 18.2 O que não extraímos
+
+- Fontes da referência.
+- Tom de linguagem da peça.
+- Copy promocional ou vocabulário da marca de origem.
+- Paleta quente como identidade principal.
+- Visual de RH stock, sorriso forçado, sala corporativa limpa demais.
+
+### 18.3 Princípios de composição
+
+| Elemento | Diretriz |
+|----------|----------|
+| **Base** | Grafite profundo como fundo dominante |
+| **Foco** | Uma imagem principal por peça, com leitura imediata |
+| **Assimetria** | Texto e sujeito podem dividir a tela, mas sem competição visual |
+| **Profundidade** | Fundo desfocado, sujeito mais nítido, luz de borda e glow controlado |
+| **Volume** | Sobreposição de cards, faixas e molduras para dar peso editorial |
+| **Respiro** | Espaço negativo suficiente para a headline respirar |
+
+### 18.4 Como o texto aparece sobre a imagem
+
+- Headline curta, grande e com leitura imediata.
+- Texto principal preferencialmente em bloco único, no máximo 2 blocos por peça.
+- Alinhamento mais comum: esquerda, com exceção de layouts centralizados ou de capa.
+- Destaque de 1 a 3 palavras em roxo `#6f32b1`, azul elétrico ou lavanda `#c084fc` sobre fundo escuro.
+- Texto de apoio entra em card translúcido com blur, não direto em cima da área mais carregada da foto.
+- Bordas com stroke fino em gradient ou roxo suave, nunca semântica aleatória.
+- Quando houver número, data, contagem de série ou indicador de carrossel, ele entra em pill discreto no canto superior direito.
+
+### 18.5 Tratamento de imagem
+
+| Tratamento | Diretriz |
+|-----------|----------|
+| **Exposição** | Escurecer a base para dar leitura ao texto |
+| **Contraste** | Alto, com pretos profundos e highlights controlados |
+| **Saturação** | Reduzida; a cor aparece como luz, não como filtro inteiro |
+| **Glow** | Sutil, concentrado em bordas, olhos, telas ou elementos de destaque |
+| **Desfoque** | Usar em fundo, partículas e áreas periféricas |
+| **Recorte** | Preferir cortes próximos e dramáticos, não cenas abertas genéricas |
+
+### 18.6 Paleta visual das postagens
+
+| Papel | Cor | Uso |
+|------|-----|-----|
+| **Dominante** | Grafite `#0B0E14` | Fundo e massa visual |
+| **Texto** | Branco / off-white | Headline e corpo sobre fundo escuro |
+| **Marca** | Roxo `#6f32b1` | Destaques, bordas, links, ênfase |
+| **Apoio frio** | Azul elétrico / ciano / lavanda | Luz, aura, profundidade, não branding fixo |
+| **Premiação** | Âmbar / ouro | Só em badges de conquista, certificação ou status premium |
+
+### 18.7 Padrões de layout
+
+| Tipo de peça | Estrutura recomendada |
+|--------------|-----------------------|
+| **Cover de carrossel** | Imagem forte + headline grande + contador no canto superior direito |
+| **Manifesto** | Fundo escuro + frase curta + uma palavra destacada |
+| **Educacional** | Título grande + subtexto em card + 3 a 5 pontos curtos |
+| **Oportunidade / recrutamento** | Retrato humano + bloco de requisitos + CTA discreto |
+| **Anúncio de produto** | Dashboard / tela / mockup + headline + label de contexto |
+
+### 18.8 Regras de consistência
+
+- A peça precisa parecer parte da mesma família, mesmo mudando o assunto.
+- Cada post deve ter uma hierarquia clara: foco, mensagem, suporte e ação.
+- A imagem não pode disputar com o texto.
+- O brilho existe para guiar o olhar, não para decorar.
+- Se a peça precisar de mais de dois blocos longos de texto, o layout está errado.
+
+### 18.9 Templates base de postagem
+
+#### Template A: Capa de carrossel
+
+- Fundo: retrato ou cena humana em close, com contraste alto.
+- Composição: sujeito em um lado, headline no outro, sem centralizar tudo.
+- Texto: 1 frase principal + 1 apoio curto.
+- Destaque: 1 palavra em roxo ou lavanda para criar ancoragem visual.
+- Sinalização: pill discreto com `01` ou `1/5` no canto superior direito.
+- Uso: abertura de série, manifesto, teaser de conteúdo.
+
+#### Template B: Peça manifesto
+
+- Fundo: grafite com textura, partículas ou luz abstrata.
+- Composição: bloco de texto dominante com pouco ruído visual.
+- Texto: frase curta e forte, ocupando a área central ou superior.
+- Destaque: uma palavra em cor de acento, nunca mais que duas.
+- Sinalização: opcional, somente se a peça fizer parte de uma sequência.
+- Uso: posicionamento, opinião, virada de percepção.
+
+#### Template C: Oportunidade ou anúncio
+
+- Fundo: retrato profissional ou cena de trabalho, com recorte dramático.
+- Composição: imagem ocupando metade ou mais da peça, com card textual sobreposto.
+- Texto: título claro + bloco de requisitos ou contexto + CTA discreto.
+- Destaque: ênfase controlada em uma linha só, para não virar peça comercial genérica.
+- Sinalização: selo pequeno de contexto, como vaga, área ou etapa.
+- Uso: recrutamento, chamada de ação, anúncio de disponibilidade.
+
+#### Template D: Educacional
+
+- Fundo: imagem tecnológica, dashboard, interface ou detalhe de produto.
+- Composição: texto em bloco superior ou lateral, com espaço para leitura.
+- Texto: título + 3 pontos curtos + fechamento direto.
+- Destaque: número, dado ou palavra-chave em roxo.
+- Sinalização: se houver série, usar indicador discreto no canto.
+- Uso: explicação de conceito, feature, dado ou insight.
 
 ---
 

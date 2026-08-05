@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>electia — Variantes do wordmark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #05070d;
+    color: #E6EDF3;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 40px 24px 80px;
+  }
+  header {
+    max-width: 1100px;
+    margin: 0 auto 40px;
+    text-align: center;
+  }
+  header h1 {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    margin-bottom: 8px;
+  }
+  header p {
+    font-size: 13px;
+    opacity: 0.65;
+    max-width: 620px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  .grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+  .card {
+    background: #161B26;
+    border: 1px solid #2A3444;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .card-meta {
+    padding: 14px 18px;
+    border-bottom: 1px solid #2A3444;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5EEAD4;
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+  }
+  .card-meta .filename {
+    display: block;
+    color: rgba(230,237,243,0.5);
+    font-size: 10px;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+    margin-top: 4px;
+    font-family: 'Inter', monospace;
+    font-weight: 400;
+  }
+  .card-preview {
+    background: #0B0E14;
+    padding: 24px;
+    display: grid;
+    place-items: center;
+    min-height: 180px;
+  }
+  .card-preview.light { background: #FFFFFF; }
+  .card-preview img {
+    max-width: 100%;
+    height: auto;
+    max-height: 140px;
+  }
+
+  .monogram-sizes {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: #0B0E14;
+    min-height: 180px;
+  }
+  .monogram-sizes img { display: block; }
+
+  .download-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 18px;
+    background: rgba(255,255,255,0.02);
+    font-size: 11px;
+    opacity: 0.6;
+    border-top: 1px solid #2A3444;
+  }
+  .download-bar a {
+    color: #5EEAD4;
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(94,234,212,0.4);
+  }
+
+  .note {
+    max-width: 800px;
+    margin: 48px auto 0;
+    padding: 20px;
+    background: rgba(45, 212, 191, 0.08);
+    border: 1px solid rgba(45, 212, 191, 0.25);
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .note strong { color: #5EEAD4; }
+  .note code { background: rgba(0,0,0,0.4); padding: 2px 6px; border-radius: 4px; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>electia — Variantes do wordmark (v1)</h1>
+  <p><strong>electia nao tem logo grafico.</strong> O wordmark tipografico <em>e</em> a marca. Abaixo: 5 variantes do wordmark + 2 helpers "e" para favicon (espacos onde o wordmark nao cabe).</p>
+  <p style="margin-top:8px;">Spec do wordmark (BRAND-BOOK §3): <code>electia</code> em JetBrains Mono Semibold 600 + <code>by emprega+</code> em Sora 400/800.</p>
+</header>
+
+<div class="grid">
+
+  <div class="card">
+    <div class="card-meta">Wordmark · Padrao dark <span class="filename">electia-wordmark.svg</span></div>
+    <div class="card-preview">
+      <img src="../assets/logo/electia-wordmark.svg" alt="electia by emprega+" />
+    </div>
+    <div class="download-bar">
+      <span>560x120 · principal</span>
+      <a href="../assets/logo/electia-wordmark.svg" download>baixar</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-meta">Wordmark · Accent teal <span class="filename">electia-wordmark-accent.svg</span></div>
+    <div class="card-preview">
+      <img src="../assets/logo/electia-wordmark-accent.svg" alt="electia by emprega+ (accent)" />
+    </div>
+    <div class="download-bar">
+      <span>560x120 · hero, CTA</span>
+      <a href="../assets/logo/electia-wordmark-accent.svg" download>baixar</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-meta">Wordmark · Fundo claro <span class="filename">electia-wordmark-light.svg</span></div>
+    <div class="card-preview light">
+      <img src="../assets/logo/electia-wordmark-light.svg" alt="electia by emprega+ (light)" />
+    </div>
+    <div class="download-bar">
+      <span>560x120 · papelaria, impressos</span>
+      <a href="../assets/logo/electia-wordmark-light.svg" download>baixar</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-meta">Wordmark curto <span class="filename">electia-short.svg</span></div>
+    <div class="card-preview">
+      <img src="../assets/logo/electia-short.svg" alt="electia" />
+    </div>
+    <div class="download-bar">
+      <span>320x96 · espacos compactos</span>
+      <a href="../assets/logo/electia-short.svg" download>baixar</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-meta">Favicon helper · Dark <span class="filename">electia-monogram.svg</span></div>
+    <div class="monogram-sizes">
+      <img src="../assets/logo/electia-monogram.svg" alt="e" style="width:96px;height:96px;" />
+      <img src="../assets/logo/electia-monogram.svg" alt="e" style="width:64px;height:64px;" />
+      <img src="../assets/logo/electia-monogram.svg" alt="e" style="width:48px;height:48px;" />
+      <img src="../assets/logo/electia-monogram.svg" alt="e" style="width:32px;height:32px;" />
+    </div>
+    <div class="download-bar">
+      <span>128x128 · favicon, app icon</span>
+      <a href="../assets/logo/electia-monogram.svg" download>baixar</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-meta">Favicon helper · Teal bg <span class="filename">electia-monogram-teal.svg</span></div>
+    <div class="monogram-sizes">
+      <img src="../assets/logo/electia-monogram-teal.svg" alt="e" style="width:96px;height:96px;" />
+      <img src="../assets/logo/electia-monogram-teal.svg" alt="e" style="width:64px;height:64px;" />
+      <img src="../assets/logo/electia-monogram-teal.svg" alt="e" style="width:48px;height:48px;" />
+      <img src="../assets/logo/electia-monogram-teal.svg" alt="e" style="width:32px;height:32px;" />
+    </div>
+    <div class="download-bar">
+      <span>128x128 · banner, splash</span>
+      <a href="../assets/logo/electia-monogram-teal.svg" download>baixar</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-meta">Lockup vertical <span class="filename">electia-lockup-vertical.svg</span></div>
+    <div class="card-preview">
+      <img src="../assets/logo/electia-lockup-vertical.svg" alt="electia by emprega+ vertical" style="max-height:160px" />
+    </div>
+    <div class="download-bar">
+      <span>360x180 · social quadrado, papelaria</span>
+      <a href="../assets/logo/electia-lockup-vertical.svg" download>baixar</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="note">
+  <strong>Notas tecnicas:</strong><br/>
+  - SVGs usam <code>&lt;text&gt;</code> + Google Fonts via <code>@import</code> no <code>&lt;style&gt;</code> interno. Funciona em browsers e em qualquer ferramenta que renderize SVG com fontes web.<br/>
+  - Para uso offline (Figma, Canva export final, software de design), <strong>converter texto em paths</strong> (Outline Stroke) preserva o look sem depender de fonte instalada.<br/>
+  - PNGs para email/favicon/OG cover ainda pendentes — gerar via rasterizacao do SVG no tamanho exato (32x32, 64x64, 256x256, 440x120, 1200x630).<br/>
+  - A proxima iteracao pode reproduzir o "<code>ga+</code>" desenhado custom do logo Emprega+ original (Canva) caso queira pixel-perfect parity.
+</div>
+
+</body>
+</html>

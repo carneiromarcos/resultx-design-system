@@ -79,13 +79,56 @@ Add `.icon-wrapper-round` for circular wrappers.
 
 ## Icon Buttons
 
-Standalone icon-only buttons (no text):
+Standalone icon-only buttons (no text). Fixed 44×44 box — not a `.btn` variant:
+`.btn` derives its width from the label, so it cannot produce a square control.
 
 ```html
 <button class="btn-icon" aria-label="Settings">
   <svg class="icon icon-md">...</svg>
 </button>
 ```
+
+**`aria-label` is mandatory.** There is no visible text, so without it the
+control is unlabelled for screen readers and voice control.
+
+### Sizes
+
+| Class | Box | Radius | Use |
+|-------|-----|--------|-----|
+| `.btn-icon` | 44×44 | `--radius-md` | Default. Matches `.btn` min-height and clears the WCAG 2.2 target size |
+| `.btn-icon-sm` | 36×36 | `--radius-sm` | Dense rows: card actions, toast dismiss, table row actions |
+| `.btn-icon-lg` | 52×52 | `--radius-lg` | Prominent single action |
+
+### Variants
+
+| Class | Appearance | Use |
+|-------|-----------|-----|
+| *(none)* | Transparent, `--text-secondary` | Default — header and toolbar actions |
+| `.btn-icon-subtle` | `--bg-surface-1` + border | Action sitting on a card or panel |
+| `.btn-icon-primary` | `--accent-primary` fill, pill | Compact primary action (send, confirm) |
+| `.btn-icon-danger` | Error tint on hover | Destructive action (delete, disconnect) |
+
+```html
+<button class="btn-icon btn-icon-primary" type="submit" aria-label="Enviar mensagem">
+  <svg class="icon icon-md">...</svg>
+</button>
+
+<button class="btn-icon btn-icon-sm btn-icon-danger" aria-label="Remover canal">
+  <svg class="icon icon-sm">...</svg>
+</button>
+```
+
+States: `:hover`, `:focus-visible` (uses `--focus-ring-*`), `:active` (scale 0.96),
+`:disabled`. The press effect is suppressed under `prefers-reduced-motion`.
+
+### Do / Don't
+
+| Do | Don't |
+|----|-------|
+| Always set `aria-label` | Don't rely on `title` alone — it is not announced consistently |
+| Use `.btn-icon-sm` inside cards and toasts | Don't override width/height — it breaks the touch target |
+| Use `.btn-icon-primary` for one action per surface | Don't use it for every icon button — it stops reading as primary |
+| Use `.icon-wrapper` when the icon is decorative | Don't use `.btn-icon` for non-interactive icons |
 
 ## Icons in Buttons
 

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aurora Hero — Preview vídeo otimizado</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; background: #05070d; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif; overflow-x: hidden; }
+
+  .frame {
+    position: relative;
+    width: 100%;
+    min-height: clamp(420px, 78vh, 820px);
+    overflow: hidden;
+    isolation: isolate;
+    background: #0B0E14;
+  }
+  .frame video, .frame img.poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    transition: filter 0.4s ease;
+  }
+  .scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    transition: background 0.4s ease;
+  }
+
+  /* Mode: original (cyan vibrante) */
+  .frame[data-mode="original"] video {
+    filter: none;
+  }
+  .frame[data-mode="original"] .scrim {
+    background:
+      radial-gradient(ellipse at center, transparent 30%, rgba(5, 7, 13, 0.55) 80%),
+      linear-gradient(180deg, rgba(5,7,13,0.40) 0%, transparent 30%, transparent 70%, rgba(5,7,13,0.85) 100%);
+  }
+
+  /* Mode: electia-dark — paleta Electia, escurecido */
+  .frame[data-mode="electia-dark"] video {
+    filter: brightness(0.55) saturate(0.7) hue-rotate(-12deg) contrast(1.05);
+  }
+  .frame[data-mode="electia-dark"] .scrim {
+    background:
+      radial-gradient(ellipse at center, rgba(45, 212, 191, 0.10) 0%, transparent 50%, rgba(11, 14, 20, 0.45) 80%),
+      linear-gradient(180deg, rgba(11, 14, 20, 0.55) 0%, rgba(11, 14, 20, 0.20) 35%, rgba(11, 14, 20, 0.20) 65%, rgba(11, 14, 20, 0.92) 100%);
+  }
+
+  /* Mode: electia-subtle — bem escuro, presente mas discreto */
+  .frame[data-mode="electia-subtle"] video {
+    filter: brightness(0.38) saturate(0.55) hue-rotate(-12deg) contrast(1.10);
+  }
+  .frame[data-mode="electia-subtle"] .scrim {
+    background:
+      radial-gradient(ellipse at center, rgba(45, 212, 191, 0.06) 0%, transparent 45%, rgba(11, 14, 20, 0.55) 75%),
+      linear-gradient(180deg, rgba(11, 14, 20, 0.65) 0%, rgba(11, 14, 20, 0.35) 40%, rgba(11, 14, 20, 0.40) 60%, rgba(11, 14, 20, 0.96) 100%);
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: clamp(80px, 18vh, 200px) 24px;
+    pointer-events: none;
+  }
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.78;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-weight: 400;
+    font-size: clamp(2rem, 1rem + 4vw, 4.25rem);
+    line-height: 1.12;
+    max-width: 18ch;
+    margin: 0 auto 28px;
+    text-shadow: 0 2px 24px rgba(0,0,0,0.35);
+  }
+  h1 em {
+    font-style: italic;
+    font-weight: 400;
+    background: linear-gradient(90deg, #fff, #c8d2e0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  button {
+    pointer-events: auto;
+    border: 1px solid rgba(255,255,255,0.28);
+    background: rgba(0,0,0,0.45);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 999px;
+    font-size: 14px;
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+  button:hover {
+    background: rgba(255,255,255,0.10);
+    border-color: rgba(255,255,255,0.45);
+  }
+
+  .meta {
+    padding: 32px 24px;
+    max-width: 720px;
+    margin: 0 auto;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.85;
+  }
+  .meta h2 { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; margin-bottom: 10px; }
+  .meta table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 13px; }
+  .meta td { padding: 6px 8px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .meta td:first-child { color: #8b949e; width: 40%; }
+  .meta code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 4px; }
+
+  .swatch-row { display: flex; gap: 8px; margin-top: 12px; }
+  .swatch { flex: 1; height: 48px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); display: grid; place-items: center; font-size: 11px; }
+
+  /* Mode toggle (canto superior) */
+  .mode-toggle {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    gap: 4px;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+    padding: 4px;
+    font-size: 12px;
+  }
+  .mode-toggle button {
+    background: transparent;
+    border: 0;
+    color: rgba(255,255,255,0.7);
+    padding: 6px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .mode-toggle button:hover { color: #fff; }
+  .mode-toggle button.active {
+    background: rgba(45, 212, 191, 0.20);
+    color: #5EEAD4;
+    box-shadow: inset 0 0 0 1px rgba(45, 212, 191, 0.35);
+  }
+
+  /* Electia accent on Saiba mais button when mode != original */
+  .frame[data-mode="electia-dark"] button.cta,
+  .frame[data-mode="electia-subtle"] button.cta {
+    background: rgba(45, 212, 191, 0.15);
+    border-color: rgba(45, 212, 191, 0.45);
+    color: #5EEAD4;
+  }
+  .frame[data-mode="electia-dark"] button.cta:hover,
+  .frame[data-mode="electia-subtle"] button.cta:hover {
+    background: rgba(45, 212, 191, 0.25);
+    border-color: rgba(45, 212, 191, 0.7);
+  }
+</style>
+</head>
+<body>
+  <div class="mode-toggle" role="tablist" aria-label="Modo de paleta">
+    <button data-set-mode="original">Original (cyan)</button>
+    <button data-set-mode="electia-dark" class="active">Electia Dark</button>
+    <button data-set-mode="electia-subtle">Electia Subtle</button>
+  </div>
+
+  <section class="frame" data-mode="electia-dark">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster="../assets/hero/aurora-hero-v1.poster.jpg"
+    >
+      <source src="../assets/hero/aurora-hero-v1.webm" type="video/webm" />
+      <source src="../assets/hero/aurora-hero-v1.mp4" type="video/mp4" />
+    </video>
+    <div class="scrim"></div>
+    <div class="content">
+      <div>
+        <div class="eyebrow">ELECTIA · LP DEMO</div>
+        <h1>Decisoes de pessoas com <em>base cientifica</em>,<br/>nao com achismo</h1>
+        <button class="cta">Saiba mais</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const frame = document.querySelector('.frame');
+    document.querySelectorAll('.mode-toggle button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mode = btn.dataset.setMode;
+        frame.dataset.mode = mode;
+        document.querySelectorAll('.mode-toggle button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+
+  <section class="meta">
+    <h2>Detalhes do asset</h2>
+    <table>
+      <tr><td>Fonte</td><td>Pexels &mdash; Colin Jones (@larchmedia)</td></tr>
+      <tr><td>Licenca</td><td>Pexels License (commercial OK, atribuicao opcional)</td></tr>
+      <tr><td>Original</td><td>1920x1080, 24fps, h264, 274 MB, 120 segundos</td></tr>
+      <tr><td>MP4 otimizado</td><td><code>aurora-hero-v1.mp4</code> &mdash; 4.6 MB, 12s, CRF 28, faststart, sem audio</td></tr>
+      <tr><td>WebM otimizado</td><td><code>aurora-hero-v1.webm</code> &mdash; 4.8 MB, 12s, VP9 CRF 42</td></tr>
+      <tr><td>Poster</td><td><code>aurora-hero-v1.poster.jpg</code> &mdash; 71 KB, 1280x720, q=6</td></tr>
+    </table>
+
+    <h2>Paleta detectada (vs referencia original)</h2>
+    <div class="swatch-row">
+      <div class="swatch" style="background:#0a1228;color:#e6edf3">#0a1228 base</div>
+      <div class="swatch" style="background:#1d4ed8;color:#fff">#1d4ed8 fios</div>
+      <div class="swatch" style="background:#7dd3fc;color:#000">#7dd3fc highlight</div>
+      <div class="swatch" style="background:#f0f9ff;color:#000">#f0f9ff core</div>
+    </div>
+
+    <p style="margin-top:24px;">
+      <strong>Observacao:</strong> visualmente este video e diferente da referencia Imagica original
+      (fitas fluidas + hot-spot quente). Aqui temos uma <em>esfera de energia</em> com fios cyan em fundo preto.
+      Ainda dark + premium, mas linguagem visual diferente. Decisao: seguir com este direcionamento ou cacar outro stock.
+    </p>
+  </section>
+</body>
+</html>

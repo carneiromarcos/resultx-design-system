@@ -13,7 +13,7 @@
       --text-muted: oklch(45% 0 0);
 
       /* Card surface */
-      --viz-card-padding: clamp(24px, 4vw, 32px);
+      --viz-card-padding: clamp(20px, 4vw, 28px);
       --viz-card-radius: 16px;
       --viz-card-bg: oklch(98.5% 0 0);
       --viz-card-border: 1px solid oklch(92% 0 0);
@@ -168,6 +168,32 @@
       color: var(--theory-disc);
       border-color: var(--theory-disc);
     }
+
+    .match-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 12px;
+      background: oklch(from var(--viz-match-on) l c h / 0.12);
+      border: 1px solid oklch(from var(--viz-match-on) l c h / 0.4);
+      border-radius: 999px;
+      color: var(--viz-match-on);
+      font-size: 12px; font-weight: 600;
+      margin-bottom: 12px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 200ms both;
+    }
+    .match-badge::before { content: "✓"; font-size: 14px; }
+
+    .compare-row {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 10px 14px;
+      background: oklch(from var(--viz-match-on) l c h / 0.06);
+      border-radius: 10px;
+      margin-bottom: 14px;
+      animation: fadeUp 400ms var(--viz-motion-entry-ease) 1050ms both;
+    }
+    .compare-cell { flex: 1; }
+    .compare-label { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+    .compare-value { font-size: 15px; font-weight: 600; color: var(--theory-disc); margin-top: 2px; }
+    .compare-divider { width: 1px; background: var(--viz-card-border); margin: 4px 0; }
 
     .hero {
       text-align: center;
@@ -409,6 +435,8 @@
         <div class="hero-subtitle">Perfil predominante · alinhado ao cargo</div>
       </div>
 
+      <div class="match-badge" role="status">Alinhado ao cargo Comercial Sr.</div>
+
       <div class="viz-wrap">
         <svg viewBox="0 0 400 400" width="360" height="360"
              role="img" aria-labelledby="disc-svg-title disc-svg-desc">
@@ -495,6 +523,18 @@
         </div>
       </div>
 
+      <div class="compare-row" aria-label="Comparativo cargo vs colaborador">
+        <div class="compare-cell">
+          <div class="compare-label">Ideal · Cargo</div>
+          <div class="compare-value">Catalisador · D60-80 I50-70</div>
+        </div>
+        <div class="compare-divider"></div>
+        <div class="compare-cell">
+          <div class="compare-label">Realizado · Você</div>
+          <div class="compare-value">Catalisador · D72 I58</div>
+        </div>
+      </div>
+
       <div class="subscores">
         <div class="subscore" data-match="on"><span class="subscore-value">72</span><span class="subscore-label">D</span></div>
         <div class="subscore" data-match="on"><span class="subscore-value">58</span><span class="subscore-label">I</span></div>
@@ -525,7 +565,7 @@
     </article>
 
     <p class="footer-note">
-      Mockup v0.1 · spec em <a href="../design-system-v0.1.md">design-system-v0.1.md</a> · valores fictícios
+      Mockup v0.1 · spec em <a href="../docs/DESIGN-SYSTEM.md">DESIGN-SYSTEM.md</a> · valores fictícios
     </p>
   </div>
 

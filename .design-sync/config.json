@@ -1,0 +1,13 @@
+{
+  "projectId": "6eb19719-283d-40d9-bb6d-2c8577e7a81f",
+  "pkg": "resultx-design-system",
+  "shape": "package",
+  "mode": "foundation-off-script",
+  "brand": "electia",
+  "tokensGlob": "brands/electia/tokens/*.css",
+  "guidelinesGlob": [
+    "brands/electia/docs/BRAND-BOOK.md",
+    "brands/electia/docs/DESIGN-SYSTEM.md",
+    "brands/electia/docs/MOTION-GUIDE.md"
+  ]
+}

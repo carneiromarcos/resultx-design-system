@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Linguagem Visual Electia — Sinapses & Cérebro como sistema</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&family=Sora:wght@400;500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal: #14B8A6;
+      --bg: #0B0E14;
+      --surface: #161B26;
+      --border: #2A3444;
+      --text: #E6EDF3;
+      --text-muted: #8B949E;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 48px 24px;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      line-height: 1.55;
+    }
+    header { max-width: 1100px; margin: 0 auto 64px; }
+    header h1 {
+      font-family: 'Sora', sans-serif; font-weight: 800;
+      font-size: clamp(28px, 4vw, 44px); margin: 0 0 12px;
+      letter-spacing: -0.02em;
+    }
+    header p { color: var(--text-muted); margin: 0; max-width: 760px; }
+    .badge {
+      display: inline-block; padding: 4px 10px; border-radius: 999px;
+      background: rgba(20,184,166,0.15); color: var(--teal);
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+      margin-right: 8px;
+    }
+
+    main { max-width: 1100px; margin: 0 auto; display: grid; gap: 80px; }
+
+    section h2 {
+      font-family: 'Sora', sans-serif; font-weight: 700;
+      font-size: 26px; margin: 0 0 6px; letter-spacing: -0.01em;
+    }
+    section .lead {
+      color: var(--text-muted); margin: 0 0 28px; font-size: 14px;
+      max-width: 760px;
+    }
+    section h3 {
+      font-family: 'Sora', sans-serif; font-weight: 600;
+      font-size: 16px; margin: 32px 0 12px; color: var(--teal);
+      letter-spacing: 0;
+    }
+
+    .application {
+      border: 1px solid var(--border); border-radius: 14px;
+      overflow: hidden; background: var(--surface);
+    }
+    .application + .application { margin-top: 24px; }
+    .app-header {
+      padding: 10px 16px; font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: var(--text-muted); border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .app-body { padding: 0; }
+
+    .mock-hero {
+      position: relative; min-height: 360px;
+      background: linear-gradient(180deg, #0B0E14 0%, #0F1620 100%);
+      display: grid; place-items: center;
+      overflow: hidden;
+    }
+    .mock-hero .mesh {
+      position: absolute; inset: 0;
+      background-image: url('../../assets/visual-language/neural-mesh-pattern.svg');
+      background-size: cover; background-position: center;
+      opacity: 0.55;
+    }
+    .mock-hero .mesh::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, transparent 0%, rgba(11,14,20,0.7) 80%);
+    }
+    .mock-hero .content {
+      position: relative; z-index: 2; text-align: center;
+      padding: 48px 24px; max-width: 720px;
+    }
+    .mock-hero h1 {
+      font-family: 'Sora', sans-serif; font-weight: 800;
+      font-size: clamp(32px, 5vw, 56px); margin: 0 0 16px;
+      letter-spacing: -0.02em;
+    }
+    .mock-hero p {
+      color: var(--text-muted); margin: 0 0 24px;
+      font-size: 16px;
+    }
+    .mock-hero .cta {
+      display: inline-block; padding: 14px 28px;
+      background: var(--teal); color: #0B0E14;
+      font-family: 'Sora', sans-serif; font-weight: 600;
+      border-radius: 10px; text-decoration: none;
+    }
+
+    .insta-post {
+      width: 100%; max-width: 360px; aspect-ratio: 1;
+      background: var(--bg);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      margin: 0 auto;
+    }
+    .insta-post .mesh {
+      position: absolute; inset: 0;
+      background-image: url('../../assets/visual-language/neural-mesh-pattern.svg');
+      background-size: 130% auto; background-position: 20% 30%;
+      opacity: 0.40;
+    }
+    .insta-post .text {
+      position: absolute; inset: 0; padding: 28px;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .insta-post .text .top {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      color: var(--teal); letter-spacing: 0.5px;
+    }
+    .insta-post .text .headline {
+      font-family: 'Sora', sans-serif; font-weight: 800;
+      font-size: 24px; line-height: 1.15; letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .insta-post .text .footer {
+      font-family: 'Sora', sans-serif; font-weight: 400;
+      font-size: 11px; color: var(--text-muted);
+      text-transform: lowercase;
+    }
+    .insta-row {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 760px) { .insta-row { grid-template-columns: 1fr; } }
+
+    .email-header {
+      background: var(--bg);
+      padding: 40px 32px; position: relative; overflow: hidden;
+      border-radius: 10px 10px 0 0;
+    }
+    .email-header .mesh-strip {
+      position: absolute; top: 0; left: 0; right: 0; height: 100%;
+      background-image: url('../../assets/visual-language/neural-mesh-pattern.svg');
+      background-size: 100% 200%; background-position: 0 30%;
+      opacity: 0.30;
+    }
+    .email-header .wm {
+      position: relative; z-index: 2;
+      font-family: 'JetBrains Mono', monospace; font-weight: 600;
+      font-size: 24px; color: var(--text); letter-spacing: -1px;
+    }
+    .email-header .wm .e { color: var(--teal); }
+    .email-header .wm .ia { color: var(--teal); }
+    .email-header .tag {
+      position: relative; z-index: 2; margin-top: 8px;
+      font-family: 'Sora', sans-serif; font-weight: 400; font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .divider-demo {
+      padding: 40px 32px; background: var(--bg);
+    }
+    .divider-demo .sec {
+      padding: 16px 0;
+    }
+    .divider-demo .sec h4 {
+      font-family: 'Sora', sans-serif; font-weight: 600;
+      font-size: 14px; color: var(--teal); margin: 0 0 8px;
+    }
+    .divider-demo .sec p {
+      margin: 0; color: var(--text-muted); font-size: 14px;
+    }
+    .divider-demo img.div {
+      width: 100%; max-width: 400px; height: auto; display: block; margin: 8px auto;
+    }
+
+    .photo-guide {
+      display: grid; gap: 16px;
+    }
+    .photo-guide .item {
+      display: grid; grid-template-columns: 80px 1fr;
+      gap: 16px; align-items: start;
+      padding: 16px; border: 1px solid var(--border); border-radius: 10px;
+      background: var(--surface);
+    }
+    .photo-guide .item.use { border-color: rgba(20,184,166,0.4); }
+    .photo-guide .item.veto { border-color: rgba(239,68,68,0.4); }
+    .photo-guide .icon {
+      width: 64px; height: 64px; border-radius: 12px;
+      background: rgba(20,184,166,0.15);
+      display: grid; place-items: center;
+      font-family: 'JetBrains Mono', monospace; font-size: 26px; font-weight: 600;
+      color: var(--teal);
+    }
+    .photo-guide .item.veto .icon { background: rgba(239,68,68,0.12); color: #EF4444; }
+    .photo-guide .item h4 {
+      margin: 0 0 4px; font-family: 'Sora', sans-serif; font-weight: 600; font-size: 15px;
+    }
+    .photo-guide .item p { margin: 0; color: var(--text-muted); font-size: 13px; }
+
+    pre {
+      background: #0B0E14; border: 1px solid var(--border); border-radius: 10px;
+      padding: 16px; overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      color: var(--text); margin: 12px 0;
+    }
+    pre .comment { color: var(--text-muted); }
+    code.inline {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      background: rgba(20,184,166,0.1); color: var(--teal);
+      padding: 2px 6px; border-radius: 4px;
+    }
+
+    footer {
+      max-width: 1100px; margin: 80px auto 0; padding-top: 32px;
+      border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Linguagem Visual Electia — Sinapses &amp; Cérebro</h1>
+    <p>
+      <span class="badge">v2.0 DRAFT</span>
+      Sistema visual abstrato baseado em <strong style="color:var(--text)">redes neurais sintéticas</strong> (não cérebro anatômico literal). Aplica em LPs, posts, emails, dividers, watermarks. Tudo monocromático em verde V1 <code class="inline">#14B8A6</code> com alphas. Veta cérebro 3D realista, lâmpada+cérebro, "cérebro com engrenagens".
+    </p>
+  </header>
+
+  <main>
+
+    <section>
+      <h2>1. Neural mesh pattern — background reutilizável</h2>
+      <p class="lead">
+        SVG vetorial 600×420 com 23 nodes + 35 edges em opacidades escalonadas. Tileable e escalonável. Path canônico: <code class="inline">brands/electia/assets/visual-language/neural-mesh-pattern.svg</code>
+      </p>
+
+      <h3>Aplicação 1.1 — Hero de LP (background atrás do título)</h3>
+      <div class="application">
+        <div class="app-header"><span>landing-page · hero section</span><span>opacity 55% + radial scrim</span></div>
+        <div class="app-body">
+          <div class="mock-hero">
+            <div class="mesh"></div>
+            <div class="content">
+              <h1>Sua equipe não está ruim.<br>Está desencaixada.</h1>
+              <p>O Electia mostra quem cada colaborador realmente é — e onde deveria estar.</p>
+              <a href="#" class="cta">Ver demonstração</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Aplicação 1.2 — Post Instagram quadrado (1080×1080)</h3>
+      <div class="application">
+        <div class="app-header"><span>instagram · feed @empregamais</span><span>opacity 40% + scrim opcional</span></div>
+        <div class="app-body" style="padding:28px;background:#0B0E14">
+          <div class="insta-row">
+            <div class="insta-post">
+              <div class="mesh"></div>
+              <div class="text">
+                <div class="top">PROVOCAÇÃO #01</div>
+                <div class="headline">Testes tradicionais medem autoimagem.</div>
+                <div class="footer">electia by emprega+</div>
+              </div>
+            </div>
+            <div class="insta-post">
+              <div class="mesh"></div>
+              <div class="text">
+                <div class="top">DADO #14</div>
+                <div class="headline">89% das PMEs não estão prontas pra NR-1.</div>
+                <div class="footer">electia by emprega+</div>
+              </div>
+            </div>
+            <div class="insta-post">
+              <div class="mesh"></div>
+              <div class="text">
+                <div class="top">MENTOR AI</div>
+                <div class="headline">Em 30 segundos. O que antes era 8 horas.</div>
+                <div class="footer">electia by emprega+</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3>Aplicação 1.3 — Header de email (Brevo + Supabase Auth)</h3>
+      <div class="application">
+        <div class="app-header"><span>email · header strip 600×140</span><span>opacity 30%</span></div>
+        <div class="app-body" style="padding:24px;background:var(--surface)">
+          <div class="email-header">
+            <div class="mesh-strip"></div>
+            <div class="wm"><span class="e">e</span>lect<span class="ia">ia</span></div>
+            <div class="tag">by emprega+ · seu time na sua mão em 2 cliques</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Synapse divider — substituto do &lt;hr&gt; em LP e emails</h2>
+      <p class="lead">
+        Linha horizontal com 3 nodes principais ramificando em dendritos pra cima/baixo. Marca transição entre seções com mais intenção que um <code class="inline">&lt;hr&gt;</code> genérico. Path: <code class="inline">brands/electia/assets/visual-language/synapse-divider.svg</code>
+      </p>
+
+      <div class="application">
+        <div class="app-header"><span>landing-page · entre seções</span><span>600×60</span></div>
+        <div class="app-body">
+          <div class="divider-demo">
+            <div class="sec">
+              <h4>SEÇÃO ANTERIOR</h4>
+              <p>O Electia cruza 6 teorias científicas. Cada colaborador recebe um relatório narrativo que combina DISC, Tipologia Cognitiva, Eneagrama, Big Five, Le Senne e Motivadores.</p>
+            </div>
+            <img class="div" src="../../assets/visual-language/synapse-divider.svg" alt="Synapse divider" />
+            <div class="sec">
+              <h4>PRÓXIMA SEÇÃO</h4>
+              <p>Módulos situacionais N1-N4 testam comportamento sob pressão — não autoimagem. É a única forma de ver o que a pessoa faz quando ninguém está olhando.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Fotografia de cérebro/sinapses — diretrizes (não SVG)</h2>
+      <p class="lead">
+        Pra hero secundários, página /mentor-ai, capas de blog e materiais editoriais que precisam de "cérebro" com profundidade fotográfica. SVG vetorial daria amador. Fonte: Pexels/Unsplash com tratamento <code class="inline">filter electia-subtle</code> (já documentado no aurora-hero-v1).
+      </p>
+
+      <h3>O que USAR ✅</h3>
+      <div class="photo-guide">
+        <div class="item use">
+          <div class="icon">✓</div>
+          <div>
+            <h4>Micrografia de neurônio em fundo escuro</h4>
+            <p>Imagens de neurônios em microscopia fluorescente (verde/cyan natural). Tipo "purkinje cell" ou "cortical neurons". Aplicar filter electia-subtle pra forçar paleta teal.</p>
+          </div>
+        </div>
+        <div class="item use">
+          <div class="icon">✓</div>
+          <div>
+            <h4>Conexões sinápticas abstratas em 3D render</h4>
+            <p>Render artístico de rede neural com partículas, linhas conectoras e bokeh. Sempre dessaturar pra teal monochrome. Movimento lento opcional.</p>
+          </div>
+        </div>
+        <div class="item use">
+          <div class="icon">✓</div>
+          <div>
+            <h4>"Brain coral" abstrato — textura</h4>
+            <p>Textura de coral cerebral (espécie marinha) lembra córtex sem ser literal. Usar como background de página com overlay 70%. Tratamento dark + teal.</p>
+          </div>
+        </div>
+        <div class="item use">
+          <div class="icon">✓</div>
+          <div>
+            <h4>Partículas + linhas em low-poly</h4>
+            <p>Estilo "data viz" com nodes conectados, esparso, fundo dark. Funciona em hero, divisor de seção full-width, capa de PDF.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>O que EVITAR 🚫</h3>
+      <div class="photo-guide">
+        <div class="item veto">
+          <div class="icon">✗</div>
+          <div>
+            <h4>Cérebro 3D realista de pé</h4>
+            <p>Imagem de cérebro humano fotorrealista — sai de jaleco branco, parece neurocirurgia. Tom errado pro Electia (gestão, não clínica).</p>
+          </div>
+        </div>
+        <div class="item veto">
+          <div class="icon">✗</div>
+          <div>
+            <h4>"Cérebro com engrenagens"</h4>
+            <p>Briefing §6 veta explicitamente. É clichê visual de "AI consultancy" anos 2010. Pula.</p>
+          </div>
+        </div>
+        <div class="item veto">
+          <div class="icon">✗</div>
+          <div>
+            <h4>Lâmpada + cérebro = ideia</h4>
+            <p>Outro clichê. Sai banal e infantiliza a marca pra C-Level.</p>
+          </div>
+        </div>
+        <div class="item veto">
+          <div class="icon">✗</div>
+          <div>
+            <h4>Silhueta humana de perfil com cérebro visível</h4>
+            <p>Toda stock photo de "neurociência B2B" usa. Diferenciação zero. Risco de parecer "neuromarketing wellness" — não é o tom.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Prompts sugeridos pra geração via IA (Midjourney / DALL-E / Fal)</h3>
+      <pre><span class="comment">// Hero secundário /mentor-ai — neural mesh denso</span>
+"abstract neural network visualization, dense interconnected nodes,
+teal monochrome (#14B8A6) on deep graphite (#0B0E14), particles, soft bokeh,
+cinematic depth of field, technical aesthetic, no text, no human face,
+ultra wide composition" — aspect 16:9
+
+<span class="comment">// Capa de blog técnico</span>
+"micrograph-style fluorescent neuron, teal and dark graphite palette,
+single bright node center, fading dendrites outward, scientific aesthetic,
+no anatomy diagrams" — aspect 16:9
+
+<span class="comment">// Background de página /saude-mental (cuidado: tom mais sereno)</span>
+"abstract synapse particles drifting slowly, deep teal monochrome,
+calm zen composition, no medical imagery, no human silhouette,
+soft glow, generous negative space" — aspect 21:9
+
+<span class="comment">// Avatar do Mentor AI no chat</span>
+"single neuron node with 6 dendrite branches, geometric abstract,
+teal (#14B8A6) solid on transparent, clean vector style,
+centered composition, 1:1 ratio"</pre>
+    </section>
+
+    <section>
+      <h2>4. Princípios de execução</h2>
+      <p class="lead">5 regras pra qualquer aplicação de sinapses/cérebro no sistema visual Electia.</p>
+
+      <div class="application">
+        <div class="app-body" style="padding:24px;background:var(--surface)">
+          <ol style="margin:0;padding-left:24px;font-size:14px;line-height:1.8">
+            <li><strong>Monocromático sempre.</strong> 1 cor (teal V1 #14B8A6) + alphas. Nunca multicolor. Multicolor vira "rainbow brain meditation app".</li>
+            <li><strong>Abstrato, não anatômico.</strong> Node-graph, partículas, linhas — sim. Neurônio com axônio detalhado, cérebro com sulcos — não.</li>
+            <li><strong>Movimento opcional.</strong> Pode animar com CSS keyframes (pulse, drift). Mas <code class="inline">@media (prefers-reduced-motion: reduce)</code> desliga.</li>
+            <li><strong>Nunca foto stock.</strong> Sempre SVG/vetor próprio OU IA-generated com filter electia-subtle. Foto stock = morte da diferenciação.</li>
+            <li><strong>Densidade graduada.</strong> Nunca encher 100% do canvas. Centro denso, bordas esparsas. Sempre tem respiração visual.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <strong>Path desta página:</strong> <code class="inline">~/meus-projetos/resultx/design-system/brands/electia/previews/visual-language/index.html</code><br>
+    <strong>Assets canônicos:</strong> <code class="inline">brands/electia/assets/visual-language/{neural-mesh-pattern,synapse-divider}.svg</code><br>
+    <span style="margin-top:8px;display:inline-block">Esta linguagem visual será documentada no §14 do BRAND-BOOK v2.0 após aprovação.</span>
+  </footer>
+
+</body>
+</html>

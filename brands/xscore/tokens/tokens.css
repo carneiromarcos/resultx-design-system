@@ -1,0 +1,250 @@
+/* ============================================
+   XSCORE BY RESULTX — Design Tokens v1.0
+   Criado 2026-07-30 · projeto `projeto-xscore-v1-2026-07-30.md` (decisões D1/D2)
+
+   IDENTIDADE — "mesa de crédito premium":
+   - Base grafite herdada do ecossistema (mesma do Electia): #0B0E14. Um só
+     fundo em toda a ResultX; o que distingue a marca é o accent, não o chão.
+   - GOLD #c4993b = cor de AÇÃO (botão primário, CTA, foco). Vem de
+     `brands/resultx` ("primary trust"): crédito se vende com confiança
+     institucional, não com energia.
+   - PURPLE #6f32b1 = cor de INTELIGÊNCIA (score, explicabilidade, IA).
+     Herdado do Electia — é a sinergia cross-brand que o DS já pratica.
+
+   ⚠️ REGRA DE USO (não negociável — se violada, a hierarquia morre):
+     ação = gold · insight = purple · estado = semântica (verde/âmbar/vermelho)
+   Nunca pintar um botão primário de roxo, nunca usar gold para score.
+
+   TEMA: dark é o default (`:root`), light é opt-in (`[data-theme="light"]`) —
+   mesma mecânica do Electia. Dado financeiro denso lê melhor em dark, e a
+   paridade permite ao usuário transitar entre os dois produtos sem reaprender.
+   ============================================ */
+
+:root {
+  /* ---- Gold (accent primário Xscore — AÇÃO) ---- */
+  --gold-light: #d4ae54;
+  --gold: #c4993b;
+  --gold-dark: #a07b2a;
+  --gold-muted: #5c4718;
+  /* Texto/ícone dourado. No escuro é o próprio --gold (6.54:1 sobre surface-1,
+     AA); no light vira #866425, porque #c4993b reprova sobre branco.
+     ⚠️ Existe nos DOIS temas para que a interface use UMA classe. Sem esta
+     declaração, `var(--gold-ink)` ficaria indefinido no escuro e quem
+     precisasse de texto dourado cairia de volta em --gold — que é exatamente o
+     bug que o token veio evitar (19 ocorrências no Xscore em 01/08). */
+  --gold-ink: #c4993b;
+
+  /* ---- Gold ramp (500 = --gold canonical) ---- */
+  --gold-50: #fdf9ef;
+  --gold-100: #f9efd6;
+  --gold-200: #f2ddab;
+  --gold-300: #e8c576;
+  --gold-400: #dcac4d;
+  --gold-500: #c4993b;
+  --gold-600: #a87f2e;
+  --gold-700: #866425;
+  --gold-800: #654b1f;
+  --gold-900: #47351a;
+  --gold-950: #2a1f0f;
+
+  /* ---- Purple (INTELIGÊNCIA — score, explicação, IA). NÃO é primary ---- */
+  --intel: #6f32b1;
+  --intel-light: #a55eea;
+  --intel-dark: #5a2890;
+  /* Sobre fundo escuro: 7.1:1 vs #0B0E14 (AA). NÃO usar como fill de botão. */
+  --intel-on-dark: #c084fc;
+
+  /* ---- Background Scale (grafite canônico do ecossistema) ---- */
+  --bg: #0B0E14;
+  --surface-1: #161B26;   /* cards, painéis */
+  --surface-2: #1C2333;   /* hover / elevado */
+  --surface-3: #232B3B;   /* linhas alternadas de tabela */
+  --surface-4: #2A3444;   /* = --border */
+
+  /* ---- Text ---- */
+  --white: #FFFFFF;
+  --text-primary: #E6EDF3;
+  --text-secondary: #8B949E;
+  --text-muted: #6E7681;
+
+  /* ---- Border ---- */
+  --border: #2A3444;
+  --border-hover: #3A4554;
+  --border-focus: #c4993b;   /* foco segue o accent de ação */
+
+  /* ---- Semantic ---- */
+  /* ⚠️ Em crédito estas cores têm significado FIXO, não decorativo:
+     success = melhora/aprovação · warning = atenção/vencendo
+     danger  = risco/corte/inadimplência · info = neutro informativo */
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --info: #38BDF8;
+
+  /* ---- Faixas de risco (tier 1..5) — escala contínua, não paleta arbitrária.
+     Tier 1 = melhor risco → 5 = pior. Usada em badge, tabela e gráfico. ---- */
+  --tier-1: #22C55E;
+  --tier-2: #84CC16;
+  --tier-3: #F59E0B;
+  --tier-4: #F97316;
+  --tier-5: #EF4444;
+
+  /* ---- Delta financeiro (variação de limite) ----
+     Atenção à semântica: em revisão de limite, REDUZIR não é "ruim" para a
+     empresa — é proteção. Por isso o delta usa direção própria, e a cor de
+     risco fica reservada à faixa do cliente. */
+  --delta-up: #22C55E;
+  --delta-down: #F97316;
+  --delta-flat: #8B949E;
+
+  /* ---- Typography ---- */
+  /* Sora (display) e Inter (corpo) espelham o Electia. A terceira família é a
+     que diferencia um produto financeiro: MONO para todo número — valor,
+     score, documento, id. Alinhamento de coluna é requisito, não estética. */
+  --font-heading: 'Sora', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
+
+  --text-display: 44px;
+  --text-h1: 32px;
+  --text-h2: 24px;
+  --text-h3: 18px;
+  --text-body: 15px;
+  --text-sm: 13px;
+  --text-xs: 12px;
+  --text-eyebrow: 11px;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --leading-tight: 1.15;
+  --leading-heading: 1.25;
+  --leading-body: 1.6;
+
+  --tracking-tight: -0.02em;
+  --tracking-wide: 0.08em;
+  --tracking-eyebrow: 0.16em;
+
+  /* ---- Radius ---- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+
+  /* ---- Elevation ---- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px -4px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 40px -20px rgba(0, 0, 0, 0.7);
+  --shadow-gold: 0 8px 20px -8px rgba(196, 153, 59, 0.35);
+
+  /* ---- Gradientes ----
+     Hierarquia deliberada: `action` é o padrão (CTA, botão primário);
+     `intel` aparece raro, só onde há inteligência em jogo (badge de score,
+     cabeçalho de explicabilidade). Se os dois aparecerem na mesma tela mais
+     de uma vez cada, provavelmente há excesso. */
+  --gradient-action: linear-gradient(100deg, #d4ae54, #c4993b);
+  --gradient-intel: linear-gradient(135deg, #6f32b1, #2040a0);
+  --gradient-surface: linear-gradient(180deg, #161B26, #0B0E14);
+
+  /* ---- Motion ---- */
+  --duration-fast: 120ms;
+  --duration-normal: 220ms;
+  --duration-slow: 380ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- Layout ---- */
+  --sidebar-width: 240px;
+  --sidebar-width-collapsed: 64px;
+  --header-height: 56px;
+  --content-max: 1280px;
+}
+
+/* ============================================
+   TEMA LIGHT — opt-in via data-theme="light"
+   Contraste sobre branco: text-primary 16:1 · text-secondary 7:1.
+   ⚠️ O gold #c4993b tem ~2.8:1 sobre branco — REPROVA em AA para TEXTO.
+   Por isso no light o texto/ícone dourado usa --gold-ink (#866425, ~5.3:1);
+   o #c4993b permanece só como FILL de botão, com texto branco por cima.
+   ============================================ */
+[data-theme="light"] {
+  --bg: #FFFFFF;
+  --surface-1: #F8FAFB;
+  --surface-2: #F0F3F5;
+  --surface-3: #E9EDF1;
+  --surface-4: #D1D9E0;
+
+  --border: #D1D9E0;
+  --border-hover: #B8C2CC;
+  --border-focus: #866425;
+
+  --gold: #c4993b;        /* fill de botão (texto branco por cima) */
+  --gold-light: #d4ae54;
+  --gold-ink: #866425;    /* texto/ícone dourado — AA sobre branco */
+
+  --intel: #6f32b1;
+  --intel-on-dark: #6f32b1;   /* sobre claro mantém identidade — 6.86:1 (AA) */
+
+  --text-primary: #0F1729;
+  --text-secondary: #4B5563;
+  --text-muted: #6B7280;
+
+  --success: #16A34A;
+  --warning: #D97706;
+  --danger: #DC2626;
+  --info: #0284C7;
+
+  --tier-1: #16A34A;
+  --tier-2: #65A30D;
+  --tier-3: #D97706;
+  --tier-4: #EA580C;
+  --tier-5: #DC2626;
+
+  --delta-up: #16A34A;
+  --delta-down: #EA580C;
+  --delta-flat: #6B7280;
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 41, 0.06);
+  --shadow-md: 0 4px 12px -4px rgba(15, 23, 41, 0.12);
+  --shadow-lg: 0 16px 40px -20px rgba(15, 23, 41, 0.25);
+  --shadow-gold: 0 8px 20px -8px rgba(196, 153, 59, 0.4);
+
+  --gradient-surface: linear-gradient(180deg, #FFFFFF, #F8FAFB);
+}
+
+/* ---- Utility classes ---- */
+
+.text-gradient-intel {
+  background: var(--gradient-intel);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Todo número do produto passa por aqui: tabular-nums alinha as colunas e
+   evita o "pulo" de dígito que faz uma tabela financeira parecer amadora. */
+.numeric {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Foco visível global (WCAG 2.2 SC 2.4.11). O offset garante que o anel não
+   seja engolido por fundos adjacentes. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<!--
+  data-theme="dark" é OBRIGATÓRIO: o `:root` do DS não carrega cor nenhuma —
+  só escala tipográfica. Cor vive em [data-theme="dark"] / ="light". Sem o
+  atributo, a página renderiza sem paleta. Vale para todo consumidor do DS.
+-->
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copiloto — Electia</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       PÁGINA-MODELO da análise de extração (print do uniq → ResultX DS).
+       Tela escolhida: Copiloto. O kanban já existe em `demos/triagem.html`;
+       esta tela é a que mais exercita as lacunas reais do DS.
+
+       ORDEM DE CARGA (intencional):
+       1. brand Electia — expõe --purple-*, --gradient-brand, --glow-brand
+       2. tokens do DS  — vence nas colisões de escala (--space-*, --radius-*, --text-*)
+       3. componentes   — components + data-cards + icons
+       4. ponte de marca — <style>, seção A
+       Invertendo 1 e 2, o brand sobrescreveria a escala do DS (§15 do relatório).
+       ══════════════════════════════════════════════════════════════════════ -->
+  <link rel="stylesheet" href="../brands/electia/tokens/tokens.css">
+  <link rel="stylesheet" href="../dist/tokens.min.css">
+  <link rel="stylesheet" href="../dist/components.min.css">
+  <link rel="stylesheet" href="../components/data-cards.css">
+  <link rel="stylesheet" href="../dist/icons.min.css">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+  /* ══════════════════════════════════════════════════════════════════════════
+     A. PONTE DE MARCA — NÃO EXISTE NO DS
+     Candidato a `brands/electia/tokens/ds-bridge.css` (decisão #2, §16).
+     O brand da Electia define --purple-*, mas não remapeia os tokens semânticos
+     do DS. Sem esta ponte a página sai teal (ResultX), não roxa (Electia).
+     Único ponto do arquivo com valores literais — todos vindos do Brand Book
+     da Electia. Nenhum foi amostrado de screenshot.
+     ══════════════════════════════════════════════════════════════════════════ */
+  :root {
+    --accent-primary:       var(--purple-700, #6f32b1);   /* fill de ação */
+    --accent-primary-hover: var(--purple-600, #8842d6);
+    --accent-primary-muted: rgba(111, 50, 177, 0.18);
+    --accent-secondary:     var(--royal-blue-500, #4c7dff);
+
+    /* O Brand Book v2.6 exige #c084fc para roxo em TEXTO sobre fundo escuro
+       (7.1:1 vs #0B0E14) e proíbe usá-lo como fill de botão.
+       Por isso são dois tokens distintos, não um só. */
+    --accent-on-dark:       var(--purple-on-dark, #c084fc);
+
+    --sidebar-active-bg:    rgba(111, 50, 177, 0.20);
+    --sidebar-text-active:  var(--accent-on-dark);
+    --focus-ring-color:     rgba(192, 132, 252, 0.55);
+    --shadow-glow-teal:     var(--glow-brand, 0 0 20px rgba(111, 50, 177, 0.25));
+
+    /* O DS assume accent CLARO (teal #2DD4BF): no theme dark, --text-inverse é
+       #0B0E14, ou seja, texto ESCURO sobre o accent. O accent da Electia é um
+       roxo ESCURO (#6f32b1) — manter o padrão daria ~2,9:1 no rótulo do botão
+       primário. A ponte de marca precisa inverter isso. */
+    --text-inverse: #FFF;
+  }
+  .tab.active,
+  .sidebar-item.active,
+  .view-toggle-btn.active { color: var(--accent-on-dark); }
+  .tab.active { border-bottom-color: var(--accent-on-dark); }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     B. EXTENSÕES PROPOSTAS AO DS — ainda NÃO fazem parte do Design System.
+     Cada bloco cita a seção do relatório que o justifica. É este o código que
+     as Fases 3 e 4 do plano moveriam para dentro do DS.
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  /* B.2 — §9.1 · .sidebar--collapsed [EXTENSÃO]
+     O token --sidebar-collapsed: 64px existe no DS desde a v2 e nunca teve CSS.
+     Trocar --sidebar-width no <body> reaproveita a margem que .main já calcula:
+     nenhum override de layout é necessário. */
+  body[data-nav="rail"] { --sidebar-width: var(--sidebar-collapsed); }
+  .sidebar--collapsed .sidebar-brand { justify-content: center; padding: 0; }
+  .sidebar--collapsed .sidebar-brand-text,
+  .sidebar--collapsed .sidebar-section-label,
+  .sidebar--collapsed .sidebar-item-label,
+  .sidebar--collapsed .badge-count,
+  .sidebar--collapsed .rail-hide { display: none; }
+  .sidebar--collapsed .sidebar-item {
+    justify-content: center; margin: 2px var(--space-2); padding: var(--space-3) 0;
+  }
+  .sidebar--collapsed .sidebar-user    { justify-content: center; }
+  .sidebar--collapsed .sidebar-divider { margin: var(--space-3); }
+
+  /* B.3 — §9.4 · .header--with-center [EXTENSÃO]
+     .header é space-between de 2 blocos; um terceiro filho desbalanceia. */
+  .header--with-center { display: grid; grid-template-columns: 1fr auto 1fr; gap: var(--space-4); }
+  .header--with-center > :last-child { justify-self: end; }
+  .header--with-center .header-title { font-size: var(--text-xl); line-height: 1.2; }
+  .header-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    line-height: 1.2;
+  }
+
+  /* B.6 — §9.6 · contagem dentro de .tab [EXTENSÃO] */
+  .tab-count {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    background: var(--bg-surface-2);
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+  }
+  .tab.active .tab-count { background: var(--accent-primary-muted); color: var(--accent-on-dark); }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     C. COMPOSIÇÕES LOCAIS — ficam na aplicação, NÃO sobem para o DS (§8).
+     Montadas só com peças existentes. Promover apenas se um segundo produto
+     do portfólio repetir a mesma anatomia.
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  /* C.1 — ConsumptionCard = .card + .progress-* + .dl-delta */
+  .usage-card { margin: var(--space-4) var(--space-4) 0; padding: var(--space-4); }
+  .usage-card .progress-track { margin-top: var(--space-3); }
+
+  /* C.2 — Barra de sugestão da IA ancorada no header */
+  .assist-bar { margin-bottom: 0; background: var(--bg-surface-1); border: 1px solid var(--border-accent); }
+
+  /* C.3 — Área da conversa: estado vazio centrado verticalmente */
+  .chat-shell {
+    display: flex; flex-direction: column;
+    min-height: calc(100vh - var(--header-height));
+    padding: var(--space-8);
+    max-width: 900px; margin: 0 auto;
+  }
+  .chat-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+  /* C.4 — Chips de sugestão: são BOTÕES (.btn-secondary .btn-sm), não filtros.
+     .filter-pill foi descartado de propósito — é filtro removível, outra semântica. */
+  .suggestion-row {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: var(--space-3); margin-top: var(--space-6);
+  }
+
+  /* C.5 — ChatComposer: composição local (§11). O que sobe ao DS é só o textarea. */
+  .composer {
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-xl);
+    background: var(--bg-surface-1);
+    padding: var(--space-4);
+    margin-top: var(--space-8);
+  }
+  .composer-hint {
+    display: flex; align-items: center; justify-content: center;
+    gap: var(--space-2); flex-wrap: wrap;
+    margin-top: var(--space-3);
+    font-size: var(--text-xs); color: var(--text-muted);
+  }
+  .composer-footer {
+    display: flex; align-items: center; gap: var(--space-3);
+    margin-top: var(--space-4); flex-wrap: wrap;
+  }
+  .composer-footer .spacer { flex: 1 1 auto; }
+
+  /* ────────────────────────────────────────────────────────────────────────
+     MARCA ANIMADA "SINAPSE" — original, não é asset de terceiro.
+     Construída a partir da linguagem visual da própria Electia: o grafo de
+     sinapses de `brands/electia/assets/visual-language/neural-mesh-pattern.svg`
+     (nós + arestas, opacidade 0,14–0,45), fechado em esfera.
+     Cor: roxo canônico via ponte de marca (seção A). O SVG do brand ainda está
+     em teal #14B8A6, anterior à migração v2.5 — aqui já sai roxo.
+
+     Motion conforme `brands/electia/docs/MOTION-GUIDE.md`:
+       · ciclo lento de 8s · escala 1 → 1,05 · opacidade 0,6 → 1,0 · ease-in-out
+       · "se o usuário percebe a animação conscientemente, está exagerada"
+     `prefers-reduced-motion` já é neutralizado pela regra global do DS.
+
+     Candidato a virar `brands/electia/assets/visual-language/synapse-orb.svg`.
+     ──────────────────────────────────────────────────────────────────────── */
+  .brand-orb {
+    width: 128px; height: 128px;
+    display: block;
+    margin: 0 auto var(--space-5);
+    overflow: visible;
+  }
+  /* Núcleo: respira devagar, quase imperceptível */
+  .orb-core { animation: orb-breathe 8s ease-in-out infinite; transform-origin: 60px 60px; }
+  /* Anéis orbitais: dão profundidade sem 3D. Sentidos opostos e tempos primos
+     entre si, para o padrão nunca se repetir de forma óbvia. */
+  .orb-ring-a { animation: orb-spin 29s linear infinite; transform-origin: 60px 60px; }
+  .orb-ring-b { animation: orb-spin 41s linear infinite reverse; transform-origin: 60px 60px; }
+  /* Malha: respira junto com o núcleo */
+  .orb-mesh { animation: orb-breathe 8s ease-in-out infinite; transform-origin: 60px 60px; }
+  /* Nós pulsam fora de fase — é o que dá a leitura de "atividade" */
+  .orb-node { animation: orb-node 3.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  .orb-node:nth-of-type(3n)   { animation-delay: -1.1s; }
+  .orb-node:nth-of-type(3n+1) { animation-delay: -2.3s; }
+  .orb-hub { animation: orb-hub 4.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+
+  @keyframes orb-breathe {
+    0%, 100% { opacity: 0.72; transform: scale(1); }
+    50%      { opacity: 1;    transform: scale(1.05); }
+  }
+  @keyframes orb-spin { to { transform: rotate(360deg); } }
+  @keyframes orb-node {
+    0%, 100% { opacity: 0.35; transform: scale(0.9); }
+    50%      { opacity: 1;    transform: scale(1.15); }
+  }
+  @keyframes orb-hub {
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50%      { opacity: 0.9;  transform: scale(1.1); }
+  }
+
+  /* C.6 — O posicionamento lateral do tooltip agora vem do DS (.tooltip-right).
+     Sobra só este ajuste: .tooltip-wrapper impõe display:inline-block, que
+     desmonta o flex do .sidebar-item. Candidato a item da Onda 3 — separar
+     posicionamento de display no .tooltip-wrapper. */
+  .sidebar-item.tooltip-wrapper { display: flex; }
+
+  /* Utilitários locais */
+  .stack-sm  { display: flex; flex-direction: column; gap: var(--space-1); }
+  .row-center{ display: flex; align-items: center; gap: var(--space-3); }
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     D. RESPONSIVIDADE (§14) — nenhuma dimensão copiada de screenshot.
+     Breakpoints do DS: --bp-lg 1024 · --bp-md 768.
+     ══════════════════════════════════════════════════════════════════════════ */
+  @media (max-width: 1024px) {
+    /* O DS esconde .sidebar aqui (display:none) sem substituto — risco #10 do
+       relatório. Enquanto o drawer não existir, o rail é o fallback. */
+    .sidebar { display: flex; }
+    body { --sidebar-width: var(--sidebar-collapsed); }
+    /* O DS zera a margem porque ESCONDE a sidebar neste breakpoint.
+       Mantendo o rail, a margem tem de voltar — senão o rail cobre o conteúdo. */
+    .main { margin-left: var(--sidebar-width); }
+    .sidebar-brand-text, .sidebar-section-label,
+    .sidebar-item-label, .sidebar .badge-count, .rail-hide { display: none; }
+    .sidebar-item { justify-content: center; }
+    .header--with-center { grid-template-columns: auto 1fr auto; }
+    .header--with-center .assist-bar { display: none; }
+    .tabs { overflow-x: auto; flex-wrap: nowrap; }
+    .tab  { flex-shrink: 0; }
+  }
+  @media (max-width: 768px) {
+    .chat-shell { padding: var(--space-5); }
+    .composer-footer .view-toggle { order: 3; }
+    /* O padding reduzido do .header agora vem do DS (Onda 1).
+       Aqui fica só o que é específico desta página. */
+    .header-eyebrow { display: none; }
+    .header--with-center > .row-center { min-width: 0; }
+    .header--with-center .header-title {
+      font-size: var(--text-base);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn-icon, .btn-icon:active, .sidebar-item { transition: none; transform: none; }
+  }
+  </style>
+</head>
+<body data-nav="rail">
+
+<a href="#main-content" class="skip-link">Pular para o conteúdo</a>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SIDEBAR — [DS] .sidebar + [EXT §9.1] .sidebar--collapsed
+     Rail e painel são o MESMO componente em dois estados (botão no header).
+     ══════════════════════════════════════════════════════════════════════════ -->
+<aside class="sidebar sidebar--collapsed" id="sidebar">
+
+  <!-- [COMP §8] WorkspaceSwitcher = .sidebar-brand + .dropdown -->
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">E</div>
+    <div class="sidebar-brand-text stack-sm rail-hide">
+      <span>Electia</span>
+      <span class="sidebar-user-role">Emprega+ · Proprietário</span>
+    </div>
+  </div>
+
+  <div class="rail-hide" style="padding: 0 var(--space-4) var(--space-2);">
+    <label class="visually-hidden" for="nav-search">Buscar</label>
+    <div class="search-container row-center" style="gap: var(--space-2);">
+      <input class="form-input" id="nav-search" type="search" placeholder="Buscar…">
+      <!-- [EXT §9.6] hint de atalho -->
+      <kbd class="kbd">⌘K</kbd>
+    </div>
+  </div>
+
+  <nav aria-label="Navegação principal">
+    <div class="sidebar-section-label">Operação</div>
+
+    <a class="sidebar-item active tooltip-wrapper" href="#" aria-current="page" aria-label="Copiloto">
+      <i data-lucide="sparkles" class="icon" aria-hidden="true"></i>
+      <span class="sidebar-item-label">Copiloto</span>
+      <span class="tooltip tooltip-right">Copiloto</span>
+    </a>
+
+    <a class="sidebar-item tooltip-wrapper" href="#" aria-label="Dashboard">
+      <i data-lucide="layout-dashboard" class="icon" aria-hidden="true"></i>
+      <span class="sidebar-item-label">Dashboard</span>
+      <span class="tooltip tooltip-right">Dashboard</span>
+    </a>
+
+    <a class="sidebar-item tooltip-wrapper" href="#" aria-label="Avaliações">
+      <i data-lucide="clipboard-check" class="icon" aria-hidden="true"></i>
+      <span class="sidebar-item-label">Avaliações</span>
+      <span class="badge-count">12</span>
+      <span class="tooltip tooltip-right">Avaliações</span>
+    </a>
+
+    <a class="sidebar-item tooltip-wrapper" href="#" aria-label="Candidatos">
+      <i data-lucide="users" class="icon" aria-hidden="true"></i>
+      <span class="sidebar-item-label">Candidatos</span>
+      <span class="badge-count">128</span>
+      <span class="tooltip tooltip-right">Candidatos</span>
+    </a>
+
+    <div class="sidebar-section-label">Análise</div>
+
+    <a class="sidebar-item tooltip-wrapper" href="#" aria-label="Relatórios">
+      <i data-lucide="file-text" class="icon" aria-hidden="true"></i>
+      <span class="sidebar-item-label">Relatórios</span>
+      <span class="tooltip tooltip-right">Relatórios</span>
+    </a>
+
+    <a class="sidebar-item tooltip-wrapper" href="#" aria-label="Comparativos">
+      <i data-lucide="git-compare" class="icon" aria-hidden="true"></i>
+      <span class="sidebar-item-label">Comparativos</span>
+      <span class="tooltip tooltip-right">Comparativos</span>
+    </a>
+
+    <hr class="sidebar-divider">
+
+    <a class="sidebar-item tooltip-wrapper" href="#" aria-label="Configurações">
+      <i data-lucide="settings" class="icon" aria-hidden="true"></i>
+      <span class="sidebar-item-label">Configurações</span>
+      <span class="tooltip tooltip-right">Configurações</span>
+    </a>
+  </nav>
+
+  <!-- [COMP §8] ConsumptionCard = .card + .progress-* + .dl-delta -->
+  <div class="card usage-card rail-hide">
+    <div class="section-label" style="margin-bottom: var(--space-2);">Consumo</div>
+    <div class="row-center" style="justify-content: space-between;">
+      <span style="font-size: var(--text-sm); color: var(--text-secondary);">Avaliações do plano</span>
+      <span class="dl-delta dl-delta--positive">38%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" style="width: 38%; background: var(--gradient-brand);"></div>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar">MC</div>
+      <div class="rail-hide">
+        <div class="sidebar-user-name">Marcos Carneiro</div>
+        <div class="sidebar-user-role">Business · Customer</div>
+      </div>
+      <!-- [NOVO §10] .btn-icon -->
+      <button class="btn-icon btn-icon-sm rail-hide" type="button" aria-label="Sair da conta">
+        <i data-lucide="log-out" class="icon icon-sm" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</aside>
+
+<main class="main" id="main-content">
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       HEADER — [DS] .header + [EXT §9.4] região central
+       ════════════════════════════════════════════════════════════════════════ -->
+  <header class="header header--with-center">
+
+    <div class="row-center">
+      <button class="btn-icon" type="button" id="nav-toggle"
+              aria-label="Expandir navegação" aria-expanded="false" aria-controls="sidebar">
+        <i data-lucide="panel-left" class="icon" aria-hidden="true"></i>
+      </button>
+      <div class="icon-badge icon-badge-sm icon-badge-purple" aria-hidden="true">
+        <i data-lucide="sparkles" class="icon"></i>
+      </div>
+      <div>
+        <div class="header-eyebrow">Copiloto</div>
+        <div class="header-title">Electia AI</div>
+      </div>
+    </div>
+
+    <!-- [EXT §9.5] .toast com ação e dispensa — sugestão contextual da IA -->
+    <div class="toast toast-info assist-bar" id="assist" role="status">
+      <div class="avatar avatar-xs" aria-hidden="true"
+           style="background: var(--accent-primary-muted); color: var(--accent-on-dark);">
+        <i data-lucide="sparkles" class="icon icon-sm"></i>
+      </div>
+      <span>3 relatórios prontos para revisão.</span>
+      <button class="btn btn-primary btn-sm toast-action" type="button">Revisar</button>
+      <button class="btn-icon btn-icon-sm toast-dismiss" type="button"
+              aria-label="Dispensar sugestão" data-dismiss="assist">
+        <i data-lucide="x" class="icon icon-sm" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn-icon" type="button" aria-label="Conversas">
+        <i data-lucide="message-square" class="icon" aria-hidden="true"></i>
+      </button>
+      <button class="btn-icon" type="button" aria-label="Notificações">
+        <i data-lucide="bell" class="icon" aria-hidden="true"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="chat-shell">
+
+    <!-- [DS] .tabs / .tab · [EXT §9.6] .tab-count -->
+    <div class="tabs" role="tablist" aria-label="Seções do copiloto">
+      <button class="tab" role="tab" aria-selected="false">
+        <i data-lucide="panel-left-open" class="icon icon-sm" aria-hidden="true"></i>
+        Conversas <span class="tab-count">7</span>
+      </button>
+      <button class="tab active" role="tab" aria-selected="true">
+        <i data-lucide="message-circle" class="icon icon-sm" aria-hidden="true"></i>
+        Conversa
+      </button>
+      <button class="tab" role="tab" aria-selected="false">
+        <i data-lucide="list-checks" class="icon icon-sm" aria-hidden="true"></i>
+        Tarefas <span class="tab-count">3</span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false">
+        <i data-lucide="shield-check" class="icon icon-sm" aria-hidden="true"></i>
+        Aprovar
+      </button>
+      <button class="tab" role="tab" aria-selected="false">
+        <i data-lucide="brain" class="icon icon-sm" aria-hidden="true"></i>
+        Memória
+      </button>
+      <button class="tab" role="tab" aria-selected="false">
+        <i data-lucide="settings" class="icon icon-sm" aria-hidden="true"></i>
+        Configurações
+      </button>
+    </div>
+
+    <div class="chat-body">
+
+      <!-- [DS] .empty-state — reuso puro, sem alteração.
+           O orb 3D do print foi DESCARTADO (§11): é ilustração de marca.
+           Aqui o lugar dele é ocupado por .dl-coin, que já existe no DS. -->
+      <div class="empty-state">
+        <svg class="brand-orb" viewBox="0 0 120 120" role="img"
+             aria-label="Electia AI — malha de sinapses em atividade">
+          <defs>
+            <radialGradient id="orbCore" cx="42%" cy="36%" r="68%">
+              <stop offset="0%"   stop-color="var(--accent-on-dark)" stop-opacity="0.55"/>
+              <stop offset="45%"  stop-color="var(--accent-primary)" stop-opacity="0.38"/>
+              <stop offset="100%" stop-color="var(--accent-primary)" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="orbHalo" cx="50%" cy="50%" r="50%">
+              <stop offset="55%"  stop-color="var(--accent-primary)" stop-opacity="0"/>
+              <stop offset="100%" stop-color="var(--accent-primary)" stop-opacity="0.22"/>
+            </radialGradient>
+            <linearGradient id="orbEdge" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%"   stop-color="var(--accent-on-dark)"/>
+              <stop offset="100%" stop-color="var(--accent-primary)"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Núcleo e halo -->
+          <g class="orb-core">
+            <circle cx="60" cy="60" r="52" fill="url(#orbHalo)"/>
+            <circle cx="60" cy="60" r="40" fill="url(#orbCore)"/>
+          </g>
+
+          <!-- Anéis orbitais: profundidade sem 3D -->
+          <g stroke="var(--accent-on-dark)" fill="none" stroke-width="0.9">
+            <ellipse class="orb-ring-a" cx="60" cy="60" rx="46" ry="17" stroke-opacity="0.30"/>
+            <ellipse class="orb-ring-b" cx="60" cy="60" rx="17" ry="46" stroke-opacity="0.20"/>
+          </g>
+
+          <!-- Malha de sinapses: arestas 0,14–0,45 de opacidade, como no brand -->
+          <g class="orb-mesh">
+            <g stroke="url(#orbEdge)" fill="none" stroke-width="0.9" stroke-linecap="round">
+              <path d="M60 20 88 32"  stroke-opacity="0.32"/>
+              <path d="M88 32 98 62"  stroke-opacity="0.28"/>
+              <path d="M98 62 84 88"  stroke-opacity="0.34"/>
+              <path d="M84 88 58 100" stroke-opacity="0.26"/>
+              <path d="M58 100 30 88" stroke-opacity="0.30"/>
+              <path d="M30 88 22 58"  stroke-opacity="0.24"/>
+              <path d="M22 58 32 30"  stroke-opacity="0.33"/>
+              <path d="M32 30 60 20"  stroke-opacity="0.29"/>
+
+              <path d="M60 20 62 42"  stroke-opacity="0.40"/>
+              <path d="M88 32 62 42"  stroke-opacity="0.18"/>
+              <path d="M98 62 78 58"  stroke-opacity="0.38"/>
+              <path d="M84 88 64 78"  stroke-opacity="0.22"/>
+              <path d="M58 100 64 78" stroke-opacity="0.36"/>
+              <path d="M30 88 44 62"  stroke-opacity="0.20"/>
+              <path d="M22 58 44 62"  stroke-opacity="0.42"/>
+              <path d="M32 30 52 50"  stroke-opacity="0.24"/>
+
+              <path d="M62 42 78 58"  stroke-opacity="0.45"/>
+              <path d="M78 58 64 78"  stroke-opacity="0.40"/>
+              <path d="M64 78 44 62"  stroke-opacity="0.44"/>
+              <path d="M44 62 52 50"  stroke-opacity="0.38"/>
+              <path d="M52 50 62 42"  stroke-opacity="0.42"/>
+              <path d="M62 42 64 78"  stroke-opacity="0.14"/>
+              <path d="M78 58 44 62"  stroke-opacity="0.16"/>
+
+              <!-- Cordas longas: atravessam a esfera e leem como "lado de trás".
+                   Opacidade baixa de propósito — é o que dá volume sem peso. -->
+              <path d="M60 20 84 88"  stroke-opacity="0.12"/>
+              <path d="M88 32 30 88"  stroke-opacity="0.10"/>
+              <path d="M98 62 32 30"  stroke-opacity="0.13"/>
+              <path d="M22 58 58 100" stroke-opacity="0.11"/>
+
+              <!-- Conexões intermediárias: adensam a malha sem fechar o miolo -->
+              <path d="M88 32 78 58"  stroke-opacity="0.22"/>
+              <path d="M30 88 64 78"  stroke-opacity="0.20"/>
+              <path d="M32 30 44 62"  stroke-opacity="0.18"/>
+              <path d="M98 62 62 42"  stroke-opacity="0.16"/>
+              <path d="M58 100 44 62" stroke-opacity="0.19"/>
+              <path d="M60 20 52 50"  stroke-opacity="0.21"/>
+              <path d="M84 88 78 58"  stroke-opacity="0.24"/>
+              <path d="M22 58 52 50"  stroke-opacity="0.17"/>
+            </g>
+
+            <!-- Nós periféricos -->
+            <g fill="var(--accent-on-dark)">
+              <circle class="orb-node" cx="60"  cy="20"  r="2.2"/>
+              <circle class="orb-node" cx="88"  cy="32"  r="1.9"/>
+              <circle class="orb-node" cx="98"  cy="62"  r="2.2"/>
+              <circle class="orb-node" cx="84"  cy="88"  r="1.8"/>
+              <circle class="orb-node" cx="58"  cy="100" r="2.1"/>
+              <circle class="orb-node" cx="30"  cy="88"  r="1.9"/>
+              <circle class="orb-node" cx="22"  cy="58"  r="2.2"/>
+              <circle class="orb-node" cx="32"  cy="30"  r="1.8"/>
+              <circle class="orb-node" cx="52"  cy="50"  r="0.9"/>
+            </g>
+
+            <!-- Hubs internos: marcam os vértices da malha sem virar bolas.
+                 Pulso menor que o dos nós periféricos, para o miolo ficar quieto. -->
+            <g fill="var(--accent-on-dark)">
+              <circle class="orb-hub" cx="62" cy="42" r="1.4"/>
+              <circle class="orb-hub" cx="78" cy="58" r="1.3"/>
+              <circle class="orb-hub" cx="64" cy="78" r="1.4"/>
+              <circle class="orb-hub" cx="44" cy="62" r="1.3"/>
+            </g>
+          </g>
+        </svg>
+        <h1 class="empty-state-title">Olá, sou a <span style="color: var(--accent-on-dark);">Electia AI</span></h1>
+        <p class="empty-state-text">
+          Descreva o que quer analisar ou escolha um atalho abaixo.
+          Eu opero avaliações, relatórios e comparativos em linguagem natural.
+        </p>
+      </div>
+
+      <!-- [COMP §8] Chips de sugestão = .btn-secondary .btn-sm -->
+      <div class="suggestion-row">
+        <button class="btn btn-secondary btn-sm" type="button">
+          <i data-lucide="clipboard-plus" class="icon icon-sm" aria-hidden="true"></i>
+          Criar uma avaliação
+        </button>
+        <button class="btn btn-secondary btn-sm" type="button">
+          <i data-lucide="list" class="icon icon-sm" aria-hidden="true"></i>
+          Listar candidatos pendentes
+        </button>
+        <button class="btn btn-secondary btn-sm" type="button">
+          <i data-lucide="git-compare" class="icon icon-sm" aria-hidden="true"></i>
+          Comparar dois perfis
+        </button>
+        <button class="btn btn-secondary btn-sm" type="button">
+          <i data-lucide="file-text" class="icon icon-sm" aria-hidden="true"></i>
+          Resumir um relatório
+        </button>
+      </div>
+    </div>
+
+    <!-- [COMP §8] ChatComposer — composição local.
+         O que sobe ao DS é apenas [EXT §9.6] .form-textarea. -->
+    <form class="composer" onsubmit="return false;">
+      <label class="visually-hidden" for="prompt">Pergunte ao copiloto</label>
+      <textarea class="form-textarea" id="prompt" rows="2"
+                placeholder="Pergunte ou peça… use @candidato, @processo, @relatório"></textarea>
+
+      <p class="composer-hint">
+        <kbd class="kbd">Enter</kbd> envia
+        <span aria-hidden="true">·</span>
+        <kbd class="kbd">Shift</kbd>+<kbd class="kbd">Enter</kbd> quebra linha
+        <span aria-hidden="true">·</span>
+        <kbd class="kbd">@</kbd> busca no workspace
+      </p>
+
+      <div class="composer-footer">
+        <!-- [DS] .dropdown — seletor de agente -->
+        <div class="dropdown">
+          <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+            <i data-lucide="sparkles" class="icon icon-sm" aria-hidden="true"></i>
+            Electia AI
+            <i data-lucide="chevron-down" class="icon icon-sm" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="spacer"></div>
+
+        <!-- [NOVO §10] .btn-icon -->
+        <button class="btn-icon" type="button" aria-label="Desativar áudio de resposta" aria-pressed="false">
+          <i data-lucide="volume-x" class="icon" aria-hidden="true"></i>
+        </button>
+
+        <!-- [DS] .view-toggle — controle segmentado genérico.
+             Ver inconsistência #7 do relatório: o nome fala de "visualização",
+             mas o componente já é o segmentado do DS (aqui: modo de entrada). -->
+        <div class="view-toggle" role="group" aria-label="Modo de entrada">
+          <button class="view-toggle-btn active" type="button" aria-pressed="true">Texto</button>
+          <button class="view-toggle-btn" type="button" aria-pressed="false">
+            <i data-lucide="mic" class="icon icon-sm" aria-hidden="true"></i> Voz
+          </button>
+        </div>
+
+        <button class="btn-icon btn-icon-primary" type="submit" aria-label="Enviar mensagem">
+          <i data-lucide="send" class="icon" aria-hidden="true"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<script>
+  lucide.createIcons();
+
+  // Rail ⇄ painel: o MESMO componente em dois estados (§9.1).
+  // Trocar --sidebar-width reaproveita a margem que .main já calcula.
+  var toggle  = document.getElementById('nav-toggle');
+  var sidebar = document.getElementById('sidebar');
+  toggle.addEventListener('click', function () {
+    var collapsed = sidebar.classList.toggle('sidebar--collapsed');
+    document.body.dataset.nav = collapsed ? 'rail' : 'panel';
+    toggle.setAttribute('aria-expanded', String(!collapsed));
+    toggle.setAttribute('aria-label', collapsed ? 'Expandir navegação' : 'Recolher navegação');
+  });
+
+  // Dispensa da sugestão da IA (§9.5)
+  document.querySelectorAll('[data-dismiss]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.getElementById(btn.dataset.dismiss).hidden = true;
+    });
+  });
+</script>
+</body>
+</html>

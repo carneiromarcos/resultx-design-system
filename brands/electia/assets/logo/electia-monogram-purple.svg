@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="electia">
+  <title>electia — monogram (roxo bg)</title>
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&amp;display=swap');
+      .e { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 96px; letter-spacing: -0.04em; fill: #FFFFFF; }
+    </style>
+  </defs>
+  <rect width="128" height="128" rx="30" fill="#6f32b1"/>
+  <text class="e" x="64" y="88" text-anchor="middle">e</text>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 60" role="img" aria-label="Synapse divider Electia — section divider with dendritic branches">
+  <!-- Linha base contínua -->
+  <g stroke="#14B8A6" stroke-linecap="round" fill="none">
+    <line x1="40"  y1="30" x2="148" y2="30" stroke-width="1.2" stroke-opacity="0.55"/>
+    <line x1="152" y1="30" x2="298" y2="30" stroke-width="1.2" stroke-opacity="0.70"/>
+    <line x1="302" y1="30" x2="448" y2="30" stroke-width="1.2" stroke-opacity="0.70"/>
+    <line x1="452" y1="30" x2="560" y2="30" stroke-width="1.2" stroke-opacity="0.55"/>
+
+    <!-- Ramos dendríticos do nó 1 (x=150) -->
+    <path d="M 150,30 Q 130,20 110,12" stroke-width="0.9" stroke-opacity="0.45"/>
+    <path d="M 150,30 Q 130,40 110,48" stroke-width="0.9" stroke-opacity="0.45"/>
+
+    <!-- Ramos do nó 2 (x=300) — central, mais ramificado -->
+    <path d="M 300,30 Q 280,18 260,8"  stroke-width="0.9" stroke-opacity="0.55"/>
+    <path d="M 300,30 Q 285,15 270,8"  stroke-width="0.9" stroke-opacity="0.35"/>
+    <path d="M 300,30 Q 320,18 340,8"  stroke-width="0.9" stroke-opacity="0.55"/>
+    <path d="M 300,30 Q 280,42 260,52" stroke-width="0.9" stroke-opacity="0.50"/>
+    <path d="M 300,30 Q 320,42 340,52" stroke-width="0.9" stroke-opacity="0.50"/>
+
+    <!-- Ramos do nó 3 (x=450) -->
+    <path d="M 450,30 Q 470,20 490,12" stroke-width="0.9" stroke-opacity="0.45"/>
+    <path d="M 450,30 Q 470,40 490,48" stroke-width="0.9" stroke-opacity="0.45"/>
+  </g>
+
+  <!-- Nodes principais -->
+  <g fill="#14B8A6">
+    <circle cx="150" cy="30" r="3"/>
+    <circle cx="300" cy="30" r="3.5"/>
+    <circle cx="450" cy="30" r="3"/>
+  </g>
+
+  <!-- Terminações dendríticas -->
+  <g fill="#14B8A6" fill-opacity="0.65">
+    <circle cx="110" cy="12" r="1.8"/>
+    <circle cx="110" cy="48" r="1.8"/>
+    <circle cx="260" cy="8"  r="1.8"/>
+    <circle cx="270" cy="8"  r="1.5"/>
+    <circle cx="340" cy="8"  r="1.8"/>
+    <circle cx="260" cy="52" r="1.8"/>
+    <circle cx="340" cy="52" r="1.8"/>
+    <circle cx="490" cy="12" r="1.8"/>
+    <circle cx="490" cy="48" r="1.8"/>
+  </g>
+</svg>

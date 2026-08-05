@@ -1,25 +1,158 @@
 /* ============================================
-   RESULTX — Design Tokens v0.1 (stub)
-   ============================================
-   ResultX e a marca-base do ResultX Design System.
-   Os tokens canonicos ficam no DS root (tokens/tokens.css raiz).
-   Este arquivo existe pra paridade estrutural com brands/pdv/ e brands/electia/.
-
-   QUANDO PRECISAR DE OVERRIDES ESPECIFICOS DA MARCA RESULTX,
-   ADICIONAR ABAIXO. ATE LA, REFERENCIA TOKENS ROOT.
-
-   Vide: docs/BRAND-BOOK.md secao 4 (Paleta de Cores) para
-   decisao pendente entre 3 direcoes de paleta.
+   RESULTX — Design Tokens v1.0
+   Source of truth: tokens.json (W3C Design Tokens)
+   Marca de consultoria — ponte Emprega+ <-> Electia
    ============================================ */
 
 :root {
-  /* ---- Paleta ResultX (TBD) ---- */
-  /* Sera definida apos Marcos escolher uma das 3 direcoes do BRAND-BOOK §4. */
-  /* Por enquanto, ResultX usa os tokens do DS root sem override. */
+  /* ---- Gold accent (heranca Emprega+) ---- */
+  --rx-gold-light: #d4ae54;
+  --rx-gold: #c4993b;
+  --rx-gold-dark: #a07b2a;
 
-  /* Quando definida, adicionar aqui:
-   *   --resultx-primary: #...;
-   *   --resultx-primary-hover: #...;
-   *   --resultx-primary-muted: rgba(...);
-   */
+  /* ---- Purple accent (heranca Electia) ---- */
+  --rx-purple-light: #a55eea;
+  --rx-purple: #6f32b1;
+  --rx-purple-dark: #5a2890;
+
+  /* ---- Bridge gradient (assinatura ResultX) ---- */
+  --rx-gradient-bridge: linear-gradient(135deg, #c4993b 0%, #6f32b1 100%);
+  --rx-gradient-bridge-subtle: linear-gradient(135deg, rgba(196,153,59,0.12) 0%, rgba(111,50,177,0.12) 100%);
+  --rx-gradient-gold: linear-gradient(135deg, #c4993b 0%, #d4ae54 100%);
+  --rx-gradient-purple: linear-gradient(135deg, #6f32b1 0%, #a55eea 100%);
+
+  /* ---- Navy (ecossistema compartilhado) ---- */
+  --rx-bg: #1B2A4A;
+  --rx-surface-1: #1c2a4a;
+  --rx-surface-2: #243661;
+  --rx-surface-3: #2d4378;
+
+  /* ---- Light surfaces ---- */
+  --rx-light-bg: #FFFFFF;
+  --rx-light-subtle: #f5f7f9;
+  --rx-light-muted: #f0f4f8;
+  --rx-light-border: #e0e6eb;
+
+  /* ---- Text ---- */
+  --rx-text: #FFFFFF;
+  --rx-text-secondary: #bfd0ec;
+  --rx-text-muted: #5a6b7c;
+  --rx-text-inverse: #1B2A4A;
+
+  /* ---- Glass Light (heranca Emprega+) ---- */
+  --rx-glass-light-bg: rgba(255, 255, 255, 0.7);
+  --rx-glass-light-border: rgba(28, 42, 74, 0.08);
+  --rx-glass-light-blur: 12px;
+
+  /* ---- Glass Dark (heranca Electia) ---- */
+  --rx-glass-dark-bg: rgba(28, 42, 74, 0.6);
+  --rx-glass-dark-border: rgba(255, 255, 255, 0.06);
+  --rx-glass-dark-blur: 16px;
+
+  /* ---- Semantic ---- */
+  --rx-success: #16a34a;
+  --rx-error: #ef4343;
+  --rx-warning: #d97706;
+
+  /* ---- Typography ---- */
+  --rx-font-heading: 'Sora', system-ui, sans-serif;
+  --rx-font-body: 'Inter', system-ui, sans-serif;
+  --rx-font-mono: 'JetBrains Mono', monospace;
+
+  /* Legacy (site live resultx.app — migracao planejada) */
+  --rx-font-heading-legacy: 'Poppins', system-ui, sans-serif;
+  --rx-font-body-legacy: 'Roboto', system-ui, sans-serif;
+
+  --rx-weight-regular: 400;
+  --rx-weight-medium: 500;
+  --rx-weight-semibold: 600;
+  --rx-weight-bold: 700;
+  --rx-weight-extrabold: 800;
+
+  /* ---- Typography Scale ---- */
+  --rx-text-display: clamp(2.5rem, 6vw, 4.5rem);
+  --rx-text-h1: 2.5rem;
+  --rx-text-h2: 2rem;
+  --rx-text-h3: 1.25rem;
+  --rx-text-eyebrow: 0.75rem;
+  --rx-text-body-lg: 1.25rem;
+  --rx-text-body: 1rem;
+  --rx-text-small: 0.875rem;
+  --rx-text-code: 0.8125rem;
+
+  /* ---- Spacing ---- */
+  --rx-space-xs: 0.25rem;
+  --rx-space-sm: 0.5rem;
+  --rx-space-md: 1rem;
+  --rx-space-lg: 1.5rem;
+  --rx-space-xl: 2rem;
+  --rx-space-2xl: 3rem;
+  --rx-space-3xl: 5rem;
+  --rx-space-section: clamp(4rem, 3rem + 5vw, 10rem);
+
+  /* ---- Radius ---- */
+  --rx-radius-sm: 0.25rem;
+  --rx-radius-md: 0.5rem;
+  --rx-radius-lg: 0.75rem;
+  --rx-radius-xl: 1rem;
+
+  /* ---- Shadows ---- */
+  --rx-shadow-sm: 0 4px 20px rgba(27, 42, 74, 0.05);
+  --rx-shadow-md: 0 4px 12px rgba(27, 42, 74, 0.08);
+  --rx-shadow-lg: 0 10px 30px rgba(27, 42, 74, 0.12);
+  --rx-glow-gold: 0 0 20px rgba(196, 153, 59, 0.20);
+  --rx-glow-purple: 0 0 20px rgba(111, 50, 177, 0.20);
+  --rx-glow-bridge: 0 0 20px rgba(196, 153, 59, 0.15), 0 0 20px rgba(111, 50, 177, 0.15);
+
+  /* ---- Motion ---- */
+  --rx-duration-fast: 150ms;
+  --rx-duration-normal: 300ms;
+  --rx-duration-slow: 500ms;
+  --rx-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- Layout ---- */
+  --rx-container-max: 1200px;
+  --rx-gutter: 1.5rem;
+}
+
+/* ---- Animation: Scroll Reveal ---- */
+@keyframes rx-fade-in-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rx-reveal {
+  animation: rx-fade-in-up 700ms var(--rx-ease-out-expo) forwards;
+}
+.rx-reveal.d1 { animation-delay: 100ms; opacity: 0; }
+.rx-reveal.d2 { animation-delay: 200ms; opacity: 0; }
+.rx-reveal.d3 { animation-delay: 300ms; opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rx-reveal, .rx-reveal.d1, .rx-reveal.d2, .rx-reveal.d3 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- Utility: Bridge gradient text ---- */
+.rx-text-gradient-bridge {
+  background: var(--rx-gradient-bridge);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- Utility: Light Glass (heranca Emprega+) ---- */
+.rx-glass-light {
+  background: var(--rx-glass-light-bg);
+  border: 1px solid var(--rx-glass-light-border);
+  backdrop-filter: blur(var(--rx-glass-light-blur));
+}
+
+/* ---- Utility: Dark Glass (heranca Electia) ---- */
+.rx-glass-dark {
+  background: var(--rx-glass-dark-bg);
+  border: 1px solid var(--rx-glass-dark-border);
+  backdrop-filter: blur(var(--rx-glass-dark-blur));
 }

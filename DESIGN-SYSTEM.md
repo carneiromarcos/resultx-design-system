@@ -442,7 +442,7 @@ Label                    Score/100
 
 ## 14. Social Media Templates (Sistema Separado)
 
-O arquivo `social-media-templates.html` e o diretório `social-media-png/` **não fazem parte deste Design System**. Eles compõem um sistema independente de geração de criativos para redes sociais usando theme light (navy `#1B2A4A` + gold `#C49A3C`), alinhado com a identidade da marca Emprega+ institucional — não com o App DS (dark + teal).
+O arquivo `social-media-templates.html` e o diretório `templates/social-media/` **não fazem parte deste Design System**. Eles compõem um sistema independente de geração de criativos para redes sociais usando theme light (navy `#1B2A4A` + gold `#C49A3C`), alinhado com a identidade da marca Emprega+ institucional — não com o App DS (dark + teal).
 
 - **Renderer:** `render-templates.mjs` (Playwright → PNG)
 - **Formatos:** feed 1080x1080, banners, stories, thumbnails, WhatsApp cards

@@ -238,6 +238,48 @@ label.toggle
 </form>
 ```
 
+## Textarea
+
+Multi-line counterpart to `.form-input`. Inherits the same visual contract and
+changes only what is specific to long-form entry: vertical padding, readable
+line-height, `resize: vertical` and a minimum height.
+
+```html
+<div class="form-group">
+  <label class="form-label" for="notes">Observações</label>
+  <textarea class="form-textarea" id="notes" rows="3"
+            placeholder="Descreva o contexto…"></textarea>
+  <p class="form-hint">Máximo de 500 caracteres.</p>
+</div>
+```
+
+| Property | Value |
+|----------|-------|
+| `min-height` | `88px` (≈3 lines) |
+| `resize` | `vertical` — horizontal resize breaks the grid |
+| `:focus-visible` | `--accent-primary` border + `--focus-ring-*` glow, same as `.form-input` |
+| `:disabled` | Reduced opacity, `--bg-surface-2` background |
+
+## Keyboard Shortcut
+
+Use `.kbd` on a `<kbd>` element to render a key. Keeps shortcut hints consistent
+instead of each product styling its own.
+
+```html
+<div class="search-container">
+  <input class="form-input" type="search" placeholder="Buscar…">
+  <kbd class="kbd">⌘K</kbd>
+</div>
+
+<p class="form-hint">
+  <kbd class="kbd">Enter</kbd> envia ·
+  <kbd class="kbd">Shift</kbd>+<kbd class="kbd">Enter</kbd> quebra linha
+</p>
+```
+
+Mono type, `--bg-surface-2` background and a subtle border. It is a visual hint,
+not a control — never make it clickable.
+
 ## Tokens Used
 
 - `--space-1`, `--space-2`, `--space-3`, `--space-4`, `--space-5` (spacing)
