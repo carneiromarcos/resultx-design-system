@@ -5,7 +5,51 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
-## [2.2.0] - 2026-05-24 — Reorganização estrutural (folders)
+## [2.2.0] - 2026-08-05
+
+Primeiro release desde abril. Reconcilia a linha de release com o trabalho real:
+`main` estava parada em 26/04 enquanto o brand system evoluía em branch paralela, e a
+tag `v2.1.2` havia sido cortada de uma branch de correção que não estava em lugar nenhum.
+Esta versão junta tudo numa linha só.
+
+### Added — Brand system multi-marca
+- `brands/` com Electia, Emprega+, PdV, ResultX e Xscore — brand books, tokens, previews e templates
+- Migração canônica da Electia: teal → roxo `#6f32b1`, navy → grafite `#0B0E14`
+- Rampa OKLCH purple / royal-blue / gold com sinergia cross-brand
+
+### Added — Componentes
+- **`.btn-icon` completo** — passa de dimensão por padding (34×24, raspando o mínimo da WCAG 2.2)
+  para caixa fixa 44×44, com `:disabled` e press effect. Tamanhos `-sm` (36) e `-lg` (52);
+  variantes `-subtle`, `-primary` e `-danger`. Definição única em `components/icons.css`
+- **`.form-textarea`** — o DS tinha `.form-input` e nenhum campo multilinha
+- **`.kbd`** — atalhos de teclado deixam de ser texto solto
+- **`.tooltip-right` / `.tooltip-left`** — só havia topo e base, inútil para navegação em rail
+- **`.empty-state-inline`** — o estado vazio cheio usa ícone de 80px e padding `--space-16`,
+  que estoura coluna de kanban e painel lateral
+- **`.toast-action` / `.toast-dismiss` / `.toast[hidden]`** — sem eles o toast só comunica,
+  nunca oferece saída nem pode ser dispensado; `display:flex` vencia o `[hidden]` do navegador
+
+### Fixed — Defeitos de base
+- **`.main` sem `min-width: 0`.** `body` é flex e `.main` é flex item: sem isso ele nunca encolhe
+  abaixo do min-content do conteúdo, e qualquer linha que não quebra (tabs, toolbar, tabela)
+  trava a largura acima da viewport, gerando scroll horizontal na página inteira.
+  Medido em 390px, antes→depois: triagem 848→390, employer-jobs 1006→390, dashboard 614→390,
+  candidatos 571→390
+- **`.sidebar-item` sem `text-decoration: none`** — só ficava correto com `<div>`; com `<a>`,
+  que é o markup certo para navegação, o link vinha sublinhado
+- **`.header` com padding lateral fixo** `--space-8` — não cabe em 320px; passa a reduzir em ≤768px
+
+### Changed — Convenção de nomenclatura
+`CONTRIBUTING.md` e `docs/guides/getting-started.md` mandavam usar `.component--modifier` para tudo,
+contradizendo o código: a camada base usa sufixo simples (`.btn-primary`, `.card-glass`) e só a
+camada `.dl-` usa BEM. A doc passa a descrever as duas camadas — nenhum consumidor foi renomeado.
+
+### Added — Demos
+- `demos/electia-copiloto.html` — página-modelo de copiloto conversacional, com cada nó marcado
+  como reuso do DS, composição local ou extensão proposta. Inclui a marca animada "Sinapse"
+  da Electia AI, construída sobre a linguagem de sinapses da própria marca
+
+### Changed — Reorganização estrutural (24/05)
 
 ### Changed — Top-level layout
 - `docs-viewer.html` (orfão na raiz) → `docs/viewer.html`
@@ -45,6 +89,16 @@ Marcos apontou desorganização: templates antigos misturados com novos, orphans
 - Apps consumidores externos não dependiam dos paths alterados (validado por grep cross-repo)
 
 ---
+
+## [2.1.2] - 2026-07-27
+
+### Fixed
+- **`.dl-table-wrap` — tabelas largas voltam a rolar em telas estreitas.** A regra usava `overflow: hidden`, que suprime barra de rolagem *e* gesto de swipe: o conteúdo excedente existia no DOM mas ficava inalcançável para o usuário. Medido no FinanceX (tela de Lançamentos, 7 colunas) a 390px de largura: `clientWidth` 324px contra `scrollWidth` 881px — **63% da tabela inacessível**, incluindo as colunas de status, valor e ações. Agora `overflow-x: auto` + `overflow-y: hidden` (o eixo Y segue clipado para preservar o `border-radius`).
+- **`version` no `package.json` ressincronizada.** A tag `v2.1.1` foi publicada carregando `version: 2.1.0` internamente.
+
+### Notas de compatibilidade
+- Mudança isolada em `.dl-table-wrap`. Consumidores: **FinanceX** (15 usos) e **Electia** (0 usos — importa `components/data-cards.css` mas não usa a classe).
+- ⚠️ A dívida de histórico registrada aqui — `main` fora da linha de release — **foi resolvida na v2.2.0**.
 
 ## [2.1.1] - 2026-04-26
 
