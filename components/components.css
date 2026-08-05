@@ -76,6 +76,9 @@ body {
   font-size: var(--text-sm); font-weight: var(--font-medium);
   color: var(--sidebar-text);
   cursor: pointer;
+  /* Navegação deve ser <a>, não <div>. Sem este reset o link chega sublinhado
+     e o item só fica correto com markup não semântico. */
+  text-decoration: none;
   transition: all 150ms var(--spring-snappy);
   border-radius: var(--radius-md);
 }
@@ -131,6 +134,11 @@ body {
 .main {
   margin-left: var(--sidebar-width);
   flex: 1;
+  /* `body` é flex e `.main` é flex item: sem min-width:0 ele nunca encolhe
+     abaixo do min-content do próprio conteúdo. Qualquer linha que não quebra
+     (tabs, toolbar, tabela) trava a largura acima da viewport e gera scroll
+     horizontal na página inteira. */
+  min-width: 0;
   min-height: 100vh;
 }
 
@@ -1858,6 +1866,10 @@ tr:hover td { background: var(--bg-surface-1); }
 }
 @media (max-width: 768px) {
   .stat-grid { grid-template-columns: 1fr; }
+  /* .header usa padding lateral --space-8 (32px de cada lado). Em 320px isso
+     consome 20% da largura e o bloco de identidade não cabe — alinhado ao
+     .content, que já reduz o padding neste breakpoint. */
+  .header { padding: 0 var(--space-4); }
   .kanban { flex-direction: column; }
   .kanban-column { max-width: 100%; min-width: 100%; }
   .btn { min-height: 48px; padding: var(--space-3) var(--space-5); }
