@@ -36,7 +36,17 @@ Examples: `--bg-surface-1`, `--text-muted`, `--theory-mbti-bg`, `--color-success
 
 1. Add styles to `components/components.css` under the appropriate section
 2. Use only token variables for colors, spacing, typography, shadows
-3. Follow BEM naming: `.component`, `.component-element`, `.component--modifier`
+3. Follow the naming convention **of the layer you are editing** — the two
+   layers differ, and mixing them is what creates drift:
+
+   | Layer | File | Element | Variant | Example |
+   |-------|------|---------|---------|---------|
+   | Base | `components.css`, `icons.css` | `.component-element` | `.component-variant` | `.btn-primary`, `.card-glass`, `.btn-icon-sm` |
+   | Data | `data-cards.css` | `.dl-component-element` | `.dl-component--variant` | `.dl-status--done`, `.dl-coin--sm` |
+
+   Base uses a single dash for both elements and variants; the `.dl-` layer uses
+   BEM modifiers. Do not "fix" one layer to match the other — renaming breaks
+   consumers, and the DS promises backward-compatible class names.
 4. Add `:focus-visible` styles for all interactive elements
 5. Run `npm run lint` before committing
 

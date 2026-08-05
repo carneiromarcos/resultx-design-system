@@ -207,8 +207,14 @@ tokens/tokens.css ──→ postcss-import (inlines tokens-base.css)
 
 ### Creating New Components
 
-Follow the existing naming pattern:
-- Use BEM-lite: `.component`, `.component-element`, `.component--modifier`
+Follow the naming pattern of the layer you are adding to:
+
+| Layer | File | Variant syntax | Example |
+|-------|------|----------------|---------|
+| Base | `components.css`, `icons.css` | single dash | `.btn-primary`, `.btn-icon-sm` |
+| Data | `data-cards.css` | BEM modifier | `.dl-status--done` |
+
+Other rules:
 - Always use `var()` for colors, spacing, radius — never hardcode
 - Support both themes — never reference dark/light colors directly
 

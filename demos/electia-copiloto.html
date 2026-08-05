@@ -76,38 +76,6 @@
      as Fases 3 e 4 do plano moveriam para dentro do DS.
      ══════════════════════════════════════════════════════════════════════════ */
 
-  /* B.1 — §10 · .btn-icon [NOVO] — único componente novo aprovado.
-     .btn impõe padding lateral --space-5 e min-height 44px; botão quadrado
-     precisa de contrato próprio. Alvo de toque de 44px preservado. */
-  .btn-icon {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 44px; height: 44px; flex-shrink: 0;
-    padding: 0; border: none; cursor: pointer;
-    border-radius: var(--radius-md);
-    background: transparent;
-    color: var(--text-secondary);
-    transition: all 150ms var(--spring-snappy);
-  }
-  .btn-icon:hover  { background: var(--bg-surface-2); color: var(--text-primary); }
-  .btn-icon:active { transform: scale(0.96); }
-  .btn-icon:focus-visible {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: var(--focus-ring-offset);
-  }
-  .btn-icon[disabled] { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
-  .btn-icon-sm     { width: 36px; height: 36px; border-radius: var(--radius-sm); }
-  .btn-icon-subtle { background: var(--bg-surface-1); border: 1px solid var(--border-subtle); }
-  .btn-icon-danger:hover { background: var(--color-error-bg); color: var(--color-error); }
-  /* 4ª variante, ALÉM das três previstas no relatório (ghost/subtle/danger):
-     ação primária compacta — o botão "enviar" do composer. Registrada aqui
-     de forma explícita para entrar na revisão, não silenciosamente. */
-  .btn-icon-primary {
-    background: var(--accent-primary);
-    color: var(--white, #fff);
-    border-radius: var(--radius-full);
-  }
-  .btn-icon-primary:hover { background: var(--accent-primary-hover); color: var(--white, #fff); }
-
   /* B.2 — §9.1 · .sidebar--collapsed [EXTENSÃO]
      O token --sidebar-collapsed: 64px existe no DS desde a v2 e nunca teve CSS.
      Trocar --sidebar-width no <body> reaproveita a margem que .main já calcula:
@@ -139,37 +107,6 @@
     line-height: 1.2;
   }
 
-  /* B.4 — §9.5 · .toast com ação e dispensa [EXTENSÃO]
-     Hoje .toast é feedback passivo: sem slot de ação, sem fechar. Isso impede
-     QUALQUER toast acionável ("Desfazer", "Ver detalhes") em todo o DS. */
-  .toast-action  { margin-left: var(--space-2); }
-  .toast-dismiss { margin-left: var(--space-1); }
-  .toast[hidden] { display: none; }
-
-  /* B.5 — §9.6 · .form-textarea [EXTENSÃO]
-     Lacuna de fundação: o DS tem .form-input e NENHUM textarea. Independe
-     desta tela — qualquer formulário com campo longo esbarra nisso hoje. */
-  .form-textarea {
-    width: 100%;
-    padding: var(--space-3) var(--space-4);
-    background: var(--bg-base);
-    border: 1px solid var(--border-default);
-    border-radius: var(--radius-md);
-    font-family: var(--font-body);
-    font-size: var(--text-base);
-    color: var(--text-primary);
-    line-height: 1.6;
-    resize: vertical;
-    min-height: 88px;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-  }
-  .form-textarea::placeholder { color: var(--text-muted); }
-  .form-textarea:focus-visible {
-    outline: none;
-    border-color: var(--accent-on-dark);
-    box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
-  }
-
   /* B.6 — §9.6 · contagem dentro de .tab [EXTENSÃO] */
   .tab-count {
     font-family: var(--font-mono);
@@ -180,18 +117,6 @@
     border-radius: var(--radius-sm);
   }
   .tab.active .tab-count { background: var(--accent-primary-muted); color: var(--accent-on-dark); }
-
-  /* B.7 — §9.6 · hint de atalho de teclado [EXTENSÃO]
-     Nenhum tratamento de tecla existe no DS; sem isso, "⌘K" vira texto solto. */
-  .kbd {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-    background: var(--bg-surface-2);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
-    padding: 1px 6px;
-  }
 
   /* ══════════════════════════════════════════════════════════════════════════
      C. COMPOSIÇÕES LOCAIS — ficam na aplicação, NÃO sobem para o DS (§8).
@@ -242,14 +167,11 @@
   }
   .composer-footer .spacer { flex: 1 1 auto; }
 
-  /* C.6 — Tooltip do rail.
-     LACUNA REAL: o .tooltip do DS só posiciona em topo/base. Um rail precisa de
-     tooltip à direita. Registrado como candidato a extensão — não proposto aqui. */
-  .rail-tip { position: relative; }
-  .rail-tip > .tooltip {
-    bottom: auto; top: 50%; left: calc(100% + 10px);
-    transform: translateY(-50%); white-space: nowrap;
-  }
+  /* C.6 — O posicionamento lateral do tooltip agora vem do DS (.tooltip-right).
+     Sobra só este ajuste: .tooltip-wrapper impõe display:inline-block, que
+     desmonta o flex do .sidebar-item. Candidato a item da Onda 3 — separar
+     posicionamento de display no .tooltip-wrapper. */
+  .sidebar-item.tooltip-wrapper { display: flex; }
 
   /* Utilitários locais */
   .stack-sm  { display: flex; flex-direction: column; gap: var(--space-1); }
@@ -327,52 +249,52 @@
   <nav aria-label="Navegação principal">
     <div class="sidebar-section-label">Operação</div>
 
-    <a class="sidebar-item active rail-tip" href="#" aria-current="page" aria-label="Copiloto">
+    <a class="sidebar-item active tooltip-wrapper" href="#" aria-current="page" aria-label="Copiloto">
       <i data-lucide="sparkles" class="icon" aria-hidden="true"></i>
       <span class="sidebar-item-label">Copiloto</span>
-      <span class="tooltip">Copiloto</span>
+      <span class="tooltip tooltip-right">Copiloto</span>
     </a>
 
-    <a class="sidebar-item rail-tip" href="#" aria-label="Dashboard">
+    <a class="sidebar-item tooltip-wrapper" href="#" aria-label="Dashboard">
       <i data-lucide="layout-dashboard" class="icon" aria-hidden="true"></i>
       <span class="sidebar-item-label">Dashboard</span>
-      <span class="tooltip">Dashboard</span>
+      <span class="tooltip tooltip-right">Dashboard</span>
     </a>
 
-    <a class="sidebar-item rail-tip" href="#" aria-label="Avaliações">
+    <a class="sidebar-item tooltip-wrapper" href="#" aria-label="Avaliações">
       <i data-lucide="clipboard-check" class="icon" aria-hidden="true"></i>
       <span class="sidebar-item-label">Avaliações</span>
       <span class="badge-count">12</span>
-      <span class="tooltip">Avaliações</span>
+      <span class="tooltip tooltip-right">Avaliações</span>
     </a>
 
-    <a class="sidebar-item rail-tip" href="#" aria-label="Candidatos">
+    <a class="sidebar-item tooltip-wrapper" href="#" aria-label="Candidatos">
       <i data-lucide="users" class="icon" aria-hidden="true"></i>
       <span class="sidebar-item-label">Candidatos</span>
       <span class="badge-count">128</span>
-      <span class="tooltip">Candidatos</span>
+      <span class="tooltip tooltip-right">Candidatos</span>
     </a>
 
     <div class="sidebar-section-label">Análise</div>
 
-    <a class="sidebar-item rail-tip" href="#" aria-label="Relatórios">
+    <a class="sidebar-item tooltip-wrapper" href="#" aria-label="Relatórios">
       <i data-lucide="file-text" class="icon" aria-hidden="true"></i>
       <span class="sidebar-item-label">Relatórios</span>
-      <span class="tooltip">Relatórios</span>
+      <span class="tooltip tooltip-right">Relatórios</span>
     </a>
 
-    <a class="sidebar-item rail-tip" href="#" aria-label="Comparativos">
+    <a class="sidebar-item tooltip-wrapper" href="#" aria-label="Comparativos">
       <i data-lucide="git-compare" class="icon" aria-hidden="true"></i>
       <span class="sidebar-item-label">Comparativos</span>
-      <span class="tooltip">Comparativos</span>
+      <span class="tooltip tooltip-right">Comparativos</span>
     </a>
 
     <hr class="sidebar-divider">
 
-    <a class="sidebar-item rail-tip" href="#" aria-label="Configurações">
+    <a class="sidebar-item tooltip-wrapper" href="#" aria-label="Configurações">
       <i data-lucide="settings" class="icon" aria-hidden="true"></i>
       <span class="sidebar-item-label">Configurações</span>
-      <span class="tooltip">Configurações</span>
+      <span class="tooltip tooltip-right">Configurações</span>
     </a>
   </nav>
 
