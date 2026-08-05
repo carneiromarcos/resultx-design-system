@@ -1,4 +1,4 @@
-// Renderiza as 8 demos do hub (pages/) como PNGs para galeria visual
+// Renderiza as 9 demos do hub (pages/) como PNGs para galeria visual
 // em brands/emprega-mais/mockups/dashboards/.
 // Uso: node scripts/render-dashboards.mjs (executar a partir de design-system/)
 
@@ -20,6 +20,7 @@ const pages = [
   'triagem',
   '404',
   'positioning-wheel-demo',
+  'electia-copiloto',
 ];
 
 const browser = await chromium.launch();

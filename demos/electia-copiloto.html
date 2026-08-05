@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<!--
+  data-theme="dark" é OBRIGATÓRIO: o `:root` do DS não carrega cor nenhuma —
+  só escala tipográfica. Cor vive em [data-theme="dark"] / ="light". Sem o
+  atributo, a página renderiza sem paleta. Vale para todo consumidor do DS.
+-->
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copiloto — Electia</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       PÁGINA-MODELO da análise de extração (print do uniq → ResultX DS).
+       Tela escolhida: Copiloto. O kanban já existe em `demos/triagem.html`;
+       esta tela é a que mais exercita as lacunas reais do DS.
+
+       ORDEM DE CARGA (intencional):
+       1. brand Electia — expõe --purple-*, --gradient-brand, --glow-brand
+       2. tokens do DS  — vence nas colisões de escala (--space-*, --radius-*, --text-*)
+       3. componentes   — components + data-cards + icons
+       4. ponte de marca — <style>, seção A
+       Invertendo 1 e 2, o brand sobrescreveria a escala do DS (§15 do relatório).
+       ══════════════════════════════════════════════════════════════════════ -->
+  <link rel="stylesheet" href="../brands/electia/tokens/tokens.css">
+  <link rel="stylesheet" href="../dist/tokens.min.css">
+  <link rel="stylesheet" href="../dist/components.min.css">
+  <link rel="stylesheet" href="../components/data-cards.css">
+  <link rel="stylesheet" href="../dist/icons.min.css">
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+  /* ══════════════════════════════════════════════════════════════════════════
+     A. PONTE DE MARCA — NÃO EXISTE NO DS
+     Candidato a `brands/electia/tokens/ds-bridge.css` (decisão #2, §16).
+     O brand da Electia define --purple-*, mas não remapeia os tokens semânticos
+     do DS. Sem esta ponte a página sai teal (ResultX), não roxa (Electia).
+     Único ponto do arquivo com valores literais — todos vindos do Brand Book
+     da Electia. Nenhum foi amostrado de screenshot.
+     ══════════════════════════════════════════════════════════════════════════ */
+  :root {
+    --accent-primary:       var(--purple-700, #6f32b1);   /* fill de ação */
+    --accent-primary-hover: var(--purple-600, #8842d6);
+    --accent-primary-muted: rgba(111, 50, 177, 0.18);
+    --accent-secondary:     var(--royal-blue-500, #4c7dff);
+
+    /* O Brand Book v2.6 exige #c084fc para roxo em TEXTO sobre fundo escuro
+       (7.1:1 vs #0B0E14) e proíbe usá-lo como fill de botão.
+       Por isso são dois tokens distintos, não um só. */
+    --accent-on-dark:       var(--purple-on-dark, #c084fc);
+
+    --sidebar-active-bg:    rgba(111, 50, 177, 0.20);
+    --sidebar-text-active:  var(--accent-on-dark);
+    --focus-ring-color:     rgba(192, 132, 252, 0.55);
+    --shadow-glow-teal:     var(--glow-brand, 0 0 20px rgba(111, 50, 177, 0.25));
+
+    /* O DS assume accent CLARO (teal #2DD4BF): no theme dark, --text-inverse é
+       #0B0E14, ou seja, texto ESCURO sobre o accent. O accent da Electia é um
+       roxo ESCURO (#6f32b1) — manter o padrão daria ~2,9:1 no rótulo do botão
+       primário. A ponte de marca precisa inverter isso. */
+    --text-inverse: #FFF;
+  }
+  .tab.active,
+  .sidebar-item.active,
+  .view-toggle-btn.active { color: var(--accent-on-dark); }
+  .tab.active { border-bottom-color: var(--accent-on-dark); }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     B. EXTENSÕES PROPOSTAS AO DS — ainda NÃO fazem parte do Design System.
+     Cada bloco cita a seção do relatório que o justifica. É este o código que
+     as Fases 3 e 4 do plano moveriam para dentro do DS.
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  /* B.1 — §10 · .btn-icon [NOVO] — único componente novo aprovado.
+     .btn impõe padding lateral --space-5 e min-height 44px; botão quadrado
+     precisa de contrato próprio. Alvo de toque de 44px preservado. */
+  .btn-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; flex-shrink: 0;
+    padding: 0; border: none; cursor: pointer;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--text-secondary);
+    transition: all 150ms var(--spring-snappy);
+  }
+  .btn-icon:hover  { background: var(--bg-surface-2); color: var(--text-primary); }
+  .btn-icon:active { transform: scale(0.96); }
+  .btn-icon:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+  .btn-icon[disabled] { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+  .btn-icon-sm     { width: 36px; height: 36px; border-radius: var(--radius-sm); }
+  .btn-icon-subtle { background: var(--bg-surface-1); border: 1px solid var(--border-subtle); }
+  .btn-icon-danger:hover { background: var(--color-error-bg); color: var(--color-error); }
+  /* 4ª variante, ALÉM das três previstas no relatório (ghost/subtle/danger):
+     ação primária compacta — o botão "enviar" do composer. Registrada aqui
+     de forma explícita para entrar na revisão, não silenciosamente. */
+  .btn-icon-primary {
+    background: var(--accent-primary);
+    color: var(--white, #fff);
+    border-radius: var(--radius-full);
+  }
+  .btn-icon-primary:hover { background: var(--accent-primary-hover); color: var(--white, #fff); }
+
+  /* B.2 — §9.1 · .sidebar--collapsed [EXTENSÃO]
+     O token --sidebar-collapsed: 64px existe no DS desde a v2 e nunca teve CSS.
+     Trocar --sidebar-width no <body> reaproveita a margem que .main já calcula:
+     nenhum override de layout é necessário. */
+  body[data-nav="rail"] { --sidebar-width: var(--sidebar-collapsed); }
+  .sidebar--collapsed .sidebar-brand { justify-content: center; padding: 0; }
+  .sidebar--collapsed .sidebar-brand-text,
+  .sidebar--collapsed .sidebar-section-label,
+  .sidebar--collapsed .sidebar-item-label,
+  .sidebar--collapsed .badge-count,
+  .sidebar--collapsed .rail-hide { display: none; }
+  .sidebar--collapsed .sidebar-item {
+    justify-content: center; margin: 2px var(--space-2); padding: var(--space-3) 0;
+  }
+  .sidebar--collapsed .sidebar-user    { justify-content: center; }
+  .sidebar--collapsed .sidebar-divider { margin: var(--space-3); }
+
+  /* B.3 — §9.4 · .header--with-center [EXTENSÃO]
+     .header é space-between de 2 blocos; um terceiro filho desbalanceia. */
+  .header--with-center { display: grid; grid-template-columns: 1fr auto 1fr; gap: var(--space-4); }
+  .header--with-center > :last-child { justify-self: end; }
+  .header--with-center .header-title { font-size: var(--text-xl); line-height: 1.2; }
+  .header-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    line-height: 1.2;
+  }
+
+  /* B.4 — §9.5 · .toast com ação e dispensa [EXTENSÃO]
+     Hoje .toast é feedback passivo: sem slot de ação, sem fechar. Isso impede
+     QUALQUER toast acionável ("Desfazer", "Ver detalhes") em todo o DS. */
+  .toast-action  { margin-left: var(--space-2); }
+  .toast-dismiss { margin-left: var(--space-1); }
+  .toast[hidden] { display: none; }
+
+  /* B.5 — §9.6 · .form-textarea [EXTENSÃO]
+     Lacuna de fundação: o DS tem .form-input e NENHUM textarea. Independe
+     desta tela — qualquer formulário com campo longo esbarra nisso hoje. */
+  .form-textarea {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background: var(--bg-base);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    line-height: 1.6;
+    resize: vertical;
+    min-height: 88px;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  .form-textarea::placeholder { color: var(--text-muted); }
+  .form-textarea:focus-visible {
+    outline: none;
+    border-color: var(--accent-on-dark);
+    box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+  }
+
+  /* B.6 — §9.6 · contagem dentro de .tab [EXTENSÃO] */
+  .tab-count {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    background: var(--bg-surface-2);
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+  }
+  .tab.active .tab-count { background: var(--accent-primary-muted); color: var(--accent-on-dark); }
+
+  /* B.7 — §9.6 · hint de atalho de teclado [EXTENSÃO]
+     Nenhum tratamento de tecla existe no DS; sem isso, "⌘K" vira texto solto. */
+  .kbd {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    background: var(--bg-surface-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 1px 6px;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     C. COMPOSIÇÕES LOCAIS — ficam na aplicação, NÃO sobem para o DS (§8).
+     Montadas só com peças existentes. Promover apenas se um segundo produto
+     do portfólio repetir a mesma anatomia.
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  /* C.1 — ConsumptionCard = .card + .progress-* + .dl-delta */
+  .usage-card { margin: var(--space-4) var(--space-4) 0; padding: var(--space-4); }
+  .usage-card .progress-track { margin-top: var(--space-3); }
+
+  /* C.2 — Barra de sugestão da IA ancorada no header */
+  .assist-bar { margin-bottom: 0; background: var(--bg-surface-1); border: 1px solid var(--border-accent); }
+
+  /* C.3 — Área da conversa: estado vazio centrado verticalmente */
+  .chat-shell {
+    display: flex; flex-direction: column;
+    min-height: calc(100vh - var(--header-height));
+    padding: var(--space-8);
+    max-width: 900px; margin: 0 auto;
+  }
+  .chat-body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+  /* C.4 — Chips de sugestão: são BOTÕES (.btn-secondary .btn-sm), não filtros.
+     .filter-pill foi descartado de propósito — é filtro removível, outra semântica. */
+  .suggestion-row {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: var(--space-3); margin-top: var(--space-6);
+  }
+
+  /* C.5 — ChatComposer: composição local (§11). O que sobe ao DS é só o textarea. */
+  .composer {
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-xl);
+    background: var(--bg-surface-1);
+    padding: var(--space-4);
+    margin-top: var(--space-8);
+  }
+  .composer-hint {
+    display: flex; align-items: center; justify-content: center;
+    gap: var(--space-2); flex-wrap: wrap;
+    margin-top: var(--space-3);
+    font-size: var(--text-xs); color: var(--text-muted);
+  }
+  .composer-footer {
+    display: flex; align-items: center; gap: var(--space-3);
+    margin-top: var(--space-4); flex-wrap: wrap;
+  }
+  .composer-footer .spacer { flex: 1 1 auto; }
+
+  /* C.6 — Tooltip do rail.
+     LACUNA REAL: o .tooltip do DS só posiciona em topo/base. Um rail precisa de
+     tooltip à direita. Registrado como candidato a extensão — não proposto aqui. */
+  .rail-tip { position: relative; }
+  .rail-tip > .tooltip {
+    bottom: auto; top: 50%; left: calc(100% + 10px);
+    transform: translateY(-50%); white-space: nowrap;
+  }
+
+  /* Utilitários locais */
+  .stack-sm  { display: flex; flex-direction: column; gap: var(--space-1); }
+  .row-center{ display: flex; align-items: center; gap: var(--space-3); }
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     D. RESPONSIVIDADE (§14) — nenhuma dimensão copiada de screenshot.
+     Breakpoints do DS: --bp-lg 1024 · --bp-md 768.
+     ══════════════════════════════════════════════════════════════════════════ */
+  @media (max-width: 1024px) {
+    /* O DS esconde .sidebar aqui (display:none) sem substituto — risco #10 do
+       relatório. Enquanto o drawer não existir, o rail é o fallback. */
+    .sidebar { display: flex; }
+    body { --sidebar-width: var(--sidebar-collapsed); }
+    /* O DS zera a margem porque ESCONDE a sidebar neste breakpoint.
+       Mantendo o rail, a margem tem de voltar — senão o rail cobre o conteúdo. */
+    .main { margin-left: var(--sidebar-width); }
+    .sidebar-brand-text, .sidebar-section-label,
+    .sidebar-item-label, .sidebar .badge-count, .rail-hide { display: none; }
+    .sidebar-item { justify-content: center; }
+    .header--with-center { grid-template-columns: auto 1fr auto; }
+    .header--with-center .assist-bar { display: none; }
+    .tabs { overflow-x: auto; flex-wrap: nowrap; }
+    .tab  { flex-shrink: 0; }
+  }
+  @media (max-width: 768px) {
+    .chat-shell { padding: var(--space-5); }
+    .composer-footer .view-toggle { order: 3; }
+    /* O padding reduzido do .header agora vem do DS (Onda 1).
+       Aqui fica só o que é específico desta página. */
+    .header-eyebrow { display: none; }
+    .header--with-center > .row-center { min-width: 0; }
+    .header--with-center .header-title {
+      font-size: var(--text-base);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn-icon, .btn-icon:active, .sidebar-item { transition: none; transform: none; }
+  }
+  </style>
+</head>
+<body data-nav="rail">
+
+<a href="#main-content" class="skip-link">Pular para o conteúdo</a>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SIDEBAR — [DS] .sidebar + [EXT §9.1] .sidebar--collapsed
+     Rail e painel são o MESMO componente em dois estados (botão no header).
+     ══════════════════════════════════════════════════════════════════════════ -->
+<aside class="sidebar sidebar--collapsed" id="sidebar">
+
+  <!-- [COMP §8] WorkspaceSwitcher = .sidebar-brand + .dropdown -->
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">E</div>
+    <div class="sidebar-brand-text stack-sm rail-hide">
+      <span>Electia</span>
+      <span class="sidebar-user-role">Emprega+ · Proprietário</span>
+    </div>
+  </div>
+
+  <div class="rail-hide" style="padding: 0 var(--space-4) var(--space-2);">
+    <label class="visually-hidden" for="nav-search">Buscar</label>
+    <div class="search-container row-center" style="gap: var(--space-2);">
+      <input class="form-input" id="nav-search" type="search" placeholder="Buscar…">
+      <!-- [EXT §9.6] hint de atalho -->
+      <kbd class="kbd">⌘K</kbd>
+    </div>
+  </div>
+
+  <nav aria-label="Navegação principal">
+    <div class="sidebar-section-label">Operação</div>
+
+    <a class="sidebar-item active rail-tip" href="#" aria-current="page" aria-label="Copiloto">
+      <i data-lucide="sparkles" class="icon" aria-hidden="true"></i>
+      <span class="sidebar-item-label">Copiloto</span>
+      <span class="tooltip">Copiloto</span>
+    </a>
+
+    <a class="sidebar-item rail-tip" href="#" aria-label="Dashboard">
+      <i data-lucide="layout-dashboard" class="icon" aria-hidden="true"></i>
+      <span class="sidebar-item-label">Dashboard</span>
+      <span class="tooltip">Dashboard</span>
+    </a>
+
+    <a class="sidebar-item rail-tip" href="#" aria-label="Avaliações">
+      <i data-lucide="clipboard-check" class="icon" aria-hidden="true"></i>
+      <span class="sidebar-item-label">Avaliações</span>
+      <span class="badge-count">12</span>
+      <span class="tooltip">Avaliações</span>
+    </a>
+
+    <a class="sidebar-item rail-tip" href="#" aria-label="Candidatos">
+      <i data-lucide="users" class="icon" aria-hidden="true"></i>
+      <span class="sidebar-item-label">Candidatos</span>
+      <span class="badge-count">128</span>
+      <span class="tooltip">Candidatos</span>
+    </a>
+
+    <div class="sidebar-section-label">Análise</div>
+
+    <a class="sidebar-item rail-tip" href="#" aria-label="Relatórios">
+      <i data-lucide="file-text" class="icon" aria-hidden="true"></i>
+      <span class="sidebar-item-label">Relatórios</span>
+      <span class="tooltip">Relatórios</span>
+    </a>
+
+    <a class="sidebar-item rail-tip" href="#" aria-label="Comparativos">
+      <i data-lucide="git-compare" class="icon" aria-hidden="true"></i>
+      <span class="sidebar-item-label">Comparativos</span>
+      <span class="tooltip">Comparativos</span>
+    </a>
+
+    <hr class="sidebar-divider">
+
+    <a class="sidebar-item rail-tip" href="#" aria-label="Configurações">
+      <i data-lucide="settings" class="icon" aria-hidden="true"></i>
+      <span class="sidebar-item-label">Configurações</span>
+      <span class="tooltip">Configurações</span>
+    </a>
+  </nav>
+
+  <!-- [COMP §8] ConsumptionCard = .card + .progress-* + .dl-delta -->
+  <div class="card usage-card rail-hide">
+    <div class="section-label" style="margin-bottom: var(--space-2);">Consumo</div>
+    <div class="row-center" style="justify-content: space-between;">
+      <span style="font-size: var(--text-sm); color: var(--text-secondary);">Avaliações do plano</span>
+      <span class="dl-delta dl-delta--positive">38%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" style="width: 38%; background: var(--gradient-brand);"></div>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar">MC</div>
+      <div class="rail-hide">
+        <div class="sidebar-user-name">Marcos Carneiro</div>
+        <div class="sidebar-user-role">Business · Customer</div>
+      </div>
+      <!-- [NOVO §10] .btn-icon -->
+      <button class="btn-icon btn-icon-sm rail-hide" type="button" aria-label="Sair da conta">
+        <i data-lucide="log-out" class="icon icon-sm" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</aside>
+
+<main class="main" id="main-content">
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       HEADER — [DS] .header + [EXT §9.4] região central
+       ════════════════════════════════════════════════════════════════════════ -->
+  <header class="header header--with-center">
+
+    <div class="row-center">
+      <button class="btn-icon" type="button" id="nav-toggle"
+              aria-label="Expandir navegação" aria-expanded="false" aria-controls="sidebar">
+        <i data-lucide="panel-left" class="icon" aria-hidden="true"></i>
+      </button>
+      <div class="icon-badge icon-badge-sm icon-badge-purple" aria-hidden="true">
+        <i data-lucide="sparkles" class="icon"></i>
+      </div>
+      <div>
+        <div class="header-eyebrow">Copiloto</div>
+        <div class="header-title">Electia AI</div>
+      </div>
+    </div>
+
+    <!-- [EXT §9.5] .toast com ação e dispensa — sugestão contextual da IA -->
+    <div class="toast toast-info assist-bar" id="assist" role="status">
+      <div class="avatar avatar-xs" aria-hidden="true"
+           style="background: var(--accent-primary-muted); color: var(--accent-on-dark);">
+        <i data-lucide="sparkles" class="icon icon-sm"></i>
+      </div>
+      <span>3 relatórios prontos para revisão.</span>
+      <button class="btn btn-primary btn-sm toast-action" type="button">Revisar</button>
+      <button class="btn-icon btn-icon-sm toast-dismiss" type="button"
+              aria-label="Dispensar sugestão" data-dismiss="assist">
+        <i data-lucide="x" class="icon icon-sm" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="header-actions">
+      <button class="btn-icon" type="button" aria-label="Conversas">
+        <i data-lucide="message-square" class="icon" aria-hidden="true"></i>
+      </button>
+      <button class="btn-icon" type="button" aria-label="Notificações">
+        <i data-lucide="bell" class="icon" aria-hidden="true"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="chat-shell">
+
+    <!-- [DS] .tabs / .tab · [EXT §9.6] .tab-count -->
+    <div class="tabs" role="tablist" aria-label="Seções do copiloto">
+      <button class="tab" role="tab" aria-selected="false">
+        <i data-lucide="panel-left-open" class="icon icon-sm" aria-hidden="true"></i>
+        Conversas <span class="tab-count">7</span>
+      </button>
+      <button class="tab active" role="tab" aria-selected="true">
+        <i data-lucide="message-circle" class="icon icon-sm" aria-hidden="true"></i>
+        Conversa
+      </button>
+      <button class="tab" role="tab" aria-selected="false">
+        <i data-lucide="list-checks" class="icon icon-sm" aria-hidden="true"></i>
+        Tarefas <span class="tab-count">3</span>
+      </button>
+      <button class="tab" role="tab" aria-selected="false">
+        <i data-lucide="shield-check" class="icon icon-sm" aria-hidden="true"></i>
+        Aprovar
+      </button>
+      <button class="tab" role="tab" aria-selected="false">
+        <i data-lucide="brain" class="icon icon-sm" aria-hidden="true"></i>
+        Memória
+      </button>
+      <button class="tab" role="tab" aria-selected="false">
+        <i data-lucide="settings" class="icon icon-sm" aria-hidden="true"></i>
+        Configurações
+      </button>
+    </div>
+
+    <div class="chat-body">
+
+      <!-- [DS] .empty-state — reuso puro, sem alteração.
+           O orb 3D do print foi DESCARTADO (§11): é ilustração de marca.
+           Aqui o lugar dele é ocupado por .dl-coin, que já existe no DS. -->
+      <div class="empty-state">
+        <div class="dl-coin dl-coin--purple dl-coin--lg empty-state-icon" aria-hidden="true"
+             style="box-shadow: var(--glow-brand);">
+          <i data-lucide="sparkles" class="icon icon-xl"></i>
+        </div>
+        <h1 class="empty-state-title">Olá, sou a <span style="color: var(--accent-on-dark);">Electia AI</span></h1>
+        <p class="empty-state-text">
+          Descreva o que quer analisar ou escolha um atalho abaixo.
+          Eu opero avaliações, relatórios e comparativos em linguagem natural.
+        </p>
+      </div>
+
+      <!-- [COMP §8] Chips de sugestão = .btn-secondary .btn-sm -->
+      <div class="suggestion-row">
+        <button class="btn btn-secondary btn-sm" type="button">
+          <i data-lucide="clipboard-plus" class="icon icon-sm" aria-hidden="true"></i>
+          Criar uma avaliação
+        </button>
+        <button class="btn btn-secondary btn-sm" type="button">
+          <i data-lucide="list" class="icon icon-sm" aria-hidden="true"></i>
+          Listar candidatos pendentes
+        </button>
+        <button class="btn btn-secondary btn-sm" type="button">
+          <i data-lucide="git-compare" class="icon icon-sm" aria-hidden="true"></i>
+          Comparar dois perfis
+        </button>
+        <button class="btn btn-secondary btn-sm" type="button">
+          <i data-lucide="file-text" class="icon icon-sm" aria-hidden="true"></i>
+          Resumir um relatório
+        </button>
+      </div>
+    </div>
+
+    <!-- [COMP §8] ChatComposer — composição local.
+         O que sobe ao DS é apenas [EXT §9.6] .form-textarea. -->
+    <form class="composer" onsubmit="return false;">
+      <label class="visually-hidden" for="prompt">Pergunte ao copiloto</label>
+      <textarea class="form-textarea" id="prompt" rows="2"
+                placeholder="Pergunte ou peça… use @candidato, @processo, @relatório"></textarea>
+
+      <p class="composer-hint">
+        <kbd class="kbd">Enter</kbd> envia
+        <span aria-hidden="true">·</span>
+        <kbd class="kbd">Shift</kbd>+<kbd class="kbd">Enter</kbd> quebra linha
+        <span aria-hidden="true">·</span>
+        <kbd class="kbd">@</kbd> busca no workspace
+      </p>
+
+      <div class="composer-footer">
+        <!-- [DS] .dropdown — seletor de agente -->
+        <div class="dropdown">
+          <button class="dropdown-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+            <i data-lucide="sparkles" class="icon icon-sm" aria-hidden="true"></i>
+            Electia AI
+            <i data-lucide="chevron-down" class="icon icon-sm" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="spacer"></div>
+
+        <!-- [NOVO §10] .btn-icon -->
+        <button class="btn-icon" type="button" aria-label="Desativar áudio de resposta" aria-pressed="false">
+          <i data-lucide="volume-x" class="icon" aria-hidden="true"></i>
+        </button>
+
+        <!-- [DS] .view-toggle — controle segmentado genérico.
+             Ver inconsistência #7 do relatório: o nome fala de "visualização",
+             mas o componente já é o segmentado do DS (aqui: modo de entrada). -->
+        <div class="view-toggle" role="group" aria-label="Modo de entrada">
+          <button class="view-toggle-btn active" type="button" aria-pressed="true">Texto</button>
+          <button class="view-toggle-btn" type="button" aria-pressed="false">
+            <i data-lucide="mic" class="icon icon-sm" aria-hidden="true"></i> Voz
+          </button>
+        </div>
+
+        <button class="btn-icon btn-icon-primary" type="submit" aria-label="Enviar mensagem">
+          <i data-lucide="send" class="icon" aria-hidden="true"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<script>
+  lucide.createIcons();
+
+  // Rail ⇄ painel: o MESMO componente em dois estados (§9.1).
+  // Trocar --sidebar-width reaproveita a margem que .main já calcula.
+  var toggle  = document.getElementById('nav-toggle');
+  var sidebar = document.getElementById('sidebar');
+  toggle.addEventListener('click', function () {
+    var collapsed = sidebar.classList.toggle('sidebar--collapsed');
+    document.body.dataset.nav = collapsed ? 'rail' : 'panel';
+    toggle.setAttribute('aria-expanded', String(!collapsed));
+    toggle.setAttribute('aria-label', collapsed ? 'Expandir navegação' : 'Recolher navegação');
+  });
+
+  // Dispensa da sugestão da IA (§9.5)
+  document.querySelectorAll('[data-dismiss]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.getElementById(btn.dataset.dismiss).hidden = true;
+    });
+  });
+</script>
+</body>
+</html>
