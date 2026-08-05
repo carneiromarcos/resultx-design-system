@@ -1,0 +1,831 @@
+author: ""
+brandUpdateTime: ""
+campaignType: classic
+fields: {}
+fieldsHistory: []
+firstLoadSocialIcons: false
+fonts: []
+id: 6addb043-c026-4e9f-a50e-4424f440e1a9
+name: "Electia — Template Base"
+subject: "{{params.SUBJECT}}"
+ui:
+  showDeleteOption: false
+user-hash: 951bf59139aaaa86f9fd2981184b3a46
+version: 3.0.1
+body:
+  id: 8d9ea9c3-e63d-4dbd-91b5-de6e2903c09f
+  type: body
+  layout:
+    320px:
+      width: 320px
+    default:
+      background-color: '#08080A'
+      wrapper-background-color: '#08080A'
+      wrapper-width: 600px
+  content:
+    -
+      content-type: wrapper
+      id: 0c268871-5dba-4bd1-9aad-99cb6d0b4dcb
+      title: Wrapper
+      type: rows
+      layout:
+        320px:
+          width: 320px
+        default:
+          align: center
+          valign: top
+      content:
+        # ═══════════════════════════════════════════
+        # ROW 1 — Ver no navegador
+        # ═══════════════════════════════════════════
+        -
+          align: top
+          dist: '12'
+          gutter: 0px
+          id: 9478ca5c-fdaa-40c1-8132-23501709bdb7
+          moduleName: viewInBrowser
+          thumbnail: /assets/img/editor/grid_12.svg
+          title: section
+          type: grid-row
+          layout:
+            320px:
+              display: rows
+              width: 100%
+            default:
+              align: center
+              background-color: '#08080A'
+              display: none
+              full-width: true
+              padding-bottom: 5px
+              padding-top: 5px
+              valign: top
+              width: 100%
+          content:
+            -
+              id: 59eb4cc6-e9e3-4874-b761-02356aa067a0
+              isEmpty: false
+              label: 'Drop content here'
+              title: 'column 1'
+              type: grid-column
+              layout:
+                320px: []
+                default:
+                  padding-left: 0px
+                  padding-right: 0px
+                  valign: top
+              content:
+                -
+                  id: 9c24e4e3-0f92-4fea-8744-e7b1475b365c
+                  title: Webversion
+                  type: text
+                  layout:
+                    320px:
+                      padding-left: 10px
+                      padding-right: 10px
+                      width: 100%
+                    default:
+                      align: center
+                      line-height: 16px
+                      padding-left: 30px
+                      padding-right: 30px
+                      text-align: center
+                      width: 100%
+                  content: "<p><a href=\"{{ mirror }}\">\n                      <span style=\"font-family: arial,helvetica,sans-serif;color:#8A8A96;font-size: 12px; text-decoration: underline;\">\n                      Ver no navegador</span></a></p>"
+
+        # ═══════════════════════════════════════════
+        # ROW 2 — Header (Logo + Teal accent line)
+        # ═══════════════════════════════════════════
+        -
+          align: top
+          dist: '12'
+          gutter: 30px
+          id: aa97eaef-e9c3-47f1-868f-98f427604ae5
+          moduleName: header
+          thumbnail: /assets/img/editor/element-header.svg
+          title: Header
+          type: grid-row
+          layout:
+            320px:
+              display: rows
+              padding-left: 15px
+              padding-right: 15px
+              width: 100%
+            default:
+              align: center
+              background-color: '#08080A'
+              full-width: false
+              padding-bottom: 10px
+              padding-top: 40px
+              valign: top
+              width: 100%
+          content:
+            -
+              id: e98abe98-73cc-41c5-8cc2-357e087cfd73
+              isEmpty: false
+              label: 'Drop content here'
+              title: grid-column
+              type: grid-column
+              layout:
+                320px: []
+                default:
+                  padding-left: 0px
+                  padding-right: 0px
+                  valign: top
+              content:
+                # Logo Electia horizontal
+                -
+                  id: ead5ba05-4608-4b56-9242-2aaed91eb569
+                  label: Replace
+                  moduleName: brand-logo
+                  thumbnail: /assets/img/editor/element-logo.png
+                  title: Logo
+                  type: image
+                  layout:
+                    320px:
+                      max-width: 320px
+                      width: 100%
+                    default:
+                      align: center
+                      canvas-height: 40px
+                      dynamic: false
+                      embed: false
+                      image-maxWidth: 400px
+                      imgSize: '3042'
+                      opacity: 1
+                      valign: top
+                      width: 220px
+                  content:
+                    src: 'https://raw.githubusercontent.com/empregamais/emprega-mais-electia/main/design-system/assets/logo/electia-email-header-440x120.png'
+                    href: 'https://profissional.empregamais.me'
+
+        # ═══════════════════════════════════════════
+        # ROW 3 — Teal accent line
+        # ═══════════════════════════════════════════
+        -
+          align: top
+          dist: '12'
+          gutter: 0px
+          id: teal-accent-line-row
+          moduleName: grid-row12
+          thumbnail: /assets/img/editor/grid_12.svg
+          title: 'Teal Line'
+          type: grid-row
+          layout:
+            320px:
+              display: rows
+              width: 100%
+            default:
+              align: center
+              background-color: '#08080A'
+              padding-bottom: 20px
+              padding-top: 10px
+              valign: top
+              width: 100%
+          content:
+            -
+              id: teal-accent-line-col
+              isEmpty: false
+              label: 'Drop content here'
+              title: 'column 1'
+              type: grid-column
+              layout:
+                320px: []
+                default:
+                  padding-left: 0px
+                  padding-right: 0px
+                  valign: top
+              content:
+                -
+                  id: teal-accent-line-text
+                  title: 'Teal Line'
+                  type: text
+                  layout:
+                    320px:
+                      width: 100%
+                    default:
+                      align: center
+                      text-align: center
+                      width: 100%
+                  content: '<p style="text-align:center;"><span style="display:inline-block;width:60px;height:2px;background-color:#2DD4BF;border-radius:1px;line-height:2px;font-size:2px;">&nbsp;</span></p>'
+
+        # ═══════════════════════════════════════════
+        # ROW 4 — Greeting
+        # ═══════════════════════════════════════════
+        -
+          align: top
+          dist: '12'
+          gutter: 20px
+          id: greeting-row
+          moduleName: grid-row12
+          thumbnail: /assets/img/editor/grid_12.svg
+          title: 'Greeting'
+          type: grid-row
+          layout:
+            320px:
+              display: rows
+              width: 100%
+            default:
+              align: center
+              background-color: '#08080A'
+              padding-bottom: 0px
+              padding-left: 0px
+              padding-right: 0px
+              padding-top: 10px
+              valign: top
+              width: 100%
+          content:
+            -
+              id: greeting-col
+              isEmpty: false
+              label: 'Drop content here'
+              title: 'column 1'
+              type: grid-column
+              layout:
+                320px: []
+                default:
+                  padding-left: 40px
+                  padding-right: 40px
+                  valign: top
+              content:
+                -
+                  id: greeting-text
+                  thumbnail: /assets/img/editor/element_text.svg
+                  title: Text
+                  type: text
+                  layout:
+                    320px:
+                      width: 100%
+                    default:
+                      align: left
+                      padding-top: 10px
+                      padding-bottom: 10px
+                      text-align: left
+                      text-valign: top
+                      valign: top
+                      width: 100%
+                  content: '<p><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px; line-height: 1.6;">{{contact.PRIMEIRO_NOME}}, tudo bem?</span></p>'
+
+        # ═══════════════════════════════════════════
+        # ROW 5 — Body text
+        # ═══════════════════════════════════════════
+        -
+          align: top
+          dist: '12'
+          gutter: 20px
+          id: body-text-row
+          moduleName: grid-row12
+          thumbnail: /assets/img/editor/grid_12.svg
+          title: 'Body Text'
+          type: grid-row
+          layout:
+            320px:
+              display: rows
+              width: 100%
+            default:
+              align: center
+              background-color: '#08080A'
+              padding-bottom: 0px
+              padding-left: 0px
+              padding-right: 0px
+              padding-top: 0px
+              valign: top
+              width: 100%
+          content:
+            -
+              id: body-text-col
+              isEmpty: false
+              label: 'Drop content here'
+              title: 'column 1'
+              type: grid-column
+              layout:
+                320px: []
+                default:
+                  padding-left: 40px
+                  padding-right: 40px
+                  valign: top
+              content:
+                -
+                  id: body-text-content
+                  thumbnail: /assets/img/editor/element_text.svg
+                  title: Text
+                  type: text
+                  layout:
+                    320px:
+                      width: 100%
+                    default:
+                      align: left
+                      padding-bottom: 10px
+                      padding-top: 5px
+                      text-align: left
+                      text-valign: top
+                      valign: top
+                      width: 100%
+                  content: '<p><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px; line-height: 1.6;">Escreva aqui o corpo do email. Use paragrafos curtos. Tom de carta pessoal.</span></p><p>&nbsp;</p><p><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px; line-height: 1.6;">Segundo paragrafo. <strong style="color: #FFFFFF;">Destaque palavras-chave em negrito.</strong></span></p>'
+
+        # ═══════════════════════════════════════════
+        # ROW 6 — Highlight block (teal left border)
+        # ═══════════════════════════════════════════
+        -
+          align: top
+          dist: '12'
+          gutter: 20px
+          id: highlight-row
+          moduleName: grid-row12
+          thumbnail: /assets/img/editor/grid_12.svg
+          title: 'Highlight'
+          type: grid-row
+          layout:
+            320px:
+              display: rows
+              width: 100%
+            default:
+              align: center
+              background-color: '#08080A'
+              padding-bottom: 10px
+              padding-left: 0px
+              padding-right: 0px
+              padding-top: 10px
+              valign: top
+              width: 100%
+          content:
+            -
+              id: highlight-col
+              isEmpty: false
+              label: 'Drop content here'
+              title: 'column 1'
+              type: grid-column
+              layout:
+                320px: []
+                default:
+                  padding-left: 40px
+                  padding-right: 40px
+                  valign: top
+              content:
+                -
+                  id: highlight-content
+                  thumbnail: /assets/img/editor/element_text.svg
+                  title: 'Highlight Block'
+                  type: text
+                  layout:
+                    320px:
+                      width: 100%
+                    default:
+                      align: left
+                      padding-bottom: 0px
+                      padding-top: 0px
+                      text-align: left
+                      text-valign: top
+                      valign: top
+                      width: 100%
+                  content: '<div style="background-color:#0E0E11; border-left:3px solid #2DD4BF; padding:20px 24px; border-radius:0 8px 8px 0;"><p><span style="color: #2DD4BF; font-family: arial,helvetica,sans-serif; font-size: 14px; font-weight: bold;">DESTAQUE</span></p><p><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px; line-height: 1.6;">Insira aqui uma citacao, dado impactante ou frase-chave do email.</span></p></div>'
+
+        # ═══════════════════════════════════════════
+        # ROW 7 — More body text
+        # ═══════════════════════════════════════════
+        -
+          align: top
+          dist: '12'
+          gutter: 20px
+          id: body-text-2-row
+          moduleName: grid-row12
+          thumbnail: /assets/img/editor/grid_12.svg
+          title: 'Body Text 2'
+          type: grid-row
+          layout:
+            320px:
+              display: rows
+              width: 100%
+            default:
+              align: center
+              background-color: '#08080A'
+              padding-bottom: 10px
+              padding-left: 0px
+              padding-right: 0px
+              padding-top: 0px
+              valign: top
+              width: 100%
+          content:
+            -
+              id: body-text-2-col
+              isEmpty: false
+              label: 'Drop content here'
+              title: 'column 1'
+              type: grid-column
+              layout:
+                320px: []
+                default:
+                  padding-left: 40px
+                  padding-right: 40px
+                  valign: top
+              content:
+                -
+                  id: body-text-2-content
+                  thumbnail: /assets/img/editor/element_text.svg
+                  title: Text
+                  type: text
+                  layout:
+                    320px:
+                      width: 100%
+                    default:
+                      align: left
+                      padding-bottom: 10px
+                      padding-top: 5px
+                      text-align: left
+                      text-valign: top
+                      valign: top
+                      width: 100%
+                  content: '<p><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px; line-height: 1.6;">Paragrafo de transicao antes do CTA. Conecte o conteudo a acao desejada.</span></p>'
+
+        # ═══════════════════════════════════════════
+        # ROW 8 — CTA Button (teal)
+        # ═══════════════════════════════════════════
+        -
+          align: top
+          dist: '12'
+          gutter: 20px
+          id: cta-row
+          moduleName: grid-row12
+          thumbnail: /assets/img/editor/grid_12.svg
+          title: 'CTA'
+          type: grid-row
+          layout:
+            320px:
+              display: rows
+              width: 100%
+            default:
+              align: center
+              background-color: '#08080A'
+              padding-bottom: 20px
+              padding-left: 0px
+              padding-right: 0px
+              padding-top: 10px
+              valign: top
+              width: 100%
+          content:
+            -
+              id: cta-col
+              isEmpty: false
+              label: 'Drop content here'
+              title: 'column 1'
+              type: grid-column
+              layout:
+                320px: []
+                default:
+                  padding-left: 40px
+                  padding-right: 40px
+                  valign: top
+              content:
+                -
+                  id: cta-button
+                  text: '<p><span style="color: #08080A; font-size: 16px;"><strong>Chamada para acao</strong></span></p>'
+                  thumbnail: /assets/img/editor/element_button.svg
+                  title: Button
+                  type: text-button
+                  layout:
+                    320px:
+                      width: 100%
+                    default:
+                      align: center
+                      background-color: '#2DD4BF'
+                      border-color: '#2DD4BF'
+                      border-radius: 8px
+                      border-width: 0px
+                      item-height: 52px
+                      margin-bottom: 10px
+                      margin-top: 10px
+                      padding-bottom: 14px
+                      padding-left: 32px
+                      padding-right: 32px
+                      padding-top: 14px
+                      text-align: center
+                      text-valign: top
+                      valign: top
+                      width: 60%
+                  content:
+                    text: '<p><span style="color: #08080A; font-size: 16px;"><strong>Chamada para acao</strong></span></p>'
+
+        # ═══════════════════════════════════════════
+        # ROW 9 — Signature
+        # ═══════════════════════════════════════════
+        -
+          align: top
+          dist: '12'
+          gutter: 20px
+          id: signature-row
+          moduleName: grid-row12
+          thumbnail: /assets/img/editor/grid_12.svg
+          title: 'Signature'
+          type: grid-row
+          layout:
+            320px:
+              display: rows
+              width: 100%
+            default:
+              align: center
+              background-color: '#08080A'
+              padding-bottom: 30px
+              padding-left: 0px
+              padding-right: 0px
+              padding-top: 10px
+              valign: top
+              width: 100%
+          content:
+            -
+              id: signature-col
+              isEmpty: false
+              label: 'Drop content here'
+              title: 'column 1'
+              type: grid-column
+              layout:
+                320px: []
+                default:
+                  padding-left: 40px
+                  padding-right: 40px
+                  valign: top
+              content:
+                -
+                  id: signature-content
+                  thumbnail: /assets/img/editor/element_text.svg
+                  title: 'Signature'
+                  type: text
+                  layout:
+                    320px:
+                      width: 100%
+                    default:
+                      align: left
+                      padding-bottom: 0px
+                      padding-top: 10px
+                      text-align: left
+                      text-valign: top
+                      valign: top
+                      width: 100%
+                  content: '<p><strong><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px;">Marcos Carneiro</span></strong></p><p><span style="color: #8A8A96; font-family: arial,helvetica,sans-serif; font-size: 13px;">Fundador, Electia by Emprega+</span></p><p><em><span style="color: #2DD4BF; font-family: arial,helvetica,sans-serif; font-size: 13px;">[Tagline Electia a definir].</span></em></p>'
+
+        # ═══════════════════════════════════════════
+        # ROW 10 — Divider
+        # ═══════════════════════════════════════════
+        -
+          align: top
+          dist: '12'
+          gutter: 0px
+          id: divider-row
+          moduleName: grid-row12
+          thumbnail: /assets/img/editor/grid_12.svg
+          title: 'Divider'
+          type: grid-row
+          layout:
+            320px:
+              display: rows
+              width: 100%
+            default:
+              align: center
+              background-color: '#08080A'
+              padding-bottom: 0px
+              padding-top: 0px
+              valign: top
+              width: 100%
+          content:
+            -
+              id: divider-col
+              isEmpty: false
+              label: 'Drop content here'
+              title: 'column 1'
+              type: grid-column
+              layout:
+                320px: []
+                default:
+                  padding-left: 40px
+                  padding-right: 40px
+                  valign: top
+              content:
+                -
+                  id: divider-content
+                  title: 'Divider'
+                  type: text
+                  layout:
+                    320px:
+                      width: 100%
+                    default:
+                      align: center
+                      text-align: center
+                      width: 100%
+                  content: '<p style="text-align:center;"><span style="display:inline-block;width:100%;height:1px;background-color:#26262D;line-height:1px;font-size:1px;">&nbsp;</span></p>'
+
+        # ═══════════════════════════════════════════
+        # ROW 11 — Footer (dark)
+        # ═══════════════════════════════════════════
+        -
+          align: top
+          dist: '12'
+          gutter: 30px
+          id: 2aa2c80d-751b-4b10-84c9-d396e24eab14
+          moduleName: footer
+          thumbnail: /assets/img/editor/element-footer.svg
+          title: Footer
+          type: grid-row
+          layout:
+            320px:
+              display: rows
+              padding-left: 15px
+              padding-right: 15px
+              width: 100%
+            default:
+              align: center
+              background-color: '#0E0E11'
+              full-width: false
+              padding-bottom: 30px
+              padding-left: 0px
+              padding-right: 0px
+              padding-top: 24px
+              valign: top
+              width: 100%
+          content:
+            -
+              id: 1ecbd6d6-9580-4911-909d-604f702147d7
+              isEmpty: false
+              label: 'Drop content here'
+              title: grid-column
+              type: grid-column
+              layout:
+                320px: []
+                default:
+                  padding-left: 0px
+                  padding-right: 0px
+                  valign: top
+              content:
+                # Social links
+                -
+                  id: footer-social
+                  thumbnail: /assets/img/editor/element_text.svg
+                  title: 'Social Links'
+                  type: text
+                  layout:
+                    320px:
+                      width: 100%
+                    default:
+                      align: left
+                      font-size: 12px
+                      line-height: '1.5'
+                      padding-bottom: 12px
+                      padding-top: 0px
+                      text-align: center
+                      text-valign: top
+                      valign: top
+                      width: 100%
+                  content: '<p><a href="https://instagram.com/profissionaldevalor" style="color:#8A8A96; text-decoration:none; font-family:arial,helvetica,sans-serif; font-size:12px;">Instagram</a> <span style="color:#26262D;">&nbsp;|&nbsp;</span> <a href="https://youtube.com/@profissionaldevalor" style="color:#8A8A96; text-decoration:none; font-family:arial,helvetica,sans-serif; font-size:12px;">YouTube</a> <span style="color:#26262D;">&nbsp;|&nbsp;</span> <a href="https://profissional.empregamais.me" style="color:#8A8A96; text-decoration:none; font-family:arial,helvetica,sans-serif; font-size:12px;">Site</a></p>'
+                # Company name
+                -
+                  id: footer-company
+                  thumbnail: /assets/img/editor/element_text.svg
+                  title: 'Company'
+                  type: text
+                  layout:
+                    320px:
+                      width: 100%
+                    default:
+                      align: left
+                      font-size: 11px
+                      line-height: '1.5'
+                      padding-bottom: 0px
+                      padding-top: 12px
+                      text-align: center
+                      text-valign: top
+                      valign: top
+                      width: 100%
+                  content: '<p><span style="color:#505058; font-family:arial,helvetica,sans-serif; font-size:11px;"><strong style="color:#8A8A96;">Electia by Emprega+</strong> &mdash; Emprega+</span></p>'
+                # Address
+                -
+                  id: footer-address
+                  thumbnail: /assets/img/editor/element_text.svg
+                  title: 'Address'
+                  type: text
+                  layout:
+                    320px:
+                      width: 100%
+                    default:
+                      align: left
+                      font-size: 11px
+                      line-height: '1.5'
+                      padding-bottom: 0px
+                      padding-top: 0px
+                      text-align: center
+                      text-valign: top
+                      valign: top
+                      width: 100%
+                  content: '<p><span style="color:#505058; font-family:arial,helvetica,sans-serif; font-size:11px;">Av. Desembargador Moreira, 1300 — Fortaleza, CE</span></p>'
+                # Email sent to
+                -
+                  id: footer-email-to
+                  thumbnail: /assets/img/editor/element_text.svg
+                  title: 'Email To'
+                  type: text
+                  layout:
+                    320px:
+                      width: 100%
+                    default:
+                      align: left
+                      font-size: 11px
+                      line-height: '1.5'
+                      padding-bottom: 0px
+                      padding-top: 12px
+                      text-align: center
+                      text-valign: top
+                      valign: top
+                      width: 100%
+                  content: '<p><span style="color:#505058; font-family:arial,helvetica,sans-serif; font-size:11px;">Este email foi enviado para {{contact.EMAIL}}</span></p>'
+                # Why receiving
+                -
+                  id: footer-why
+                  thumbnail: /assets/img/editor/element_text.svg
+                  title: 'Why'
+                  type: text
+                  layout:
+                    320px:
+                      width: 100%
+                    default:
+                      align: left
+                      font-size: 11px
+                      line-height: '1.5'
+                      padding-bottom: 0px
+                      padding-top: 0px
+                      text-align: center
+                      text-valign: top
+                      valign: top
+                      width: 100%
+                  content: '<p><span style="color:#505058; font-family:arial,helvetica,sans-serif; font-size:11px;">Voce recebeu porque se cadastrou em profissional.empregamais.me</span></p>'
+                # Unsubscribe / Update
+                -
+                  id: footer-unsub
+                  thumbnail: /assets/img/editor/element_text.svg
+                  title: 'Unsubscribe'
+                  type: text
+                  layout:
+                    320px:
+                      width: 100%
+                    default:
+                      align: left
+                      font-size: 11px
+                      line-height: '1.5'
+                      padding-bottom: 0px
+                      padding-top: 12px
+                      text-align: center
+                      text-valign: top
+                      valign: top
+                      width: 100%
+                  content: '<p><span condition="{{ update_profile }}" style="display:none"><a href="{{ update_profile }}" style="color:#8A8A96; font-family:arial,helvetica,sans-serif; font-size:11px;">Atualizar preferencias</a> <span style="color:#505058;">&bull;</span> </span><a href="{{ unsubscribe }}" style="color:#8A8A96; font-family:arial,helvetica,sans-serif; font-size:11px;">Cancelar inscricao</a></p>'
+media:
+  320px:
+    max-width: 600
+    min-width: 0
+styles:
+  default:
+    properties:
+      color: '#FFFFFF'
+      font-family: 'arial,helvetica,sans-serif'
+      font-size: 16px
+      line-height: '1.6'
+    title: Paragraph
+  default-button:
+    properties:
+      background-color: '#2DD4BF'
+      border-radius: 8px
+      border-width: 0px
+      color: '#08080A'
+      font-family: 'arial,helvetica,sans-serif'
+      font-size: 16px
+      remove-vml-button: optional
+      width: 60%
+    title: Button
+  default-heading1:
+    properties:
+      color: '#FFFFFF'
+      font-family: 'arial,helvetica,sans-serif'
+      font-size: 28px
+      font-weight: '700'
+    title: 'Heading 1'
+  default-heading2:
+    properties:
+      color: '#FFFFFF'
+      font-family: 'arial,helvetica,sans-serif'
+      font-size: 20px
+      font-weight: '700'
+    title: 'Heading 2'
+  default-heading3:
+    properties:
+      color: '#FFFFFF'
+      font-family: 'arial,helvetica,sans-serif'
+      font-size: 18px
+      font-weight: '700'
+    title: 'Heading 3'
+  default-heading4:
+    properties:
+      color: '#2DD4BF'
+      font-family: 'arial,helvetica,sans-serif'
+      font-size: 14px
+      font-weight: '700'
+    title: 'Heading 4'
+  default-link:
+    properties:
+      color: '#2DD4BF'
+      text-decoration: underline
+    title: Link

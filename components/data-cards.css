@@ -543,44 +543,40 @@
   /* 4 main quadrants (Conductor red, Promoter yellow, Supporter green, Analyzer blue)
      with 4 transitional styles (Motivator orange, Facilitator yellow-green,
      Coordinator teal, Organizer purple) blending smoothly. */
-  /* stylelint-disable color-no-hex -- 8-color dot scale is a fixed perceptual palette, not theme tokens */
   background:
     radial-gradient(circle at center,
       rgba(255, 255, 255, 0.55) 0%,
       rgba(255, 255, 255, 0) 55%),
     conic-gradient(from -90deg,
-      #E85B3A 0deg,    /* Conductor (top) */
-      #F89B3A 45deg,   /* Motivator */
-      #F6D63A 90deg,   /* Promoter */
-      #B4D14F 135deg,  /* Facilitator */
-      #5BBF5C 180deg,  /* Supporter */
-      #3DAACE 225deg,  /* Coordinator */
-      #3D6CCE 270deg,  /* Analyzer */
-      #9C42C4 315deg,  /* Organizer */
-      #E85B3A 360deg);
-  /* stylelint-enable color-no-hex */
+      var(--disc-wheel-conductor) 0deg,
+      var(--disc-wheel-motivator) 45deg,
+      var(--disc-wheel-promoter) 90deg,
+      var(--disc-wheel-facilitator) 135deg,
+      var(--disc-wheel-supporter) 180deg,
+      var(--disc-wheel-coordinator) 225deg,
+      var(--disc-wheel-analyzer) 270deg,
+      var(--disc-wheel-organizer) 315deg,
+      var(--disc-wheel-conductor) 360deg);
 }
 
 [data-theme="dark"] .dl-pwheel-disc,
 [data-theme="sober-dark"] .dl-pwheel-disc,
 [data-theme="vibrant-dark"] .dl-pwheel-disc {
-  /* stylelint-disable color-no-hex -- 8-color dot scale is a fixed perceptual palette, not theme tokens */
   background:
     radial-gradient(circle at center,
       rgba(255, 255, 255, 0.45) 0%,
       rgba(255, 255, 255, 0) 50%,
       rgba(0, 0, 0, 0.10) 100%),
     conic-gradient(from -90deg,
-      #E85B3A 0deg,
-      #F89B3A 45deg,
-      #F6D63A 90deg,
-      #B4D14F 135deg,
-      #5BBF5C 180deg,
-      #3DAACE 225deg,
-      #3D6CCE 270deg,
-      #9C42C4 315deg,
-      #E85B3A 360deg);
-  /* stylelint-enable color-no-hex */
+      var(--disc-wheel-conductor) 0deg,
+      var(--disc-wheel-motivator) 45deg,
+      var(--disc-wheel-promoter) 90deg,
+      var(--disc-wheel-facilitator) 135deg,
+      var(--disc-wheel-supporter) 180deg,
+      var(--disc-wheel-coordinator) 225deg,
+      var(--disc-wheel-analyzer) 270deg,
+      var(--disc-wheel-organizer) 315deg,
+      var(--disc-wheel-conductor) 360deg);
 }
 
 /* Subtle dividing lines between the 8 octants (stylistic only) */
