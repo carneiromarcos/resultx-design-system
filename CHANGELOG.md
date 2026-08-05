@@ -5,9 +5,15 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
-## [2.2.0] - 2026-08-05
+## [2.2.0] - PREPARADA, NÃO PUBLICADA
 
-Primeiro release desde abril. Reconcilia a linha de release com o trabalho real:
+⚠️ Release **preparada em 05/08/2026 e ainda não tagueada**. A tag `v2.2.0` chegou a ser
+criada e foi **removida**: apontava para fora da `main`, repetindo exatamente o defeito da
+`v2.1.2` que esta versão pretende corrigir. A `main` remota tem 13 commits — brands electia
+v1.3, refactor da roda DISC e dependabot — que precisam ser reconciliados com esta linha
+antes de qualquer tag. Até lá, nenhum consumidor deve apontar para 2.2.0.
+
+Reconcilia a linha de release com o trabalho real:
 `main` estava parada em 26/04 enquanto o brand system evoluía em branch paralela, e a
 tag `v2.1.2` havia sido cortada de uma branch de correção que não estava em lugar nenhum.
 Esta versão junta tudo numa linha só.
