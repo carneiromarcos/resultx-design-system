@@ -16,10 +16,11 @@
   /* Auto-classified tokens exposed as Tailwind v4 utilities. */
   /* Uses var() references so runtime theme switching keeps working. */
 
-  /* color (102) */
+  /* color (103) */
   --color-accent-primary: var(--accent-primary);
   --color-accent-primary-hover: var(--accent-primary-hover);
   --color-accent-primary-muted: var(--accent-primary-muted);
+  --color-accent-primary-text: var(--accent-primary-text);
   --color-accent-secondary: var(--accent-secondary);
   --color-accent-secondary-muted: var(--accent-secondary-muted);
   --color-avatar-gradient-end: var(--avatar-gradient-end);
@@ -351,6 +352,7 @@
   --accent-primary-hover: #5EEAD4;
   --accent-primary-muted: rgba(45, 212, 191, 0.15);
   --accent-secondary: #C49A3C;
+  --accent-primary-text: #2DD4BF;
   --color-success: #22C55E;
   --color-success-bg: rgba(34, 197, 94, 0.12);
   --color-warning: #F59E0B;
@@ -445,6 +447,7 @@
   --accent-primary-hover: #1E40AF;
   --accent-primary-muted: rgba(29, 78, 216, 0.12);
   --accent-secondary: #C49A3C;
+  --accent-primary-text: #1D4ED8;
   --color-success: #16A34A;
   --color-success-bg: rgba(22, 163, 74, 0.12);
   --color-warning: #D97706;
@@ -771,6 +774,7 @@
     --accent-primary-hover: #5EEAD4;
     --accent-primary-muted: rgba(45, 212, 191, 0.15);
     --accent-secondary: #C49A3C;
+    --accent-primary-text: #2DD4BF;
     --color-success: #22C55E;
     --color-success-bg: rgba(34, 197, 94, 0.12);
     --color-warning: #F59E0B;
@@ -867,6 +871,7 @@
     --accent-primary-hover: #1E40AF;
     --accent-primary-muted: rgba(29, 78, 216, 0.12);
     --accent-secondary: #C49A3C;
+    --accent-primary-text: #1D4ED8;
     --color-success: #16A34A;
     --color-success-bg: rgba(22, 163, 74, 0.12);
     --color-warning: #D97706;

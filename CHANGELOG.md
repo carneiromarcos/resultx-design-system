@@ -5,6 +5,53 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Added — Ponte de marca (Onda 3, itens 1 e 2)
+
+- **`brands/<marca>/tokens/ds-bridge.css`** para as 5 marcas — a camada que faltava entre o
+  arquivo de marca e os tokens semânticos do DS. Antes disso o brand declarava `--purple` /
+  `--gold` e não remapeava nada: quem importasse os dois continuava renderizando teal.
+  Sobrescreve os **quatro** escopos de tema, inclusive os dois blocos `prefers-color-scheme` —
+  sem eles quem não seta `data-theme` seguia no teal. Documentação em `docs/brand-bridge.md`
+- **`--accent-primary-text`** em `tokens/tokens.css` — separa o papel de **texto** do papel de
+  **preenchimento**. O mesmo dourado `#c4993b` é bom fundo (7,33:1 contra tinta escura) e texto
+  ilegível sobre branco (2,64:1); um token só não dava conta dos dois
+- **`scripts/lib/contrast.js`** — luminância relativa e razão de contraste WCAG 2.2. O repo não
+  tinha nenhuma verificação de contraste
+- **`scripts/build-brand-bridges.js`** + `scripts/brand-bridges.config.js` — geram as pontes a
+  partir de `brands/<marca>/tokens/tokens.css`, que segue sendo fonte única. A config declara
+  *qual token cumpre qual papel*, nunca um valor. `npm run build:bridges`, encadeado em `build:all`
+- **`tests/brand-bridge.test.js`** — contraste, cobertura dos 4 escopos, ausência de teal e
+  paridade entre o arquivo commitado e o gerador (esquecer o rebuild reprova a suíte)
+
+### Fixed — Contraste do rótulo sobre o accent
+
+- **`--text-inverse` deixa de ser um valor único do DS e passa a ser medido por marca.** O DS fixa
+  `#0B0E14`, correto para o teal (10,38:1) e **ilegal para o roxo da Electia: 2,55:1**. A falha é
+  bidirecional — nas 4 marcas douradas quem reprova é o branco (2,64:1). Nenhum valor único serve
+  às duas famílias, então a tinta é escolhida por medição e o build falha se nenhuma candidata
+  alcançar 4,5:1
+- **27 usos de `--accent-primary` como cor de texto** em `components/` migraram para
+  `--accent-primary-text`. `border-color`, `background` e `accent-color` não foram tocados
+- **Hover da Electia** passa de `--purple-light #a55eea` (3,90:1 com rótulo branco, reprova) para
+  `--purple-600 #8842d6` (5,53:1), um passo da rampa OKLCH da própria marca
+
+### Changed
+
+- `package.json` — `brands/*/tokens/*.css` entram em `files[]` e ganham os subpaths
+  `./brands/*/bridge` e `./brands/*/tokens` em `exports`. **`brands/` não era publicado**:
+  `node_modules/resultx-design-system/` não continha a pasta, e uma ponte sem essa correção não
+  chegaria a consumidor nenhum
+
+### Lacunas abertas — decisão de marca, não de código
+
+- **Emprega+, PdV e ResultX** não têm, em tema light, variante do dourado aprovada em AA como
+  texto (`#a07b2a` = 3,92:1; o `--gold-muted` do PdV passa no branco com 4,96:1 mas cai a 4,28:1
+  sobre a superfície tingida de tag). Enquanto isso, `--accent-primary-text` cai em
+  `var(--text-primary)`: perde-se a cor, não a legibilidade. **Xscore é o modelo** — já declara
+  `--gold-ink #866425` (5,44:1)
+- O comentário de `brands/xscore/tokens/tokens.css` afirma que o fill `#c4993b` leva "texto branco
+  por cima". Branco sobre `#c4993b` dá **2,64:1** — reprova. O token está certo, a justificativa não
+
 ## [2.2.0] - 2026-08-05
 
 Publicada via PR #34, merge commit `728bee0`. **Primeira vez desde abril que `main`, brand
