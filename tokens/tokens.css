@@ -53,6 +53,19 @@
   --sidebar-collapsed: 64px;
   --header-height: 56px;
   --content-max-width: 1280px;
+
+  /* Context panel — the resizable column beside the main content.
+     --panel-width is the DEFAULT. The live width lives in --split-pane-width,
+     set on the .split-pane element itself, so the panel and the space it takes
+     from the main column can never drift apart. */
+  --panel-width: 320px;
+  --panel-width-min: 260px;
+  --panel-width-max: 560px;
+  --split-handle-width: 12px;
+
+  /* Disclosure — the collapse/expand timing. Read by dist/disclosure.js so the
+     script waits exactly as long as the CSS animates. */
+  --disclosure-duration: 220ms;
   --grid-gap: 20px;
   --card-min-width: 300px;
 

@@ -5,6 +5,49 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Added — Camada de comportamento + 2 componentes de painel
+
+Extraídos a partir de telas reais de um inbox de atendimento. O DS era CSS puro;
+estes dois exigem JavaScript, e a decisão foi abrir a camada de comportamento em
+vez de deixar cada produto reimplementar (item 7 da Onda 3, antecipado).
+
+- **`.disclosure`** — módulo recolhível, o padrão dos blocos de um painel de
+  contexto. Construído sobre `<details>`/`<summary>`: papel semântico,
+  `aria-expanded`, teclado e revelação ao buscar na página vêm do navegador, não
+  de código nosso. Cabeçalho de 44px (WCAG 2.2 SC 2.5.8). Fechado mede 46px —
+  44 do cabeçalho + 2 de borda, **zero** vão morto. `docs/components/disclosure.md`
+- **`.split-pane`** — painel de contexto redimensionável. **A largura vive numa
+  variável só**, `--split-pane-width`, e a grade inteira deriva dela: o painel e o
+  espaço que ele tira da coluna principal são o mesmo número, não dois para manter
+  em sincronia. É o contrato que torna impossível repetir o vão morto de 192px do
+  Electia. `docs/components/split-pane.md`
+- **`dist/disclosure.js`** e **`dist/split-pane.js`** — vanilla, sem framework, no
+  idioma do `theme-toggle.js` já existente. Arraste com pointer capture, teclado
+  (← → ±16px, Shift ±64px, Home/End, Enter restaura), limites lidos do CSS,
+  persistência em `localStorage` sob `resultx-*`, todo acesso em `try/catch`.
+  Expostos como `resultx-design-system/disclosure` e `/split-pane`
+- **`demos/inbox-panel.html`** — os dois funcionando juntos, com a ponte da Electia
+- **`tests/disclosure-split-pane.test.js`** — 20 testes de contrato, incluindo um
+  que reprova qualquer segundo `setProperty` de largura no script
+
+Verificado em Chrome real: arraste de 320→440px com a coluna principal devolvendo
+exatamente o que o painel tomou; teto em 560 e piso em 260; `aria-valuenow`
+acompanhando; largura e módulos abertos restaurados após reload; coluna única em
+768px sem overflow horizontal; zero erro de console.
+
+### Added — Tokens de layout
+
+- `--panel-width` (320px), `--panel-width-min` (260px), `--panel-width-max` (560px),
+  `--split-handle-width` (12px) e `--disclosure-duration` (220ms), no bloco `:root`
+  compartilhado. A duração é lida de volta pelo script, para que o CSS e a espera
+  não se separem quando uma marca reajustar o token.
+
+### Changed — Composição do bundle de componentes
+
+- `components/components.css` passa a usar `@import url()` para puxar
+  `disclosure.css` e `split-pane.css`. O `postcss-import` inlina no build, então
+  `dist/components.min.css` segue sendo um arquivo só para o consumidor.
+
 ### Added — Ponte de marca (Onda 3, itens 1 e 2)
 
 - **`brands/<marca>/tokens/ds-bridge.css`** para as 5 marcas — a camada que faltava entre o

@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Split pane + Disclosure — ResultX DS</title>
+
+<link rel="stylesheet" href="../dist/tokens.min.css">
+<link rel="stylesheet" href="../brands/electia/tokens/ds-bridge.css">
+<link rel="stylesheet" href="../dist/components.min.css">
+
+<style>
+  /* Só o esqueleto da página de demonstração. Todo componente abaixo vem do
+     DS — nada aqui redefine .split-pane nem .disclosure. */
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+  }
+
+  .demo-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-5);
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-surface-1);
+    flex-shrink: 0;
+  }
+
+  .demo-bar h1 {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+  }
+
+  .demo-hint { margin: 0; color: var(--text-muted); font-size: var(--text-xs); }
+
+  /* O split-pane ocupa o que sobra da altura. min-height: 0 é o que deixa as
+     colunas rolarem em vez de esticar a página. */
+  .split-pane { flex: 1; min-height: 0; }
+
+  .thread { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
+  .thread-title { margin: 0; font-size: var(--text-xl); font-weight: var(--font-semibold); }
+
+  /* Uma linha que não quebra: prova que a coluna encolhe mesmo assim, em vez
+     de empurrar a página para o scroll horizontal. */
+  .thread-wide {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: auto;
+    padding: var(--space-3);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+  }
+
+  .panel-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .panel-name { font-weight: var(--font-semibold); }
+  .panel-phone { color: var(--text-muted); font-size: var(--text-sm); }
+  .panel-body { padding: var(--space-4); }
+
+  .prop { display: flex; justify-content: space-between; gap: var(--space-4); padding: var(--space-2) 0; }
+  .prop + .prop { border-top: 1px solid var(--border-subtle); }
+  .prop-label { color: var(--text-secondary); }
+  .prop-value { color: var(--text-muted); }
+
+  .mode-copy { margin: 0; color: var(--text-muted); font-size: var(--text-sm); }
+</style>
+</head>
+<body>
+
+<div class="demo-bar">
+  <h1>Split pane + Disclosure</h1>
+  <p class="demo-hint">
+    Arraste a alça entre as colunas, ou foque nela com Tab e use ← →, Home, End.
+    Enter ou duplo-clique restaura. A largura e os módulos abertos ficam salvos.
+  </p>
+</div>
+
+<div class="split-pane" data-split-pane data-split-id="demo-inbox">
+
+  <main class="split-pane-main">
+    <div class="thread">
+      <h2 class="thread-title">Conversa</h2>
+      <p>
+        A coluna principal encolhe conforme o painel cresce, porque as duas saem
+        da mesma variável. Não há um segundo número para manter em sincronia.
+      </p>
+      <div class="thread-wide">
+        uma-linha-longa-que-nao-quebra-para-provar-que-a-coluna-encolhe-em-vez-de-empurrar-a-pagina
+      </div>
+      <p>
+        O painel ao lado tem largura mínima e máxima; arrastar além do limite
+        para, em vez de deixar a coluna principal desaparecer.
+      </p>
+    </div>
+  </main>
+
+  <div class="split-pane-handle"></div>
+
+  <aside class="split-pane-side">
+    <div class="panel-head">
+      <div>
+        <div class="panel-name">Roberta Moraes</div>
+        <div class="panel-phone">+55 85 90000-0000</div>
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <div class="disclosure-group">
+
+        <details class="disclosure" data-disclosure-id="demo-modo" open>
+          <summary class="disclosure-summary">
+            <span class="disclosure-label">Modo de atendimento</span>
+            <svg class="disclosure-chevron" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </summary>
+          <div class="disclosure-panel">
+            <div class="disclosure-content">
+              <p class="mode-copy">Você assume a conversa; a IA fica em espera.</p>
+            </div>
+          </div>
+        </details>
+
+        <details class="disclosure" data-disclosure-id="demo-atendimento" open>
+          <summary class="disclosure-summary">
+            <span class="disclosure-label">Atendimento</span>
+            <span class="disclosure-badge">2</span>
+            <svg class="disclosure-chevron" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </summary>
+          <div class="disclosure-panel">
+            <div class="disclosure-content">
+              <div class="prop">
+                <span class="prop-label">Responsável</span>
+                <span class="prop-value">—</span>
+              </div>
+              <div class="prop">
+                <span class="prop-label">Fila</span>
+                <span class="prop-value">—</span>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="disclosure" data-disclosure-id="demo-enriquecimento">
+          <summary class="disclosure-summary">
+            <span class="disclosure-label">Enriquecimento</span>
+            <svg class="disclosure-chevron" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </summary>
+          <div class="disclosure-panel">
+            <div class="disclosure-content">
+              <p class="mode-copy">Contato ainda não enriquecido.</p>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<script src="../dist/disclosure.js"></script>
+<script src="../dist/split-pane.js"></script>
+</body>
+</html>

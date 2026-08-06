@@ -3,6 +3,11 @@
    v2.0.0 | Systems & Applications
    ========================================================================== */
 
+/* Componentes com arquivo próprio. O postcss-import inlina no build, então
+   dist/components.min.css segue sendo um arquivo só para o consumidor. */
+@import url('./disclosure.css');
+@import url('./split-pane.css');
+
 /* ══════════════════════════════════════════════════════════════════
    RESET & BASE
    ══════════════════════════════════════════════════════════════════ */

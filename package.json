@@ -13,6 +13,8 @@
     "./brands/*/tokens": "./brands/*/tokens/tokens.css",
     "./icons": "./dist/icons.min.css",
     "./theme": "./dist/theme-toggle.js",
+    "./disclosure": "./dist/disclosure.js",
+    "./split-pane": "./dist/split-pane.js",
     "./tokens/source": "./tokens/tokens.css",
     "./components/source": "./components/components.css",
     "./package.json": "./package.json"

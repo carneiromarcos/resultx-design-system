@@ -276,6 +276,11 @@
   --sidebar-collapsed: 64px;
   --header-height: 56px;
   --content-max-width: 1280px;
+  --panel-width: 320px;
+  --panel-width-min: 260px;
+  --panel-width-max: 560px;
+  --split-handle-width: 12px;
+  --disclosure-duration: 220ms;
   --grid-gap: 20px;
   --card-min-width: 300px;
   --focus-ring-width: 3px;
