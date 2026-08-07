@@ -157,6 +157,80 @@ When parent is `.active`: `background: rgba(255,255,255,0.25)`.
 - `.sidebar-user-name`: `color: var(--text-primary); font-weight: var(--font-medium)`
 - `.sidebar-user-role`: `font-size: 10px; opacity: 0.5`
 
+### Rail mode — `.sidebar-rail`
+
+The second navigation mode. Until this landed the DS supported exactly one — the 240px panel — and `--sidebar-collapsed: 64px` sat declared and unused.
+
+```html
+<aside class="sidebar sidebar-rail" aria-label="Navegação principal">
+  <a class="sidebar-item active" href="…" aria-current="page">
+    <svg class="icon icon-md" aria-hidden="true">…</svg>
+    <span class="sidebar-label">Atendimento</span>
+  </a>
+</aside>
+
+<main class="main main-rail">…</main>
+```
+
+| Class | Role |
+|-------|------|
+| `.sidebar-rail` | Narrows the sidebar to `var(--sidebar-collapsed)` and centres its items |
+| `.sidebar-label` | The item's text. New — the family had no hook for it |
+| `.main-rail` | The content offset, from the **same** token |
+
+**The width and the offset come from one token.** Two numbers here is exactly how Electia's 192px dead gap was born; see [split-pane.md](split-pane.md) for the same principle applied to a resizable column.
+
+**The label is not hidden with `display: none`.** It stays in the accessibility tree, just out of sight — otherwise the item becomes a nameless icon and a screen reader announces "link" and nothing more. Verified in Chrome: the label box measures 1px wide, and the accessible name still reads `link "Atendimento"`.
+
+Because the label leaves the viewport, rail items need a tooltip. Use `.tooltip-right` from the DS rather than a `title` attribute — `title` does not appear on keyboard focus.
+
+Measured: rail 64px, content offset 64px, no horizontal overflow at 1500 / 1024 / 768 / 390px.
+
+### Overlay mode — `.sidebar-overlay`
+
+The third and last mode. What defines it: **the content does not move.** Rail and panel take space from the page; the overlay floats above it and gives the space back when it closes.
+
+It is also what was missing below 1024px, where `.sidebar` simply vanished with no substitute — the whole navigation disappeared on small screens.
+
+```html
+<button data-sidebar-toggle="nav" aria-expanded="false" hidden>Menu</button>
+
+<aside class="sidebar sidebar-rail sidebar-overlay" id="nav"
+       data-sidebar-overlay data-sidebar-media="(max-width: 1024px)">…</aside>
+```
+
+Combining it with `.sidebar-rail` gives the case most products actually want — **rail on the desktop, drawer below 1024px, one element**, no duplicated navigation in the HTML. Above the cut a media query hands control back to the rail: it stops floating and takes space again.
+
+| Class | Role |
+|-------|------|
+| `.sidebar-overlay` | Floats above the content instead of taking space |
+| `.sidebar-scrim` | The backdrop. Created by the script when the page has none |
+
+Load `resultx-design-system/sidebar-overlay`.
+
+| API | Effect |
+|-----|--------|
+| `ResultXSidebarOverlay.init(root)` | Enhance every `[data-sidebar-overlay]` |
+| `.open(el)` / `.close(el)` / `.toggle(el)` | Transport |
+
+Dispatches `sidebartoggle` with `detail: { open }`.
+
+#### Accessibility — this is a modal panel, and it behaves like one
+
+- **Focus moves into the panel on open and returns to the trigger on close.** Verified: 12 Tabs and 6 Shift+Tabs, zero escapes.
+- **Escape closes it.** Clicking the scrim closes it.
+- Page scroll is locked while open, and the previous value is **restored**, not zeroed.
+- The trigger ships `hidden` and the script reveals it. Without JavaScript the panel cannot open, and a button that does nothing is worse than no button.
+- `data-sidebar-media` closes the panel when the query stops matching — a stuck overlay would outlive its reason to exist and leave the scroll lock behind.
+
+> The scrim is **not** `.modal-overlay`: that one lives at `--z-modal` and centers its child, so it is coupled to the modal. This one sits at `--z-overlay` and only dims.
+
+#### Two defects this mode surfaced
+
+**`.sidebar-item` was transitioning `all`** — which includes `visibility`, which the item inherits from the sidebar. The link reported `visibility: hidden` at the exact moment the script called `.focus()`, and focusing an invisible element fails silently, leaving focus trapped on the button. A nav item only ever needed to animate colour and background; it now says so.
+
+**`visibility` must flip instantly on open, and wait on close.** Transitioning it in both directions reproduces the same silent failure. The pattern is `visibility 0s linear var(--transition-slow)` when closed and `visibility 0s` when open.
+
 ---
 
 ## Header

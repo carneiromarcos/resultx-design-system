@@ -1,0 +1,139 @@
+/* ==========================================================================
+   Split pane — painel de contexto redimensionável
+   ==========================================================================
+
+   Duas colunas separadas por uma alça que o usuário arrasta: conteúdo
+   principal de um lado, painel de contexto do outro.
+
+   A REGRA QUE ESTE COMPONENTE EXISTE PARA IMPOR
+   ---------------------------------------------
+   A largura vive em UMA variável — --split-pane-width, declarada no próprio
+   .split-pane — e a grade inteira é derivada dela. O painel e o espaço que ele
+   tira da coluna principal não são dois números que alguém precisa lembrar de
+   sincronizar: são a mesma variável. Divergir virou impossível por construção.
+
+   Isso não é preferência de estilo. O vão morto de 192px do Electia nasceu
+   exatamente de dois números fora de sincronia — a largura em estado do React
+   e o deslocamento escrito à mão no conteúdo.
+
+   Estrutura:
+     <div class="split-pane" data-split-pane data-split-id="inbox">
+       <div class="split-pane-main">…</div>
+       <div class="split-pane-handle" role="separator"
+            aria-orientation="vertical" tabindex="0"></div>
+       <aside class="split-pane-side">…</aside>
+     </div>
+
+   Sem JavaScript a alça não arrasta, mas o layout fica correto na largura
+   padrão. Com dist/split-pane.js, ganha arraste, teclado, duplo-clique para
+   restaurar e memória da largura. Ver docs/components/split-pane.md.
+   ========================================================================== */
+
+.split-pane {
+  --split-pane-width: var(--panel-width);
+  --split-pane-min: var(--panel-width-min);
+  --split-pane-max: var(--panel-width-max);
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--split-handle-width) var(--split-pane-width);
+  min-height: 0;
+  min-width: 0;
+}
+
+/* min-width: 0 é o que permite a coluna encolher abaixo do próprio min-content.
+   Sem isso, uma tabela larga trava a largura e o painel corta o conteúdo. */
+.split-pane-main,
+.split-pane-side {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+}
+
+.split-pane-side {
+  background: var(--bg-surface-1);
+  border-left: 1px solid var(--border-subtle);
+}
+
+/* ── Alça ───────────────────────────────────────────────────────────────── */
+
+/* A área de arraste ocupa os 12px da coluna; a linha visível tem 2px.
+   Alvo generoso, marca discreta. */
+.split-pane-handle {
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: col-resize;
+  touch-action: none;        /* sem isto o navegador rola em vez de arrastar */
+  z-index: var(--z-sticky);
+}
+
+.split-pane-handle::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: var(--border-subtle);
+  transition: background var(--transition-fast), width var(--transition-fast);
+}
+
+.split-pane-handle:hover::before,
+.split-pane-handle:focus-visible::before {
+  background: var(--accent-primary);
+}
+
+.split-pane-handle:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: calc(var(--focus-ring-offset) * -1);
+}
+
+/* ── Painel à esquerda ──────────────────────────────────────────────────── */
+
+/* Espelha a grade para listas mestras — a coluna de conversas de um inbox. */
+.split-pane-start {
+  grid-template-columns: var(--split-pane-width) var(--split-handle-width) minmax(0, 1fr);
+}
+
+.split-pane-start > .split-pane-side {
+  border-left: 0;
+  border-right: 1px solid var(--border-subtle);
+}
+
+/* ── Durante o arraste ──────────────────────────────────────────────────── */
+
+/* A alça fica acesa e a página para de selecionar texto — arrastar sobre um
+   chat selecionaria a conversa inteira. */
+.split-pane[data-resizing] {
+  user-select: none;
+  cursor: col-resize;
+}
+
+.split-pane[data-resizing] .split-pane-handle::before {
+  width: 3px;
+  background: var(--accent-primary);
+}
+
+/* ── Telas estreitas ────────────────────────────────────────────────────── */
+
+/* Empilha em vez de esconder. Um painel que some sem substituto leva o
+   conteúdo junto — o painel de contexto guarda as ações da conversa. */
+@media (max-width: 1024px) {
+  .split-pane,
+  .split-pane-start {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .split-pane-handle { display: none; }
+
+  .split-pane-side {
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid var(--border-subtle);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .split-pane-handle::before { transition: none; }
+}

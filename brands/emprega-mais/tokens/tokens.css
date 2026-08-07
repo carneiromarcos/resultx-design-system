@@ -12,6 +12,14 @@
   --emp-gold: #c4993b;
   --emp-gold-warm: #c49a3c;
   --emp-gold-dark: #a07b2a;
+  /* Texto/ícone dourado. No escuro é o próprio --emp-gold (7,33:1 sobre
+     #0B0E14); no light vira #866425, porque #c4993b reprova sobre branco
+     (2,64:1) e mesmo --emp-gold-dark para em 3,92:1.
+     ⚠️ Existe nos DOIS temas para que a interface use UM token só. Sem esta
+     declaração `var(--emp-gold-ink)` ficaria indefinido no escuro, e quem
+     precisasse de texto dourado cairia de volta em --emp-gold — que é
+     exatamente o bug que o token veio evitar. Mesmo padrão do Xscore. */
+  --emp-gold-ink: #c4993b;
   --emp-purple: #7c3aed;
   --emp-purple-light: #a855f7;
   --emp-purple-soft: rgba(124, 58, 237, 0.12);
@@ -106,6 +114,18 @@
   --emp-radius-md: 0.5rem;
   --emp-radius-lg: 0.75rem;
   --emp-radius-xl: 1rem;
+}
+
+/* ============================================
+   TEMA LIGHT — opt-in via data-theme="light"
+   Só o que MUDA de valor sobre fundo claro.
+   ============================================ */
+[data-theme="light"] {
+  /* 5,44:1 sobre branco e 4,69:1 sobre a superfície com 12% de dourado
+     (o fundo de tag) — as duas medidas precisam passar, e é por isso que
+     --emp-gold-dark (3,92 / 3,38) não serve. O dourado da marca segue
+     intacto como PREENCHIMENTO de botão, com tinta escura por cima. */
+  --emp-gold-ink: #866425;
 }
 
 /* ---- Animation: Scroll Reveal ---- */

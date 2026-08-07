@@ -3,6 +3,16 @@
    v2.0.0 | Systems & Applications
    ========================================================================== */
 
+/* Componentes com arquivo próprio. O postcss-import inlina no build, então
+   dist/components.min.css segue sendo um arquivo só para o consumidor. */
+@import url('./disclosure.css');
+@import url('./split-pane.css');
+@import url('./segmented.css');
+@import url('./list-item.css');
+@import url('./message.css');
+@import url('./audio-player.css');
+@import url('./composer.css');
+
 /* ══════════════════════════════════════════════════════════════════
    RESET & BASE
    ══════════════════════════════════════════════════════════════════ */
@@ -79,7 +89,13 @@ body {
   /* Navegação deve ser <a>, não <div>. Sem este reset o link chega sublinhado
      e o item só fica correto com markup não semântico. */
   text-decoration: none;
-  transition: all 150ms var(--spring-snappy);
+  /* `all` incluía `visibility`, e o item herda a do sidebar. No modo overlay
+     isso fazia o link reportar `visibility: hidden` no instante em que o
+     script tentava focá-lo — e `.focus()` num elemento invisível falha em
+     silêncio, deixando o foco preso no botão que abriu o painel.
+     Um item de navegação só precisa animar cor e fundo. */
+  transition: color 150ms var(--spring-snappy),
+    background 150ms var(--spring-snappy);
   border-radius: var(--radius-md);
 }
 .sidebar-item:hover { color: var(--text-primary); background: var(--sidebar-bg-hover); }
@@ -128,6 +144,145 @@ body {
   opacity: 0.5;
 }
 
+/* ── Modo rail (64px, só ícones) ─────────────────────────────────────────
+   Segundo modo de navegação do DS. Até aqui existia um só — o painel de
+   240px — e o token --sidebar-collapsed vivia órfão, declarado e sem uso.
+
+   O rótulo NÃO é escondido com display: none. Ele continua na árvore de
+   acessibilidade, apenas fora da vista: sem isso o item vira um ícone sem
+   nome, e o leitor de tela anuncia "link" e nada mais.
+
+   Como o rótulo some da vista, o item precisa de tooltip — use .tooltip-right
+   do próprio DS.
+
+   <aside class="sidebar sidebar-rail">
+     <a class="sidebar-item active">
+       <svg …></svg><span class="sidebar-label">Atendimento</span>
+     </a>
+   </aside>
+   O conteúdo ao lado usa .main-rail para acompanhar a largura.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.sidebar-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-rail {
+  width: var(--sidebar-collapsed);
+  align-items: center;
+  padding-inline: 0;
+}
+
+.sidebar-rail .sidebar-item {
+  justify-content: center;
+  margin-inline: var(--space-2);
+  padding-inline: 0;
+}
+
+/* Fora da vista, dentro da árvore de acessibilidade. */
+.sidebar-rail .sidebar-label,
+.sidebar-rail .sidebar-brand-text,
+.sidebar-rail .sidebar-section-label,
+.sidebar-rail .sidebar-user-name,
+.sidebar-rail .sidebar-user-role {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.sidebar-rail .sidebar-brand,
+.sidebar-rail .sidebar-footer {
+  justify-content: center;
+  padding-inline: 0;
+}
+
+/* ── Modo overlay (flutua sobre o conteúdo) ──────────────────────────────
+   Terceiro e último modo de navegação. A diferença que o define: o conteúdo
+   NÃO se move. Rail e panel tomam espaço da página; o overlay passa por cima
+   e devolve o espaço ao fechar.
+
+   É o que faltava abaixo de 1024px, onde o `.sidebar` simplesmente sumia sem
+   substituto — a navegação inteira desaparecia da tela pequena.
+
+   Sozinho é a gaveta. Somado ao rail — `.sidebar .sidebar-rail
+   .sidebar-overlay` — dá o caso comum de verdade: rail fixo no desktop,
+   gaveta abaixo de 1024px, um elemento só.
+
+   <aside class="sidebar sidebar-overlay" id="nav" data-sidebar-overlay>…</aside>
+   <button data-sidebar-toggle="nav" aria-expanded="false" hidden>Menu</button>
+
+   O comportamento — foco preso, Escape, clique fora, devolução do foco — vive
+   em dist/sidebar-overlay.js. Sem o script o painel fica fechado e inerte;
+   por isso o gatilho deve nascer com `hidden` e ser revelado pelo script.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.sidebar-overlay {
+  width: var(--sidebar-width);
+  z-index: var(--z-overlay);
+  /* visibility, e não só transform: é ela que tira o painel fechado da ordem
+     de tabulação e da árvore de acessibilidade. Um menu fechado que ainda
+     recebe Tab é uma armadilha silenciosa. */
+  visibility: hidden;
+  transform: translateX(-100%);
+  /* A visibilidade não interpola: ela vira de uma vez, e o `0s` com atraso
+     segura o painel visível até o deslize terminar. Ao ABRIR ela precisa valer
+     no mesmo quadro — `.focus()` num elemento ainda invisível falha em
+     silêncio, e o foco fica preso no botão. */
+  transition: transform var(--transition-slow),
+    visibility 0s linear var(--transition-slow);
+}
+
+.sidebar-overlay[data-open] {
+  visibility: visible;
+  transform: translateX(0);
+  transition: transform var(--transition-slow), visibility 0s;
+}
+
+/* Não é o .modal-overlay: aquele vive em --z-modal e centraliza o filho —
+   é acoplado ao modal. Este só escurece o fundo, uma camada abaixo do painel. */
+.sidebar-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-overlay) - 1);
+  visibility: hidden;
+  background: var(--bg-overlay);
+  opacity: 0;
+  transition: opacity var(--transition-slow),
+    visibility 0s linear var(--transition-slow);
+}
+
+.sidebar-scrim[data-open] {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity var(--transition-slow), visibility 0s;
+}
+
+/* Acima do corte, a composição rail + overlay devolve o comando ao rail: para
+   de flutuar e volta a ocupar espaço na página. É o que permite um elemento só
+   ser rail no desktop e gaveta no mobile, sem duplicar a navegação no HTML. */
+@media (min-width: 1025px) {
+  .sidebar-overlay.sidebar-rail {
+    /* A largura também: .sidebar-overlay é declarado depois de .sidebar-rail e
+       venceria com os 240px, deixando o "rail" do tamanho do painel. */
+    width: var(--sidebar-collapsed);
+    z-index: var(--z-sidebar);
+    visibility: visible;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-overlay,
+  .sidebar-scrim { transition: none; }
+}
+
 /* ══════════════════════════════════════════════════════════════════
    MAIN CONTENT
    ══════════════════════════════════════════════════════════════════ */
@@ -140,6 +295,13 @@ body {
      horizontal na página inteira. */
   min-width: 0;
   min-height: 100vh;
+}
+
+/* Par do .sidebar-rail. Largura da navegação e deslocamento do conteúdo saem
+   do mesmo token — os dois nunca saem de sincronia, que foi como nasceu o vão
+   morto de 192px do Electia. Ver components/split-pane.css. */
+.main-rail {
+  margin-left: var(--sidebar-collapsed);
 }
 
 /* Header */
@@ -208,7 +370,7 @@ body {
   color: var(--text-primary);
   border: 1px solid var(--border-default);
 }
-.btn-secondary:hover { border-color: var(--accent-primary); color: var(--accent-primary); transform: translateY(-1px); }
+.btn-secondary:hover { border-color: var(--accent-primary); color: var(--accent-primary-text); transform: translateY(-1px); }
 .btn-ghost { background: transparent; color: var(--text-secondary); }
 .btn-ghost:hover { color: var(--text-primary); background: var(--bg-surface-2); }
 .btn-danger {
@@ -381,7 +543,7 @@ body {
   font-size: 20px;
 }
 .icon-badge-sm { width: 36px; height: 36px; border-radius: var(--radius-md); font-size: 16px; }
-.icon-badge-blue { background: var(--accent-primary-muted); color: var(--accent-primary); }
+.icon-badge-blue { background: var(--accent-primary-muted); color: var(--accent-primary-text); }
 .icon-badge-purple { background: var(--theory-enneagram-bg); color: var(--theory-enneagram); }
 .icon-badge-green { background: var(--color-success-bg); color: var(--color-success); }
 .icon-badge-orange { background: var(--theory-disc-bg); color: var(--theory-disc); }
@@ -435,7 +597,7 @@ body {
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
 }
-.tag-blue { background: var(--accent-primary-muted); color: var(--accent-primary); }
+.tag-blue { background: var(--accent-primary-muted); color: var(--accent-primary-text); }
 .tag-purple { background: var(--theory-enneagram-bg); color: var(--theory-enneagram); }
 .tag-green { background: var(--color-success-bg); color: var(--color-success); }
 .tag-orange { background: var(--theory-disc-bg); color: var(--theory-disc); }
@@ -487,7 +649,7 @@ body {
   transition: all 150ms var(--spring-snappy);
 }
 .tab:hover { color: var(--text-secondary); }
-.tab.active { color: var(--accent-primary); border-bottom-color: var(--accent-primary); }
+.tab.active { color: var(--accent-primary-text); border-bottom-color: var(--accent-primary); }
 .tab.disabled, .tab:disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -629,7 +791,7 @@ body {
 }
 .chart-period-btn.active {
   background: var(--bg-base);
-  color: var(--accent-primary);
+  color: var(--accent-primary-text);
   box-shadow: var(--shadow-sm);
 }
 .chart-svg { width: 100%; height: 200px; }
@@ -693,7 +855,7 @@ tr:hover td { background: var(--bg-surface-1); }
 .td-score {
   font-family: var(--font-mono);
   font-weight: var(--font-bold);
-  color: var(--accent-primary);
+  color: var(--accent-primary-text);
 }
 .td-score-total {
   font-size: var(--text-xs);
@@ -782,7 +944,7 @@ tr:hover td { background: var(--bg-surface-1); }
   margin-bottom: var(--space-1);
 }
 .enneagram-mini-label-fear { color: var(--color-error); }
-.enneagram-mini-label-desire { color: var(--accent-primary); }
+.enneagram-mini-label-desire { color: var(--accent-primary-text); }
 .enneagram-mini-text {
   font-size: var(--text-xs);
   color: var(--text-secondary);
@@ -836,7 +998,7 @@ tr:hover td { background: var(--bg-surface-1); }
   font-family: var(--font-heading);
   font-size: var(--text-lg);
   font-weight: var(--font-bold);
-  color: var(--accent-primary);
+  color: var(--accent-primary-text);
   margin-bottom: var(--space-2);
 }
 .ds-footer-sub {
@@ -938,7 +1100,7 @@ tr:hover td { background: var(--bg-surface-1); }
   transition: all 150ms var(--spring-snappy);
 }
 .dropdown-item:hover { background: var(--bg-surface-2); color: var(--text-primary); }
-.dropdown-item.active { background: var(--accent-primary-muted); color: var(--accent-primary); font-weight: var(--font-medium); }
+.dropdown-item.active { background: var(--accent-primary-muted); color: var(--accent-primary-text); font-weight: var(--font-medium); }
 .dropdown-divider {
   border: none; border-top: 1px solid var(--border-subtle);
   margin: var(--space-1) 0;
@@ -972,7 +1134,7 @@ tr:hover td { background: var(--bg-surface-1); }
   cursor: pointer;
   transition: all 150ms var(--spring-snappy);
 }
-.pagination-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+.pagination-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary-text); }
 .pagination-btn.active {
   background: var(--accent-primary);
   color: var(--text-inverse);
@@ -1002,7 +1164,7 @@ tr:hover td { background: var(--bg-surface-1); }
   margin-bottom: var(--space-4);
 }
 .breadcrumb-item { color: var(--text-muted); cursor: pointer; transition: color var(--transition-fast); }
-.breadcrumb-item:hover { color: var(--accent-primary); }
+.breadcrumb-item:hover { color: var(--accent-primary-text); }
 .breadcrumb-item.active { color: var(--text-primary); font-weight: var(--font-medium); cursor: default; }
 .breadcrumb-sep { color: var(--text-muted); font-size: var(--text-xs); }
 
@@ -1242,7 +1404,7 @@ tr:hover td { background: var(--bg-surface-1); }
   cursor: pointer;
   transition: all 150ms var(--spring-snappy);
 }
-.kanban-add:hover { border-color: var(--accent-primary); color: var(--accent-primary); background: var(--accent-primary-muted); }
+.kanban-add:hover { border-color: var(--accent-primary); color: var(--accent-primary-text); background: var(--accent-primary-muted); }
 
 /* ══════════════════════════════════════════════════════════════════
    KEYFRAME ANIMATIONS
@@ -1320,39 +1482,13 @@ tr:hover td { background: var(--bg-surface-1); }
   background: var(--bg-base);
   z-index: 5;
 }
-.layout-list-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-4) var(--space-5);
-  border-bottom: 1px solid var(--border-subtle);
-  cursor: pointer;
-  transition: all 150ms var(--spring-snappy);
-}
-.layout-list-item:hover {
-  background: var(--bg-surface-1);
-}
-.layout-list-item.active {
-  background: var(--accent-primary-muted);
-  border-left: 3px solid var(--accent-primary);
-}
-.layout-list-item-info {
-  flex: 1;
-  min-width: 0;
-}
-.layout-list-item-name {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.layout-list-item-meta {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-  margin-top: 2px;
-}
+/* .layout-list-item e família foram CONSOLIDADOS em components/list-item.css
+   (07/08). As classes continuam existindo, agora como alias depreciado da
+   mesma implementação — nenhum consumidor quebra, e os nomes antigos herdaram
+   as correções que faltavam aqui: o `border-left: 3px` do estado ativo, que
+   empurrava o conteúdo a cada troca de seleção; a falta de `min-width: 0` na
+   linha; e a ausência de foco visível. Ver docs/components/list-item.md. */
+
 .layout-detail {
   flex: 1;
   overflow-y: auto;
@@ -1406,7 +1542,7 @@ tr:hover td { background: var(--bg-surface-1); }
   color: var(--text-muted);
 }
 .layout-centered-footer a {
-  color: var(--accent-primary);
+  color: var(--accent-primary-text);
   text-decoration: none;
   font-weight: var(--font-medium);
 }
@@ -1560,7 +1696,7 @@ tr:hover td { background: var(--bg-surface-1); }
   accent-color: var(--accent-primary);
 }
 .form-link {
-  color: var(--accent-primary);
+  color: var(--accent-primary-text);
   text-decoration: none;
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
@@ -1595,7 +1731,7 @@ tr:hover td { background: var(--bg-surface-1); }
 .view-toggle-btn:hover { color: var(--text-secondary); }
 .view-toggle-btn.active {
   background: var(--bg-base);
-  color: var(--accent-primary);
+  color: var(--accent-primary-text);
   box-shadow: var(--shadow-sm);
 }
 .view-toggle-btn:focus-visible {
@@ -1620,11 +1756,11 @@ tr:hover td { background: var(--bg-surface-1); }
 }
 .th-sortable.asc::after {
   content: '↑';
-  color: var(--accent-primary);
+  color: var(--accent-primary-text);
 }
 .th-sortable.desc::after {
   content: '↓';
-  color: var(--accent-primary);
+  color: var(--accent-primary-text);
 }
 .td-checkbox {
   width: 44px;
@@ -1665,7 +1801,7 @@ tr:hover td { background: var(--bg-surface-1); }
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);
-  color: var(--accent-primary);
+  color: var(--accent-primary-text);
   margin-right: auto;
 }
 
@@ -1710,7 +1846,7 @@ tr:hover td { background: var(--bg-surface-1); }
   transition: all 150ms var(--spring-snappy);
 }
 .filter-pill-remove:hover {
-  color: var(--accent-primary);
+  color: var(--accent-primary-text);
   background: var(--bg-surface-3);
 }
 .filter-pill-remove:focus-visible {
@@ -1720,7 +1856,7 @@ tr:hover td { background: var(--bg-surface-1); }
 .filter-bar-clear {
   font-size: var(--text-xs);
   font-weight: var(--font-medium);
-  color: var(--accent-primary);
+  color: var(--accent-primary-text);
   background: transparent;
   border: none;
   cursor: pointer;
@@ -1762,7 +1898,7 @@ tr:hover td { background: var(--bg-surface-1); }
 }
 .stepper-step.active .stepper-step-number {
   border-color: var(--accent-primary);
-  color: var(--accent-primary);
+  color: var(--accent-primary-text);
   font-weight: var(--font-bold);
 }
 .stepper-step-label {
@@ -1944,7 +2080,9 @@ tr:hover td { background: var(--bg-surface-1); }
   .theory-grid { grid-template-columns: 1fr; }
   .grid-2 { grid-template-columns: 1fr; }
   .grid-3 { grid-template-columns: 1fr; }
-  .sidebar { display: none; }
+  /* O modo overlay é a exceção, e é a razão de ele existir: até aqui a
+     navegação simplesmente sumia da tela pequena, sem substituto. */
+  .sidebar:not(.sidebar-overlay) { display: none; }
   .main { margin-left: 0; }
 }
 @media (max-width: 768px) {
@@ -2026,7 +2164,7 @@ tr:hover td { background: var(--bg-surface-1); }
 .breadcrumb-item:focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
-  color: var(--accent-primary);
+  color: var(--accent-primary-text);
 }
 .layout-list-item:focus-visible {
   outline: none;
@@ -2053,6 +2191,26 @@ tr:hover td { background: var(--bg-surface-1); }
 }
 .skip-link:focus {
   top: var(--space-2);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   ACCESSIBILITY — Screen-reader only text
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Alguns elementos precisam de um nome que só a tecnologia assistiva lê — a
+   <legend> de um segmented control cujo grupo já tem título visível, por
+   exemplo. `display: none` tiraria o elemento da árvore de acessibilidade
+   junto, que é o oposto do objetivo. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
 }
 
 /* ══════════════════════════════════════════════════════════════════

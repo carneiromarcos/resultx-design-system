@@ -5,6 +5,239 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Added — Modo overlay: os 3 modos de navegação, completos
+
+- **`.sidebar-overlay`** — terceiro e último modo. O que o define: **o conteúdo
+  não se move.** Rail e panel tomam espaço da página; o overlay passa por cima e
+  devolve o espaço ao fechar.
+- 🔴 **Corrige um defeito antigo:** abaixo de 1024px o `.sidebar` fazia
+  `display: none` **sem substituto** — a navegação inteira sumia da tela pequena.
+  Agora a regra é `.sidebar:not(.sidebar-overlay)`.
+- **`.sidebar-rail` + `.sidebar-overlay` compõem** o caso que a maioria dos
+  produtos quer: rail no desktop, gaveta abaixo de 1024px, **um elemento só**,
+  sem duplicar a navegação no HTML.
+- **`.sidebar-scrim`** — não é o `.modal-overlay`, que vive em `--z-modal` e
+  centraliza o filho. Este só escurece, uma camada abaixo do painel.
+- **`dist/sidebar-overlay.js`**, exposto como `resultx-design-system/sidebar-overlay`.
+  É painel modal e se comporta como um: foco entra ao abrir e **volta ao gatilho**
+  ao fechar, Tab preso dentro, Escape fecha, clique no scrim fecha, rolagem
+  travada e **restaurada** (não zerada). O gatilho nasce `hidden` e o script o
+  revela — botão que não faz nada é pior que botão nenhum.
+  `data-sidebar-media` fecha o painel quando a consulta deixa de casar.
+
+### Fixed — Dois defeitos que o overlay revelou
+
+- 🔴 **`.sidebar-item` transicionava `all`**, o que inclui `visibility` — herdada
+  do sidebar. O link reportava `visibility: hidden` no instante exato em que o
+  script chamava `.focus()`, e **focar elemento invisível falha em silêncio**:
+  o foco ficava preso no botão que abriu o painel. Um item de navegação só
+  precisa animar cor e fundo, e agora é o que ele declara.
+- 🔴 **`visibility` precisa virar na hora ao abrir e esperar ao fechar.**
+  Transicioná-la nos dois sentidos reproduz a mesma falha silenciosa. O padrão é
+  `visibility 0s linear var(--transition-slow)` fechado e `visibility 0s` aberto.
+
+Verificado em Chrome: foco entra no painel ao abrir; **12 Tabs e 6 Shift+Tabs,
+zero escapes**; Escape devolve o foco ao gatilho e `aria-expanded` acompanha;
+clique no scrim fecha; `body.overflow` travado e restaurado ao valor anterior;
+a 1440px o rail volta com 64px de largura e 64px de deslocamento; overlay aberto
+não sobrevive a janela crescer; zero overflow horizontal em 390/768/1440px; zero
+erro de console. **173 testes.**
+
+### Added — Superfície de conversa e segundo modo de navegação
+
+Fecha os nove componentes extraídos das telas de inbox.
+
+- **`.message`** — bolha, marco de dia (`.message-day`) e evento de sistema
+  (`.message-event`). **Evento não é mensagem:** não tem autor, não tem recibo e
+  não deve ser lido como fala — por isso é `<p>` e a mensagem é `<article>`. A
+  bolha para em `min(60ch, 78%)`: medida de leitura, não largura de coluna. O
+  recibo difere primeiro na **forma** (um tique × dois) e só depois na cor
+- **`.audio-player`** — reprodutor com forma de onda, **partindo de um
+  `<audio controls>` nativo**. Sem JavaScript o usuário vê o player do navegador
+  e ouve o áudio; um player que exige script para tocar troca uma mensagem de voz
+  por nada. A onda é um `slider`: setas ±5s, Home/End, Espaço alterna, e
+  `aria-valuetext` anuncia "0:02 de 0:04". Dois áudios não tocam ao mesmo tempo.
+  As alturas vêm de `--level` — o DS desenha a onda, não a inventa
+- **`.composer`** — barra de composição com campo que cresce. Usa
+  `field-sizing: content` onde existe, e `dist/composer.js` só cobre o resto —
+  onde o nativo existe, o script não anexa nada. **Enter-para-enviar, `/` e `@`
+  ficaram de fora de propósito:** é política de produto, não do sistema visual, e
+  um teste reprova se um `keydown` aparecer no script
+- **`.sidebar-rail`** — segundo modo de navegação, estendendo o `.sidebar` em vez
+  de criar um `.nav-rail` paralelo. Passa a usar `--sidebar-collapsed`, que vivia
+  **declarado e órfão**. Largura da navegação e deslocamento do conteúdo
+  (`.main-rail`) saem do **mesmo token**. O rótulo (`.sidebar-label`, novo) sai da
+  vista **sem sair da árvore de acessibilidade** — `display: none` deixaria o item
+  como ícone sem nome
+- **`dist/audio-player.js`** e **`dist/composer.js`**, expostos como
+  `resultx-design-system/audio-player` e `/composer`. Nenhum dos dois persiste
+  nada
+- **`docs/components/conversation.md`** e a seção de rail em `navigation.md`;
+  `docs/api-reference.md` atualizado — a linha do `.sidebar` dizia "240px" e
+  passou a haver dois modos
+
+Verificado em Chrome real: rail de 64px com o conteúdo deslocado exatamente 64px
+e o nome acessível preservado (`link "Atendimento"`, rótulo com 1px de largura);
+player trocando o `<audio controls>` pela interface própria, com 15 barras de
+alturas proporcionais; bolhas a 16px do lado correto de cada tipo; composer de
+36px → 75px → 117px (teto) → 36px; zero overflow horizontal em 1500 / 1024 / 768
+/ 390px; zero erro de console.
+
+**Um defeito que o próprio demo revelou:** o DS torna `body` um flex container, e
+o contêiner improvisado do demo, sem `flex`/`min-width: 0`, encolheu até o
+conteúdo — a coluna de conversa ficou em 265px de 1436 disponíveis. É o mesmo
+defeito que a Onda 1 corrigiu no `.main`. O demo passou a usar `.main .main-rail`
+em vez de improvisar, e a documentação do rail registra o par.
+
+### Added — Segmented control e item de lista
+
+- **`.segmented`** — escolher um valor entre poucos, todos visíveis
+  ("Humano / Agente / Observar"). **Sem JavaScript:** um grupo de
+  `<input type="radio">` nativo já dá setas do teclado, seleção com Espaço, uma
+  única parada de Tab, participação em formulário e o anúncio "Humano, botão de
+  opção, 1 de 3, selecionado". Um teste reprova o dia em que aparecer um
+  `dist/segmented.js`. Não é `.tabs` (que troca de visão) nem `.toggle` (que é
+  binário). Estado lido por `:has()`. Variantes `-stacked`, `-sm`, `-lg`,
+  `-block`. `docs/components/segmented.md`
+- **`.list-item`** — linha de lista com avatar, título, hora, prévia, meta e
+  contador de não lidas. Reaproveita a família `.avatar` do próprio DS.
+  Truncamento com `min-width: 0` nos quatro níveis da cadeia; a hora não encolhe
+  junto. O trilho de selecionado é `box-shadow` interno, não borda —
+  deslocamento medido de **0px** ao trocar de seleção. Não lida sinaliza por
+  **peso**, não só por cor. `docs/components/list-item.md`
+- **`.sr-only`** — utilitário de texto só para leitor de tela, na seção
+  ACCESSIBILITY. O repo não tinha nenhum, e o segmented control precisa de
+  rótulo de grupo quando o bloco em volta já mostra um título
+
+Verificado em Chrome real: `←` movendo a seleção `observar → agente → humano`
+sem script carregado; o grupo consumindo **uma** parada de Tab e a seguinte
+saindo dele; árvore ARIA com `group "Modo de atendimento"` e três `radio`; e o
+título truncando em 175 de 364px reais numa coluna de 280px, com a hora inteira
+preservada. Zero erro de console.
+
+### Changed — `.layout-list-item` consolidado em `.list-item` (dívida fechada)
+
+Eram dois componentes fazendo quase a mesma coisa. Agora há **uma implementação**
+e dois vocabulários: os nomes antigos entraram nas mesmas regras como alias.
+
+- **Nada foi removido.** `.layout-list-item` é classe pública e o FinanceX importa
+  o bundle inteiro — remover seria quebra de contrato, e quebra pertence a uma
+  major. Verificado: nenhum consumidor externo usa a classe (Electia e labs/site
+  nem importam `components`).
+- **Os nomes antigos herdaram as três correções que não tinham:** o trilho de
+  selecionado deixou de deslocar o conteúdo (`border-left: 3px` → `box-shadow`
+  interno, deslocamento medido de **0px**), a linha ganhou `min-width: 0`, e
+  passou a existir foco visível (3px, medido).
+- O bloco saiu de `components/components.css`; a implementação vive em
+  `components/list-item.css`. Cada alias está marcado `alias depreciado` para
+  sair de uma vez na próxima major.
+- Regra de compatibilidade preserva o divisor para markup antigo, que não tem o
+  `.list-item-group` em volta.
+- `demos/candidatos.html` migrado para o vocabulário novo — 32 ocorrências, mais
+  `.active` → `aria-current`. Um teste reprova se o nome antigo voltar a algum demo.
+- `docs/components/layout.md` e `docs/api-reference.md` marcam a depreciação com
+  tabela de migração. **160 testes.**
+
+### Added — Camada de comportamento + 2 componentes de painel
+
+Extraídos a partir de telas reais de um inbox de atendimento. O DS era CSS puro;
+estes dois exigem JavaScript, e a decisão foi abrir a camada de comportamento em
+vez de deixar cada produto reimplementar (item 7 da Onda 3, antecipado).
+
+- **`.disclosure`** — módulo recolhível, o padrão dos blocos de um painel de
+  contexto. Construído sobre `<details>`/`<summary>`: papel semântico,
+  `aria-expanded`, teclado e revelação ao buscar na página vêm do navegador, não
+  de código nosso. Cabeçalho de 44px (WCAG 2.2 SC 2.5.8). Fechado mede 46px —
+  44 do cabeçalho + 2 de borda, **zero** vão morto. `docs/components/disclosure.md`
+- **`.split-pane`** — painel de contexto redimensionável. **A largura vive numa
+  variável só**, `--split-pane-width`, e a grade inteira deriva dela: o painel e o
+  espaço que ele tira da coluna principal são o mesmo número, não dois para manter
+  em sincronia. É o contrato que torna impossível repetir o vão morto de 192px do
+  Electia. `docs/components/split-pane.md`
+- **`dist/disclosure.js`** e **`dist/split-pane.js`** — vanilla, sem framework, no
+  idioma do `theme-toggle.js` já existente. Arraste com pointer capture, teclado
+  (← → ±16px, Shift ±64px, Home/End, Enter restaura), limites lidos do CSS,
+  persistência em `localStorage` sob `resultx-*`, todo acesso em `try/catch`.
+  Expostos como `resultx-design-system/disclosure` e `/split-pane`
+- **`demos/inbox-panel.html`** — os componentes funcionando juntos, com a ponte da Electia
+- **`tests/disclosure-split-pane.test.js`** — 20 testes de contrato, incluindo um
+  que reprova qualquer segundo `setProperty` de largura no script
+
+Verificado em Chrome real: arraste de 320→440px com a coluna principal devolvendo
+exatamente o que o painel tomou; teto em 560 e piso em 260; `aria-valuenow`
+acompanhando; largura e módulos abertos restaurados após reload; coluna única em
+768px sem overflow horizontal; zero erro de console.
+
+### Added — Tokens de layout
+
+- `--panel-width` (320px), `--panel-width-min` (260px), `--panel-width-max` (560px),
+  `--split-handle-width` (12px) e `--disclosure-duration` (220ms), no bloco `:root`
+  compartilhado. A duração é lida de volta pelo script, para que o CSS e a espera
+  não se separem quando uma marca reajustar o token.
+
+### Changed — Composição do bundle de componentes
+
+- `components/components.css` passa a usar `@import url()` para puxar
+  `disclosure.css` e `split-pane.css`. O `postcss-import` inlina no build, então
+  `dist/components.min.css` segue sendo um arquivo só para o consumidor.
+
+### Added — Ponte de marca (Onda 3, itens 1 e 2)
+
+- **`brands/<marca>/tokens/ds-bridge.css`** para as 5 marcas — a camada que faltava entre o
+  arquivo de marca e os tokens semânticos do DS. Antes disso o brand declarava `--purple` /
+  `--gold` e não remapeava nada: quem importasse os dois continuava renderizando teal.
+  Sobrescreve os **quatro** escopos de tema, inclusive os dois blocos `prefers-color-scheme` —
+  sem eles quem não seta `data-theme` seguia no teal. Documentação em `docs/brand-bridge.md`
+- **`--accent-primary-text`** em `tokens/tokens.css` — separa o papel de **texto** do papel de
+  **preenchimento**. O mesmo dourado `#c4993b` é bom fundo (7,33:1 contra tinta escura) e texto
+  ilegível sobre branco (2,64:1); um token só não dava conta dos dois
+- **`scripts/lib/contrast.js`** — luminância relativa e razão de contraste WCAG 2.2. O repo não
+  tinha nenhuma verificação de contraste
+- **`scripts/build-brand-bridges.js`** + `scripts/brand-bridges.config.js` — geram as pontes a
+  partir de `brands/<marca>/tokens/tokens.css`, que segue sendo fonte única. A config declara
+  *qual token cumpre qual papel*, nunca um valor. `npm run build:bridges`, encadeado em `build:all`
+- **`tests/brand-bridge.test.js`** — contraste, cobertura dos 4 escopos, ausência de teal e
+  paridade entre o arquivo commitado e o gerador (esquecer o rebuild reprova a suíte)
+
+### Fixed — Contraste do rótulo sobre o accent
+
+- **`--text-inverse` deixa de ser um valor único do DS e passa a ser medido por marca.** O DS fixa
+  `#0B0E14`, correto para o teal (10,38:1) e **ilegal para o roxo da Electia: 2,55:1**. A falha é
+  bidirecional — nas 4 marcas douradas quem reprova é o branco (2,64:1). Nenhum valor único serve
+  às duas famílias, então a tinta é escolhida por medição e o build falha se nenhuma candidata
+  alcançar 4,5:1
+- **27 usos de `--accent-primary` como cor de texto** em `components/` migraram para
+  `--accent-primary-text`. `border-color`, `background` e `accent-color` não foram tocados
+- **Hover da Electia** passa de `--purple-light #a55eea` (3,90:1 com rótulo branco, reprova) para
+  `--purple-600 #8842d6` (5,53:1), um passo da rampa OKLCH da própria marca
+
+### Changed
+
+- `package.json` — `brands/*/tokens/*.css` entram em `files[]` e ganham os subpaths
+  `./brands/*/bridge` e `./brands/*/tokens` em `exports`. **`brands/` não era publicado**:
+  `node_modules/resultx-design-system/` não continha a pasta, e uma ponte sem essa correção não
+  chegaria a consumidor nenhum
+
+### Fixed — Tinta dourada das 3 marcas (lacuna fechada)
+
+- **Emprega+, PdV e ResultX** ganharam `--emp-gold-ink`, `--gold-ink` e `--rx-gold-ink`. Antes,
+  nenhuma tinha variante do dourado aprovada em AA como texto no tema light, e
+  `--accent-primary-text` caía em `var(--text-primary)`.
+- **O valor veio do Xscore, não de invenção:** `#866425` já existia lá. Como as quatro marcas
+  compartilham o mesmo dourado `#c4993b`, o valor é o mesmo. É a **mínima escurecida que passa nas
+  duas superfícies** — 5,44:1 no branco e 4,69:1 sobre o fundo de tag `#f2eee4`. Mantém o matiz
+  (39° contra 41°), só baixa a luminosidade de 50% para 34%.
+- O caso do PdV era o mais instrutivo: `--gold-muted #8B6B2A` passava no branco com 4,96 e reprovava
+  na tag com **4,28**. Passar num fundo e falhar no outro não é aprovação.
+- **O token existe nos DOIS temas** — `#c4993b` no `:root`, `#866425` no light. Sem a declaração no
+  escuro, `var(--*-gold-ink)` ficaria indefinido e quem precisasse de texto dourado cairia de volta
+  no `--gold`, que é o bug que o token veio evitar. Mesmo padrão que o Xscore já documentava.
+- PdV e ResultX ganharam um bloco `[data-theme="light"]`, que não tinham.
+- **Dois testes travam a correção:** nenhuma ponte pode conter `var(--text-primary)` como tinta de
+  texto, e o build não pode reportar lacuna alguma. **156 testes.**
+- O comentário de `brands/xscore/tokens/tokens.css` afirma que o fill `#c4993b` leva "texto branco
+  por cima". Branco sobre `#c4993b` dá **2,64:1** — reprova. O token está certo, a justificativa não
+
 ## [2.2.0] - 2026-08-05
 
 Publicada via PR #34, merge commit `728bee0`. **Primeira vez desde abril que `main`, brand

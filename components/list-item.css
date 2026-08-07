@@ -1,0 +1,218 @@
+/* ==========================================================================
+   List item — linha de lista com mídia, título, hora, prévia e meta
+   ==========================================================================
+
+   O item de uma lista de conversas. Nada aqui é de mensageria: a mesma linha
+   serve notificação, candidato, colaborador — qualquer entidade com rosto,
+   nome, um "quando" e uma prévia.
+
+   Primo próximo, de propósito diferente: .search-result-item é a linha
+   compacta de uma paleta de comandos — uma linha só, avatar de 28px, sem hora
+   nem prévia. Não são a mesma coisa e não devem ser fundidos.
+
+   ⚠️ .layout-list-item — DEPRECIADO, virou alias deste componente
+   ------------------------------------------------------------------
+   Existiam dois componentes fazendo quase a mesma coisa. Consolidados aqui em
+   07/08: os nomes antigos entraram nas MESMAS regras dos novos — uma
+   implementação, dois vocabulários. Nada foi removido, então nenhum consumidor
+   quebra; e os nomes antigos passaram a herdar as três correções que só o novo
+   tinha: sem deslocamento de layout ao selecionar, `min-width: 0` na linha, e
+   foco visível.
+
+     antigo (depreciado)          novo
+     .layout-list-item        →   .list-item
+     .layout-list-item-info   →   .list-item-body
+     .layout-list-item-name   →   .list-item-title
+     .layout-list-item-meta   →   .list-item-meta
+     .layout-list-item.active →   .list-item[aria-current]
+
+   Cada alias está marcado com `alias depreciado` para sair de uma vez na
+   próxima major. Em trabalho novo, usar os nomes novos.
+
+   Estrutura:
+     <a class="list-item" href="…" aria-current="true">
+       <img class="avatar avatar-md" src="…" alt="">
+       <span class="list-item-body">
+         <span class="list-item-head">
+           <span class="list-item-title">Roberta Moraes</span>
+           <time class="list-item-time" datetime="…">1min</time>
+           <span class="list-item-count">2</span>
+         </span>
+         <span class="list-item-preview">Você: do celular</span>
+         <span class="list-item-meta">WhatsApp · Pessoal</span>
+       </span>
+     </a>
+
+   O avatar vem de .avatar do próprio DS — inclusive .avatar-status para o
+   ponto de presença. Ver docs/components/list-item.md.
+   ========================================================================== */
+
+.list-item-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Divisor entre irmãos, nunca acima do primeiro nem abaixo do último. */
+.list-item-group > * + * {
+  border-top: 1px solid var(--border-subtle);
+}
+
+.list-item,
+.layout-list-item {                      /* alias depreciado */
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-3) var(--space-4);
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+/* min-width: 0 em cada nível é o que deixa o texto truncar. Sem isso, a linha
+   mais longa define a largura da coluna inteira e o painel corta. */
+.list-item-body,
+.layout-list-item-info {                 /* alias depreciado */
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.list-item-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.list-item-title,
+.layout-list-item-name {                 /* alias depreciado */
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-item-time {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Contador de não lidas. Só entre no markup quando houver o que contar. */
+.list-item-count {
+  flex-shrink: 0;
+  min-width: 18px;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-3);
+  color: var(--text-secondary);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  font-variant-numeric: tabular-nums;
+  line-height: 18px;
+  text-align: center;
+}
+
+.list-item-preview {
+  min-width: 0;
+  overflow: hidden;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-item-meta,
+.layout-list-item-meta {                 /* alias depreciado */
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Estados ────────────────────────────────────────────────────────────── */
+
+.list-item:hover,
+.layout-list-item:hover {                /* alias depreciado */
+  background: var(--bg-surface-1);
+}
+
+/* A classe antiga não tinha foco visível; passa a ter, de graça. */
+.list-item:focus-visible,
+.layout-list-item:focus-visible {        /* alias depreciado */
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: calc(var(--focus-ring-offset) * -1);
+}
+
+/* Não lida: o peso do título carrega o estado junto com o contador, para o
+   sinal não depender só de cor. */
+.list-item-unread .list-item-title {
+  color: var(--text-primary);
+  font-weight: var(--font-semibold);
+}
+
+.list-item-unread .list-item-preview {
+  color: var(--text-primary);
+}
+
+.list-item-unread .list-item-count {
+  background: var(--accent-primary-muted);
+  color: var(--accent-primary-text);
+}
+
+/* Selecionada. O trilho é box-shadow interno, não borda: borda empurraria o
+   conteúdo 3px para o lado toda vez que a seleção mudasse. */
+/* A classe antiga usava `border-left: 3px`, que empurrava o conteúdo a cada
+   troca de seleção. Vira box-shadow interno aqui, e o deslocamento some. */
+.list-item[aria-current],
+.layout-list-item.active {               /* alias depreciado */
+  background: var(--bg-surface-2);
+  box-shadow: inset 3px 0 0 0 var(--accent-primary);
+}
+
+.list-item[aria-current]:hover,
+.layout-list-item.active:hover {         /* alias depreciado */
+  background: var(--bg-surface-2);
+}
+
+/* ── Variantes ──────────────────────────────────────────────────────────── */
+
+/* Duas linhas em vez de três — para listas sem a faixa de meta. */
+.list-item-compact {
+  padding: var(--space-2) var(--space-4);
+}
+
+/* ── Compatibilidade do alias depreciado ────────────────────────────────── */
+
+/* O componente antigo carregava o divisor em si mesmo (`border-bottom` em cada
+   item); o novo o coloca no grupo, que é onde ele pertence. Esta regra mantém
+   a linha para markup antigo, que não tem o `.list-item-group` em volta.
+   Sai junto com os alias na próxima major. */
+.layout-list-item + .layout-list-item {
+  border-top: 1px solid var(--border-subtle);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .list-item,
+  .layout-list-item { transition: none; }
+}

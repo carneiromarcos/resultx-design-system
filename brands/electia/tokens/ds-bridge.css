@@ -1,0 +1,128 @@
+/* ============================================================================
+   Electia by Emprega+ — ponte para o ResultX Design System
+   ARQUIVO GERADO por scripts/build-brand-bridges.js — nao editar a mao.
+   Fonte dos valores: brands/electia/tokens/tokens.css
+   Regenerar: npm run build:bridges
+
+   O que faz
+   ---------
+   tokens/tokens.css entrega um accent so (teal no dark, azul no light). Esta
+   ponte reescreve os tokens semanticos do DS com os valores desta marca, nos
+   quatro escopos de tema que o DS usa — incluindo os dois blocos de
+   prefers-color-scheme, sem os quais quem nao seta data-theme continua vendo
+   teal.
+
+   --text-inverse e a tinta impressa SOBRE o accent (.btn-primary). Nao foi
+   escolhida: foi medida contra #0B0E14 e #FFFFFF, e o build falha
+   se nenhuma candidata alcancar 4.5:1.
+
+   Como usar — importar DEPOIS dos tokens do DS:
+     @import "resultx-design-system/tokens";
+     @import "resultx-design-system/brands/electia/bridge";
+   ============================================================================ */
+
+/* Tokens independentes de tema. --text-on-accent carrega a mesma tinta que
+   --text-inverse, porque os dois so aparecem sobre um preenchimento de accent. */
+:root {
+  --text-on-accent: #FFFFFF;
+  --accent-secondary-muted: rgba(178, 148, 66, 0.12);
+}
+
+/* ---- Tema dark (padrao) ---- */
+[data-theme="dark"] {
+  --accent-primary: #6f32b1;   /* --purple */
+  --accent-primary-hover: #8842d6;   /* --purple-600 */
+  --accent-primary-muted: rgba(111, 50, 177, 0.15);
+  --accent-secondary: #b29442;   /* --gold */
+
+  --text-inverse: #FFFFFF;   /* tinta medida sobre o accent: 7.59:1 */
+  --accent-primary-text: #c084fc;   /* --purple-on-dark — 7.31:1 sobre o fundo */
+
+  --border-accent: rgba(111, 50, 177, 0.2);
+  --focus-ring-color: rgba(111, 50, 177, 0.5);
+
+  --sidebar-active-bg: rgba(111, 50, 177, 0.15);
+  --sidebar-text-active: #c084fc;
+
+  --shadow-glow: 0 0 20px rgba(111, 50, 177, 0.15);
+  --shadow-glow-lg: 0 0 40px rgba(111, 50, 177, 0.2), 0 0 80px rgba(111, 50, 177, 0.08);
+
+  --chart-gradient-start: rgba(111, 50, 177, 0.25);
+  --chart-gradient-end: rgba(111, 50, 177, 0.02);
+  --chart-line: #c084fc;
+}
+
+/* ---- Tema light ---- */
+[data-theme="light"] {
+  --accent-primary: #6f32b1;   /* --purple */
+  --accent-primary-hover: #7c3aed;   /* --purple-light */
+  --accent-primary-muted: rgba(111, 50, 177, 0.12);
+  --accent-secondary: #b29442;   /* --gold */
+
+  --text-inverse: #FFFFFF;   /* tinta medida sobre o accent: 7.59:1 */
+  --accent-primary-text: #6f32b1;   /* --purple-on-dark — 7.59:1 sobre o fundo */
+
+  --border-accent: rgba(111, 50, 177, 0.25);
+  --focus-ring-color: rgba(111, 50, 177, 0.5);
+
+  --sidebar-active-bg: #6f32b1;
+  --sidebar-text-active: #FFFFFF;
+
+  --shadow-glow: 0 0 20px rgba(111, 50, 177, 0.15);
+  --shadow-glow-lg: 0 0 40px rgba(111, 50, 177, 0.2), 0 0 80px rgba(111, 50, 177, 0.08);
+
+  --chart-gradient-start: rgba(111, 50, 177, 0.25);
+  --chart-gradient-end: rgba(111, 50, 177, 0.02);
+  --chart-line: #6f32b1;
+}
+
+/* ---- Auto-deteccao: sem data-theme, respeitar a preferencia do sistema ---- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --accent-primary: #6f32b1;   /* --purple */
+    --accent-primary-hover: #8842d6;   /* --purple-600 */
+    --accent-primary-muted: rgba(111, 50, 177, 0.15);
+    --accent-secondary: #b29442;   /* --gold */
+
+    --text-inverse: #FFFFFF;   /* tinta medida sobre o accent: 7.59:1 */
+    --accent-primary-text: #c084fc;   /* --purple-on-dark — 7.31:1 sobre o fundo */
+
+    --border-accent: rgba(111, 50, 177, 0.2);
+    --focus-ring-color: rgba(111, 50, 177, 0.5);
+
+    --sidebar-active-bg: rgba(111, 50, 177, 0.15);
+    --sidebar-text-active: #c084fc;
+
+    --shadow-glow: 0 0 20px rgba(111, 50, 177, 0.15);
+    --shadow-glow-lg: 0 0 40px rgba(111, 50, 177, 0.2), 0 0 80px rgba(111, 50, 177, 0.08);
+
+    --chart-gradient-start: rgba(111, 50, 177, 0.25);
+    --chart-gradient-end: rgba(111, 50, 177, 0.02);
+    --chart-line: #c084fc;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --accent-primary: #6f32b1;   /* --purple */
+    --accent-primary-hover: #7c3aed;   /* --purple-light */
+    --accent-primary-muted: rgba(111, 50, 177, 0.12);
+    --accent-secondary: #b29442;   /* --gold */
+
+    --text-inverse: #FFFFFF;   /* tinta medida sobre o accent: 7.59:1 */
+    --accent-primary-text: #6f32b1;   /* --purple-on-dark — 7.59:1 sobre o fundo */
+
+    --border-accent: rgba(111, 50, 177, 0.25);
+    --focus-ring-color: rgba(111, 50, 177, 0.5);
+
+    --sidebar-active-bg: #6f32b1;
+    --sidebar-text-active: #FFFFFF;
+
+    --shadow-glow: 0 0 20px rgba(111, 50, 177, 0.15);
+    --shadow-glow-lg: 0 0 40px rgba(111, 50, 177, 0.2), 0 0 80px rgba(111, 50, 177, 0.08);
+
+    --chart-gradient-start: rgba(111, 50, 177, 0.25);
+    --chart-gradient-end: rgba(111, 50, 177, 0.02);
+    --chart-line: #6f32b1;
+  }
+}

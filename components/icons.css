@@ -47,7 +47,7 @@
 .icon-primary   { color: var(--text-primary); }
 .icon-secondary { color: var(--text-secondary); }
 .icon-muted     { color: var(--text-muted); }
-.icon-accent    { color: var(--accent-primary); }
+.icon-accent    { color: var(--accent-primary-text); }
 .icon-success   { color: var(--color-success); }
 .icon-warning   { color: var(--color-warning); }
 .icon-error     { color: var(--color-error); }
@@ -71,7 +71,7 @@
 .icon-wrapper-xl { width: 56px; height: 56px; }
 
 /* Wrapper color variants */
-.icon-wrapper-accent  { background: var(--accent-primary-muted); color: var(--accent-primary); }
+.icon-wrapper-accent  { background: var(--accent-primary-muted); color: var(--accent-primary-text); }
 .icon-wrapper-success { background: var(--color-success-bg); color: var(--color-success); }
 .icon-wrapper-warning { background: var(--color-warning-bg); color: var(--color-warning); }
 .icon-wrapper-error   { background: var(--color-error-bg); color: var(--color-error); }

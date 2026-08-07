@@ -47,7 +47,12 @@ See [tokens/](tokens/) for detailed documentation per category.
 
 | Class | Description | Docs |
 |-------|-------------|------|
-| `.sidebar` | Fixed sidebar container (240px) | [navigation.md](components/navigation.md) |
+| `.sidebar` | Fixed sidebar container — 240px panel, or 64px with `.sidebar-rail` | [navigation.md](components/navigation.md) |
+| `.sidebar-rail` | Rail mode: `var(--sidebar-collapsed)`, icons only | [navigation.md](components/navigation.md) |
+| `.sidebar-label` | Item text. Clipped, not removed, in rail mode | [navigation.md](components/navigation.md) |
+| `.main-rail` | Content offset paired with `.sidebar-rail` | [navigation.md](components/navigation.md) |
+| `.sidebar-overlay` | Overlay mode: floats above the content, which does not move | [navigation.md](components/navigation.md) |
+| `.sidebar-scrim` | Backdrop for the overlay. Created by the script if absent | [navigation.md](components/navigation.md) |
 | `.sidebar-brand` | Brand logo area | |
 | `.sidebar-logo` | Logo icon (32px, accent bg) | |
 | `.sidebar-brand-text` | Brand name text | |
@@ -306,6 +311,23 @@ See [tokens/](tokens/) for detailed documentation per category.
 | `.dropdown-item.active` | Active item |
 | `.dropdown-divider` | Menu divider |
 | `.dropdown-label` | Menu section label |
+
+### Panel & Conversation
+
+| Class | Description | Docs |
+|-------|-------------|------|
+| `.disclosure` | Collapsible module, built on `<details>` | [disclosure.md](components/disclosure.md) |
+| `.split-pane` | Resizable two-column layout; one width variable | [split-pane.md](components/split-pane.md) |
+| `.segmented` | Pick one value among N; native radio group, no JS | [segmented.md](components/segmented.md) |
+| `.list-item` | List row: avatar, title, time, preview, unread count | [list-item.md](components/list-item.md) |
+| `.layout-list-item` | ⚠️ Deprecated alias of `.list-item` — same implementation | [list-item.md](components/list-item.md) |
+| `.message` | A message bubble, incoming or outgoing | [conversation.md](components/conversation.md) |
+| `.message-event` | System event in the stream — not a message | [conversation.md](components/conversation.md) |
+| `.message-day` | Sticky date marker | [conversation.md](components/conversation.md) |
+| `.audio-player` | Waveform player over a native `<audio>` | [conversation.md](components/conversation.md) |
+| `.composer` | Message composition bar; field grows with content | [conversation.md](components/conversation.md) |
+
+Behaviour scripts: `resultx-design-system/disclosure`, `/split-pane`, `/audio-player`, `/composer`. `.segmented` needs none.
 
 ### Utility Classes
 

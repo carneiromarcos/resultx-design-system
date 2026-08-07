@@ -1,0 +1,188 @@
+/* ==========================================================================
+   Audio player — reprodutor com forma de onda
+   ==========================================================================
+
+   Parte de um <audio controls> nativo. Sem JavaScript o usuário vê o player do
+   navegador e CONSEGUE OUVIR O ÁUDIO; o script esconde o nativo e mostra esta
+   interface. Um player que exige JS para tocar troca uma mensagem de voz por
+   nada.
+
+   As alturas da onda vêm de --level (0 a 1) em cada barra, calculadas por quem
+   gera o áudio. O DS não inventa a forma de onda: ele a desenha.
+
+   Estrutura:
+     <div class="audio-player" data-audio-player>
+       <audio class="audio-native" src="…" controls preload="metadata"></audio>
+
+       <button class="audio-play" type="button" aria-label="Reproduzir">…</button>
+       <div class="audio-body">
+         <div class="audio-wave">
+           <span class="audio-bar" style="--level: .4"></span>
+           …
+         </div>
+         <div class="audio-meta">
+           <time class="audio-time">0:04</time>
+           <button class="audio-rate" type="button">1×</button>
+         </div>
+       </div>
+     </div>
+
+   Ver docs/components/conversation.md.
+   ========================================================================== */
+
+.audio-player {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  max-width: min(60ch, 78%);
+  padding: var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-2);
+}
+
+/* Antes de o script assumir, o nativo é a interface. Depois ele continua no
+   DOM tocando o som — só deixa de aparecer. */
+.audio-native {
+  width: 100%;
+  min-width: 0;
+}
+
+/* ── Botão de reprodução ────────────────────────────────────────────────── */
+
+.audio-play {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;                 /* alvo de toque — WCAG 2.2 SC 2.5.8 */
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--accent-primary);
+  color: var(--text-on-accent);
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.audio-play:hover { background: var(--accent-primary-hover); }
+.audio-play:active { transform: scale(0.96); }
+
+.audio-play:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.audio-play > svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Corpo ──────────────────────────────────────────────────────────────── */
+
+.audio-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+/* ── Forma de onda ──────────────────────────────────────────────────────── */
+
+/* É um slider: recebe foco, aceita setas e anuncia a posição. Clicar numa
+   barra procura aquele ponto. */
+.audio-wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 32px;
+  min-width: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.audio-wave:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.audio-bar {
+  flex: 1;
+  min-width: 2px;
+  max-width: 3px;
+  /* --level vai de 0 a 1; o piso de 12% impede a barra silenciosa de sumir. */
+  height: calc(12% + var(--level, 0.5) * 88%);
+  border-radius: var(--radius-full);
+  background: var(--text-muted);
+  transition: background var(--transition-fast);
+}
+
+.audio-bar-played {
+  background: var(--accent-primary-text);
+}
+
+/* ── Tempo e velocidade ─────────────────────────────────────────────────── */
+
+.audio-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.audio-time {
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.audio-rate {
+  flex-shrink: 0;
+  min-height: 24px;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-3);
+  color: var(--text-secondary);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-semibold);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.audio-rate:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.audio-rate:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ── A troca de interface ───────────────────────────────────────────────── */
+
+/* Depois das definições de propósito: estes seletores são mais específicos e
+   precisam vencer na cascata. Antes de o script assumir, o player nativo é a
+   interface; depois, ele continua no DOM tocando o som, só deixa de aparecer. */
+.audio-player:not([data-audio-ready]) > .audio-play,
+.audio-player:not([data-audio-ready]) > .audio-body {
+  display: none;
+}
+
+.audio-player[data-audio-ready] > .audio-native {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audio-play,
+  .audio-bar,
+  .audio-rate { transition: none; }
+
+  .audio-play:active { transform: none; }
+}

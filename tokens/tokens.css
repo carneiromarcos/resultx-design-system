@@ -53,6 +53,19 @@
   --sidebar-collapsed: 64px;
   --header-height: 56px;
   --content-max-width: 1280px;
+
+  /* Context panel — the resizable column beside the main content.
+     --panel-width is the DEFAULT. The live width lives in --split-pane-width,
+     set on the .split-pane element itself, so the panel and the space it takes
+     from the main column can never drift apart. */
+  --panel-width: 320px;
+  --panel-width-min: 260px;
+  --panel-width-max: 560px;
+  --split-handle-width: 12px;
+
+  /* Disclosure — the collapse/expand timing. Read by dist/disclosure.js so the
+     script waits exactly as long as the CSS animates. */
+  --disclosure-duration: 220ms;
   --grid-gap: 20px;
   --card-min-width: 300px;
 
@@ -135,6 +148,11 @@
   --accent-primary-hover: #5EEAD4;
   --accent-primary-muted: rgba(45, 212, 191, 0.15);
   --accent-secondary: #C49A3C;
+  /* The accent as TEXT, not as fill. Same value here because teal reads at
+     10.38:1 on #0B0E14 — but a brand whose accent is dark (Electia purple:
+     2.55:1) must override this separately from --accent-primary.
+     See brands/<marca>/tokens/ds-bridge.css. */
+  --accent-primary-text: #2DD4BF;
 
   /* ── Semantic ──────────────────────────────────────────────────────────── */
   --color-success: #22C55E;
@@ -267,6 +285,8 @@
   --accent-primary-hover: #1E40AF;
   --accent-primary-muted: rgba(29, 78, 216, 0.12);
   --accent-secondary: #C49A3C;
+  /* 6.70:1 on #FFF — safe as text, so it mirrors --accent-primary here. */
+  --accent-primary-text: #1D4ED8;
 
   /* ── Semantic ──────────────────────────────────────────────────────────── */
   --color-success: #16A34A;
@@ -378,6 +398,7 @@
     --text-muted: #6E7681; --text-inverse: #0B0E14;
     --accent-primary: #2DD4BF; --accent-primary-hover: #5EEAD4;
     --accent-primary-muted: rgba(45, 212, 191, 0.15); --accent-secondary: #C49A3C;
+    --accent-primary-text: #2DD4BF;
     --color-success: #22C55E; --color-success-bg: rgba(34, 197, 94, 0.12);
     --color-warning: #F59E0B; --color-warning-bg: rgba(245, 158, 11, 0.12);
     --color-error: #EF4444; --color-error-bg: rgba(239, 68, 68, 0.12);
@@ -433,6 +454,7 @@
     --text-muted: #6B7280; --text-inverse: #FFF;
     --accent-primary: #1D4ED8; --accent-primary-hover: #1E40AF;
     --accent-primary-muted: rgba(29, 78, 216, 0.12); --accent-secondary: #C49A3C;
+    --accent-primary-text: #1D4ED8;
     --color-success: #16A34A; --color-success-bg: rgba(22, 163, 74, 0.12);
     --color-warning: #D97706; --color-warning-bg: rgba(217, 119, 6, 0.12);
     --color-error: #DC2626; --color-error-bg: rgba(220, 38, 38, 0.12);
