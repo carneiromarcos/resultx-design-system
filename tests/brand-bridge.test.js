@@ -67,6 +67,24 @@ describe('Brand bridge — contraste WCAG AA', () => {
     }
   });
 
+  test('nenhuma marca cai no texto neutro — todas tem tinta propria', () => {
+    // Ate 07/08, Emprega+, PdV e ResultX nao tinham variante do dourado
+    // aprovada em AA como texto no light, e --accent-primary-text caia em
+    // var(--text-primary). As tres ganharam --*-gold-ink #866425. Remover o
+    // token faz o gerador voltar ao neutro, e este teste reprova.
+    for (const id of BRAND_IDS) {
+      const css = readBridge(id);
+      expect(`${id}: ${css.includes('--accent-primary-text: var(--text-primary)')}`).toBe(
+        `${id}: false`
+      );
+      expect(`${id}: ${css.includes('LACUNA DE MARCA')}`).toBe(`${id}: false`);
+    }
+  });
+
+  test('o build nao reporta lacuna nenhuma', () => {
+    expect(build({ write: false }).gaps).toEqual([]);
+  });
+
   test('toda tinta alcanca 4.5:1 sobre o accent da marca', () => {
     const { report } = build({ write: false });
     for (const { brand, theme, r } of report) {

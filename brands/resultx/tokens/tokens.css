@@ -9,6 +9,14 @@
   --rx-gold-light: #d4ae54;
   --rx-gold: #c4993b;
   --rx-gold-dark: #a07b2a;
+  /* Texto/ícone dourado. No escuro é o próprio --rx-gold (7,33:1 sobre
+     #0B0E14); no light vira #866425, porque #c4993b reprova sobre branco
+     (2,64:1) e mesmo --rx-gold-dark para em 3,92:1.
+     ⚠️ Existe nos DOIS temas para que a interface use UM token só. Sem esta
+     declaração `var(--rx-gold-ink)` ficaria indefinido no escuro, e quem
+     precisasse de texto dourado cairia de volta em --rx-gold — que é
+     exatamente o bug que o token veio evitar. Mesmo padrão do Xscore. */
+  --rx-gold-ink: #c4993b;
 
   /* ---- Purple accent (heranca Electia) ---- */
   --rx-purple-light: #a55eea;
@@ -113,6 +121,17 @@
   /* ---- Layout ---- */
   --rx-container-max: 1200px;
   --rx-gutter: 1.5rem;
+}
+
+/* ============================================
+   TEMA LIGHT — opt-in via data-theme="light"
+   Só o que MUDA de valor sobre fundo claro.
+   ============================================ */
+[data-theme="light"] {
+  /* 5,44:1 sobre branco e 4,69:1 sobre a superfície com 12% de dourado (o
+     fundo de tag) — as duas medidas precisam passar. O dourado da marca segue
+     intacto como PREENCHIMENTO de botão, com tinta escura por cima. */
+  --rx-gold-ink: #866425;
 }
 
 /* ---- Animation: Scroll Reveal ---- */

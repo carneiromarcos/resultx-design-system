@@ -167,13 +167,23 @@ acompanhando; largura e módulos abertos restaurados após reload; coluna única
   `node_modules/resultx-design-system/` não continha a pasta, e uma ponte sem essa correção não
   chegaria a consumidor nenhum
 
-### Lacunas abertas — decisão de marca, não de código
+### Fixed — Tinta dourada das 3 marcas (lacuna fechada)
 
-- **Emprega+, PdV e ResultX** não têm, em tema light, variante do dourado aprovada em AA como
-  texto (`#a07b2a` = 3,92:1; o `--gold-muted` do PdV passa no branco com 4,96:1 mas cai a 4,28:1
-  sobre a superfície tingida de tag). Enquanto isso, `--accent-primary-text` cai em
-  `var(--text-primary)`: perde-se a cor, não a legibilidade. **Xscore é o modelo** — já declara
-  `--gold-ink #866425` (5,44:1)
+- **Emprega+, PdV e ResultX** ganharam `--emp-gold-ink`, `--gold-ink` e `--rx-gold-ink`. Antes,
+  nenhuma tinha variante do dourado aprovada em AA como texto no tema light, e
+  `--accent-primary-text` caía em `var(--text-primary)`.
+- **O valor veio do Xscore, não de invenção:** `#866425` já existia lá. Como as quatro marcas
+  compartilham o mesmo dourado `#c4993b`, o valor é o mesmo. É a **mínima escurecida que passa nas
+  duas superfícies** — 5,44:1 no branco e 4,69:1 sobre o fundo de tag `#f2eee4`. Mantém o matiz
+  (39° contra 41°), só baixa a luminosidade de 50% para 34%.
+- O caso do PdV era o mais instrutivo: `--gold-muted #8B6B2A` passava no branco com 4,96 e reprovava
+  na tag com **4,28**. Passar num fundo e falhar no outro não é aprovação.
+- **O token existe nos DOIS temas** — `#c4993b` no `:root`, `#866425` no light. Sem a declaração no
+  escuro, `var(--*-gold-ink)` ficaria indefinido e quem precisasse de texto dourado cairia de volta
+  no `--gold`, que é o bug que o token veio evitar. Mesmo padrão que o Xscore já documentava.
+- PdV e ResultX ganharam um bloco `[data-theme="light"]`, que não tinham.
+- **Dois testes travam a correção:** nenhuma ponte pode conter `var(--text-primary)` como tinta de
+  texto, e o build não pode reportar lacuna alguma. **156 testes.**
 - O comentário de `brands/xscore/tokens/tokens.css` afirma que o fill `#c4993b` leva "texto branco
   por cima". Branco sobre `#c4993b` dá **2,64:1** — reprova. O token está certo, a justificativa não
 

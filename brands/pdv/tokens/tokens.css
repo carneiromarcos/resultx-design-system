@@ -12,6 +12,13 @@
   --gold: #c4993b;
   --gold-dark: #a07b2a;
   --gold-muted: #8B6B2A;
+  /* Texto/ícone dourado. No escuro é o próprio --gold (7,33:1 sobre #0B0E14);
+     no light vira #866425. Nem --gold-dark (3,92) nem --gold-muted servem:
+     este último passa no branco com 4,96 mas cai a 4,28 sobre a superfície
+     tingida de tag — passar num fundo e falhar no outro não é aprovação.
+     ⚠️ Existe nos DOIS temas para que a interface use UM token só. Mesmo
+     padrão do Xscore. */
+  --gold-ink: #c4993b;
 
   /* ---- Background Scale (navy ecossistema — alinhado theme-color Emprega+) ---- */
   --bg: #1B2A4A;
@@ -130,6 +137,17 @@
   /* --bp-md: 768px; */
   /* --bp-lg: 1024px; */
   /* --bp-xl: 1280px; */
+}
+
+/* ============================================
+   TEMA LIGHT — opt-in via data-theme="light"
+   Só o que MUDA de valor sobre fundo claro.
+   ============================================ */
+[data-theme="light"] {
+  /* 5,44:1 sobre branco e 4,69:1 sobre a superfície com 12% de dourado (o
+     fundo de tag) — as duas medidas precisam passar. O dourado da marca segue
+     intacto como PREENCHIMENTO de botão, com tinta escura por cima. */
+  --gold-ink: #866425;
 }
 
 /* ---- Utility classes ---- */

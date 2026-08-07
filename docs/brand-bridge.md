@@ -87,11 +87,11 @@ Saída de `npm run build:bridges`:
 | electia | dark | `#6f32b1` | `#FFFFFF` | 7,59:1 | `#c084fc` (7,31:1) |
 | electia | light | `#6f32b1` | `#FFFFFF` | 7,59:1 | `#6f32b1` (7,59:1) |
 | emprega-mais | dark | `#c4993b` | `#0B0E14` | 7,33:1 | `#c4993b` (7,33:1) |
-| emprega-mais | light | `#c4993b` | `#0B0E14` | 7,33:1 | ⚠️ lacuna |
+| emprega-mais | light | `#c4993b` | `#0B0E14` | 7,33:1 | `#866425` (5,44:1) |
 | pdv | dark | `#c4993b` | `#0B0E14` | 7,33:1 | `#c4993b` (7,33:1) |
-| pdv | light | `#c4993b` | `#0B0E14` | 7,33:1 | ⚠️ lacuna |
+| pdv | light | `#c4993b` | `#0B0E14` | 7,33:1 | `#866425` (5,44:1) |
 | resultx | dark | `#c4993b` | `#0B0E14` | 7,33:1 | `#c4993b` (7,33:1) |
-| resultx | light | `#c4993b` | `#0B0E14` | 7,33:1 | ⚠️ lacuna |
+| resultx | light | `#c4993b` | `#0B0E14` | 7,33:1 | `#866425` (5,44:1) |
 | xscore | dark | `#c4993b` | `#0B0E14` | 7,33:1 | `#c4993b` (7,33:1) |
 | xscore | light | `#c4993b` | `#0B0E14` | 7,33:1 | `#866425` (5,44:1) |
 
@@ -107,24 +107,46 @@ valor só e o rótulo ficaria ilegível justamente no estado de interação.
 **4,28:1** sobre a superfície com 12% de tinta do accent, que é o fundo de tag e badge. Passar num
 fundo e falhar no outro não é aprovação.
 
-## ⚠️ Lacunas abertas — pedem decisão de marca, não de código
+## 🟢 A tinta dourada — lacuna fechada em 07/08
 
-**Emprega+, PdV e ResultX não possuem, em tema light, nenhuma variante do dourado aprovada em AA
-como texto.** O mais escuro que cada uma declara:
+Até aqui, **Emprega+, PdV e ResultX não tinham** variante do dourado aprovada em AA como texto no
+tema light, e `--accent-primary-text` caía em `var(--text-primary)`: perdia-se a cor de marca, não
+a legibilidade.
 
-| marca | token mais escuro | sobre branco |
-|---|---|---:|
-| Emprega+ | `--emp-gold-dark #a07b2a` | 3,92:1 — só texto grande |
-| ResultX | `--rx-gold-dark #a07b2a` | 3,92:1 — só texto grande |
-| PdV | `--gold-muted #8B6B2A` | 4,96:1 no branco, 4,28:1 na tag |
+O mais escuro que cada uma declarava, e por que nenhum servia:
 
-Enquanto a lacuna existir, a ponte aponta `--accent-primary-text` para `var(--text-primary)`:
-perde-se a cor de marca, **não** a legibilidade. Manter o accent do DS ali seria legível porém de
-outra marca — texto azul ao lado de botões dourados.
+| marca | token mais escuro | sobre branco | sobre a tag `#f2eee4` |
+|---|---|---:|---:|
+| Emprega+ | `--emp-gold-dark #a07b2a` | 3,92:1 ❌ | 3,38:1 ❌ |
+| ResultX | `--rx-gold-dark #a07b2a` | 3,92:1 ❌ | 3,38:1 ❌ |
+| PdV | `--gold-muted #8B6B2A` | 4,96:1 ✅ | **4,28:1** ❌ |
 
-**O Xscore já resolveu isso** e é o modelo a copiar: declara `--gold-ink: #866425` no escopo light,
-com 5,44:1 sobre branco e aprovação também sobre a superfície tingida. As três marcas precisam de
-uma tinta equivalente.
+O caso do PdV é o mais instrutivo: passava no branco puro e reprovava sobre a superfície com 12% de
+tinta do accent, que é o fundo de tag e badge. **Passar num fundo e falhar no outro não é aprovação.**
+
+**A solução veio do Xscore, não de invenção.** Ele já declarava `--gold-ink: #866425`, e as três
+marcas passaram a declarar o equivalente com o próprio prefixo — `--emp-gold-ink`, `--gold-ink`,
+`--rx-gold-ink`. Como as quatro compartilham o mesmo dourado `#c4993b`, o valor é o mesmo.
+
+`#866425` é a **mínima escurecida que passa nas duas superfícies** — 5,44:1 no branco e 4,69:1 na
+tag. Mantém o matiz da marca (39° contra 41° do `#c4993b`), só baixa a luminosidade de 50% para 34%.
+Candidatos mais escuros passariam com folga, e por isso mesmo se afastariam mais do dourado.
+
+### O token existe nos DOIS temas, e isso é deliberado
+
+```css
+:root                 { --emp-gold-ink: #c4993b; }  /* no escuro, o próprio dourado lê bem */
+[data-theme="light"]  { --emp-gold-ink: #866425; }
+```
+
+O comentário do Xscore explica por quê, e vale para as quatro: sem a declaração no escuro,
+`var(--gold-ink)` ficaria indefinido e quem precisasse de texto dourado cairia de volta no
+`--gold` — **exatamente o bug que o token veio evitar** (19 ocorrências no Xscore em 01/08). Um
+papel, um nome, resolvido por tema.
+
+Efeito colateral bem-vindo: PdV e ResultX ganharam um bloco `[data-theme="light"]`, que não tinham.
+Dois testes travam a correção — um verifica que nenhuma ponte contém `var(--text-primary)` como
+tinta de texto, outro que o build não reporta lacuna alguma.
 
 > Achado colateral: o comentário do `brands/xscore/tokens/tokens.css` afirma que o `#c4993b`
 > "permanece só como FILL de botão, **com texto branco por cima**". Branco sobre `#c4993b` dá

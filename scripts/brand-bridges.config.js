@@ -64,17 +64,15 @@ const BRANDS = [
       accent: '--emp-gold',
       hover: '--emp-gold-light',
       secondary: '--emp-purple',
-      text: '--emp-gold',
+      // One token across both themes: the brand file resolves it to #c4993b in
+      // dark and #866425 in light. The interface uses one name, not two.
+      text: '--emp-gold-ink',
     },
     light: {
       accent: '--emp-gold',
       hover: '--emp-gold-light',
       secondary: '--emp-purple',
-      // GAP: the darkest gold the brand owns is --emp-gold-dark #a07b2a, which
-      // reaches only 3.92 on white — large text only. The brand needs an ink
-      // variant like xscore's --gold-ink. Until it has one, the bridge leaves
-      // --accent-primary-text at the DS default in the light theme.
-      text: null,
+      text: '--emp-gold-ink',
     },
   },
   {
@@ -84,17 +82,13 @@ const BRANDS = [
       accent: '--gold',
       hover: '--gold-light',
       secondary: null,
-      text: '--gold',
+      text: '--gold-ink',
     },
     light: {
       accent: '--gold',
       hover: '--gold-light',
       secondary: null,
-      // GAP: --gold-muted #8B6B2A is the brand's darkest gold and clears 4.96
-      // on plain white — but only 4.28 once the surface carries the 12% accent
-      // tint used by tags and badges. It is not safe for every text surface, so
-      // it is not promoted. xscore's --gold-ink #866425 clears both.
-      text: null,
+      text: '--gold-ink',
     },
   },
   {
@@ -104,14 +98,13 @@ const BRANDS = [
       accent: '--rx-gold',
       hover: '--rx-gold-light',
       secondary: '--rx-purple',
-      text: '--rx-gold',
+      text: '--rx-gold-ink',
     },
     light: {
       accent: '--rx-gold',
       hover: '--rx-gold-light',
       secondary: '--rx-purple',
-      // GAP: same as emprega-mais — --rx-gold-dark #a07b2a stops at 3.92.
-      text: null,
+      text: '--rx-gold-ink',
     },
   },
   {
@@ -121,13 +114,14 @@ const BRANDS = [
       accent: '--gold',
       hover: '--gold-light',
       secondary: '--intel',
-      text: '--gold',
+      // The brand that got here first: --gold-ink already existed in both
+      // scopes, and the other three now follow the same pattern.
+      text: '--gold-ink',
     },
     light: {
       accent: '--gold',
       hover: '--gold-light',
       secondary: '--intel',
-      // The only brand that already shipped this role: --gold-ink #866425.
       text: '--gold-ink',
     },
   },

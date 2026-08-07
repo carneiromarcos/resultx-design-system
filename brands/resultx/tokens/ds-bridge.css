@@ -36,7 +36,7 @@
   --accent-secondary: #6f32b1;   /* --rx-purple */
 
   --text-inverse: #0B0E14;   /* tinta medida sobre o accent: 7.33:1 */
-  --accent-primary-text: #c4993b;   /* --rx-gold — 7.33:1 sobre o fundo */
+  --accent-primary-text: #c4993b;   /* --rx-gold-ink — 7.33:1 sobre o fundo */
 
   --border-accent: rgba(196, 153, 59, 0.2);
   --focus-ring-color: rgba(196, 153, 59, 0.5);
@@ -60,13 +60,7 @@
   --accent-secondary: #6f32b1;   /* --rx-purple */
 
   --text-inverse: #0B0E14;   /* tinta medida sobre o accent: 7.33:1 */
-  /* LACUNA DE MARCA: nenhuma variante do accent desta marca alcanca AA
-     (4.5:1) como texto neste tema. Cai no texto neutro em vez de manter
-     o accent do DS — que seria legivel, porem de outra marca (texto azul
-     ao lado de botoes dourados). Perde-se a cor, nao a legibilidade.
-     Some quando a marca ganhar uma tinta como --gold-ink do xscore.
-     Ver docs/brand-bridge.md. */
-  --accent-primary-text: var(--text-primary);
+  --accent-primary-text: #866425;   /* --rx-gold-ink — 5.44:1 sobre o fundo */
 
   --border-accent: rgba(196, 153, 59, 0.25);
   --focus-ring-color: rgba(196, 153, 59, 0.5);
@@ -79,7 +73,7 @@
 
   --chart-gradient-start: rgba(196, 153, 59, 0.25);
   --chart-gradient-end: rgba(196, 153, 59, 0.02);
-  --chart-line: #c4993b;
+  --chart-line: #866425;
 }
 
 /* ---- Auto-deteccao: sem data-theme, respeitar a preferencia do sistema ---- */
@@ -91,7 +85,7 @@
     --accent-secondary: #6f32b1;   /* --rx-purple */
 
     --text-inverse: #0B0E14;   /* tinta medida sobre o accent: 7.33:1 */
-    --accent-primary-text: #c4993b;   /* --rx-gold — 7.33:1 sobre o fundo */
+    --accent-primary-text: #c4993b;   /* --rx-gold-ink — 7.33:1 sobre o fundo */
 
     --border-accent: rgba(196, 153, 59, 0.2);
     --focus-ring-color: rgba(196, 153, 59, 0.5);
@@ -116,13 +110,7 @@
     --accent-secondary: #6f32b1;   /* --rx-purple */
 
     --text-inverse: #0B0E14;   /* tinta medida sobre o accent: 7.33:1 */
-    /* LACUNA DE MARCA: nenhuma variante do accent desta marca alcanca AA
-       (4.5:1) como texto neste tema. Cai no texto neutro em vez de manter
-       o accent do DS — que seria legivel, porem de outra marca (texto azul
-       ao lado de botoes dourados). Perde-se a cor, nao a legibilidade.
-       Some quando a marca ganhar uma tinta como --gold-ink do xscore.
-       Ver docs/brand-bridge.md. */
-    --accent-primary-text: var(--text-primary);
+    --accent-primary-text: #866425;   /* --rx-gold-ink — 5.44:1 sobre o fundo */
 
     --border-accent: rgba(196, 153, 59, 0.25);
     --focus-ring-color: rgba(196, 153, 59, 0.5);
@@ -135,6 +123,6 @@
 
     --chart-gradient-start: rgba(196, 153, 59, 0.25);
     --chart-gradient-end: rgba(196, 153, 59, 0.02);
-    --chart-line: #c4993b;
+    --chart-line: #866425;
   }
 }

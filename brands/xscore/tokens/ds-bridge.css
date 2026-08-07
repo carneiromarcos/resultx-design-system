@@ -36,7 +36,7 @@
   --accent-secondary: #6f32b1;   /* --intel */
 
   --text-inverse: #0B0E14;   /* tinta medida sobre o accent: 7.33:1 */
-  --accent-primary-text: #c4993b;   /* --gold — 7.33:1 sobre o fundo */
+  --accent-primary-text: #c4993b;   /* --gold-ink — 7.33:1 sobre o fundo */
 
   --border-accent: rgba(196, 153, 59, 0.2);
   --focus-ring-color: rgba(196, 153, 59, 0.5);
@@ -85,7 +85,7 @@
     --accent-secondary: #6f32b1;   /* --intel */
 
     --text-inverse: #0B0E14;   /* tinta medida sobre o accent: 7.33:1 */
-    --accent-primary-text: #c4993b;   /* --gold — 7.33:1 sobre o fundo */
+    --accent-primary-text: #c4993b;   /* --gold-ink — 7.33:1 sobre o fundo */
 
     --border-accent: rgba(196, 153, 59, 0.2);
     --focus-ring-color: rgba(196, 153, 59, 0.5);
