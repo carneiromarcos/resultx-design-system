@@ -5,6 +5,25 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-08-07
+
+Nove componentes extraídos de telas reais de inbox, a camada de comportamento aberta, os três modos
+de navegação completos e a ponte de marca com tinta medida por contraste. PR #36, merge commit
+`638b57c`, 173 testes.
+
+**Aditiva — nada foi removido.** `.layout-list-item` continua existindo como alias depreciado, e
+`--accent-primary-text` nasce com o mesmo valor de `--accent-primary`: quem não sobrescreve nada vê
+o comportamento de antes.
+
+⚠️ **Três mudanças visuais que pedem conferência ao subir:**
+1. `.sidebar-item` deixou de transicionar `all` e passou a transicionar só `color` e `background` —
+   corrige o foco preso no modo overlay, mas tira a animação de propriedades que ninguém pretendia
+   animar.
+2. `.layout-list-item` herdou a densidade do `.list-item`: padding menor, alinhamento ao topo, e o
+   trilho de selecionado deixou de deslocar o conteúdo.
+3. Os 27 usos de `--accent-primary` como cor de texto em `components/` passaram a
+   `--accent-primary-text`. Sem override, o valor é idêntico.
+
 ### Added — Modo overlay: os 3 modos de navegação, completos
 
 - **`.sidebar-overlay`** — terceiro e último modo. O que o define: **o conteúdo
