@@ -5,6 +5,54 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Added — Docs de toast, empty-state e tooltip (Onda 3, item 4)
+
+Três componentes vivos no CSS e sem arquivo de documentação nenhum: existiam só
+como uma linha na tabela do `api-reference.md`. Agora têm anatomia, markup,
+tokens e acessibilidade, e a tabela mestra passou a linkar para eles.
+
+- **`docs/components/toast.md`** — inclui por que `.toast[hidden]` precisa
+  existir (`.toast` define `display: flex`, que vence o `[hidden]` padrão do
+  navegador — sem a regra, esconder um toast não faz nada) e o alerta da
+  WCAG 2.2 SC 2.2.1 sobre toast que some sozinho.
+- **`docs/components/empty-state.md`** — a distinção que importa: o `.empty-state`
+  cheio **não cabe** num slot (ícone de 80px + `--space-16` estoura coluna de
+  kanban e painel lateral), e é para isso que existe o `-inline`.
+- **`docs/components/tooltip.md`** — posições, e por que o tooltip nunca é o
+  nome acessível do gatilho.
+
+### Fixed — `.tooltip-wrapper` parou de impor layout (item 5)
+
+- **Deixou de declarar `display: inline-block`.** Ele desmontava o flex de
+  qualquer gatilho que já tivesse layout próprio — um item de rail, por exemplo.
+  O `demos/electia-copiloto.html` carregava o contorno disso
+  (`.sidebar-item.tooltip-wrapper { display: flex }`); saiu. Quem dependia do
+  comportamento antigo usa **`.tooltip-wrapper-inline`**.
+- 🔴 **O tooltip agora aparece no foco por teclado**, não só no hover. Sem
+  `:focus-within` ele nunca aparecia para quem navega por teclado — **o mesmo
+  defeito que faz a documentação desaconselhar o atributo `title`**. A
+  recomendação do `navigation.md` só passou a ser verdadeira com esta linha.
+
+### Fixed — Tabela larga rola em vez de sumir (item 6)
+
+- **`.table-card`** trocou `overflow: hidden` por `overflow-x: auto` +
+  `overflow-y: hidden`. Com `hidden`, as colunas da direita ficavam
+  **inalcançáveis** em tela estreita: sem barra e sem gesto de swipe.
+  `overflow-y` segue `hidden` para preservar o clip do border-radius.
+- **`.table-wrap`**, novo — envolve só a `<table>`, para o cabeçalho ficar parado
+  enquanto as colunas rolam. O scroll no `.table-card` é a rede de segurança
+  para markup que não usa o wrapper.
+- Mesmo raciocínio que a camada `.dl-` já aplicava em `.dl-table-wrap`.
+
+Medido em Chrome: item de rail mantendo `flex` sem o contorno; tooltip indo de
+opacidade 0 para 1 no Tab; tabela de 552px dentro de um cartão de 446px a 480px
+de viewport, com o conteúdo alcançável. **189 testes.**
+
+⚠️ **Achado não corrigido, fora do escopo destes itens:** `.header-actions`
+(`display: flex`, sem `wrap` nem `min-width`) estoura a largura do documento em
+viewport de 480px. É **preexistente** — meu diff não toca a classe. Vale um item
+próprio.
+
 ## [2.3.0] - 2026-08-07
 
 Nove componentes extraídos de telas reais de inbox, a camada de comportamento aberta, os três modos

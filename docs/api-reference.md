@@ -134,7 +134,8 @@ See [tokens/](tokens/) for detailed documentation per category.
 
 | Class | Description | Docs |
 |-------|-------------|------|
-| `.table-card` | Table wrapper card | [tables.md](components/tables.md) |
+| `.table-card` | Table wrapper card. Scrolls horizontally instead of clipping | [tables.md](components/tables.md) |
+| `.table-wrap` | Wraps the `<table>` alone, so the header stays put while columns scroll | [tables.md](components/tables.md) |
 | `.table-header` | Table header bar | |
 | `.table-header-title` | Table title | |
 | `.td-avatar` | Avatar cell | |
@@ -347,21 +348,26 @@ Behaviour scripts: `resultx-design-system/disclosure`, `/split-pane`, `/audio-pl
 
 ### Feedback
 
-| Class | Description |
-|-------|-------------|
-| `.toast-container` | Toast notification area |
-| `.toast` | Base toast |
-| `.toast-success` | Success toast |
-| `.toast-error` | Error toast |
-| `.toast-warning` | Warning toast |
-| `.toast-info` | Info toast |
-| `.tooltip-wrapper` | Tooltip container |
-| `.tooltip` | Tooltip text |
-| `.tooltip-bottom` | Bottom-positioned tooltip |
-| `.empty-state` | Empty state container |
-| `.empty-state-icon` | Empty state icon |
-| `.empty-state-title` | Empty state title |
-| `.empty-state-text` | Empty state text |
+| Class | Description | Docs |
+|-------|-------------|------|
+| `.toast-container` | Toast area — the live region belongs here | [toast.md](components/toast.md) |
+| `.toast` | Base toast | [toast.md](components/toast.md) |
+| `.toast-success` | Success toast | |
+| `.toast-error` | Error toast | |
+| `.toast-warning` | Warning toast | |
+| `.toast-info` | Info toast | |
+| `.toast-action` | Optional action slot ("Desfazer") | [toast.md](components/toast.md) |
+| `.toast-dismiss` | Optional close slot | [toast.md](components/toast.md) |
+| `.tooltip-wrapper` | Anchor. Sets `position` only — **not** `display` | [tooltip.md](components/tooltip.md) |
+| `.tooltip-wrapper-inline` | Restores `display: inline-block` for inline triggers | [tooltip.md](components/tooltip.md) |
+| `.tooltip` | Tooltip text. Shows on hover **and** keyboard focus | [tooltip.md](components/tooltip.md) |
+| `.tooltip-bottom` | Bottom-positioned tooltip | |
+| `.tooltip-left` / `.tooltip-right` | Side-positioned — what a nav rail needs | [tooltip.md](components/tooltip.md) |
+| `.empty-state` | Empty state — for a page or a full panel | [empty-state.md](components/empty-state.md) |
+| `.empty-state-inline` | Compact variant — for a slot, not a page | [empty-state.md](components/empty-state.md) |
+| `.empty-state-icon` | Empty state icon | |
+| `.empty-state-title` | Empty state title | |
+| `.empty-state-text` | Empty state text | |
 | `.spinner` | Loading spinner |
 | `.spinner-lg` | Large spinner |
 | `.skeleton` | Skeleton loading |

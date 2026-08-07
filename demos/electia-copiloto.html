@@ -216,11 +216,9 @@
     50%      { opacity: 0.9;  transform: scale(1.1); }
   }
 
-  /* C.6 — O posicionamento lateral do tooltip agora vem do DS (.tooltip-right).
-     Sobra só este ajuste: .tooltip-wrapper impõe display:inline-block, que
-     desmonta o flex do .sidebar-item. Candidato a item da Onda 3 — separar
-     posicionamento de display no .tooltip-wrapper. */
-  .sidebar-item.tooltip-wrapper { display: flex; }
+  /* C.6 — RESOLVIDO na Onda 3 (item 5): o .tooltip-wrapper deixou de impor
+     display:inline-block, então o flex do .sidebar-item sobrevive sozinho.
+     O override local que existia aqui saiu. */
 
   /* Utilitários locais */
   .stack-sm  { display: flex; flex-direction: column; gap: var(--space-1); }
