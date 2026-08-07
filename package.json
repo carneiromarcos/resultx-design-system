@@ -101,7 +101,7 @@
     "jest": "^30.4.2",
     "lint-staged": "^17.0.5",
     "playwright": "^1.58.2",
-    "postcss": "^8.5.8",
+    "postcss": "^8.5.26",
     "postcss-cli": "^11.0.1",
     "postcss-import": "^16.1.1",
     "stylelint": "^17.11.1",
