@@ -10,6 +10,25 @@
    compacta de uma paleta de comandos — uma linha só, avatar de 28px, sem hora
    nem prévia. Não são a mesma coisa e não devem ser fundidos.
 
+   ⚠️ .layout-list-item — DEPRECIADO, virou alias deste componente
+   ------------------------------------------------------------------
+   Existiam dois componentes fazendo quase a mesma coisa. Consolidados aqui em
+   07/08: os nomes antigos entraram nas MESMAS regras dos novos — uma
+   implementação, dois vocabulários. Nada foi removido, então nenhum consumidor
+   quebra; e os nomes antigos passaram a herdar as três correções que só o novo
+   tinha: sem deslocamento de layout ao selecionar, `min-width: 0` na linha, e
+   foco visível.
+
+     antigo (depreciado)          novo
+     .layout-list-item        →   .list-item
+     .layout-list-item-info   →   .list-item-body
+     .layout-list-item-name   →   .list-item-title
+     .layout-list-item-meta   →   .list-item-meta
+     .layout-list-item.active →   .list-item[aria-current]
+
+   Cada alias está marcado com `alias depreciado` para sair de uma vez na
+   próxima major. Em trabalho novo, usar os nomes novos.
+
    Estrutura:
      <a class="list-item" href="…" aria-current="true">
        <img class="avatar avatar-md" src="…" alt="">
@@ -42,7 +61,8 @@
   border-top: 1px solid var(--border-subtle);
 }
 
-.list-item {
+.list-item,
+.layout-list-item {                      /* alias depreciado */
   display: flex;
   align-items: flex-start;
   gap: var(--space-3);
@@ -56,7 +76,8 @@
 
 /* min-width: 0 em cada nível é o que deixa o texto truncar. Sem isso, a linha
    mais longa define a largura da coluna inteira e o painel corta. */
-.list-item-body {
+.list-item-body,
+.layout-list-item-info {                 /* alias depreciado */
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -71,7 +92,8 @@
   min-width: 0;
 }
 
-.list-item-title {
+.list-item-title,
+.layout-list-item-name {                 /* alias depreciado */
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -115,7 +137,8 @@
   white-space: nowrap;
 }
 
-.list-item-meta {
+.list-item-meta,
+.layout-list-item-meta {                 /* alias depreciado */
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -129,11 +152,14 @@
 
 /* ── Estados ────────────────────────────────────────────────────────────── */
 
-.list-item:hover {
+.list-item:hover,
+.layout-list-item:hover {                /* alias depreciado */
   background: var(--bg-surface-1);
 }
 
-.list-item:focus-visible {
+/* A classe antiga não tinha foco visível; passa a ter, de graça. */
+.list-item:focus-visible,
+.layout-list-item:focus-visible {        /* alias depreciado */
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: calc(var(--focus-ring-offset) * -1);
 }
@@ -156,12 +182,16 @@
 
 /* Selecionada. O trilho é box-shadow interno, não borda: borda empurraria o
    conteúdo 3px para o lado toda vez que a seleção mudasse. */
-.list-item[aria-current] {
+/* A classe antiga usava `border-left: 3px`, que empurrava o conteúdo a cada
+   troca de seleção. Vira box-shadow interno aqui, e o deslocamento some. */
+.list-item[aria-current],
+.layout-list-item.active {               /* alias depreciado */
   background: var(--bg-surface-2);
   box-shadow: inset 3px 0 0 0 var(--accent-primary);
 }
 
-.list-item[aria-current]:hover {
+.list-item[aria-current]:hover,
+.layout-list-item.active:hover {         /* alias depreciado */
   background: var(--bg-surface-2);
 }
 
@@ -172,6 +202,17 @@
   padding: var(--space-2) var(--space-4);
 }
 
+/* ── Compatibilidade do alias depreciado ────────────────────────────────── */
+
+/* O componente antigo carregava o divisor em si mesmo (`border-bottom` em cada
+   item); o novo o coloca no grupo, que é onde ele pertence. Esta regra mantém
+   a linha para markup antigo, que não tem o `.list-item-group` em volta.
+   Sai junto com os alias na próxima major. */
+.layout-list-item + .layout-list-item {
+  border-top: 1px solid var(--border-subtle);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .list-item { transition: none; }
+  .list-item,
+  .layout-list-item { transition: none; }
 }

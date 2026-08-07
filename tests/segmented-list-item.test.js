@@ -12,12 +12,19 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const read = (...p) => fs.readFileSync(path.join(ROOT, ...p), 'utf-8');
-/** Corpo da primeira regra cujo seletor comeca com `selector`. */
+/**
+ * Corpo da primeira regra cuja LISTA de seletores contem `selector`.
+ * Precisa lidar com lista porque a consolidacao de 07/08 fez os nomes antigos
+ * virarem alias na mesma regra: `.list-item,\n.layout-list-item { … }`.
+ */
 const rule = (css, selector) => {
-  const start = css.indexOf(selector);
-  if (start === -1) return '';
-  const bloco = css.slice(start);
-  return bloco.slice(0, bloco.indexOf('}'));
+  // As chamadas passam o seletor com ` {` no fim; aqui ele atrapalha.
+  const limpo = selector.replace(/\s*\{\s*$/, '');
+  const escapado = limpo.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const encontrado = new RegExp(`(^|,)\\s*${escapado}\\s*(,|\\{)`, 'm').exec(css);
+  if (!encontrado) return '';
+  const abre = css.indexOf('{', encontrado.index);
+  return css.slice(abre + 1, css.indexOf('}', abre));
 };
 
 const segmentedCss = read('components', 'segmented.css');
@@ -144,26 +151,62 @@ describe('List item — truncar, nao alargar', () => {
   });
 });
 
-describe('Divida de consolidacao — .layout-list-item', () => {
-  // .layout-list-item ja existia e faz quase a mesma coisa. Nao foi alterado:
-  // tem consumidor vivo (demos/candidatos.html) e documentacao propria, entao
-  // fundir os dois e uma decisao, nao um efeito colateral. Estes testes
-  // impedem a divida de sumir de vista.
-  test('o componente antigo continua existindo, intocado', () => {
-    expect(componentsCss).toContain('.layout-list-item {');
-    expect(componentsCss).toContain('.layout-list-item.active');
+describe('Consolidacao — .layout-list-item virou alias', () => {
+  // Ate 07/08 eram dois componentes fazendo quase a mesma coisa. Foram fundidos
+  // numa implementacao so, com os nomes antigos como alias depreciado. Nada foi
+  // removido: financex importa o bundle inteiro, e uma classe publica nao some
+  // sem major.
+  test('existe UMA implementacao — o bloco antigo saiu de components.css', () => {
+    expect(componentsCss).not.toMatch(/^\.layout-list-item\s*\{/m);
+    expect(componentsCss).not.toMatch(/^\.layout-list-item-info\s*\{/m);
+    expect(componentsCss).not.toMatch(/^\.layout-list-item\.active\s*\{/m);
   });
 
-  test('a sobreposicao esta registrada na documentacao', () => {
+  test('as classes antigas continuam existindo, como alias', () => {
+    for (const antiga of [
+      '.layout-list-item',
+      '.layout-list-item-info',
+      '.layout-list-item-name',
+      '.layout-list-item-meta',
+      '.layout-list-item.active',
+    ]) {
+      expect(`${antiga}: ${listItemCss.includes(antiga)}`).toBe(`${antiga}: true`);
+    }
+  });
+
+  test('e chegam ao bundle publicado', () => {
+    const bundle = read('dist', 'components.min.css');
+    expect(bundle).toContain('.layout-list-item');
+    expect(bundle).toContain('.layout-list-item-info');
+  });
+
+  test('o nome antigo herdou as 3 correcoes que nao tinha', () => {
+    // 1. o trilho de selecao nao desloca mais o conteudo
+    const ativo = rule(listItemCss, '.list-item[aria-current]');
+    expect(ativo).toContain('box-shadow: inset 3px');
+    expect(ativo).not.toContain('border-left');
+    // 2. min-width: 0 na linha
+    expect(rule(listItemCss, '.list-item')).toContain('min-width: 0');
+    // 3. foco visivel
+    expect(listItemCss).toContain('.layout-list-item:focus-visible');
+  });
+
+  test('o divisor do markup antigo foi preservado', () => {
+    // O componente antigo trazia border-bottom em cada item; o novo poe no
+    // grupo. Markup antigo nao tem o grupo em volta.
+    expect(listItemCss).toContain('.layout-list-item + .layout-list-item');
+  });
+
+  test('nenhum demo do repo usa mais o nome antigo', () => {
+    const demo = read('demos', 'candidatos.html');
+    expect(demo).not.toContain('layout-list-item');
+    expect(demo).toContain('list-item-group');
+  });
+
+  test('a consolidacao esta registrada na documentacao', () => {
     const doc = read('docs', 'components', 'list-item.md');
     expect(doc).toContain('.layout-list-item');
-    expect(doc).toMatch(/consolida/i);
-  });
-
-  test('o novo nao repete o deslocamento de layout do antigo', () => {
-    // .layout-list-item.active usa border-left: 3px, que empurra o conteudo.
-    expect(rule(componentsCss, '.layout-list-item.active')).toContain('border-left: 3px');
-    expect(rule(listItemCss, '.list-item[aria-current] {')).not.toContain('border-left');
+    expect(doc).toMatch(/deprec/i);
   });
 });
 

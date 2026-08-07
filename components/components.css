@@ -1396,39 +1396,13 @@ tr:hover td { background: var(--bg-surface-1); }
   background: var(--bg-base);
   z-index: 5;
 }
-.layout-list-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-4) var(--space-5);
-  border-bottom: 1px solid var(--border-subtle);
-  cursor: pointer;
-  transition: all 150ms var(--spring-snappy);
-}
-.layout-list-item:hover {
-  background: var(--bg-surface-1);
-}
-.layout-list-item.active {
-  background: var(--accent-primary-muted);
-  border-left: 3px solid var(--accent-primary);
-}
-.layout-list-item-info {
-  flex: 1;
-  min-width: 0;
-}
-.layout-list-item-name {
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.layout-list-item-meta {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-  margin-top: 2px;
-}
+/* .layout-list-item e família foram CONSOLIDADOS em components/list-item.css
+   (07/08). As classes continuam existindo, agora como alias depreciado da
+   mesma implementação — nenhum consumidor quebra, e os nomes antigos herdaram
+   as correções que faltavam aqui: o `border-left: 3px` do estado ativo, que
+   empurrava o conteúdo a cada troca de seleção; a falta de `min-width: 0` na
+   linha; e a ausência de foco visível. Ver docs/components/list-item.md. */
+
 .layout-detail {
   flex: 1;
   overflow-y: auto;

@@ -64,45 +64,21 @@ A two-panel layout with a scrollable list on the left and a detail view on the r
 | `background` | `var(--bg-base)` |
 | `z-index` | `5` |
 
-#### `.layout-list-item`
+#### ⚠️ `.layout-list-item` and family — DEPRECATED
 
-| Property | Value |
-|----------|-------|
-| `display` | `flex` / `align-items: center` / `gap: var(--space-3)` |
-| `padding` | `var(--space-4) var(--space-5)` |
-| `border-bottom` | `1px solid var(--border-subtle)` |
-| `cursor` | `pointer` |
-| `transition` | `all var(--transition-fast)` |
+Consolidated into [list-item.md](list-item.md) on 07/08. The implementation moved out of `components/components.css`; these class names survive as aliases **inside the same rules**, so existing markup keeps working — and it picked up three fixes it never had: the selected state no longer shifts content sideways, the row got `min-width: 0`, and there is a visible focus ring.
 
-**Hover:** `background: var(--bg-surface-1)`
+| deprecated | use instead |
+|---|---|
+| `.layout-list-item` | `.list-item` |
+| `.layout-list-item-info` | `.list-item-body` |
+| `.layout-list-item-name` | `.list-item-title` |
+| `.layout-list-item-meta` | `.list-item-meta` |
+| `.layout-list-item.active` | `.list-item[aria-current]` |
 
-**Active (`.active`):** `background: var(--accent-primary-muted); border-left: 3px solid var(--accent-primary)`
+Properties are documented at [list-item.md](list-item.md). The aliases come out in the next major; use the new names in new work.
 
-#### `.layout-list-item-info`
-
-| Property | Value |
-|----------|-------|
-| `flex` | `1` |
-| `min-width` | `0` |
-
-#### `.layout-list-item-name`
-
-| Property | Value |
-|----------|-------|
-| `font-size` | `var(--text-sm)` |
-| `font-weight` | `var(--font-medium)` |
-| `color` | `var(--text-primary)` |
-| `white-space` | `nowrap` |
-| `overflow` | `hidden` |
-| `text-overflow` | `ellipsis` |
-
-#### `.layout-list-item-meta`
-
-| Property | Value |
-|----------|-------|
-| `font-size` | `var(--text-xs)` |
-| `color` | `var(--text-muted)` |
-| `margin-top` | `2px` |
+`.layout-list`, `.layout-list-header` and `.layout-detail` are **not** affected — they are the shell, and they stay here.
 
 #### `.layout-detail`
 

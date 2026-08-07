@@ -318,6 +318,7 @@ See [tokens/](tokens/) for detailed documentation per category.
 | `.split-pane` | Resizable two-column layout; one width variable | [split-pane.md](components/split-pane.md) |
 | `.segmented` | Pick one value among N; native radio group, no JS | [segmented.md](components/segmented.md) |
 | `.list-item` | List row: avatar, title, time, preview, unread count | [list-item.md](components/list-item.md) |
+| `.layout-list-item` | ⚠️ Deprecated alias of `.list-item` — same implementation | [list-item.md](components/list-item.md) |
 | `.message` | A message bubble, incoming or outgoing | [conversation.md](components/conversation.md) |
 | `.message-event` | System event in the stream — not a message | [conversation.md](components/conversation.md) |
 | `.message-day` | Sticky date marker | [conversation.md](components/conversation.md) |

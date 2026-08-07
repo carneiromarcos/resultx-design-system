@@ -2,21 +2,32 @@
 
 A list row with a face, a name, a "when", a preview and some metadata. It came out of a conversation list, but nothing in it is about messaging — the same row serves notifications, candidates, employees.
 
-## ⚠️ Overlaps with `.layout-list-item` — a consolidation decision is open
+## `.layout-list-item` is now a deprecated alias of this component
 
-`.layout-list-item` already exists (`components/components.css`), is documented in [layout.md](layout.md) and is used by `demos/candidatos.html`. It is the simpler two-line row that belongs to the master-detail shell.
+Two components used to do nearly the same thing. They were consolidated on 07/08: the old names became aliases **inside the same rules**, so there is one implementation and two vocabularies.
 
-| | `.layout-list-item` | `.list-item` |
+**Nothing was removed.** `.layout-list-item` is a public class and FinanceX imports the whole component bundle — removing it would be a breaking change, and breaking changes belong in a major. So the old names keep working, and they inherited the three fixes they never had:
+
+| | `.layout-list-item` before | after consolidation |
 |---|---|---|
-| Lines | 2 — name + meta | 3 — title/time/count, preview, meta |
-| Timestamp, unread count | no | yes |
-| Truncation | name only | title, preview and meta |
+| Selected state | `.active` with `border-left: 3px` — **shifted content sideways** | inset `box-shadow` — measured **0px** shift |
 | `min-width: 0` on the row | no | yes |
-| Selected state | `.active` with `border-left: 3px` — **shifts content sideways** | `[aria-current]` with an inset `box-shadow` — 0px shift |
-| Focus ring | no | yes |
+| Focus ring | none | 3px, measured |
 | Transition | `all` | `background` only |
 
-`.list-item` is a superset with three fixes. **Nothing was changed in `.layout-list-item`** — it has a live consumer and its own documentation, so merging the two is a decision, not a side effect. Until that decision is made, prefer `.list-item` for new work.
+### Migration
+
+| deprecated | use instead |
+|---|---|
+| `.layout-list-item` | `.list-item` |
+| `.layout-list-item-info` | `.list-item-body` |
+| `.layout-list-item-name` | `.list-item-title` |
+| `.layout-list-item-meta` | `.list-item-meta` |
+| `.layout-list-item.active` | `.list-item[aria-current]` |
+
+The old component carried its divider on each row (`border-bottom`); the new one puts it on `.list-item-group`, where it belongs. A compatibility rule keeps the line for old markup that has no group wrapper.
+
+Every alias is marked `alias depreciado` in the source so they can all come out at once in the next major. `demos/candidatos.html` was migrated and no longer uses the old names — a test asserts that.
 
 ## Not the same as `.search-result-item`
 

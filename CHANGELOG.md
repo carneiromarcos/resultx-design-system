@@ -77,15 +77,28 @@ saindo dele; árvore ARIA com `group "Modo de atendimento"` e três `radio`; e o
 título truncando em 175 de 364px reais numa coluna de 280px, com a hora inteira
 preservada. Zero erro de console.
 
-### ⚠️ Dívida registrada — `.layout-list-item`
+### Changed — `.layout-list-item` consolidado em `.list-item` (dívida fechada)
 
-`.layout-list-item` já existia, é documentado em `docs/components/layout.md` e
-tem consumidor vivo em `demos/candidatos.html`. Faz quase a mesma coisa numa
-versão de duas linhas: sem hora, prévia nem contador, sem `min-width: 0` na
-linha, sem foco visível, e com `border-left: 3px` no ativo — que **desloca o
-conteúdo** a cada troca de seleção. **Nada nele foi alterado:** fundir os dois é
-uma decisão, não um efeito colateral. A sobreposição está registrada em
-`docs/components/list-item.md` e fixada por três testes.
+Eram dois componentes fazendo quase a mesma coisa. Agora há **uma implementação**
+e dois vocabulários: os nomes antigos entraram nas mesmas regras como alias.
+
+- **Nada foi removido.** `.layout-list-item` é classe pública e o FinanceX importa
+  o bundle inteiro — remover seria quebra de contrato, e quebra pertence a uma
+  major. Verificado: nenhum consumidor externo usa a classe (Electia e labs/site
+  nem importam `components`).
+- **Os nomes antigos herdaram as três correções que não tinham:** o trilho de
+  selecionado deixou de deslocar o conteúdo (`border-left: 3px` → `box-shadow`
+  interno, deslocamento medido de **0px**), a linha ganhou `min-width: 0`, e
+  passou a existir foco visível (3px, medido).
+- O bloco saiu de `components/components.css`; a implementação vive em
+  `components/list-item.css`. Cada alias está marcado `alias depreciado` para
+  sair de uma vez na próxima major.
+- Regra de compatibilidade preserva o divisor para markup antigo, que não tem o
+  `.list-item-group` em volta.
+- `demos/candidatos.html` migrado para o vocabulário novo — 32 ocorrências, mais
+  `.active` → `aria-current`. Um teste reprova se o nome antigo voltar a algum demo.
+- `docs/components/layout.md` e `docs/api-reference.md` marcam a depreciação com
+  tabela de migração. **160 testes.**
 
 ### Added — Camada de comportamento + 2 componentes de painel
 
