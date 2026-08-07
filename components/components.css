@@ -9,6 +9,9 @@
 @import url('./split-pane.css');
 @import url('./segmented.css');
 @import url('./list-item.css');
+@import url('./message.css');
+@import url('./audio-player.css');
+@import url('./composer.css');
 
 /* ══════════════════════════════════════════════════════════════════
    RESET & BASE
@@ -135,6 +138,65 @@ body {
   opacity: 0.5;
 }
 
+/* ── Modo rail (64px, só ícones) ─────────────────────────────────────────
+   Segundo modo de navegação do DS. Até aqui existia um só — o painel de
+   240px — e o token --sidebar-collapsed vivia órfão, declarado e sem uso.
+
+   O rótulo NÃO é escondido com display: none. Ele continua na árvore de
+   acessibilidade, apenas fora da vista: sem isso o item vira um ícone sem
+   nome, e o leitor de tela anuncia "link" e nada mais.
+
+   Como o rótulo some da vista, o item precisa de tooltip — use .tooltip-right
+   do próprio DS.
+
+   <aside class="sidebar sidebar-rail">
+     <a class="sidebar-item active">
+       <svg …></svg><span class="sidebar-label">Atendimento</span>
+     </a>
+   </aside>
+   O conteúdo ao lado usa .main-rail para acompanhar a largura.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.sidebar-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-rail {
+  width: var(--sidebar-collapsed);
+  align-items: center;
+  padding-inline: 0;
+}
+
+.sidebar-rail .sidebar-item {
+  justify-content: center;
+  margin-inline: var(--space-2);
+  padding-inline: 0;
+}
+
+/* Fora da vista, dentro da árvore de acessibilidade. */
+.sidebar-rail .sidebar-label,
+.sidebar-rail .sidebar-brand-text,
+.sidebar-rail .sidebar-section-label,
+.sidebar-rail .sidebar-user-name,
+.sidebar-rail .sidebar-user-role {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.sidebar-rail .sidebar-brand,
+.sidebar-rail .sidebar-footer {
+  justify-content: center;
+  padding-inline: 0;
+}
+
 /* ══════════════════════════════════════════════════════════════════
    MAIN CONTENT
    ══════════════════════════════════════════════════════════════════ */
@@ -147,6 +209,13 @@ body {
      horizontal na página inteira. */
   min-width: 0;
   min-height: 100vh;
+}
+
+/* Par do .sidebar-rail. Largura da navegação e deslocamento do conteúdo saem
+   do mesmo token — os dois nunca saem de sincronia, que foi como nasceu o vão
+   morto de 192px do Electia. Ver components/split-pane.css. */
+.main-rail {
+  margin-left: var(--sidebar-collapsed);
 }
 
 /* Header */

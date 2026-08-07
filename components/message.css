@@ -1,0 +1,180 @@
+/* ==========================================================================
+   Message — fluxo de conversa: bolha, marco de dia e evento de sistema
+   ==========================================================================
+
+   Três peças que só fazem sentido juntas, no mesmo fluxo:
+
+     .message-day     "Hoje" — marco temporal, gruda no topo ao rolar
+     .message-event   "Marcos Carneiro assumiu o atendimento" — o sistema
+                      falando, não uma pessoa
+     .message         uma fala, entrando ou saindo
+
+   A distinção entre .message-event e .message importa além da aparência: um
+   evento de sistema não tem autor, não tem recibo e não deve ser lido como
+   fala por leitor de tela. Por isso ele é <p> e a mensagem é <article>.
+
+   Estrutura:
+     <div class="message-stream">
+       <div class="message-day"><span>Hoje</span></div>
+       <p class="message-event">Marcos Carneiro assumiu o atendimento</p>
+
+       <article class="message message-out">
+         <div class="message-bubble">
+           <p class="message-text">olha se chegou um convite de lista</p>
+           <footer class="message-foot">
+             <span class="message-author">Marcos Carneiro</span>
+             <time class="message-time" datetime="…">17:48</time>
+             <svg class="message-receipt message-receipt-read" aria-hidden="true"></svg>
+           </footer>
+         </div>
+         <div class="message-actions">…</div>
+       </article>
+     </div>
+
+   Ver docs/components/conversation.md.
+   ========================================================================== */
+
+.message-stream {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+  padding: var(--space-4);
+}
+
+/* ── Marco de dia ───────────────────────────────────────────────────────── */
+
+.message-day {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-base);
+  display: flex;
+  justify-content: center;
+  padding: var(--space-1) 0;
+  pointer-events: none;
+}
+
+.message-day > span {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  background: var(--bg-surface-2);
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+  font-weight: var(--font-medium);
+}
+
+/* ── Evento de sistema ──────────────────────────────────────────────────── */
+
+.message-event {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+  text-align: center;
+}
+
+/* As duas linhas laterais crescem para ocupar o que sobra. */
+.message-event::before,
+.message-event::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+/* ── Mensagem ───────────────────────────────────────────────────────────── */
+
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.message-bubble {
+  /* Uma medida de leitura, não a largura da coluna: uma linha de 120
+     caracteres cansa mesmo quando cabe. */
+  max-width: min(60ch, 78%);
+  min-width: 0;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-2);
+}
+
+.message-text {
+  margin: 0;
+  overflow-wrap: anywhere;   /* um link sem espaços não estoura a bolha */
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.message-foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  min-width: 0;
+  margin-top: var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+}
+
+.message-author {
+  min-width: 0;
+  overflow: hidden;
+  margin-right: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.message-time {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.message-receipt {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  color: var(--text-muted);
+}
+
+/* Reações e ações, fora da bolha, alinhadas ao mesmo lado dela. */
+.message-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ── Variantes de lado ──────────────────────────────────────────────────── */
+
+.message-out {
+  align-items: flex-end;
+}
+
+.message-out > .message-bubble {
+  border-color: var(--border-accent);
+  background: var(--accent-primary-muted);
+}
+
+/* ── Estado do recibo ───────────────────────────────────────────────────── */
+
+/* Enviado, entregue e lido diferem primeiro na FORMA — um tique contra dois,
+   escolhida no SVG — e só depois na cor. */
+.message-receipt-read {
+  color: var(--accent-primary-text);
+}
+
+/* ── Densidade ──────────────────────────────────────────────────────────── */
+
+/* Mensagens seguidas encostam mais do que os blocos do fluxo. */
+.message-stream > .message + .message {
+  margin-top: calc(var(--space-2) * -1);
+}

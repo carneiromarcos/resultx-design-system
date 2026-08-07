@@ -157,6 +157,37 @@ When parent is `.active`: `background: rgba(255,255,255,0.25)`.
 - `.sidebar-user-name`: `color: var(--text-primary); font-weight: var(--font-medium)`
 - `.sidebar-user-role`: `font-size: 10px; opacity: 0.5`
 
+### Rail mode — `.sidebar-rail`
+
+The second navigation mode. Until this landed the DS supported exactly one — the 240px panel — and `--sidebar-collapsed: 64px` sat declared and unused.
+
+```html
+<aside class="sidebar sidebar-rail" aria-label="Navegação principal">
+  <a class="sidebar-item active" href="…" aria-current="page">
+    <svg class="icon icon-md" aria-hidden="true">…</svg>
+    <span class="sidebar-label">Atendimento</span>
+  </a>
+</aside>
+
+<main class="main main-rail">…</main>
+```
+
+| Class | Role |
+|-------|------|
+| `.sidebar-rail` | Narrows the sidebar to `var(--sidebar-collapsed)` and centres its items |
+| `.sidebar-label` | The item's text. New — the family had no hook for it |
+| `.main-rail` | The content offset, from the **same** token |
+
+**The width and the offset come from one token.** Two numbers here is exactly how Electia's 192px dead gap was born; see [split-pane.md](split-pane.md) for the same principle applied to a resizable column.
+
+**The label is not hidden with `display: none`.** It stays in the accessibility tree, just out of sight — otherwise the item becomes a nameless icon and a screen reader announces "link" and nothing more. Verified in Chrome: the label box measures 1px wide, and the accessible name still reads `link "Atendimento"`.
+
+Because the label leaves the viewport, rail items need a tooltip. Use `.tooltip-right` from the DS rather than a `title` attribute — `title` does not appear on keyboard focus.
+
+Measured: rail 64px, content offset 64px, no horizontal overflow at 1500 / 1024 / 768 / 390px.
+
+> The third mode from the navigation study — overlay, for medium screens and mobile drawers — is **not** built yet.
+
 ---
 
 ## Header

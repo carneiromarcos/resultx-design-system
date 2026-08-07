@@ -1,0 +1,175 @@
+/* ==========================================================================
+   Composer — barra de composição de mensagem
+   ==========================================================================
+
+   Ferramentas em cima, campo que cresce com o texto, ação principal à direita.
+
+   Não é .form-textarea: aquele é campo de formulário, com borda própria,
+   min-height de 88px e resize vertical. Aqui a borda pertence à barra inteira
+   e a altura acompanha o conteúdo até um teto.
+
+   O crescimento usa `field-sizing: content` onde o navegador tem, e
+   dist/composer.js cobre o resto. Sem nenhum dos dois o campo continua
+   utilizável — só não cresce.
+
+   O que NÃO está aqui, de propósito: Enter para enviar, Shift+Enter para nova
+   linha, "/" para respostas rápidas, "@" para mencionar. Isso é política do
+   produto, não do sistema visual. O DS entrega a estrutura e o crescimento.
+
+   Estrutura:
+     <div class="composer" data-composer>
+       <div class="composer-tools">
+         <button class="composer-tool" type="button" aria-label="Anexar">…</button>
+         …
+       </div>
+       <div class="composer-row">
+         <textarea class="composer-input" rows="1" placeholder="Mensagem…"></textarea>
+         <button class="composer-send" type="button" aria-label="Gravar áudio">…</button>
+       </div>
+     </div>
+
+   Ver docs/components/conversation.md.
+   ========================================================================== */
+
+.composer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface-1);
+  transition: border-color var(--transition-fast);
+}
+
+/* A barra inteira acende quando o campo dentro dela recebe foco — é ela que
+   lê como "o campo", não o <textarea> nu. */
+.composer:focus-within {
+  border-color: var(--accent-primary);
+}
+
+/* ── Ferramentas ────────────────────────────────────────────────────────── */
+
+.composer-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  overflow-x: auto;
+}
+
+.composer-tool {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.composer-tool:hover {
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+}
+
+.composer-tool:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: calc(var(--focus-ring-offset) * -1);
+}
+
+.composer-tool > svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Campo e ação ───────────────────────────────────────────────────────── */
+
+.composer-row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.composer-input {
+  flex: 1;
+  min-width: 0;
+  /* Teto em linhas, não em pixels: acompanha a escala de texto da marca. */
+  max-height: calc(var(--leading-normal) * 6em);
+  padding: var(--space-2) 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  resize: none;
+  field-sizing: content;
+}
+
+.composer-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* O anel de foco é da barra inteira; um segundo anel aqui seria ruído. */
+.composer-input:focus,
+.composer-input:focus-visible {
+  outline: none;
+}
+
+.composer-send {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 44px;                 /* alvo de toque — WCAG 2.2 SC 2.5.8 */
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--accent-primary);
+  color: var(--text-on-accent);
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.composer-send:hover { background: var(--accent-primary-hover); }
+.composer-send:active { transform: scale(0.96); }
+
+.composer-send:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.composer-send:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.composer-send > svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ── Variante discreta ──────────────────────────────────────────────────── */
+
+/* Sem a fileira de ferramentas — para uma resposta rápida embutida. */
+.composer-bare {
+  padding: var(--space-2) var(--space-3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .composer,
+  .composer-tool,
+  .composer-send { transition: none; }
+
+  .composer-send:active { transform: none; }
+}

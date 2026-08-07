@@ -5,6 +5,52 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Added — Superfície de conversa e segundo modo de navegação
+
+Fecha os nove componentes extraídos das telas de inbox.
+
+- **`.message`** — bolha, marco de dia (`.message-day`) e evento de sistema
+  (`.message-event`). **Evento não é mensagem:** não tem autor, não tem recibo e
+  não deve ser lido como fala — por isso é `<p>` e a mensagem é `<article>`. A
+  bolha para em `min(60ch, 78%)`: medida de leitura, não largura de coluna. O
+  recibo difere primeiro na **forma** (um tique × dois) e só depois na cor
+- **`.audio-player`** — reprodutor com forma de onda, **partindo de um
+  `<audio controls>` nativo**. Sem JavaScript o usuário vê o player do navegador
+  e ouve o áudio; um player que exige script para tocar troca uma mensagem de voz
+  por nada. A onda é um `slider`: setas ±5s, Home/End, Espaço alterna, e
+  `aria-valuetext` anuncia "0:02 de 0:04". Dois áudios não tocam ao mesmo tempo.
+  As alturas vêm de `--level` — o DS desenha a onda, não a inventa
+- **`.composer`** — barra de composição com campo que cresce. Usa
+  `field-sizing: content` onde existe, e `dist/composer.js` só cobre o resto —
+  onde o nativo existe, o script não anexa nada. **Enter-para-enviar, `/` e `@`
+  ficaram de fora de propósito:** é política de produto, não do sistema visual, e
+  um teste reprova se um `keydown` aparecer no script
+- **`.sidebar-rail`** — segundo modo de navegação, estendendo o `.sidebar` em vez
+  de criar um `.nav-rail` paralelo. Passa a usar `--sidebar-collapsed`, que vivia
+  **declarado e órfão**. Largura da navegação e deslocamento do conteúdo
+  (`.main-rail`) saem do **mesmo token**. O rótulo (`.sidebar-label`, novo) sai da
+  vista **sem sair da árvore de acessibilidade** — `display: none` deixaria o item
+  como ícone sem nome
+- **`dist/audio-player.js`** e **`dist/composer.js`**, expostos como
+  `resultx-design-system/audio-player` e `/composer`. Nenhum dos dois persiste
+  nada
+- **`docs/components/conversation.md`** e a seção de rail em `navigation.md`;
+  `docs/api-reference.md` atualizado — a linha do `.sidebar` dizia "240px" e
+  passou a haver dois modos
+
+Verificado em Chrome real: rail de 64px com o conteúdo deslocado exatamente 64px
+e o nome acessível preservado (`link "Atendimento"`, rótulo com 1px de largura);
+player trocando o `<audio controls>` pela interface própria, com 15 barras de
+alturas proporcionais; bolhas a 16px do lado correto de cada tipo; composer de
+36px → 75px → 117px (teto) → 36px; zero overflow horizontal em 1500 / 1024 / 768
+/ 390px; zero erro de console.
+
+**Um defeito que o próprio demo revelou:** o DS torna `body` um flex container, e
+o contêiner improvisado do demo, sem `flex`/`min-width: 0`, encolheu até o
+conteúdo — a coluna de conversa ficou em 265px de 1436 disponíveis. É o mesmo
+defeito que a Onda 1 corrigiu no `.main`. O demo passou a usar `.main .main-rail`
+em vez de improvisar, e a documentação do rail registra o par.
+
 ### Added — Segmented control e item de lista
 
 - **`.segmented`** — escolher um valor entre poucos, todos visíveis
@@ -62,7 +108,7 @@ vez de deixar cada produto reimplementar (item 7 da Onda 3, antecipado).
   (← → ±16px, Shift ±64px, Home/End, Enter restaura), limites lidos do CSS,
   persistência em `localStorage` sob `resultx-*`, todo acesso em `try/catch`.
   Expostos como `resultx-design-system/disclosure` e `/split-pane`
-- **`demos/inbox-panel.html`** — os dois funcionando juntos, com a ponte da Electia
+- **`demos/inbox-panel.html`** — os componentes funcionando juntos, com a ponte da Electia
 - **`tests/disclosure-split-pane.test.js`** — 20 testes de contrato, incluindo um
   que reprova qualquer segundo `setProperty` de largura no script
 

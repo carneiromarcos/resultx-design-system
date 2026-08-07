@@ -15,6 +15,8 @@
     "./theme": "./dist/theme-toggle.js",
     "./disclosure": "./dist/disclosure.js",
     "./split-pane": "./dist/split-pane.js",
+    "./audio-player": "./dist/audio-player.js",
+    "./composer": "./dist/composer.js",
     "./tokens/source": "./tokens/tokens.css",
     "./components/source": "./components/components.css",
     "./package.json": "./package.json"

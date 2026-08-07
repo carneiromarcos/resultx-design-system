@@ -3,61 +3,75 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Split pane + Disclosure — ResultX DS</title>
+<title>Inbox — componentes de conversa · ResultX DS</title>
 
 <link rel="stylesheet" href="../dist/tokens.min.css">
 <link rel="stylesheet" href="../brands/electia/tokens/ds-bridge.css">
 <link rel="stylesheet" href="../dist/components.min.css">
 
 <style>
-  /* Só o esqueleto da página de demonstração. Todo componente abaixo vem do
-     DS — nada aqui redefine .split-pane nem .disclosure. */
+  /* Só o esqueleto da demonstração. Todo componente abaixo vem do DS — nada
+     aqui redefine .split-pane, .disclosure, .segmented, .list-item, .message,
+     .audio-player, .composer ou .sidebar. */
   body {
     margin: 0;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
+    overflow: hidden;
     background: var(--bg-base);
     color: var(--text-primary);
     font-family: var(--font-sans);
   }
 
+  /* O deslocamento vem de .main-rail, não daqui: o DS torna `body` um flex
+     container, e um filho sem flex/min-width encolhe até o conteúdo — foi o
+     que aconteceu aqui antes de usar as classes certas. */
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
   .demo-bar {
     display: flex;
-    align-items: center;
+    flex-shrink: 0;
+    align-items: baseline;
     gap: var(--space-4);
     padding: var(--space-3) var(--space-5);
     border-bottom: 1px solid var(--border-subtle);
     background: var(--bg-surface-1);
-    flex-shrink: 0;
   }
 
-  .demo-bar h1 {
-    margin: 0;
-    font-size: var(--text-base);
-    font-weight: var(--font-semibold);
-  }
-
+  .demo-bar h1 { margin: 0; font-size: var(--text-base); font-weight: var(--font-semibold); }
   .demo-hint { margin: 0; color: var(--text-muted); font-size: var(--text-xs); }
 
-  /* O split-pane ocupa o que sobra da altura. min-height: 0 é o que deixa as
-     colunas rolarem em vez de esticar a página. */
   .split-pane { flex: 1; min-height: 0; }
 
-  .thread { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
-  .thread-title { margin: 0; font-size: var(--text-xl); font-weight: var(--font-semibold); }
+  /* Lista à esquerda, conversa à direita, dentro da coluna principal. */
+  .inbox {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    min-height: 0;
+    overflow: hidden;
+  }
 
-  /* Uma linha que não quebra: prova que a coluna encolhe mesmo assim, em vez
-     de empurrar a página para o scroll horizontal. */
-  .thread-wide {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-    white-space: nowrap;
-    overflow: auto;
-    padding: var(--space-3);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-md);
+  .inbox-list {
+    min-width: 0;
+    overflow-y: auto;
+    border-right: 1px solid var(--border-subtle);
+  }
+
+  .inbox-thread {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .inbox-stream { flex: 1; min-height: 0; overflow-y: auto; }
+
+  .inbox-composer {
+    flex-shrink: 0;
+    padding: var(--space-3) var(--space-4) var(--space-4);
   }
 
   .panel-head {
@@ -79,41 +93,73 @@
 
   .mode-copy { margin: var(--space-3) 0 0; color: var(--text-muted); font-size: var(--text-sm); }
 
-  .thread-list {
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
+  @media (max-width: 1024px) {
+    .inbox { grid-template-columns: minmax(0, 1fr); }
+    .inbox-list { display: none; }
   }
 </style>
 </head>
 <body>
 
-<div class="demo-bar">
-  <h1>Split pane + Disclosure</h1>
-  <p class="demo-hint">
-    Arraste a alça entre as colunas, ou foque nela com Tab e use ← →, Home, End.
-    Enter ou duplo-clique restaura. A largura e os módulos abertos ficam salvos.
-  </p>
-</div>
+<!-- ── Rail de navegação — segundo modo do .sidebar ────────────────────── -->
+<aside class="sidebar sidebar-rail" aria-label="Navegação principal">
+  <div class="sidebar-brand">
+    <div class="sidebar-logo">R</div>
+    <span class="sidebar-brand-text">ResultX</span>
+  </div>
 
-<div class="split-pane" data-split-pane data-split-id="demo-inbox">
+  <a class="sidebar-item active" href="#" aria-current="page">
+    <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+      <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+    </svg>
+    <span class="sidebar-label">Atendimento</span>
+  </a>
 
-  <main class="split-pane-main">
-    <div class="thread">
-      <h2 class="thread-title">Conversa</h2>
-      <p>
-        A coluna principal encolhe conforme o painel cresce, porque as duas saem
-        da mesma variável. Não há um segundo número para manter em sincronia.
-      </p>
-      <div class="thread-wide">
-        uma-linha-longa-que-nao-quebra-para-provar-que-a-coluna-encolhe-em-vez-de-empurrar-a-pagina
+  <a class="sidebar-item" href="#">
+    <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 7v4M8 3h8"/>
+    </svg>
+    <span class="sidebar-label">Agentes</span>
+  </a>
+
+  <a class="sidebar-item" href="#">
+    <svg class="icon icon-md" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+    </svg>
+    <span class="sidebar-label">Contatos</span>
+  </a>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar">MC</div>
+      <div>
+        <div class="sidebar-user-name">Marcos</div>
+        <div class="sidebar-user-role">Atendente</div>
       </div>
-      <p>
-        O painel ao lado tem largura mínima e máxima; arrastar além do limite
-        para, em vez de deixar a coluna principal desaparecer.
-      </p>
+    </div>
+  </div>
+</aside>
 
-      <div class="thread-list">
+<div class="main main-rail app">
+
+  <div class="demo-bar">
+    <h1>Inbox</h1>
+    <p class="demo-hint">
+      Arraste a alça do painel, ou foque nela com Tab e use ← →. A onda do áudio
+      e o seletor de modo também respondem ao teclado.
+    </p>
+  </div>
+
+  <div class="split-pane" data-split-pane data-split-id="demo-inbox">
+
+    <div class="split-pane-main inbox">
+
+      <!-- ── Lista de conversas ──────────────────────────────────────── -->
+      <div class="inbox-list">
         <ul class="list-item-group">
           <li>
             <a class="list-item" href="#" aria-current="true">
@@ -171,122 +217,267 @@
           </li>
         </ul>
       </div>
-    </div>
-  </main>
 
-  <div class="split-pane-handle"></div>
+      <!-- ── Conversa ────────────────────────────────────────────────── -->
+      <div class="inbox-thread">
 
-  <aside class="split-pane-side">
-    <div class="panel-head">
-      <div>
-        <div class="panel-name">Roberta Moraes</div>
-        <div class="panel-phone">+55 85 90000-0000</div>
+        <div class="inbox-stream">
+          <div class="message-stream">
+
+            <div class="message-day"><span>Hoje</span></div>
+
+            <article class="message">
+              <div class="message-bubble">
+                <p class="message-text">qual e-mail vc usa no iCloud ?</p>
+                <footer class="message-foot">
+                  <span class="message-author">via WhatsApp</span>
+                  <time class="message-time" datetime="17:40">17:40</time>
+                </footer>
+              </div>
+            </article>
+
+            <!-- O src do áudio não existe de propósito: prova que a interface
+                 aparece e que o caminho sem JS é o player nativo. -->
+            <article class="message">
+              <div class="audio-player" data-audio-player>
+                <audio class="audio-native" src="voz.mp3" controls preload="metadata"></audio>
+
+                <button class="audio-play" type="button" aria-label="Reproduzir">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </button>
+
+                <div class="audio-body">
+                  <div class="audio-wave">
+                    <span class="audio-bar" style="--level: .2"></span>
+                    <span class="audio-bar" style="--level: .45"></span>
+                    <span class="audio-bar" style="--level: .3"></span>
+                    <span class="audio-bar" style="--level: .7"></span>
+                    <span class="audio-bar" style="--level: .55"></span>
+                    <span class="audio-bar" style="--level: .9"></span>
+                    <span class="audio-bar" style="--level: .65"></span>
+                    <span class="audio-bar" style="--level: 1"></span>
+                    <span class="audio-bar" style="--level: .8"></span>
+                    <span class="audio-bar" style="--level: .5"></span>
+                    <span class="audio-bar" style="--level: .35"></span>
+                    <span class="audio-bar" style="--level: .6"></span>
+                    <span class="audio-bar" style="--level: .25"></span>
+                    <span class="audio-bar" style="--level: .4"></span>
+                    <span class="audio-bar" style="--level: .15"></span>
+                  </div>
+                  <div class="audio-meta">
+                    <time class="audio-time">0:04</time>
+                    <button class="audio-rate" type="button">1×</button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <p class="message-event">Marcos Carneiro assumiu o atendimento</p>
+
+            <article class="message message-out">
+              <div class="message-bubble">
+                <p class="message-text">olha se chegou um convite de lista</p>
+                <footer class="message-foot">
+                  <span class="message-author">Marcos Carneiro</span>
+                  <time class="message-time" datetime="17:48">17:48</time>
+                  <svg class="message-receipt message-receipt-read" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m1 12 5 5L17 6M11 17l6-6"/>
+                  </svg>
+                </footer>
+              </div>
+            </article>
+
+            <article class="message message-out">
+              <div class="message-bubble">
+                <p class="message-text">do celular</p>
+                <footer class="message-foot">
+                  <span class="message-author">Marcos Carneiro</span>
+                  <time class="message-time" datetime="17:48">17:48</time>
+                  <svg class="message-receipt message-receipt-read" viewBox="0 0 24 24"
+                       fill="none" stroke="currentColor" stroke-width="2"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m1 12 5 5L17 6M11 17l6-6"/>
+                  </svg>
+                </footer>
+              </div>
+            </article>
+
+            <p class="message-event">Estado atual: atendimento humano</p>
+
+          </div>
+        </div>
+
+        <!-- ── Composer ────────────────────────────────────────────────── -->
+        <div class="inbox-composer">
+          <div class="composer" data-composer>
+            <div class="composer-tools">
+              <button class="composer-tool" type="button" aria-label="Anexar arquivo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21.4 11.05 12.25 20.2a5.5 5.5 0 0 1-7.78-7.78l9.19-9.19a3.67 3.67 0 0 1 5.18 5.18l-9.2 9.19a1.83 1.83 0 0 1-2.59-2.59l8.49-8.48"/>
+                </svg>
+              </button>
+              <button class="composer-tool" type="button" aria-label="Resposta rápida">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+              </button>
+              <button class="composer-tool" type="button" aria-label="Emoji">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                  <path d="M9 9h.01M15 9h.01"/>
+                </svg>
+              </button>
+              <button class="composer-tool" type="button" aria-label="Agendar envio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="18" rx="2"/>
+                  <path d="M16 2v4M8 2v4M3 10h18"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="composer-row">
+              <label class="sr-only" for="composer-field">Mensagem</label>
+              <textarea class="composer-input" id="composer-field" rows="1"
+                        placeholder="Mensagem…"></textarea>
+              <button class="composer-send" type="button" aria-label="Gravar áudio">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="9" y="2" width="6" height="12" rx="3"/>
+                  <path d="M19 10a7 7 0 0 1-14 0M12 17v5"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <div class="panel-body">
-      <div class="disclosure-group">
+    <div class="split-pane-handle"></div>
 
-        <details class="disclosure" data-disclosure-id="demo-modo" open>
-          <summary class="disclosure-summary">
-            <span class="disclosure-label">Modo de atendimento</span>
-            <svg class="disclosure-chevron" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                 stroke-linejoin="round" aria-hidden="true">
-              <path d="m6 9 6 6 6-6"/>
-            </svg>
-          </summary>
-          <div class="disclosure-panel">
-            <div class="disclosure-content">
-              <fieldset class="segmented segmented-stacked segmented-block">
-                <legend class="sr-only">Modo de atendimento</legend>
-
-                <label class="segmented-option">
-                  <input type="radio" name="modo" value="humano" checked>
-                  <svg class="segmented-icon" viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                       stroke-linejoin="round" aria-hidden="true">
-                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-                    <circle cx="12" cy="7" r="4"/>
-                  </svg>
-                  <span class="segmented-label">Humano</span>
-                </label>
-
-                <label class="segmented-option">
-                  <input type="radio" name="modo" value="agente">
-                  <svg class="segmented-icon" viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                       stroke-linejoin="round" aria-hidden="true">
-                    <rect x="3" y="11" width="18" height="10" rx="2"/>
-                    <path d="M12 7v4M8 3h8"/>
-                  </svg>
-                  <span class="segmented-label">Agente</span>
-                </label>
-
-                <label class="segmented-option">
-                  <input type="radio" name="modo" value="observar">
-                  <svg class="segmented-icon" viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                       stroke-linejoin="round" aria-hidden="true">
-                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/>
-                    <circle cx="12" cy="12" r="3"/>
-                  </svg>
-                  <span class="segmented-label">Observar</span>
-                </label>
-              </fieldset>
-
-              <p class="mode-copy">Você assume a conversa; a IA fica em espera.</p>
-            </div>
-          </div>
-        </details>
-
-        <details class="disclosure" data-disclosure-id="demo-atendimento" open>
-          <summary class="disclosure-summary">
-            <span class="disclosure-label">Atendimento</span>
-            <span class="disclosure-badge">2</span>
-            <svg class="disclosure-chevron" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                 stroke-linejoin="round" aria-hidden="true">
-              <path d="m6 9 6 6 6-6"/>
-            </svg>
-          </summary>
-          <div class="disclosure-panel">
-            <div class="disclosure-content">
-              <div class="prop">
-                <span class="prop-label">Responsável</span>
-                <span class="prop-value">—</span>
-              </div>
-              <div class="prop">
-                <span class="prop-label">Fila</span>
-                <span class="prop-value">—</span>
-              </div>
-            </div>
-          </div>
-        </details>
-
-        <details class="disclosure" data-disclosure-id="demo-enriquecimento">
-          <summary class="disclosure-summary">
-            <span class="disclosure-label">Enriquecimento</span>
-            <svg class="disclosure-chevron" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                 stroke-linejoin="round" aria-hidden="true">
-              <path d="m6 9 6 6 6-6"/>
-            </svg>
-          </summary>
-          <div class="disclosure-panel">
-            <div class="disclosure-content">
-              <p class="mode-copy">Contato ainda não enriquecido.</p>
-            </div>
-          </div>
-        </details>
-
+    <!-- ── Painel de contexto ────────────────────────────────────────── -->
+    <aside class="split-pane-side">
+      <div class="panel-head">
+        <div>
+          <div class="panel-name">Roberta Moraes</div>
+          <div class="panel-phone">+55 85 90000-0000</div>
+        </div>
       </div>
-    </div>
-  </aside>
 
+      <div class="panel-body">
+        <div class="disclosure-group">
+
+          <details class="disclosure" data-disclosure-id="demo-modo" open>
+            <summary class="disclosure-summary">
+              <span class="disclosure-label">Modo de atendimento</span>
+              <svg class="disclosure-chevron" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                   stroke-linejoin="round" aria-hidden="true">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </summary>
+            <div class="disclosure-panel">
+              <div class="disclosure-content">
+                <fieldset class="segmented segmented-stacked segmented-block">
+                  <legend class="sr-only">Modo de atendimento</legend>
+
+                  <label class="segmented-option">
+                    <input type="radio" name="modo" value="humano" checked>
+                    <svg class="segmented-icon" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round" aria-hidden="true">
+                      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                      <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <span class="segmented-label">Humano</span>
+                  </label>
+
+                  <label class="segmented-option">
+                    <input type="radio" name="modo" value="agente">
+                    <svg class="segmented-icon" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round" aria-hidden="true">
+                      <rect x="3" y="11" width="18" height="10" rx="2"/>
+                      <path d="M12 7v4M8 3h8"/>
+                    </svg>
+                    <span class="segmented-label">Agente</span>
+                  </label>
+
+                  <label class="segmented-option">
+                    <input type="radio" name="modo" value="observar">
+                    <svg class="segmented-icon" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round" aria-hidden="true">
+                      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span class="segmented-label">Observar</span>
+                  </label>
+                </fieldset>
+
+                <p class="mode-copy">Você assume a conversa; a IA fica em espera.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="disclosure" data-disclosure-id="demo-atendimento" open>
+            <summary class="disclosure-summary">
+              <span class="disclosure-label">Atendimento</span>
+              <span class="disclosure-badge">2</span>
+              <svg class="disclosure-chevron" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                   stroke-linejoin="round" aria-hidden="true">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </summary>
+            <div class="disclosure-panel">
+              <div class="disclosure-content">
+                <div class="prop">
+                  <span class="prop-label">Responsável</span>
+                  <span class="prop-value">—</span>
+                </div>
+                <div class="prop">
+                  <span class="prop-label">Fila</span>
+                  <span class="prop-value">—</span>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="disclosure" data-disclosure-id="demo-enriquecimento">
+            <summary class="disclosure-summary">
+              <span class="disclosure-label">Enriquecimento</span>
+              <svg class="disclosure-chevron" viewBox="0 0 24 24" fill="none"
+                   stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                   stroke-linejoin="round" aria-hidden="true">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </summary>
+            <div class="disclosure-panel">
+              <div class="disclosure-content">
+                <p class="mode-copy">Contato ainda não enriquecido.</p>
+              </div>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </aside>
+
+  </div>
 </div>
 
 <script src="../dist/disclosure.js"></script>
 <script src="../dist/split-pane.js"></script>
+<script src="../dist/audio-player.js"></script>
+<script src="../dist/composer.js"></script>
 </body>
 </html>
