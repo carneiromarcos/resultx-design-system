@@ -175,6 +175,88 @@ describe('Sidebar rail — segundo modo de navegacao', () => {
   });
 });
 
+describe('Sidebar overlay — terceiro modo', () => {
+  const overlayJs = read('dist', 'sidebar-overlay.js');
+
+  test('o conteudo NAO se move — e o que define o modo', () => {
+    // Rail e panel tomam espaco da pagina; o overlay passa por cima. Se
+    // aparecer margem ou offset aqui, virou panel.
+    const regra = rule(componentsCss, '.sidebar-overlay {');
+    expect(regra).not.toMatch(/margin-left/);
+    expect(regra).toContain('z-index: var(--z-overlay)');
+  });
+
+  test('a navegacao deixou de sumir abaixo de 1024px', () => {
+    // Era o defeito: `.sidebar { display: none }` sem substituto nenhum.
+    expect(componentsCss).toContain('.sidebar:not(.sidebar-overlay) { display: none; }');
+  });
+
+  test('rail + overlay compoem: rail no desktop, gaveta no mobile', () => {
+    const regra = rule(componentsCss, '.sidebar-overlay.sidebar-rail');
+    expect(regra).toContain('var(--sidebar-collapsed)');
+    expect(regra).toContain('transform: none');
+  });
+
+  test('a visibilidade vira na hora ao ABRIR e espera ao fechar', () => {
+    // Se ela transicionasse ao abrir, o painel ainda estaria invisivel quando
+    // o script chama .focus() — e focar um elemento invisivel falha calado.
+    expect(rule(componentsCss, '.sidebar-overlay[data-open]')).toContain('visibility 0s');
+    expect(rule(componentsCss, '.sidebar-overlay {')).toContain(
+      'visibility 0s linear var(--transition-slow)'
+    );
+  });
+
+  test('o item de navegacao nao transiciona `all`', () => {
+    // `all` incluia visibility, e foi exatamente o que prendeu o foco no botao.
+    const regra = rule(componentsCss, '.sidebar-item {');
+    expect(regra).not.toMatch(/transition:\s*all/);
+    expect(regra).toContain('transition: color');
+  });
+
+  test('o scrim nao e o .modal-overlay', () => {
+    // Aquele vive em --z-modal e centraliza o filho: e acoplado ao modal.
+    const regra = rule(componentsCss, '.sidebar-scrim {');
+    expect(regra).toContain('var(--z-overlay)');
+    expect(regra).not.toContain('align-items');
+  });
+
+  test('o foco fica preso enquanto o painel esta aberto', () => {
+    expect(overlayJs).toContain('function trapTab');
+    expect(overlayJs).toContain("event.key === 'Tab'");
+    expect(overlayJs).toContain('event.shiftKey');
+  });
+
+  test('Escape fecha e o foco volta para quem abriu', () => {
+    expect(overlayJs).toContain("event.key === 'Escape'");
+    expect(overlayJs).toContain('_devolverFocoPara');
+  });
+
+  test('a rolagem da pagina trava e e restaurada, nao zerada', () => {
+    expect(overlayJs).toContain('_overflowAnterior');
+    expect(overlayJs).toContain("document.body.style.overflow = 'hidden'");
+  });
+
+  test('o gatilho nasce hidden e o script o revela', () => {
+    // Um botao que nao faz nada e pior do que botao nenhum.
+    expect(overlayJs).toContain('gatilho.hidden = false');
+    expect(overlayJs).toContain("setAttribute('aria-controls'");
+    expect(overlayJs).toContain('aria-expanded');
+  });
+
+  test('o overlay nao sobrevive a janela crescer', () => {
+    expect(overlayJs).toContain('data-sidebar-media');
+    expect(overlayJs).toContain('matchMedia');
+  });
+
+  test('e alcancavel pelo mapa de exports', () => {
+    expect(pkg.exports['./sidebar-overlay']).toBe('./dist/sidebar-overlay.js');
+  });
+
+  test('nao persiste nada', () => {
+    expect(overlayJs).not.toContain('localStorage');
+  });
+});
+
 describe('Convencoes do DS', () => {
   test('nenhuma cor literal nos tres arquivos novos', () => {
     for (const css of [messageCss, audioCss, composerCss]) {

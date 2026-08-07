@@ -186,7 +186,50 @@ Because the label leaves the viewport, rail items need a tooltip. Use `.tooltip-
 
 Measured: rail 64px, content offset 64px, no horizontal overflow at 1500 / 1024 / 768 / 390px.
 
-> The third mode from the navigation study — overlay, for medium screens and mobile drawers — is **not** built yet.
+### Overlay mode — `.sidebar-overlay`
+
+The third and last mode. What defines it: **the content does not move.** Rail and panel take space from the page; the overlay floats above it and gives the space back when it closes.
+
+It is also what was missing below 1024px, where `.sidebar` simply vanished with no substitute — the whole navigation disappeared on small screens.
+
+```html
+<button data-sidebar-toggle="nav" aria-expanded="false" hidden>Menu</button>
+
+<aside class="sidebar sidebar-rail sidebar-overlay" id="nav"
+       data-sidebar-overlay data-sidebar-media="(max-width: 1024px)">…</aside>
+```
+
+Combining it with `.sidebar-rail` gives the case most products actually want — **rail on the desktop, drawer below 1024px, one element**, no duplicated navigation in the HTML. Above the cut a media query hands control back to the rail: it stops floating and takes space again.
+
+| Class | Role |
+|-------|------|
+| `.sidebar-overlay` | Floats above the content instead of taking space |
+| `.sidebar-scrim` | The backdrop. Created by the script when the page has none |
+
+Load `resultx-design-system/sidebar-overlay`.
+
+| API | Effect |
+|-----|--------|
+| `ResultXSidebarOverlay.init(root)` | Enhance every `[data-sidebar-overlay]` |
+| `.open(el)` / `.close(el)` / `.toggle(el)` | Transport |
+
+Dispatches `sidebartoggle` with `detail: { open }`.
+
+#### Accessibility — this is a modal panel, and it behaves like one
+
+- **Focus moves into the panel on open and returns to the trigger on close.** Verified: 12 Tabs and 6 Shift+Tabs, zero escapes.
+- **Escape closes it.** Clicking the scrim closes it.
+- Page scroll is locked while open, and the previous value is **restored**, not zeroed.
+- The trigger ships `hidden` and the script reveals it. Without JavaScript the panel cannot open, and a button that does nothing is worse than no button.
+- `data-sidebar-media` closes the panel when the query stops matching — a stuck overlay would outlive its reason to exist and leave the scroll lock behind.
+
+> The scrim is **not** `.modal-overlay`: that one lives at `--z-modal` and centers its child, so it is coupled to the modal. This one sits at `--z-overlay` and only dims.
+
+#### Two defects this mode surfaced
+
+**`.sidebar-item` was transitioning `all`** — which includes `visibility`, which the item inherits from the sidebar. The link reported `visibility: hidden` at the exact moment the script called `.focus()`, and focusing an invisible element fails silently, leaving focus trapped on the button. A nav item only ever needed to animate colour and background; it now says so.
+
+**`visibility` must flip instantly on open, and wait on close.** Transitioning it in both directions reproduces the same silent failure. The pattern is `visibility 0s linear var(--transition-slow)` when closed and `visibility 0s` when open.
 
 ---
 

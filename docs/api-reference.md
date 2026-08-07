@@ -51,6 +51,8 @@ See [tokens/](tokens/) for detailed documentation per category.
 | `.sidebar-rail` | Rail mode: `var(--sidebar-collapsed)`, icons only | [navigation.md](components/navigation.md) |
 | `.sidebar-label` | Item text. Clipped, not removed, in rail mode | [navigation.md](components/navigation.md) |
 | `.main-rail` | Content offset paired with `.sidebar-rail` | [navigation.md](components/navigation.md) |
+| `.sidebar-overlay` | Overlay mode: floats above the content, which does not move | [navigation.md](components/navigation.md) |
+| `.sidebar-scrim` | Backdrop for the overlay. Created by the script if absent | [navigation.md](components/navigation.md) |
 | `.sidebar-brand` | Brand logo area | |
 | `.sidebar-logo` | Logo icon (32px, accent bg) | |
 | `.sidebar-brand-text` | Brand name text | |

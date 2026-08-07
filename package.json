@@ -17,6 +17,7 @@
     "./split-pane": "./dist/split-pane.js",
     "./audio-player": "./dist/audio-player.js",
     "./composer": "./dist/composer.js",
+    "./sidebar-overlay": "./dist/sidebar-overlay.js",
     "./tokens/source": "./tokens/tokens.css",
     "./components/source": "./components/components.css",
     "./package.json": "./package.json"

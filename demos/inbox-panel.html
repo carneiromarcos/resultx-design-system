@@ -96,13 +96,19 @@
   @media (max-width: 1024px) {
     .inbox { grid-template-columns: minmax(0, 1fr); }
     .inbox-list { display: none; }
+    /* A gaveta flutua: o conteúdo não abre espaço para ela. */
+    .app { margin-left: 0; }
   }
 </style>
 </head>
 <body>
 
-<!-- ── Rail de navegação — segundo modo do .sidebar ────────────────────── -->
-<aside class="sidebar sidebar-rail" aria-label="Navegação principal">
+<!-- ── Navegação: rail no desktop, gaveta abaixo de 1024px ──────────────
+     Um elemento só, dois modos. Acima do corte o rail ocupa espaço; abaixo,
+     vira overlay e o botão "Menu" aparece. -->
+<aside class="sidebar sidebar-rail sidebar-overlay" id="nav"
+       aria-label="Navegação principal"
+       data-sidebar-overlay data-sidebar-media="(max-width: 1024px)">
   <div class="sidebar-brand">
     <div class="sidebar-logo">R</div>
     <span class="sidebar-brand-text">ResultX</span>
@@ -147,6 +153,12 @@
 <div class="main main-rail app">
 
   <div class="demo-bar">
+    <!-- Nasce `hidden`: sem o script o painel não abre, e um botão que não
+         faz nada é pior do que botão nenhum. O script o revela. -->
+    <button class="btn btn-secondary btn-sm" type="button"
+            data-sidebar-toggle="nav" aria-expanded="false" hidden>
+      Menu
+    </button>
     <h1>Inbox</h1>
     <p class="demo-hint">
       Arraste a alça do painel, ou foque nela com Tab e use ← →. A onda do áudio
@@ -475,6 +487,7 @@
   </div>
 </div>
 
+<script src="../dist/sidebar-overlay.js"></script>
 <script src="../dist/disclosure.js"></script>
 <script src="../dist/split-pane.js"></script>
 <script src="../dist/audio-player.js"></script>

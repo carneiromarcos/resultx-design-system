@@ -5,6 +5,44 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Added — Modo overlay: os 3 modos de navegação, completos
+
+- **`.sidebar-overlay`** — terceiro e último modo. O que o define: **o conteúdo
+  não se move.** Rail e panel tomam espaço da página; o overlay passa por cima e
+  devolve o espaço ao fechar.
+- 🔴 **Corrige um defeito antigo:** abaixo de 1024px o `.sidebar` fazia
+  `display: none` **sem substituto** — a navegação inteira sumia da tela pequena.
+  Agora a regra é `.sidebar:not(.sidebar-overlay)`.
+- **`.sidebar-rail` + `.sidebar-overlay` compõem** o caso que a maioria dos
+  produtos quer: rail no desktop, gaveta abaixo de 1024px, **um elemento só**,
+  sem duplicar a navegação no HTML.
+- **`.sidebar-scrim`** — não é o `.modal-overlay`, que vive em `--z-modal` e
+  centraliza o filho. Este só escurece, uma camada abaixo do painel.
+- **`dist/sidebar-overlay.js`**, exposto como `resultx-design-system/sidebar-overlay`.
+  É painel modal e se comporta como um: foco entra ao abrir e **volta ao gatilho**
+  ao fechar, Tab preso dentro, Escape fecha, clique no scrim fecha, rolagem
+  travada e **restaurada** (não zerada). O gatilho nasce `hidden` e o script o
+  revela — botão que não faz nada é pior que botão nenhum.
+  `data-sidebar-media` fecha o painel quando a consulta deixa de casar.
+
+### Fixed — Dois defeitos que o overlay revelou
+
+- 🔴 **`.sidebar-item` transicionava `all`**, o que inclui `visibility` — herdada
+  do sidebar. O link reportava `visibility: hidden` no instante exato em que o
+  script chamava `.focus()`, e **focar elemento invisível falha em silêncio**:
+  o foco ficava preso no botão que abriu o painel. Um item de navegação só
+  precisa animar cor e fundo, e agora é o que ele declara.
+- 🔴 **`visibility` precisa virar na hora ao abrir e esperar ao fechar.**
+  Transicioná-la nos dois sentidos reproduz a mesma falha silenciosa. O padrão é
+  `visibility 0s linear var(--transition-slow)` fechado e `visibility 0s` aberto.
+
+Verificado em Chrome: foco entra no painel ao abrir; **12 Tabs e 6 Shift+Tabs,
+zero escapes**; Escape devolve o foco ao gatilho e `aria-expanded` acompanha;
+clique no scrim fecha; `body.overflow` travado e restaurado ao valor anterior;
+a 1440px o rail volta com 64px de largura e 64px de deslocamento; overlay aberto
+não sobrevive a janela crescer; zero overflow horizontal em 390/768/1440px; zero
+erro de console. **173 testes.**
+
 ### Added — Superfície de conversa e segundo modo de navegação
 
 Fecha os nove componentes extraídos das telas de inbox.

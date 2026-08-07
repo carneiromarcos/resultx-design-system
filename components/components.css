@@ -89,7 +89,13 @@ body {
   /* Navegação deve ser <a>, não <div>. Sem este reset o link chega sublinhado
      e o item só fica correto com markup não semântico. */
   text-decoration: none;
-  transition: all 150ms var(--spring-snappy);
+  /* `all` incluía `visibility`, e o item herda a do sidebar. No modo overlay
+     isso fazia o link reportar `visibility: hidden` no instante em que o
+     script tentava focá-lo — e `.focus()` num elemento invisível falha em
+     silêncio, deixando o foco preso no botão que abriu o painel.
+     Um item de navegação só precisa animar cor e fundo. */
+  transition: color 150ms var(--spring-snappy),
+    background 150ms var(--spring-snappy);
   border-radius: var(--radius-md);
 }
 .sidebar-item:hover { color: var(--text-primary); background: var(--sidebar-bg-hover); }
@@ -195,6 +201,86 @@ body {
 .sidebar-rail .sidebar-footer {
   justify-content: center;
   padding-inline: 0;
+}
+
+/* ── Modo overlay (flutua sobre o conteúdo) ──────────────────────────────
+   Terceiro e último modo de navegação. A diferença que o define: o conteúdo
+   NÃO se move. Rail e panel tomam espaço da página; o overlay passa por cima
+   e devolve o espaço ao fechar.
+
+   É o que faltava abaixo de 1024px, onde o `.sidebar` simplesmente sumia sem
+   substituto — a navegação inteira desaparecia da tela pequena.
+
+   Sozinho é a gaveta. Somado ao rail — `.sidebar .sidebar-rail
+   .sidebar-overlay` — dá o caso comum de verdade: rail fixo no desktop,
+   gaveta abaixo de 1024px, um elemento só.
+
+   <aside class="sidebar sidebar-overlay" id="nav" data-sidebar-overlay>…</aside>
+   <button data-sidebar-toggle="nav" aria-expanded="false" hidden>Menu</button>
+
+   O comportamento — foco preso, Escape, clique fora, devolução do foco — vive
+   em dist/sidebar-overlay.js. Sem o script o painel fica fechado e inerte;
+   por isso o gatilho deve nascer com `hidden` e ser revelado pelo script.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.sidebar-overlay {
+  width: var(--sidebar-width);
+  z-index: var(--z-overlay);
+  /* visibility, e não só transform: é ela que tira o painel fechado da ordem
+     de tabulação e da árvore de acessibilidade. Um menu fechado que ainda
+     recebe Tab é uma armadilha silenciosa. */
+  visibility: hidden;
+  transform: translateX(-100%);
+  /* A visibilidade não interpola: ela vira de uma vez, e o `0s` com atraso
+     segura o painel visível até o deslize terminar. Ao ABRIR ela precisa valer
+     no mesmo quadro — `.focus()` num elemento ainda invisível falha em
+     silêncio, e o foco fica preso no botão. */
+  transition: transform var(--transition-slow),
+    visibility 0s linear var(--transition-slow);
+}
+
+.sidebar-overlay[data-open] {
+  visibility: visible;
+  transform: translateX(0);
+  transition: transform var(--transition-slow), visibility 0s;
+}
+
+/* Não é o .modal-overlay: aquele vive em --z-modal e centraliza o filho —
+   é acoplado ao modal. Este só escurece o fundo, uma camada abaixo do painel. */
+.sidebar-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-overlay) - 1);
+  visibility: hidden;
+  background: var(--bg-overlay);
+  opacity: 0;
+  transition: opacity var(--transition-slow),
+    visibility 0s linear var(--transition-slow);
+}
+
+.sidebar-scrim[data-open] {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity var(--transition-slow), visibility 0s;
+}
+
+/* Acima do corte, a composição rail + overlay devolve o comando ao rail: para
+   de flutuar e volta a ocupar espaço na página. É o que permite um elemento só
+   ser rail no desktop e gaveta no mobile, sem duplicar a navegação no HTML. */
+@media (min-width: 1025px) {
+  .sidebar-overlay.sidebar-rail {
+    /* A largura também: .sidebar-overlay é declarado depois de .sidebar-rail e
+       venceria com os 240px, deixando o "rail" do tamanho do painel. */
+    width: var(--sidebar-collapsed);
+    z-index: var(--z-sidebar);
+    visibility: visible;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-overlay,
+  .sidebar-scrim { transition: none; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -1994,7 +2080,9 @@ tr:hover td { background: var(--bg-surface-1); }
   .theory-grid { grid-template-columns: 1fr; }
   .grid-2 { grid-template-columns: 1fr; }
   .grid-3 { grid-template-columns: 1fr; }
-  .sidebar { display: none; }
+  /* O modo overlay é a exceção, e é a razão de ele existir: até aqui a
+     navegação simplesmente sumia da tela pequena, sem substituto. */
+  .sidebar:not(.sidebar-overlay) { display: none; }
   .main { margin-left: 0; }
 }
 @media (max-width: 768px) {
