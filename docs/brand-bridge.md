@@ -164,3 +164,12 @@ esquecer o rebuild reprova a suíte em vez de passar despercebido.
 
 Os `ds-bridge.css` são gerados e não entram nos scripts de lint: contêm hexadecimal de propósito,
 como `tokens/`.
+
+## A gramática que a ponte pressupõe
+
+A ponte só funciona porque os dois lados falam línguas diferentes de propósito: `brands/` nomeia
+**pigmento** (`--purple-600`), o DS nomeia **papel** (`--accent-primary`), e a ponte é a tradução.
+
+Quando um consumidor cria o próprio apelido com nome de cor, ele fura essa separação — e o nome
+apodrece calado. O caso medido em 07/08: o Electia mantém `--accent-teal`, que hoje guarda **roxo**,
+em 296 lugares. Ver [adr/0001-role-named-tokens.md](adr/0001-role-named-tokens.md).

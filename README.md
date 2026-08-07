@@ -77,6 +77,7 @@ design-system/
 ├── dist/                      ← outputs compilados (tokens.ts, tokens.theme.css, theme-toggle.js)
 ├── docs/                      ← documentacao adicional
 │   ├── viewer.html            ← viewer interativo do DS — antes `docs-viewer.html` na raiz
+│   ├── adr/                   ← decisoes de arquitetura (0001 = gramatica dos nomes de token)
 │   ├── components/            ← docs de componentes
 │   └── tokens/                ← docs de tokens
 └── tests/                     ← Playwright + visual regression
