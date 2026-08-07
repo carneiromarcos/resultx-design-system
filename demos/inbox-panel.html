@@ -77,7 +77,13 @@
   .prop-label { color: var(--text-secondary); }
   .prop-value { color: var(--text-muted); }
 
-  .mode-copy { margin: 0; color: var(--text-muted); font-size: var(--text-sm); }
+  .mode-copy { margin: var(--space-3) 0 0; color: var(--text-muted); font-size: var(--text-sm); }
+
+  .thread-list {
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
 </style>
 </head>
 <body>
@@ -106,6 +112,65 @@
         O painel ao lado tem largura mínima e máxima; arrastar além do limite
         para, em vez de deixar a coluna principal desaparecer.
       </p>
+
+      <div class="thread-list">
+        <ul class="list-item-group">
+          <li>
+            <a class="list-item" href="#" aria-current="true">
+              <span class="avatar avatar-md">RM</span>
+              <span class="list-item-body">
+                <span class="list-item-head">
+                  <span class="list-item-title">Roberta Moraes</span>
+                  <time class="list-item-time">1min</time>
+                </span>
+                <span class="list-item-preview">Você: do celular</span>
+                <span class="list-item-meta">WhatsApp · Pessoal</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="list-item list-item-unread" href="#">
+              <span class="avatar avatar-md">PB</span>
+              <span class="list-item-body">
+                <span class="list-item-head">
+                  <span class="list-item-title">Pedro Benevides</span>
+                  <time class="list-item-time">38min</time>
+                  <span class="list-item-count">1</span>
+                </span>
+                <span class="list-item-preview">Áudio</span>
+                <span class="list-item-meta">WhatsApp · Pessoal</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="list-item" href="#">
+              <span class="avatar avatar-md">CM</span>
+              <span class="list-item-body">
+                <span class="list-item-head">
+                  <span class="list-item-title">Um nome bem longo que nao cabe na coluna e precisa truncar</span>
+                  <time class="list-item-time">1h</time>
+                </span>
+                <span class="list-item-preview">Uma previa igualmente longa, para provar que a linha inteira trunca em vez de alargar a coluna</span>
+                <span class="list-item-meta">WhatsApp · Pessoal · Aberta</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a class="list-item list-item-unread" href="#">
+              <span class="avatar avatar-md">SO</span>
+              <span class="list-item-body">
+                <span class="list-item-head">
+                  <span class="list-item-title">Sônia</span>
+                  <time class="list-item-time">2h</time>
+                  <span class="list-item-count">12</span>
+                </span>
+                <span class="list-item-preview">Vc vai buscar o José</span>
+                <span class="list-item-meta">WhatsApp · Pessoal</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </main>
 
@@ -133,6 +198,43 @@
           </summary>
           <div class="disclosure-panel">
             <div class="disclosure-content">
+              <fieldset class="segmented segmented-stacked segmented-block">
+                <legend class="sr-only">Modo de atendimento</legend>
+
+                <label class="segmented-option">
+                  <input type="radio" name="modo" value="humano" checked>
+                  <svg class="segmented-icon" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                       stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                  </svg>
+                  <span class="segmented-label">Humano</span>
+                </label>
+
+                <label class="segmented-option">
+                  <input type="radio" name="modo" value="agente">
+                  <svg class="segmented-icon" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                       stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="11" width="18" height="10" rx="2"/>
+                    <path d="M12 7v4M8 3h8"/>
+                  </svg>
+                  <span class="segmented-label">Agente</span>
+                </label>
+
+                <label class="segmented-option">
+                  <input type="radio" name="modo" value="observar">
+                  <svg class="segmented-icon" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                       stroke-linejoin="round" aria-hidden="true">
+                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                  </svg>
+                  <span class="segmented-label">Observar</span>
+                </label>
+              </fieldset>
+
               <p class="mode-copy">Você assume a conversa; a IA fica em espera.</p>
             </div>
           </div>

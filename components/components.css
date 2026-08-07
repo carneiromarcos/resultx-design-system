@@ -7,6 +7,8 @@
    dist/components.min.css segue sendo um arquivo só para o consumidor. */
 @import url('./disclosure.css');
 @import url('./split-pane.css');
+@import url('./segmented.css');
+@import url('./list-item.css');
 
 /* ══════════════════════════════════════════════════════════════════
    RESET & BASE
@@ -2058,6 +2060,26 @@ tr:hover td { background: var(--bg-surface-1); }
 }
 .skip-link:focus {
   top: var(--space-2);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   ACCESSIBILITY — Screen-reader only text
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Alguns elementos precisam de um nome que só a tecnologia assistiva lê — a
+   <legend> de um segmented control cujo grupo já tem título visível, por
+   exemplo. `display: none` tiraria o elemento da árvore de acessibilidade
+   junto, que é o oposto do objetivo. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
 }
 
 /* ══════════════════════════════════════════════════════════════════

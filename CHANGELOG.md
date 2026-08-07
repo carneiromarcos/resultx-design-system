@@ -5,6 +5,42 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Added — Segmented control e item de lista
+
+- **`.segmented`** — escolher um valor entre poucos, todos visíveis
+  ("Humano / Agente / Observar"). **Sem JavaScript:** um grupo de
+  `<input type="radio">` nativo já dá setas do teclado, seleção com Espaço, uma
+  única parada de Tab, participação em formulário e o anúncio "Humano, botão de
+  opção, 1 de 3, selecionado". Um teste reprova o dia em que aparecer um
+  `dist/segmented.js`. Não é `.tabs` (que troca de visão) nem `.toggle` (que é
+  binário). Estado lido por `:has()`. Variantes `-stacked`, `-sm`, `-lg`,
+  `-block`. `docs/components/segmented.md`
+- **`.list-item`** — linha de lista com avatar, título, hora, prévia, meta e
+  contador de não lidas. Reaproveita a família `.avatar` do próprio DS.
+  Truncamento com `min-width: 0` nos quatro níveis da cadeia; a hora não encolhe
+  junto. O trilho de selecionado é `box-shadow` interno, não borda —
+  deslocamento medido de **0px** ao trocar de seleção. Não lida sinaliza por
+  **peso**, não só por cor. `docs/components/list-item.md`
+- **`.sr-only`** — utilitário de texto só para leitor de tela, na seção
+  ACCESSIBILITY. O repo não tinha nenhum, e o segmented control precisa de
+  rótulo de grupo quando o bloco em volta já mostra um título
+
+Verificado em Chrome real: `←` movendo a seleção `observar → agente → humano`
+sem script carregado; o grupo consumindo **uma** parada de Tab e a seguinte
+saindo dele; árvore ARIA com `group "Modo de atendimento"` e três `radio`; e o
+título truncando em 175 de 364px reais numa coluna de 280px, com a hora inteira
+preservada. Zero erro de console.
+
+### ⚠️ Dívida registrada — `.layout-list-item`
+
+`.layout-list-item` já existia, é documentado em `docs/components/layout.md` e
+tem consumidor vivo em `demos/candidatos.html`. Faz quase a mesma coisa numa
+versão de duas linhas: sem hora, prévia nem contador, sem `min-width: 0` na
+linha, sem foco visível, e com `border-left: 3px` no ativo — que **desloca o
+conteúdo** a cada troca de seleção. **Nada nele foi alterado:** fundir os dois é
+uma decisão, não um efeito colateral. A sobreposição está registrada em
+`docs/components/list-item.md` e fixada por três testes.
+
 ### Added — Camada de comportamento + 2 componentes de painel
 
 Extraídos a partir de telas reais de um inbox de atendimento. O DS era CSS puro;
