@@ -32,14 +32,20 @@ jobs:
       - run: npm run build
 
       - name: Prepare pages directory
+        # Caminhos alinhados a estrutura pos-2affe96 (reorganizacao de pastas):
+        # o visualizador virou docs/viewer.html e pages/ virou demos/. O
+        # workflow ficou para tras e o deploy falhava no `cp` desde entao.
+        # `set -euo pipefail` para que um caminho que suma de novo derrube o
+        # passo com erro claro, em vez de publicar um site pela metade.
         run: |
+          set -euo pipefail
           mkdir -p _site
-          cp docs-viewer.html _site/index.html
+          cp docs/viewer.html _site/index.html
           cp -r dist _site/dist
           cp -r tokens _site/tokens
           cp -r components _site/components
           cp -r docs _site/docs
-          cp -r pages _site/pages
+          cp -r demos _site/demos
           cp DESIGN-SYSTEM.md _site/
 
       - uses: actions/upload-pages-artifact@v5
