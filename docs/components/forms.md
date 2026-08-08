@@ -73,19 +73,6 @@ When the input receives focus:
 | `border-color` | `var(--accent-primary)` |
 | `box-shadow` | `0 0 0 3px var(--accent-primary-muted)` |
 
-### `.form-textarea`
-
-Multi-line field. Inherits the `.form-input` visual contract and changes only what is proper to a multi-line box.
-
-| Property | Value |
-|----------|-------|
-| `padding` | `var(--space-3) var(--space-4)` |
-| `line-height` | `var(--leading-relaxed)` |
-| `min-height` | `88px` |
-| `resize` | `vertical` |
-
-Added in Wave 2 — the DS had `.form-input` and no long-text field. It went undocumented until now.
-
 ### `.form-select`
 
 The third leg of the field triad. A **native `<select>`**.
@@ -306,10 +293,14 @@ line-height, `resize: vertical` and a minimum height.
 
 | Property | Value |
 |----------|-------|
+| `padding` | `var(--space-3) var(--space-4)` — taller than `.form-input` |
+| `line-height` | `var(--leading-relaxed)` |
 | `min-height` | `88px` (≈3 lines) |
 | `resize` | `vertical` — horizontal resize breaks the grid |
 | `:focus-visible` | `--accent-primary` border + `--focus-ring-*` glow, same as `.form-input` |
 | `:disabled` | Reduced opacity, `--bg-surface-2` background |
+
+> The `.form-select` section above is the third leg of the same triad: `.form-input` → `.form-textarea` → `.form-select`.
 
 ## Keyboard Shortcut
 
