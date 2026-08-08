@@ -9,12 +9,23 @@ Data tables for displaying structured, tabular information inside card container
   .table-header
     .table-header-title
     [actions, e.g., buttons or dropdowns]
-  table
-    thead
-      tr > th
-    tbody
-      tr > td [.td-name | .td-score | .td-avatar]
+  .table-wrap                     ← preferred: scrolls the table alone
+    table
+      thead
+        tr > th
+      tbody
+        tr > td [.td-name | .td-score | .td-avatar]
 ```
+
+## A wide table must scroll, not be clipped
+
+`.table-card` used to carry `overflow: hidden`. On a narrow viewport that made the extra columns **unreachable** — no scrollbar, no swipe, they simply disappeared. It now scrolls horizontally, with `overflow-y` still hidden so the border radius keeps clipping.
+
+`.table-wrap` is the preferred structure: it wraps the `<table>` alone, so the header — title and actions — **stays put** while the columns move. The scroll on `.table-card` is the safety net for existing markup that has no wrapper.
+
+Measured on `demos/dashboard.html` at a 480px viewport: a 552px table inside a 446px card, and the content is reachable.
+
+Same reasoning already applied to `.dl-table-wrap` in the data layer — see [data-cards.md](data-cards.md).
 
 ## Components
 

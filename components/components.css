@@ -812,7 +812,25 @@ body {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  overflow: hidden;
+  /* overflow-x: auto (era `overflow: hidden`) — tabela larga em tela estreita
+     precisa rolar. Com `hidden` o excedente ficava inacessível: sem barra e sem
+     gesto de swipe, as colunas da direita simplesmente sumiam. overflow-y segue
+     `hidden` para preservar o clip do border-radius.
+     Mesmo raciocínio já aplicado em .dl-table-wrap (components/data-cards.css).
+     Rede de segurança para markup que não usa .table-wrap. */
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Estrutura preferida: envolve SÓ a tabela, para o cabeçalho ficar parado
+   enquanto as colunas rolam.
+     <div class="table-card">
+       <div class="table-header">…</div>
+       <div class="table-wrap"><table>…</table></div>
+     </div> */
+.table-wrap {
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 .table-header {
   display: flex; justify-content: space-between; align-items: center;
@@ -1252,7 +1270,17 @@ tr:hover td { background: var(--bg-surface-1); }
 /* ══════════════════════════════════════════════════════════════════
    TOOLTIP
    ══════════════════════════════════════════════════════════════════ */
-.tooltip-wrapper { position: relative; display: inline-block; }
+/* Só `position: relative` — o ancoradouro de que o .tooltip precisa. NÃO impõe
+   `display`: o gatilho pode ser um item flex do rail, uma célula de grade ou um
+   botão, e um `inline-block` cravado aqui desmontava o layout do pai. O
+   demos/electia-copiloto.html carregava o contorno disso
+   (`.sidebar-item.tooltip-wrapper { display: flex }`) — não precisa mais.
+   Gatilho naturalmente inline que dependia do inline-block: usar
+   `.tooltip-wrapper-inline`. */
+.tooltip-wrapper { position: relative; }
+
+/* Para gatilho inline, onde o inline-block ainda é o que se quer. */
+.tooltip-wrapper-inline { display: inline-block; }
 .tooltip {
   position: absolute;
   bottom: calc(100% + 8px); left: 50%;
@@ -1299,7 +1327,12 @@ tr:hover td { background: var(--bg-surface-1); }
   transform: translateY(-50%);
   border-top-color: transparent; border-left-color: var(--text-primary);
 }
-.tooltip-wrapper:hover .tooltip { opacity: 1; }
+/* `:focus-within` junto do hover, e não só hover: sem ele o tooltip nunca
+   aparece para quem navega por teclado — o mesmo defeito que o atributo
+   `title` tem, e pelo qual a documentação recomendava trocar `title` por este
+   componente. A recomendação só passa a ser verdadeira com esta linha. */
+.tooltip-wrapper:hover .tooltip,
+.tooltip-wrapper:focus-within .tooltip { opacity: 1; }
 
 /* ══════════════════════════════════════════════════════════════════
    AVATAR
