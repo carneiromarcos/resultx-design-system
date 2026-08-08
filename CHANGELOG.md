@@ -5,6 +5,29 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-08-08
+
+Fecha a **Onda 3** (itens 4, 5 e 6), ratifica o **ADR-0001** e entrega o **modal
+de filtros** extraído de tela real. PRs #38, #39, #40 e #41 — todas por merge
+commit, `main` em `77a730e`. **210 testes** (9 suítes), lint limpo, build
+determinístico.
+
+**Minor, não major — tudo aditivo.** Nenhuma declaração foi removida e nenhum
+valor existente mudou. As três mudanças de comportamento são correções de
+defeito, não quebras:
+
+1. `.modal-body` passa a **rolar** onde antes **cortava em silêncio**. Nenhum
+   consumidor usa a família `.modal-*`, então o raio é zero hoje.
+2. `.modal-close` ganha alvo de 44×44 por pseudo-elemento; a caixa visível segue
+   32×32 e **nenhum cabeçalho muda de altura**.
+3. `.tag` ganha `gap` — visível apenas em tags que adotem o novo `.tag-dot`.
+
+⚠️ **`commit-and-tag-version` segue DESCARTADO**, pelo mesmo motivo da v2.3.0: no
+`--dry-run` ele transforma hexadecimais das mensagens de commit em links de issue
+falsos, e substituiria estas seções escritas à mão por uma lista seca de assuntos.
+Os scripts `release`, `release:minor` e `release:major` continuam no
+`package.json` e **não devem ser usados** enquanto houver hex nas mensagens.
+
 ### Fixed — O corpo do modal rolava? Não. Cortava. (lote A)
 
 `.modal` tinha `overflow: hidden` e nenhum teto de altura, e `.modal-body` só
