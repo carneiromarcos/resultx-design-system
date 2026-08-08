@@ -224,3 +224,40 @@ describe('Hardcoded Color Detection', () => {
     expect(typeof hexCount).toBe('number');
   });
 });
+
+// ─── Viewer ↔ demos ──────────────────────────────────────────────────────────
+
+/**
+ * Trava contra a deriva que quebrou o site duas vezes em 08/08/2026.
+ *
+ * O commit 2affe96 renomeou `pages/` para `demos/`. O workflow de Pages ficou
+ * apontando para o caminho velho e o deploy falhou por TRES MESES sem ninguem
+ * notar — o job de Pages nao bloqueia merge. Consertado o deploy, a home subiu
+ * com os cinco links de template devolvendo 404: a mesma renomeacao, agora no
+ * viewer.
+ *
+ * Os testes cobrem os dois sentidos: link que aponta para nada, e demo que
+ * existe e ninguem alcanca.
+ */
+describe('Viewer e demos andam juntos', () => {
+  const ROOT = path.resolve(__dirname, '..');
+  const viewer = fs.readFileSync(path.join(ROOT, 'docs', 'viewer.html'), 'utf-8');
+  const linkados = [...viewer.matchAll(/href="(demos\/[a-z0-9-]+\.html)"/g)].map((m) => m[1]);
+  const emDisco = fs
+    .readdirSync(path.join(ROOT, 'demos'))
+    .filter((f) => f.endsWith('.html'))
+    .map((f) => `demos/${f}`);
+
+  test('todo link do viewer aponta para um arquivo que existe', () => {
+    expect(linkados.filter((l) => !fs.existsSync(path.join(ROOT, l)))).toEqual([]);
+  });
+
+  test('todo demo em disco esta alcancavel pelo viewer', () => {
+    // Um demo que ninguem linka e trabalho publicado que ninguem encontra.
+    expect(emDisco.filter((d) => !linkados.includes(d))).toEqual([]);
+  });
+
+  test('nenhum link sobrou apontando para a pasta antiga `pages/`', () => {
+    expect(viewer).not.toMatch(/href="pages\//);
+  });
+});
