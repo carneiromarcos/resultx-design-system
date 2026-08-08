@@ -53,8 +53,14 @@ lacuna que a textarea preencheu na Onda 2, um nível adiante.
   `.form-label` leria como legenda de campo. Compartilha uma regra só com
   `.segmented-legend`: o painel precisa do mesmo rótulo sobre um grupo de rádio
   e sobre um select, mas o elemento certo difere (`<legend>` × `<label>`).
-- **`docs/components/forms.md` passou a documentar a `.form-textarea`**, que
-  estava viva desde a Onda 2 e nunca havia sido documentada.
+- ⚠️ **Correção a esta própria entrada:** afirmei que a `.form-textarea` "nunca
+  havia sido documentada" e acrescentei uma seção para ela. **Era falso** — o
+  `forms.md` já tinha uma seção `## Textarea`, mais completa que a minha. Meu
+  `grep` de títulos estava truncado e eu concluí de uma visão parcial. A
+  duplicata foi removida logo em seguida e os dois valores que ela tinha a mais
+  (`padding`, `line-height`) foram dobrados na seção original. Terceira vez que
+  a falta de varredura completa gera duplicata no repo, depois de `.btn-icon`
+  (Onda 2) e `.layout-list-item` (Onda 3) — desta vez em documentação.
 
 ### Added — Chips que quebram linha e o dot da tag (lote C)
 
