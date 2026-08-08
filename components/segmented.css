@@ -41,7 +41,14 @@
   background: var(--bg-surface-2);
 }
 
-.segmented-legend {
+/* `.form-label-eyebrow` compartilha a regra em vez de copiá-la: num painel de
+   filtros os grupos de rádio e os campos de escolha precisam do MESMO rótulo,
+   mas o elemento certo difere — <legend> dentro de <fieldset>, <label> para um
+   <select>. Duas portas de entrada, uma definição. Renomear `.segmented-legend`
+   não era opção: é classe pública desde a v2.3.0. */
+.segmented-legend,
+.form-label-eyebrow {
+  display: block;
   padding: 0 0 var(--space-2);
   color: var(--text-secondary);
   font-size: var(--text-xs);
@@ -122,6 +129,32 @@
 
 /* Ocupa a largura disponível em vez de se ajustar ao conteúdo. */
 .segmented-block { width: 100%; }
+
+/* Chips soltos que quebram linha, em vez de uma barra unida.
+   A barra base usa `grid-auto-columns: 1fr`, que dá a TODAS as opções a mesma
+   largura e as mantém numa linha só — ótimo para "Dia / Semana / Mês", inviável
+   para um grupo de rótulos de comprimentos muito diferentes, que ou espremeria
+   os curtos ou estouraria a caixa.
+
+   Muda só a caixa e a moldura. O rádio nativo, o :has() dos estados, o alvo de
+   44px e o foco continuam sendo os da barra — é a mesma máquina noutro formato,
+   não um segundo componente. */
+.segmented-chips {
+  display: flex;
+  flex-wrap: wrap;
+  /* O contorno some do grupo e passa para cada chip. */
+  padding: 0;
+  border: none;
+  background: transparent;
+  gap: var(--space-2);
+}
+
+.segmented-chips > .segmented-option {
+  border-radius: var(--radius-full);
+  border-color: var(--border-default);
+  background: var(--bg-surface-2);
+  padding: var(--space-2) var(--space-4);
+}
 
 /* ── Estados ────────────────────────────────────────────────────────────── */
 

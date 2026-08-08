@@ -5,6 +5,91 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Fixed — O corpo do modal rolava? Não. Cortava. (lote A)
+
+`.modal` tinha `overflow: hidden` e nenhum teto de altura, e `.modal-body` só
+tinha `padding`. Conteúdo mais alto que a viewport era **cortado, sem barra e
+sem aviso** — a mesma classe de falha silenciosa das armadilhas de `visibility`
+da Onda 3. Sobreviveu despercebido porque **nenhum consumidor usa a família
+`.modal-*`** e nenhum demo a exercitava.
+
+- **`.modal` virou coluna flex com `max-height: 100%`.** Cabeçalho e rodapé
+  ficam parados (`flex-shrink: 0`) e só o corpo rola.
+- **`.modal-overlay` ganhou `padding: var(--space-4)`** — é ele que vira o teto:
+  o `max-height` do modal resolve contra a caixa de conteúdo do overlay. Modais
+  curtos não se movem; a centralização flex os mantém onde estavam.
+- **`.modal-body`: `overflow-y: auto` + `min-height: 0` + `overscroll-behavior:
+  contain`.** O `min-height: 0` não é enfeite — sem ele o item de flex não
+  encolhe abaixo do min-content e o corpo empurra o modal para fora do teto em
+  vez de rolar. Mesma lição do `.main` na Onda 1.
+- **`.scroll-slim`** — o DS **não tinha estilo de scrollbar nenhum**. Cada
+  navegador desenhava a sua, larga e fora da paleta, dentro de superfícies
+  escuras. `scrollbar-*` para Firefox e Chromium recente, `::-webkit-scrollbar`
+  para Safari e Chromium antigo; onde nenhum vale, a barra nativa aparece e a
+  rolagem funciona igual. `.modal-body` já nasce com ela.
+- **`.modal-close`: alvo de 44×44, caixa visível ainda 32×32.** O DS fixou 44
+  para `.btn-icon` na Onda 2 e este botão ficou fora — 32×32 **passa** na WCAG
+  2.2 AA (SC 2.5.8 pede 24×24), mas eram duas réguas para o mesmo gesto. O alvo
+  cresce por `::after { inset: -6px }`, então nenhum cabeçalho muda de altura.
+- **`.modal-close` deixou de usar `transition: all`.** Restam 22 ocorrências de
+  `all` em `components/` — nenhuma convive mais com `visibility`, então é dívida
+  de higiene, não falha ativa. Registrada, não corrigida aqui.
+
+### Added — `.form-select` fecha a tríade de campos (lote B)
+
+Havia `.form-input` e `.form-textarea` e nenhum campo de escolha: exatamente a
+lacuna que a textarea preencheu na Onda 2, um nível adiante.
+
+- **`.form-select`** — `<select>` **nativo**. O elemento nativo entrega teclado,
+  busca por digitação, o seletor do sistema no celular e o anúncio correto no
+  leitor de tela; é o mesmo motivo pelo qual o `.segmented` usa rádio nativo em
+  vez de imitar um.
+- **`.form-select-wrap`** — existe por uma razão só: `<select>` não aceita
+  pseudo-elemento, então o chevron precisa de um pai. **Desenhado com bordas,
+  não com SVG:** um `data:` URI traria o hex por dentro e mentiria no tema claro.
+  `pointer-events: none` para o clique atravessar — sem isso o canto direito do
+  campo vira área morta.
+- **`.form-label-eyebrow`** — rótulo de **grupo de controles**, onde
+  `.form-label` leria como legenda de campo. Compartilha uma regra só com
+  `.segmented-legend`: o painel precisa do mesmo rótulo sobre um grupo de rádio
+  e sobre um select, mas o elemento certo difere (`<legend>` × `<label>`).
+- **`docs/components/forms.md` passou a documentar a `.form-textarea`**, que
+  estava viva desde a Onda 2 e nunca havia sido documentada.
+
+### Added — Chips que quebram linha e o dot da tag (lote C)
+
+- **`.segmented-chips`** — a barra base usa `grid-auto-columns: 1fr`, que dá a
+  todas as opções a mesma largura numa linha só. Certo para "Dia / Semana / Mês",
+  inviável para rótulos de comprimentos muito diferentes. A variante troca **só a
+  caixa e a moldura**: o rádio nativo, os estados por `:has()`, o alvo de 44px e
+  o anel de foco continuam sendo os da barra. Um teste garante que existe
+  **exatamente um** bloco `:has(input[type="radio"]:checked)` no arquivo — um
+  segundo seria a duplicata já paga com `.btn-icon` e `.layout-list-item`.
+- **`.tag-dot`** — o comentário no CSS dizia "sem dot" literalmente. A cor vem
+  **por dado**, não de paleta: uma lista de etiquetas do usuário guarda a cor por
+  registro. O consumidor define `--tag-dot-color` no ponto de uso; o padrão é
+  `currentColor`, então sem nada definido o dot acompanha o texto e nunca some.
+
+### Verificado em navegador real
+
+`demos/filtros.html` (novo) exercita o modal aberto. Medido em Chrome a 1280×900
+e 390×740, nos quatro escopos de tema (`data-theme` × `prefers-color-scheme`):
+
+| | 1280×900 | 390×740 |
+|---|---|---|
+| corpo rola | 716 de 720px | 552 de 858px, rolou 306px |
+| cabeçalho/rodapé parados | sim | sim |
+| overflow horizontal | 0 | 0 |
+| alvo do fechar | 44×44 (visível 32×32) | idem |
+
+Zero erro de console. **210 testes** (9 suítes), 21 novos.
+
+⚠️ Uma medição intermediária pareceu mostrar os chips presos no tema escuro sob
+`data-theme="light"`. Era artefato da sonda: `.segmented-option` transiciona
+`background`, e a leitura pegava o valor de origem da transição. Aos 600ms, e com
+o tema aplicado antes do primeiro paint, os tokens resolvem corretos. **Não havia
+defeito** — fica registrado para não virar folclore.
+
 ### Added — Docs de toast, empty-state e tooltip (Onda 3, item 4)
 
 Três componentes vivos no CSS e sem arquivo de documentação nenhum: existiam só

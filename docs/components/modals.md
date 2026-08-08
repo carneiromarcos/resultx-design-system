@@ -45,6 +45,12 @@ The modal container itself.
 | `max-width` | `520px` |
 | `animation` | `scale-in 0.25s ease` |
 | `overflow` | `hidden` |
+| `display` | `flex` / `flex-direction: column` |
+| `max-height` | `100%` |
+
+**Why it is a flex column.** Header and footer stay put and only the body scrolls. Before this, `.modal` had `overflow: hidden` and no height ceiling, so a tall modal was **clipped with no scrollbar and no warning** — the content below the fold was simply unreachable.
+
+The ceiling comes from `.modal-overlay`'s `padding: var(--space-4)`: `max-height: 100%` resolves against the overlay's content box, so that padding is the guaranteed gap to the viewport edge. Short modals do not move — flex centering keeps them where they were.
 
 ### `.modal-header`
 
@@ -82,17 +88,42 @@ The close/dismiss button in the top-right corner.
 | `font-size` | `var(--text-lg)` |
 | `cursor` | `pointer` |
 | `display` | `flex` / `align-items: center` / `justify-content: center` |
-| `transition` | `all var(--transition-fast)` |
+| `transition` | `background-color`, `color` — **never `all`** |
+| `position` | `relative` (anchors the enlarged target below) |
 
 On hover: `background: var(--bg-surface-2); color: var(--text-primary)`.
 
+**Pointer target is 44×44; the visible box stays 32×32.** `.modal-close::after` spreads `inset: -6px`, so 32 + 6 + 6 = 44. The DS settled on 44×44 for `.btn-icon` in Wave 2 and this button was left behind — 32×32 does pass WCAG 2.2 AA (SC 2.5.8 asks for 24×24), but two rules for the same gesture is incoherent. Growing the target instead of the box means **no header changes height**.
+
+`transition` is explicit rather than `all`: `all` sweeps properties nobody meant to animate, and in Wave 3 that dragged `visibility` along and made focus fail silently.
+
 ### `.modal-body`
 
-The main content area.
+The main content area — and the only part that scrolls.
 
 | Property | Value |
 |----------|-------|
 | `padding` | `var(--space-6)` |
+| `min-height` | `0` |
+| `overflow-y` | `auto` |
+| `overscroll-behavior` | `contain` |
+
+**`min-height: 0` is not optional.** A flex item will not shrink below its content's min-content size without it, so the body would push the modal past its ceiling instead of scrolling. Same lesson as `.main` in Wave 1.
+
+`overscroll-behavior: contain` stops the scroll at the modal instead of chaining to the page behind it.
+
+### `.scroll-slim`
+
+Slim, tokenised scrollbar. `.modal-body` already carries it; apply the class to any other scroll container that needs the same treatment.
+
+| Property | Value |
+|----------|-------|
+| `scrollbar-width` | `thin` |
+| `scrollbar-color` | `var(--border-default) transparent` |
+| thumb (`::-webkit-scrollbar-thumb`) | `var(--border-default)`, `var(--radius-full)`, 8px |
+| thumb on hover | `var(--text-muted)` |
+
+The DS had **no scrollbar styling at all** before this: every browser drew its own, wide and off-palette, inside dark surfaces. `scrollbar-*` is the standard property (Firefox, recent Chromium); the `::-webkit-scrollbar` block covers Safari and older Chromium. Where neither applies the native bar shows and scrolling still works — degradation without loss of function.
 
 ### `.modal-footer`
 
