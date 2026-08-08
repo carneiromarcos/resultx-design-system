@@ -60,6 +60,22 @@ Use `.segmented-legend` when the label should be visible, and `.sr-only` when th
 | `.segmented-stacked` | Icon above the label — fits more text per column |
 | `.segmented-sm` / `.segmented-lg` | 32px / 52px |
 | `.segmented-block` | Fill the available width |
+| `.segmented-chips` | Loose pills that wrap, instead of one joined bar |
+| `.form-label-eyebrow` | The same label rule as `.segmented-legend`, for a `<label>` on a `<select>` |
+
+### `.segmented-chips`
+
+The base bar uses `grid-auto-columns: 1fr`, which gives every option the same width and keeps them on one line. That is right for `Day / Week / Month` and unworkable for a group of labels of very different lengths — it would either squeeze the short ones or overflow the box.
+
+`.segmented-chips` changes the container and the frame, nothing else:
+
+| | Base bar | `.segmented-chips` |
+|---|---|---|
+| layout | `grid`, equal columns, one line | `flex`, `flex-wrap: wrap` |
+| frame | border + recessed surface on the **group** | border + surface on **each chip** |
+| chip shape | `var(--radius-md)` | `var(--radius-full)` |
+
+**It is the same machine in another shape, not a second component.** The native radio, the `:has()` states, the 44px target and the focus ring are all inherited from `.segmented-option`. A test asserts there is exactly **one** `:has(input[type="radio"]:checked)` block in the file — a second one would be the duplication already paid for twice, with `.btn-icon` in Wave 2 and `.layout-list-item` in Wave 3.
 
 ## How the state is read
 

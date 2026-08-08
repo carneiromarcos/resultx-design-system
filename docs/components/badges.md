@@ -107,7 +107,7 @@ Colored square containers for icons or emoji.
 
 ## Tags
 
-Pill-shaped labels without the `::before` dot. Used for categorization.
+Pill-shaped labels used for categorization. The dot is optional — see `.tag-dot`.
 
 ### `.tag`
 
@@ -115,10 +115,35 @@ Pill-shaped labels without the `::before` dot. Used for categorization.
 |----------|-------|
 | `display` | `inline-flex` |
 | `align-items` | `center` |
+| `gap` | `var(--space-1-5)` |
 | `padding` | `var(--space-1) var(--space-3)` |
 | `border-radius` | `var(--radius-full)` |
 | `font-size` | `var(--text-xs)` |
 | `font-weight` | `var(--font-semibold)` |
+
+### `.tag-dot`
+
+A small colour dot preceding the label.
+
+| Property | Value |
+|----------|-------|
+| `width / height` | `6px` |
+| `border-radius` | `var(--radius-full)` |
+| `background` | `var(--tag-dot-color, currentColor)` |
+| `flex-shrink` | `0` |
+
+**The colour comes from data, not from a palette.** The five `.tag-*` variants cover the DS's own categories, but a list of user-defined labels carries a colour per record — the app stores it and no fixed palette can cover it. So the consumer sets it at the point of use:
+
+```html
+<span class="tag">
+  <i class="tag-dot" style="--tag-dot-color: #7c5cff" aria-hidden="true"></i>
+  Electia
+</span>
+```
+
+The fallback is `currentColor`: with nothing set, the dot follows the tag's text colour and never disappears against the surface. Mark it `aria-hidden` — the label is written right next to it and a screen reader should not narrate colour.
+
+`flex-shrink: 0` keeps the dot round; without it a long label squashes it into a dash.
 
 ### Tag Color Variants
 

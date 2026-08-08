@@ -73,6 +73,57 @@ When the input receives focus:
 | `border-color` | `var(--accent-primary)` |
 | `box-shadow` | `0 0 0 3px var(--accent-primary-muted)` |
 
+### `.form-textarea`
+
+Multi-line field. Inherits the `.form-input` visual contract and changes only what is proper to a multi-line box.
+
+| Property | Value |
+|----------|-------|
+| `padding` | `var(--space-3) var(--space-4)` |
+| `line-height` | `var(--leading-relaxed)` |
+| `min-height` | `88px` |
+| `resize` | `vertical` |
+
+Added in Wave 2 — the DS had `.form-input` and no long-text field. It went undocumented until now.
+
+### `.form-select`
+
+The third leg of the field triad. A **native `<select>`**.
+
+| Property | Value |
+|----------|-------|
+| `width` | `100%` |
+| `padding` | `var(--space-2) var(--space-4)`, `padding-right: var(--space-10)` |
+| `appearance` | `none` |
+| `cursor` | `pointer` |
+| everything else | same contract as `.form-input` |
+
+**Why native.** The native element gives keyboard navigation, type-ahead, the OS picker on mobile and correct screen-reader announcement for free — the same reason `.segmented` uses a real radio group instead of imitating one. Reimplementing this in `div`s costs everything and returns nothing.
+
+The right-hand padding leaves room for the chevron drawn by the wrapper.
+
+### `.form-select-wrap`
+
+Exists for one reason: `<select>` accepts no pseudo-element, so the chevron needs a parent.
+
+| Property | Value |
+|----------|-------|
+| `position` | `relative` |
+| `::after` | 8×8 box, `border-right` + `border-bottom` in `var(--text-muted)`, rotated 45° |
+| `::after` `pointer-events` | `none` |
+
+**The chevron is drawn with borders, not an SVG.** A `data:` URI would carry a hex inside it and lie in the light theme; borders inherit a token and follow both themes. `pointer-events: none` lets the click pass through — without it the right edge of the field is dead space.
+
+Disabled state dims the chevron via `.form-select-wrap:has(.form-select:disabled)::after`.
+
+### `.form-label-eyebrow`
+
+Uppercase, letter-spaced group label — for labelling a **group of controls** inside a panel, where `.form-label` (sentence case, `--text-primary`) would read as a field caption instead.
+
+It shares one rule with `.segmented-legend`: a filter panel needs the same label above a radio group and above a select, but the correct element differs — `<legend>` inside a `<fieldset>`, `<label>` for a `<select>`. Two entry points, one definition.
+
+Not to be confused with `.section-label`, which carries a bottom rule and larger margins and divides page sections.
+
 ### `.form-hint`
 
 Helper text displayed below an input.

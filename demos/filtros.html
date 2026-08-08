@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal de filtros — ResultX DS</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Design System -->
+  <link rel="stylesheet" href="../dist/tokens.min.css">
+  <link rel="stylesheet" href="../dist/components.min.css">
+
+  <!--
+    Demo do modal de filtros. Existe para exercitar num navegador de verdade o
+    que teste de texto nao alcanca: a rolagem do corpo, o cabecalho e o rodape
+    ancorados, o chevron do select nos dois temas e o alvo de 44px do fechar.
+
+    O modal fica ABERTO por padrao: e o estado que interessa medir.
+
+    Nada aqui e estilo de componente — se algo parecer errado na tela, o erro
+    esta no DS, nao nesta pagina. As duas regras locais abaixo pertencem a
+    barra de controle do demo e ao corte artificial de altura que provoca a
+    rolagem.
+  -->
+  <style>
+    /* Barra de controle do demo — nao faz parte do componente. */
+    .demo-bar {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; gap: var(--space-3); align-items: center;
+      padding: var(--space-3) var(--space-4);
+      background: var(--bg-surface-2);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 100;
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+    /* Aperta o overlay para forcar o teto do modal e provocar a rolagem. */
+    .overlay-baixo { top: 220px; bottom: 220px; }
+  </style>
+</head>
+<body>
+
+<div class="demo-bar">
+  <strong style="color: var(--text-primary)">Modal de filtros</strong>
+  <button class="btn btn-sm btn-secondary" id="tema">Alternar tema</button>
+  <button class="btn btn-sm btn-secondary" id="apertar">Simular viewport baixa</button>
+  <span id="estado"></span>
+</div>
+
+<div class="modal-overlay" id="overlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="titulo-filtros">
+
+    <header class="modal-header">
+      <h2 class="modal-title" id="titulo-filtros">Filtros</h2>
+      <button class="modal-close" type="button" aria-label="Fechar filtros">&times;</button>
+    </header>
+
+    <div class="modal-body">
+
+      <fieldset class="segmented segmented-chips" style="margin-bottom: var(--space-6)">
+        <legend class="segmented-legend">Tipo</legend>
+        <label class="segmented-option"><input type="radio" name="tipo" checked><span class="segmented-label">Tudo</span></label>
+        <label class="segmented-option"><input type="radio" name="tipo"><span class="segmented-label">Mensagens</span></label>
+        <label class="segmented-option"><input type="radio" name="tipo"><span class="segmented-label">Grupos</span></label>
+        <label class="segmented-option"><input type="radio" name="tipo"><span class="segmented-label">Contatos</span></label>
+        <label class="segmented-option"><input type="radio" name="tipo"><span class="segmented-label">Canais</span></label>
+      </fieldset>
+
+      <!-- Rotulos de comprimentos muito diferentes: e o caso que a barra de
+           colunas iguais nao atende e o motivo da variante existir. -->
+      <fieldset class="segmented segmented-chips" style="margin-bottom: var(--space-6)">
+        <legend class="segmented-legend">Atendimento</legend>
+        <label class="segmented-option"><input type="radio" name="ia" checked><span class="segmented-label">Todas as conversas</span></label>
+        <label class="segmented-option"><input type="radio" name="ia"><span class="segmented-label">Em atendimento automatico</span></label>
+        <label class="segmented-option"><input type="radio" name="ia"><span class="segmented-label">Respondida automaticamente</span></label>
+      </fieldset>
+
+      <div class="form-group">
+        <label class="form-label-eyebrow" for="fila">Fila</label>
+        <div class="form-select-wrap">
+          <select class="form-select" id="fila">
+            <option>Todas as filas</option>
+            <option>Comercial</option>
+            <option>Suporte</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label-eyebrow" for="depto">Departamento</label>
+        <div class="form-select-wrap">
+          <select class="form-select" id="depto">
+            <option>Todos os departamentos</option>
+            <option>Operacoes</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label-eyebrow" for="equipe">Equipe</label>
+        <div class="form-select-wrap">
+          <select class="form-select" id="equipe">
+            <option>Todas as equipes</option>
+            <option>Time A</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Campo desabilitado: prova que o chevron acompanha o estado. -->
+      <div class="form-group">
+        <label class="form-label-eyebrow" for="arquivado">Arquivadas (desabilitado)</label>
+        <div class="form-select-wrap">
+          <select class="form-select" id="arquivado" disabled>
+            <option>Indisponivel neste periodo</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <span class="form-label-eyebrow">Etiquetas</span>
+        <div class="filter-bar">
+          <span class="tag"><i class="tag-dot" style="--tag-dot-color:#7c5cff" aria-hidden="true"></i>Candidato</span>
+          <span class="tag"><i class="tag-dot" style="--tag-dot-color:#22c55e" aria-hidden="true"></i>Consultoria</span>
+          <span class="tag"><i class="tag-dot" style="--tag-dot-color:#ef4444" aria-hidden="true"></i>Duplicado</span>
+          <span class="tag"><i class="tag-dot" style="--tag-dot-color:#3b82f6" aria-hidden="true"></i>EditalHub</span>
+          <span class="tag"><i class="tag-dot" style="--tag-dot-color:#a855f7" aria-hidden="true"></i>Electia</span>
+          <span class="tag"><i class="tag-dot" style="--tag-dot-color:#22c55e" aria-hidden="true"></i>Gerente Comercial</span>
+          <span class="tag"><i class="tag-dot" style="--tag-dot-color:#6e7681" aria-hidden="true"></i>Grupo</span>
+          <span class="tag"><i class="tag-dot" style="--tag-dot-color:#f97316" aria-hidden="true"></i>IMO</span>
+          <span class="tag"><i class="tag-dot" style="--tag-dot-color:#eab308" aria-hidden="true"></i>Tetra</span>
+          <span class="tag"><i class="tag-dot" style="--tag-dot-color:#22c55e" aria-hidden="true"></i>Xscore</span>
+          <!-- Sem cor definida: cai em currentColor e continua visivel. -->
+          <span class="tag"><i class="tag-dot" aria-hidden="true"></i>Sem cor definida</span>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="modal-footer">
+      <button class="btn btn-secondary" type="button">Limpar</button>
+      <button class="btn btn-primary" type="button">Aplicar</button>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+  // Alternancia de tema: os tokens do DS ja cobrem os quatro escopos; isto so
+  // troca o atributo para conferir o chevron e a barra nos dois.
+  document.getElementById('tema').addEventListener('click', () => {
+    const html = document.documentElement;
+    html.dataset.theme = html.dataset.theme === 'light' ? 'dark' : 'light';
+  });
+
+  // Aperta o overlay para que o modal encoste no teto e o corpo precise rolar.
+  document.getElementById('apertar').addEventListener('click', () => {
+    document.getElementById('overlay').classList.toggle('overlay-baixo');
+  });
+
+  // Sonda: o que interessa medir e se o corpo ROLA de fato, nao se a regra
+  // existe no arquivo — isso os testes ja garantem.
+  const relatar = () => {
+    const corpo = document.querySelector('.modal-body');
+    const rola = corpo.scrollHeight > corpo.clientHeight;
+    document.getElementById('estado').textContent =
+      `corpo ${corpo.clientHeight}px de ${corpo.scrollHeight}px — ${rola ? 'ROLA' : 'cabe inteiro'}`;
+  };
+  relatar();
+  document.getElementById('apertar').addEventListener('click', () => setTimeout(relatar, 50));
+  window.addEventListener('resize', relatar);
+</script>
+
+</body>
+</html>

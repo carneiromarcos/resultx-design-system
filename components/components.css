@@ -589,13 +589,32 @@ body {
 /* Badge size variants */
 .badge-table { font-size: 10px; padding: 2px 8px; }
 
-/* Tag badges (sem dot, pill colorido) */
+/* Tag badges (pill colorido; o dot é opcional — ver .tag-dot abaixo) */
 .tag {
   display: inline-flex; align-items: center;
+  gap: var(--space-1-5);
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
+}
+
+/* O dot que faltava. As cinco variantes `.tag-*` cobrem categorias do próprio
+   DS, mas uma lista de etiquetas do usuário tem cor por DADO — o app guarda a
+   cor de cada etiqueta e nenhuma paleta fixa dá conta. Por isso a cor entra por
+   custom property, definida pelo consumidor no ponto de uso:
+
+     <span class="tag"><i class="tag-dot" style="--tag-dot-color:#7c5cff"></i>Electia</span>
+
+   O padrão é `currentColor`: sem nada definido o dot acompanha o texto da tag,
+   e nunca desaparece contra o fundo. `aria-hidden` no elemento — o nome da
+   etiqueta já está escrito ao lado, e o leitor de tela não deve narrar cor. */
+.tag-dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--tag-dot-color, currentColor);
 }
 .tag-blue { background: var(--accent-primary-muted); color: var(--accent-primary-text); }
 .tag-purple { background: var(--theory-enneagram-bg); color: var(--theory-enneagram); }
@@ -697,6 +716,56 @@ body {
 .form-textarea::placeholder { color: var(--text-muted); }
 .form-textarea:focus-visible { border-color: var(--accent-primary); box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color); }
 .form-textarea:disabled { opacity: 0.5; cursor: not-allowed; background: var(--bg-surface-2); }
+
+/* Select — a terceira ponta da tríade. O DS tinha .form-input e .form-textarea
+   e nenhum campo de escolha: exatamente a lacuna que a .form-textarea preencheu
+   na Onda 2, um nível adiante.
+
+   É um <select> NATIVO. O elemento nativo entrega teclado, busca por digitação,
+   o seletor do sistema no celular e o anúncio correto no leitor de tela — o
+   mesmo motivo pelo qual o .segmented usa rádio nativo em vez de imitar um.
+   Reimplementar isso em div custa tudo e não devolve nada. */
+.form-select {
+  width: 100%; padding: var(--space-2) var(--space-4);
+  /* Espaço à direita para o chevron do invólucro não encostar no texto. */
+  padding-right: var(--space-10);
+  background: var(--bg-base);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  /* A seta do sistema sai para dar lugar à do DS; sem isto ficariam duas. */
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 150ms var(--spring-snappy),
+    box-shadow 150ms var(--spring-snappy);
+  outline: none;
+}
+.form-select:focus-visible { border-color: var(--accent-primary); box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color); }
+.form-select:disabled { opacity: 0.5; cursor: not-allowed; background: var(--bg-surface-2); }
+
+/* O invólucro existe por uma razão só: <select> não aceita pseudo-elemento,
+   então o chevron precisa de um pai. Ele é desenhado com bordas em vez de SVG
+   porque assim herda a cor de um token e acompanha os dois temas — um SVG em
+   data URI traria o hex cravado dentro e mentiria no tema claro. */
+.form-select-wrap { position: relative; display: block; }
+.form-select-wrap::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: var(--space-4);
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid var(--text-muted);
+  border-bottom: 1.5px solid var(--text-muted);
+  /* -70% e não -50%: o que se centraliza é o quadrado antes de girar, e a
+     ponta visível do chevron fica abaixo do centro geométrico. */
+  transform: translateY(-70%) rotate(45deg);
+  /* O clique atravessa e chega ao campo — sem isto o canto direito fica morto. */
+  pointer-events: none;
+}
+.form-select-wrap:has(.form-select:disabled)::after { opacity: 0.5; }
 
 /* Tecla de atalho — para <kbd>. Sem isto, "⌘K" e "Enter" viram texto solto e
    cada produto inventa o proprio estilo. */
@@ -1031,6 +1100,11 @@ tr:hover td { background: var(--bg-surface-1); }
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
   background: var(--bg-overlay);
   display: flex; align-items: center; justify-content: center;
+  /* O padding é o que dá teto ao modal: `.modal` limita-se a 100% da caixa de
+     conteúdo do overlay, então esta folga vira a margem garantida contra a
+     borda da viewport. Modais curtos não se movem — a centralização flex os
+     mantém no lugar. */
+  padding: var(--space-4);
   z-index: var(--z-modal);
   animation: fade-in 0.2s ease;
 }
@@ -1042,6 +1116,13 @@ tr:hover td { background: var(--bg-surface-1); }
   width: 100%; max-width: 520px;
   animation: scale-in 0.25s ease;
   overflow: hidden;
+  /* Coluna flex com teto: cabeçalho e rodapé ficam fixos e só o corpo rola.
+     Sem `max-height` o modal crescia sem limite e o `overflow: hidden` acima
+     CORTAVA o excedente — sem barra e sem aviso, a mesma classe de falha
+     silenciosa das armadilhas de `visibility` da Onda 3. */
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
 }
 .modal-sm { max-width: 400px; }
 .modal-lg { max-width: 720px; }
@@ -1049,6 +1130,8 @@ tr:hover td { background: var(--bg-surface-1); }
   display: flex; align-items: center; justify-content: space-between;
   padding: var(--space-5) var(--space-6);
   border-bottom: 1px solid var(--border-subtle);
+  /* Cabeçalho e rodapé não encolhem: quem cede espaço é o corpo. */
+  flex-shrink: 0;
 }
 .modal-title {
   font-family: var(--font-heading);
@@ -1063,15 +1146,70 @@ tr:hover td { background: var(--bg-surface-1); }
   font-size: var(--text-lg);
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: all 150ms var(--spring-snappy);
+  /* Nunca `all`: ele varre propriedades que ninguém pretendia animar. Aqui só
+     cor e fundo mudam no hover. Regra da Onda 3. */
+  transition: background-color 150ms var(--spring-snappy),
+    color 150ms var(--spring-snappy);
+  /* Âncora do alvo de toque ampliado abaixo. */
+  position: relative;
+}
+/* O DS decidiu 44×44 como alvo de `.btn-icon` na Onda 2, e o `.modal-close`
+   ficou de fora — 32×32 passa na WCAG 2.2 AA (SC 2.5.8 pede 24×24), mas eram
+   duas réguas para o mesmo gesto. O alvo cresce para 44×44 pelo pseudo-elemento;
+   a caixa visível segue 32×32, então nenhum cabeçalho muda de altura. */
+.modal-close::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
 }
 .modal-close:hover { background: var(--bg-surface-2); color: var(--text-primary); }
-.modal-body { padding: var(--space-6); }
+.modal-body {
+  padding: var(--space-6);
+  /* `min-height: 0` é obrigatório: item de flex não encolhe abaixo do
+     min-content do conteúdo sem isso, e o corpo empurraria o modal para além
+     do teto em vez de rolar. Mesma lição do `.main` na Onda 1. */
+  min-height: 0;
+  overflow-y: auto;
+  /* A rolagem para no modal em vez de continuar na página atrás dele. */
+  overscroll-behavior: contain;
+}
 .modal-footer {
   display: flex; justify-content: flex-end; gap: var(--space-3);
   padding: var(--space-4) var(--space-6);
   border-top: 1px solid var(--border-subtle);
   background: var(--bg-surface-1);
+  flex-shrink: 0;
+}
+
+/* ── Barra de rolagem enxuta ──────────────────────────────────────────────
+   O DS não tinha estilo de scrollbar nenhum: cada navegador desenhava a sua,
+   larga e fora da paleta, dentro de superfícies escuras. `scrollbar-*` é o
+   padrão (Firefox e Chromium recentes); o bloco `::-webkit-scrollbar` cobre
+   Safari e Chromium antigo. Onde nenhum dos dois vale, a barra nativa aparece
+   e a rolagem funciona igual — degradação sem perda de função.
+   `.scroll-slim` é o utilitário reusável; `.modal-body` já nasce com ele. */
+.scroll-slim,
+.modal-body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-default) transparent;
+}
+.scroll-slim::-webkit-scrollbar,
+.modal-body::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scroll-slim::-webkit-scrollbar-track,
+.modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-slim::-webkit-scrollbar-thumb,
+.modal-body::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: var(--radius-full);
+}
+.scroll-slim::-webkit-scrollbar-thumb:hover,
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
 
 /* ══════════════════════════════════════════════════════════════════
