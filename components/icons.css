@@ -103,7 +103,10 @@
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  /* --transition-fast e "150ms ease": um token so, indivisivel em duracao e curva. */
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: ease;
 }
 .btn-icon:hover { background: var(--bg-surface-2); color: var(--text-primary); }
 .btn-icon:focus-visible {

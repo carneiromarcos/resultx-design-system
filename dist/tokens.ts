@@ -63,6 +63,7 @@ export const sharedTokens = {
   "transition-base": "200ms ease",
   "transition-slow": "300ms ease-out",
   "transition-spring": "500ms cubic-bezier(0.34, 1.56, 0.64, 1)",
+  "transition-interactive": "background-color, border-color, color, box-shadow, transform, opacity",
   "z-base": "0",
   "z-dropdown": "10",
   "z-sticky": "20",

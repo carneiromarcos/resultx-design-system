@@ -261,3 +261,51 @@ describe('Viewer e demos andam juntos', () => {
     expect(viewer).not.toMatch(/href="pages\//);
   });
 });
+
+// ─── transition: all ─────────────────────────────────────────────────────────
+
+/**
+ * `all` varre propriedades que ninguem pretendia animar. Na Onda 3 ele arrastou
+ * `visibility` na transicao do `.sidebar-item`: o link reportava
+ * `visibility: hidden` no instante em que o script chamava `.focus()`, e focar
+ * elemento invisivel nao faz nada e nao avisa — o foco ficava preso.
+ *
+ * As 22 ocorrencias restantes foram trocadas por `--transition-interactive`, ou
+ * por uma lista propria onde a animacao do componente e outra coisa.
+ */
+describe('Nenhum `transition: all`', () => {
+  const ROOT = path.resolve(__dirname, '..');
+  const COMPONENTES = path.join(ROOT, 'components');
+  const arquivos = fs.readdirSync(COMPONENTES).filter((f) => f.endsWith('.css'));
+
+  test.each(arquivos)('%s nao usa `transition: all`', (arq) => {
+    // Comentarios fora: eles EXPLICAM o `all` e casariam com a assercao.
+    const css = fs
+      .readFileSync(path.join(COMPONENTES, arq), 'utf-8')
+      .replace(/\/\*[\s\S]*?\*\//g, '');
+    expect(css).not.toMatch(/transition:\s*all/);
+  });
+
+  test('o token --transition-interactive existe e nao inclui outline', () => {
+    const base = fs.readFileSync(path.join(ROOT, 'tokens', 'base', 'tokens-base.css'), 'utf-8');
+    const m = base.match(/--transition-interactive:\s*([^;]+);/);
+    expect(m).not.toBeNull();
+    const lista = m[1].split(',').map((s) => s.trim());
+    expect(lista).toEqual(
+      expect.arrayContaining([
+        'background-color', 'border-color', 'color', 'box-shadow', 'transform', 'opacity',
+      ])
+    );
+    // O anel de foco tem de aparecer na hora: animar atrasa a pista visual de
+    // quem navega por teclado.
+    expect(lista).not.toContain('outline');
+    expect(lista).not.toContain('outline-offset');
+  });
+
+  test('o toggle mantem lista propria — a padrao o deixaria mudo', () => {
+    // `.toggle-thumb` anima `left` (2px → 22px), que nao esta na lista padrao.
+    const css = fs.readFileSync(path.join(COMPONENTES, 'components.css'), 'utf-8');
+    const regra = css.slice(css.indexOf('.toggle-thumb {'));
+    expect(regra.slice(0, regra.indexOf('}'))).toMatch(/transition-property:\s*left/);
+  });
+});
