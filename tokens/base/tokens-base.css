@@ -80,6 +80,26 @@
   --transition-slow: 300ms ease-out;
   --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
 
+  /* O que um elemento interativo anima ao mudar de estado. Existe para que
+     `transition: all` nunca precise ser escrito: `all` varre propriedades que
+     ninguem pretendia animar — foi assim que `visibility` entrou na transicao
+     do `.sidebar-item` e o foco passou a falhar em silencio (Onda 3).
+
+     Deliberadamente FORA da lista:
+       outline, outline-offset  o anel de foco tem de aparecer na hora; animar
+                                atrasa a pista visual de quem navega por teclado
+       cursor, pointer-events   nao sao animaveis
+       font-*, padding, width   animar tipografia e caixa causa reflow e tremor
+
+     Componentes cuja animacao E outra coisa declaram a propria lista — o
+     `.toggle-thumb` anima `left`, e usar esta lista o deixaria mudo.
+
+     Se o token faltar (consumidor que importe `components` sem `tokens`), a
+     propriedade cai no valor inicial, que e `all` — o comportamento de antes,
+     nao perda silenciosa de transicao. */
+  --transition-interactive: background-color, border-color, color, box-shadow,
+    transform, opacity;
+
   /* ── Z-Index Scale ─────────────────────────────────────────────────────── */
   --z-base: 0;
   --z-dropdown: 10;

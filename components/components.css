@@ -352,7 +352,9 @@ body {
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   cursor: pointer; border: none;
-  transition: all 200ms var(--spring-smooth);
+  transition-property: var(--transition-interactive);
+  transition-duration: 200ms;
+  transition-timing-function: var(--spring-smooth);
   line-height: 1.5;
 }
 .btn-primary {
@@ -432,7 +434,9 @@ body {
   border-radius: var(--radius-lg);
   padding: var(--space-5) var(--space-6);
   box-shadow: var(--elevation-1);
-  transition: all 250ms var(--spring-smooth);
+  transition-property: var(--transition-interactive);
+  transition-duration: 250ms;
+  transition-timing-function: var(--spring-smooth);
 }
 .card:hover { box-shadow: var(--elevation-2); transform: translateY(-3px); border-color: var(--border-default); }
 .card-glass {
@@ -476,7 +480,9 @@ body {
   border-radius: var(--radius-lg);
   padding: var(--space-5);
   box-shadow: var(--elevation-1);
-  transition: all 250ms var(--spring-smooth);
+  transition-property: var(--transition-interactive);
+  transition-duration: 250ms;
+  transition-timing-function: var(--spring-smooth);
 }
 .stat-card:hover { box-shadow: var(--elevation-2); transform: translateY(-3px); }
 .stat-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-3); }
@@ -562,7 +568,9 @@ body {
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   letter-spacing: var(--tracking-wide);
-  transition: all 150ms var(--spring-snappy);
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
 }
 .badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
 .badge-mbti { background: var(--theory-mbti-bg); color: var(--theory-mbti); border: 1px solid rgba(8,145,178,0.25); }
@@ -665,7 +673,9 @@ body {
   background: none; border: none;
   border-bottom: 2px solid transparent;
   cursor: pointer;
-  transition: all 150ms var(--spring-snappy);
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
 }
 .tab:hover { color: var(--text-secondary); }
 .tab.active { color: var(--accent-primary-text); border-bottom-color: var(--accent-primary); }
@@ -688,7 +698,9 @@ body {
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: var(--text-sm);
-  transition: all 150ms var(--spring-snappy);
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
   outline: none;
 }
 .form-input::placeholder { color: var(--text-muted); }
@@ -710,7 +722,9 @@ body {
   line-height: var(--leading-relaxed);
   min-height: 88px;
   resize: vertical;
-  transition: all 150ms var(--spring-snappy);
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
   outline: none;
 }
 .form-textarea::placeholder { color: var(--text-muted); }
@@ -787,7 +801,11 @@ body {
 .toggle-track {
   position: absolute; top: 0; left: 0; right: 0; bottom: 0;
   background: var(--border-default); border-radius: var(--radius-full);
-  transition: all 150ms var(--spring-snappy);
+  /* Nao usa --transition-interactive: a animacao deste elemento e `background-color`,
+     que a lista padrao nao cobre. */
+  transition-property: background-color;
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
 }
 .toggle input:checked + .toggle-track { background: var(--accent-primary); }
 .toggle-thumb {
@@ -795,7 +813,11 @@ body {
   width: 20px; height: 20px;
   background: var(--text-primary); border-radius: 50%;
   box-shadow: var(--shadow-sm);
-  transition: all 150ms var(--spring-snappy);
+  /* Nao usa --transition-interactive: a animacao deste elemento e `left`,
+     que a lista padrao nao cobre. */
+  transition-property: left;
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
 }
 .toggle input:checked ~ .toggle-thumb { left: 22px; }
 
@@ -856,7 +878,9 @@ body {
   color: var(--text-muted);
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: all 150ms var(--spring-snappy);
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
 }
 .chart-period-btn.active {
   background: var(--bg-base);
@@ -992,7 +1016,9 @@ tr:hover td { background: var(--bg-surface-1); }
   border-radius: var(--radius-lg);
   padding: var(--space-5);
   box-shadow: var(--elevation-1);
-  transition: all 250ms var(--spring-smooth);
+  transition-property: var(--transition-interactive);
+  transition-duration: 250ms;
+  transition-timing-function: var(--spring-smooth);
 }
 .theory-card:hover { box-shadow: var(--elevation-2); transform: translateY(-3px); }
 .theory-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4); }
@@ -1226,7 +1252,9 @@ tr:hover td { background: var(--bg-surface-1); }
   font-size: var(--text-sm);
   color: var(--text-primary);
   cursor: pointer;
-  transition: all 150ms var(--spring-snappy);
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
 }
 .dropdown-trigger:hover { border-color: var(--accent-primary); }
 .dropdown-trigger:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -1253,7 +1281,9 @@ tr:hover td { background: var(--bg-surface-1); }
   font-size: var(--text-sm);
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 150ms var(--spring-snappy);
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
 }
 .dropdown-item:hover { background: var(--bg-surface-2); color: var(--text-primary); }
 .dropdown-item.active { background: var(--accent-primary-muted); color: var(--accent-primary-text); font-weight: var(--font-medium); }
@@ -1288,7 +1318,9 @@ tr:hover td { background: var(--bg-surface-1); }
   font-weight: var(--font-medium);
   color: var(--text-secondary);
   cursor: pointer;
-  transition: all 150ms var(--spring-snappy);
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
 }
 .pagination-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary-text); }
 .pagination-btn.active {
@@ -1550,7 +1582,9 @@ tr:hover td { background: var(--bg-surface-1); }
   padding: var(--space-3);
   box-shadow: var(--shadow-sm);
   cursor: grab;
-  transition: all 150ms var(--spring-snappy);
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
 }
 .kanban-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
 .kanban-card-title {
@@ -1573,7 +1607,9 @@ tr:hover td { background: var(--bg-surface-1); }
   color: var(--text-muted);
   font-size: var(--text-sm);
   cursor: pointer;
-  transition: all 150ms var(--spring-snappy);
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
 }
 .kanban-add:hover { border-color: var(--accent-primary); color: var(--accent-primary-text); background: var(--accent-primary-muted); }
 
@@ -1832,7 +1868,9 @@ tr:hover td { background: var(--bg-surface-1); }
   background: var(--bg-base);
   color: var(--text-primary);
   cursor: pointer;
-  transition: all 150ms var(--spring-snappy);
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
   margin-bottom: var(--space-3);
 }
 .btn-social:hover {
@@ -1897,7 +1935,9 @@ tr:hover td { background: var(--bg-surface-1); }
   border: none;
   border-radius: var(--radius-full);
   cursor: pointer;
-  transition: all 150ms var(--spring-snappy);
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
 }
 .view-toggle-btn:hover { color: var(--text-secondary); }
 .view-toggle-btn.active {
@@ -1991,7 +2031,9 @@ tr:hover td { background: var(--bg-surface-1); }
   background: var(--bg-surface-2);
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
-  transition: all 150ms var(--spring-snappy);
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
 }
 .filter-pill-label {
   font-family: var(--font-mono);
@@ -2014,7 +2056,9 @@ tr:hover td { background: var(--bg-surface-1); }
   font-size: var(--text-xs);
   border-radius: var(--radius-full);
   cursor: pointer;
-  transition: all 150ms var(--spring-snappy);
+  transition-property: var(--transition-interactive);
+  transition-duration: 150ms;
+  transition-timing-function: var(--spring-snappy);
 }
 .filter-pill-remove:hover {
   color: var(--accent-primary-text);
@@ -2060,7 +2104,9 @@ tr:hover td { background: var(--bg-surface-1); }
   font-weight: var(--font-medium);
   color: var(--text-muted);
   background: var(--bg-base);
-  transition: all 250ms var(--spring-smooth);
+  transition-property: var(--transition-interactive);
+  transition-duration: 250ms;
+  transition-timing-function: var(--spring-smooth);
 }
 .stepper-step.completed .stepper-step-number {
   background: var(--accent-primary);
