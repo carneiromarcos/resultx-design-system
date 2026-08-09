@@ -5,6 +5,106 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+## [2.5.0] - 2026-08-09
+
+Seis PRs (#42 a #47). O tema da versão não foi planejado: **consertar o deploy do
+site acendeu a luz sobre defeitos que estavam no escuro havia meses.**
+
+**Minor, não major — tudo aditivo.** Um token novo (`--transition-interactive`),
+nenhuma classe removida, nenhum valor existente alterado. As mudanças de
+comportamento visíveis são todas correção de defeito.
+
+### Fixed — O site não publicava havia três meses
+
+O workflow **Deploy to GitHub Pages** falhava em *todo* push para `main` desde
+`728bee0` (05/08). Último sucesso: **16/05**.
+
+Passou despercebido por um motivo estrutural: **o job de Pages não bloqueia
+merge**. O `CI` de lint-and-build fica verde o tempo todo, e é nele que se olha.
+
+Causa: o commit `2affe96` renomeou `pages/` → `demos/` e `docs-viewer.html` →
+`docs/viewer.html`, e **dois** arquivos ficaram para trás.
+
+- **`.github/workflows/pages.yml`** (#42) — `cp: cannot stat 'docs-viewer.html'`.
+  Ganhou `set -euo pipefail`: sem isso um caminho que suma derruba o job num `cp`
+  solto, sem dizer o que faltou.
+- **`docs/viewer.html`** (#43) — os cinco links de template ainda apontavam para
+  `pages/`. Só ficou visível **depois** de consertar o deploy: a home subiu com a
+  navegação inteira em 404, confirmado ao vivo.
+
+A renomeação estava documentada no `CHANGELOG.md` e no `README.md` desde sempre.
+**Renomeação de pasta pede varredura por caminho, não só por nome de classe.**
+
+### Added — Os 11 demos alcançáveis, e uma trava (#44)
+
+Cinco demos existiam em disco sem link nenhum: `electia-copiloto`,
+`employer-jobs`, `employer-job-applicants`, `inbox-panel`,
+`positioning-wheel-demo`. Trabalho publicado que ninguém encontrava.
+
+A navegação passou a separar **Templates** (telas de produto completas) de
+**Component Demos** (os que exercitam uma família a fundo) — onze links achatados
+escondiam a diferença.
+
+**Três testes** fecham os dois sentidos da deriva: link que aponta para nada, e
+demo que existe e ninguém alcança. Validados por teste negativo.
+
+### Security — Dependabot zerado (#45, #46)
+
+`npm audit` de **9 vulnerabilidades (1 low, 1 moderate, 7 high) para 0**, e zero
+alertas abertos.
+
+Resolvidas **num lote**, não em nove merges: sete das nove tocavam
+`package-lock.json` e conflitariam entre si a cada merge.
+
+⚠️ **Dimensão real:** `dependencies` está vazio — as 15 são devDependencies, e o
+pacote é CSS, docs e JS vanilla sem dependência. **Nada daquilo alcançava
+consumidor**; o raio era a máquina de build e o CI.
+
+`actions/checkout` e `actions/setup-node` foram de v6 para v7 nos 4 workflows,
+com `node-version: 20` ainda pinado.
+
+🔴 **Bumpar a cadeia de minificação muda o `dist/` em silêncio.** Aconteceu duas
+vezes: o cssnano novo parou de ordenar declarações alfabeticamente e, depois,
+parou de remover o espaço após vírgula em custom properties. **Receita de
+verificação que funcionou:** montar `seletor → propriedade → último valor` nas
+duas versões e comparar; depois repetir normalizando só espaço em branco.
+**691 regras, 0 divergências reais** nas duas vezes.
+
+### Changed — Nenhum `transition: all` (#47)
+
+As 22 ocorrências restantes eliminadas. `all` varre propriedades que ninguém
+pretendia animar — foi assim que `visibility` entrou na transição do
+`.sidebar-item` na Onda 3 e o foco passou a falhar em silêncio.
+
+**Novo token `--transition-interactive`**, nomeado por papel (ADR-0001):
+
+```css
+--transition-interactive: background-color, border-color, color, box-shadow,
+  transform, opacity;
+```
+
+Fora da lista de propósito: `outline`/`outline-offset` (o anel de foco tem de
+aparecer **na hora**), `cursor`/`pointer-events` (não animáveis),
+`font-*`/`padding`/`width` (reflow e tremor).
+
+🔴 **Duas exceções que a lista padrão quebraria:** `.toggle-thumb` anima `left`
+(2px → 22px) e `.toggle-track` só `background-color`. Aplicar a lista uniforme
+aos 22 teria **matado o toggle em silêncio** — a mesma classe de falha que a
+mudança existe para eliminar.
+
+Verificado em Chrome: 22/22 com `transition-property` correto, e as transições
+animando de fato (valor intermediário capturado a 60ms). **Modo de falha também
+medido:** sem o token, a propriedade cai no valor inicial, que é `all` — o
+comportamento anterior, não perda de transição.
+
+Custo: **+186 bytes gzipados** no total.
+
+### Números
+
+**225 testes** (9 suítes), sendo 12 de trava contra `transition: all` e 3 contra
+a deriva viewer↔demos. Lint limpo, build determinístico, `npm audit` = 0.
+Site no ar: https://carneiromarcos.github.io/resultx-design-system/
+
 ## [2.4.0] - 2026-08-08
 
 Fecha a **Onda 3** (itens 4, 5 e 6), ratifica o **ADR-0001** e entrega o **modal
