@@ -98,6 +98,65 @@ docs: update token documentation
 chore: update dependencies
 ```
 
+## Release — feito à mão, de propósito
+
+Não existe script de release neste repo, e isso é decisão, não esquecimento.
+
+O `commit-and-tag-version` **foi removido em 10/08/2026**. Foi testado em
+`--dry-run` na v2.3.0 e reprovado por dois motivos concretos:
+
+1. **Transformava hexadecimal de mensagem de commit em link de issue falso** —
+   `closes #0B0E14`, `#c4993`, `#866425`… onze links quebrados numa release só.
+   Este é um design system: mensagem de commit cita cor em hex o tempo todo.
+2. **Substituiria o CHANGELOG escrito à mão** — que explica *por que* cada
+   mudança existe — por uma lista seca de assuntos de commit.
+
+Ficou instalado e proibido por duas versões, com três scripts que qualquer um
+podia rodar sem saber da decisão. Removido para que o pé não tenha onde tropeçar.
+
+### A receita
+
+```bash
+# 1. Escreva a seção da versão no CHANGELOG.md, à mão.
+#    Converta o cabeçalho [Unreleased] em [X.Y.Z] - AAAA-MM-DD
+#    e abra um [Unreleased] vazio acima.
+
+# 2. Alinhe package.json E package-lock.json de uma vez.
+#    (o lockfile já ficou defasado sozinho uma vez — não editar à mão)
+npm version minor --no-git-tag-version   # ou patch / major
+
+# 3. Reconstrua e verifique ANTES de taguear.
+npm run build:all && npm run lint && npm test
+
+# 4. Commit, tag anotada, push com a tag junto.
+git commit -am "chore(release): X.Y.Z"
+git tag -a vX.Y.Z -m "vX.Y.Z — <resumo de uma linha>"
+git push origin main --follow-tags
+
+# 5. Confirme que a tag é alcançável a partir da main remota.
+git merge-base --is-ancestor vX.Y.Z origin/main && echo ok
+```
+
+O passo 5 não é zelo excessivo: em 05/08 uma tag foi criada sobre uma branch que
+não estava na `main` e ficou **órfã** — a v2.1.2 apontava para lugar nenhum.
+
+### Major × minor × patch
+
+**Tudo aditivo é minor.** Classe nova, token novo, variante nova — mesmo que mude
+pixel, desde que nada existente seja removido nem tenha valor alterado.
+
+**Só é major se remover ou renomear algo público.** Foi por isso que
+`.layout-list-item` virou alias em vez de sumir: remover classe pública pertence
+a uma major, e não havia razão para gastar uma.
+
+### Ao bumpar dependência de build, confira o `dist/`
+
+Trocar cssnano, postcss ou autoprefixer **muda a saída minificada em silêncio** —
+aconteceu duas vezes na v2.5.0. Não compare tamanho de arquivo: compare o
+resultado efetivo, montando `seletor → propriedade → último valor` nas duas
+versões. Se divergir, repita normalizando só espaço em branco antes de concluir
+que houve mudança real.
+
 ## File Structure
 
 ```

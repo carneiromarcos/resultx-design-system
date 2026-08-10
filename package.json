@@ -73,9 +73,6 @@
     "test": "jest",
     "test:visual": "playwright test",
     "test:visual:update": "playwright test -u",
-    "release": "commit-and-tag-version",
-    "release:minor": "commit-and-tag-version --release-as minor",
-    "release:major": "commit-and-tag-version --release-as major",
     "prepare": "husky"
   },
   "jest": {
@@ -95,7 +92,6 @@
     "@commitlint/config-conventional": "^21.2.0",
     "@playwright/test": "^1.62.1",
     "autoprefixer": "^10.5.4",
-    "commit-and-tag-version": "^12.7.3",
     "cssnano": "^8.0.4",
     "husky": "^9.1.7",
     "jest": "^30.4.2",

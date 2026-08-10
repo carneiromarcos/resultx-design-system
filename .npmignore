@@ -5,10 +5,8 @@ pages/
 social-media-png/
 assets/
 render-templates.mjs
-docs-viewer.html
 postcss.config.js
 commitlint.config.js
-.versionrc.json
 .stylelintrc.json
 .github/
 .DS_Store
