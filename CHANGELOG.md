@@ -5,6 +5,27 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Removed — `commit-and-tag-version` saiu do repo
+
+A ferramenta foi **descartada na v2.3.0** e mesmo assim seguiu instalada por duas
+versões, com três scripts vivos (`release`, `release:minor`, `release:major`).
+Regra que existe só na cabeça de quem decidiu não é regra: bastava alguém rodar
+`npm run release` para o CHANGELOG escrito à mão virar lista seca com links de
+issue falsos (`closes #0B0E14`, `#c4993`…).
+
+Removidos: a devDependency, os 3 scripts e o `.versionrc.json`. Aproveitando,
+saíram duas entradas mortas do `.npmignore` — `.versionrc.json` e
+`docs-viewer.html`, este último renomeado em `2affe96`, o mesmo commit que
+derrubou o site por três meses.
+
+🟢 **A receita de release agora está escrita** em `CONTRIBUTING.md` §Release —
+antes não existia em lugar nenhum do repo, só em memória. Inclui os 5 passos, o
+critério de major × minor × patch e o alerta sobre bump de dependência de build
+mudar o `dist/` em silêncio.
+
+Efeito colateral: encerra a PR #48 do Dependabot e todas as futuras para uma
+ferramenta que não deve ser usada.
+
 ## [2.5.0] - 2026-08-09
 
 Seis PRs (#42 a #47). O tema da versão não foi planejado: **consertar o deploy do
