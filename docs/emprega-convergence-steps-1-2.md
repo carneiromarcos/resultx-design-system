@@ -2,6 +2,7 @@
 
 - **Implementa:** [ADR-0002](adr/0002-emprega-brand-convergence.md)
 - **Aprovado por:** Marcos, em 26/08/2026
+- **Passo 2 entregue:** empregamais/app#554 (commits `3d982d0a` e `d9f0a7e2`), aguardando merge em `dev`
 - **Escopo:** apenas os passos 1 e 2. Os passos 3 a 6 dependem de decisões ainda abertas.
 - **Executor:** não atribuído — nenhum agente conectado ao canal no momento da escrita.
 
@@ -63,6 +64,12 @@ Regra a aplicar, por papel do seletor:
 ## Passo 2 — tokenizar o EditalHub
 
 **Zero mudança visual.** Cada valor abaixo é substituído por um token cujo valor é idêntico. Se algum pixel mudar, a substituição está errada.
+
+### 2.0 — declarar os tokens PRIMEIRO (este passo faltava nesta ordem de serviço)
+
+Os `--eds-*` **não existem no repositório do EditalHub**: vivem no CSS do IMO, em outro repo. Substituir literal por `var(--eds-*)` sem declarar antes deixaria todo valor inválido e a tela quebrada. Antes de qualquer substituição, declarar um bloco `:root` no topo do arquivo com os tokens usados, **com os mesmos valores do IMO**. Como o bloco viaja junto com o arquivo, funciona em qualquer layout que o carregue.
+
+> Esta seção foi acrescentada depois que o mandato precisou corrigi-la em execução. A versão original desta ordem de serviço mandava substituir sem declarar.
 
 ### 2.1 Substituição direta — 21 cores, 123 ocorrências
 
