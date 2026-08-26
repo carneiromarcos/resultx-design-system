@@ -3,6 +3,9 @@
   "version": "2.5.0",
   "description": "ResultX Design System — Multi-product (Electia, IMO, Editais) with dark + light themes, spring physics, elevation system, and WCAG AA accessibility.",
   "main": "dist/tokens.min.css",
+  "engines": {
+    "node": ">=22.11"
+  },
   "exports": {
     "./tokens": "./dist/tokens.min.css",
     "./tokens/theme": "./dist/tokens.theme.css",
