@@ -5,6 +5,64 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+## [2.6.0] - 2026-08-26
+
+### Added — a marca do Xscore ganhou arquivo
+
+`brands/xscore/assets/logo/` passa a ter monograma, wordmark em claro e escuro,
+favicon e os PNG de 16, 32, 180 e 512. Antes existiam só dois arquivos de token
+sob `brands/xscore` — o produto não tinha um arquivo de marca para entregar a
+ninguém, e isso segurava um acordo comercial inteiro fora deste repo. O
+monograma deriva do X da marca-mãe, não é desenho novo.
+
+### Fixed — o CI voltou a passar: Node 22 e `engines` declarado
+
+O `npm run build` falhava com `TypeError: trustedFunctions.difference is not a
+function`, e a causa não era a PR de dependência que tornou a falha visível. O
+`cssnano` exige `node ^22.11 || ^24.11 || >=26` — **nas duas versões**, a que
+estava instalada e a proposta — e os três workflows rodavam em **Node 20**. O CI
+já estava fora do engine suportado havia tempo, emitindo apenas
+`npm warn EBADENGINE`; a versão nova passou a usar `Set.prototype.difference`,
+ausente no Node 20, e o aviso virou erro.
+
+`ci.yml`, `npm-publish.yml` e `pages.yml` foram para Node 22 — inclusive o de
+Pages, que também estava em 20 e publica o site do DS. O `package.json` passou a
+declarar `engines.node: ">=22.11"`, que é o que evita a reincidência: a próxima
+divergência falha no `install` nomeando a versão exigida, em vez de reaparecer
+como erro obscuro dentro do build.
+
+### Changed — `dist/` regenerado com o cssnano 8.0.7
+
+Terceira vez que bumpar dependência de build muda a saída minificada, e a
+primeira em que o `CONTRIBUTING.md` §Release já avisava. O `prepare` deste
+pacote é apenas `husky`: quem instala por `github:…#tag` recebe o `dist/`
+commitado, não um rebuild. `dist/` defasado significa consumidor servindo CSS
+que o próprio `npm run build` não reproduz mais.
+
+Equivalência verificada pelo método da receita — mapa
+`(contexto @, seletor, propriedade) → último valor` nas duas versões:
+
+| Arquivo | Pares | Sumiram | Surgiram | Valor mudou | Bytes |
+|---|---|---|---|---|---|
+| `tokens.min.css` | 780 | 0 | 0 | 0 | 24.704 → 23.906 |
+| `components.min.css` | 2.667 | 2 | 2 | 0 | 75.144 → 75.035 |
+
+As duas diferenças em `components.min.css` são reescrita de atalho para
+propriedade longa, equivalentes porque o `border` anterior já define largura e
+estilo dos quatro lados: `border-right:2px solid transparent` virou
+`border-right-color:transparent` em `.btn-loading:after`, e o mesmo com
+`border-top` em `.tooltip:after`. **Nenhum valor de token mudou.**
+
+O ganho de tamanho vem de uma otimização nova da 8.0.7: extrair declarações
+idênticas de seletores irmãos para uma regra compartilhada, como
+`[data-theme=sober-dark],[data-theme=vibrant-dark]{…}`.
+
+### Changed — dependências de desenvolvimento
+
+`@commitlint/cli` 21.2.1 → 21.2.2, `@commitlint/config-conventional`
+21.2.0 → 21.2.2 e `cssnano` 8.0.4 → 8.0.7. Só devDependencies; nenhuma
+dependência de runtime.
+
 ### Removed — `commit-and-tag-version` saiu do repo
 
 A ferramenta foi **descartada na v2.3.0** e mesmo assim seguiu instalada por duas
