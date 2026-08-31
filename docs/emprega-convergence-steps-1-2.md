@@ -2,7 +2,8 @@
 
 - **Implementa:** [ADR-0002](adr/0002-emprega-brand-convergence.md)
 - **Aprovado por:** Marcos, em 26/08/2026
-- **Passo 2 entregue:** empregamais/app#554 (commits `3d982d0a` e `d9f0a7e2`), aguardando merge em `dev`
+- **Passo 2 entregue:** empregamais/app#554 (commits `3d982d0a` e `d9f0a7e2`) — **mergeada em `dev` em 26/08/2026 21:39**, e o conteúdo já está na `main`. A frase original desta linha dizia "aguardando merge"; ficou desatualizada no mesmo dia em que foi escrita.
+- **Passo 1:** feito **só no IMO** (commit `0be55aa8`, 26/08 — Sora/Inter, nada acima de 600, Nunito removido). O item **1.4**, no EditalHub, seguia por fazer até 31/08.
 - **Escopo:** apenas os passos 1 e 2. Os passos 3 a 6 dependem de decisões ainda abertas.
 - **Executor:** não atribuído — nenhum agente conectado ao canal no momento da escrita.
 
@@ -97,7 +98,18 @@ Os `--eds-*` **não existem no repositório do EditalHub**: vivem no CSS do IMO,
 | `#2a2f45` | 1 | `var(--eds-table-head)` |
 | `#8b5cf6` | 1 | `var(--eds-violet)` |
 
-Onde há mais de um token com o mesmo valor, a escolha acima é a semântica: `#ffffff` vira `--eds-surface` (superfície), não `--eds-on-accent` (tinta sobre acento); `#4f46e5` vira `--eds-indigo-dark` (cor de ação), não `--eds-violet-ink`. **Usar o token que descreve o papel, nunca o que descreve a cor** — é o ADR-0001.
+Onde há mais de um token com o mesmo valor, a escolha acima é a semântica: `#ffffff` vira `--eds-surface` (superfície), não `--eds-on-accent` (tinta sobre acento); `#4f46e5` vira `--eds-indigo-dark` (cor de ação), não `--eds-violet-ink`. **Usar o token que descreve o uso, não o que descreve a tinta.**
+
+> ⚠️ **A citação original aqui invocava o ADR-0001 e não cabia.** Aquele ADR proíbe nomear token
+> por aparência — e os `--eds-*` do IMO são, quase todos, nomeados por cor (`indigo-dark`,
+> `navy`, `violet`). Escolher entre `--eds-indigo-dark` e `--eds-violet-ink` não é aplicar o
+> ADR-0001: é escolher entre dois nomes de cor com o mesmo valor.
+>
+> A exceção é legítima e o próprio ADR-0001 a assume: ele mede que a fundação
+> (`tokens/tokens.css`) é 100% nomeada por papel e que, dentro de `brands/`, nome de cor é
+> aceitável quando é **verdadeiro** — *"nenhum token de marca mente"*. Os `--eds-*` são camada
+> de produto, não fundação. O critério real desta seção é qual token descreve o **uso** no
+> ponto em que aparece; levar essa camada a nomes de papel é trabalho do passo 3, não deste.
 
 ### 2.2 Pontas de gradiente — 4 cores, 8 ocorrências
 

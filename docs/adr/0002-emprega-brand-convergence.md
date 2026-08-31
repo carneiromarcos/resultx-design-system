@@ -30,6 +30,21 @@ Os três lugares onde a identidade Emprega+ está escrita hoje:
 | Como carrega | pacote npm | `<link>` direto, sem build | `<link>` **opt-in**, não está em layout nenhum |
 | Consumido por | **nenhum produto** | IMO em produção | telas de `/concursos/*` |
 
+> **Estado em 31/08/2026 — a tabela acima é o retrato de 26/08 e envelheceu.** Os passos 1 e 2
+> foram executados entre aquela data e esta, e as linhas que mudaram são estas:
+>
+> | | IMO | EditalHub |
+> |---|---|---|
+> | Arquivo | 3.647 linhas | **706** linhas |
+> | Tokens | 51 (`--eds-*`) | **114 usos** de `var(--eds-*)`, com `:root` próprio |
+> | Fonte | Sora + Inter, nada acima de 600 (`0be55aa8`) | Sora + Inter (passo 1.4, 31/08) |
+>
+> A linha **"Tokens: 0"** do EditalHub era o fato que motivou este ADR; ela deixou de valer
+> com a PR empregamais/app#554. A **cor de ação, o fundo e o tema escuro não mudaram** — a
+> tokenização foi de zero efeito visual, por construção. O que a decisão 1 propõe (reescrever
+> `brands/emprega-mais` a partir da produção) **segue não implementado**: o `tokens.css` deste
+> repo mantém `--emp-gold: #c4993b`.
+
 ### Achado 1 — a marca do sistema e os produtos não têm uma cor em comum
 
 Ouro sobre navy escuro contra índigo sobre branco. Nem o navy coincide: `#1B2A4A` no sistema, `#1c2444` no produto. Não é deriva de tom — são identidades diferentes, e a que está publicada como oficial é a que ninguém entrega.
