@@ -33,6 +33,12 @@
      precisasse de texto dourado cairia de volta em --gold — que é exatamente o
      bug que o token veio evitar (19 ocorrências no Xscore em 01/08). */
   --gold-ink: #c4993b;
+  /* Texto SOBRE o dourado (botão primário, selo de ação). Terceiro caso da
+     regra do dourado: fundo é --gold, tinta é --gold-ink, e o que fica em cima
+     do fundo dourado é --on-gold. Igual nos dois temas porque o fundo é o mesmo.
+     Nasceu no Xscore (M14, 16/09) no lugar do #1a1408 cravado em button.tsx —
+     o produto pediu, a fonte registra. Contraste sobre #c4993b: 6,9:1 (AA). */
+  --on-gold: #1a1408;
 
   /* ---- Gold ramp (500 = --gold canonical) ---- */
   --gold-50: #fdf9ef;
@@ -183,6 +189,7 @@
   --gold: #c4993b;        /* fill de botão (texto branco por cima) */
   --gold-light: #d4ae54;
   --gold-ink: #866425;    /* texto/ícone dourado — AA sobre branco */
+  --on-gold: #1a1408;     /* texto sobre fundo dourado — mesmo nos dois temas */
 
   --intel: #6f32b1;
   --intel-on-dark: #6f32b1;   /* sobre claro mantém identidade — 6.86:1 (AA) */
