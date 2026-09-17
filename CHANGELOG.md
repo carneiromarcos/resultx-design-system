@@ -5,6 +5,15 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Changed — a marca Emprega+ do sistema passa a descrever a produção
+
+`brands/emprega-mais/tokens/` deixou de publicar ouro sobre navy (que nenhum
+produto vestia) e passou a espelhar o IMO: navy `#1c2444`, preenchimento de
+ação `#4f46e5`, superfície clara, Sora/Inter com teto 600. O ouro `#c49a3c`
+continua como pigmento de prestígio (secondary na ponte), não como
+`--accent-primary`. ADR-0002 decisão 1. Nenhum consumidor do pacote importa
+essa marca hoje.
+
 ## [2.6.0] - 2026-08-26
 
 ### Added — a marca do Xscore ganhou arquivo

@@ -61,18 +61,18 @@ const BRANDS = [
     id: 'emprega-mais',
     label: 'Emprega+',
     dark: {
-      accent: '--emp-gold',
-      hover: '--emp-gold-light',
-      secondary: '--emp-purple',
-      // One token across both themes: the brand file resolves it to #c4993b in
-      // dark and #866425 in light. The interface uses one name, not two.
-      text: '--emp-gold-ink',
+      // FILL do botão de Ação no IMO é indigo-dark, não o índigo cru
+      // (#6366f1 + branco = 4,47:1). Ouro vira secondary (prestígio).
+      accent: '--emp-indigo-dark',
+      hover: '--emp-indigo-hover',
+      secondary: '--emp-gold',
+      text: '--emp-indigo-ink',
     },
     light: {
-      accent: '--emp-gold',
-      hover: '--emp-gold-light',
-      secondary: '--emp-purple',
-      text: '--emp-gold-ink',
+      accent: '--emp-indigo-dark',
+      hover: '--emp-indigo-hover',
+      secondary: '--emp-gold',
+      text: '--emp-indigo-ink',
     },
   },
   {
