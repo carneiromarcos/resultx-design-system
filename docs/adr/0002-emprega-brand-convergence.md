@@ -1,8 +1,8 @@
 # ADR-0002 — A marca Emprega+ do sistema descreve um produto que não existe
 
-- **Status:** Accepted (decisões 1 e 2). Decisão 3 ainda aberta.
+- **Status:** Accepted (decisões 1 e 2). Decisão 3 em execução (passo 4a nesta fatia; 4b EditalHub aberto).
 - **Date:** 2026-08-26
-- **Implemented:** decisão 2 em 26/08 (EditalHub tokenizado, zero pixel); decisão 1 em 17/09 (`brands/emprega-mais/tokens/` reescrito a partir do IMO).
+- **Implemented:** decisão 2 em 26/08 (EditalHub tokenizado, zero pixel); decisão 1 em 17/09 (`tokens.css` reescrito a partir do IMO); decisão 3 / 4a em 17/09 (`eds-root.css` — Camada 1 `--eds-*`).
 - **Related:** [ADR-0001](0001-role-named-tokens.md) — a gramática dos tokens · [brand-bridge.md](../brand-bridge.md) — o mecanismo que traduz marca em papel
 
 > Escrito em pt-BR, como o `CHANGELOG.md` e o `CONTRIBUTING.md` deste repo. O ADR-0001 está em inglês; a divergência é dele, não deste.
@@ -80,6 +80,8 @@ Substituir os 141 usos por `var(--eds-*)` com os mesmos valores é mudança de *
 
 **3. Os dois Laravel passam a ler um único arquivo de token.**
 Hoje o bloco `:root` canônico está enterrado nas 3.571 linhas do IMO. Ele sai de lá, vira `brands/emprega-mais/tokens/` neste repo, e os dois produtos passam a carregar o mesmo arquivo.
+
+**Como fechado em 17/09 (Marcos).** Não é o `tokens.css` da ponte (`--emp-*` / `--accent-*`) nem `npm install` em runtime. O arquivo Laravel é `brands/emprega-mais/tokens/eds-root.css` (`--eds-*`, `color-mix` permitido). Cada produto guarda uma cópia vendored com prova de SHA (4c). IMO importa a cópia em `emprega-ds.css` (passo 4a). EditalHub lê a mesma cópia no passo 4b, alinhando warning/neutral/gradiente ao IMO. White-label continua no Blade (`--eds-indigo` depois da folha). Electia, site gold e rename para `--accent-*` ficam fora.
 
 **4. O alinhamento com o Electia é feito por escala e gramática, não por código compartilhado.**
 Electia é React, os outros dois são Blade. Componente não atravessa essa fronteira — mas token, escala tipográfica, raio, sombra e espaçamento atravessam, porque são CSS. O alvo é parecerem a mesma família, não compartilharem implementação.
