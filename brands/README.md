@@ -121,13 +121,13 @@
 | Marca | Cor primária | Hex | Vibe |
 |-------|--------------|-----|------|
 | **ResultX** | (a definir) | — | Consultoria premium |
-| **Emprega+** | Gold + Navy (canonizado 2026-05-23) | `#D4A928` (+ navy `#0F1A2E`) — extraido de `emprega-mais/previews/brand-guidelines.html` | Empregabilidade |
+| **Emprega+** | Índigo de ação + navy (ADR-0002, 2026-09-17) | `#4f46e5` (+ navy `#1c2444`) — produção IMO. Ouro `#c49a3c` é prestígio, não accent. | Empregabilidade |
 | **PdV** | Gold | `#D4A928` (+ navy `#0F1A2E`) | Forjar, montanha |
 | **IMO** | — | — | Herda 100% Emprega+ |
 | **EditalHub** | — | — | Herda 100% Emprega+ |
 | **Electia** | **Teal** | `#2DD4BF` (+ dark `#0B0E14`) | Tech, ciência |
 
-> ✅ **Paleta Emprega+ canonizada 2026-05-23.** Gold + navy confirmados extraindo de `emprega-mais/previews/brand-guidelines.html` (96KB). Tokens cristalizados em `emprega-mais/tokens/tokens.json` + `tokens.css` (prefixo `--emp-*`). PdV reutiliza o navy `#0F1A2E` como `bg.base` (descrito como "navy escuro Emprega+" no tokens.json do PdV) — confirmando que o navy e canonico do ecossistema, herdado pela personal-brand.
+> ✅ **Paleta Emprega+ de produto (ADR-0002, 17/09/2026).** Índigo `#4f46e5` + navy `#1c2444`, light-first, a partir do IMO. O ouro permanece no arquivo como pigmento de prestígio. PdV segue com o próprio gold; não herda o accent de produto.
 
 ---
 

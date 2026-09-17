@@ -1,71 +1,90 @@
 /* ============================================
-   EMPREGA+ — Design Tokens v1.0
-   Source of truth: tokens.json (W3C Design Tokens)
-   Synced with Stitch project 15906106681978017496
-   Marca-mae do ecossistema (Emprega+, IMO, Editais)
+   EMPREGA+ — Design Tokens
+   Fonte da verdade: a produção (IMO + EditalHub), não o site.
+   ADR-0002 decisão 1 — 2026-09-17.
+
+   Identidade de PRODUTO: navy #1c2444 + índigo de ação #4f46e5 sobre
+   superfície clara. O ouro (#c49a3c) permanece como pigmento de
+   prestígio (site / PdV), não como accent do sistema.
+
+   Prefixos --emp-* são pigmento (ADR-0001: nomes de cor só nesta camada).
+   A ponte (ds-bridge.css) traduz para papéis --accent-*.
    ============================================ */
 
 :root {
-  /* ---- Gold (cor de marca — accents) ---- */
-  /* Fonte: --color-brand-dark e --color-brand-light do site live */
-  --emp-gold-light: #d4ae54;
-  --emp-gold: #c4993b;
+  /* ---- Navy (base institucional, IMO) ---- */
+  --emp-navy: #1c2444;
+  --emp-navy-2: #34427a;
+  --emp-table-head: #2a2f45;
+
+  /* ---- Índigo (ação de produto — preenchimento) ----
+     O FILL do botão de Ação no IMO é --eds-indigo-dark, não o índigo cru.
+     Cru #6366f1 + branco = 4,47:1 (abaixo de AA). #4f46e5 + branco = 6,29:1. */
+  --emp-indigo: #6366f1;
+  --emp-indigo-dark: #4f46e5;
+  --emp-indigo-hover: #4940d3; /* 92% do dark + preto; branco 7,10:1 */
+  --emp-violet: #8b5cf6;
+  --emp-violet-dark: #7c3aed;
+
+  /* Tinta do índigo SOBRE superfície. Sólido — a ponte não aceita color-mix.
+     :root = tema escuro da ponte (45% índigo + branco). Light sobrescreve. */
+  --emp-indigo-ink: #b9baf9;
+
+  /* ---- Gold (prestígio — site, não o accent do produto) ---- */
+  --emp-gold-light: #d4ad55;
+  --emp-gold: #c49a3c;
   --emp-gold-warm: #c49a3c;
-  --emp-gold-dark: #a07b2a;
-  /* Texto/ícone dourado. No escuro é o próprio --emp-gold (7,33:1 sobre
-     #0B0E14); no light vira #866425, porque #c4993b reprova sobre branco
-     (2,64:1) e mesmo --emp-gold-dark para em 3,92:1.
-     ⚠️ Existe nos DOIS temas para que a interface use UM token só. Sem esta
-     declaração `var(--emp-gold-ink)` ficaria indefinido no escuro, e quem
-     precisasse de texto dourado cairia de volta em --emp-gold — que é
-     exatamente o bug que o token veio evitar. Mesmo padrão do Xscore. */
-  --emp-gold-ink: #c4993b;
+  --emp-gold-dark: #a8842f;
+  --emp-gold-ink: #c49a3c;
   --emp-purple: #7c3aed;
   --emp-purple-light: #a855f7;
   --emp-purple-soft: rgba(124, 58, 237, 0.12);
 
-  /* ---- Backgrounds (navy — theme-color oficial) ---- */
-  --emp-bg: #1B2A4A;
-  --emp-surface-1: #1c2a4a;
-  --emp-surface-deep: #0f1117;
+  /* ---- Superfícies — :root = escuro IMO (o resolver da ponte lê daqui) ---- */
+  --emp-bg: #171b2b;
+  --emp-surface-1: #1e2335;
+  --emp-surface-deep: #0f1320;
+  --emp-surface: #171b2b;
+  --emp-surface-tonal: #1e2335;
+  --emp-border: #2a3047;
 
-  /* ---- Light surfaces (Gov, Editais, light glass) ---- */
-  --emp-light-bg: #FFFFFF;
-  --emp-light-subtle: #f5f7f9;
-  --emp-light-muted: #f0f4f8;
-  --emp-light-border: #e0e6eb;
+  /* ---- Superfícies claras (Gov, site, IMO light) ---- */
+  --emp-light-bg: #ffffff;
+  --emp-light-subtle: #fafbfe;
+  --emp-light-muted: #eef0f7;
+  --emp-light-border: #e9ebf3;
 
-  /* ---- Glass effects (Light Glass — sistema oficial Emprega+) ---- */
+  /* ---- Glass ---- */
   --emp-glass-bg: rgba(255, 255, 255, 0.7);
-  --emp-glass-border: rgba(28, 42, 74, 0.08);
-  --emp-glass-border-hover: rgba(28, 42, 74, 0.15);
+  --emp-glass-border: rgba(28, 36, 68, 0.08);
+  --emp-glass-border-hover: rgba(28, 36, 68, 0.15);
 
-  /* ---- Text (em fundo dark) ---- */
-  --emp-text: #FFFFFF;
-  --emp-text-secondary: #bfd0ec;
-  --emp-text-muted: #5a6b7c;
-  --emp-text-subtle: #71717a;
-  --emp-text-inverse: #1B2A4A;
+  /* ---- Texto em fundo escuro ---- */
+  --emp-text: #e8eaf2;
+  --emp-text-secondary: #a3abc4;
+  --emp-text-muted: #6f7796;
+  --emp-text-subtle: #6f7796;
+  --emp-text-inverse: #1e2433;
 
-  /* ---- Semantic (tailwind-aligned) ---- */
-  --emp-success: #16a34a;
-  --emp-success-dark: #0d7a30;
-  --emp-error: #ef4343;
+  /* ---- Semânticas (IMO claro; dark sobrescreve no bloco abaixo) ---- */
+  --emp-success: #34d399;
+  --emp-success-dark: #047857;
+  --emp-error: #f87171;
   --emp-error-dark: #b91c1c;
-  --emp-warning: #d97706;
+  --emp-warning: #fbbf24;
 
-  /* ---- Typography ---- */
-  --emp-font-heading: 'Sora', system-ui, sans-serif;
-  --emp-font-sans: 'Inter', system-ui, sans-serif;
+  /* ---- Tipografia (passo 1 — Sora/Inter, teto 600 no produto) ---- */
+  --emp-font-heading: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --emp-font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
   --emp-font-mono: 'JetBrains Mono', monospace;
 
   --emp-weight-regular: 400;
   --emp-weight-medium: 500;
   --emp-weight-semibold: 600;
-  --emp-weight-bold: 700;
-  --emp-weight-extrabold: 800;
+  --emp-weight-bold: 600;
+  --emp-weight-extrabold: 600;
 
-  /* ---- Motion ---- */
+  /* ---- Motion (IMO = site) ---- */
   --emp-duration-fast: 150ms;
   --emp-duration-normal: 300ms;
   --emp-duration-slow: 500ms;
@@ -73,7 +92,7 @@
   --emp-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --emp-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* ---- Typography Scale ---- */
+  /* ---- Escala ---- */
   --emp-text-display: clamp(2.5rem, 6vw, 4.5rem);
   --emp-text-h1: 2.5rem;
   --emp-text-h2: 2rem;
@@ -84,7 +103,7 @@
   --emp-text-small: 0.875rem;
   --emp-text-code: 0.8125rem;
 
-  /* ---- Spacing ---- */
+  /* ---- Espaçamento ---- */
   --emp-space-xs: 0.25rem;
   --emp-space-sm: 0.5rem;
   --emp-space-md: 1rem;
@@ -94,41 +113,50 @@
   --emp-space-3xl: 5rem;
   --emp-space-section: clamp(4rem, 3rem + 5vw, 10rem);
 
-  /* ---- Shadows (navy-tinted per Stitch elevation system) ---- */
-  --emp-shadow-sm: 0 4px 20px rgba(27, 42, 74, 0.05);
-  --emp-shadow-md: 0 4px 12px rgba(27, 42, 74, 0.08);
-  --emp-shadow-lg: 0 10px 30px rgba(27, 42, 74, 0.12);
-  --emp-glow-brand: 0 0 20px rgba(196, 153, 59, 0.20);
-  --emp-glow-brand-lg: 0 0 40px rgba(196, 153, 59, 0.25), 0 0 80px rgba(196, 153, 59, 0.10);
+  /* ---- Sombras (IMO dark) ---- */
+  --emp-shadow-sm: 0 1px 3px rgba(0, 0, 0, .45);
+  --emp-shadow-md: 0 14px 32px -14px rgba(0, 0, 0, .7);
+  --emp-shadow-lg: 0 12px 34px -12px rgba(0, 0, 0, .6);
+  --emp-glow-brand: 0 0 20px rgba(79, 70, 229, 0.20);
+  --emp-glow-brand-lg: 0 0 40px rgba(79, 70, 229, 0.25), 0 0 80px rgba(79, 70, 229, 0.10);
   --emp-glow-purple: 0 0 20px rgba(124, 58, 237, 0.20);
   --emp-glow-purple-lg: 0 0 40px rgba(124, 58, 237, 0.28), 0 0 80px rgba(124, 58, 237, 0.12);
 
-  /* ---- Layout (synced from Stitch) ---- */
   --emp-container-max: 1200px;
   --emp-gutter: 1.5rem;
   --emp-margin-mobile: 1rem;
   --emp-margin-desktop: 2.5rem;
 
-  /* ---- Radius ---- */
-  --emp-radius-sm: 0.25rem;
-  --emp-radius-md: 0.5rem;
-  --emp-radius-lg: 0.75rem;
-  --emp-radius-xl: 1rem;
+  --emp-radius-sm: 10px;
+  --emp-radius-md: 12px;
+  --emp-radius-lg: 16px;
+  --emp-radius-xl: 20px;
 }
 
-/* ============================================
-   TEMA LIGHT — opt-in via data-theme="light"
-   Só o que MUDA de valor sobre fundo claro.
-   ============================================ */
+/* Light = IMO :root. A ponte lê este bloco para o tema claro. */
 [data-theme="light"] {
-  /* 5,44:1 sobre branco e 4,69:1 sobre a superfície com 12% de dourado
-     (o fundo de tag) — as duas medidas precisam passar, e é por isso que
-     --emp-gold-dark (3,92 / 3,38) não serve. O dourado da marca segue
-     intacto como PREENCHIMENTO de botão, com tinta escura por cima. */
+  --emp-indigo-ink: #363885; /* 55% índigo + preto; 10,19:1 sobre branco */
   --emp-gold-ink: #866425;
+  --emp-bg: #ffffff;
+  --emp-surface: #ffffff;
+  --emp-surface-1: #fafbfe;
+  --emp-surface-tonal: #fafbfe;
+  --emp-surface-deep: #eef0f7;
+  --emp-border: #e9ebf3;
+  --emp-table-head: #2a2f45;
+  --emp-text: #1e2433;
+  --emp-text-secondary: #6b7280;
+  --emp-text-muted: #9aa3b5;
+  --emp-text-subtle: #9aa3b5;
+  --emp-text-inverse: #ffffff;
+  --emp-success: #047857;
+  --emp-error: #b91c1c;
+  --emp-warning: #a94e08;
+  --emp-shadow-sm: 0 1px 3px rgba(30, 36, 51, .06);
+  --emp-shadow-md: 0 4px 12px rgba(30, 36, 51, .08);
+  --emp-shadow-lg: 0 10px 30px -12px rgba(49, 46, 129, .22);
 }
 
-/* ---- Animation: Scroll Reveal ---- */
 @keyframes emp-fade-in-up {
   from { opacity: 0; transform: translateY(32px); }
   to { opacity: 1; transform: translateY(0); }
@@ -148,7 +176,6 @@
   }
 }
 
-/* ---- Utility: Light Glass effect (padrao oficial Emprega+) ---- */
 .emp-glass {
   background: var(--emp-glass-bg);
   border: 1px solid var(--emp-glass-border);

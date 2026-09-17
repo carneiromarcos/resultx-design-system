@@ -1,7 +1,8 @@
 # ADR-0002 — A marca Emprega+ do sistema descreve um produto que não existe
 
-- **Status:** Proposed
+- **Status:** Accepted (decisões 1 e 2). Decisão 3 ainda aberta.
 - **Date:** 2026-08-26
+- **Implemented:** decisão 2 em 26/08 (EditalHub tokenizado, zero pixel); decisão 1 em 17/09 (`brands/emprega-mais/tokens/` reescrito a partir do IMO).
 - **Related:** [ADR-0001](0001-role-named-tokens.md) — a gramática dos tokens · [brand-bridge.md](../brand-bridge.md) — o mecanismo que traduz marca em papel
 
 > Escrito em pt-BR, como o `CHANGELOG.md` e o `CONTRIBUTING.md` deste repo. O ADR-0001 está em inglês; a divergência é dele, não deste.
