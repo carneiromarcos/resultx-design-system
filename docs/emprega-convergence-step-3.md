@@ -1,7 +1,7 @@
 # Passo 3 da convergência Emprega+ — a marca do sistema descreve a produção
 
 - **Implementa:** ADR-0002 decisão 1
-- **Não implementa:** decisão 3 (os dois Laravel lerem este arquivo). Isso é o passo 4.
+- **Não implementa:** decisão 3 (os dois Laravel lerem um arquivo `--eds-*`). Isso começou no passo 4a (`eds-root.css`); o EditalHub entra no 4b.
 - **Aprovado por:** Marcos, ao mandar executar a opção 3 em 17/09/2026.
 
 ## O que este passo faz

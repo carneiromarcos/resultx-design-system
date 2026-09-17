@@ -1,0 +1,204 @@
+/* ============================================================================
+   Emprega+ — tokens Laravel (`--eds-*`)
+   CANÔNICO: resultx-design-system/brands/emprega-mais/tokens/eds-root.css
+   Cópia no IMO: public/css/eds-root.css (byte-idêntica).
+   ADR-0002 decisão 3 / passo 4a — 2026-09-17.
+
+   Só Camada 1: :root + [data-theme="dark"] + canvas do body.
+   color-mix é o contrato de white-label. NÃO alimentar build-brand-bridges.js
+   (a ponte exige hex sólido — isso vive em tokens.css / ds-bridge.css).
+   Aliases --jl-* e componentes .jl-* ficam em emprega-ds.css.
+   ============================================================================ */
+
+/* ==========================================================================
+   CAMADA 1 — DESIGN TOKENS (:root)  <- ponto de tema
+   ========================================================================== */
+:root {
+    /* --- Brand / Navy (hero) --- */
+    --eds-navy: #1c2444;
+    --eds-navy-2: #34427a;
+    --eds-table-head: #2a2f45;
+
+    /* --- Indigo / Violet (acao) --- */
+    --eds-indigo: #6366f1;
+    --eds-indigo-dark: #4f46e5;
+    --eds-violet: #8b5cf6;
+    --eds-violet-dark: #7c3aed;
+
+    /* --- Tinta de marca sobre superficie (par com contraste nos DOIS temas) ---
+       --eds-indigo-dark e --eds-violet-dark sao cores de PINTURA (gradiente,
+       preenchimento). NAO servem de texto em tema nenhum, e a razao e simetrica:
+
+       - no ESCURO, o layout do tenant os deriva ESCURECENDO a marca
+         (color-mix 80% + #000) e este bloco nao os redefine — texto quase preto
+         sobre #171b2b, ate 1,05:1 medido;
+       - no CLARO, 80% de marca nao escurece o bastante quando a MARCA e clara:
+         com #64a1f2 (tenant saude) o texto fica em 4,00:1 sobre branco.
+
+       Ate a fatia B este par so tinha conta propria no escuro, e por isso o
+       claro reprovava sem que ninguem visse: as tres marcas do harness eram
+       escuras, que e o lado FACIL do tema claro.
+
+       Agora os dois temas tem a mesma regra, espelhada a partir da marca crua
+       (--eds-indigo), que e o que o layout do tenant escreve:
+         claro  -> 55% de marca + preto
+         escuro -> 45% de marca + branco
+       Por que 55%: o pior caso do claro e uma marca MUITO clara. Com 55% ate um
+       amarelo forte (#f5c518) da 5,01:1. Escolher 65%, que ja resolveria o
+       tenant de hoje com 5,65:1, obrigaria a voltar aqui no dia em que entrasse
+       um tenant amarelo. A simetria com o escuro e o que torna o token
+       previsivel — o defeito nasceu de o claro NAO ter conta propria enquanto o
+       escuro tinha. */
+    --eds-brand-ink: color-mix(in srgb, var(--eds-indigo) 55%, #000);
+    --eds-brand-ink-hover: color-mix(in srgb, var(--eds-indigo) 40%, #000);
+
+    /* --- Gradientes --- */
+    --eds-grad-hero: linear-gradient(120deg, var(--eds-navy) 0%, var(--eds-navy-2) 100%);
+    /* Ação = a pintura de marca. O stop final era --eds-violet-dark (#7c3aed)
+       fixo: preto sobre ele dá 3,69:1 e branco sobre o start Saúde (#5081c2)
+       dá 3,99:1 — uma tinta não cobre os dois. O segundo stop agora é a
+       mesma pintura 4% mais escura (preto no Saúde ainda 4,91:1). */
+    --eds-grad-action: linear-gradient(135deg, var(--eds-indigo-dark) 0%, color-mix(in srgb, var(--eds-indigo-dark) 96%, #000) 100%);
+    --eds-grad-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    --eds-grad-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+
+    /* --- Cores semanticas (texto + tint) --- */
+    --eds-success-ink: #047857;
+    --eds-success-tint: rgba(16, 185, 129, .14);
+    --eds-warning-ink: #a94e08;   /* #427: era #b45309 (4,43:1 sobre o tint) */
+    --eds-warning-tint: rgba(245, 158, 11, .16);
+    --eds-danger-ink: #b91c1c;
+    --eds-danger-tint: rgba(239, 68, 68, .12);
+    --eds-info-ink: #1d4ed8;
+    --eds-info-tint: rgba(59, 130, 246, .07);
+    --eds-neutral-ink: #5a687d;   /* #427: era #64748b (4,09:1 sobre o tint) */
+    --eds-neutral-tint: rgba(100, 116, 139, .12);
+    /* Componentes cujo FUNDO e --eds-violet-tint usam este par, nao o de marca:
+       sobre o tint o brand-ink do escuro (marca clareada) cai a 3,94:1 no pior
+       caso. Medido na fatia B.
+
+       VALOR FIXO, e nao derivado da marca — decidido ao remedir depois do 55%.
+       O token dizia servir a fundo violeta, mas o valor apontava para
+       --eds-indigo-dark, que o layout do tenant deriva da MARCA. Num tenant de
+       marca CLARA (saude, #64a1f2) a marca escurecida a 80% da #5081c2, que
+       sobre o tint mede 3,36:1 — as 6 reprovas que sobraram no tema claro.
+       O tint ja e um violeta fixo (rgba(139,92,246,...)), e no ESCURO a tinta
+       ja era fixa (#a78bfa): o claro estava sozinho amarrado a marca, contra a
+       propria semantica declarada aqui. #6d28d9 mede 5,97:1 sobre o tint e
+       5,79:1 sobre o tint na zebra — folga, e nao o limite. */
+    --eds-violet-ink: #6d28d9;
+    --eds-violet-tint: rgba(139, 92, 246, .14);
+
+    /* texto/icone sobre navy/hero (branco em ambos os temas) + estrela de rating */
+    --eds-on-accent: #fff;
+    /* texto SOBRE a pintura de marca. Default = branco (galeria, tenant
+       sem layout). O layout do tenant sobrescreve com brandOnColor() —
+       issue #463: branco sobre #64a1f2 dá 2,7:1. Hero navy continua em
+       --eds-on-accent; botão de Ação e paginação leem este. */
+    --eds-on-brand: var(--eds-on-accent);
+    --eds-star: #f5b301;
+
+    /* --- Superficies --- */
+    --eds-surface: #ffffff;
+    --eds-surface-tonal: #fafbfe;
+    --eds-surface-tonal-dark: #eef0f7;
+    --eds-border: #e9ebf3;
+    --eds-border-input: #d7dbe8;
+    --eds-border-mid: #c9cede;
+
+    /* --- Ink (tinta) --- */
+    --eds-ink-strong: #1e2433;
+    --eds-ink-medium: #6b7280;
+    --eds-ink-soft: #9aa3b5;
+
+    /* --- Raios --- */
+    --eds-radius-hero: 20px;
+    --eds-radius-card: 16px;
+    --eds-radius-chip: 11px;
+    --eds-radius-btn: 12px;
+    --eds-radius-btn-sm: 10px;
+    --eds-radius-pill: 999px;
+
+    /* --- Sombras --- */
+    --eds-shadow-card: 0 1px 3px rgba(30, 36, 51, .06), 0 1px 2px rgba(30, 36, 51, .04);
+    --eds-shadow-card-hover: 0 12px 28px -14px rgba(30, 36, 51, .26), 0 4px 12px rgba(30, 36, 51, .08);
+    --eds-shadow-hero: 0 10px 30px -12px rgba(49, 46, 129, .22), 0 4px 12px rgba(30, 36, 51, .06);
+    --eds-ring-indigo: 0 0 0 3px rgba(99, 102, 241, .25);
+
+    /* --- Tipografia --- */
+    --eds-font-heading: 'Sora', ui-sans-serif, system-ui, sans-serif;
+    --eds-font-body:    'Inter', ui-sans-serif, system-ui, sans-serif;
+    --eds-font: var(--eds-font-body);
+
+    /* --- Espacamento --- */
+    --eds-gap: 15px;
+    --eds-pad-head: 1rem 1.25rem;
+    --eds-pad-body: 1.125rem 1.375rem;
+
+    /* --- Movimento --- */
+    --eds-ease: cubic-bezier(.16, 1, .3, 1);
+    --eds-transition: transform .18s cubic-bezier(.16, 1, .3, 1), box-shadow .18s ease;
+    --eds-lift: translateY(-2px);
+}
+
+/* ==========================================================================
+   TEMA DARK — [data-theme="dark"]  <- sobrescreve SO superficies/inks/bordas
+   --------------------------------------------------------------------------
+   Mesma mecanica de tema do :root: troca os --eds-* de superficie, tinta e
+   borda. Indigo/violet (acao) e o hero navy permanecem identicos. Tints
+   semanticos ficam um pouco mais saturados pra segurar contraste AA no escuro.
+   ========================================================================== */
+[data-theme="dark"] {
+    /* --- Superficies --- */
+    --eds-surface: #171b2b;
+    --eds-surface-tonal: #1e2335;
+    --eds-surface-tonal-dark: #252b40;
+    --eds-border: #2a3047;
+    --eds-border-input: #353c57;
+    --eds-border-mid: #424a69;
+
+    /* --- Ink (tinta) --- */
+    --eds-ink-strong: #e8eaf2;
+    --eds-ink-medium: #a3abc4;
+    --eds-ink-soft: #6f7796;
+
+    /* --- thead de tabela (um degrau acima do navy base) --- */
+    --eds-table-head: #20263c;
+
+    /* --- Tinta de marca: CLAREIA a marca em vez de escurece-la ---
+       O tenant entrega a marca crua em --eds-indigo (o layout a escreve em
+       :root, que o bloco dark nao toca), entao a conta parte da marca e vale
+       para QUALQUER cor que um tenant configure em `primary_color`.
+       Por que 45%: o pior caso possivel e uma marca preta, que reduz a mistura
+       ao branco restante — 45% de marca deixa no minimo #8c8c8c, que da 5,0:1
+       sobre --eds-surface (#171b2b). Acima de ~48,5% o pior caso cai abaixo dos
+       4,5:1 do WCAG AA. O hover clareia mais (25%) porque precisa avancar sobre
+       o estado normal, nao recuar. */
+    --eds-brand-ink: color-mix(in srgb, var(--eds-indigo) 45%, #fff);
+    --eds-brand-ink-hover: color-mix(in srgb, var(--eds-indigo) 25%, #fff);
+
+    /* --- Cores semanticas: ink mais claro + tint mais saturado p/ AA no escuro --- */
+    --eds-success-ink: #34d399;
+    --eds-success-tint: rgba(16, 185, 129, .20);
+    --eds-warning-ink: #fbbf24;
+    --eds-warning-tint: rgba(245, 158, 11, .22);
+    --eds-danger-ink: #f87171;
+    --eds-danger-tint: rgba(239, 68, 68, .20);
+    --eds-info-ink: #60a5fa;
+    --eds-info-tint: rgba(59, 130, 246, .18);
+    --eds-neutral-ink: #9aa3b5;
+    --eds-neutral-tint: rgba(148, 163, 184, .16);
+    --eds-violet-ink: #a78bfa;
+    --eds-violet-tint: rgba(139, 92, 246, .22);
+
+    /* --- Sombras: mais densas pra ler sobre fundo escuro --- */
+    --eds-shadow-card: 0 1px 3px rgba(0, 0, 0, .45), 0 1px 2px rgba(0, 0, 0, .35);
+    --eds-shadow-card-hover: 0 14px 32px -14px rgba(0, 0, 0, .7), 0 6px 14px rgba(0, 0, 0, .4);
+    --eds-shadow-hero: 0 12px 34px -12px rgba(0, 0, 0, .6), 0 4px 14px rgba(0, 0, 0, .4);
+}
+
+/* Canvas raiz no dark (a galeria/app costuma pintar o body via
+   --eds-surface-tonal; aqui garantimos o fundo base mais profundo). */
+[data-theme="dark"] body {
+    background: #0f1320;
+}
