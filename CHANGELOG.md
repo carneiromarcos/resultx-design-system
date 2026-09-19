@@ -41,6 +41,8 @@ sumidos ou surgidos nos 4 arquivos. Nenhum efeito para consumidor.
 `engines.node` sobe de `>=22.11` para `>=22.22.3`, o mínimo que o cssnano 9
 declara — para que uma divergência futura falhe no `install` nomeando a
 versão, não como `TypeError` dentro do build (lição de 26/08).
+Depois, `cssnano` 9.0.0 → 9.0.4 e `autoprefixer` 10.5.6 → 10.6.1: `dist/`
+byte-idêntico, 0 diferenças nos 4 mapas.
 
 ## [2.6.0] - 2026-08-26
 
