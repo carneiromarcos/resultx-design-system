@@ -1,6 +1,6 @@
 # ADR-0002 — A marca Emprega+ do sistema descreve um produto que não existe
 
-- **Status:** Accepted (decisões 1 e 2). Decisão 3 em execução (passo 4a nesta fatia; 4b EditalHub aberto).
+- **Status:** Accepted (decisões 1 e 2). Decisão 3 em execução: 4a IMO em produção; 4b EditalHub em `dev` (app#662), sem promoção a `main`; 4c trava de SHA nos três repos (esta fatia).
 - **Date:** 2026-08-26
 - **Implemented:** decisão 2 em 26/08 (EditalHub tokenizado, zero pixel); decisão 1 em 17/09 (`tokens.css` reescrito a partir do IMO); decisão 3 / 4a em 17/09 (`eds-root.css` — Camada 1 `--eds-*`).
 - **Related:** [ADR-0001](0001-role-named-tokens.md) — a gramática dos tokens · [brand-bridge.md](../brand-bridge.md) — o mecanismo que traduz marca em papel

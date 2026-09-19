@@ -76,7 +76,8 @@
     "test": "jest",
     "test:visual": "playwright test",
     "test:visual:update": "playwright test -u",
-    "prepare": "husky"
+    "prepare": "husky",
+    "check:eds-root": "node scripts/check-eds-root-copies.js"
   },
   "jest": {
     "testPathIgnorePatterns": [
