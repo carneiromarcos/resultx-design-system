@@ -21,6 +21,19 @@ continua como pigmento de prestígio (secondary na ponte), não como
 `--accent-primary`. ADR-0002 decisão 1. Nenhum consumidor do pacote importa
 essa marca hoje.
 
+### Changed — cadeia de build atualizada (lote das 5 PRs do dependabot)
+
+`cssnano` 8.0.7 → **9.0.0** e `postcss-import` 16.1.1 → **17.0.0** (majors),
+mais `svgo` 4.1.0, `fast-uri` 3.1.8 e o grupo minor/patch (jest, stylelint,
+postcss, autoprefixer, playwright, lint-staged). `dist/` regenerado: só
+`components.min.css` mudou, e a diferença é o cssnano 9 escrevendo o operando
+constante primeiro dentro de `calc()` — 19 reordenações comutativas
+(`calc(var(--x)*-1)` → `calc(-1 * var(--x))`), 0 valores alterados, 0 pares
+sumidos ou surgidos nos 4 arquivos. Nenhum efeito para consumidor.
+`engines.node` sobe de `>=22.11` para `>=22.22.3`, o mínimo que o cssnano 9
+declara — para que uma divergência futura falhe no `install` nomeando a
+versão, não como `TypeError` dentro do build (lição de 26/08).
+
 ## [2.6.0] - 2026-08-26
 
 ### Added — a marca do Xscore ganhou arquivo
