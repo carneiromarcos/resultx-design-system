@@ -30,6 +30,9 @@ postcss, autoprefixer, playwright, lint-staged). `dist/` regenerado: só
 constante primeiro dentro de `calc()` — 19 reordenações comutativas
 (`calc(var(--x)*-1)` → `calc(-1 * var(--x))`), 0 valores alterados, 0 pares
 sumidos ou surgidos nos 4 arquivos. Nenhum efeito para consumidor.
+`engines.node` sobe de `>=22.11` para `>=22.22.3`, o mínimo que o cssnano 9
+declara — para que uma divergência futura falhe no `install` nomeando a
+versão, não como `TypeError` dentro do build (lição de 26/08).
 
 ## [2.6.0] - 2026-08-26
 
