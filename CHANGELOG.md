@@ -10,7 +10,15 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 `brands/emprega-mais/tokens/eds-root.css` publica a Camada 1 do IMO:
 `:root` + `[data-theme="dark"]`, incluindo `color-mix`. Não alimenta a
 ponte (hex sólido continua em `tokens.css`). O IMO importa uma cópia
-vendored; o EditalHub ainda não lê este arquivo (passo 4b).
+vendored; o EditalHub lê a mesma cópia em `dev` (passo 4b, app#662).
+
+### Added — trava de SHA do `eds-root.css` (ADR-0002 decisão 3 / passo 4c)
+
+`brands/emprega-mais/tokens/eds-root.sha256` registra o SHA-256 do arquivo
+canônico e um teste falha se o CSS mudar sem regravá-lo. Cada produto trava a
+própria cópia com o mesmo hash. `npm run check:eds-root` baixa as cópias pela
+API do GitHub e diz, uma a uma, se batem com o canônico — é a única conferência
+que enxerga os três repos de uma vez.
 
 ### Changed — a marca Emprega+ do sistema passa a descrever a produção
 

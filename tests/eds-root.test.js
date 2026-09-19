@@ -4,6 +4,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const ROOT = path.resolve(__dirname, '..');
 const eds = fs.readFileSync(
@@ -14,6 +15,12 @@ const emp = fs.readFileSync(
   path.join(ROOT, 'brands/emprega-mais/tokens/tokens.css'),
   'utf8'
 );
+const edsBytes = fs.readFileSync(
+  path.join(ROOT, 'brands/emprega-mais/tokens/eds-root.css')
+);
+const recordedSha = fs
+  .readFileSync(path.join(ROOT, 'brands/emprega-mais/tokens/eds-root.sha256'), 'utf8')
+  .trim();
 
 function decl(css, token) {
   const m = css.match(new RegExp(`${token}:\\s*([^;]+);`));
@@ -46,5 +53,15 @@ describe('eds-root.css — contrato Laravel', () => {
     expect(decl(eds, '--eds-navy')).toBe(decl(emp, '--emp-navy'));
     expect(decl(eds, '--eds-indigo')).toBe(decl(emp, '--emp-indigo'));
     expect(decl(eds, '--eds-indigo-dark')).toBe(decl(emp, '--emp-indigo-dark'));
+  });
+
+  // Passo 4c do ADR-0002. O arquivo é vendored em dois produtos; cada um
+  // trava a própria cópia com este mesmo hash. Mudou o CSS sem regravar o
+  // .sha256, o CI falha aqui e nomeia o hash novo — que é o que os dois
+  // produtos precisam receber junto com a cópia nova.
+  test('o SHA-256 registrado em eds-root.sha256 é o do arquivo', () => {
+    const actual = crypto.createHash('sha256').update(edsBytes).digest('hex');
+    expect(recordedSha).toMatch(/^[0-9a-f]{64}$/);
+    expect(actual).toBe(recordedSha);
   });
 });
