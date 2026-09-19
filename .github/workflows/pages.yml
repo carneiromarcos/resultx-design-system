@@ -14,6 +14,13 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+# Se o job `deploy` falhar por transiente do GitHub (ECONNRESET, 500 ao
+# criar o deployment), NAO use "Re-run failed jobs": a re-execucao sobe um
+# segundo artefato `github-pages` no MESMO run e o deploy-pages recusa com
+# "Multiple artifacts named github-pages ... Artifact count is 2". Foi o
+# que deixou o site uma versao atras em 17/09/2026 (run 35283203139,
+# tentativa 2). Dispare um run novo:  gh workflow run pages.yml --ref main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
