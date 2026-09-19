@@ -20,3 +20,32 @@ jobs:
       - run: npm run lint:tokens
       - run: npm run build
       - run: npm test
+      # After tests on purpose: 6/9 tests read dist/, so a degenerate minifier
+      # output must fail the suite first (true diagnosis) instead of this gate
+      # telling you to commit bad artifacts. Scope is dist/ + brands/ only
+      # (build writes nowhere else). git status --porcelain catches untracked;
+      # git diff --exit-code alone would miss them.
+      - name: Assert build outputs match committed artifacts
+        run: |
+          if [ -n "$(git status --porcelain -- dist/ brands/)" ]; then
+            echo "::error::npm run build produced output that differs from what is committed (or created new untracked files under dist/ or brands/)."
+            echo ""
+            echo "At stake: dist/ is imported in production by electia, financex, and resultx-site — a divergent dist ships the defect into those products."
+            echo ""
+            echo "Reproduce on Node 22 (this workflow's version); a different Node can yield different build output."
+            echo "Then: run \`npm run build\`, REVIEW the diff, and only commit if the output is correct (dist/ and brands/*/tokens/ds-bridge.css)."
+            echo "Do not commit blindly — if the build output is degenerate, committing it is the wrong fix."
+            echo ""
+            echo "=== git status --porcelain -- dist/ brands/ ==="
+            git status --porcelain -- dist/ brands/
+            echo ""
+            echo "=== git diff --stat -- dist/ brands/ ==="
+            git diff --stat -- dist/ brands/
+            untracked="$(git ls-files --others --exclude-standard -- dist/ brands/)"
+            if [ -n "$untracked" ]; then
+              echo ""
+              echo "=== untracked files (git diff --exit-code would miss these) ==="
+              printf '%s\n' "$untracked"
+            fi
+            exit 1
+          fi
