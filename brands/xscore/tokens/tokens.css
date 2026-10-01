@@ -71,7 +71,7 @@
   --white: #FFFFFF;
   --text-primary: #E6EDF3;
   --text-secondary: #8B949E;
-  --text-muted: #6E7681;
+  --text-muted: #848D97;   /* 4.66:1 sobre surface-2 (era 3.42:1) */
 
   /* ---- Border ---- */
   --border: #2A3444;
@@ -84,7 +84,10 @@
      danger  = risco/corte/inadimplência · info = neutro informativo */
   --success: #22C55E;
   --warning: #F59E0B;
-  --danger: #EF4444;
+  --danger: #F87171;   /* 4.92:1 no selo a 16% (era 3.88:1) */
+  /* Texto sobre fundo --danger (botão de perigo). Escuro aqui: branco sobre
+     o vermelho claro dá 2.77:1. Mesmo padrão de --on-gold. */
+  --on-danger: #1A0A0A;
   --info: #38BDF8;
 
   /* ---- Faixas de risco (tier 1..5) — escala contínua, não paleta arbitrária.
@@ -108,7 +111,7 @@
      que diferencia um produto financeiro: MONO para todo número — valor,
      score, documento, id. Alinhamento de coluna é requisito, não estética. */
   --font-heading: 'Sora', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;   /* a fonte que o app carrega */
   --font-mono: 'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
 
   --text-display: 44px;
@@ -173,7 +176,8 @@
    Contraste sobre branco: text-primary 16:1 · text-secondary 7:1.
    ⚠️ O gold #c4993b tem ~2.8:1 sobre branco — REPROVA em AA para TEXTO.
    Por isso no light o texto/ícone dourado usa --gold-ink (#866425, ~5.3:1);
-   o #c4993b permanece só como FILL de botão, com texto branco por cima.
+   o #c4993b permanece só como FILL de botão, com --on-gold (#1a1408, 7.33:1) por cima —
+   branco sobre #c4993b dá 2.64:1 e reprova.
    ============================================ */
 [data-theme="light"] {
   --bg: #FFFFFF;
@@ -186,7 +190,7 @@
   --border-hover: #B8C2CC;
   --border-focus: #866425;
 
-  --gold: #c4993b;        /* fill de botão (texto branco por cima) */
+  --gold: #c4993b;        /* fill de botão (texto --on-gold por cima) */
   --gold-light: #d4ae54;
   --gold-ink: #866425;    /* texto/ícone dourado — AA sobre branco */
   --on-gold: #1a1408;     /* texto sobre fundo dourado — mesmo nos dois temas */
@@ -196,12 +200,13 @@
 
   --text-primary: #0F1729;
   --text-secondary: #4B5563;
-  --text-muted: #6B7280;
+  --text-muted: #5F6672;   /* 5.19:1 sobre surface-2 (era 4.34:1) */
 
-  --success: #16A34A;
-  --warning: #D97706;
-  --danger: #DC2626;
-  --info: #0284C7;
+  --success: #166534;   /* selo 5.33:1 (era 2.65:1) */
+  --warning: #92400E;   /* selo 5.28:1 (era 2.57:1) */
+  --danger: #B91C1C;   /* selo 4.69:1 (era 3.60:1) */
+  --on-danger: #FFFFFF;
+  --info: #075985;   /* selo 5.60:1 (era 3.21:1) */
 
   --tier-1: #16A34A;
   --tier-2: #65A30D;
