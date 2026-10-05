@@ -1,0 +1,645 @@
+<!doctype html>
+<!--
+  Protótipo do dashboard do app Electia — 05/10/2026.
+  Mesma regra da landing (#80): tudo o que é componente vem do DS; o CSS e o JS
+  abaixo só compõem a página. Ficha: docs/research/electia-dashboard-2026-10-05.md
+
+  Componentes do DS consumidos
+    .sidebar .sidebar-overlay  navegação do app (components.css + dist/sidebar-overlay.js).
+                               Gaveta até 1024 px; acima, painel fixo (ver CANDIDATO 1).
+    .header                    barra do topo (sticky, vidro)
+    .brand-orb-electia         Nexus. Repouso; data-state="active" só enquanto responde (WCAG 2.2.2)
+    .dl-statcard--compact      KPIs (components/data-cards.css, fora do dist/: carregado direto)
+    .list-item(-group)         vagas e "Precisa de atenção"
+    .stage-chip(-count)        etapas: rótulo nas vagas, cabeçalho do kanban e filtro
+    .kanban.pipeline           vaga aberta (o ponto antigo .kanban-column-dot não é usado)
+    .composer + .message       conversa com o Nexus
+    .progress-track/-fill      testes por tipo
+    .icon (dist/icons.min.css)  .toast  .tag  .avatar  .btn  .btn-icon  .breadcrumb  .tabs  .dl-status  .empty-state-inline  .skip-link
+
+  Peças locais marcadas "CANDIDATO" = faltam no DS (lista na ficha).
+  Dados fictícios. Nenhuma pessoa real.
+-->
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Protótipo navegável do dashboard do electia: início do RH com vagas, Nexus, Bem-Estar agregado e a vaga aberta em kanban.">
+  <title>Início · electia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../../dist/tokens.min.css">
+  <link rel="stylesheet" href="../../tokens/ds-bridge.css">
+  <link rel="stylesheet" href="../../../../dist/components.min.css">
+  <link rel="stylesheet" href="../../../../dist/icons.min.css">
+  <link rel="stylesheet" href="../../../../components/data-cards.css">
+  <style>
+    :root { --dash-gap: var(--space-5); --dash-page: 1280px; }
+
+    /* ── DS, só o que é desta página ─────────────────────────────────────── */
+
+    /* CANDIDATO 1 — .sidebar-overlay como PAINEL no desktop. O DS só tem
+       rail + overlay (ícones no desktop); o Electia usa o painel de 240 px com
+       rótulos. Acima do corte do DS (1025 px) o overlay para de flutuar. */
+    @media (min-width: 1025px) {
+      .app-nav.sidebar-overlay { visibility: visible; transform: none; transition: none; z-index: var(--z-sidebar); }
+      .app-top .app-menu-btn { display: none; }
+    }
+    /* A sidebar é escura nos dois temas. O anel roxo do tema claro (#6f32b1)
+       some sobre o navy: aqui vale o roxo para fundo escuro (CANDIDATO 2,
+       token --sidebar-focus-ring). */
+    .app-nav { --focus-ring-color: #c084fc; }
+    /* Papel do usuário: o DS usa 10 px com opacity .5 (abaixo de AA). */
+    .app-nav .sidebar-user-role { opacity: 1; color: var(--sidebar-text); font-size: var(--text-xs); }
+    .app-nav .sidebar-item { min-block-size: 40px; }
+    /* .sidebar-user-name usa --text-primary: no tema claro sai escuro sobre o navy. */
+    .app-nav .sidebar-user-name { color: var(--sidebar-text-bright); }
+    /* Iniciais: o gradiente do DS (#6366f1 → #8b5cf6) dá 4,23–4,47:1 com branco
+       e o --text-primary do claro some. Preenchimento do accent: 7,59:1. */
+    .app-nav .sidebar-user-avatar { background: var(--accent-primary); color: var(--text-inverse); }
+    .app-brand { display: grid; gap: 2px; padding: 0 var(--space-5); margin-block-end: var(--space-5); color: var(--sidebar-text-bright); text-decoration: none; }
+    .app-brand strong { font: 600 1.35rem/1 var(--font-mono); letter-spacing: -0.06em; }
+    .app-brand span { color: var(--sidebar-text); font-size: var(--text-xs); }
+    .app-company { margin: 0 var(--space-3) var(--space-4); padding: var(--space-2) var(--space-3); border: 1px solid var(--sidebar-divider); border-radius: var(--radius-md); color: var(--sidebar-text); font-size: var(--text-xs); }
+    .app-company b { display: block; color: var(--sidebar-text-bright); font-size: var(--text-sm); font-weight: var(--font-medium); }
+
+    /* Kanban: o card não é arrastável aqui (movimento por botão), e as cinco
+       etapas cabem lado a lado a partir de 1280 px. */
+    .pipeline .kanban-column { flex: 1 0 200px; min-width: 200px; max-width: none; }
+    .pipeline .kanban-card { cursor: default; }
+    .pipeline .kanban-card-meta,
+    .pipeline .empty-state-inline { color: var(--text-secondary); } /* --text-muted ainda em ajuste (outra PR) */
+    .pipeline .kanban-column-header { padding: var(--space-3); }
+    .pipeline .kanban-column[hidden] { display: none; }
+    /* .dl-status--done pinta o texto com --color-success puro: 2,77:1 no claro.
+       Aqui a tinta segue a fórmula do .stage-chip (pendência do DS). */
+    .dl-status--done { color: color-mix(in oklab, var(--color-success) 60%, var(--text-primary)); }
+    /* Links de texto soltos com alvo de 24 px (WCAG 2.5.8). */
+    .panel-head a, a.breadcrumb-item { display: inline-flex; align-items: center; min-block-size: 24px; }
+
+    /* ════════════════════════════════════════════════════════════════════
+       PÁGINA
+       ════════════════════════════════════════════════════════════════════ */
+    .app-top { gap: var(--space-3); }
+    .app-top-start, .app-top-end { display: flex; align-items: center; gap: var(--space-2); min-inline-size: 0; }
+    .app-top-title { overflow: hidden; color: var(--text-secondary); font-size: var(--text-sm); font-weight: var(--font-medium); text-overflow: ellipsis; white-space: nowrap; }
+    .app-top .btn-icon { inline-size: 40px; block-size: 40px; }
+    .app-bell { position: relative; }
+    .app-bell-dot { position: absolute; inset-block-start: 8px; inset-inline-end: 8px; inline-size: 8px; block-size: 8px; border-radius: 50%; background: var(--color-error); box-shadow: 0 0 0 2px var(--bg-base); }
+
+    /* CANDIDATO 3 — pílula de abertura do agente (Nexus, ⌘K) */
+    .agent-pill { display: inline-flex; align-items: center; gap: var(--space-2); min-block-size: 40px; padding: var(--space-1) var(--space-3) var(--space-1) var(--space-1); border: 1px solid var(--border-default); border-radius: var(--radius-full); background: var(--bg-base); color: var(--text-primary); font: var(--font-semibold) var(--text-sm) var(--font-heading); cursor: pointer; transition: border-color var(--transition-fast), box-shadow var(--transition-fast); }
+    .agent-pill:hover { border-color: var(--accent-primary); box-shadow: var(--shadow-glow); }
+    .agent-pill:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+    .agent-pill kbd { padding: 1px var(--space-1-5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-secondary); font: 500 var(--text-xs) var(--font-mono); }
+
+    .content.app-content { inline-size: 100%; max-inline-size: var(--dash-page); margin-inline: auto; padding: var(--space-6) var(--space-6) var(--space-16); }
+    .screen h1:focus, .panel:focus { outline: none; }
+    .page-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-4); margin-block-end: var(--space-6); }
+    .page-head h1 { margin-block: var(--space-1); font: 700 clamp(1.6rem, 1.2rem + 1.4vw, 2.1rem)/1.15 var(--font-heading); letter-spacing: -0.04em; }
+    .page-head p { color: var(--text-secondary); font-size: var(--text-sm); }
+    .eyebrow { color: var(--accent-primary-text); font: var(--font-semibold) var(--text-xs) var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; }
+    .page-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    a.btn { text-decoration: none; } /* .btn em <a> herda o sublinhado do link */
+
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); margin-block-end: var(--dash-gap); }
+    .kpis .dl-statcard { text-decoration: none; color: inherit; }
+
+    .dash { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); align-items: start; gap: var(--dash-gap); }
+    .dash-col { display: grid; gap: var(--dash-gap); min-inline-size: 0; }
+    .panel { min-inline-size: 0; padding: var(--space-5); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); background: var(--bg-base); scroll-margin-block-start: calc(var(--header-height) + var(--space-4)); }
+    .panel-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2); margin-block-end: var(--space-3); }
+    .panel-head h2 { font: var(--font-semibold) var(--text-lg)/1.3 var(--font-heading); letter-spacing: -0.02em; }
+    .panel-head a { color: var(--accent-primary-text); font-size: var(--text-sm); font-weight: var(--font-medium); }
+    .panel-head .tag { border: 1px solid var(--border-subtle); background: var(--bg-surface-2); color: var(--text-primary); font-size: var(--text-xs); }
+    .panel-head small { color: var(--text-secondary); font-size: var(--text-xs); }
+    .panel-note { margin-block-start: var(--space-3); color: var(--text-secondary); font-size: var(--text-xs); line-height: var(--leading-relaxed); }
+    .panel .list-item-group { margin-inline: calc(var(--space-3) * -1); }
+
+    /* CANDIDATO 4 — linha de chips dentro do .list-item */
+    .list-item-chips { display: flex; flex-wrap: wrap; gap: var(--space-1-5); margin-block-start: var(--space-2); }
+    .vaga-ico { display: inline-flex; flex: none; align-items: center; justify-content: center; inline-size: 40px; block-size: 40px; border-radius: var(--radius-md); background: var(--accent-primary-muted); color: var(--accent-primary-text); }
+
+    /* CANDIDATO 5 — marcador de atenção (forma + cor, nunca só cor) */
+    .attention-mark { flex: none; inline-size: 18px; block-size: 16px; margin: 2px; background: color-mix(in oklab, var(--color-warning) 70%, var(--text-primary)); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+
+    /* Nexus */
+    .nexus { border-color: var(--border-accent); background: linear-gradient(180deg, var(--accent-primary-muted), transparent 140px), var(--bg-base); }
+    .nexus-head { display: flex; align-items: center; gap: var(--space-3); margin-block-end: var(--space-3); }
+    .nexus-head h2 { font: var(--font-semibold) var(--text-lg)/1.2 var(--font-heading); }
+    .nexus-head p { color: var(--text-secondary); font-size: var(--text-sm); }
+    .nexus .message-stream { max-block-size: 320px; margin-inline: calc(var(--space-4) * -1); overflow-y: auto; }
+    .nexus .message-stream:empty { display: none; }
+    .nexus .message-bubble { max-inline-size: 92%; }
+    .nexus .message-out .message-bubble { background: var(--accent-primary); border-color: transparent; color: var(--text-on-accent); }
+    .nexus .brand-orb-lockup { font-size: var(--text-xs); }
+    /* CANDIDATO 6 — chips de sugestão do composer (.composer-chip) */
+    .nexus-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-block: var(--space-3); }
+    .nexus-chip { min-block-size: 32px; padding: var(--space-1) var(--space-3); border: 1px solid var(--border-default); border-radius: var(--radius-full); background: var(--bg-base); color: var(--text-primary); font-size: var(--text-xs); line-height: 1.35; text-align: start; cursor: pointer; transition: border-color var(--transition-fast), background var(--transition-fast); }
+    .nexus-chip:hover { border-color: var(--accent-primary); background: var(--accent-primary-muted); }
+    .nexus-chip:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+    .nexus .composer-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* CANDIDATO 7 — marca do teste: a FORMA identifica o teste; a cor fica
+       livre para o resultado (aqui neutra, porque a lista não mostra resultado). */
+    .test-mark { flex: none; display: inline-block; inline-size: 14px; block-size: 14px; background: currentcolor; color: var(--text-secondary); }
+    .test-mark-disc { border-radius: 50%; background: conic-gradient(currentcolor 0 84deg, transparent 0 96deg, currentcolor 0 174deg, transparent 0 186deg, currentcolor 0 264deg, transparent 0 276deg, currentcolor 0 354deg, transparent 0); }
+    .test-mark-tipologia { border-radius: 2px; }
+    .test-mark-eneagrama { clip-path: polygon(50% 0, 82% 12%, 99% 41%, 93% 75%, 67% 97%, 33% 97%, 7% 75%, 1% 41%, 18% 12%); }
+    .test-mark-bigfive { clip-path: polygon(50% 0, 100% 38%, 81% 100%, 19% 100%, 0 38%); }
+    .test-mark-temperamentos { clip-path: polygon(50% 0, 100% 100%, 0 100%, 50% 0, 50% 30%, 22% 86%, 78% 86%, 50% 30%); }
+    .test-mark-motivadores { clip-path: polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0 50%); }
+    .tests { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+    .tests li { display: grid; grid-template-columns: auto minmax(0, 9.5rem) minmax(0, 1fr) auto; align-items: center; gap: var(--space-3); font-size: var(--text-sm); }
+    .tests .progress-track, .tests .progress-fill { display: block; } /* em <span>, o width do DS não vale */
+    .tests .progress-fill { background: var(--accent-primary); }
+    .tests output { color: var(--text-secondary); font: var(--font-medium) var(--text-xs) var(--font-mono); font-variant-numeric: tabular-nums; }
+
+    /* CANDIDATO 8 — distribuição por zona do Bem-Estar (Saudável · Atenção · Alerta) */
+    .zone-bar { display: flex; block-size: 14px; overflow: hidden; border-radius: var(--radius-full); background: var(--bg-surface-2); }
+    .zone-bar span { block-size: 100%; background: var(--zone); }
+    .zone-bar span + span { border-inline-start: 2px solid var(--bg-base); }
+    .zone-saudavel { --zone: var(--color-success); }
+    .zone-atencao { --zone: var(--color-warning); }
+    .zone-alerta { --zone: var(--color-error); }
+    .zone-legend { display: grid; gap: var(--space-2); margin: var(--space-4) 0 0; padding: 0; list-style: none; }
+    .zone-legend li { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); }
+    .zone-legend b { margin-inline-start: auto; font: var(--font-semibold) var(--text-sm) var(--font-mono); font-variant-numeric: tabular-nums; }
+    .zone-mark { flex: none; inline-size: 12px; block-size: 12px; background: color-mix(in oklab, var(--zone) 70%, var(--text-primary)); }
+    .zone-saudavel .zone-mark { border-radius: 50%; }
+    .zone-atencao .zone-mark { clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+    .zone-alerta .zone-mark { clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+
+    .indicators { display: grid; gap: var(--space-3); margin: 0; }
+    .indicators div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-1) var(--space-3); }
+    .indicators dt { font-size: var(--text-sm); }
+    .indicators dd { margin: 0; font: var(--font-semibold) var(--text-lg) var(--font-mono); font-variant-numeric: tabular-nums; }
+    .indicators .tag { border: 1px solid var(--border-subtle); background: var(--bg-surface-2); color: var(--text-primary); grid-column: 1; justify-self: start; font-size: var(--text-xs); }
+
+    /* Vaga */
+    .vaga-title { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+    .vaga-nav { margin-block: var(--space-2) var(--space-4); overflow-x: auto; }
+    .vaga-nav .tab { min-block-size: 44px; color: var(--text-secondary); text-decoration: none; white-space: nowrap; }
+    .vaga-nav .tab.active { color: var(--accent-primary-text); }
+    .stage-filter { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-block-end: var(--space-4); }
+    .stage-filter > span { color: var(--text-secondary); font-size: var(--text-sm); }
+    .stage-filter .stage-chip { min-block-size: 32px; padding-inline: var(--space-3); }
+    .stage-filter .stage-chip[aria-pressed="false"] { opacity: 0.62; text-decoration: line-through; }
+    .pipeline:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+    .cand-head { display: flex; align-items: center; gap: var(--space-2); margin-block-end: var(--space-2); }
+    .cand-head .kanban-card-title { margin: 0; }
+    .cand-head .avatar { background: var(--bg-surface-3); }
+    .pipeline .kanban-card-meta { justify-content: flex-start; gap: var(--space-2); margin-block-end: var(--space-1); }
+    .pipeline .kanban-card-meta strong { color: var(--text-primary); font-family: var(--font-mono); }
+    .pipeline .kanban-card:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+    .cand-advance { inline-size: 100%; margin-block-start: var(--space-2); }
+
+    /* CANDIDATO 9 — região de toasts (o .toast do DS não se posiciona) */
+    .toast-region { position: fixed; inset-inline: var(--space-4); inset-block-end: var(--space-4); z-index: var(--z-tooltip); display: grid; justify-items: center; pointer-events: none; }
+    .toast-region .toast { max-inline-size: 480px; margin: 0; background: var(--bg-base); box-shadow: var(--elevation-3); pointer-events: auto; }
+
+    @media (max-width: 1279.98px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 1100px) { .dash { grid-template-columns: 1fr; } }
+    @media (max-width: 767.98px) {
+      .content.app-content { padding: var(--space-4) var(--space-4) var(--space-12); }
+      .page-actions { inline-size: 100%; }
+      .page-actions .btn { flex: 1; }
+      .panel { padding: var(--space-4); }
+      .tests li { grid-template-columns: auto minmax(0, 1fr) auto; }
+      .tests .progress-track { grid-column: 2 / -1; grid-row: 2; }
+    }
+    @media (max-width: 479.98px) {
+      .kpis { gap: var(--space-2); }
+      .agent-pill kbd, .app-top-title { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .agent-pill, .nexus-chip { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2 .7 3.5 2.6 3.5 5.5"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></symbol>
+    <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-9-9.5C2 7 4.3 4 7.5 4c2 0 3.5 1.2 4.5 2.6C13 5.2 14.5 4 16.5 4 19.7 4 22 7 21 10.5 19.5 15.4 12 20 12 20z"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 21h8M9 17h6"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></symbol>
+    <symbol id="i-search-user" viewBox="0 0 24 24"><circle cx="10" cy="8" r="4"/><path d="M3 20c0-3.5 3-6 7-6M19.2 19.2l2.3 2.3"/><circle cx="17" cy="17" r="3"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1M10 21v-3h4v3"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12 20 4l-4 16-4-6zM12 14l8-10"/></symbol>
+  </svg>
+
+  <aside class="sidebar sidebar-overlay app-nav" id="app-nav" aria-label="Navegação do electia" data-sidebar-overlay data-sidebar-media="(max-width: 1024px)">
+    <a class="app-brand" href="#inicio"><strong>electia</strong><span>by emprega+</span></a>
+    <p class="app-company"><b>Clínica Horizonte</b>Empresa ativa</p>
+    <nav aria-label="Módulos">
+      <a class="sidebar-item" href="#inicio" data-nav="inicio"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-home"/></svg><span class="sidebar-label">Início</span></a>
+      <a class="sidebar-item" href="#colaboradores" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-users"/></svg><span class="sidebar-label">Colaboradores</span></a>
+      <a class="sidebar-item" href="#cargos" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-briefcase"/></svg><span class="sidebar-label">Cargos</span></a>
+      <a class="sidebar-item" href="#assessments" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-clipboard"/></svg><span class="sidebar-label">Assessments</span></a>
+      <a class="sidebar-item" href="#situacional" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-clipboard"/></svg><span class="sidebar-label">Situacional</span></a>
+      <a class="sidebar-item" href="#bem-estar" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-heart"/></svg><span class="sidebar-label">Bem-Estar</span></a>
+      <a class="sidebar-item" href="#ranking" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-trophy"/></svg><span class="sidebar-label">Ranking</span></a>
+      <a class="sidebar-item" href="#performance" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-target"/></svg><span class="sidebar-label">Performance</span></a>
+      <a class="sidebar-item" href="#vagas" data-nav="vaga"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-search-user"/></svg><span class="sidebar-label">Recrutamento &amp; Seleção</span></a>
+      <hr class="sidebar-divider">
+      <a class="sidebar-item" href="#empresa" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-building"/></svg><span class="sidebar-label">Empresa</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <span class="sidebar-user-avatar" aria-hidden="true">MC</span>
+        <div><div class="sidebar-user-name">Marina Couto</div><div class="sidebar-user-role">RH</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="header app-top">
+      <div class="app-top-start">
+        <button class="btn-icon app-menu-btn" type="button" data-sidebar-toggle="app-nav" aria-controls="app-nav" aria-expanded="false" aria-label="Abrir navegação" hidden><svg class="icon icon-md" aria-hidden="true"><use href="#i-menu"/></svg></button>
+        <span class="app-top-title" data-top-title>Início</span>
+      </div>
+      <button class="agent-pill" type="button" data-nexus-open aria-keyshortcuts="Meta+K Control+K">
+        <span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span>Nexus<kbd aria-hidden="true">⌘K</kbd>
+      </button>
+      <div class="app-top-end">
+        <button class="btn-icon app-bell" type="button" data-fora-btn="Notificações" aria-label="Notificações, 3 novas"><svg class="icon icon-md" aria-hidden="true"><use href="#i-bell"/></svg><span class="app-bell-dot" aria-hidden="true"></span></button>
+        <button class="btn-icon" type="button" data-theme-toggle aria-label="Ativar tema escuro"><svg class="icon icon-md" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      </div>
+    </header>
+
+    <main class="content app-content" id="conteudo">
+      <!-- ═══ Tela 1: Início ═══ -->
+      <section class="screen" data-screen="inicio" aria-labelledby="inicio-titulo">
+        <header class="page-head">
+          <div>
+            <span class="eyebrow">Segunda-feira, 5 de outubro</span>
+            <h1 id="inicio-titulo" tabindex="-1">Boa tarde, Marina</h1>
+            <p>Clínica Horizonte · 124 colaboradores ativos</p>
+          </div>
+          <div class="page-actions">
+            <a class="btn btn-secondary" href="#colaboradores" data-fora>Adicionar colaborador</a>
+            <a class="btn btn-primary" href="#assessments" data-fora>Enviar teste</a>
+          </div>
+        </header>
+
+        <div class="kpis">
+          <a class="dl-statcard dl-statcard--compact" href="#vagas"><span class="dl-statcard-label">Vagas ativas</span><span class="dl-statcard-value">3</span><span class="dl-statcard-compare">Limite do plano: 5 simultâneas</span></a>
+          <a class="dl-statcard dl-statcard--compact" href="#vagas"><span class="dl-statcard-label">Candidatos em andamento</span><span class="dl-statcard-value" data-kpi-andamento>13</span><span class="dl-statcard-compare">5 entraram nesta semana</span></a>
+          <a class="dl-statcard dl-statcard--compact" href="#assessments" data-fora><span class="dl-statcard-label">Testes concluídos</span><span class="dl-statcard-value">37</span><span class="dl-statcard-compare">de 52 enviados em 30 dias</span></a>
+          <a class="dl-statcard dl-statcard--compact" href="#colaboradores" data-fora><span class="dl-statcard-label">Colaboradores</span><span class="dl-statcard-value">124</span><span class="dl-statcard-compare">8 sem nenhum teste</span></a>
+        </div>
+
+        <div class="dash">
+          <div class="dash-col">
+            <section class="panel" aria-labelledby="vagas-titulo" id="vagas" tabindex="-1">
+              <div class="panel-head"><h2 id="vagas-titulo">Vagas ativas</h2><a href="#recrutamento" data-fora>Ver todas</a></div>
+              <ul class="list-item-group" data-vagas-list></ul>
+              <noscript><p class="panel-note">As vagas e o kanban deste protótipo precisam de JavaScript.</p></noscript>
+            </section>
+
+            <section class="panel" aria-labelledby="testes-titulo">
+              <div class="panel-head"><h2 id="testes-titulo">Testes por tipo</h2><small>Últimos 30 dias</small></div>
+              <ul class="tests">
+                <li><span class="test-mark test-mark-disc" aria-hidden="true"></span><span>DISC</span><span class="progress-track"><span class="progress-fill" style="width:87%"></span></span><output>13 de 15</output></li>
+                <li><span class="test-mark test-mark-tipologia" aria-hidden="true"></span><span>Tipologia Cognitiva</span><span class="progress-track"><span class="progress-fill" style="width:67%"></span></span><output>6 de 9</output></li>
+                <li><span class="test-mark test-mark-eneagrama" aria-hidden="true"></span><span>Eneagrama</span><span class="progress-track"><span class="progress-fill" style="width:63%"></span></span><output>5 de 8</output></li>
+                <li><span class="test-mark test-mark-bigfive" aria-hidden="true"></span><span>Big Five</span><span class="progress-track"><span class="progress-fill" style="width:75%"></span></span><output>6 de 8</output></li>
+                <li><span class="test-mark test-mark-temperamentos" aria-hidden="true"></span><span>Temperamentos</span><span class="progress-track"><span class="progress-fill" style="width:60%"></span></span><output>3 de 5</output></li>
+                <li><span class="test-mark test-mark-motivadores" aria-hidden="true"></span><span>Motivadores</span><span class="progress-track"><span class="progress-fill" style="width:57%"></span></span><output>4 de 7</output></li>
+              </ul>
+              <p class="panel-note">Concluídos sobre enviados. A forma identifica o teste; o resultado de cada pessoa fica no perfil dela.</p>
+            </section>
+          </div>
+
+          <div class="dash-col">
+            <section class="panel nexus" id="nexus" aria-labelledby="nexus-titulo">
+              <div class="nexus-head">
+                <span class="brand-orb brand-orb-electia brand-orb-md" aria-hidden="true"></span>
+                <div><h2 id="nexus-titulo">Nexus</h2><p>Pergunte sobre perfis, cargos ou desenvolvimento de equipe.</p></div>
+              </div>
+              <div class="message-stream" aria-label="Conversa com o Nexus" data-nexus-log></div>
+              <div class="nexus-chips" role="group" aria-label="Sugestões de pergunta">
+                <button class="nexus-chip" type="button" data-nexus-chip="vagas">Resumir as vagas paradas</button>
+                <button class="nexus-chip" type="button" data-nexus-chip="instrumentos">Quais instrumentos aplicar primeiro num time que ainda não fez nenhum?</button>
+                <button class="nexus-chip" type="button" data-nexus-chip="comunicacao">Como adaptar minha comunicação ao perfil de cada pessoa?</button>
+              </div>
+              <form class="composer" data-composer data-nexus-form>
+                <div class="composer-row">
+                  <label class="sr-only" for="nexus-input">Pergunta ao Nexus</label>
+                  <textarea class="composer-input" id="nexus-input" rows="1" placeholder="Pergunte ou peça algo..."></textarea>
+                  <button class="composer-send" type="submit" aria-label="Enviar ao Nexus"><svg class="icon icon-md" aria-hidden="true"><use href="#i-send"/></svg></button>
+                </div>
+              </form>
+              <p class="sr-only" role="status" aria-live="polite" data-nexus-status></p>
+              <p class="panel-note">O Nexus lê o que já está na sua conta. Não lê desempenho, metas, anotações nem resultados individuais de Saúde Mental.</p>
+            </section>
+
+            <section class="panel" aria-labelledby="atencao-titulo">
+              <div class="panel-head"><h2 id="atencao-titulo">Precisa de atenção</h2></div>
+              <ul class="list-item-group">
+                <li><a class="list-item list-item-compact" href="#vaga/analista-dp"><span class="attention-mark" aria-hidden="true"></span><span class="list-item-body"><span class="list-item-head"><span class="list-item-title">2 candidatos parados em Entrevista há 8 dias</span></span><span class="list-item-meta">Analista de Departamento Pessoal</span></span></a></li>
+                <li><a class="list-item list-item-compact" href="#vaga/recepcionista"><span class="attention-mark" aria-hidden="true"></span><span class="list-item-body"><span class="list-item-head"><span class="list-item-title">Vaga sem candidatos novos há 10 dias</span></span><span class="list-item-meta">Recepcionista</span></span></a></li>
+                <li><a class="list-item list-item-compact" href="#assessments" data-fora><span class="attention-mark" aria-hidden="true"></span><span class="list-item-body"><span class="list-item-head"><span class="list-item-title">15 convites de teste sem resposta</span></span><span class="list-item-meta">Assessments · enviados há mais de 5 dias</span></span></a></li>
+              </ul>
+            </section>
+
+            <section class="panel" aria-labelledby="bem-estar-titulo">
+              <div class="panel-head"><h2 id="bem-estar-titulo">Bem-Estar da empresa</h2><span class="tag">Agregado e anônimo</span></div>
+              <div class="zone-bar" role="img" aria-label="Distribuição por zona: Saudável 58%, Atenção 31%, Alerta 11%">
+                <span class="zone-saudavel" style="width:58%"></span><span class="zone-atencao" style="width:31%"></span><span class="zone-alerta" style="width:11%"></span>
+              </div>
+              <ul class="zone-legend">
+                <li class="zone-saudavel"><span class="zone-mark" aria-hidden="true"></span>Saudável<b>58%</b></li>
+                <li class="zone-atencao"><span class="zone-mark" aria-hidden="true"></span>Atenção<b>31%</b></li>
+                <li class="zone-alerta"><span class="zone-mark" aria-hidden="true"></span>Alerta<b>11%</b></li>
+              </ul>
+              <p class="panel-note">86 respostas em 6 departamentos. Grupos com menos de 5 respostas não aparecem. Resultado individual só o profissional de saúde e o próprio colaborador veem.</p>
+            </section>
+
+            <section class="panel" aria-labelledby="indicadores-titulo">
+              <div class="panel-head"><h2 id="indicadores-titulo">Seus indicadores</h2></div>
+              <dl class="indicators">
+                <div><dt>Tempo médio para fechar vaga</dt><dd>18 dias</dd><span class="tag">Do cargo · compartilhado</span></div>
+                <div><dt>Entrevistas conduzidas no mês</dt><dd>14</dd><span class="tag">Meu</span></div>
+              </dl>
+              <p class="panel-note">Só indicadores do seu cargo e seus. Sem nota e sem comparação entre pessoas ou departamentos.</p>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ Tela 2: vaga aberta ═══ -->
+      <section class="screen" data-screen="vaga" aria-labelledby="vaga-titulo" hidden>
+        <nav class="breadcrumb" aria-label="Você está em">
+          <a class="breadcrumb-item" href="#inicio">Início</a><span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <a class="breadcrumb-item" href="#vagas">Vagas</a><span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <span class="breadcrumb-item" aria-current="page" data-vaga-crumb></span>
+        </nav>
+        <header class="page-head">
+          <div>
+            <div class="vaga-title"><h1 id="vaga-titulo" tabindex="-1" data-vaga-title></h1><span class="dl-status dl-status--done">Ativa</span></div>
+            <p data-vaga-meta></p>
+          </div>
+          <div class="page-actions">
+            <a class="btn btn-ghost" href="#inicio"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-back"/></svg>Voltar</a>
+            <a class="btn btn-secondary" href="#cadastrar" data-fora>Cadastrar candidato</a>
+          </div>
+        </header>
+        <nav class="tabs vaga-nav" aria-label="Seções da vaga">
+          <a class="tab active" href="#pipeline" aria-current="page" data-noop>Pipeline</a>
+          <a class="tab" href="#detalhes" data-fora>Detalhes da vaga</a>
+          <a class="tab" href="#candidatos" data-fora>Candidatos (lista)</a>
+          <a class="tab" href="#divulgacao" data-fora>Card de divulgação</a>
+        </nav>
+        <div class="stage-filter" role="group" aria-labelledby="filtro-rotulo">
+          <span id="filtro-rotulo">Mostrar etapas:</span>
+          <button class="stage-chip stage-chip-triagem" type="button" aria-pressed="true" data-filter="triagem">Triagem</button>
+          <button class="stage-chip stage-chip-entrevista" type="button" aria-pressed="true" data-filter="entrevista">Entrevista</button>
+          <button class="stage-chip stage-chip-oferta" type="button" aria-pressed="true" data-filter="oferta">Oferta</button>
+          <button class="stage-chip stage-chip-contratado" type="button" aria-pressed="true" data-filter="contratado">Contratado</button>
+          <button class="stage-chip stage-chip-rejeitado" type="button" aria-pressed="true" data-filter="rejeitado">Rejeitado</button>
+        </div>
+        <div class="kanban pipeline" role="region" aria-label="Pipeline da vaga" tabindex="0" data-kanban></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast-region" role="status" aria-live="polite"><div class="toast toast-info" data-toast hidden></div></div>
+
+  <script src="../../../../dist/sidebar-overlay.js" defer></script>
+  <script src="../../../../dist/composer.js" defer></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const $ = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+    const root = document.documentElement;
+
+    /* ── Dados fictícios ─────────────────────────────────────────────── */
+    const ETAPAS = [
+      ['triagem', 'Triagem'], ['entrevista', 'Entrevista'], ['oferta', 'Oferta'],
+      ['contratado', 'Contratado'], ['rejeitado', 'Rejeitado'],
+    ];
+    const DISC = { D: 'Dominância', I: 'Influência', S: 'Estabilidade', C: 'Conformidade' };
+    const c = (nome, etapa, disc, aderencia) => ({ nome, etapa, disc, aderencia });
+    const VAGAS = {
+      'analista-dp': {
+        titulo: 'Analista de Departamento Pessoal', desde: 'há 12 dias',
+        meta: 'Departamento Pessoal · Presencial · Fortaleza, CE · CLT',
+        cands: [c('Bruna Teixeira', 'triagem', 'S', 82), c('Caio Menezes', 'triagem', 'C', 76), c('Davi Rocha', 'triagem', null, null),
+          c('Elisa Furtado', 'entrevista', 'C', 88), c('Fábio Nogueira', 'entrevista', 'I', 71),
+          c('Giovana Lins', 'oferta', 'S', 91), c('Heitor Alves', 'rejeitado', 'D', 54)],
+      },
+      'tec-enfermagem': {
+        titulo: 'Técnico(a) de Enfermagem', desde: 'há 5 dias',
+        meta: 'Assistencial · Presencial · Caucaia, CE · CLT · escala 12×36',
+        cands: [c('Iara Sampaio', 'triagem', 'S', 79), c('João Pedro Lima', 'triagem', 'I', 68), c('Karla Moura', 'triagem', null, null),
+          c('Luana Freitas', 'entrevista', 'S', 85), c('Márcio Dantas', 'oferta', 'C', 87), c('Nayara Costa', 'contratado', 'S', 90),
+          c('Otávio Reis', 'rejeitado', 'D', 49)],
+      },
+      recepcionista: {
+        titulo: 'Recepcionista', desde: 'há 21 dias',
+        meta: 'Atendimento · Presencial · Fortaleza, CE · CLT',
+        cands: [c('Paula Viana', 'triagem', 'I', 74), c('Rafael Brito', 'triagem', null, null), c('Sofia Matos', 'rejeitado', 'C', 52)],
+      },
+    };
+    const esc = (t) => String(t).replace(/[&<>"]/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
+    const iniciais = (n) => n.split(' ').filter(Boolean).map((p) => p[0]).slice(0, 2).join('');
+    const contar = (v, e) => v.cands.filter((x) => x.etapa === e).length;
+    const chip = (e, rotulo, n) => `<span class="stage-chip stage-chip-${e}">${rotulo} <span class="stage-chip-count">${n}</span></span>`;
+    /* Triagem → Entrevista → Oferta → Contratado. Rejeitado e Contratado são fim. */
+    const proxima = (e) => ({ triagem: 'entrevista', entrevista: 'oferta', oferta: 'contratado' }[e] || null);
+    const rotuloDe = (e) => ETAPAS.find(([k]) => k === e)[1];
+
+    /* ── Toast ───────────────────────────────────────────────────────── */
+    const TOAST_MS = 4000;
+    const toast = $('[data-toast]');
+    let toastTimer;
+    function avisar(texto) {
+      toast.textContent = texto;
+      toast.hidden = false;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { toast.hidden = true; }, TOAST_MS);
+    }
+
+    /* ── Início: lista de vagas ──────────────────────────────────────── */
+    function renderVagas() {
+      $('[data-vagas-list]').innerHTML = Object.entries(VAGAS).map(([id, v]) => `
+        <li><a class="list-item" href="#vaga/${id}">
+          <span class="vaga-ico" aria-hidden="true"><svg class="icon icon-md"><use href="#i-briefcase"/></svg></span>
+          <span class="list-item-body">
+            <span class="list-item-head"><span class="list-item-title">${esc(v.titulo)}</span><span class="list-item-time">${v.desde}</span></span>
+            <span class="list-item-meta">${esc(v.meta)}</span>
+            <span class="list-item-chips">${ETAPAS.map(([e, r]) => chip(e, r, contar(v, e))).join('')}</span>
+          </span></a></li>`).join('');
+      const andamento = Object.values(VAGAS)
+        .reduce((s, v) => s + v.cands.filter((x) => proxima(x.etapa)).length, 0);
+      $('[data-kpi-andamento]').textContent = andamento;
+    }
+
+    /* ── Vaga: kanban ────────────────────────────────────────────────── */
+    let vagaAtual = null;
+    function cartao(cand, i) {
+      const prox = proxima(cand.etapa);
+      const leitura = cand.disc
+        ? `<p class="kanban-card-meta"><span class="test-mark test-mark-disc" aria-hidden="true"></span>DISC · ${DISC[cand.disc]}</p>
+           <p class="kanban-card-meta">Aderência ao cargo <strong>${cand.aderencia}%</strong></p>`
+        : '<p class="kanban-card-meta">Testes pendentes</p>';
+      const acao = prox
+        ? `<button class="btn btn-secondary btn-sm cand-advance" type="button" data-advance="${i}" aria-label="Avançar ${esc(cand.nome)} para ${rotuloDe(prox)}">Avançar para ${rotuloDe(prox)}</button>`
+        : '';
+      return `<article class="kanban-card" tabindex="-1" data-card="${i}" aria-labelledby="cand-${i}">
+        <div class="cand-head"><span class="avatar avatar-sm" aria-hidden="true">${iniciais(cand.nome)}</span><h3 class="kanban-card-title" id="cand-${i}">${esc(cand.nome)}</h3></div>
+        ${leitura}${acao}</article>`;
+    }
+    function renderKanban(id, foco) {
+      const v = VAGAS[id];
+      vagaAtual = id;
+      $('[data-vaga-title]').textContent = v.titulo;
+      $('[data-vaga-crumb]').textContent = v.titulo;
+      $('[data-vaga-meta]').textContent = `${v.meta} · aberta ${v.desde}`;
+      $('[data-kanban]').setAttribute('aria-label', `Pipeline da vaga ${v.titulo}`);
+      $('[data-kanban]').innerHTML = ETAPAS.map(([e, r]) => {
+        const cards = v.cands.map((cand, i) => (cand.etapa === e ? cartao(cand, i) : '')).join('');
+        const oculta = $(`[data-filter="${e}"]`).getAttribute('aria-pressed') === 'false' ? ' hidden' : '';
+        return `<section class="kanban-column" aria-labelledby="col-${e}" data-col="${e}"${oculta}>
+          <header class="kanban-column-header"><h2 class="kanban-column-title" id="col-${e}">${chip(e, r, contar(v, e))}</h2></header>
+          <div class="kanban-column-body">${cards || '<p class="empty-state-inline">Nenhum candidato nesta etapa.</p>'}</div></section>`;
+      }).join('');
+      if (foco != null) $(`[data-card="${foco}"]`)?.focus();
+    }
+    $('[data-kanban]').addEventListener('click', (ev) => {
+      const btn = ev.target.closest('[data-advance]');
+      if (!btn) return;
+      const i = Number(btn.dataset.advance);
+      const cand = VAGAS[vagaAtual].cands[i];
+      cand.etapa = proxima(cand.etapa);
+      const filtro = $(`[data-filter="${cand.etapa}"]`);
+      if (filtro.getAttribute('aria-pressed') === 'false') filtro.setAttribute('aria-pressed', 'true');
+      renderKanban(vagaAtual, i);
+      renderVagas();
+      avisar(`${cand.nome} foi para ${rotuloDe(cand.etapa)}.`);
+    });
+    $$('[data-filter]').forEach((b) => b.addEventListener('click', () => {
+      const on = b.getAttribute('aria-pressed') !== 'true';
+      b.setAttribute('aria-pressed', String(on));
+      const col = $(`[data-col="${b.dataset.filter}"]`);
+      if (col) col.hidden = !on;
+    }));
+
+    /* ── Rotas: #inicio · #vagas · #nexus · #vaga/<id> ──────────────── */
+    const nav = $('#app-nav');
+    function rota() {
+      const [tela, id] = (location.hash.slice(1) || 'inicio').split('/');
+      const ehVaga = tela === 'vaga' && Boolean(VAGAS[id]);
+      const atual = ehVaga ? 'vaga' : 'inicio';
+      $$('[data-screen]').forEach((s) => { s.hidden = s.dataset.screen !== atual; });
+      $$('[data-nav]').forEach((a) => {
+        const sim = a.dataset.nav === atual;
+        a.classList.toggle('active', sim);
+        if (sim) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      });
+      if (ehVaga && vagaAtual !== id) renderKanban(id);
+      $('[data-top-title]').textContent = ehVaga ? 'Recrutamento & Seleção' : 'Início';
+      document.title = `${ehVaga ? VAGAS[id].titulo : 'Início'} · electia`;
+      if (ehVaga) return '#vaga-titulo';
+      return { vagas: '#vagas', nexus: '#nexus-input' }[tela] || '#inicio-titulo';
+    }
+    window.addEventListener('hashchange', () => {
+      const alvo = $(rota());
+      alvo.focus({ preventScroll: true });
+      alvo.scrollIntoView({ block: alvo.id === 'nexus-input' ? 'center' : 'start' });
+    });
+
+    /* Itens fora do protótipo avisam e ficam onde estão. */
+    document.addEventListener('click', (ev) => {
+      if (ev.target.closest('[data-noop]')) { ev.preventDefault(); return; }
+      const fora = ev.target.closest('[data-fora], [data-fora-btn]');
+      if (fora) {
+        ev.preventDefault();
+        avisar(`“${fora.dataset.foraBtn || fora.textContent.trim()}” fica fora deste protótipo.`);
+        return;
+      }
+      if (ev.target.closest('#app-nav a') && nav.hasAttribute('data-open')) window.ResultXSidebarOverlay?.close(nav);
+    });
+
+    /* ── Tema ────────────────────────────────────────────────────────── */
+    const temaBtn = $('[data-theme-toggle]');
+    temaBtn.addEventListener('click', () => {
+      const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      temaBtn.setAttribute('aria-label', next === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro');
+      temaBtn.querySelector('use').setAttribute('href', next === 'dark' ? '#i-sun' : '#i-moon');
+    });
+
+    /* ── Nexus ───────────────────────────────────────────────────────────
+       O chip preenche o campo sem enviar (como no app, PR #641). Ao enviar,
+       a orb da resposta fica data-state="active" por ~2 s (< 5 s) e o status
+       sai em texto, fora da região aria-busy. */
+    const NEXUS_MS = 2200;
+    const RESPOSTAS = {
+      vagas: 'Recepcionista está há 10 dias sem candidatos novos, e em Analista de Departamento Pessoal dois candidatos esperam em Entrevista há 8 dias. Sugiro reabrir a divulgação da primeira e marcar as entrevistas pendentes desta semana.',
+      instrumentos: 'Comece pelo DISC: é curto e dá uma linguagem comum ao time. Depois, os Motivadores mostram o que sustenta o engajamento. Hoje 8 colaboradores ainda não fizeram nenhum teste.',
+      comunicacao: 'Com perfis de Estabilidade, antecipe mudanças e dê tempo para processar. Com Conformidade, leve dados e critérios por escrito. A leitura é um ponto de partida, não um rótulo.',
+    };
+    const RESPOSTA_PADRAO = 'Posso ajudar com perfis, cargos e desenvolvimento da equipe. De Saúde Mental, mostro só a visão agregada por departamento.';
+    const PERGUNTAS = Object.fromEntries($$('[data-nexus-chip]').map((b) => [b.textContent.trim(), b.dataset.nexusChip]));
+    const form = $('[data-nexus-form]');
+    const input = $('#nexus-input');
+    const log = $('[data-nexus-log]');
+    const status = $('[data-nexus-status]');
+    const enviar = form.querySelector('.composer-send');
+    $$('[data-nexus-chip]').forEach((b) => b.addEventListener('click', () => {
+      input.value = b.textContent.trim();
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.focus();
+    }));
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      const texto = input.value.trim();
+      if (!texto || enviar.disabled) return;
+      log.insertAdjacentHTML('beforeend', `<article class="message message-out"><div class="message-bubble"><p class="message-text">${esc(texto)}</p></div></article>
+        <article class="message"><span class="brand-orb-lockup"><span class="brand-orb brand-orb-electia brand-orb-sm" data-state="active" aria-hidden="true"></span>Nexus</span><div class="message-bubble"><p class="message-text">…</p></div></article>`);
+      const resposta = log.lastElementChild;
+      input.value = '';
+      enviar.disabled = true;
+      log.setAttribute('aria-busy', 'true');
+      status.textContent = 'Nexus está respondendo…';
+      log.scrollTop = log.scrollHeight;
+      setTimeout(() => {
+        resposta.querySelector('.message-text').textContent = RESPOSTAS[PERGUNTAS[texto]] || RESPOSTA_PADRAO;
+        resposta.querySelector('.brand-orb').removeAttribute('data-state');
+        log.setAttribute('aria-busy', 'false');
+        status.textContent = 'Nexus respondeu.';
+        enviar.disabled = false;
+        log.scrollTop = log.scrollHeight;
+      }, NEXUS_MS);
+    });
+    input.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); form.requestSubmit(); }
+    });
+    function abrirNexus() {
+      if (location.hash === '#nexus') { input.focus(); input.scrollIntoView({ block: 'center' }); } else location.hash = 'nexus';
+    }
+    $('[data-nexus-open]').addEventListener('click', abrirNexus);
+    document.addEventListener('keydown', (ev) => {
+      if ((ev.metaKey || ev.ctrlKey) && ev.key.toLowerCase() === 'k') { ev.preventDefault(); abrirNexus(); }
+    });
+
+    renderVagas();
+    rota();
+  });
+  </script>
+</body>
+</html>
