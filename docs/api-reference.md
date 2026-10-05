@@ -327,6 +327,7 @@ See [tokens/](tokens/) for detailed documentation per category.
 | `.message-day` | Sticky date marker | [conversation.md](components/conversation.md) |
 | `.audio-player` | Waveform player over a native `<audio>` | [conversation.md](components/conversation.md) |
 | `.composer` | Message composition bar; field grows with content | [conversation.md](components/conversation.md) |
+| `.brand-orb` | Animated orb that identifies an AI agent (Nexus, Copilot Electia, IMO, Xscore); CSS only | [brand-orb.md](components/brand-orb.md) |
 
 Behaviour scripts: `resultx-design-system/disclosure`, `/split-pane`, `/audio-player`, `/composer`. `.segmented` needs none.
 
