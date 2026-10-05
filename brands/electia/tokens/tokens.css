@@ -4,7 +4,7 @@
    Atualizacao 2026-06-26 (v2.6 — alinhamento DS↔LP real):
    - Navy #1B2A4A APOSENTADO → grafite #0B0E14 canonical (base unica em tudo: tokens, web, social, Canva, e-mail, image-prompts)
    - Surface scale rebaseada sobre grafite: #161B26 / #1C2333 / #232B3B / #2A3444 (= LP --bg-card / --bg-card-hover / derivados / border)
-   - Text alinhada a LP: --text-primary #E6EDF3, --text-secondary #8B949E, --text-muted #6E7681 (gray-200/gray-500 derivados)
+   - Text alinhada a LP: --text-primary #E6EDF3, --text-secondary #8B949E, --text-muted #848D97 (era #6E7681, reprovava AA — 05/10/2026) (gray-200/gray-500 derivados)
    - Border: default #2A3444, hover #3A4554, + novo --border-focus #6f32b1
    - Semanticos VIVOS (LP): --success #22C55E, --warning #F59E0B, --error #EF4444
    - Glass scale rgba rebaseada navy (28,42,74) → grafite (22,27,38 = #161B26)
@@ -75,7 +75,7 @@
   --white: #FFFFFF;
   --text-primary: #E6EDF3;
   --text-secondary: #8B949E;
-  --text-muted: #6E7681;
+  --text-muted: #848D97;   /* 4.66:1 sobre #1C2333, 5.74:1 sobre #0B0E14 (era #6E7681: 3.42 / 4.2) — alinhado ao DS e ao Xscore */
   --gray-200: #C9D1D9;    /* derivado — texto de corpo claro */
   --gray-500: #545D68;    /* derivado — labels sutis, timestamps */
 

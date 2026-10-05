@@ -31,7 +31,7 @@ const fs = require('fs');
 const path = require('path');
 
 const { BRANDS, INK_CANDIDATES, SURFACES } = require('./brand-bridges.config');
-const { AA_NORMAL, ratio, pickInk, flatten, toRgbTriplet } = require('./lib/contrast');
+const { AA_NORMAL, AA_LARGE, ratio, pickInk, flatten, toRgbTriplet } = require('./lib/contrast');
 
 const ROOT = path.resolve(__dirname, '..');
 
@@ -131,6 +131,13 @@ function resolveTheme(brand, theme, resolve) {
     theme === 'dark' ? flatten(accent, SIDEBAR_BG.dark, alpha.sidebarActive) : accent;
   const sidebarTextActive = theme === 'dark' ? text || accent : ink.value;
 
+  // The focus ring is SOLID and uses the accent-as-text color. The old
+  // rgba(accent, 0.5) composited to 1.38-2.66:1 for every brand (purple and
+  // indigo sink into the dark surfaces, gold washes out on white). The text
+  // role already clears 4.5:1 on the base, so it clears 3:1 (WCAG 1.4.11)
+  // with room — measured below against every surface anyway.
+  const focusRing = text || accent;
+
   const checks = [
     {
       label: 'rotulo sobre o botao primario',
@@ -175,7 +182,17 @@ function resolveTheme(brand, theme, resolve) {
     );
   }
 
-  return { accent, hover, secondary, text, ink, inkOnHover, sidebarTextActive, checks };
+  for (const surface of surfaces.all) {
+    checks.push({
+      label: `anel de foco sobre ${surface}`,
+      fg: focusRing,
+      bg: surface,
+      ratio: ratio(focusRing, surface),
+      required: AA_LARGE,
+    });
+  }
+
+  return { accent, hover, secondary, text, ink, inkOnHover, sidebarTextActive, focusRing, checks };
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -219,7 +236,8 @@ function declarations(brand, theme, r, indent) {
 
   lines.push('');
   push('--border-accent', rgba(r.accent, alpha.border));
-  push('--focus-ring-color', rgba(r.accent, 0.5));
+  const ringMin = Math.min(...SURFACES[theme].all.map((s) => ratio(r.focusRing, s)));
+  push('--focus-ring-color', r.focusRing, `solido — minimo ${ringMin}:1 nas superficies do tema`);
 
   lines.push('');
   push(

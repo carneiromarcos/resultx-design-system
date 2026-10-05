@@ -172,7 +172,7 @@ export const darkTokens = {
   "border-accent": "rgba(45, 212, 191, 0.20)",
   "text-primary": "#E6EDF3",
   "text-secondary": "#8B949E",
-  "text-muted": "#6E7681",
+  "text-muted": "#848D97",
   "text-inverse": "#0B0E14",
   "accent-primary": "#2DD4BF",
   "accent-primary-hover": "#5EEAD4",
@@ -337,7 +337,7 @@ export const lightTokens = {
   "chart-gradient-end": "rgba(29, 78, 216, 0.02)",
   "chart-line": "#1D4ED8",
   "chart-grid": "#E8ECF0",
-  "focus-ring-color": "rgba(29, 78, 216, 0.5)"
+  "focus-ring-color": "#1D4ED8"
 } as const;
 
 export const premiumLightTokens = {

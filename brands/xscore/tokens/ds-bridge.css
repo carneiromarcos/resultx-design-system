@@ -39,7 +39,7 @@
   --accent-primary-text: #c4993b;   /* --gold-ink — 7.33:1 sobre o fundo */
 
   --border-accent: rgba(196, 153, 59, 0.2);
-  --focus-ring-color: rgba(196, 153, 59, 0.5);
+  --focus-ring-color: #c4993b;   /* solido — minimo 5.96:1 nas superficies do tema */
 
   --sidebar-active-bg: rgba(196, 153, 59, 0.15);
   --sidebar-text-active: #c4993b;
@@ -63,7 +63,7 @@
   --accent-primary-text: #866425;   /* --gold-ink — 5.44:1 sobre o fundo */
 
   --border-accent: rgba(196, 153, 59, 0.25);
-  --focus-ring-color: rgba(196, 153, 59, 0.5);
+  --focus-ring-color: #866425;   /* solido — minimo 4.58:1 nas superficies do tema */
 
   --sidebar-active-bg: #c4993b;
   --sidebar-text-active: #0B0E14;
@@ -88,7 +88,7 @@
     --accent-primary-text: #c4993b;   /* --gold-ink — 7.33:1 sobre o fundo */
 
     --border-accent: rgba(196, 153, 59, 0.2);
-    --focus-ring-color: rgba(196, 153, 59, 0.5);
+    --focus-ring-color: #c4993b;   /* solido — minimo 5.96:1 nas superficies do tema */
 
     --sidebar-active-bg: rgba(196, 153, 59, 0.15);
     --sidebar-text-active: #c4993b;
@@ -113,7 +113,7 @@
     --accent-primary-text: #866425;   /* --gold-ink — 5.44:1 sobre o fundo */
 
     --border-accent: rgba(196, 153, 59, 0.25);
-    --focus-ring-color: rgba(196, 153, 59, 0.5);
+    --focus-ring-color: #866425;   /* solido — minimo 4.58:1 nas superficies do tema */
 
     --sidebar-active-bg: #c4993b;
     --sidebar-text-active: #0B0E14;

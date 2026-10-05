@@ -88,6 +88,31 @@ tirando o espaço de `var(--x, .5)`; e o `postcss-merge-rules` juntou blocos
 declarações — todos com o mesmo valor dos dois lados, então nenhum elemento
 muda de cor, borda ou layout. `@media (` virou `@media(`, sintaxe válida.
 
+### Fixed — anel de foco e `--text-muted` escuro reprovavam WCAG (decisão de 05/10/2026)
+
+Medido em cor composta (alpha sobre a superfície) contra `--bg-base` e
+`--bg-surface-1..3` de cada tema; `tests/contrast-tokens.test.js` lê os tokens
+do CSS e trava os dois pares.
+
+- **Anel de foco do tema claro** (`tokens/tokens.css`, `[data-theme="light"]` e
+  `prefers-color-scheme: light`): `rgba(29, 78, 216, 0.5)` → `#1D4ED8` sólido.
+  Antes 2,24–2,36:1 (WCAG 1.4.11 pede 3:1); agora 5,64:1 em surface-3 e 6,7:1
+  no fundo. O anel escuro (teal a 50%) mede 3,17–3,33:1 e ficou como está.
+- **Anel de foco das pontes de marca** (`brands/*/tokens/ds-bridge.css`,
+  gerado): `rgba(accent, 0.5)` → cor sólida do papel `--accent-primary-text`
+  da marca. Antes, em toda marca e tema: Electia 1,38–2,45:1, Emprega+
+  1,53–2,29:1, PdV/ResultX/Xscore 1,46–2,66:1. Agora o mínimo é 4,58:1
+  (dourado-tinta `#866425` em surface-3 claro). O gerador passou a medir o
+  anel contra as quatro superfícies e falha abaixo de 3:1.
+- **`--text-muted` do tema escuro** (`[data-theme="dark"]` e
+  `prefers-color-scheme: dark`): `#6E7681` → `#848D97`. Antes 4,2:1 no fundo e
+  3,42:1 em surface-3 (AA pede 4,5:1); agora 5,74:1 e 4,66:1, abaixo de
+  `--text-secondary` (6,28 / 5,1:1) em toda superfície. Mesmo valor que o
+  Xscore adotou na #76 — sem regressão.
+- **Electia** (`brands/electia/tokens/tokens.css` e `tokens.json`) redeclarava
+  `--text-muted: #6E7681` no tema escuro e anularia a correção para quem
+  importa o arquivo da marca: passou a `#848D97`.
+
 ### Security — `braces` segue aberto: não existe versão corrigida
 
 O GHSA-vfj7-8cjw-p6xm (publicado em 18/09/2026) cobre `braces` ≤ 3.0.3, e a
