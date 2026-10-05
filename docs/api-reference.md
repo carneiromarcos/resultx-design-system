@@ -74,6 +74,15 @@ See [tokens/](tokens/) for detailed documentation per category.
 | `.header` | Sticky header bar | [navigation.md](components/navigation.md) |
 | `.header-title` | Page title (heading font) | |
 | `.header-actions` | Action buttons container | |
+| `.header-float` | Floating rounded landing navbar (sticky pill, strong glass; `[data-scrolled]` via `dist/header-float.js`) | [header-float.md](components/header-float.md) |
+| `.header-float-bar` | The pill: grid brand · links · actions | |
+| `.header-float-brand` / `.header-float-brand-tag` | Brand link and its small tag (tag hidden below 360px) | |
+| `.header-float-links` | Center links (hidden below 1024px) | |
+| `.header-float-icon` / `.header-float-menu` | Round icon button / the one that opens `.menu-drawer` (below 1024px) | |
+| `.header-float-sentinel` | Invisible top strip observed by the script | |
+| `.menu-drawer` | Landing menu drawer, `role=dialog` via `dist/menu-drawer.js`; opens by `:target` without JS | [menu-drawer.md](components/menu-drawer.md) |
+| `.menu-drawer-head` / `-body` / `-label` / `-nav` / `-actions` / `-close` | Fixed head, scrollable body, section label, nav links, full-width CTAs, close | |
+| `.menu-drawer-scrim` | Backdrop right after the drawer | |
 
 ### Buttons
 
@@ -89,6 +98,11 @@ See [tokens/](tokens/) for detailed documentation per category.
 | `.btn-lg` | Large size | |
 | `.btn-block` | Full width | |
 | `.btn-social` | OAuth/social login | |
+| `.btn-sheen` | One sheen pass on hover/focus-visible (700ms, never looping, off under reduced motion) | [buttons.md](components/buttons.md#reflexo-btn-sheen) |
+| `.cta-panel` | Closing CTA section, dark via `data-theme="dark"` on the element | [cta-panel.md](components/cta-panel.md) |
+| `.cta-panel-title` / `-title-tone` / `-lead` / `-actions` / `-proof` | Title, gradient half-tone, lead, buttons, trust list | |
+| `.cta-dock` | Mobile sticky CTA bar after the hero CTA leaves (`dist/cta-dock.js`); hidden on desktop | [cta-dock.md](components/cta-dock.md) |
+| `.cta-dock-text` | The short line beside the button | |
 
 ### Cards
 
@@ -394,6 +408,10 @@ Behaviour scripts: `resultx-design-system/disclosure`, `/split-pane`, `/audio-pl
 | `.kanban-card-title` | Card title |
 | `.kanban-card-meta` | Card metadata |
 | `.kanban-add` | Add card button |
+| `.stage-chip` | Funnel stage chip: color + shape + name ([stage-chip.md](components/stage-chip.md)) |
+| `.stage-chip-{triagem,entrevista,oferta,contratado,rejeitado}` | One color and one marker shape per stage |
+| `.stage-chip-count` | Optional mono count |
+| `.dl-statcard--compact` | Dense KPI statcard: `--space-3`, mono `--text-xl`, no elevation ([data-cards.md](components/data-cards.md)) |
 
 ### Profile
 

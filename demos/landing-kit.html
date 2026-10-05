@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<!--
+  Demo do lote P (05/10/2026): os componentes de landing promovidos do
+  protótipo da #80, no tema padrão do DS (sem ponte de marca).
+    .header-float   components/header-float.css · dist/header-float.js
+    .menu-drawer    components/menu-drawer.css  · dist/menu-drawer.js
+    .btn-sheen      components/btn-sheen.css
+    .stage-chip     components/stage-chip.css
+    .dl-statcard--compact  components/data-cards.css
+    .cta-panel      components/cta-panel.css (data-theme="dark" no elemento)
+    .cta-dock       components/cta-dock.css     · dist/cta-dock.js
+  ?theme=dark ou ?theme=light abre num tema; o botão de lua/sol alterna.
+  O conteúdo é ilustrativo.
+-->
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Kit de landing — ResultX DS</title>
+  <script>
+    /* Antes do CSS, para não piscar no tema errado. */
+    (function () {
+      var t = new URLSearchParams(location.search).get('theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../dist/tokens.min.css">
+  <link rel="stylesheet" href="../dist/components.min.css">
+  <link rel="stylesheet" href="../components/data-cards.css">
+  <style>
+    /* Só a página da demo. Os componentes vêm todos do DS. */
+    body { position: relative; display: flow-root; margin: 0; background: var(--bg-surface-1); color: var(--text-primary); font-family: var(--font-body); }
+    .kit-wrap { inline-size: min(1120px, calc(100% - 2 * var(--space-4))); margin-inline: auto; }
+    .kit-wordmark { font: 700 var(--text-lg)/1 var(--font-heading); letter-spacing: -0.03em; }
+    .kit-hero { padding-block: clamp(var(--space-12), 7vw, var(--space-20)) var(--space-12); }
+    .kit-hero h1 { max-inline-size: 18ch; margin: var(--space-4) 0; font: 700 clamp(2.25rem, 1.2rem + 4vw, 3.75rem)/1.05 var(--font-heading); letter-spacing: -0.04em; }
+    .kit-hero p { max-inline-size: 56ch; color: var(--text-secondary); font-size: var(--text-lg); line-height: var(--leading-relaxed); }
+    .kit-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-block-start: var(--space-8); }
+    .kit-actions .btn { min-block-size: 48px; padding-inline: var(--space-6); text-decoration: none; }
+    .kit-eyebrow { color: var(--accent-primary-text); font-size: var(--text-xs); font-weight: var(--font-semibold); letter-spacing: var(--tracking-widest); text-transform: uppercase; }
+    .kit-section { padding-block: var(--space-16); }
+    .kit-section h2 { margin: var(--space-2) 0 var(--space-3); font: 600 var(--text-3xl)/1.15 var(--font-heading); letter-spacing: -0.03em; }
+    .kit-section > .kit-wrap > p { max-inline-size: 60ch; margin-block-end: var(--space-8); color: var(--text-secondary); }
+    .kit-board { display: grid; gap: var(--space-6); padding: var(--space-6); border: 1px solid var(--border-default); border-radius: var(--radius-xl); background: var(--bg-base); }
+    .kit-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-3); }
+    .kit-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+    .kit-label { margin-block-end: var(--space-3); color: var(--text-secondary); font-size: var(--text-xs); font-weight: var(--font-semibold); letter-spacing: var(--tracking-wider); text-transform: uppercase; }
+    .kit-jobs { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+    .kit-job { display: grid; gap: var(--space-2); padding: var(--space-4); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); }
+    .kit-job strong { font-family: var(--font-heading); }
+    .kit-job span { color: var(--text-secondary); font-size: var(--text-sm); }
+    .kit-footer { padding-block: var(--space-8); border-top: 1px solid var(--border-default); color: var(--text-secondary); font-size: var(--text-sm); }
+    .kit-footer .kit-wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-4); }
+    .kit-long { block-size: 40vh; }
+  </style>
+</head>
+<body>
+  <div class="header-float-sentinel" data-header-float-sentinel aria-hidden="true"></div>
+
+  <header class="header-float" data-header-float>
+    <div class="header-float-bar">
+      <a class="header-float-brand" href="#inicio" aria-label="ResultX, kit de landing, início">
+        <span class="kit-wordmark">ResultX</span><span class="header-float-brand-tag">kit de landing</span>
+      </a>
+      <nav class="header-float-links" aria-label="Navegação principal">
+        <a href="#funil">Funil</a>
+        <a href="#indicadores">Indicadores</a>
+        <a href="#fechamento">Fechamento</a>
+      </nav>
+      <div class="header-float-actions">
+        <button class="header-float-icon" type="button" data-kit-theme aria-label="Alternar tema"><span aria-hidden="true">◐</span></button>
+        <a class="btn btn-ghost btn-sm" href="#entrar">Entrar</a>
+        <a class="btn btn-primary btn-sm btn-sheen" href="#fechamento">Começar</a>
+        <a class="header-float-icon header-float-menu" id="kit-menu-abrir" href="#kit-menu" data-menu-drawer-toggle="kit-menu" aria-label="Abrir menu"><span aria-hidden="true">☰</span></a>
+      </div>
+    </div>
+  </header>
+
+  <section class="menu-drawer" id="kit-menu" aria-label="Menu" data-menu-drawer data-menu-drawer-media="(max-width: 1023.98px)">
+    <div class="menu-drawer-head">
+      <span class="menu-drawer-label">Navegue</span>
+      <a class="menu-drawer-close" href="#kit-menu-abrir" data-menu-drawer-close aria-label="Fechar menu"><span aria-hidden="true">✕</span></a>
+    </div>
+    <div class="menu-drawer-body">
+      <nav class="menu-drawer-nav" aria-label="Navegação principal (móvel)">
+        <a href="#funil">Funil</a>
+        <a href="#indicadores">Indicadores</a>
+        <a href="#fechamento">Fechamento</a>
+      </nav>
+      <div class="menu-drawer-actions">
+        <span class="menu-drawer-label">Conta</span>
+        <a class="btn btn-ghost" href="#entrar">Entrar</a>
+        <a class="btn btn-secondary" href="#fechamento">Falar com a equipe</a>
+        <a class="btn btn-primary" href="#fechamento">Começar</a>
+      </div>
+    </div>
+  </section>
+  <div class="menu-drawer-scrim" data-menu-drawer-scrim></div>
+
+  <main>
+    <section class="kit-hero" id="inicio" aria-labelledby="kit-title">
+      <div class="kit-wrap">
+        <span class="kit-eyebrow">Lote P · componentes de landing</span>
+        <h1 id="kit-title">Uma página de produto montada só com o DS.</h1>
+        <p>Navbar flutuante, gaveta de menu, reflexo de uma passada, chips de etapa, indicadores compactos, painel de fechamento e a barra de CTA do celular.</p>
+        <div class="kit-actions" data-hero-cta>
+          <a class="btn btn-primary btn-sheen" href="#fechamento">Começar agora</a>
+          <a class="btn btn-secondary btn-sheen" href="#funil">Ver o funil</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="kit-section" id="funil" aria-labelledby="funil-title">
+      <div class="kit-wrap">
+        <span class="kit-eyebrow">.stage-chip</span>
+        <h2 id="funil-title">Etapas que se leem sem a cor</h2>
+        <p>Cada etapa tem cor, forma e nome. Nenhuma cor se repete, e o accent fica de fora.</p>
+        <div class="kit-board">
+          <div>
+            <p class="kit-label">Rótulos</p>
+            <ul class="kit-chips" aria-label="Etapas do funil">
+              <li><span class="stage-chip stage-chip-triagem">Triagem <span class="stage-chip-count">42</span></span></li>
+              <li><span class="stage-chip stage-chip-entrevista">Entrevista <span class="stage-chip-count">12</span></span></li>
+              <li><span class="stage-chip stage-chip-oferta">Oferta <span class="stage-chip-count">3</span></span></li>
+              <li><span class="stage-chip stage-chip-contratado">Contratado <span class="stage-chip-count">2</span></span></li>
+              <li><span class="stage-chip stage-chip-rejeitado">Rejeitado <span class="stage-chip-count">27</span></span></li>
+            </ul>
+          </div>
+          <div>
+            <p class="kit-label">Filtro (clicável)</p>
+            <div class="kit-chips" role="group" aria-label="Filtrar por etapa">
+              <button class="stage-chip stage-chip-triagem" type="button" aria-pressed="false">Triagem</button>
+              <button class="stage-chip stage-chip-entrevista" type="button" aria-pressed="true">Entrevista</button>
+              <button class="stage-chip stage-chip-oferta" type="button" aria-pressed="false">Oferta</button>
+              <button class="stage-chip stage-chip-contratado" type="button" aria-pressed="false">Contratado</button>
+              <button class="stage-chip stage-chip-rejeitado" type="button" aria-pressed="false">Rejeitado</button>
+            </div>
+          </div>
+          <div>
+            <p class="kit-label">Linha de vaga</p>
+            <ul class="kit-jobs">
+              <li class="kit-job"><strong>Analista de dados pleno</strong><span>Recife · 86 candidatos</span>
+                <span class="kit-chips"><span class="stage-chip stage-chip-triagem">Triagem <span class="stage-chip-count">42</span></span><span class="stage-chip stage-chip-entrevista">Entrevista <span class="stage-chip-count">12</span></span><span class="stage-chip stage-chip-oferta">Oferta <span class="stage-chip-count">3</span></span></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="kit-section" id="indicadores" aria-labelledby="indicadores-title">
+      <div class="kit-wrap">
+        <span class="kit-eyebrow">.dl-statcard--compact</span>
+        <h2 id="indicadores-title">Indicadores densos</h2>
+        <p>Sem elevação nem altura mínima; o valor em mono alinha os algarismos entre cartões.</p>
+        <div class="kit-kpis">
+          <article class="dl-statcard dl-statcard--compact"><span class="dl-statcard-label">Vagas abertas</span><span class="dl-statcard-value">14</span><span class="dl-statcard-compare">+2 na semana</span></article>
+          <article class="dl-statcard dl-statcard--compact"><span class="dl-statcard-label">Candidatos</span><span class="dl-statcard-value">1.208</span><span class="dl-statcard-compare">+96 na semana</span></article>
+          <article class="dl-statcard dl-statcard--compact"><span class="dl-statcard-label">Entrevistas</span><span class="dl-statcard-value">31</span><span class="dl-statcard-compare">8 hoje</span></article>
+          <a class="dl-statcard dl-statcard--compact" href="#funil"><span class="dl-statcard-label">Contratados</span><span class="dl-statcard-value">5</span><span class="dl-statcard-compare">Ver no funil</span></a>
+        </div>
+        <div class="kit-long" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section class="kit-section" id="fechamento" aria-labelledby="fechamento-title">
+      <div class="kit-wrap">
+        <div class="cta-panel" data-theme="dark" data-cta-final>
+          <h2 class="cta-panel-title" id="fechamento-title">Monte a próxima landing com o DS. <span class="cta-panel-title-tone">Sem CSS de página para os componentes.</span></h2>
+          <p class="cta-panel-lead">O painel é escuro nos dois temas da página: o data-theme="dark" no próprio elemento faz os tokens resolverem no escopo escuro.</p>
+          <div class="cta-panel-actions">
+            <a class="btn btn-primary btn-sheen" href="#inicio">Começar agora</a>
+            <a class="btn btn-secondary btn-sheen" href="#funil">Ver o funil</a>
+          </div>
+          <ul class="cta-panel-proof" aria-label="O que vem no kit">
+            <li>Só tokens</li>
+            <li>Dois temas</li>
+            <li>Reduced motion</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="kit-footer">
+    <div class="kit-wrap"><span>ResultX Design System · demo do lote P</span><a class="header-float-brand" href="#inicio">Voltar ao início</a></div>
+  </footer>
+
+  <aside class="cta-dock" aria-label="Atalho para começar" data-cta-dock data-cta-dock-after="[data-hero-cta]" data-cta-dock-until="[data-cta-final]">
+    <span class="cta-dock-text">Monte a sua com o DS</span>
+    <a class="btn btn-primary btn-sheen" href="#fechamento">Começar</a>
+  </aside>
+
+  <script src="../dist/header-float.js" defer></script>
+  <script src="../dist/menu-drawer.js" defer></script>
+  <script src="../dist/cta-dock.js" defer></script>
+  <script>
+    /* Só da demo: alternar o tema e os chips de filtro. */
+    document.querySelector('[data-kit-theme]').addEventListener('click', function () {
+      var raiz = document.documentElement;
+      raiz.dataset.theme = raiz.dataset.theme === 'dark' ? 'light' : 'dark';
+    });
+    document.querySelectorAll('button.stage-chip').forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+      });
+    });
+  </script>
+</body>
+</html>

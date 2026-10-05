@@ -1,0 +1,202 @@
+/* ==========================================================================
+   Menu drawer — gaveta de menu do celular
+   Docs: docs/components/menu-drawer.md · Demo: demos/landing-kit.html
+   Comportamento: dist/menu-drawer.js
+
+   Promovido do protótipo da #80 (lote P, 05/10/2026). Decisão do Marcos:
+   componente próprio, não uma variação de .sidebar-overlay — aquele é a
+   navegação do app (rail, painel, grupos); esta é o menu de uma landing,
+   com seções rotuladas e CTAs em largura total.
+
+   Anatomia
+     .menu-drawer           o painel (irmão do header, nunca dentro dele)
+       .menu-drawer-head    cabeçalho fixo: rótulo + .menu-drawer-close
+       .menu-drawer-body    a única parte que rola
+         .menu-drawer-label rótulo de seção em caixa alta
+         .menu-drawer-nav   links de navegação (alvo de 48 px)
+         .menu-drawer-actions  CTAs em largura total, no pé
+     .menu-drawer-scrim     o véu, logo depois do painel
+
+   Estados
+     fechado   fora da tela (translateX) e visibility: hidden — fora da ordem
+               de foco e da árvore de acessibilidade.
+     aberto    [data-open], posto pelo script. A visibilidade vira NA HORA ao
+               abrir (o script foca o primeiro item no mesmo quadro) e espera
+               a saída ao fechar.
+     sem JS    o botão é um link para #id-da-gaveta e :target abre a gaveta;
+               o Fechar é um link de volta para o botão. Quando o script
+               assume ([data-menu-drawer-ready]) o :target deixa de valer.
+
+   O corpo rola sozinho e o cabeçalho fica parado: em 667×375 e 320×320 o
+   conteúdo passa da altura, e o Fechar precisa continuar à vista.
+   ========================================================================== */
+
+.menu-drawer {
+  --menu-drawer-width: 320px;
+  --menu-drawer-duration: 280ms;
+
+  position: fixed;
+  inset-block: 0;
+  inset-inline-end: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  inline-size: min(var(--menu-drawer-width), 86vw);
+  max-block-size: 100dvh;
+  padding-block-start: calc(var(--space-4) + env(safe-area-inset-top));
+  border-inline-start: 1px solid var(--border-default);
+  background: var(--bg-base);
+  box-shadow: var(--elevation-4);
+  color: var(--text-primary);
+  transform: translateX(100%);
+  visibility: hidden;
+  transition:
+    transform var(--menu-drawer-duration) var(--spring-smooth),
+    visibility 0s linear var(--menu-drawer-duration);
+}
+
+.menu-drawer:focus { outline: none; }
+
+.menu-drawer[data-open],
+.menu-drawer:target:not([data-menu-drawer-ready]) {
+  transform: none;
+  visibility: visible;
+  transition: transform var(--menu-drawer-duration) var(--spring-smooth);
+}
+
+.menu-drawer-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  background: var(--bg-overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-base),
+    visibility 0s linear var(--menu-drawer-duration, 280ms);
+}
+
+.menu-drawer-scrim[data-open],
+.menu-drawer:target:not([data-menu-drawer-ready]) + .menu-drawer-scrim {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--transition-base);
+}
+
+/* ── Cabeçalho fixo ─────────────────────────────────────────────────────── */
+.menu-drawer-head {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-inline: var(--space-5);
+}
+
+.menu-drawer-close {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  inline-size: 44px;
+  block-size: 44px;
+  padding: 0;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.menu-drawer-close:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary-text);
+}
+
+.menu-drawer-close:active { transform: scale(0.94); }
+
+/* ── Corpo rolável ──────────────────────────────────────────────────────── */
+.menu-drawer-body {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-2) var(--space-5) calc(var(--space-6) + env(safe-area-inset-bottom));
+  scroll-padding-block: var(--space-4);
+}
+
+/* --text-secondary, não --text-muted: o muted escuro não passa AA (4,2:1)
+   para texto deste tamanho. */
+.menu-drawer-label {
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+}
+
+.menu-drawer-nav { display: grid; }
+
+.menu-drawer-nav a {
+  display: flex;
+  align-items: center;
+  min-block-size: 48px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.menu-drawer-nav a:hover { color: var(--accent-primary-text); }
+.menu-drawer-nav a:active { transform: translateX(var(--space-1)); }
+.menu-drawer-nav a[aria-current] { color: var(--accent-primary-text); }
+
+.menu-drawer-actions {
+  display: grid;
+  gap: var(--space-3);
+  margin-block-start: auto;
+}
+
+.menu-drawer-actions .btn {
+  inline-size: 100%;
+  min-block-size: 48px;
+  text-decoration: none;
+}
+
+/* ── Foco ───────────────────────────────────────────────────────────────── */
+.menu-drawer-close:focus-visible,
+.menu-drawer-nav a:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* A regra global de reduced-motion do DS (components.css) põe 0,01 ms em
+     tudo, e todo descendente com transition-property: all (o padrão)
+     passaria a transicionar a visibility herdada: no quadro em que a gaveta
+     abre, o botão Fechar ainda estaria hidden e o .focus() falharia calado. */
+  .menu-drawer * { transition-property: none; }
+
+  .menu-drawer,
+  .menu-drawer[data-open],
+  .menu-drawer-scrim,
+  .menu-drawer-scrim[data-open],
+  .menu-drawer-close,
+  .menu-drawer-nav a { transition: none; }
+
+  .menu-drawer-close:active,
+  .menu-drawer-nav a:active { transform: none; }
+}

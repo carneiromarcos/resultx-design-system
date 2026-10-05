@@ -13,6 +13,12 @@
 @import url('./audio-player.css');
 @import url('./composer.css');
 @import url('./brand-orb.css');
+@import url('./header-float.css');
+@import url('./menu-drawer.css');
+@import url('./btn-sheen.css');
+@import url('./cta-panel.css');
+@import url('./cta-dock.css');
+@import url('./stage-chip.css');
 
 /* ══════════════════════════════════════════════════════════════════
    RESET & BASE

@@ -1,0 +1,84 @@
+/* ==========================================================================
+   CTA dock — barra de CTA do celular
+   Docs: docs/components/cta-dock.md · Demo: demos/landing-kit.html
+   Comportamento: dist/cta-dock.js
+
+   Promovido do protótipo da #80 (lote P, 05/10/2026). Uma pílula presa ao pé
+   da tela no celular, com uma frase curta e o CTA primário. Aparece quando o
+   CTA do hero sai da tela e some quando o CTA final entra — o script decide
+   por IntersectionObserver, não por limiar de pixels. No desktop não existe.
+
+   Não cobre o fim da página: a barra é position: sticky e mora no FIM do
+   fluxo (último filho do <body> ou do contêiner que rola). Enquanto a página
+   rola ela gruda no pé da tela; no fim ela para no próprio lugar, que já está
+   reservado no fluxo. Nenhum espaçador mágico no rodapé.
+
+   Escondida = transparente, um recuo abaixo e visibility: hidden — sai da
+   ordem de foco e da árvore de acessibilidade. Sem o script ela nunca aparece; o
+   lugar reservado no pé continua (é a altura dela).
+   ========================================================================== */
+
+.cta-dock {
+  --cta-dock-offset: calc(var(--space-3) + env(safe-area-inset-bottom));
+  --cta-dock-duration: 260ms;
+
+  position: sticky;
+  inset-block-end: var(--cta-dock-offset);
+  z-index: var(--z-sticky);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-inline: var(--space-3);
+  margin-block-end: var(--cta-dock-offset);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  border: 1px solid var(--glass-standard-border);
+  border-radius: var(--radius-xl);
+  background: var(--glass-strong-bg);
+  -webkit-backdrop-filter: blur(var(--glass-strong-blur));
+  backdrop-filter: blur(var(--glass-strong-blur));
+  box-shadow: var(--elevation-3);
+  opacity: 0;
+  visibility: hidden;
+  /* Desce só o próprio recuo: no fim da página a borda de baixo encosta no
+     fim do documento. Descer mais (o protótipo descia 100 % + 24 px) faz a
+     transformação esticar a área de rolagem — sobrava ~90 px de vazio sob o
+     rodapé no celular. */
+  transform: translateY(var(--cta-dock-offset));
+  transition:
+    transform var(--cta-dock-duration) var(--spring-smooth),
+    opacity var(--transition-base),
+    visibility 0s linear var(--cta-dock-duration);
+}
+
+.cta-dock[data-visible] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    transform var(--cta-dock-duration) var(--spring-smooth),
+    opacity var(--transition-base);
+}
+
+.cta-dock-text {
+  min-inline-size: 0;
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-snug);
+}
+
+.cta-dock .btn {
+  flex: none;
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+}
+
+@media (min-width: 1024px) {
+  .cta-dock { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-dock,
+  .cta-dock[data-visible] { transition: none; }
+}
