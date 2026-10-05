@@ -135,8 +135,8 @@
   scroll-padding-block: var(--space-4);
 }
 
-/* --text-secondary, não --text-muted: o muted escuro não passa AA (4,2:1)
-   para texto deste tamanho. */
+/* --text-secondary, não --text-muted: o rótulo de seção organiza a gaveta,
+   não é metadado. (O muted passa AA em toda superfície desde 05/10/2026.) */
 .menu-drawer-label {
   color: var(--text-secondary);
   font-size: var(--text-xs);

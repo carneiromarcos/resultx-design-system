@@ -156,6 +156,31 @@ do CSS e trava os dois pares.
   **sem arredondar**: `#139980` sobre `#E8ECF0` dá 2,99999:1, arredondava para
   3,00 e passava.
 
+### Fixed — `--text-muted` passa AA em toda superfície de texto, claro e escuro (decisão de 05/10/2026)
+
+Fecha as lacunas que a entrada acima deixou em `KNOWN_MUTED_GAPS`. Um valor por
+tema para DS, Electia e Xscore (uma linguagem só); razão bruta, sem arredondar.
+
+- **Escuro** (`[data-theme="dark"]`, `prefers-color-scheme: dark`, `:root` de
+  Electia e Xscore): `#848D97` → `#8A939D`. Fundo 5,74 → 6,20:1; surface-3 do DS
+  `#1C2333` 4,66 → 5,04:1; surface-3 de Electia/Xscore `#232B3B` 4,21 → 4,55:1.
+  Continua abaixo de `--text-secondary` `#8B949E` em toda superfície (4,61:1 na
+  pior) — a distância entre os dois, que já era pequena, encolhe.
+- **Claro** (`[data-theme="light"]`, `prefers-color-scheme: light`, bloco claro
+  da Electia): `#6B7280` → `#5F6672`, o valor que o Xscore já usava. Surface-2
+  `#F0F3F5` 4,34 → 5,19:1; surface-3 `#E8ECF0` 4,07 → 4,87:1; fundo 4,83 → 5,78:1.
+  `--text-secondary` `#4B5563` segue acima (6,37:1 na pior).
+- **surface-4 de Electia e Xscore** (`#2A3444` escuro, `#D1D9E0` claro) é o tom
+  de `--border`, não fundo de texto: no escuro nem o `--text-secondary` passa ali
+  (4,08:1), então não existe muted ≥ 4,5 e abaixo dele. Texto sobre ela usa
+  `--text-primary`. O teste exclui só a superfície igual ao `--border` do escopo
+  e lista as exclusões explicitamente.
+- `tests/contrast-tokens.test.js` cobre os quatro escopos do DS e os dois temas
+  de cada marca que redeclara o muted, contra as superfícies do DS e as da marca;
+  trava também a hierarquia, o valor único por tema, o vazamento do muted escuro
+  para o claro e que as pontes não redeclaram o muted. `KNOWN_MUTED_GAPS` e o
+  `test.todo` saíram.
+
 ### Security — `braces` segue aberto: não existe versão corrigida
 
 O GHSA-vfj7-8cjw-p6xm (publicado em 18/09/2026) cobre `braces` ≤ 3.0.3, e a

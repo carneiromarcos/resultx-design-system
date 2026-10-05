@@ -50,8 +50,8 @@ Dark is the default theme. When no `data-theme` is set, the system falls back to
 | Token | Dark Value | Light Value | Usage |
 |-------|-----------|-------------|-------|
 | `--text-primary` | `#E6EDF3` | `#0F1729` | Headings, primary body text |
-| `--text-secondary` | `#8B949E` | `#586069` | Descriptions, secondary labels |
-| `--text-muted` | `#848D97` | `#6B7280` | Placeholders, disabled text, timestamps |
+| `--text-secondary` | `#8B949E` | `#4B5563` | Descriptions, secondary labels |
+| `--text-muted` | `#8A939D` | `#5F6672` | Placeholders, timestamps, metadata — AA (≥ 4.5:1) on the background and every text surface, both themes. Not on a brand `--surface-4` (= `--border`) |
 | `--text-inverse` | `#0B0E14` | `#FFFFFF` | Text on accent-colored backgrounds |
 | `--text-on-color` | `#FFFFFF` | `#FFFFFF` | Text on any colored background (theme-independent) |
 
