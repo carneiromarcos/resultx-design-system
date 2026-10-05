@@ -1,0 +1,46 @@
+{
+  "$description": "Snapshot medido em talio.work em 2026-09-29. Referência externa; não é token canônico ResultX.",
+  "source": {
+    "url": "https://talio.work/",
+    "cssAsset": "/assets/index-BdfkPj_c.css",
+    "cssSha256": "d3cbff7966b561a8f12dc583d08f7b3017cdb60f681ba5286690e89e03451d51"
+  },
+  "light": {
+    "canvas": "#F7F6F3",
+    "ink": "#2E2E2E",
+    "surface": "#FFFFFF",
+    "primary": "#1C2130",
+    "accent": "#67727E",
+    "brandBlue": "#0F38B3",
+    "border": "#DBD7D1"
+  },
+  "darkDemo": {
+    "canvas": "#141824",
+    "ink": "#E7EBEF",
+    "surface": "#1A1F2D",
+    "primary": "#758CD1",
+    "border": "#2D3449"
+  },
+  "typography": {
+    "sans": "General Sans",
+    "mono": "JetBrains Mono",
+    "heroDesktopPx": 84,
+    "heroMobilePx": 36.8,
+    "sectionDesktopPx": 48,
+    "sectionMobilePx": 29.6,
+    "eyebrowDesktopPx": 12,
+    "eyebrowMobilePx": 11
+  },
+  "shape": {
+    "baseRadiusPx": 8,
+    "planCardRadiusPx": 12,
+    "demoFrameRadiusPx": 16,
+    "primaryButtonHeightDesktopPx": 44,
+    "primaryButtonHeightMobilePx": 48
+  },
+  "motion": {
+    "smoothEase": "cubic-bezier(.22, .61, .36, 1)",
+    "buttonDurationMs": 180,
+    "cardDurationMs": 300
+  }
+}
