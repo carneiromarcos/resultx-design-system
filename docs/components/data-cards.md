@@ -43,6 +43,34 @@ Bloco de métrica com header, valor grande e footer opcional.
 
 **Variants:** `.dl-statcard--with-spark` quando integrar Sparkline inline.
 
+### `.dl-statcard--compact` (lote P, 05/10/2026)
+
+KPI denso para molduras de demo e painéis com muitos números lado a lado. Preferido a criar um `.kpi-tile` paralelo.
+
+| | Padrão | Compacta |
+|---|---|---|
+| Padding | `--space-4` | `--space-3` |
+| Altura mínima | `--statcard-min-height` | nenhuma |
+| Elevação | `--elevation-1` (2 no hover) | nenhuma; o hover acende a borda (`--border-default`) |
+| Valor | `--font-heading`, `--text-3xl` | `--font-mono`, `--text-xl`, `tabular-nums` |
+| Rótulo e comparação | `--text-muted` | `--text-secondary` |
+
+O rótulo sobe para `--text-secondary` porque o `--text-muted` do tema escuro dá 4,2:1 sobre a superfície, abaixo de AA para texto de 12 px. Medido no Chrome (demo `demos/landing-kit.html`): rótulo **7,22:1** no claro e **5,89:1** no escuro; valor 17,07:1 e 15,33:1.
+
+```html
+<div class="kpis">
+  <article class="dl-statcard dl-statcard--compact">
+    <span class="dl-statcard-label">Vagas abertas</span>
+    <span class="dl-statcard-value">14</span>
+    <span class="dl-statcard-compare">+2 na semana</span>
+  </article>
+  <!-- Cartão que leva a um detalhe: <a> ou <button> com a mesma classe -->
+  <a class="dl-statcard dl-statcard--compact" href="#contratados">…</a>
+</div>
+```
+
+Como `<a>` ou `<button>`, ganha cursor, o anel de foco do statcard e uma pressão (`scale(0.98)`, desligada em reduced-motion).
+
 ---
 
 ## 2. Coin

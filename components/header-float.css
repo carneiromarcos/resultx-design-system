@@ -1,0 +1,253 @@
+/* ==========================================================================
+   Header float — navbar flutuante de landing
+   Docs: docs/components/header-float.md · Demo: demos/landing-kit.html
+   Comportamento: dist/header-float.js (opcional)
+
+   Promovido do protótipo da #80 (lote P, 05/10/2026). Uma pílula sticky,
+   afastada do topo e das bordas, em vidro forte. Para landing e site; o app
+   continua com .header, que ocupa a largura toda.
+
+   Anatomia
+     .header-float-sentinel   faixa invisível no topo do <body>; o script a
+                              observa (o script cria uma se faltar)
+     header.header-float      camada externa: só o recuo e o sticky
+       .header-float-bar      a pílula (grid marca · links · ações)
+         .header-float-brand  marca (+ .header-float-brand-tag, o selo)
+         .header-float-links  links centrais (somem abaixo de 1024 px)
+         .header-float-actions
+           .header-float-icon botão redondo só com ícone (tema, menu)
+           .header-float-menu abre a .menu-drawer (só abaixo de 1024 px)
+
+   Decisões de 05/10/2026
+     - Vidro = --glass-strong-bg (0,92 no claro). Com o painel escuro do CTA
+       passando por baixo, o 0,75 do vidro padrão deixava o link a 4,27:1.
+     - Sombra leve sempre; a sombra de destaque só com [data-scrolled], que o
+       script põe quando a sentinela sai da tela (IntersectionObserver, sem
+       scroll handler). Ela mora num ::after e só anima opacity.
+     - A 320 px a pílula não estoura: abaixo de 360 px ela alarga, o respiro
+       encolhe e o selo da marca sai só da vista (o nome acessível do link da
+       marca continua com ele, via aria-label).
+
+   A gaveta NÃO fica dentro do header: o backdrop-filter da pílula prenderia
+   um position: fixed descendente. Ela é irmã (ver components/menu-drawer.css).
+   ========================================================================== */
+
+.header-float-sentinel {
+  position: absolute;
+  inset: 0 0 auto;
+  block-size: var(--space-6);
+  pointer-events: none;
+}
+
+.header-float {
+  --header-float-top: var(--space-4);
+  --header-float-gutter: var(--space-4);
+  --header-float-max: 1400px;
+
+  position: sticky;
+  top: var(--header-float-top);
+  z-index: var(--z-sticky);
+  inline-size: min(var(--header-float-max), calc(100% - 2 * var(--header-float-gutter)));
+  margin: var(--header-float-top) auto 0;
+}
+
+.header-float-bar {
+  /* Tinta secundária do vidro. O vidro é translúcido: o que passa por baixo
+     (um botão do accent, o painel escuro do CTA) muda o fundo do texto. Com
+     --text-secondary puro, o selo de 12 px caía a 4,14:1 no escuro com o
+     botão teal do DS sob a pílula. Puxada 30 % para --text-primary, passa
+     de 4,5:1 sobre todo fundo opaco da página, nos dois temas (medido). */
+  --header-float-ink-muted: color-mix(in oklab, var(--text-secondary) 70%, var(--text-primary));
+
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-4);
+  min-block-size: var(--header-height);
+  padding-inline: var(--space-5) var(--space-3);
+  border: 1px solid var(--glass-standard-border);
+  border-radius: var(--radius-xl);
+  background: var(--glass-strong-bg);
+  -webkit-backdrop-filter: blur(var(--glass-strong-blur)) saturate(1.4);
+  backdrop-filter: blur(var(--glass-strong-blur)) saturate(1.4);
+  box-shadow: var(--elevation-1);
+}
+
+/* A sombra de destaque: pronta, transparente, acende com [data-scrolled]. */
+.header-float-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  box-shadow: var(--elevation-3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.header-float[data-scrolled] .header-float-bar::after { opacity: 1; }
+
+/* ── Marca ───────────────────────────────────────────────────────────────── */
+.header-float-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  justify-self: start;
+  min-inline-size: 0;
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  text-decoration: none;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.25em;
+  transition: text-decoration-color var(--transition-fast), transform var(--transition-fast);
+}
+
+/* Feedback sem mexer na tinta. Opacidade sobre o texto (o protótipo usava
+   0,8 / 0,65) baixava o selo de 12 px a 3,15:1 sobre o vidro escuro — achado
+   do Revisor na #83. O sublinhado na tinta do accent marca o hover; a
+   pressão desce 1 px. A cor do texto é a mesma em todos os estados. */
+.header-float-brand:hover {
+  text-decoration-line: underline;
+  text-decoration-color: var(--accent-primary-text);
+}
+
+.header-float-brand:active { transform: translateY(1px); }
+
+.header-float-brand-tag {
+  /* Fora da pílula (ex.: rodapé) não há vidro: vale a tinta secundária. */
+  color: var(--header-float-ink-muted, var(--text-secondary));
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ── Links centrais ─────────────────────────────────────────────────────── */
+.header-float-links {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.header-float-links a {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  color: var(--header-float-ink-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  text-decoration: none;
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.header-float-links a:hover {
+  color: var(--text-primary);
+  background: var(--accent-primary-muted);
+}
+
+.header-float-links a:active {
+  color: var(--text-primary);
+  background: color-mix(in srgb, var(--accent-primary) 22%, transparent);
+}
+
+.header-float-links a[aria-current] { color: var(--text-primary); }
+
+/* ── Ações ──────────────────────────────────────────────────────────────── */
+.header-float-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.header-float-actions .btn {
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Botão redondo só com ícone. O nome acessível vem de aria-label. */
+.header-float-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  inline-size: 36px;
+  block-size: 36px;
+  padding: 0;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: var(--text-base);
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.header-float-icon:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary-text);
+}
+
+.header-float-icon:active { transform: scale(0.94); }
+
+.header-float-menu { display: none; }
+
+/* ── Foco ───────────────────────────────────────────────────────────────── */
+.header-float-brand:focus-visible,
+.header-float-links a:focus-visible,
+.header-float-icon:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ── Celular e tablet: menu no lugar dos links e CTAs ───────────────────── */
+@media (max-width: 1023.98px) {
+  .header-float { --header-float-top: var(--space-3); }
+
+  .header-float-bar {
+    grid-template-columns: 1fr auto;
+    padding-inline: var(--space-4) var(--space-2);
+  }
+
+  .header-float-links,
+  .header-float-actions .btn { display: none; }
+
+  .header-float-menu { display: inline-grid; }
+
+  .header-float-icon {
+    inline-size: 44px;
+    block-size: 44px;
+  }
+}
+
+/* Abaixo de 360 px marca + dois controles de 44 px não cabiam (325 px em
+   320). Pílula mais larga, respiro menor e o selo sai da vista. */
+@media (max-width: 359.98px) {
+  .header-float { --header-float-gutter: var(--space-2); }
+
+  .header-float-bar {
+    gap: var(--space-2);
+    padding-inline: var(--space-3) var(--space-1);
+  }
+
+  .header-float-actions { gap: var(--space-1); }
+
+  /* Só dentro da pílula: a mesma marca no rodapé tem espaço de sobra. */
+  .header-float .header-float-brand-tag { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-float-bar::after,
+  .header-float-brand,
+  .header-float-links a,
+  .header-float-icon { transition: none; }
+
+  .header-float-brand:active,
+  .header-float-icon:active { transform: none; }
+}

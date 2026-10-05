@@ -317,6 +317,7 @@
   --spring-smooth: cubic-bezier(0.22, 1, 0.36, 1);
   --spring-snappy: cubic-bezier(0.16, 1, 0.3, 1);
   --stagger-delay: 50ms;
+  --ease-sheen: cubic-bezier(0.22, 0.61, 0.36, 1);
   --elevation-0: none;
   --disc-d-light: #f87171;
   --disc-i-light: #fbbf24;

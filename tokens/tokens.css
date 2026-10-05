@@ -114,6 +114,14 @@
   --spring-snappy: cubic-bezier(0.16, 1, 0.3, 1);
   --stagger-delay: 50ms;
 
+  /* ── Travessia (components/btn-sheen.css) ──────────────────────────────
+     Curva de um movimento que precisa ser VISTO de ponta a ponta, como o
+     reflexo que atravessa o botão. As molas acima chegam a ~90 % do trajeto
+     no primeiro quinto do tempo: num reflexo de 700 ms isso vira um clarão
+     de ~150 ms. Esta sai suave e desacelera pouco, então a passada se lê
+     inteira. Valor validado no protótipo da #80.                       */
+  --ease-sheen: cubic-bezier(0.22, 0.61, 0.36, 1);
+
   /* ── Elevation System (shadow + z-index convention) ────────────────── */
   --elevation-0: none;
   /* elevation-1 through 4 defined per-theme (different opacity) */

@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Button sheen — reflexo de uma passada
+   Docs: docs/components/buttons.md#reflexo-btn-sheen · Demo: demos/landing-kit.html
+
+   Modificador de .btn promovido do protótipo da #80 (lote P, 05/10/2026).
+   Uma faixa de luz inclinada atravessa o botão UMA vez quando ele recebe
+   :hover ou :focus-visible. Decisão do Marcos: nunca em loop — dois CTAs
+   pulsando lado a lado competem com o título da seção.
+
+   Medidas
+     - pico de 8 % de --text-on-color. O reflexo passa sob o rótulo, então o
+       fundo que ele clareia ainda precisa dar 4,5:1 com o texto. Medido
+       quadro a quadro sobre o pior fundo (hover roxo do Electia): a 30 % o
+       texto caía a 3,34:1; a 8 % fica acima de 4,5:1 o percurso inteiro.
+     - 700 ms com --ease-sheen, uma iteração. A curva de mola do DS gastava
+       a passada em ~150 ms (ver tokens/tokens.css).
+
+   Pseudo-elemento: ::before. O ::after de .btn já é o spinner de
+   .btn-loading — um efeito por pseudo-elemento, que foi a lição da Talio
+   (duas classes disputando o mesmo ::before, e o halo previsto sumia).
+
+   Sob prefers-reduced-motion o reflexo não existe (display: none).
+   ========================================================================== */
+
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn-sheen::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  z-index: -1;
+  inline-size: 45%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--text-on-color) 8%, transparent),
+    transparent
+  );
+  opacity: 0;
+  transform: translateX(-140%) skewX(-18deg);
+  pointer-events: none;
+}
+
+.btn-sheen:hover::before,
+.btn-sheen:focus-visible::before {
+  animation: btn-sheen-pass 700ms var(--ease-sheen) 1 both;
+}
+
+@keyframes btn-sheen-pass {
+  0% {
+    opacity: 0;
+    transform: translateX(-140%) skewX(-18deg);
+  }
+
+  12% { opacity: 1; }
+
+  100% {
+    opacity: 0;
+    transform: translateX(360%) skewX(-18deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-sheen::before {
+    display: none;
+    animation: none;
+  }
+}

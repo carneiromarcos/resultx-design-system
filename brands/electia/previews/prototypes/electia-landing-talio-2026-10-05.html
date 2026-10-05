@@ -1,17 +1,19 @@
 <!doctype html>
 <!--
   Protótipo de landing do Electia — 05/10/2026.
-  Evolui talio-electia-home-prototype-2026-10.html (01/10) para validar, antes
-  de entrarem em components/, os componentes extraídos da referência Talio
-  (docs/research/talio-componentes-2026-10-05.md, seções 1 a 3):
-    .header-float   navbar flutuante; [data-scrolled] vem de IntersectionObserver
-    .brand-orb      componente pronto (components/brand-orb.css), só consumido.
-                    Em repouso; anima até 5 s ao aparecer e só fica viva com
-                    data-state="active", enquanto o Nexus responde (WCAG 2.2.2).
-    .cta-panel      painel escuro dentro da página clara + .btn-sheen
-    .cta-dock       barra de CTA fixa no móvel, entre o CTA do hero e o final
-  Cada bloco de CSS abaixo marcado "candidato" está escrito só com tokens e já
-  no formato de components/*.css. O bloco "página" é do protótipo e não sobe.
+  Evolui talio-electia-home-prototype-2026-10.html (01/10) e validou os
+  componentes extraídos da referência Talio (docs/research/
+  talio-componentes-2026-10-05.md). Desde o lote P eles moram no DS, e esta
+  página só os consome:
+    .header-float   components/header-float.css + dist/header-float.js
+    .menu-drawer    components/menu-drawer.css  + dist/menu-drawer.js
+    .btn-sheen      components/btn-sheen.css
+    .cta-panel      components/cta-panel.css (data-theme="dark" no elemento)
+    .cta-dock       components/cta-dock.css     + dist/cta-dock.js
+    .brand-orb      components/brand-orb.css. Em repouso; anima até 5 s ao
+                    aparecer e só fica viva com data-state="active", enquanto
+                    o Nexus responde (WCAG 2.2.2).
+  O CSS abaixo é só da página (marca, seções, vitrine do Nexus).
 -->
 <html lang="pt-BR" data-theme="light">
 <head>
@@ -27,15 +29,9 @@
   <link rel="stylesheet" href="../../tokens/ds-bridge.css">
   <link rel="stylesheet" href="../../../../dist/components.min.css">
   <style>
-    /* ── Ajustes de tema do protótipo ─────────────────────────────────────
-       O anel de foco do DS é o roxo a 50 % (≈ 2,4:1 sobre branco, abaixo dos
-       3:1 de elemento não textual). Aqui o anel usa a tinta de texto do
-       accent, medida em AA nos dois temas. Achado para levar ao DS. */
-    :root, [data-theme] { --focus-ring-color: var(--accent-primary-text); }
-    /* Achado para o DS: --text-muted do tema escuro (#6e7681 sobre #0b0e14)
-       dá 4,2:1 — não passa AA (4,5:1) para texto pequeno. Os textos
-       auxiliares deste protótipo (rótulos da gaveta, aviso do Nexus) usam
-       --text-secondary, que passa nos dois temas. */
+    /* ── Escala da página ──────────────────────────────────────────────────
+       O anel de foco vem da ponte Electia (sólido, desde a #82); não há
+       override de tema nesta página. */
     :root {
       --landing-page: 1180px;
       --landing-gutter: var(--space-4);
@@ -43,219 +39,17 @@
       --landing-h2: clamp(2rem, 1.3rem + 2.6vw, 3rem);
       --landing-section: clamp(4.5rem, 3rem + 5vw, 7.5rem);
       --ease-brand: var(--spring-smooth);
-      --ease-sheen: cubic-bezier(0.22, 0.61, 0.36, 1); /* travessia regular; o spring gastava a passada em ~150 ms */
+      --cta-panel-title-size: var(--landing-h2); /* o .cta-panel do DS segue a escala da página */
     }
 
-    /* ════════════════════════════════════════════════════════════════════
-       CANDIDATO components/header-float.css
-       Pílula sticky afastada do topo. Sem scroll listener: um sentinela de
-       24 px no topo do <body> é observado por IntersectionObserver e, quando
-       sai da tela, o script põe [data-scrolled] no header. A sombra extra
-       mora num ::after e só anima opacity.
-       ════════════════════════════════════════════════════════════════════ */
-    .header-float-sentinel { position: absolute; inset: 0 0 auto; block-size: 24px; pointer-events: none; }
-    .header-float {
-      position: sticky; top: var(--space-4); z-index: 40;
-      inline-size: min(1400px, calc(100% - 2 * var(--landing-gutter)));
-      margin: var(--space-4) auto 0;
-    }
-    .header-float-bar {
-      position: relative;
-      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--space-4);
-      min-block-size: var(--header-height);
-      padding-inline: var(--space-5) var(--space-3);
-      border: 1px solid var(--glass-standard-border);
-      border-radius: var(--radius-xl);
-      background: var(--glass-strong-bg); /* .92 no claro: com o painel escuro passando por baixo, o .75 dava 4,27:1 */
-      backdrop-filter: blur(var(--glass-strong-blur)) saturate(1.4);
-      box-shadow: var(--elevation-1);
-    }
-    .header-float-bar::after {
-      content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
-      box-shadow: var(--elevation-3); opacity: 0; pointer-events: none;
-      transition: opacity var(--transition-base);
-    }
-    .header-float[data-scrolled] .header-float-bar::after { opacity: 1; }
-    .header-float-brand { display: inline-flex; align-items: center; gap: var(--space-2); justify-self: start; color: var(--text-primary); text-decoration: none; border-radius: var(--radius-md); }
-    .header-float-brand strong { font: 600 1.3rem/1 var(--font-mono); letter-spacing: -0.06em; }
-    .header-float-brand span { color: var(--text-secondary); font: 600 var(--text-xs)/1 var(--font-heading); }
-    .header-float-links { display: flex; gap: var(--space-1); }
-    .header-float-links a {
-      padding: var(--space-2) var(--space-3); border-radius: var(--radius-md);
-      color: var(--text-secondary); font-size: var(--text-sm); font-weight: var(--font-medium); text-decoration: none;
-      transition: color var(--transition-fast), background-color var(--transition-fast);
-    }
-    .header-float-links a:hover { color: var(--text-primary); background: var(--accent-primary-muted); }
-    .header-float-actions { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-2); }
-    .header-float-icon {
-      display: inline-grid; place-items: center; inline-size: 36px; block-size: 36px; padding: 0;
-      border: 1px solid var(--border-default); border-radius: var(--radius-full);
-      background: transparent; color: var(--text-primary); cursor: pointer; font-size: 1rem;
-    }
-    .header-float-icon:hover { border-color: var(--accent-primary); color: var(--accent-primary-text); }
-    .header-float-menu { display: none; }
-    .header-float-actions .btn { text-decoration: none; white-space: nowrap; }
-    .header-float a:focus-visible, .header-float-icon:focus-visible,
-    .header-float-drawer a:focus-visible, .header-float-drawer button:focus-visible {
-      outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset);
-    }
-
-    /* Gaveta: irmã do header (o backdrop-filter da pílula prenderia um
-       position: fixed filho). Fechada = visibility hidden, fora do foco. */
-    .header-float-scrim {
-      position: fixed; inset: 0; z-index: 50; background: var(--bg-overlay);
-      opacity: 0; visibility: hidden;
-      transition: opacity var(--transition-base), visibility 0s linear 250ms;
-    }
-    .header-float-drawer {
-      position: fixed; inset-block: 0; inset-inline-end: 0; z-index: 51;
-      display: flex; flex-direction: column; gap: var(--space-4);
-      inline-size: min(320px, 86vw);
-      padding-block-start: calc(var(--space-4) + env(safe-area-inset-top));
-      background: var(--bg-base); border-inline-start: 1px solid var(--border-default); box-shadow: var(--elevation-4);
-      transform: translateX(100%); visibility: hidden;
-      transition: transform 280ms var(--ease-brand), visibility 0s linear 280ms;
-    }
-    .header-float-drawer[data-open] { transform: none; visibility: visible; transition: transform 280ms var(--ease-brand); }
-    .header-float-scrim[data-open] { opacity: 1; visibility: visible; transition: opacity var(--transition-base); }
-    /* Cabeçalho fixo (Fechar sempre à vista); só o corpo rola. Em paisagem
-       baixa (667×375) o conteúdo passa da altura e precisa de rolagem. */
-    .header-float-drawer-head { flex: none; display: flex; align-items: center; justify-content: space-between; padding-inline: var(--space-5); }
-    .header-float-drawer-body {
-      flex: 1 1 auto; min-block-size: 0;
-      display: flex; flex-direction: column; gap: var(--space-6);
-      overflow-y: auto; overscroll-behavior: contain;
-      padding: var(--space-2) var(--space-5) calc(var(--space-6) + env(safe-area-inset-bottom));
-      scroll-padding-block: var(--space-4);
-    }
-    .header-float-drawer-label { color: var(--text-secondary); font-size: var(--text-xs); font-weight: var(--font-semibold); letter-spacing: 0.12em; text-transform: uppercase; }
-    .header-float-drawer nav { display: grid; }
-    .header-float-drawer nav a {
-      display: flex; align-items: center; min-block-size: 48px; border-bottom: 1px solid var(--border-subtle);
-      color: var(--text-primary); font: 600 var(--text-lg) var(--font-heading); text-decoration: none;
-    }
-    .header-float-drawer-actions { display: grid; gap: var(--space-3); margin-block-start: auto; }
-    .header-float-drawer-actions .btn { inline-size: 100%; min-block-size: 48px; text-decoration: none; }
-
-    @media (max-width: 1023.98px) {
-      .header-float { top: var(--space-3); margin-block-start: var(--space-3); }
-      .header-float-bar { grid-template-columns: 1fr auto; padding-inline: var(--space-4) var(--space-2); }
-      .header-float-links, .header-float-actions .btn { display: none; }
-      .header-float-menu { display: inline-grid; }
-      .header-float-icon { inline-size: 44px; block-size: 44px; }
-    }
-    /* Abaixo de 360 px marca + dois controles de 44 px não cabiam (325 px em
-       320). Pílula mais larga, respiro menor e o "by emprega+" sai só da
-       vista: o nome acessível do link (aria-label) continua com ele. */
-    @media (max-width: 359.98px) {
-      .header-float { inline-size: calc(100% - 2 * var(--space-2)); }
-      .header-float-bar { gap: var(--space-2); padding-inline: var(--space-3) var(--space-1); }
-      .header-float-actions { gap: var(--space-1); }
-      .header-float .header-float-brand span:not(.brand-orb) { display: none; }
-    }
-
-    /* ════════════════════════════════════════════════════════════════════
-       CANDIDATO components/btn-sheen.css
-       Um reflexo de uma passada (~700 ms) no hover/foco. Sem loop em repouso.
-       Um efeito por pseudo-elemento: o ::after é só o reflexo — nada mais
-       disputa esse slot (o erro da Talio). Sob reduced-motion, não existe.
-       ════════════════════════════════════════════════════════════════════ */
-    .btn-sheen { position: relative; overflow: hidden; isolation: isolate; }
-    .btn-sheen::after {
-      content: ''; position: absolute; inset-block: 0; inset-inline-start: 0; z-index: -1;
-      inline-size: 45%;
-      /* Pico de 8 %: o reflexo passa sob o rótulo, então o fundo mais claro
-         que ele cria ainda precisa de 4,5:1 com o texto. Medido quadro a
-         quadro sobre o pior fundo (hover #8842d6): 30 % dava 3,34:1. */
-      background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--text-on-color) 8%, transparent), transparent);
-      transform: translateX(-140%) skewX(-18deg); opacity: 0; pointer-events: none;
-    }
-    .btn-sheen:hover::after, .btn-sheen:focus-visible::after { animation: btn-sheen-pass 700ms var(--ease-sheen) 1 both; }
-    @keyframes btn-sheen-pass {
-      0% { opacity: 0; transform: translateX(-140%) skewX(-18deg); }
-      12% { opacity: 1; }
-      100% { opacity: 0; transform: translateX(360%) skewX(-18deg); }
-    }
-
-    /* ════════════════════════════════════════════════════════════════════
-       CANDIDATO components/cta-panel.css
-       Painel escuro nos dois temas: o elemento leva data-theme="dark", então
-       os tokens do DS (e a ponte da marca) resolvem no escopo escuro mesmo
-       dentro da página clara. Fundo em camadas: base + dois washes roxos.
-       ════════════════════════════════════════════════════════════════════ */
-    .cta-panel {
-      position: relative; overflow: hidden; isolation: isolate;
-      display: grid; justify-items: center; gap: var(--space-5);
-      padding: clamp(var(--space-12), 6vw, var(--space-20)) clamp(var(--space-5), 5vw, var(--space-12));
-      border: 1px solid var(--border-default); border-radius: var(--radius-xl);
-      background:
-        radial-gradient(60% 70% at 100% 0%, color-mix(in srgb, var(--accent-primary) 22%, transparent), transparent 70%),
-        radial-gradient(60% 70% at 0% 100%, color-mix(in srgb, var(--accent-primary) 16%, transparent), transparent 70%),
-        var(--bg-base);
-      box-shadow: var(--elevation-4);
-      color: var(--text-primary); text-align: center;
-    }
-    .cta-panel::after { /* filete inferior da marca */
-      content: ''; position: absolute; inset: auto 0 0; block-size: 3px;
-      background: linear-gradient(90deg, transparent, var(--accent-primary) 30%, var(--accent-primary-text) 50%, var(--accent-primary) 70%, transparent);
-    }
-    .cta-panel-title { max-inline-size: 24ch; font: 600 var(--landing-h2)/1.1 var(--font-heading); letter-spacing: -0.04em; text-wrap: balance; }
-    .cta-panel-title-tone {
-      display: block;
-      background: linear-gradient(180deg, var(--text-primary), var(--accent-primary-text));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
-    }
-    .cta-panel-lead { max-inline-size: 56ch; color: var(--text-secondary); font-size: var(--text-lg); line-height: var(--leading-relaxed); }
-    .cta-panel-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-block-start: var(--space-2); }
-    .cta-panel-actions .btn { min-block-size: 48px; padding-inline: var(--space-8); font-size: var(--text-base); font-weight: var(--font-semibold); text-decoration: none; }
-    .cta-panel .btn-secondary {
-      background: color-mix(in srgb, var(--accent-primary) 14%, transparent);
-      border-color: color-mix(in srgb, var(--accent-primary-text) 55%, transparent);
-    }
-    .cta-panel .btn-secondary:hover { border-color: var(--accent-primary-text); color: var(--text-primary); }
-    .cta-panel-proof { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2) var(--space-5); padding: 0; list-style: none; color: var(--text-secondary); font-size: var(--text-xs); }
-    .cta-panel-proof li { display: inline-flex; align-items: center; gap: var(--space-2); }
-    .cta-panel-proof li::before { content: '✓'; color: var(--accent-primary-text); font-weight: var(--font-bold); }
-
-    @media (max-width: 639.98px) {
-      .cta-panel-actions { display: grid; inline-size: 100%; }
-      .cta-panel-lead { font-size: var(--text-base); }
-    }
-
-    /* ════════════════════════════════════════════════════════════════════
-       CANDIDATO components/cta-dock.css
-       Só no móvel. Aparece quando o CTA do hero sai da tela e some quando o
-       CTA final entra (IntersectionObserver). Escondida = visibility hidden,
-       então sai da ordem de foco e da árvore de acessibilidade.
-       ════════════════════════════════════════════════════════════════════ */
-    .cta-dock {
-      position: fixed; z-index: 30;
-      inset-inline: var(--space-3);
-      inset-block-end: calc(var(--space-3) + env(safe-area-inset-bottom));
-      display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
-      padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
-      border: 1px solid var(--glass-standard-border); border-radius: var(--radius-xl);
-      background: var(--glass-strong-bg); backdrop-filter: blur(var(--glass-strong-blur));
-      box-shadow: var(--elevation-3);
-      transform: translateY(calc(100% + var(--space-6))); opacity: 0; visibility: hidden;
-      transition: transform 260ms var(--ease-brand), opacity 200ms ease, visibility 0s linear 260ms;
-    }
-    .cta-dock[data-visible] { transform: none; opacity: 1; visibility: visible; transition: transform 260ms var(--ease-brand), opacity 200ms ease; }
-    .cta-dock-text { color: var(--text-primary); font-size: var(--text-sm); font-weight: var(--font-medium); line-height: var(--leading-snug); }
-    .cta-dock .btn { flex: none; text-decoration: none; font-weight: var(--font-semibold); }
-    @media (min-width: 1024px) { .cta-dock { display: none; } }
-
-    /* ── Reduced motion dos quatro candidatos (a orb já trata o seu) ───── */
-    @media (prefers-reduced-motion: reduce) {
-      .btn-sheen::after { animation: none !important; display: none; }
-      .header-float-bar::after, .header-float-drawer, .header-float-scrim, .cta-dock { transition: none !important; }
-    }
+    /* ── Componentes do DS: só o que é desta marca ─────────────────────── */
+    .header-float-brand strong { font: 600 1.3rem/1 var(--font-mono); letter-spacing: -0.06em; } /* wordmark electia */
+    .menu-drawer-label { letter-spacing: 0.12em; }
 
     /* ════════════════════════════════════════════════════════════════════
        PÁGINA — só do protótipo
        ════════════════════════════════════════════════════════════════════ */
     body { position: relative; display: flow-root; background: var(--bg-surface-1); } /* flow-root: a margem da pílula não colapsa no body e o sentinela fica no y = 0 */
-    html[data-menu-open] { overflow: hidden; }
     .wrap { inline-size: min(var(--landing-page), calc(100% - 2 * var(--landing-gutter))); margin-inline: auto; }
     .skip-link { position: absolute; top: var(--space-2); left: var(--space-2); z-index: 60; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); background: var(--bg-base); color: var(--text-primary); transform: translateY(-200%); }
     .skip-link:focus { transform: none; }
@@ -313,9 +107,8 @@
     .faq details[open] summary::after { content: '−'; }
     .faq summary:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
     .faq details p { padding-block-end: var(--space-5); color: var(--text-secondary); font-size: var(--text-sm); }
-    .site-footer { padding-block: var(--space-8) calc(var(--space-24) + env(safe-area-inset-bottom)); border-top: 1px solid var(--border-default); }
+    .site-footer { padding-block: var(--space-8); border-top: 1px solid var(--border-default); } /* o .cta-dock reserva o próprio lugar no fim */
     .site-footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); color: var(--text-secondary); font-size: var(--text-sm); }
-    @media (min-width: 1024px) { .site-footer { padding-block-end: var(--space-8); } }
 
     @media (max-width: 1023.98px) {
       .hero-grid { grid-template-columns: 1fr; }
@@ -330,14 +123,14 @@
   </style>
 </head>
 <body>
-  <div class="header-float-sentinel" data-header-sentinel aria-hidden="true"></div>
+  <div class="header-float-sentinel" data-header-float-sentinel aria-hidden="true"></div>
   <a class="skip-link" href="#main">Pular para o conteúdo</a>
 
   <header class="header-float" data-header-float>
     <div class="header-float-bar">
       <a class="header-float-brand" href="#inicio" aria-label="electia by emprega+, início">
         <span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span>
-        <strong>electia</strong><span>by emprega+</span>
+        <strong>electia</strong><span class="header-float-brand-tag">by emprega+</span>
       </a>
       <nav class="header-float-links" aria-label="Navegação principal">
         <a href="#plataforma">Plataforma</a>
@@ -350,32 +143,32 @@
         <a class="btn btn-ghost btn-sm" href="#login">Login</a>
         <a class="btn btn-secondary btn-sm" href="#cta-final">Agendar demonstração</a>
         <a class="btn btn-primary btn-sm btn-sheen" href="#cta-final">Conheça o electia</a>
-        <button class="header-float-icon header-float-menu" type="button" data-menu-toggle aria-controls="menu-gaveta" aria-expanded="false" aria-label="Abrir menu"><span aria-hidden="true">☰</span></button>
+        <a class="header-float-icon header-float-menu" id="menu-abrir" href="#menu-gaveta" data-menu-drawer-toggle="menu-gaveta" aria-label="Abrir menu"><span aria-hidden="true">☰</span></a>
       </div>
     </div>
   </header>
 
-  <div class="header-float-drawer" id="menu-gaveta" role="dialog" aria-modal="true" aria-label="Menu">
-    <div class="header-float-drawer-head">
-      <span class="header-float-drawer-label">Navegue</span>
-      <button class="header-float-icon" type="button" data-menu-close aria-label="Fechar menu"><span aria-hidden="true">✕</span></button>
+  <section class="menu-drawer" id="menu-gaveta" aria-label="Menu" data-menu-drawer data-menu-drawer-media="(max-width: 1023.98px)">
+    <div class="menu-drawer-head">
+      <span class="menu-drawer-label">Navegue</span>
+      <a class="menu-drawer-close" href="#menu-abrir" data-menu-drawer-close aria-label="Fechar menu"><span aria-hidden="true">✕</span></a>
     </div>
-    <div class="header-float-drawer-body">
-    <nav aria-label="Navegação principal (móvel)">
-      <a href="#plataforma">Plataforma</a>
-      <a href="#nexus">Nexus</a>
-      <a href="#como-funciona">Como funciona</a>
-      <a href="#duvidas">Dúvidas</a>
-    </nav>
-    <div class="header-float-drawer-actions">
-      <span class="header-float-drawer-label">Conta</span>
-      <a class="btn btn-ghost" href="#login">Login</a>
-      <a class="btn btn-secondary" href="#cta-final">Agendar demonstração</a>
-      <a class="btn btn-primary" href="#cta-final">Conheça o electia</a>
+    <div class="menu-drawer-body">
+      <nav class="menu-drawer-nav" aria-label="Navegação principal (móvel)">
+        <a href="#plataforma">Plataforma</a>
+        <a href="#nexus">Nexus</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#duvidas">Dúvidas</a>
+      </nav>
+      <div class="menu-drawer-actions">
+        <span class="menu-drawer-label">Conta</span>
+        <a class="btn btn-ghost" href="#login">Login</a>
+        <a class="btn btn-secondary" href="#cta-final">Agendar demonstração</a>
+        <a class="btn btn-primary" href="#cta-final">Conheça o electia</a>
+      </div>
     </div>
-    </div>
-  </div>
-  <div class="header-float-scrim" data-menu-scrim></div>
+  </section>
+  <div class="menu-drawer-scrim" data-menu-drawer-scrim></div>
 
   <main id="main">
     <section class="hero" id="inicio" aria-labelledby="hero-title">
@@ -479,25 +272,22 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <a class="header-float-brand" href="#inicio" aria-label="electia by emprega+, voltar ao início"><span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span><strong>electia</strong><span>by emprega+</span></a>
+      <a class="header-float-brand" href="#inicio" aria-label="electia by emprega+, voltar ao início"><span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span><strong>electia</strong><span class="header-float-brand-tag">by emprega+</span></a>
       <span>Gestão comportamental com contexto.</span>
     </div>
   </footer>
 
-  <aside class="cta-dock" data-cta-dock aria-label="Atalho para demonstração">
+  <aside class="cta-dock" aria-label="Atalho para demonstração" data-cta-dock data-cta-dock-after="[data-hero-cta]" data-cta-dock-until="[data-cta-final]">
     <span class="cta-dock-text">Veja o electia com a sua equipe</span>
     <a class="btn btn-primary" href="#cta-final">Agendar demonstração</a>
   </aside>
 
+  <script src="../../../../dist/header-float.js" defer></script>
+  <script src="../../../../dist/menu-drawer.js" defer></script>
+  <script src="../../../../dist/cta-dock.js" defer></script>
   <script>
     (() => {
       const root = document.documentElement;
-
-      /* Navbar: [data-scrolled] quando o sentinela do topo sai da tela. */
-      const header = document.querySelector('[data-header-float]');
-      new IntersectionObserver(([entry]) => {
-        header.toggleAttribute('data-scrolled', !entry.isIntersecting);
-      }).observe(document.querySelector('[data-header-sentinel]'));
 
       /* Tema claro/escuro. O painel CTA tem data-theme próprio e não muda. */
       const themeButton = document.querySelector('[data-theme-toggle]');
@@ -506,40 +296,6 @@
         root.dataset.theme = next;
         themeButton.setAttribute('aria-label', next === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro');
         themeButton.firstElementChild.textContent = next === 'dark' ? '☼' : '☾';
-      });
-
-      /* Gaveta móvel: aria-expanded, Escape fecha, foco volta ao botão. */
-      const menuButton = document.querySelector('[data-menu-toggle]');
-      const drawer = document.getElementById(menuButton.getAttribute('aria-controls'));
-      const scrim = document.querySelector('[data-menu-scrim]');
-      const focusables = () => [...drawer.querySelectorAll('a[href], button')];
-      const setMenu = (open, { restoreFocus = true } = {}) => {
-        menuButton.setAttribute('aria-expanded', String(open));
-        menuButton.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
-        drawer.toggleAttribute('data-open', open);
-        scrim.toggleAttribute('data-open', open);
-        root.toggleAttribute('data-menu-open', open);
-        if (open) requestAnimationFrame(() => focusables()[0].focus());
-        else if (restoreFocus) menuButton.focus();
-      };
-      menuButton.addEventListener('click', () => setMenu(menuButton.getAttribute('aria-expanded') !== 'true'));
-      drawer.querySelector('[data-menu-close]').addEventListener('click', () => setMenu(false));
-      scrim.addEventListener('click', () => setMenu(false));
-      drawer.addEventListener('click', (event) => {
-        if (event.target.closest('a')) setMenu(false, { restoreFocus: false });
-      });
-      document.addEventListener('keydown', (event) => {
-        if (!drawer.hasAttribute('data-open')) return;
-        if (event.key === 'Escape') { setMenu(false); return; }
-        if (event.key !== 'Tab') return;
-        const items = focusables();
-        const first = items[0];
-        const last = items[items.length - 1];
-        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-      });
-      matchMedia('(min-width: 1024px)').addEventListener('change', (event) => {
-        if (event.matches && drawer.hasAttribute('data-open')) setMenu(false, { restoreFocus: false });
       });
 
       /* Nexus: a resposta só aparece quando o usuário pergunta. Sem JS ela já
@@ -573,22 +329,6 @@
           askButton.textContent = 'Perguntar de novo';
         }, NEXUS_RESPOSTA_MS);
       });
-
-      /* Dock: visível depois que o CTA do hero sobe para fora da tela e
-         enquanto o CTA final não estiver visível. */
-      const dock = document.querySelector('[data-cta-dock]');
-      const heroCta = document.querySelector('[data-hero-cta]');
-      const finalCta = document.querySelector('[data-cta-final]');
-      const state = { heroPassed: false, finalVisible: false };
-      const syncDock = () => dock.toggleAttribute('data-visible', state.heroPassed && !state.finalVisible);
-      new IntersectionObserver(([entry]) => {
-        state.heroPassed = !entry.isIntersecting && entry.boundingClientRect.top < 0;
-        syncDock();
-      }).observe(heroCta);
-      new IntersectionObserver(([entry]) => {
-        state.finalVisible = entry.isIntersecting;
-        syncDock();
-      }).observe(finalCta);
     })();
   </script>
 </body>

@@ -1,0 +1,138 @@
+/* ==========================================================================
+   Stage chip — etapa do funil de seleção
+   Docs: docs/components/stage-chip.md · Demo: demos/landing-kit.html
+
+   Lote P (05/10/2026). Etapas: Triagem, Entrevista, Oferta, Contratado,
+   Rejeitado — o vocabulário do DS. A referência (Talio) mostrou o erro a
+   evitar: duas etapas vizinhas com a mesma cor e nada além da cor.
+
+   Três camadas de leitura, para que nenhuma dependa só da cor:
+     1. texto     o nome da etapa, sempre visível
+     2. forma     um marcador por etapa (anel, meio-cheio, losango, visto, X)
+     3. cor       uma por etapa, nenhuma repetida
+
+   Cor: a escala semântica, com o neutro para a entrada do funil.
+     Triagem     --text-secondary  anel vazio      ainda não avaliado
+     Entrevista  --color-info      círculo meio    em andamento
+     Oferta      --color-warning   losango         decisão pendente
+     Contratado  --color-success   visto           fim positivo
+     Rejeitado   --color-error     X               fim negativo
+   O accent fica de fora de propósito: no tema claro do DS ele é azul, igual
+   a --color-info, e no Electia é o roxo de "selecionado/ativo".
+
+   Tinta do texto: a cor da etapa puxada para --text-primary (oklab). No
+   claro isso escurece, no escuro clareia — uma fórmula só, AA nos dois
+   temas (medido; ver a doc). O fundo é a cor da etapa a 12 %.
+
+   Anatomia
+     .stage-chip.stage-chip-{etapa}
+       ::before              marcador decorativo (a forma)
+       texto
+       .stage-chip-count     contagem opcional, em mono
+   Clicável? Use <a> ou <button> com a mesma classe: ganha hover, foco e
+   pressão. Como rótulo, é <span>.
+   ========================================================================== */
+
+.stage-chip {
+  --stage-color: var(--text-secondary);
+  --stage-ink: color-mix(in oklab, var(--stage-color) 60%, var(--text-primary));
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  min-block-size: 24px;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid color-mix(in srgb, var(--stage-color) 35%, transparent);
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--stage-color) 12%, transparent);
+  color: var(--stage-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-snug);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* O marcador: do tamanho do texto, cheio na tinta, a forma vem da etapa. */
+.stage-chip::before {
+  content: '';
+  flex: none;
+  inline-size: 0.8em;
+  block-size: 0.8em;
+  background: currentcolor;
+}
+
+.stage-chip-triagem { --stage-color: var(--text-secondary); }
+.stage-chip-entrevista { --stage-color: var(--color-info); }
+.stage-chip-oferta { --stage-color: var(--color-warning); }
+.stage-chip-contratado { --stage-color: var(--color-success); }
+.stage-chip-rejeitado { --stage-color: var(--color-error); }
+
+/* Anel vazio: entrou, ainda não foi avaliado. */
+.stage-chip-triagem::before {
+  border: 2px solid currentcolor;
+  border-radius: 50%;
+  background: transparent;
+}
+
+/* Meio cheio: em andamento. */
+.stage-chip-entrevista::before {
+  border: 2px solid currentcolor;
+  border-radius: 50%;
+  background: linear-gradient(90deg, currentcolor 50%, transparent 50%);
+}
+
+/* Losango: decisão pendente. */
+.stage-chip-oferta::before {
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+/* Visto: fim positivo. */
+.stage-chip-contratado::before {
+  clip-path: polygon(0 55%, 15% 40%, 38% 63%, 85% 12%, 100% 27%, 38% 93%);
+}
+
+/* X: fim negativo. */
+.stage-chip-rejeitado::before {
+  clip-path: polygon(
+    18% 0, 50% 32%, 82% 0, 100% 18%, 68% 50%, 100% 82%,
+    82% 100%, 50% 68%, 18% 100%, 0 82%, 32% 50%, 0 18%
+  );
+}
+
+.stage-chip-count {
+  padding-inline-start: var(--space-1-5);
+  border-inline-start: 1px solid color-mix(in srgb, var(--stage-color) 35%, transparent);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--font-semibold);
+}
+
+/* ── Quando o chip é alvo (filtro do funil, coluna do kanban) ───────────── */
+.stage-chip:is(a, button) {
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.stage-chip:is(a, button):hover {
+  background: color-mix(in srgb, var(--stage-color) 20%, transparent);
+}
+
+.stage-chip:is(a, button):active { transform: scale(0.96); }
+
+.stage-chip:is(a, button):focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.stage-chip:is(a, button)[aria-pressed='true'],
+.stage-chip:is(a, button)[aria-current] {
+  border-color: var(--stage-ink);
+  background: color-mix(in srgb, var(--stage-color) 20%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-chip:is(a, button) { transition: none; }
+  .stage-chip:is(a, button):active { transform: none; }
+}

@@ -148,6 +148,26 @@ A full-width button variant designed for social login (Google, GitHub, etc.). Al
 - `--color-success` (success variant)
 - `--shadow-glow` (primary hover glow)
 
+## Reflexo `.btn-sheen`
+
+Modificador de `.btn` (lote P, 05/10/2026; `components/btn-sheen.css`). Uma faixa de luz inclinada atravessa o botão **uma vez** quando ele recebe `:hover` ou `:focus-visible`. Decisão do Marcos: **nunca em loop**, porque dois CTAs pulsando lado a lado competem com o título da seção.
+
+```html
+<a class="btn btn-primary btn-sheen" href="#agendar">Agendar demonstração</a>
+```
+
+| Medida | Valor | Por quê |
+|---|---|---|
+| Pico | 8 % de `--text-on-color` | O reflexo passa sob o rótulo. A 30 % o texto do Electia caía a 3,34:1 no hover |
+| Duração | 700 ms, 1 iteração | Lê-se como uma passada, sem chamar atenção depois |
+| Curva | `--ease-sheen` (`cubic-bezier(0.22, 0.61, 0.36, 1)`) | As molas do DS chegam a ~90 % do trajeto no primeiro quinto do tempo, o que vira um clarão de ~150 ms |
+| Pseudo-elemento | `::before` | O `::after` de `.btn` é o spinner de `.btn-loading`. Um efeito por pseudo-elemento |
+| Reduced motion | `display: none` | O reflexo não existe |
+
+**Contraste medido quadro a quadro** (Chrome, 60 quadros/s, pior quadro contra o fundo de hover clareado pelo reflexo): primário do Electia **4,77:1** no pior quadro (5,53:1 em repouso), primário do DS 7,19:1 no claro, secundário no painel escuro 8,63:1 ou mais. Todos ficam acima de 4,5:1 o percurso inteiro.
+
+Use em CTAs de landing (hero, `.cta-panel`, `.header-float`). Não use em botões de app, onde o movimento a cada hover cansa.
+
 ## Do / Don't
 
 | Do | Don't |

@@ -1,0 +1,170 @@
+/* ==========================================================================
+   CTA panel — seção de fechamento em contraste
+   Docs: docs/components/cta-panel.md · Demo: demos/landing-kit.html
+
+   Promovido do protótipo da #80 (lote P, 05/10/2026). Um painel escuro
+   dentro da página clara, para o último convite da landing.
+
+   O escuro NÃO está neste arquivo: o elemento leva data-theme="dark", e os
+   tokens do DS (e a ponte da marca, quando houver) resolvem no escopo
+   escuro só ali dentro. Por isso não há cor nenhuma aqui — só tokens — e o
+   mesmo painel serve Electia (roxo), Emprega+ e Xscore sem variação.
+
+   Anatomia
+     .cta-panel[data-theme="dark"]
+       (.brand-orb opcional, se o convite é do agente de IA)
+       .cta-panel-title         título (+ .cta-panel-title-tone, meio-tom)
+       .cta-panel-lead          apoio
+       .cta-panel-actions       .btn-primary + .btn-secondary (+ .btn-sheen)
+       .cta-panel-proof         selos curtos de confiança (ul)
+
+   Fundo em camadas: a base do tema + dois washes do accent. O filete da
+   marca corre no pé, num ::after decorativo.
+   ========================================================================== */
+
+.cta-panel {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-5);
+  overflow: hidden;
+  isolation: isolate;
+  padding:
+    clamp(var(--space-12), 6vw, var(--space-20))
+    clamp(var(--space-5), 5vw, var(--space-12));
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(
+      60% 70% at 100% 0%,
+      color-mix(in srgb, var(--accent-primary) 22%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      60% 70% at 0% 100%,
+      color-mix(in srgb, var(--accent-primary) 16%, transparent),
+      transparent 70%
+    ),
+    var(--bg-base);
+  box-shadow: var(--elevation-4);
+  color: var(--text-primary);
+  text-align: center;
+}
+
+/* Filete inferior da marca. */
+.cta-panel::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  block-size: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent-primary) 30%,
+    var(--accent-primary-text) 50%,
+    var(--accent-primary) 70%,
+    transparent
+  );
+  pointer-events: none;
+}
+
+.cta-panel-title {
+  max-inline-size: 24ch;
+  font-family: var(--font-heading);
+  /* Ajustável de fora: a página define --cta-panel-title-size em qualquer
+     ancestral (ex.: :root) para casar com a própria escala de títulos. */
+  font-size: var(--cta-panel-title-size, clamp(var(--text-3xl), 1.3rem + 2.6vw, var(--text-display)));
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+/* Meio-tom: gradiente vertical do texto para a tinta do accent. As duas
+   pontas são tintas de texto do tema escuro (AA sobre --bg-base). */
+.cta-panel-title-tone {
+  display: block;
+  background: linear-gradient(180deg, var(--text-primary), var(--accent-primary-text));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.cta-panel-lead {
+  max-inline-size: 56ch;
+  color: var(--text-secondary);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+}
+
+.cta-panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-block-start: var(--space-2);
+}
+
+.cta-panel-actions .btn {
+  min-block-size: 48px;
+  padding-inline: var(--space-8);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+}
+
+/* O secundário do DS é --bg-base com borda neutra: no painel ele some no
+   fundo. Aqui ganha um véu do accent e borda na tinta do accent. */
+.cta-panel .btn-secondary {
+  background: color-mix(in srgb, var(--accent-primary) 14%, transparent);
+  border-color: color-mix(in srgb, var(--accent-primary-text) 55%, transparent);
+  color: var(--text-primary);
+}
+
+.cta-panel .btn-secondary:hover {
+  border-color: var(--accent-primary-text);
+  color: var(--text-primary);
+}
+
+.cta-panel .btn-secondary:active {
+  background: color-mix(in srgb, var(--accent-primary) 24%, transparent);
+}
+
+.cta-panel .btn-secondary:focus-visible {
+  outline: var(--focus-ring-width) solid var(--accent-primary-text);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.cta-panel-proof {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+}
+
+.cta-panel-proof li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* O "/ ''" tira o glifo da leitura: a lista já tem nome e itens. */
+.cta-panel-proof li::before {
+  content: '✓' / '';
+  color: var(--accent-primary-text);
+  font-weight: var(--font-bold);
+}
+
+@media (max-width: 639.98px) {
+  .cta-panel-actions {
+    display: grid;
+    inline-size: 100%;
+  }
+
+  .cta-panel-lead { font-size: var(--text-base); }
+}

@@ -74,6 +74,43 @@
   gap: var(--space-3);
 }
 
+/* Compacta (lote P, 05/10/2026): KPI denso para moldura de demo e painéis
+   com muitos números. Sem elevação nem altura mínima; valor em mono para os
+   algarismos alinharem entre cartões vizinhos. Rótulo e comparação em
+   --text-secondary: no escuro o --text-muted dá 4,2:1, abaixo de AA para
+   texto deste tamanho. */
+.dl-statcard--compact {
+  min-height: 0;
+  padding: var(--space-3);
+  gap: var(--space-2);
+  box-shadow: none;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+/* Cartão que leva a um detalhe: <a> ou <button> com a classe. */
+.dl-statcard--compact:is(a, button) {
+  color: inherit;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+.dl-statcard--compact:hover {
+  border-color: var(--border-default);
+  box-shadow: none;
+}
+.dl-statcard--compact .dl-statcard-label,
+.dl-statcard--compact .dl-statcard-compare {
+  color: var(--text-secondary);
+}
+.dl-statcard--compact .dl-statcard-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+.dl-statcard--compact:is(a, button):active {
+  transform: scale(0.98);
+}
+
 /* ══════════════════════════════════════════════════════════════════════════
    2. COIN (icon affordance)
    ══════════════════════════════════════════════════════════════════════════ */
@@ -487,6 +524,9 @@
   .dl-statcard,
   .dl-sparkline-bar {
     transition: none;
+  }
+  .dl-statcard--compact:is(a, button):active {
+    transform: none;
   }
 }
 

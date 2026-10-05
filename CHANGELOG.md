@@ -5,6 +5,42 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Added — lote P: componentes de landing promovidos do protótipo da #80 (05/10/2026)
+
+Seis arquivos novos em `components/` (importados em `components.css`, publicados
+em `files`), três scripts em `dist/` (no mapa de `exports`) e uma variante em
+`data-cards.css`. Só tokens, dois temas, movimento só em `transform`/`opacity`,
+tudo desligado sob `prefers-reduced-motion`. Doc em `docs/components/`, demo em
+`demos/landing-kit.html`, capturas e medições em `docs/research/assets/lote-p-2026-10-05/`.
+
+- `.header-float` (`header-float.css`, `dist/header-float.js`): navbar flutuante
+  arredondada em `--glass-strong-bg`. A sombra de destaque só com `[data-scrolled]`,
+  que o script põe por `IntersectionObserver` numa sentinela (sem scroll handler).
+  Abaixo de 360 px a pílula compacta: `scrollWidth` = largura em 320 px.
+- `.menu-drawer` (`menu-drawer.css`, `dist/menu-drawer.js`): gaveta de menu própria
+  (não reaproveita `.sidebar-overlay`). `role=dialog` modal, botão com
+  `aria-expanded`/`aria-controls`, Escape fecha e devolve o foco, Tab preso, corpo
+  rolável (667×375 e 320×320), trava a rolagem do fundo. Sem JS abre por `:target`.
+- `.btn-sheen` (`btn-sheen.css`): reflexo de uma passada em `:hover`/`:focus-visible`,
+  700 ms, pico de 8 % de `--text-on-color`, nunca em loop. Pior quadro medido 4,77:1.
+- `.cta-panel` (`cta-panel.css`): seção de fechamento escura via `data-theme="dark"`
+  no próprio elemento; `--cta-panel-title-size` ajustável por ancestral.
+- `.cta-dock` (`cta-dock.css`, `dist/cta-dock.js`): barra de CTA do celular, sticky
+  no fim do fluxo (reserva o próprio lugar), aparece quando o CTA do hero sai por
+  cima, some no desktop, respeita a área segura.
+- `.stage-chip` (`stage-chip.css`): etapas Triagem, Entrevista, Oferta, Contratado e
+  Rejeitado com cor, forma e nome; cores semânticas sem repetir (o accent fica de
+  fora); tinta `color-mix` com `--text-primary`, AA medido nos dois temas (5,80:1 no pior).
+- `.dl-statcard--compact` (`data-cards.css`): KPI denso, `--space-3`, valor mono
+  `--text-xl`, sem elevação, rótulo em `--text-secondary`.
+- Token `--ease-sheen` no `:root` de `tokens/tokens.css`: a curva de travessia do
+  reflexo (as molas gastavam a passada em ~150 ms).
+- `tests/lib/css.js`: parser de regras compartilhado pelas suítes novas.
+
+O protótipo `brands/electia/previews/prototypes/electia-landing-talio-2026-10-05.html`
+passou a consumir os componentes do DS: os blocos CANDIDATO e o JS de header,
+gaveta e dock saíram da página.
+
 ### Added — `.brand-orb`, a orb dos agentes de IA (decisão de 05/10/2026)
 
 `components/brand-orb.css` (importado em `components.css`): orb animada só em
