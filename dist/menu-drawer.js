@@ -7,9 +7,10 @@
  *
  * API:
  *   ResultXMenuDrawer.init(root)  — enhance every [data-menu-drawer]
- *   ResultXMenuDrawer.open(el)
+ *   ResultXMenuDrawer.open(el[, invocador])   — invocador: where focus
+ *                                               returns on close
  *   ResultXMenuDrawer.close(el)
- *   ResultXMenuDrawer.toggle(el)
+ *   ResultXMenuDrawer.toggle(el[, invocador])
  *
  * Markup (works without this script — see "Without JavaScript"):
  *   <a class="header-float-icon header-float-menu" id="menu-abrir"
@@ -40,10 +41,19 @@
  *   - Opening moves focus to the first focusable item in the same frame (the
  *     CSS flips visibility instantly on open for this reason).
  *   - Tab and Shift+Tab are trapped inside while it is open.
- *   - Escape or the close button closes and returns focus to the toggle.
- *     The scrim closes too.
+ *   - Escape or the close button closes and returns focus to the toggle
+ *     that opened it (event.currentTarget, never document.activeElement:
+ *     Safari does not focus a clicked button, and with two toggles focus
+ *     would go back to the wrong one). Opened through the API without an
+ *     invoker, focus returns to whatever had it (if outside the drawer) or
+ *     to the first toggle. The scrim closes too.
  *   - Following a link inside closes it WITHOUT pulling focus back, so focus
  *     lands where the link goes.
+ *   - Closed = [inert], set the moment closing starts. The CSS keeps the
+ *     panel visible for the 280 ms exit; inert keeps it out of Tab order and
+ *     out of the accessibility tree during that slide. Removed on open,
+ *     before focus moves in. Only the script sets it, so the no-JS :target
+ *     fallback is unaffected.
  *   - Page scroll is locked on <html> while open and restored, not zeroed.
  *   - Optional data-menu-drawer-media closes the drawer when the query stops
  *     matching (e.g. the window grows into the desktop layout).
@@ -138,14 +148,24 @@
     );
   }
 
-  function open(el) {
+  /* Para onde o foco volta quando a gaveta é aberta pela API, sem um
+     gatilho conhecido: quem tinha o foco, se ele estiver fora da gaveta;
+     senão, o primeiro gatilho. */
+  function invocadorPadrao(el) {
+    var ativo = document.activeElement;
+    if (ativo && ativo !== document.body && !el.contains(ativo)) return ativo;
+    return gatilhosDe(el)[0] || null;
+  }
+
+  /* invocador: o gatilho que abriu (event.currentTarget). Não dá para
+     confiar em document.activeElement: no Safari o clique não foca o botão,
+     e com dois gatilhos o foco voltaria para o errado. */
+  function open(el, invocador) {
     if (isOpen(el)) return;
 
-    /* No Safari o clique não foca o botão, e activeElement fica no <body>.
-       Nesse caso o foco volta para o primeiro botão da gaveta. */
-    var ativo = document.activeElement;
-    el._devolverFocoPara =
-      ativo && ativo !== document.body ? ativo : gatilhosDe(el)[0] || null;
+    el._devolverFocoPara = invocador || invocadorPadrao(el);
+    /* Sai do inert ANTES de focar: um elemento inerte não recebe foco. */
+    el.removeAttribute('inert');
     el.setAttribute(OPEN_ATTR, '');
     scrimDe(el).setAttribute(OPEN_ATTR, '');
     marcarGatilhos(el, true);
@@ -172,6 +192,10 @@
     if (!isOpen(el)) return;
     var devolverFoco = !opcoes || opcoes.devolverFoco !== false;
 
+    /* Inerte já no início do fechamento. A visibilidade só vira hidden ao
+       fim da saída (280 ms); sem isto, um Tab logo depois do Escape entrava
+       na gaveta que ainda estava deslizando para fora. */
+    el.setAttribute('inert', '');
     el.removeAttribute(OPEN_ATTR);
     scrimDe(el).removeAttribute(OPEN_ATTR);
     marcarGatilhos(el, false);
@@ -188,9 +212,9 @@
     emit(el, false);
   }
 
-  function toggle(el) {
+  function toggle(el, invocador) {
     if (isOpen(el)) close(el);
-    else open(el);
+    else open(el, invocador);
   }
 
   function prenderTab(el, event) {
@@ -220,6 +244,9 @@
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-modal', 'true');
     if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
+    /* Fechada = inerte. Só o script põe o atributo: sem JS ele não existe e
+       o :target continua abrindo a gaveta. */
+    if (!isOpen(el)) el.setAttribute('inert', '');
 
     /* Se a página carregou com #id no endereço, o :target já não vale (o CSS
        só o aplica antes do READY_ATTR), e a gaveta começa fechada. */
@@ -229,8 +256,8 @@
       var gatilho = comoBotao(gatilhos[i]);
       gatilho.setAttribute('aria-controls', el.id);
       gatilho.setAttribute('aria-expanded', 'false');
-      gatilho.addEventListener('click', function () {
-        toggle(el);
+      gatilho.addEventListener('click', function (event) {
+        toggle(el, event.currentTarget);
       });
     }
 

@@ -100,6 +100,28 @@ describe('Estados', () => {
     },
   );
 
+  test('a marca dá feedback sem mexer na tinta nem na opacidade do texto', () => {
+    // #83: opacity 0,65 no :active levava o selo de 12 px a 3,15:1.
+    for (const estado of ['', ':hover', ':active', ':focus-visible']) {
+      const r = regra(fonte, `.header-float-brand${estado}`);
+      expect(valor(r, 'opacity')).toBeNull();
+      expect(valor(r, 'color')).toBe(estado ? null : 'var(--text-primary)');
+    }
+    expect(valor(regra(fonte, '.header-float-brand:hover'), 'text-decoration-line')).toBe('underline');
+    expect(valor(regra(fonte, '.header-float-brand:active'), 'transform')).toMatch(/^translateY/);
+  });
+
+  test('texto secundário sobre o vidro usa a tinta medida, não --text-secondary puro', () => {
+    // #83: o selo caía a 4,14:1 no escuro com um botão teal sob o vidro.
+    expect(valor(regra(fonte, '.header-float-bar'), '--header-float-ink-muted')).toMatch(
+      /^color-mix\(in oklab, var\(--text-secondary\) \d+%, var\(--text-primary\)\)$/,
+    );
+    expect(valor(regra(fonte, '.header-float-brand-tag'), 'color')).toBe(
+      'var(--header-float-ink-muted, var(--text-secondary))',
+    );
+    expect(valor(regra(fonte, '.header-float-links a'), 'color')).toBe('var(--header-float-ink-muted)');
+  });
+
   test('o foco usa o anel do DS', () => {
     const r = regra(fonte, '.header-float-icon:focus-visible');
     expect(valor(r, 'outline')).toContain('var(--focus-ring-color)');

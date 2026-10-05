@@ -59,12 +59,13 @@ section.menu-drawer#id[data-menu-drawer]   o painel (irmão do header)
 | Botão | o link vira `<button type="button">` (id, classes, `aria-label` e filhos vão junto) com `aria-controls` e `aria-expanded` |
 | Abrir | foco no primeiro item, no mesmo quadro. O CSS vira a visibilidade na hora ao abrir para isso |
 | Foco preso | Tab e Shift+Tab circulam só dentro da gaveta |
-| Fechar | Escape, o botão Fechar ou o véu. O foco volta ao botão que abriu (no Safari, onde o clique não foca o botão, volta ao primeiro botão da gaveta) |
-| Escolher um link | fecha sem puxar o foco de volta, para ele cair no destino |
+| Fechar | Escape, o botão Fechar ou o véu. O foco volta ao **gatilho que abriu** (`event.currentTarget` do clique), não a `document.activeElement`: no Safari o clique não foca o botão, e com dois gatilhos o foco voltaria ao errado (achado do Revisor na #83). Pela API, `open(el, invocador)` aceita o invocador; sem ele, volta a quem tinha o foco (se fora da gaveta) ou ao primeiro gatilho |
+| Escolher um link | fecha sem puxar o foco de volta ao gatilho; a navegação leva o ponto de partida do Tab até a âncora |
+| Inerte | fechada, a gaveta tem `[inert]`, posto **no início** do fechamento. O CSS a mantém visível durante a saída de 280 ms; o `inert` a tira da ordem do Tab e da árvore de acessibilidade nesse intervalo. Sai ao abrir, antes de o foco entrar. Só o script põe o atributo, então o `:target` sem JS não é afetado |
 | Fundo | a rolagem do `<html>` trava enquanto a gaveta está aberta e volta ao valor anterior, não a vazio |
 | Janela cresce | com `data-menu-drawer-media`, a gaveta fecha quando a consulta deixa de valer |
 | Evento | `menudrawertoggle` com `detail.open` |
-| API | `ResultXMenuDrawer.init(root)`, `.open(el)`, `.close(el)`, `.toggle(el)` |
+| API | `ResultXMenuDrawer.init(root)`, `.open(el[, invocador])`, `.close(el)`, `.toggle(el[, invocador])` |
 
 ## Sem o script
 

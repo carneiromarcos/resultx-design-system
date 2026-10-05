@@ -12,7 +12,7 @@
  * alcançáveis pelo mapa de exports e não persistem nada.
  */
 
-const { css, read, exists, texto, keyframes, propsDoKeyframe } = require('./lib/css');
+const { css, read, exists, texto, keyframes, propsDoKeyframe, regras, valor } = require('./lib/css');
 
 const PKG = JSON.parse(read('package.json'));
 
@@ -90,6 +90,27 @@ describe.each(ARQUIVOS)('Lote P — convenções de %s', (arquivo) => {
     const transicoes = [...fonte.matchAll(/transition(?:-property)?\s*:\s*([^;]+);/g)].map((m) => m[1]);
     for (const t of transicoes) {
       expect(t).not.toMatch(/\b(all|width|height|top|left|right|bottom|margin|padding|inset)\b/);
+    }
+  });
+
+  // Achado do Revisor na #83: opacity 0,8 / 0,65 no hover/active da marca
+  // baixava o selo de 12 px a 3,15:1 sobre o vidro. Opacidade parcial em
+  // elemento com texto muda o contraste medido; só pseudo-elementos
+  // decorativos (sombra, reflexo) podem ficar translúcidos.
+  test('nenhum elemento com texto fica translúcido em estado nenhum', () => {
+    for (const { seletor, corpo, contexto } of regras(fonte)) {
+      if (contexto.some((c) => /prefers-reduced-motion/.test(c))) continue;
+      if (/::(before|after)\s*$/.test(seletor)) continue;
+      const op = valor(corpo, 'opacity');
+      if (op === null) continue;
+      const n = Number(op);
+      // 1 = opaco; 0 só como estado escondido, junto de visibility: hidden.
+      const escondido = n === 0 && valor(corpo, 'visibility') === 'hidden';
+      expect({ seletor, opacity: op, ok: n === 1 || escondido }).toEqual({
+        seletor,
+        opacity: op,
+        ok: true,
+      });
     }
   });
 

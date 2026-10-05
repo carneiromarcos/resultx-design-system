@@ -72,10 +72,12 @@ A tipografia do nome (o wordmark) é da marca e fica na página. O DS cuida do l
 | Peça | Hover | Foco | Pressão |
 |---|---|---|---|
 | Link central | fundo `--accent-primary-muted`, texto primário | anel do DS | fundo do accent a 22 % |
-| Marca | opacidade 0,8 | anel do DS | opacidade 0,65 |
+| Marca | sublinhado de 2 px na tinta do accent | anel do DS | desce 1 px (`translateY`) |
 | `.header-float-icon` | borda e ícone no accent | anel do DS | `scale(0.94)` |
 
 `aria-current` num link central o deixa em `--text-primary`.
+
+Nenhum estado mexe na cor nem na opacidade do texto. O protótipo usava opacidade 0,8 e 0,65 na marca, e o selo de 12 px caía a 3,15:1 sobre o vidro escuro (achado do Revisor na #83). Um teste em `tests/lote-p.test.js` trava isso em todos os componentes do lote: elemento com texto não fica translúcido em estado nenhum.
 
 ## Responsivo
 
@@ -93,7 +95,15 @@ Só `opacity` (sombra e marca), `transform` (pressão do ícone) e cor. Sob `pre
 
 ## Contraste medido
 
-| Par | Claro | Escuro |
+O vidro é translúcido, então o fundo do texto depende do que passa por baixo. A medição compõe o vidro (e o fundo do próprio link no hover e na pressão) sobre **cada cor de fundo opaca da página** e guarda o pior caso. O texto secundário da pílula usa `--header-float-ink-muted`, que é `--text-secondary` puxado 30 % para `--text-primary`. Com `--text-secondary` puro, o selo de 12 px caía a 4,14:1 no escuro com o botão teal do DS sob a pílula.
+
+Pior caso medido no Chrome (05/10, revisão da #83), em repouso, hover, active e focus-visible:
+
+| Texto | Claro | Escuro |
 |---|---|---|
-| Link central sobre o vidro | 7,53:1 | 5,65:1 |
-| Selo da marca | 7,53:1 | 5,65:1 |
+| Selo da marca (12 px), demo / Electia | 8,71:1 / 8,71:1 | 5,67:1 / 7,05:1 |
+| Link central, repouso e foco | 8,71:1 | 5,67:1 (demo), 7,05:1 (Electia) |
+| Link central, hover | 12,55:1 ou mais | 7,83:1 ou mais |
+| Link central, pressão | 10,71:1 ou mais | 6,71:1 ou mais |
+
+Sobre o fundo da página (sem nada passando por baixo), link e selo dão 10,24:1 no claro e 7,72:1 no escuro.
