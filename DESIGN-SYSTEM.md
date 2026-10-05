@@ -57,7 +57,7 @@ Este DS atende **dois universos** com a mesma fundação de tokens:
 |-------|-----|-----|
 | `--text-primary` | `#E6EDF3` | Headings, texto principal |
 | `--text-secondary` | `#8B949E` | Texto de suporte, descrições |
-| `--text-muted` | `#6E7681` | Metadata, timestamps, placeholders |
+| `--text-muted` | `#848D97` | Metadata, timestamps, placeholders (≥4.5:1 em todas as superfícies escuras) |
 | `--text-inverse` | `#0B0E14` | Texto sobre accent colors |
 
 ### 1.4 Accent Colors

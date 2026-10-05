@@ -185,7 +185,7 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 |------|-----|-----|
 | **Text Primary** | `#E6EDF3` | Titulos, texto principal |
 | **Text Secondary** | `#8B949E` | Texto de apoio, descricoes |
-| **Text Muted** | `#6E7681` | Labels, placeholders, metadata |
+| **Text Muted** | `#848D97` | Labels, placeholders, metadata — AA (≥4.5:1) no fundo e nas surfaces 1–2; **reprova** na surface-3 `#232B3B` (4,21:1) e na 4 `#2A3444` (3,73:1), pendente de decisão; era `#6E7681` |
 
 ### Cores de Borda
 

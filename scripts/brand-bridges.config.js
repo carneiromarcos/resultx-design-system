@@ -28,10 +28,15 @@
 /** Ink candidates, measured against each brand's accent. Highest ratio wins. */
 const INK_CANDIDATES = ['#0B0E14', '#FFFFFF'];
 
-/** Surfaces used to verify the text roles. Mirrors tokens/tokens.css. */
+/**
+ * Surfaces used to verify the text roles. Mirrors tokens/tokens.css.
+ * `all` is --bg-base plus --bg-surface-1..3 — the focus ring must clear 3:1
+ * against every one of them (WCAG 1.4.11). tests/contrast-tokens.test.js reads
+ * the same surfaces straight from tokens.css, so a drift here fails there.
+ */
 const SURFACES = {
-  dark: { base: '#0B0E14', surface: '#161B26' },
-  light: { base: '#FFFFFF', surface: '#F8FAFB' },
+  dark: { base: '#0B0E14', surface: '#161B26', all: ['#0B0E14', '#111620', '#161B26', '#1C2333'] },
+  light: { base: '#FFFFFF', surface: '#F8FAFB', all: ['#FFFFFF', '#F8FAFB', '#F0F3F5', '#E8ECF0'] },
 };
 
 const BRANDS = [

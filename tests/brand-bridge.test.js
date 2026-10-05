@@ -19,7 +19,7 @@ const path = require('path');
 
 const { BRANDS } = require('../scripts/brand-bridges.config');
 const { build, emit, makeResolver, resolveTheme } = require('../scripts/build-brand-bridges');
-const { ratio, AA_NORMAL } = require('../scripts/lib/contrast');
+const { contrastRatio, AA_NORMAL } = require('../scripts/lib/contrast');
 
 const ROOT = path.resolve(__dirname, '..');
 const BRAND_IDS = BRANDS.map((b) => b.id);
@@ -88,8 +88,9 @@ describe('Brand bridge — contraste WCAG AA', () => {
   test('toda tinta alcanca 4.5:1 sobre o accent da marca', () => {
     const { report } = build({ write: false });
     for (const { brand, theme, r } of report) {
-      const measured = ratio(r.ink.value, r.accent);
-      expect(`${brand}/${theme}: ${measured >= AA_NORMAL ? 'AA' : `${measured} ABAIXO DE 4.5`}`)
+      // Sem arredondar: 4.4999 arredondado vira 4.5 e passaria.
+      const measured = contrastRatio(r.ink.value, r.accent);
+      expect(`${brand}/${theme}: ${measured >= AA_NORMAL ? 'AA' : `${measured.toFixed(5)} ABAIXO DE 4.5`}`)
         .toBe(`${brand}/${theme}: AA`);
     }
   });

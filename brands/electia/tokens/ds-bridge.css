@@ -39,7 +39,7 @@
   --accent-primary-text: #c084fc;   /* --purple-on-dark — 7.31:1 sobre o fundo */
 
   --border-accent: rgba(111, 50, 177, 0.2);
-  --focus-ring-color: rgba(111, 50, 177, 0.5);
+  --focus-ring-color: #c084fc;   /* solido — minimo 5.94:1 nas superficies do tema */
 
   --sidebar-active-bg: rgba(111, 50, 177, 0.15);
   --sidebar-text-active: #c084fc;
@@ -63,7 +63,7 @@
   --accent-primary-text: #6f32b1;   /* --purple-on-dark — 7.59:1 sobre o fundo */
 
   --border-accent: rgba(111, 50, 177, 0.25);
-  --focus-ring-color: rgba(111, 50, 177, 0.5);
+  --focus-ring-color: #6f32b1;   /* solido — minimo 6.39:1 nas superficies do tema */
 
   --sidebar-active-bg: #6f32b1;
   --sidebar-text-active: #FFFFFF;
@@ -88,7 +88,7 @@
     --accent-primary-text: #c084fc;   /* --purple-on-dark — 7.31:1 sobre o fundo */
 
     --border-accent: rgba(111, 50, 177, 0.2);
-    --focus-ring-color: rgba(111, 50, 177, 0.5);
+    --focus-ring-color: #c084fc;   /* solido — minimo 5.94:1 nas superficies do tema */
 
     --sidebar-active-bg: rgba(111, 50, 177, 0.15);
     --sidebar-text-active: #c084fc;
@@ -113,7 +113,7 @@
     --accent-primary-text: #6f32b1;   /* --purple-on-dark — 7.59:1 sobre o fundo */
 
     --border-accent: rgba(111, 50, 177, 0.25);
-    --focus-ring-color: rgba(111, 50, 177, 0.5);
+    --focus-ring-color: #6f32b1;   /* solido — minimo 6.39:1 nas superficies do tema */
 
     --sidebar-active-bg: #6f32b1;
     --sidebar-text-active: #FFFFFF;

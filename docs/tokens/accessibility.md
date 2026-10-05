@@ -11,11 +11,32 @@ Accessibility tokens for the ResultX App Design System. These tokens ensure cons
 | `--focus-ring-width` | `3px` | Both | Width of the focus outline ring |
 | `--focus-ring-offset` | `2px` | Both | Gap between the element and the focus ring |
 | `--focus-ring-color` | `rgba(45, 212, 191, 0.5)` | Dark | Teal focus ring color |
-| `--focus-ring-color` | `rgba(29, 78, 216, 0.5)` | Light | Blue focus ring color |
+| `--focus-ring-color` | `#1D4ED8` | Light | Blue focus ring color (solid) |
 
 The focus ring color matches each theme's accent:
 - **Dark theme:** Teal (`rgba(45, 212, 191, 0.5)`) -- consistent with `--accent-primary: #2DD4BF`
-- **Light theme:** Blue (`rgba(29, 78, 216, 0.5)`) -- consistent with `--accent-primary: #1D4ED8`
+- **Light theme:** Blue (`#1D4ED8`, solid) -- consistent with `--accent-primary: #1D4ED8`
+
+### Contrast rule (WCAG 1.4.11 — 3:1)
+
+The ring must clear **3:1 against `--bg-base` and every `--bg-surface-*` of its
+theme**, measured on the *painted* color: a translucent ring is composited over
+the surface first. `tests/contrast-tokens.test.js` enforces this from the CSS.
+
+| Theme | Ring | Min (surface-3) | Max (base) |
+|-------|------|-----------------|------------|
+| Dark | `rgba(45, 212, 191, 0.5)` | 3.17:1 | 3.33:1 |
+| Light | `#1D4ED8` | 5.64:1 | 6.70:1 |
+
+Until 05/10/2026 the light ring was `rgba(29, 78, 216, 0.5)`, which composites
+to 2.24–2.36:1 and failed. Brand bridges (`brands/*/tokens/ds-bridge.css`) set
+the ring to the brand's **solid accent-as-text color** (`--accent-primary-text`)
+instead of `rgba(accent, 0.5)`, which measured 1.38–2.66:1 for every brand; the
+bridge build fails if any ring drops below 3:1 on any surface. See
+[brand-bridge.md](../brand-bridge.md).
+
+> The light-theme sidebar stays dark (`#0F1A2E`) and is not covered by this
+> rule; a ring inside it should be checked separately.
 
 ### Pattern
 
@@ -70,7 +91,8 @@ Use `--text-inverse` when you need text that contrasts against the opposite them
 |------|---------------|------------|
 | `--text-primary` (#E6EDF3) on `--bg-base` (#0B0E14) | ~15.5:1 | AAA |
 | `--text-secondary` (#8B949E) on `--bg-base` (#0B0E14) | ~7.5:1 | AAA |
-| `--text-muted` (#6E7681) on `--bg-base` (#0B0E14) | ~4.8:1 | AA |
+| `--text-muted` (#848D97) on `--bg-base` (#0B0E14) | 5.74:1 | AA |
+| `--text-muted` (#848D97) on `--bg-surface-3` (#1C2333) | 4.66:1 | AA |
 | `--accent-primary` (#2DD4BF) on `--bg-base` (#0B0E14) | ~11.5:1 | AAA |
 | `--text-on-color` (#FFFFFF) on `--accent-primary` (#2DD4BF) | ~3.2:1 | AA Large |
 

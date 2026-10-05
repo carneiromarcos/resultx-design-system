@@ -51,7 +51,7 @@ Dark is the default theme. When no `data-theme` is set, the system falls back to
 |-------|-----------|-------------|-------|
 | `--text-primary` | `#E6EDF3` | `#0F1729` | Headings, primary body text |
 | `--text-secondary` | `#8B949E` | `#586069` | Descriptions, secondary labels |
-| `--text-muted` | `#6E7681` | `#8B949E` | Placeholders, disabled text, timestamps |
+| `--text-muted` | `#848D97` | `#6B7280` | Placeholders, disabled text, timestamps |
 | `--text-inverse` | `#0B0E14` | `#FFFFFF` | Text on accent-colored backgrounds |
 | `--text-on-color` | `#FFFFFF` | `#FFFFFF` | Text on any colored background (theme-independent) |
 

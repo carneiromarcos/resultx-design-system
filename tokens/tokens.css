@@ -166,7 +166,8 @@
   /* ── Text ──────────────────────────────────────────────────────────────── */
   --text-primary: #E6EDF3;
   --text-secondary: #8B949E;
-  --text-muted: #6E7681;
+  /* 4.66:1 sobre surface-3, 5.74:1 sobre o fundo (era #6E7681: 3.42 / 4.2) */
+  --text-muted: #848D97;
   --text-inverse: #0B0E14;
 
   /* ── Accent ────────────────────────────────────────────────────────────── */
@@ -267,6 +268,7 @@
   --chart-grid: #1E2736;
 
   /* ── Accessibility ─────────────────────────────────────────────────────── */
+  /* Composto sobre as superficies escuras: 3.17:1 (surface-3) a 3.33:1. */
   --focus-ring-color: rgba(45, 212, 191, 0.5);
 }
 
@@ -401,7 +403,9 @@
   --chart-grid: #E8ECF0;
 
   /* ── Accessibility ─────────────────────────────────────────────────────── */
-  --focus-ring-color: rgba(29, 78, 216, 0.5);
+  /* Solido: a 50% o azul composto dava 2.24-2.36:1 (WCAG 1.4.11 pede 3:1).
+     Agora 5.64:1 sobre surface-3, 6.7:1 sobre o fundo. */
+  --focus-ring-color: #1D4ED8;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -421,7 +425,7 @@
     --border-subtle: #1E2736; --border-default: #2A3444;
     --border-strong: #3D4A5C; --border-accent: rgba(45, 212, 191, 0.20);
     --text-primary: #E6EDF3; --text-secondary: #8B949E;
-    --text-muted: #6E7681; --text-inverse: #0B0E14;
+    --text-muted: #848D97; --text-inverse: #0B0E14;
     --accent-primary: #2DD4BF; --accent-primary-hover: #5EEAD4;
     --accent-primary-muted: rgba(45, 212, 191, 0.15); --accent-secondary: #C49A3C;
     --accent-primary-text: #2DD4BF;
@@ -517,7 +521,7 @@
     --chart-gradient-start: rgba(29, 78, 216, 0.25);
     --chart-gradient-end: rgba(29, 78, 216, 0.02);
     --chart-line: #1D4ED8; --chart-grid: #E8ECF0;
-    --focus-ring-color: rgba(29, 78, 216, 0.5);
+    --focus-ring-color: #1D4ED8;
   }
 }
 
