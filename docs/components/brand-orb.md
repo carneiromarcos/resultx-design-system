@@ -80,14 +80,17 @@ Sombras: um filete interno de 1 px na cor do reflexo, uma sombra interna embaixo
 
 Nunca coloque `role="img"` com `aria-label` na própria orb dentro de um lockup que já mostra o nome: o leitor de tela anunciaria o agente duas vezes.
 
-**Agente respondendo** (estado ativo): a orb continua `aria-hidden`, então o status **tem de existir em texto**. O contêiner da conversa marca `aria-busy` e uma região `aria-live` diz o que está acontecendo. Ao terminar, quem consome remove `data-state`, desliga `aria-busy` e troca o texto do status.
+**Agente respondendo** (estado ativo): a orb continua `aria-hidden`, então o status **tem de existir em texto**. Só a região de mensagens marca `aria-busy`; a região `aria-live` do status fica **fora** dela. Dentro de uma subárvore `aria-busy="true"`, a tecnologia assistiva pode adiar ou ignorar os anúncios até o busy sair (WAI-ARIA 1.2, `aria-busy`), e o "respondendo…" chegaria tarde ou nunca. Ao terminar, quem consome remove `data-state`, desliga `aria-busy` e troca o texto do status.
 
 ```html
-<section class="conversation" aria-label="Conversa com o Nexus" aria-busy="true">
-  <div class="message">
-    <span class="brand-orb brand-orb-electia brand-orb-md" data-state="active" aria-hidden="true"></span>
-    <p><strong>Nexus</strong> …</p>
+<section class="conversation" aria-label="Conversa com o Nexus">
+  <div class="conversation-messages" aria-busy="true">
+    <div class="message">
+      <span class="brand-orb brand-orb-electia brand-orb-md" data-state="active" aria-hidden="true"></span>
+      <p><strong>Nexus</strong> …</p>
+    </div>
   </div>
+  <!-- irmã da região busy, nunca dentro dela -->
   <p class="sr-only" role="status" aria-live="polite">Nexus está respondendo…</p>
 </section>
 ```
@@ -95,7 +98,7 @@ Nunca coloque `role="img"` com `aria-label` na própria orb dentro de um lockup 
 ```js
 // fim da resposta
 orb.removeAttribute('data-state');
-conversa.setAttribute('aria-busy', 'false');
+mensagens.setAttribute('aria-busy', 'false');
 status.textContent = 'Nexus respondeu.';
 ```
 
@@ -159,7 +162,7 @@ Na entrada tudo termina junto, aos 4,8 s (abaixo dos 5 s). No ativo as quatro du
   - **Entrada:** o movimento começa sozinho mas dura 4,8 s e para. O critério só exige mecanismo para movimento que dura **mais de 5 s**.
   - **Ativo:** o movimento é um indicador de status de um processo em andamento — o agente pensando ou respondendo a uma pergunta que o próprio usuário fez — e termina sozinho quando a resposta termina. Não é um loop decorativo: o loop infinito sem dono, que o Revisor reprovou, **deixou de existir**. Isto **não** é uma dispensa automática. O Understanding só considera essencial a animação de pré-carregamento quando "interaction cannot occur during that phase" e a falta de indicação de progresso confundiria o usuário; aqui o status também está em texto, então não alegamos essencialidade. A leitura honesta é: o movimento acompanha o processo e acaba com ele; se uma resposta puder passar de 5 s, a tela deve oferecer um controle para interromper a geração (que encerra o processo e, com ele, o movimento), e o estado nunca pode ficar ligado depois do fim, do erro ou do cancelamento.
   - **Movimento reduzido:** nada anima em estado nenhum.
-- **O status é texto, não movimento.** A orb ativa reforça visualmente, mas quem anuncia é o contêiner: `aria-busy` na conversa e uma região `aria-live` ("Nexus está respondendo…"). Erro também é texto. Quem consome é responsável por tirar `data-state="active"` quando a resposta termina, inclusive em erro ou cancelamento.
+- **O status é texto, não movimento.** A orb ativa reforça visualmente, mas quem anuncia é o contêiner: `aria-busy` só na região de mensagens e, fora dela, uma região `aria-live` ("Nexus está respondendo…"). Erro também é texto. Quem consome é responsável por tirar `data-state="active"` quando a resposta termina, inclusive em erro ou cancelamento.
 
 ## Tokens
 
