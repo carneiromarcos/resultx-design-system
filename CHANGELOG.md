@@ -63,6 +63,42 @@ versão, não como `TypeError` dentro do build (lição de 26/08).
 Depois, `cssnano` 9.0.0 → 9.0.4 e `autoprefixer` 10.5.6 → 10.6.1: `dist/`
 byte-idêntico, 0 diferenças nos 4 mapas.
 
+### Changed — lote do dependabot de 05/10 (substitui #74, #77 e #61)
+
+`postcss-cli` 11.0.1 → **12.0.0** (major): troca o `chokidar` 3 pelo 5 e com
+isso tira o `braces` vulnerável (GHSA-vfj7-8cjw-p6xm) do caminho do build.
+As quebras do 12 não nos atingem: o config é `postcss.config.js` (não YAML), os
+scripts não passam `--config` nem usam `--watch`, e ele pede Node 22+, que o
+`engines` já exige. O grupo minor/patch da #77 entra junto: `@commitlint/cli` e
+`config-conventional` 21.2.3, `jest` 30.5.2, `lint-staged` 17.6.0, `stylelint`
+17.16.0 e `cssnano` — este em **9.3.1**, não no 9.1.2 da PR, porque o 9.1.2
+já resolve o `cssnano-preset-default` 9.3.1, e quem minifica é o preset.
+A #61 (`svgo` 4.1.0) já estava no lock desde o lote de 19/09.
+
+`dist/` regenerado: `tokens.min.css` e `components.min.css` mudaram;
+`icons.min.css`, `tokens.theme.css` e as pontes, não. Equivalência provada pelo
+mapa (contexto, seletor, propriedade) → valor e pela ordem de cascata por
+propriedade: 0 pares sumidos ou surgidos nos três `.min.css`
+(789 / 2773 / 103); 21 valores mudaram em `components.min.css`, todos o
+preset devolvendo o operando variável para a frente dentro de `calc()`
+(`calc(-1 * var(--x))` → `calc(var(--x) * -1)`, o inverso de 19/09) ou
+tirando o espaço de `var(--x, .5)`; e o `postcss-merge-rules` juntou blocos
+(o segundo `:root` do tokens, `.layout-list-item+.layout-list-item` com
+`.list-item-group>*+*` etc.), o que inverteu a ordem de 124 pares de
+declarações — todos com o mesmo valor dos dois lados, então nenhum elemento
+muda de cor, borda ou layout. `@media (` virou `@media(`, sintaxe válida.
+
+### Security — `braces` segue aberto: não existe versão corrigida
+
+O GHSA-vfj7-8cjw-p6xm (publicado em 18/09/2026) cobre `braces` ≤ 3.0.3, e a
+3.0.3 é a última publicada — `first_patched_version: null`. Com o
+`postcss-cli` 12 as 9 altas caem para 7, todas na mesma cadeia de lint:
+`stylelint` 17.16.0 (a mais nova) → `micromatch` 4.0.8 / `fast-glob` /
+`globby` → `braces`. `overrides` não resolve (não há versão para onde apontar)
+e o `npm audit fix --force` propõe `stylelint` 7.7.0, recusado. O risco real é
+baixo: é devDependency, não vai no pacote publicado, e os padrões que chegam
+ao `braces` são os globs do próprio repo, não entrada de terceiro.
+
 ## [2.6.0] - 2026-08-26
 
 ### Added — a marca do Xscore ganhou arquivo
