@@ -90,6 +90,24 @@
   --avatar-gradient-start: #6366F1;
   --avatar-gradient-end: #8B5CF6;
 
+  /* ── AI orb pigments (components/brand-orb.css) ─────────────────────────
+     A orb animada é a assinatura dos agentes de IA (decisão de 05/10/2026).
+     Os valores são CÓPIA dos tokens de cada marca — tests/brand-orb.test.js
+     reprova se a marca mudar e esta cópia não acompanhar. Iguais nos dois
+     temas: a orb é um objeto com luz própria, não uma superfície.
+       core  = o foco principal da cor de IA da marca
+       glow  = o segundo foco, que dá a cor de reflexo
+       shade = o corpo escuro que dá volume                               */
+  --ai-electia-core: #6f32b1;   /* electia --purple */
+  --ai-electia-glow: #c084fc;   /* electia --purple-on-dark */
+  --ai-electia-shade: #291145;  /* electia --purple-950 */
+  --ai-emprega-core: #4f46e5;   /* emprega-mais --emp-indigo-dark (IMO) */
+  --ai-emprega-glow: #b9baf9;   /* emprega-mais --emp-indigo-ink (escuro) */
+  --ai-emprega-shade: #1c2444;  /* emprega-mais --emp-navy */
+  --ai-xscore-core: #6f32b1;    /* xscore --intel (IA = roxo) */
+  --ai-xscore-glow: #c4993b;    /* xscore --gold (reflexo, nunca o corpo) */
+  --ai-xscore-shade: #0b0e14;   /* xscore --bg (grafite) */
+
   /* ── Spring Curves (physics-based motion) ───────────────────────────── */
   --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
   --spring-smooth: cubic-bezier(0.22, 1, 0.36, 1);

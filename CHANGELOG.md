@@ -5,6 +5,17 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Added — `.brand-orb`, a orb dos agentes de IA (decisão de 05/10/2026)
+
+`components/brand-orb.css` (importado em `components.css`): orb animada só em
+CSS que identifica Nexus e Copilot Electia (mesma orb Electia), IMO e Xscore.
+Tamanhos `-sm/-md/-lg` (28/40/96 px, ou `--orb-size`), marcas
+`-electia/-emprega/-xscore`, `.brand-orb-lockup`. Anima só `transform`,
+`opacity` e propriedades `@property`; para sob `prefers-reduced-motion`.
+Pigmentos novos no `:root` de `tokens/tokens.css`: `--ai-{electia,emprega,xscore}-{core,glow,shade}`,
+cópias travadas por teste dos tokens de cada marca. Doc em
+`docs/components/brand-orb.md`, demo em `demos/brand-orb.html`.
+
 ### Added — contrato Laravel `--eds-*` (ADR-0002 decisão 3 / passo 4a)
 
 `brands/emprega-mais/tokens/eds-root.css` publica a Camada 1 do IMO:

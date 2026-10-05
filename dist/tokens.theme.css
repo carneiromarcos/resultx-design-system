@@ -16,13 +16,22 @@
   /* Auto-classified tokens exposed as Tailwind v4 utilities. */
   /* Uses var() references so runtime theme switching keeps working. */
 
-  /* color (103) */
+  /* color (112) */
   --color-accent-primary: var(--accent-primary);
   --color-accent-primary-hover: var(--accent-primary-hover);
   --color-accent-primary-muted: var(--accent-primary-muted);
   --color-accent-primary-text: var(--accent-primary-text);
   --color-accent-secondary: var(--accent-secondary);
   --color-accent-secondary-muted: var(--accent-secondary-muted);
+  --color-ai-electia-core: var(--ai-electia-core);
+  --color-ai-electia-glow: var(--ai-electia-glow);
+  --color-ai-electia-shade: var(--ai-electia-shade);
+  --color-ai-emprega-core: var(--ai-emprega-core);
+  --color-ai-emprega-glow: var(--ai-emprega-glow);
+  --color-ai-emprega-shade: var(--ai-emprega-shade);
+  --color-ai-xscore-core: var(--ai-xscore-core);
+  --color-ai-xscore-glow: var(--ai-xscore-glow);
+  --color-ai-xscore-shade: var(--ai-xscore-shade);
   --color-avatar-gradient-end: var(--avatar-gradient-end);
   --color-avatar-gradient-start: var(--avatar-gradient-start);
   --color-bg-base: var(--bg-base);
@@ -295,6 +304,15 @@
   --accent-secondary-muted: rgba(196, 154, 60, 0.12);
   --avatar-gradient-start: #6366F1;
   --avatar-gradient-end: #8B5CF6;
+  --ai-electia-core: #6f32b1;
+  --ai-electia-glow: #c084fc;
+  --ai-electia-shade: #291145;
+  --ai-emprega-core: #4f46e5;
+  --ai-emprega-glow: #b9baf9;
+  --ai-emprega-shade: #1c2444;
+  --ai-xscore-core: #6f32b1;
+  --ai-xscore-glow: #c4993b;
+  --ai-xscore-shade: #0b0e14;
   --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
   --spring-smooth: cubic-bezier(0.22, 1, 0.36, 1);
   --spring-snappy: cubic-bezier(0.16, 1, 0.3, 1);

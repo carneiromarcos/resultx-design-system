@@ -1,0 +1,249 @@
+/* ==========================================================================
+   Brand orb — assinatura visual dos agentes de IA
+   Docs: docs/components/brand-orb.md · Demo: demos/brand-orb.html
+
+   Decisão de 05/10/2026: uma orb só identifica os agentes Nexus e Copilot
+   (Electia), IMO (Emprega+) e Xscore. O movimento é o mesmo em todos; muda a
+   cor (modificador de marca) e o tamanho (modificador de uso).
+
+   Anatomia
+     .brand-orb            corpo: três gradientes radiais (núcleo, reflexo,
+                           volume) com borda orgânica
+     .brand-orb::before    lâmina cônica que gira por cima, em `screen`
+     .brand-orb::after     ponto de luz especular que pulsa
+
+   Movimento — quatro ciclos com durações que não se alinham, para que a
+   combinação demore a se repetir e a orb pareça viva sem loop visível:
+     orb-shape  6.5s  forma (raios registrados --orb-ra…rd)
+     orb-drift  11s   deriva dos focos de cor (--orb-ax/ay/bx/by)
+     orb-spin   7.5s  giro da lâmina (transform)
+     orb-glint  4.2s  pulso do ponto de luz (opacity)
+   Nada anima layout. Sob prefers-reduced-motion tudo para no quadro inicial.
+
+   Fallback sem @property: as variáveis não registradas não interpolam (dariam
+   salto a cada keyframe), então forma e deriva só ligam dentro de um
+   @supports que exige uma feature lançada DEPOIS de @property nos três
+   motores. Fora dele a orb fica parada no quadro inicial, com o gradiente
+   inteiro — os var() trazem o valor de repouso como fallback.
+   ========================================================================== */
+
+/* ── Propriedades registradas (interpoláveis) ────────────────────────────── */
+@property --orb-ax {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 32%;
+}
+
+@property --orb-ay {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 28%;
+}
+
+@property --orb-bx {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 74%;
+}
+
+@property --orb-by {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 78%;
+}
+
+@property --orb-ra {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 50%;
+}
+
+@property --orb-rb {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 50%;
+}
+
+@property --orb-rc {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 50%;
+}
+
+@property --orb-rd {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 50%;
+}
+
+/* ── Corpo ───────────────────────────────────────────────────────────────── */
+.brand-orb {
+  /* Sem modificador, a orb é a da Electia: o roxo canônico do ecossistema. */
+  --orb-core: var(--ai-electia-core);
+  --orb-glow: var(--ai-electia-glow);
+  --orb-shade: var(--ai-electia-shade);
+  --orb-size: 40px;
+
+  position: relative;
+  display: inline-block;
+  flex: none;
+  inline-size: var(--orb-size);
+  block-size: var(--orb-size);
+  vertical-align: middle;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius:
+    var(--orb-ra, 50%) calc(100% - var(--orb-ra, 50%))
+    var(--orb-rb, 50%) calc(100% - var(--orb-rb, 50%)) /
+    var(--orb-rc, 50%) var(--orb-rd, 50%)
+    calc(100% - var(--orb-rd, 50%)) calc(100% - var(--orb-rc, 50%));
+  background:
+    radial-gradient(
+      circle at var(--orb-ax, 32%) var(--orb-ay, 28%),
+      var(--orb-core) 0%,
+      transparent 66%
+    ),
+    radial-gradient(
+      circle at var(--orb-bx, 74%) var(--orb-by, 78%),
+      color-mix(in srgb, var(--orb-glow) 80%, transparent) 0%,
+      transparent 52%
+    ),
+    radial-gradient(
+      circle at 46% 40%,
+      color-mix(in oklab, var(--orb-core) 45%, var(--orb-shade)) 0%,
+      var(--orb-shade) 82%
+    );
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--orb-glow) 24%, transparent),
+    inset 0 calc(var(--orb-size) * -0.1) calc(var(--orb-size) * 0.22)
+      color-mix(in srgb, var(--orb-shade) 65%, transparent),
+    0 calc(var(--orb-size) * 0.05) calc(var(--orb-size) * 0.2) calc(var(--orb-size) * -0.05)
+      color-mix(in srgb, var(--orb-shade) 55%, transparent),
+    0 0 calc(var(--orb-size) * 0.4) calc(var(--orb-size) * -0.06)
+      color-mix(in srgb, var(--orb-core) 40%, transparent);
+}
+
+/* Lâmina cônica: maior que o corpo para que o giro nunca mostre a borda. */
+.brand-orb::before {
+  content: '';
+  position: absolute;
+  inset: -30%;
+  background: conic-gradient(
+    from 30deg,
+    color-mix(in srgb, var(--orb-glow) 65%, transparent),
+    transparent 26%,
+    color-mix(in srgb, var(--orb-core) 55%, transparent) 48%,
+    transparent 72%,
+    color-mix(in srgb, var(--orb-glow) 65%, transparent)
+  );
+  /* O desfoque some com a costura que o cônico deixa no centro (visível de
+     64 px para cima). É estático: o que anima é só o transform. */
+  filter: blur(calc(var(--orb-size) * 0.05));
+  mix-blend-mode: screen;
+  opacity: 0.4;
+  pointer-events: none;
+  animation: orb-spin 7.5s linear infinite;
+}
+
+/* Ponto de luz especular, alto à esquerda (a luz vem de cima). */
+.brand-orb::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 11%;
+  inset-inline-start: 17%;
+  inline-size: 36%;
+  block-size: 24%;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--text-on-color) 72%, transparent),
+    transparent
+  );
+  transform: rotate(-24deg);
+  opacity: 0.85;
+  pointer-events: none;
+  animation: orb-glint 4.2s ease-in-out infinite;
+}
+
+/* ── Tamanho por uso ─────────────────────────────────────────────────────── */
+/* Fora destes três, `style="--orb-size: 112px"` serve qualquer valor. */
+.brand-orb-sm { --orb-size: 28px; }  /* logo / lockup, rótulo inline */
+.brand-orb-md { --orb-size: 40px; }  /* avatar do assistente (padrão) */
+.brand-orb-lg { --orb-size: 96px; }  /* hero, estado vazio do copiloto */
+
+/* ── Cor por marca ───────────────────────────────────────────────────────── */
+/* Nexus e Copilot Electia usam a mesma orb — decidido em 05/10/2026. */
+.brand-orb-electia {
+  --orb-core: var(--ai-electia-core);
+  --orb-glow: var(--ai-electia-glow);
+  --orb-shade: var(--ai-electia-shade);
+}
+
+/* IMO: o índigo de produto da Emprega+ sobre o navy institucional. */
+.brand-orb-emprega {
+  --orb-core: var(--ai-emprega-core);
+  --orb-glow: var(--ai-emprega-glow);
+  --orb-shade: var(--ai-emprega-shade);
+}
+
+/* Xscore: corpo roxo (IA = insight); o ouro de ação só aparece como reflexo. */
+.brand-orb-xscore {
+  --orb-core: var(--ai-xscore-core);
+  --orb-glow: var(--ai-xscore-glow);
+  --orb-shade: var(--ai-xscore-shade);
+}
+
+/* ── Lockup: orb + nome do agente ────────────────────────────────────────── */
+/* O nome é texto real; a orb ao lado continua aria-hidden. */
+.brand-orb-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-heading);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+/* ── Movimento das propriedades registradas ──────────────────────────────── */
+@supports (transition-behavior: allow-discrete) {
+  .brand-orb {
+    animation:
+      orb-shape 6.5s ease-in-out infinite,
+      orb-drift 11s ease-in-out infinite;
+  }
+}
+
+@keyframes orb-shape {
+  0%,
+  100% { --orb-ra: 50%; --orb-rb: 50%; --orb-rc: 50%; --orb-rd: 50%; }
+  25% { --orb-ra: 44%; --orb-rb: 57%; --orb-rc: 54%; --orb-rd: 46%; }
+  50% { --orb-ra: 56%; --orb-rb: 45%; --orb-rc: 46%; --orb-rd: 55%; }
+  75% { --orb-ra: 47%; --orb-rb: 53%; --orb-rc: 57%; --orb-rd: 44%; }
+}
+
+@keyframes orb-drift {
+  0%,
+  100% { --orb-ax: 32%; --orb-ay: 28%; --orb-bx: 74%; --orb-by: 78%; }
+  33% { --orb-ax: 43%; --orb-ay: 35%; --orb-bx: 64%; --orb-by: 70%; }
+  66% { --orb-ax: 27%; --orb-ay: 39%; --orb-bx: 78%; --orb-by: 63%; }
+}
+
+@keyframes orb-spin {
+  to { transform: rotate(1turn); }
+}
+
+@keyframes orb-glint {
+  0%,
+  100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* ── Movimento reduzido: um quadro parado, ainda tridimensional ─────────── */
+@media (prefers-reduced-motion: reduce) {
+  .brand-orb,
+  .brand-orb::before,
+  .brand-orb::after {
+    animation: none;
+  }
+}
