@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="Protótipo exploratório da landing page electia, baseado na identidade da marca e em referências de composição editorial.">
+  <title>electia — Sua equipe não é ruim. Está desencaixada.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0e14;
+      --surface: #161b26;
+      --surface-raised: #1c2333;
+      --surface-soft: rgba(22, 27, 38, .68);
+      --text: #e6edf3;
+      --text-soft: #a6b0bd;
+      --text-muted: #929dab;
+      --border: #303a4b;
+      --purple: #6f32b1;
+      --purple-hover: #8842d6;
+      --purple-on-dark: #c084fc;
+      --blue: #779fff;
+      --gold: #d6bc7a;
+      --success: #58d18b;
+      --shadow: 0 24px 70px rgba(0, 0, 0, .34);
+      --font-heading: 'Sora', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --page: 1180px;
+    }
+    html[data-theme="light"] {
+      color-scheme: light;
+      --bg: #f7f6f3;
+      --surface: #fff;
+      --surface-raised: #f0eeea;
+      --surface-soft: rgba(255, 255, 255, .78);
+      --text: #171923;
+      --text-soft: #454b58;
+      --text-muted: #59616f;
+      --border: #d6d2cc;
+      --purple: #6f32b1;
+      --purple-hover: #57258f;
+      --purple-on-dark: #6f32b1;
+      --blue: #315fba;
+      --gold: #765d1e;
+      --success: #176c41;
+      --shadow: 0 24px 70px rgba(35, 29, 23, .12);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-body); line-height: 1.65; transition: background-color .2s ease, color .2s ease; }
+    a { color: inherit; text-decoration: none; }
+    button { color: inherit; font: inherit; }
+    button:focus-visible, a:focus-visible { outline: 3px solid var(--purple-on-dark); outline-offset: 4px; }
+    .wrap { width: min(var(--page), calc(100% - 48px)); margin-inline: auto; }
+    .skip-link { position: absolute; top: 8px; left: 8px; z-index: 20; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; transform: translateY(-150%); }
+    .skip-link:focus { transform: translateY(0); }
+    .topbar { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid color-mix(in srgb, var(--border) 72%, transparent); background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(16px); }
+    .nav { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .wordmark { display: inline-flex; align-items: baseline; gap: 9px; white-space: nowrap; }
+    .wordmark strong { font: 600 21px/1 var(--font-mono); letter-spacing: -.06em; }
+    .wordmark span { color: var(--text-muted); font: 500 11px/1 var(--font-body); }
+    .wordmark b { color: var(--text-soft); font: 700 12px/1 var(--font-heading); }
+    .nav-links { display: flex; align-items: center; gap: clamp(16px, 2.3vw, 32px); color: var(--text-soft); font-size: 13px; font-weight: 500; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .theme-toggle, .menu-toggle { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid var(--border); border-radius: 50%; background: transparent; cursor: pointer; }
+    .menu-toggle { display: none; border-radius: 10px; }
+    .button { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; gap: 9px; padding: 0 18px; border: 1px solid transparent; border-radius: 8px; background: var(--purple); color: #fff; font-size: 13px; font-weight: 600; transition: background-color .18s ease, transform .18s ease, border-color .18s ease; }
+    .button:hover { background: var(--purple-hover); transform: translateY(-1px); }
+    .button.secondary { border-color: var(--border); background: var(--surface-soft); color: var(--text); }
+    .button.secondary:hover { border-color: var(--purple); background: var(--surface); }
+    .button.small { min-height: 40px; padding-inline: 15px; font-size: 12px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--purple-on-dark); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+    .eyebrow::before { width: 20px; height: 1px; background: currentColor; content: ''; }
+    .hero { position: relative; overflow: hidden; padding: clamp(72px, 9vw, 124px) 0 80px; }
+    .hero::before { position: absolute; top: 10%; left: 50%; width: min(850px, 100vw); height: 600px; background: radial-gradient(ellipse, rgba(111, 50, 177, .19), transparent 68%); content: ''; pointer-events: none; transform: translateX(-50%); }
+    .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, .96fr) minmax(380px, 1.04fr); align-items: center; gap: clamp(44px, 7vw, 92px); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { font-family: var(--font-heading); }
+    h1 { max-width: 660px; margin: 20px 0 22px; font-size: clamp(42px, 5.7vw, 72px); font-weight: 700; letter-spacing: -.065em; line-height: 1.07; }
+    h1 em { color: var(--purple-on-dark); font-style: normal; }
+    .hero-copy { max-width: 510px; color: var(--text-soft); font-size: clamp(16px, 1.5vw, 18px); line-height: 1.7; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .hero-note { display: flex; align-items: center; gap: 10px; margin-top: 30px; color: var(--text-muted); font-size: 12px; }
+    .hero-note i { display: grid; width: 22px; height: 22px; place-items: center; border: 1px solid var(--border); border-radius: 50%; color: var(--success); font-style: normal; }
+    .product-frame { position: relative; padding: 12px; border: 1px solid color-mix(in srgb, var(--border) 82%, var(--purple)); border-radius: 20px; background: var(--surface-soft); box-shadow: var(--shadow); transform: perspective(1100px) rotateY(-4deg) rotateX(1deg); }
+    .product-frame::before { position: absolute; z-index: -1; inset: 12% -8% -12% 18%; border-radius: inherit; background: radial-gradient(ellipse, rgba(111, 50, 177, .27), transparent 70%); content: ''; filter: blur(28px); }
+    .window-bar { display: flex; height: 34px; align-items: center; justify-content: space-between; padding: 0 10px 8px; color: var(--text-muted); font-size: 10px; }
+    .window-dots { display: flex; gap: 5px; }
+    .window-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--border); }
+    .app-preview { display: grid; min-height: 348px; grid-template-columns: 118px 1fr; overflow: hidden; border: 1px solid var(--border); border-radius: 12px; background: var(--bg); }
+    .app-side { padding: 18px 12px; border-right: 1px solid var(--border); background: var(--surface); }
+    .app-brand { margin-bottom: 24px; color: var(--purple-on-dark); font: 600 10px var(--font-mono); letter-spacing: -.03em; }
+    .app-nav { display: grid; gap: 8px; }
+    .app-nav span { padding: 7px 8px; border-radius: 5px; color: var(--text-muted); font-size: 9px; }
+    .app-nav span.active { background: color-mix(in srgb, var(--purple) 18%, transparent); color: var(--purple-on-dark); }
+    .app-main { min-width: 0; padding: 22px; }
+    .app-top { display: flex; align-items: center; justify-content: space-between; color: var(--text-muted); font-size: 9px; }
+    .avatar { display: grid; width: 24px; height: 24px; place-items: center; border-radius: 50%; background: var(--surface-raised); color: var(--text-soft); font-size: 9px; }
+    .app-heading { margin: 20px 0 4px; font: 600 17px var(--font-heading); letter-spacing: -.04em; }
+    .app-subtitle { color: var(--text-muted); font-size: 9px; }
+    .profile-card { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; margin-top: 20px; padding: 14px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); }
+    .profile-avatar { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 10px; background: color-mix(in srgb, var(--purple) 22%, var(--surface)); color: var(--purple-on-dark); font: 600 12px var(--font-mono); }
+    .profile-name { display: block; font-size: 10px; font-weight: 600; }
+    .profile-role { display: block; color: var(--text-muted); font-size: 8px; }
+    .match { color: var(--success); font: 600 10px var(--font-mono); }
+    .insight-title { margin: 18px 0 10px; color: var(--text-muted); font-size: 8px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+    .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .insight { min-width: 0; padding: 10px 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
+    .insight span { display: block; overflow: hidden; color: var(--text-muted); font-size: 7px; text-overflow: ellipsis; white-space: nowrap; }
+    .insight strong { display: block; margin-top: 6px; color: var(--text); font: 600 13px var(--font-mono); }
+    .bars { display: flex; gap: 4px; margin-top: 8px; }
+    .bars i { height: 3px; flex: 1; border-radius: 9px; background: var(--purple); }
+    .bars i:last-child { background: var(--border); }
+    .proof-row { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 28px; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 12px; }
+    .proof-row strong { color: var(--text); font-weight: 600; }
+    .section { padding: clamp(78px, 10vw, 124px) 0; }
+    .section.tint { background: color-mix(in srgb, var(--surface) 48%, transparent); }
+    .section-head { max-width: 650px; margin: 0 auto 48px; text-align: center; }
+    .section-head .eyebrow { justify-content: center; }
+    h2 { margin: 15px 0 14px; font-size: clamp(32px, 4vw, 48px); letter-spacing: -.055em; line-height: 1.15; }
+    .section-head p { margin-bottom: 0; color: var(--text-soft); font-size: 15px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .feature-card { min-height: 230px; padding: 24px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface-soft); transition: transform .2s ease, border-color .2s ease, background-color .2s ease; }
+    .feature-card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--purple) 65%, var(--border)); background: var(--surface); }
+    .feature-icon { display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid color-mix(in srgb, var(--purple) 42%, var(--border)); border-radius: 11px; background: color-mix(in srgb, var(--purple) 15%, transparent); color: var(--purple-on-dark); font: 600 14px var(--font-mono); }
+    .feature-card h3 { margin: 24px 0 8px; font-size: 17px; letter-spacing: -.03em; }
+    .feature-card p { margin: 0; color: var(--text-soft); font-size: 13px; line-height: 1.7; }
+    .demo-grid { display: grid; grid-template-columns: .8fr 1.2fr; align-items: center; gap: clamp(44px, 8vw, 110px); }
+    .demo-copy h2 { max-width: 510px; }
+    .demo-copy p { max-width: 460px; color: var(--text-soft); }
+    .demo-copy .button { margin-top: 12px; }
+    .demo-card { padding: 24px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); }
+    .demo-card-top { display: flex; align-items: center; justify-content: space-between; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+    .demo-card-top strong { font: 600 13px var(--font-heading); }
+    .demo-card-top span { color: var(--text-muted); font-size: 10px; }
+    .dimension { display: grid; grid-template-columns: 116px 1fr 36px; align-items: center; gap: 12px; margin-top: 18px; color: var(--text-soft); font-size: 11px; }
+    .track { height: 7px; overflow: hidden; border-radius: 8px; background: var(--surface-raised); }
+    .track i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--purple), var(--blue)); }
+    .dimension b { color: var(--text); font: 500 10px var(--font-mono); text-align: right; }
+    .demo-foot { margin: 22px 0 0; padding: 12px; border-left: 2px solid var(--purple); background: color-mix(in srgb, var(--purple) 9%, transparent); color: var(--text-soft); font-size: 11px; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: step; }
+    .step { position: relative; min-height: 194px; padding: 24px; border-top: 1px solid var(--border); counter-increment: step; }
+    .step::before { display: block; margin-bottom: 30px; color: var(--purple-on-dark); content: '0' counter(step); font: 500 12px var(--font-mono); }
+    .step h3 { margin: 0 0 9px; font-size: 18px; letter-spacing: -.03em; }
+    .step p { max-width: 300px; margin: 0; color: var(--text-soft); font-size: 13px; }
+    .quote-panel { position: relative; overflow: hidden; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 24px; padding: clamp(30px, 6vw, 64px); border: 1px solid color-mix(in srgb, var(--purple) 34%, var(--border)); border-radius: 20px; background: linear-gradient(125deg, color-mix(in srgb, var(--purple) 20%, var(--surface)), var(--surface) 55%); }
+    .quote-panel::after { position: absolute; top: -130px; right: 15%; width: 260px; height: 260px; border-radius: 50%; background: rgba(111, 50, 177, .22); content: ''; filter: blur(60px); }
+    .quote-panel blockquote { position: relative; z-index: 1; max-width: 720px; margin: 0; font: 600 clamp(25px, 3.5vw, 42px)/1.2 var(--font-heading); letter-spacing: -.05em; }
+    .quote-panel blockquote em { color: var(--purple-on-dark); font-style: normal; }
+    .quote-panel .button { position: relative; z-index: 1; white-space: nowrap; }
+    .faq { max-width: 800px; margin: 0 auto; border-top: 1px solid var(--border); }
+    details { border-bottom: 1px solid var(--border); }
+    summary { position: relative; padding: 20px 36px 20px 0; cursor: pointer; font: 600 15px var(--font-heading); list-style: none; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { position: absolute; right: 5px; color: var(--purple-on-dark); content: '+'; font: 400 21px var(--font-body); }
+    details[open] summary::after { content: '−'; }
+    details p { max-width: 690px; margin: -3px 0 20px; color: var(--text-soft); font-size: 13px; }
+    footer { padding: 34px 0; border-top: 1px solid var(--border); }
+    .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; color: var(--text-muted); font-size: 11px; }
+    .footer-links { display: flex; gap: 20px; }
+    .reveal { animation: enter .65s cubic-bezier(.16, 1, .3, 1) both; }
+    @keyframes enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 50px; }
+      .hero-copy { max-width: 620px; }
+      .product-frame { width: min(100%, 650px); margin-inline: auto; transform: none; }
+      .demo-grid { grid-template-columns: 1fr; gap: 36px; }
+      .feature-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 680px) {
+      .wrap { width: min(var(--page), calc(100% - 36px)); }
+      .nav { min-height: 64px; }
+      .nav-links { position: absolute; top: calc(100% + 1px); right: 0; left: 0; display: none; align-items: stretch; padding: 12px 18px 18px; border-bottom: 1px solid var(--border); background: var(--bg); }
+      .nav-links[data-open="true"] { display: grid; gap: 0; }
+      .nav-links a { padding: 12px 4px; border-bottom: 1px solid var(--border); }
+      .nav-actions > .button { display: none; }
+      .menu-toggle { display: grid; }
+      .wordmark strong { font-size: 19px; }
+      .hero { padding: 64px 0 54px; }
+      h1 { max-width: 560px; font-size: clamp(40px, 11vw, 56px); }
+      .hero-copy { font-size: 15px; }
+      .hero-actions { display: grid; grid-template-columns: 1fr; }
+      .hero-actions .button { width: 100%; }
+      .app-preview { grid-template-columns: 82px 1fr; min-height: 310px; }
+      .app-side { padding: 14px 8px; }
+      .app-main { padding: 16px 12px; }
+      .profile-card { grid-template-columns: auto 1fr; gap: 8px; padding: 10px; }
+      .match { grid-column: 2; }
+      .insight-grid { gap: 5px; }
+      .insight { padding: 8px 6px; }
+      .proof-row { justify-content: flex-start; gap: 12px 18px; margin-top: 36px; font-size: 11px; }
+      .section { padding: 76px 0; }
+      .section-head { margin-bottom: 34px; text-align: left; }
+      .section-head .eyebrow { justify-content: flex-start; }
+      .feature-grid, .steps { grid-template-columns: 1fr; }
+      .feature-card { min-height: auto; padding: 21px; }
+      .feature-card h3 { margin-top: 18px; }
+      .step { min-height: auto; padding: 20px 16px; }
+      .step::before { margin-bottom: 16px; }
+      .dimension { grid-template-columns: 92px 1fr 32px; gap: 8px; font-size: 10px; }
+      .demo-card { padding: 17px 14px; }
+      .quote-panel { grid-template-columns: 1fr; padding: 30px 24px; }
+      .quote-panel .button { justify-self: start; }
+      .footer-row { align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-width: 380px) {
+      .wrap { width: calc(100% - 28px); }
+      .wordmark { gap: 6px; }
+      .wordmark strong { font-size: 17px; }
+      .wordmark span { font-size: 10px; }
+      .theme-toggle, .menu-toggle { width: 36px; height: 36px; }
+      .app-preview { grid-template-columns: 70px 1fr; }
+      .insight span { font-size: 6px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="wordmark" href="#inicio" aria-label="electia by emprega+, início"><strong>electia</strong><span>by</span><b>emprega+</b></a>
+      <nav class="nav-links" id="primary-nav" aria-label="Navegação principal" data-open="false">
+        <a href="#plataforma">Plataforma</a><a href="#como-funciona">Como funciona</a><a href="#duvidas">Dúvidas</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="theme-toggle" type="button" aria-label="Ativar tema claro" title="Alternar tema"><span aria-hidden="true">☼</span></button>
+        <a class="button small" href="#conversa">Conheça o electia <span aria-hidden="true">↗</span></a>
+        <button class="menu-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" aria-label="Abrir menu"><span aria-hidden="true">☰</span></button>
+      </div>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" id="inicio">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div class="reveal">
+            <span class="eyebrow">Gestão comportamental com contexto</span>
+            <h1>Sua equipe não é ruim. Está <em>desencaixada.</em></h1>
+            <p class="hero-copy">Entenda como cada pessoa trabalha, se comunica e toma decisões. O electia conecta comportamento e contexto para ajudar líderes a fazer escolhas melhores sobre pessoas.</p>
+            <div class="hero-actions"><a class="button" href="#conversa">Veja como funciona <span aria-hidden="true">↗</span></a><a class="button secondary" href="#plataforma">Explore a plataforma</a></div>
+            <div class="hero-note"><i aria-hidden="true">✓</i><span>6 perspectivas comportamentais em uma leitura integrada</span></div>
+          </div>
+          <div class="product-frame reveal" aria-label="Prévia ilustrativa do painel electia">
+            <div class="window-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>visão de equipe · demonstração</span><span>•••</span></div>
+            <div class="app-preview">
+              <aside class="app-side"><div class="app-brand">electia</div><div class="app-nav"><span class="active">Visão geral</span><span>Pessoas</span><span>Leituras</span><span>Desenvolvimento</span></div></aside>
+              <div class="app-main">
+                <div class="app-top"><span>ESPAÇO DE DEMONSTRAÇÃO</span><span class="avatar">MC</span></div>
+                <div class="app-heading">Olá, Marina</div><div class="app-subtitle">Uma visão mais contextual da sua equipe.</div>
+                <div class="profile-card"><div class="profile-avatar">AL</div><div><span class="profile-name">Alex Lima</span><span class="profile-role">Produto · perfil demonstrativo</span></div><span class="match">Leitura</span></div>
+                <div class="insight-title">Dimensões em destaque</div>
+                <div class="insight-grid"><div class="insight"><span>Tomada de decisão</span><strong>Analítica</strong><div class="bars"><i></i><i></i><i></i><i></i><i></i></div></div><div class="insight"><span>Ritmo de trabalho</span><strong>Constante</strong><div class="bars"><i></i><i></i><i></i><i></i><i></i></div></div><div class="insight"><span>Comunicação</span><strong>Direta</strong><div class="bars"><i></i><i></i><i></i><i></i><i></i></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="proof-row"><span><strong>6 perspectivas</strong> comportamentais</span><span><strong>1 leitura</strong> conectada ao contexto</span><span><strong>Próximos passos</strong> para a liderança</span></div>
+      </div>
+    </section>
+    <section class="section tint" id="plataforma">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">O que muda na prática</span><h2>Mais contexto para decisões sobre pessoas</h2><p>Informação comportamental ganha valor quando ajuda a entender situações reais do trabalho.</p></div>
+        <div class="feature-grid">
+          <article class="feature-card"><div class="feature-icon" aria-hidden="true">01</div><h3>Conheça os padrões</h3><p>Reúna diferentes perspectivas para entender como cada pessoa tende a agir em situações de trabalho.</p></article>
+          <article class="feature-card"><div class="feature-icon" aria-hidden="true">02</div><h3>Leia o contexto</h3><p>Relacione características individuais às responsabilidades, desafios e relações da equipe.</p></article>
+          <article class="feature-card"><div class="feature-icon" aria-hidden="true">03</div><h3>Converse melhor</h3><p>Use a leitura como ponto de partida para conversas de desenvolvimento mais concretas.</p></article>
+          <article class="feature-card"><div class="feature-icon" aria-hidden="true">04</div><h3>Enxergue combinações</h3><p>Observe complementaridades e tensões de trabalho sem resumir alguém a um único rótulo.</p></article>
+          <article class="feature-card"><div class="feature-icon" aria-hidden="true">05</div><h3>Acompanhe a evolução</h3><p>Retome acordos e objetivos em uma rotina de gestão que acompanha a realidade da equipe.</p></article>
+          <article class="feature-card"><div class="feature-icon" aria-hidden="true">06</div><h3>Transforme leitura em ação</h3><p>Leve os insights para decisões de liderança, desenvolvimento e organização do trabalho.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap demo-grid">
+        <div class="demo-copy"><span class="eyebrow">Uma leitura, várias perspectivas</span><h2>Comportamento não cabe em uma etiqueta.</h2><p>O electia cruza seis perspectivas para construir uma leitura mais ampla. Os resultados servem para orientar conversas e decisões contextualizadas, sem substituir o olhar de quem lidera.</p><a class="button secondary" href="#como-funciona">Entenda a abordagem <span aria-hidden="true">↓</span></a></div>
+        <div class="demo-card" aria-label="Exemplo visual de dimensões comportamentais, valores ilustrativos">
+          <div class="demo-card-top"><strong>Leitura demonstrativa</strong><span>valores ilustrativos</span></div>
+          <div class="dimension"><span>Colaboração</span><div class="track"><i style="width:76%"></i></div><b>76</b></div>
+          <div class="dimension"><span>Organização</span><div class="track"><i style="width:62%"></i></div><b>62</b></div>
+          <div class="dimension"><span>Adaptação</span><div class="track"><i style="width:84%"></i></div><b>84</b></div>
+          <div class="dimension"><span>Comunicação</span><div class="track"><i style="width:69%"></i></div><b>69</b></div>
+          <p class="demo-foot">Este exemplo é fictício e não representa um resultado, diagnóstico ou recomendação real.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section tint" id="como-funciona">
+      <div class="wrap">
+        <div class="section-head"><span class="eyebrow">Do entendimento à prática</span><h2>Um caminho claro para a liderança</h2><p>Uma experiência para transformar informação em conversas e decisões do dia a dia.</p></div>
+        <div class="steps"><article class="step"><h3>Conheça</h3><p>Explore as perspectivas comportamentais e entenda o que cada leitura pode revelar.</p></article><article class="step"><h3>Conecte</h3><p>Relacione os padrões observados às pessoas, às funções e ao contexto da equipe.</p></article><article class="step"><h3>Aja</h3><p>Use os insights para orientar conversas, acordos de trabalho e desenvolvimento.</p></article></div>
+      </div>
+    </section>
+    <section class="section" id="conversa">
+      <div class="wrap"><div class="quote-panel"><blockquote>O problema pode não ser a pessoa. Pode ser o <em>lugar</em> onde ela está.</blockquote><a class="button" href="#como-funciona">Veja como funciona <span aria-hidden="true">↓</span></a></div></div>
+    </section>
+    <section class="section tint" id="duvidas">
+      <div class="wrap"><div class="section-head"><span class="eyebrow">Dúvidas comuns</span><h2>Antes de começar</h2></div><div class="faq">
+        <details><summary>O electia é um teste de personalidade?</summary><p>O electia reúne diferentes perspectivas comportamentais para apoiar a compreensão de pessoas no contexto de trabalho. Uma leitura não define alguém por completo.</p></details>
+        <details><summary>Os resultados substituem a avaliação de uma liderança?</summary><p>Não. Os resultados são insumos para conversas e decisões contextualizadas; não substituem o conhecimento da equipe nem o julgamento responsável de quem lidera.</p></details>
+        <details><summary>Para quem é a plataforma?</summary><p>Para organizações e lideranças que querem compreender melhor suas equipes e apoiar decisões de gestão de pessoas com mais contexto.</p></details>
+      </div></div>
+    </section>
+  </main>
+  <footer><div class="wrap footer-row"><a class="wordmark" href="#inicio"><strong>electia</strong><span>by</span><b>emprega+</b></a><span>Gestão comportamental com contexto.</span><div class="footer-links"><a href="#inicio">Início</a><a href="#duvidas">Dúvidas</a></div></div></footer>
+  <script>
+    const root = document.documentElement;
+    const themeButton = document.querySelector('.theme-toggle');
+    const menuButton = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('#primary-nav');
+
+    themeButton.addEventListener('click', () => {
+      const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = nextTheme;
+      themeButton.setAttribute('aria-label', nextTheme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro');
+      themeButton.firstElementChild.textContent = nextTheme === 'dark' ? '☼' : '☾';
+    });
+
+    menuButton.addEventListener('click', () => {
+      const isOpen = menuButton.getAttribute('aria-expanded') !== 'true';
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+      menuButton.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+      nav.dataset.open = String(isOpen);
+    });
+
+    nav.addEventListener('click', (event) => {
+      if (event.target.closest('a')) {
+        nav.dataset.open = 'false';
+        menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.setAttribute('aria-label', 'Abrir menu');
+      }
+    });
+  </script>
+</body>
+</html>
