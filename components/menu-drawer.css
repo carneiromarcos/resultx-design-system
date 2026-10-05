@@ -136,7 +136,8 @@
 }
 
 /* --text-secondary, não --text-muted: o rótulo de seção organiza a gaveta,
-   não é metadado. (O muted passa AA em toda superfície desde 05/10/2026.) */
+   não é metadado. (Desde 05/10/2026 o muted passa AA nas superfícies de
+   texto do DS e de Electia/Xscore; não nos temas de runtime.) */
 .menu-drawer-label {
   color: var(--text-secondary);
   font-size: var(--text-xs);

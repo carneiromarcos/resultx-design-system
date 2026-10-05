@@ -199,6 +199,11 @@
   --bg: #FFFFFF;
   --surface-1: #F8FAFB;   /* card */
   --surface-2: #F0F3F5;   /* card hover */
+  /* Ate 05/10/2026 o claro nao redeclarava a 3/4 e herdava as escuras do :root
+     (#232B3B / #2A3444): muted claro 2,45 / 2,17:1 e hierarquia invertida.
+     Espelha o Xscore. A 4 e o --border claro: tom de borda, sem texto. */
+  --surface-3: #E9EDF1;   /* linhas alternadas — muted 4,92:1, secondary 6,42:1 */
+  --surface-4: #D1D9E0;   /* = --border */
 
   /* ---- Border (light) ---- */
   --border: #D1D9E0;

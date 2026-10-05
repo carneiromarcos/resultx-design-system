@@ -12,7 +12,9 @@
  *    >= 4.5:1, unrounded), kept strictly below --text-secondary on each one
  *    so the hierarchy survives. Covered in the four DS scopes and wherever a
  *    brand's tokens.css redeclares it (:root = dark, [data-theme="light"]),
- *    against the DS surfaces plus the brand's own (--bg, --surface-N).
+ *    against the DS surfaces plus every brand surface IN EFFECT in that theme
+ *    (--bg, --surface-N, inherited from :root included). A gate also requires
+ *    each brand's light theme to declare every surface it uses.
  *    A brand surface equal to that scope's --border (surface-4 in Electia and
  *    Xscore) is a border tone, not a text surface: --text-secondary also fails
  *    there in the dark (4.08:1). Text on it uses --text-primary.
@@ -172,7 +174,10 @@ describe('--text-muted — WCAG 1.4.3 (>= 4.5:1) em toda superficie de texto, cl
       .filter(({ own }) => own['--text-muted'] !== undefined)
       .map(({ theme, block, own, resolved }) => {
         const border = resolved['--border'] && up(resolved['--border']);
-        const ownSurfaces = Object.entries(own).filter(([t, v]) => OWN_SURFACE.test(t) && isHex(v));
+        // Cascata EFETIVA: o claro herda do :root tudo o que nao redeclara, e o
+        // que herda tambem e pintado. Enumerar so `own` deixava escapar as
+        // superficies escuras que o claro da Electia herdava (2,45 / 2,17:1).
+        const ownSurfaces = Object.entries(resolved).filter(([t, v]) => OWN_SURFACE.test(t) && isHex(v));
         const textSurfaces = ownSurfaces.filter(([, v]) => up(v) !== border).map(([, v]) => up(v));
         const dsSecondary = dsRows.find((r) => r.theme === theme).secondary;
         return {
@@ -187,6 +192,38 @@ describe('--text-muted — WCAG 1.4.3 (>= 4.5:1) em toda superficie de texto, cl
   );
 
   const rows = [...dsRows, ...brandRows];
+
+  /**
+   * HERANCA CRUZADA — o tema claro de uma marca herda do :root toda superficie
+   * que nao redeclara. Superficie escura vigente no tema claro e bug (foi o
+   * caso da surface-3/4 da Electia ate 05/10/2026). Cada --bg / --surface-N
+   * vigente num tema precisa ser declarada no proprio tema, salvo as excecoes
+   * abaixo, conferidas uma a uma (entrada obsoleta tambem reprova).
+   *
+   * PdV: o bloco claro so troca --gold-ink; fundo e superficies seguem navy
+   * nos dois temas. Pendencia registrada, nao decisao deste teste.
+   */
+  const INHERITED_SURFACE_EXCEPTIONS = [
+    'pdv light --bg',
+    'pdv light --surface-1',
+    'pdv light --surface-2',
+    'pdv light --surface-3',
+    'pdv light --surface-4',
+  ];
+
+  const inheritedSurfaces = brandFiles.flatMap(({ id, root, light }) =>
+    Object.keys(root)
+      .filter((t) => OWN_SURFACE.test(t) && light[t] === undefined)
+      .map((t) => `${id} light ${t}`)
+  );
+
+  test('gate: toda superficie vigente no tema claro de cada marca e declarada no proprio tema', () => {
+    expect(inheritedSurfaces.filter((g) => !INHERITED_SURFACE_EXCEPTIONS.includes(g))).toEqual([]);
+  });
+
+  test('gate: as excecoes de heranca continuam verdadeiras (nenhuma entrada obsoleta)', () => {
+    expect(INHERITED_SURFACE_EXCEPTIONS.filter((g) => !inheritedSurfaces.includes(g))).toEqual([]);
+  });
 
   test('cobre os quatro escopos do DS e Electia/Xscore nos dois temas', () => {
     expect(rows.map((r) => r.label)).toEqual(
@@ -237,12 +274,13 @@ describe('--text-muted — WCAG 1.4.3 (>= 4.5:1) em toda superficie de texto, cl
 
   /**
    * Superficie = --border nao e fundo de texto. Hoje sao as surface-4 de
-   * Electia (escuro) e Xscore (escuro e claro). Lista explicita para que um
+   * Electia e Xscore, nos dois temas. Lista explicita para que um
    * novo caso apareca no diff em vez de sumir da cobertura em silencio.
    */
   test('so o tom de borda fica fora da cobertura, e e exatamente a surface-4', () => {
     expect(brandRows.flatMap((r) => r.excluded)).toEqual([
       'electia dark --surface-4 #2A3444',
+      'electia light --surface-4 #D1D9E0',
       'xscore dark --surface-4 #2A3444',
       'xscore light --surface-4 #D1D9E0',
     ]);
