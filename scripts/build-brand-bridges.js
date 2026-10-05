@@ -31,7 +31,15 @@ const fs = require('fs');
 const path = require('path');
 
 const { BRANDS, INK_CANDIDATES, SURFACES } = require('./brand-bridges.config');
-const { AA_NORMAL, AA_LARGE, ratio, pickInk, flatten, toRgbTriplet } = require('./lib/contrast');
+const {
+  AA_NORMAL,
+  AA_LARGE,
+  ratio,
+  contrastRatio,
+  pickInk,
+  flatten,
+  toRgbTriplet,
+} = require('./lib/contrast');
 
 const ROOT = path.resolve(__dirname, '..');
 
@@ -312,6 +320,20 @@ ${media('light', 'light', light)}
 // Run
 // ─────────────────────────────────────────────────────────────────────────────
 
+/**
+ * The gate. Compares the UNROUNDED ratio: c.ratio is rounded to 2 decimals for
+ * the report, and #139980 on #E8ECF0 (2.99999:1) would round to 3 and pass.
+ */
+function failedChecks(checks, prefix) {
+  return checks
+    .filter((c) => contrastRatio(c.fg, c.bg) < c.required)
+    .map(
+      (c) =>
+        `${prefix}: ${c.label} — ${c.fg} sobre ${c.bg} = ` +
+        `${contrastRatio(c.fg, c.bg).toFixed(5)}:1, abaixo de ${c.required}:1`
+    );
+}
+
 function build({ write = true } = {}) {
   const failures = [];
   const gaps = [];
@@ -330,14 +352,7 @@ function build({ write = true } = {}) {
             `so. Escolher um hover mais proximo do accent em luminancia.`
         );
       }
-      for (const c of r.checks) {
-        if (c.ratio < c.required) {
-          failures.push(
-            `${brand.id}/${theme}: ${c.label} — ${c.fg} sobre ${c.bg} = ${c.ratio}:1, ` +
-              `abaixo de ${c.required}:1`
-          );
-        }
-      }
+      failures.push(...failedChecks(r.checks, `${brand.id}/${theme}`));
       if (!r.text) {
         gaps.push(`${brand.id}/${theme}: sem variante do accent aprovada em AA como texto`);
       }
@@ -398,4 +413,12 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { build, makeResolver, resolveTheme, extractBlock, parseDeclarations, emit };
+module.exports = {
+  build,
+  failedChecks,
+  makeResolver,
+  resolveTheme,
+  extractBlock,
+  parseDeclarations,
+  emit,
+};

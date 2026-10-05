@@ -111,7 +111,14 @@ do CSS e trava os dois pares.
   Xscore adotou na #76 — sem regressão.
 - **Electia** (`brands/electia/tokens/tokens.css` e `tokens.json`) redeclarava
   `--text-muted: #6E7681` no tema escuro e anularia a correção para quem
-  importa o arquivo da marca: passou a `#848D97`.
+  importa o arquivo da marca: passou a `#848D97`. AA no fundo e nas surfaces
+  1–2 da marca; **reprova nas surfaces 3 (`#232B3B`, 4,21:1) e 4 (`#2A3444`,
+  3,73:1) próprias da Electia — e do Xscore, que tem a mesma escala**.
+  Pendente de decisão; o teste registra a lacuna em `KNOWN_MUTED_GAPS` e num
+  `test.todo`.
+- Os gates de contraste (teste e `build-brand-bridges.js`) comparam a razão
+  **sem arredondar**: `#139980` sobre `#E8ECF0` dá 2,99999:1, arredondava para
+  3,00 e passava.
 
 ### Security — `braces` segue aberto: não existe versão corrigida
 

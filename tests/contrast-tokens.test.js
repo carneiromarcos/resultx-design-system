@@ -18,8 +18,8 @@ const fs = require('fs');
 const path = require('path');
 
 const { BRANDS } = require('../scripts/brand-bridges.config');
-const { extractBlock, parseDeclarations } = require('../scripts/build-brand-bridges');
-const { ratio, flatten, AA_NORMAL, AA_LARGE } = require('../scripts/lib/contrast');
+const { extractBlock, parseDeclarations, failedChecks } = require('../scripts/build-brand-bridges');
+const { ratio, contrastRatio, flatten, AA_NORMAL, AA_LARGE } = require('../scripts/lib/contrast');
 
 const ROOT = path.resolve(__dirname, '..');
 const read = (...p) => fs.readFileSync(path.join(ROOT, ...p), 'utf-8');
@@ -50,11 +50,15 @@ function parseColor(value) {
   return { hex, alpha: m[4] === undefined ? 1 : Number(m[4]) };
 }
 
-/** Contrast of a possibly translucent color as painted over an opaque surface. */
+/**
+ * UNROUNDED contrast of a possibly translucent color as painted over an opaque
+ * surface. Never compare a rounded ratio with a threshold: #139980 on #E8ECF0
+ * is 2.99999:1, rounds to 3.00 and would pass a 3:1 gate.
+ */
 function paintedRatio(value, surfaceHex) {
   const { hex, alpha } = parseColor(value);
   const painted = alpha >= 1 ? hex : flatten(hex, surfaceHex, alpha);
-  return ratio(painted, surfaceHex);
+  return contrastRatio(painted, surfaceHex);
 }
 
 const dsCss = read('tokens', 'tokens.css');
@@ -71,8 +75,30 @@ function failures(color, surfaces, min, label) {
   return surfaces
     .map((s) => ({ s, r: paintedRatio(color, s) }))
     .filter(({ r }) => r < min)
-    .map(({ s, r }) => `${label}: ${color} sobre ${s} = ${r}:1 (< ${min}:1)`);
+    .map(({ s, r }) => `${label}: ${color} sobre ${s} = ${r.toFixed(5)}:1 (< ${min}:1)`);
 }
+
+describe('Limiar sem arredondamento', () => {
+  // Mutacao que o Revisor encontrou na #82: arredondada da 3.00 e passava.
+  test('#139980 reprova o anel de 3:1 sobre surface-3 claro (2.99999:1)', () => {
+    expect(ratio('#139980', '#E8ECF0')).toBe(3); // o arredondamento esconderia a falha
+    expect(failures('#139980', DS_SURFACES.light, AA_LARGE, 'mutacao')).toEqual([
+      'mutacao: #139980 sobre #E8ECF0 = 2.99999:1 (< 3:1)',
+    ]);
+  });
+
+  test('o gate do build das pontes tambem reprova #139980', () => {
+    const check = {
+      label: 'anel de foco sobre #E8ECF0',
+      fg: '#139980',
+      bg: '#E8ECF0',
+      ratio: ratio('#139980', '#E8ECF0'), // 3 no relatorio
+      required: AA_LARGE,
+    };
+    expect(failedChecks([check], 'mutacao/light')).toHaveLength(1);
+    expect(failedChecks([{ ...check, fg: '#1D4ED8' }], 'ok/light')).toEqual([]);
+  });
+});
 
 describe('Superficies do DS', () => {
   test('os quatro escopos declaram as quatro superficies como hex solido', () => {
@@ -126,14 +152,51 @@ describe('--text-muted do tema escuro — WCAG 1.4.3 (>= 4.5:1)', () => {
     }
   });
 
-  test('marcas que redeclaram --text-muted no escopo escuro nao reprovam', () => {
-    // O :root de brands/<id>/tokens/tokens.css e o tema escuro da marca e e
-    // exportado (./brands/*/tokens). Xscore foi corrigido na #76 (#848D97).
-    const found = BRANDS.flatMap(({ id }) => {
-      const root = parseDeclarations(extractBlock(read('brands', id, 'tokens', 'tokens.css'), ':root'));
-      const muted = root['--text-muted'];
-      return muted ? failures(muted, DS_SURFACES.dark, AA_NORMAL, `marca ${id}`) : [];
-    });
-    expect(found).toEqual([]);
+  /**
+   * Superficies escuras de uma marca: as do DS mais as que a propria marca
+   * declara no :root (--bg, --surface-N). Electia e Xscore tem surface-3/4
+   * mais claras que qualquer superficie do DS.
+   */
+  function brandDarkSurfaces(root) {
+    const own = Object.entries(root)
+      .filter(([t, v]) => /^--(bg|surface-\d+)$/.test(t) && /^#[0-9a-fA-F]{3,6}$/.test(v))
+      .map(([, v]) => v.toUpperCase());
+    return [...new Set([...DS_SURFACES.dark.map((v) => v.toUpperCase()), ...own])];
+  }
+
+  /**
+   * PENDENCIAS CONHECIDAS — decisao do Marcos, nao do implementador.
+   * #848D97 passa no fundo e nas surfaces 1-2 destas marcas, mas reprova nas
+   * surfaces 3 (#232B3B, linhas alternadas) e 4 (#2A3444, = --border):
+   * 4.21:1 e 3.73:1. Sair desta lista exige escolher outra cor para o muted
+   * da marca ou restringir o uso dele nessas superficies. Cada entrada e
+   * conferida abaixo: se deixar de reprovar, o teste pede para remove-la.
+   */
+  const KNOWN_MUTED_GAPS = [
+    'electia #232B3B', // surface-3
+    'electia #2A3444', // surface-4
+    'xscore #232B3B', // surface-3 (#848D97 vem da #76)
+    'xscore #2A3444', // surface-4
+  ];
+
+  const brandMuted = BRANDS.map(({ id }) => {
+    const root = parseDeclarations(extractBlock(read('brands', id, 'tokens', 'tokens.css'), ':root'));
+    return { id, muted: root['--text-muted'], surfaces: brandDarkSurfaces(root) };
+  }).filter((b) => b.muted);
+
+  const mutedGaps = brandMuted.flatMap(({ id, muted, surfaces }) =>
+    surfaces.filter((s) => paintedRatio(muted, s) < AA_NORMAL).map((s) => `${id} ${s}`)
+  );
+
+  test('marcas que redeclaram --text-muted no escuro passam no DS e nas proprias superficies', () => {
+    expect(mutedGaps.filter((g) => !KNOWN_MUTED_GAPS.includes(g))).toEqual([]);
   });
+
+  test('a lista de pendencias conhecidas continua verdadeira (nenhuma entrada obsoleta)', () => {
+    expect(KNOWN_MUTED_GAPS.filter((g) => !mutedGaps.includes(g))).toEqual([]);
+  });
+
+  test.todo(
+    'Electia e Xscore: --text-muted escuro em AA nas surfaces 3/4 da marca (#232B3B 4.21:1, #2A3444 3.73:1) — aguarda decisao do Marcos'
+  );
 });
