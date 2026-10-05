@@ -4,7 +4,7 @@
 
 ## Proveniência e limite
 
-A ficha de 29/09 já mede paleta, tipografia geral e ordem das seções, e esses dados não se repetem aqui. Esta ficha desce ao nível de **componente**: navbar, orb da marca, painel de CTA, composer do assistente e moldura da demo. A Talio é marca de terceiro. Daqui saem padrões e valores. Logo, textos, imagens, CSS minificado e código de animação não são copiados. Nas propostas, os nomes de classe e os tokens são os nossos.
+A ficha de 29/09 já mede paleta, tipografia geral e ordem das seções, e esses dados não se repetem aqui. Esta ficha desce ao nível de **componente**: navbar, orb da marca, painel de CTA, composer do assistente e moldura da demo. A Talio é marca de terceiro. Daqui saem padrões e valores. Os recortes PNG em `assets/talio-componentes-2026-10-05/` reproduzem marca e textos da Talio porque são **captura documental para pesquisa interna**: servem de evidência das medidas registradas aqui. Nada da Talio (logo, textos, imagens, CSS minificado ou código de animação) é incorporado ao produto nem ao código canônico (`components/`, `tokens/`, `dist/`). Nas propostas, os nomes de classe e os tokens são os nossos.
 
 | Evidência | Revisão em 05/10 | Uso |
 |---|---|---|
@@ -155,11 +155,11 @@ Não encontrei hero escuro com orb na versão de hoje: o hero é claro e o orb a
 | Electia | `--orb-a: var(--purple)` `#6f32b1`, `--orb-b: var(--purple-on-dark)` `#c084fc`, base grafite `#0B0E14`. Fica coerente com o gradiente de marca `#6f32b1 → #a55eea` |
 | Xscore | Roxo também: nos tokens do Xscore, roxo = "inteligência, score, explicação, IA" e ouro = ação. Um orb dourado confundiria IA com botão |
 | Papel | Avatar do assistente e marcador de "IA" — **não** um logotipo novo. Logotipos ficam em `brands/*/assets` |
-| Motion | Movimento contínuo (forma, deriva, giro e brilho) só no orb, com `@media (prefers-reduced-motion: reduce)` zerando tudo e um fallback estático para navegador sem `@property` (o gradiente fica parado na posição inicial) |
+| Motion | Movimento contínuo (forma, deriva, giro e brilho) só no orb, com `@media (prefers-reduced-motion: reduce)` zerando tudo e um fallback estático para navegador sem `@property` (o gradiente fica parado na posição inicial). O reduced-motion não basta para o WCAG 2.2.2; no DS, o movimento passa a depender do estado (decisão de 05/10, ver Acessibilidade abaixo) |
 
 ### Acessibilidade
 
-Decorativo e `aria-hidden` em todos os lugares **[medido]**; o nome acessível fica no link da marca (`aria-label="Talio — início"`). Sem texto dentro, não há contraste a medir. Animação contínua em loop infinito pede o reduced-motion acima. O critério WCAG 2.2.2 (pausar, parar, ocultar) não se aplica a um elemento de 22 a 40 px que não transmite informação, mas um orb de 112 px em loop perto de texto longo merece revisão.
+Decorativo e `aria-hidden` em todos os lugares **[medido]**; o nome acessível fica no link da marca (`aria-label="Talio — início"`). Sem texto dentro, não há contraste a medir. Ser decorativo, pequeno (22 a 40 px) ou `aria-hidden` **não** dispensa o critério WCAG 2.2.2 (Pausar, parar, ocultar): ele vale para qualquer conteúdo que se move, começa sozinho, dura mais de 5 s e aparece junto de outro conteúdo, salvo quando o movimento é essencial ([Understanding 2.2.2](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html)). O orb em loop infinito precisa, portanto, de um mecanismo para pausar, parar ou ocultar, **ou** de movimento limitado a 5 s. O `prefers-reduced-motion` acima ajuda, mas sozinho não basta como mecanismo. **Decidido por Marcos em 05/10/2026: "a orb fica viva só quando o agente age."** No DS (`.brand-orb`, PR #79) a orb fica **em repouso** por padrão, parada no quadro 3D; ao aparecer, move-se por **até 5 s** (4,8 s, iterações finitas) e para sozinha; volta a animar **só enquanto o agente pensa ou responde** (`data-state="active"`), com o status anunciado em texto (`aria-busy` / `aria-live`). Sob `prefers-reduced-motion` nada anima. O loop infinito da Talio não é adotado.
 
 ---
 
@@ -282,7 +282,7 @@ O nosso `components/composer.css` é um **composer funcional** (textarea que cre
 | Chips de sugestão com rótulo | só `.composer-tool` com ícone | `.composer-chips` + `.composer-chip` como `<button>` de verdade, com rótulo e ícone em círculo, altura mínima de 32 px (até 44 em `pointer: coarse`), rolando na horizontal como `.composer-tools` |
 | Envio com rótulo | só ícone de 44 px | `.composer-send--label` (pílula com texto + ícone); o estado desabilitado continua sendo `:disabled` real |
 | Superfície de vidro + contorno + halo | borda simples `--border-subtle` | modificador `.composer--assistant` com `--glass-standard-*`, contorno em gradiente e `--shadow-glow` |
-| Texto digitado de demonstração | não tem (e não deve ter no produto) | `.composer-typewriter`, só para landing, desligado por `prefers-reduced-motion` (mostrar a primeira frase inteira, parada) e com `aria-hidden` no texto animado + um `.sr-only` estático |
+| Texto digitado de demonstração | não tem (e não deve ter no produto) | `.composer-typewriter`, só para landing, desligado por `prefers-reduced-motion` (mostrar a primeira frase inteira, parada). Como o reduced-motion sozinho não atende ao WCAG 2.2.2, fora dele a digitação também precisa parar em até 5 s ou ter controle de pausa. Leva `aria-hidden` no texto animado + um `.sr-only` estático |
 
 A política de "Enter envia" segue fora do DS, como já diz `conversation.md`.
 
@@ -421,10 +421,10 @@ Ordem sugerida: 1 → 2 → 3 numa leva só (as três são P e não pedem decis�
 ## Decisões abertas do Marcos
 
 1. **Orb como assinatura de IA.** Ele vira o avatar padrão do assistente em todas as marcas? A cor proposta é roxa no Electia e roxa (IA, não ouro) no Xscore. Ou cada produto escolhe a sua?
-2. **Movimento contínuo em botões.** Aceitar a deriva de luz em loop infinito nos CTAs (Talio) ou limitar a hover + reflexo de uma passada? A recomendação é limitar e deixar o loop só no orb.
+2. **Movimento contínuo em botões.** Aceitar a deriva de luz em loop infinito nos CTAs (Talio) ou limitar a hover + reflexo de uma passada? A recomendação é limitar. O orb já não é exceção: pela decisão de 05/10 ele fica em repouso, anima até 5 s na entrada e só volta a se mover enquanto o agente trabalha (ver seção 2).
 3. **Navbar ao rolar.** Manter estática como a Talio, ou ganhar elevação ou opacidade maior depois do primeiro scroll (`[data-scrolled]`)?
 4. **Barra de CTA fixa no móvel.** Adotar? Se sim, aparecer quando o CTA do hero sair da tela, não em pixel fixo.
-5. **Composer com digitação automática** só em landing e sempre parado sob reduced-motion: confirma que isso nunca entra no produto?
+5. **Composer com digitação automática** só em landing, sempre parado sob reduced-motion e, fora dele, limitado a 5 s ou com pausa (WCAG 2.2.2): confirma que isso nunca entra no produto? (Para o orb, o mecanismo do 2.2.2 foi decidido em 05/10: repouso, até 5 s na entrada, ativo só enquanto o agente trabalha. A digitação do composer continua aberta.)
 6. **Nomes das etapas do funil.** Manter os do DS (Triagem, Entrevista, Oferta, Contratado, Rejeitado) ou alinhar a outro vocabulário de produto? Isso define quantas cores o `.stage-chip` precisa.
 7. **Escopo de destino.** Esses componentes vão para `components/` como base comum, ou primeiro para um protótipo de landing Electia (como sugeriu a ficha de 29/09)?
 
