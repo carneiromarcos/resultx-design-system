@@ -71,13 +71,18 @@ A tipografia do nome (o wordmark) é da marca e fica na página. O DS cuida do l
 
 | Peça | Hover | Foco | Pressão |
 |---|---|---|---|
-| Link central | fundo `--accent-primary-muted`, texto primário | anel do DS | fundo do accent a 22 % |
+| Link central | texto de `--header-float-ink-muted` para `--text-primary`, fundo `--accent-primary-muted` | anel do DS | texto `--text-primary`, fundo do accent a 22 % |
 | Marca | sublinhado de 2 px na tinta do accent | anel do DS | desce 1 px (`translateY`) |
-| `.header-float-icon` | borda e ícone no accent | anel do DS | `scale(0.94)` |
+| `.header-float-icon` | borda no accent, ícone em `--accent-primary-text` | anel do DS | `scale(0.94)` |
 
 `aria-current` num link central o deixa em `--text-primary`.
 
-Nenhum estado mexe na cor nem na opacidade do texto. O protótipo usava opacidade 0,8 e 0,65 na marca, e o selo de 12 px caía a 3,15:1 sobre o vidro escuro (achado do Revisor na #83). Um teste em `tests/lote-p.test.js` trava isso em todos os componentes do lote: elemento com texto não fica translúcido em estado nenhum.
+Duas garantias diferentes, cada uma com seu teste:
+
+- **A marca não muda a cor nem a opacidade do texto em estado nenhum** (repouso, hover, active, focus-visible). O feedback é o sublinhado e o deslocamento. O protótipo usava opacidade 0,8 e 0,65 na marca, e o selo de 12 px caía a 3,15:1 sobre o vidro escuro (achado do Revisor na #83). Trava: `tests/header-float.test.js`, que verifica, por estado da marca, a ausência de `opacity` e de troca de `color`, o sublinhado no hover e o `translateY` no active.
+- **Nenhum elemento com texto fica translúcido**, em todos os componentes do lote P. Os links centrais **mudam de cor** de propósito (vão para `--text-primary` no hover, no active e com `aria-current`), mas nunca de opacidade. Trava: `tests/lote-p.test.js`, que só aceita `opacity: 1`, ou `0` junto de `visibility: hidden`, fora de pseudo-elementos decorativos. Esse teste trava opacidade, não cor.
+
+A cor de cada estado é garantida por medição, não por teste: ver "Contraste medido" abaixo.
 
 ## Responsivo
 
@@ -91,7 +96,14 @@ Medido no Chrome em 05/10/2026 (demo e protótipo, claro e escuro): `scrollWidth
 
 ## Movimento
 
-Só `opacity` (sombra e marca), `transform` (pressão do ícone) e cor. Sob `prefers-reduced-motion: reduce`, nenhuma transição.
+| Peça | O que se move | Como |
+|---|---|---|
+| Sombra de destaque (`::after`) | `opacity` | 0 → 1 com `[data-scrolled]` |
+| Marca | sublinhado no hover; desce 1 px no active | transição de `text-decoration-color` e `transform: translateY(1px)` |
+| Link central | cor e fundo | transição de `color` e `background-color` |
+| `.header-float-icon` | cor, borda e pressão | transição de `color` e `border-color`; `transform: scale(0.94)` no active |
+
+Nada anima layout. Sob `prefers-reduced-motion: reduce` nenhuma transição roda, e as duas pressões (`translateY` da marca e `scale` do ícone) ficam em `transform: none`. O sublinhado do hover continua: é um estado, não um movimento.
 
 ## Contraste medido
 
