@@ -29,14 +29,9 @@
   <link rel="stylesheet" href="../../tokens/ds-bridge.css">
   <link rel="stylesheet" href="../../../../dist/components.min.css">
   <style>
-    /* ── Ajustes de tema do protótipo ─────────────────────────────────────
-       O anel de foco do DS é o roxo a 50 % (≈ 2,4:1 sobre branco, abaixo dos
-       3:1 de elemento não textual). Aqui o anel usa a tinta de texto do
-       accent, medida em AA nos dois temas. A correção no DS vem em PR
-       própria (fix/ds-contraste-foco-muted). */
-    :root, [data-theme] { --focus-ring-color: var(--accent-primary-text); }
-    /* --text-muted escuro (#6e7681 sobre #0b0e14) dá 4,2:1. Os textos
-       auxiliares desta página usam --text-secondary, que passa nos dois. */
+    /* ── Escala da página ──────────────────────────────────────────────────
+       O anel de foco vem da ponte Electia (sólido, desde a #82); não há
+       override de tema nesta página. */
     :root {
       --landing-page: 1180px;
       --landing-gutter: var(--space-4);
