@@ -8,7 +8,9 @@
  *   2. cada marca resolve um conjunto de cores próprio, e esse conjunto é o
  *      mesmo pigmento declarado no arquivo de tokens da marca (sem deriva);
  *   3. o movimento só mexe em transform, opacity e propriedades registradas,
- *      e para por completo sob prefers-reduced-motion.
+ *      e para por completo sob prefers-reduced-motion;
+ *   4. WCAG 2.2.2 (decisão de 05/10/2026): em repouso nada anima; a entrada
+ *      dura no máximo 5 s com iterações finitas; loop só em data-state="active".
  */
 
 const fs = require('fs');
@@ -196,4 +198,119 @@ describe('Movimento', () => {
       expect(bloco).toMatch(new RegExp(`${escapado}[^{]*\\{[^}]*animation:\\s*none`));
     }
   });
+});
+
+/** Todas as regras folha (sem blocos aninhados), com a pilha de at-rules. */
+const regras = (css, contexto = []) => {
+  const lista = [];
+  let pos = 0;
+  while (pos < css.length) {
+    const abre = css.indexOf('{', pos);
+    if (abre === -1) break;
+    const cabeca = css.slice(pos, abre).trim();
+    const corpo = corpoDoBloco(css, abre);
+    if (cabeca.startsWith('@')) {
+      if (!cabeca.startsWith('@keyframes') && !cabeca.startsWith('@property')) {
+        lista.push(...regras(corpo, [...contexto, cabeca]));
+      }
+    } else {
+      for (const seletor of cabeca.split(',')) {
+        lista.push({ seletor: seletor.trim(), corpo, contexto });
+      }
+    }
+    pos = abre + corpo.length + 2;
+  }
+  return lista;
+};
+
+/** `animation` → [{ nome, duracao, atraso, iteracoes }] (s; Infinity = infinite). */
+const animacoes = (corpo) => {
+  const v = valor(corpo, 'animation');
+  if (!v || v === 'none') return [];
+  return v.split(',').map((item) => {
+    const partes = item.trim().split(/\s+/);
+    const tempos = partes
+      .filter((p) => /^-?[\d.]+m?s$/.test(p))
+      .map((p) => (p.endsWith('ms') ? parseFloat(p) / 1000 : parseFloat(p)));
+    const iter = partes.find((p) => p === 'infinite' || /^[\d.]+$/.test(p));
+    return {
+      nome: partes.find((p) => /^orb-/.test(p)),
+      duracao: tempos[0] || 0,
+      atraso: tempos[1] || 0,
+      iteracoes: iter === 'infinite' ? Infinity : parseFloat(iter || '1'),
+    };
+  });
+};
+
+describe('Estados — WCAG 2.2.2 (decisão de 05/10/2026)', () => {
+  const todas = regras(orbCss);
+  const reduz = (r) => r.contexto.some((c) => /prefers-reduced-motion:\s*reduce/.test(c));
+  const ATIVO = '[data-state="active"]';
+  const BASE = ['.brand-orb', '.brand-orb::before', '.brand-orb::after'];
+
+  test('loop infinito só existe sob data-state="active"', () => {
+    const comLoop = todas.filter((r) => /\binfinite\b/.test(valor(r.corpo, 'animation') || ''));
+    expect(comLoop.length).toBeGreaterThan(0);
+    for (const r of comLoop) expect(r.seletor).toContain(ATIVO);
+  });
+
+  test.each(BASE)('entrada de %s: iterações finitas e no máximo 5 s', (seletor) => {
+    const comAnimacao = todas.filter(
+      (r) => r.seletor === seletor && !reduz(r) && valor(r.corpo, 'animation'),
+    );
+    expect(comAnimacao.length).toBeGreaterThan(0);
+    for (const r of comAnimacao) {
+      for (const a of animacoes(r.corpo)) {
+        expect(Number.isFinite(a.iteracoes)).toBe(true);
+        expect(a.atraso + a.duracao * a.iteracoes).toBeLessThanOrEqual(5);
+      }
+    }
+  });
+
+  test('cada keyframe começa e termina no quadro de repouso (a entrada para nele)', () => {
+    // Repouso = initial-value dos registros e valores-base das camadas.
+    const repouso = {
+      '--orb-ax': '32%', '--orb-ay': '28%', '--orb-bx': '74%', '--orb-by': '78%',
+      '--orb-ra': '50%', '--orb-rb': '50%', '--orb-rc': '50%', '--orb-rd': '50%',
+      opacity: '0.85',
+    };
+    for (const nome of ['orb-shape', 'orb-drift', 'orb-glint']) {
+      const m = new RegExp(`@keyframes\\s+${nome}\\s*\\{`).exec(orbCss);
+      const corpo = corpoDoBloco(orbCss, orbCss.indexOf('{', m.index));
+      const extremo = /0%\s*,\s*100%\s*\{([^}]*)\}/.exec(corpo);
+      expect(extremo).not.toBeNull();
+      for (const [prop, v] of [...extremo[1].matchAll(/(--[\w-]+|opacity)\s*:\s*([^;]+);/g)].map(
+        (x) => [x[1], x[2].trim()],
+      )) {
+        expect({ nome, prop, v }).toEqual({ nome, prop, v: repouso[prop] });
+      }
+    }
+    expect(valor(regra(orbCss, '.brand-orb::after'), 'opacity')).toBe(repouso.opacity);
+  });
+
+  test.each([
+    ['.brand-orb[data-state="active"]', ['orb-shape', 'orb-drift']],
+    ['.brand-orb[data-state="active"]::before', ['orb-spin']],
+    ['.brand-orb[data-state="active"]::after', ['orb-glint']],
+  ])('%s anima em loop', (seletor, nomes) => {
+    const r = todas.find((x) => x.seletor === seletor && !reduz(x));
+    expect(r).toBeDefined();
+    const lista = animacoes(r.corpo);
+    expect(lista.map((a) => a.nome).sort()).toEqual([...nomes].sort());
+    for (const a of lista) expect(a.iteracoes).toBe(Infinity);
+  });
+
+  test('o estado ativo do corpo também respeita o gate de @property', () => {
+    const r = todas.find((x) => x.seletor === '.brand-orb[data-state="active"]' && !reduz(x));
+    expect(r.contexto.some((c) => /transition-behavior:\s*allow-discrete/.test(c))).toBe(true);
+  });
+
+  test.each([...BASE, '.brand-orb[data-state="active"]', '.brand-orb[data-state="active"]::before', '.brand-orb[data-state="active"]::after'])(
+    'reduced-motion zera %s',
+    (seletor) => {
+      const r = todas.find((x) => x.seletor === seletor && reduz(x));
+      expect(r).toBeDefined();
+      expect(valor(r.corpo, 'animation')).toBe('none');
+    },
+  );
 });

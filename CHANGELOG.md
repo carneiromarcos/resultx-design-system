@@ -16,6 +16,14 @@ Pigmentos novos no `:root` de `tokens/tokens.css`: `--ai-{electia,emprega,xscore
 cópias travadas por teste dos tokens de cada marca. Doc em
 `docs/components/brand-orb.md`, demo em `demos/brand-orb.html`.
 
+Movimento por estado (WCAG 2.2.2, decisão de 05/10/2026: "a orb fica viva só
+quando o agente age"): em **repouso** (padrão) nada anima; na **entrada** a orb
+se move por 4,8 s com iterações finitas e para sozinha no quadro de repouso
+(`fill-mode: both`, sem JS); com **`data-state="active"`** anima em loop
+enquanto o agente pensa ou responde, e quem consome tira o atributo ao fim e
+anuncia o status em texto (`aria-busy` / `aria-live`). Sob
+`prefers-reduced-motion: reduce` nada anima, nem entrada nem ativo.
+
 ### Added — contrato Laravel `--eds-*` (ADR-0002 decisão 3 / passo 4a)
 
 `brands/emprega-mais/tokens/eds-root.css` publica a Camada 1 do IMO:

@@ -2,7 +2,8 @@
 <!--
   Demo da orb de IA (components/brand-orb.css · docs/components/brand-orb.md).
   As quatro identidades lado a lado nos três tamanhos, num painel escuro e num
-  claro. Cada painel carrega o próprio data-theme: os tokens de tema do DS
+  claro, em repouso (a entrada dura 4,8 s e para). No fim, uma conversa mostra
+  o estado ativo: o botão "Simular resposta" é o controle do usuário. Cada painel carrega o próprio data-theme: os tokens de tema do DS
   valem em qualquer elemento com o atributo, não só no <html>.
 -->
 <html lang="pt-BR" data-theme="dark">
@@ -134,6 +135,45 @@
       font-size: var(--text-xs);
       color: var(--text-secondary);
     }
+
+    .orb-demo-chat {
+      margin-top: var(--space-6);
+      padding: var(--space-6) var(--space-5);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      background: var(--bg-surface-1);
+    }
+
+    .orb-demo-chat h2 {
+      margin: 0 0 var(--space-2);
+      font-family: var(--font-heading);
+      font-size: var(--text-lg);
+    }
+
+    .orb-demo-chat > p {
+      max-width: 62ch;
+      margin: 0 0 var(--space-5);
+      color: var(--text-secondary);
+      font-size: var(--text-sm);
+      line-height: 1.6;
+    }
+
+    .orb-demo-chat .orb-bubble { max-width: 520px; }
+    .orb-demo-chat .orb-bubble p { min-height: 2.6em; }
+
+    .orb-demo-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3);
+      margin-top: var(--space-5);
+    }
+
+    .orb-demo-status {
+      margin: 0;
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
   </style>
 </head>
 <body>
@@ -142,7 +182,10 @@
       <h1>Orb de IA</h1>
       <p>Assinatura visual dos agentes de IA: um componente, o mesmo movimento, a cor da marca.
         Nexus e Copilot Electia compartilham a orb Electia (decidido em 05/10/2026). Sob
-        <code>prefers-reduced-motion</code> a orb para no quadro inicial.</p>
+        <code>prefers-reduced-motion</code> nada anima.</p>
+      <p>A orb fica viva só quando o agente age: ao aparecer ela se move por 4,8 s e para no
+        quadro de repouso; volta a se mover só com <code>data-state="active"</code>, enquanto o
+        agente pensa ou responde.</p>
     </header>
 
     <div class="orb-panels">
@@ -227,6 +270,50 @@
         </div>
       </section>
     </div>
+
+    <section class="orb-demo-chat" aria-labelledby="chat-titulo">
+      <h2 id="chat-titulo">Estado ativo numa conversa</h2>
+      <p>A orb anima só enquanto o Nexus responde (~3 s) e volta ao repouso sozinha. O status é
+        anunciado em texto numa região <code>aria-live</code>; a orb continua
+        <code>aria-hidden</code>.</p>
+      <div class="orb-demo-thread" id="conversa" aria-busy="false">
+        <div class="orb-bubble">
+          <span class="brand-orb brand-orb-electia brand-orb-md" id="orb-conversa" aria-hidden="true"></span>
+          <p><span class="orb-bubble-name">Nexus</span><span id="resposta">Pergunte quantas vagas abertas há no hospital.</span></p>
+        </div>
+      </div>
+      <div class="orb-demo-actions">
+        <button class="btn btn-primary" type="button" id="simular">Simular resposta</button>
+        <p class="orb-demo-status" id="status" role="status" aria-live="polite">Nexus em espera.</p>
+      </div>
+    </section>
   </main>
+
+  <script>
+    (() => {
+      const RESPOSTA_MS = 3000;
+      const botao = document.getElementById('simular');
+      const orb = document.getElementById('orb-conversa');
+      const conversa = document.getElementById('conversa');
+      const status = document.getElementById('status');
+      const resposta = document.getElementById('resposta');
+
+      botao.addEventListener('click', () => {
+        botao.disabled = true;
+        orb.setAttribute('data-state', 'active');
+        conversa.setAttribute('aria-busy', 'true');
+        status.textContent = 'Nexus está respondendo…';
+        resposta.textContent = '…';
+
+        window.setTimeout(() => {
+          resposta.textContent = 'Há 14 vagas abertas: 9 de enfermagem e 5 administrativas.';
+          orb.removeAttribute('data-state');
+          conversa.setAttribute('aria-busy', 'false');
+          status.textContent = 'Nexus respondeu.';
+          botao.disabled = false;
+        }, RESPOSTA_MS);
+      });
+    })();
+  </script>
 </body>
 </html>
