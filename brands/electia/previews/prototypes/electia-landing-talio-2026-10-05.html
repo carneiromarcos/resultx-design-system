@@ -32,6 +32,10 @@
        3:1 de elemento não textual). Aqui o anel usa a tinta de texto do
        accent, medida em AA nos dois temas. Achado para levar ao DS. */
     :root, [data-theme] { --focus-ring-color: var(--accent-primary-text); }
+    /* Achado para o DS: --text-muted do tema escuro (#6e7681 sobre #0b0e14)
+       dá 4,2:1 — não passa AA (4,5:1) para texto pequeno. Os textos
+       auxiliares deste protótipo (rótulos da gaveta, aviso do Nexus) usam
+       --text-secondary, que passa nos dois temas. */
     :root {
       --landing-page: 1180px;
       --landing-gutter: var(--space-4);
@@ -105,17 +109,26 @@
     }
     .header-float-drawer {
       position: fixed; inset-block: 0; inset-inline-end: 0; z-index: 51;
-      display: flex; flex-direction: column; gap: var(--space-6);
+      display: flex; flex-direction: column; gap: var(--space-4);
       inline-size: min(320px, 86vw);
-      padding: calc(var(--space-4) + env(safe-area-inset-top)) var(--space-5) calc(var(--space-6) + env(safe-area-inset-bottom));
+      padding-block-start: calc(var(--space-4) + env(safe-area-inset-top));
       background: var(--bg-base); border-inline-start: 1px solid var(--border-default); box-shadow: var(--elevation-4);
       transform: translateX(100%); visibility: hidden;
       transition: transform 280ms var(--ease-brand), visibility 0s linear 280ms;
     }
     .header-float-drawer[data-open] { transform: none; visibility: visible; transition: transform 280ms var(--ease-brand); }
     .header-float-scrim[data-open] { opacity: 1; visibility: visible; transition: opacity var(--transition-base); }
-    .header-float-drawer-head { display: flex; align-items: center; justify-content: space-between; }
-    .header-float-drawer-label { color: var(--text-muted); font-size: var(--text-xs); font-weight: var(--font-semibold); letter-spacing: 0.12em; text-transform: uppercase; }
+    /* Cabeçalho fixo (Fechar sempre à vista); só o corpo rola. Em paisagem
+       baixa (667×375) o conteúdo passa da altura e precisa de rolagem. */
+    .header-float-drawer-head { flex: none; display: flex; align-items: center; justify-content: space-between; padding-inline: var(--space-5); }
+    .header-float-drawer-body {
+      flex: 1 1 auto; min-block-size: 0;
+      display: flex; flex-direction: column; gap: var(--space-6);
+      overflow-y: auto; overscroll-behavior: contain;
+      padding: var(--space-2) var(--space-5) calc(var(--space-6) + env(safe-area-inset-bottom));
+      scroll-padding-block: var(--space-4);
+    }
+    .header-float-drawer-label { color: var(--text-secondary); font-size: var(--text-xs); font-weight: var(--font-semibold); letter-spacing: 0.12em; text-transform: uppercase; }
     .header-float-drawer nav { display: grid; }
     .header-float-drawer nav a {
       display: flex; align-items: center; min-block-size: 48px; border-bottom: 1px solid var(--border-subtle);
@@ -131,6 +144,15 @@
       .header-float-menu { display: inline-grid; }
       .header-float-icon { inline-size: 44px; block-size: 44px; }
     }
+    /* Abaixo de 360 px marca + dois controles de 44 px não cabiam (325 px em
+       320). Pílula mais larga, respiro menor e o "by emprega+" sai só da
+       vista: o nome acessível do link (aria-label) continua com ele. */
+    @media (max-width: 359.98px) {
+      .header-float { inline-size: calc(100% - 2 * var(--space-2)); }
+      .header-float-bar { gap: var(--space-2); padding-inline: var(--space-3) var(--space-1); }
+      .header-float-actions { gap: var(--space-1); }
+      .header-float .header-float-brand span:not(.brand-orb) { display: none; }
+    }
 
     /* ════════════════════════════════════════════════════════════════════
        CANDIDATO components/btn-sheen.css
@@ -142,7 +164,10 @@
     .btn-sheen::after {
       content: ''; position: absolute; inset-block: 0; inset-inline-start: 0; z-index: -1;
       inline-size: 45%;
-      background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--text-on-color) 30%, transparent), transparent);
+      /* Pico de 8 %: o reflexo passa sob o rótulo, então o fundo mais claro
+         que ele cria ainda precisa de 4,5:1 com o texto. Medido quadro a
+         quadro sobre o pior fundo (hover #8842d6): 30 % dava 3,34:1. */
+      background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--text-on-color) 8%, transparent), transparent);
       transform: translateX(-140%) skewX(-18deg); opacity: 0; pointer-events: none;
     }
     .btn-sheen:hover::after, .btn-sheen:focus-visible::after { animation: btn-sheen-pass 700ms var(--ease-sheen) 1 both; }
@@ -264,7 +289,7 @@
     .copilot-msg-user p { max-inline-size: 80%; background: var(--accent-primary); color: var(--text-inverse); border-end-end-radius: var(--radius-sm); }
     .copilot-msg-ai p { background: var(--bg-surface-2); color: var(--text-primary); border-end-start-radius: var(--radius-sm); }
     .copilot-msg-ai strong { display: block; margin-block-end: var(--space-1); color: var(--accent-primary-text); font: 600 var(--text-xs) var(--font-heading); }
-    .copilot-foot { margin-block-start: var(--space-5); color: var(--text-muted); font-size: var(--text-xs); text-align: center; }
+    .copilot-foot { margin-block-start: var(--space-5); color: var(--text-secondary); font-size: var(--text-xs); text-align: center; }
     .copilot [hidden] { display: none; }
     .copilot-ask { display: flex; justify-content: flex-end; margin-block-start: var(--space-3); }
     .copilot-ask .btn { color: var(--accent-primary-text); }
@@ -335,6 +360,7 @@
       <span class="header-float-drawer-label">Navegue</span>
       <button class="header-float-icon" type="button" data-menu-close aria-label="Fechar menu"><span aria-hidden="true">✕</span></button>
     </div>
+    <div class="header-float-drawer-body">
     <nav aria-label="Navegação principal (móvel)">
       <a href="#plataforma">Plataforma</a>
       <a href="#nexus">Nexus</a>
@@ -346,6 +372,7 @@
       <a class="btn btn-ghost" href="#login">Login</a>
       <a class="btn btn-secondary" href="#cta-final">Agendar demonstração</a>
       <a class="btn btn-primary" href="#cta-final">Conheça o electia</a>
+    </div>
     </div>
   </div>
   <div class="header-float-scrim" data-menu-scrim></div>
