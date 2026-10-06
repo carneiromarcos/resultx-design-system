@@ -5,6 +5,8 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+## [2.7.0] - 2026-10-06
+
 ### Fixed — foco inicial da gaveta com `prefers-reduced-motion` (06/10/2026)
 
 Ressalva P2 do Revisor na #88, herdada do DS. Sob `prefers-reduced-motion: reduce`,
