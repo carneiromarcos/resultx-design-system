@@ -77,6 +77,17 @@ body {
      para os temas alternativos (tokens/themes/), que não declaram o token. */
   --focus-ring-color: var(--sidebar-focus-ring, var(--sidebar-text-bright));
 }
+/* "O que vier" só lê a variável se tiver regra de foco. Um focável sem anel
+   próprio — o link de marca do app-shell e do protótipo Electia, que é o
+   PRIMEIRO alvo da gaveta ao abrir — ficava com o anel do navegador: azul
+   escuro sobre a sidebar escura, abaixo de 3:1. :where() zera a
+   especificidade da sidebar, então qualquer anel do DS (.sidebar-item,
+   .btn…) ou do consumidor continua vencendo. -2px, como o .sidebar-item: o
+   overflow da sidebar cortaria um anel por fora nas laterais. */
+:where(.sidebar) :focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: -2px;
+}
 .sidebar-brand {
   padding: 0 var(--space-5);
   margin-bottom: var(--space-8);
@@ -350,9 +361,18 @@ body {
   .sidebar-panel-toggle[data-sidebar-toggle] { display: none; }
 }
 
+/* Os seletores com [data-open] também: sem eles a regra aberta (mais
+   específica) mantém `visibility 0s` na lista, e a regra global de
+   reduced-motion (transition-duration: 0.01ms !important) transforma esse 0s
+   numa transição de verdade. No quadro da abertura o painel ainda está
+   `hidden`, o .focus() do script falha em silêncio e o foco fica no <body>.
+   `transition: none` zera a lista de propriedades — e o !important global, que
+   só mexe na duração, deixa de ter o que esticar. */
 @media (prefers-reduced-motion: reduce) {
   .sidebar-overlay,
-  .sidebar-scrim { transition: none; }
+  .sidebar-overlay[data-open],
+  .sidebar-scrim,
+  .sidebar-scrim[data-open] { transition: none; }
 }
 
 /* ══════════════════════════════════════════════════════════════════

@@ -59,7 +59,7 @@ function montar({ role, ariaModal, filhos } = {}) {
   const janela = dom.carregar('dist', 'sidebar-overlay.js');
   const q = (id) => doc.querySelector(`[id="${id}"]`);
   const scrim = doc.querySelector('.sidebar-scrim');
-  return { ...dom, api: janela.ResultXSidebarOverlay, q, nav: q('nav'), scrim };
+  return { ...dom, janela, api: janela.ResultXSidebarOverlay, q, nav: q('nav'), scrim };
 }
 
 const abrir = ({ q }) => {
@@ -618,5 +618,176 @@ describe('P3 da #86 — sem marcado, o representante segue a ordem sequencial', 
       shiftTabAntesDoPrimeiro(ctx);
       expect(ctx.doc.activeElement.id).toBe(ultimo);
     }
+  });
+});
+
+/**
+ * Revisor da #88 (P2, herdado do DS): com prefers-reduced-motion, a regra
+ * global `transition-duration: 0.01ms !important` transformava o `visibility
+ * 0s` da abertura numa transição de verdade — e cada filho, com o
+ * `transition-property: all` padrão, ganhava a sua da visibility herdada. No
+ * instante do .focus() o painel ainda estava `hidden`: o foco ficava no
+ * <body> (medido no Chrome, Enter e clique, 667×375). O mini-dom não tem
+ * CSS; aqui o painel é simulado do jeito que o Chrome se comporta:
+ *   - fechado ou com a transição em curso, getComputedStyle diz `hidden` e o
+ *     .focus() é ignorado;
+ *   - getAnimations({ subtree: true }) devolve a transição de visibility do
+ *     NÍVEL atual (painel; depois de terminada, a dos filhos) e a do
+ *     transform, que não pode ser terminada;
+ *   - sem getAnimations, só o "fim da transição" (fimDaTransicao) revela.
+ * requestAnimationFrame é uma fila deste teste, para contar quadros.
+ */
+describe('Revisor #88 (P2) — abertura síncrona com o painel ainda invisível (reduced-motion)', () => {
+  function painelComTransicao(ctx, { comGetAnimations }) {
+    const estado = { nivel: 0, transformTerminado: false, rodadas: 0 };
+    const aberto = () => ctx.nav.hasAttribute('data-open');
+    /* nivel 0: tudo hidden; 1: painel visível, filhos ainda não; 2: tudo visível */
+    const visivel = (no) => {
+      if (!aberto()) {
+        estado.nivel = 0;
+        return !ctx.nav.contains(no);
+      }
+      if (!ctx.nav.contains(no)) return true;
+      return no === ctx.nav ? estado.nivel >= 1 : estado.nivel >= 2;
+    };
+    ctx.janela.getComputedStyle = (no) => ({ visibility: visivel(no) ? 'visible' : 'hidden', display: 'block' });
+    const recusarSeInvisivel = (no) => {
+      const original = no.focus;
+      no.focus = function () {
+        if (!visivel(this)) return;
+        original.call(this);
+      };
+    };
+    recusarSeInvisivel(ctx.nav);
+    for (const no of ctx.nav.descendentes()) recusarSeInvisivel(no);
+    if (comGetAnimations) {
+      ctx.nav.getAnimations = () => {
+        if (!aberto()) return [];
+        const lista = [
+          {
+            transitionProperty: 'transform',
+            playState: 'running',
+            finish() {
+              estado.transformTerminado = true;
+            },
+          },
+        ];
+        if (estado.nivel < 2) {
+          lista.push({
+            transitionProperty: 'visibility',
+            playState: 'running',
+            finish() {
+              estado.rodadas++;
+              estado.nivel++;
+            },
+          });
+        }
+        return lista;
+      };
+    }
+    const fila = [];
+    ctx.janela.requestAnimationFrame = (fn) => fila.push(fn);
+    const quadro = () => fila.splice(0).forEach((fn) => fn());
+    const fimDaTransicao = () => {
+      estado.nivel = 2;
+    };
+    return { estado, fila, quadro, fimDaTransicao };
+  }
+
+  test('com getAnimations: o foco entra NO MESMO quadro, no primeiro item; só a visibility é terminada, nível a nível', () => {
+    const ctx = montar();
+    const sim = painelComTransicao(ctx, { comGetAnimations: true });
+    abrir(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
+    expect(sim.estado.rodadas).toBe(2); /* painel, depois os filhos */
+    expect(sim.estado.transformTerminado).toBe(false); /* o deslize continua */
+    expect(sim.fila).toHaveLength(0); /* nada a tentar de novo */
+  });
+
+  test('sem getAnimations: no quadro da abertura o foco não entra; quando a transição acaba, o próximo quadro o põe no primeiro item', () => {
+    const ctx = montar();
+    const sim = painelComTransicao(ctx, { comGetAnimations: false });
+    abrir(ctx);
+    /* o gatilho ficou inerte e o painel recusou: é o defeito, ainda sem a rede */
+    expect(ctx.nav.contains(ctx.doc.activeElement)).toBe(false);
+    expect(sim.fila).toHaveLength(1);
+    sim.quadro(); /* transição ainda em curso: tenta de novo no seguinte */
+    expect(ctx.nav.contains(ctx.doc.activeElement)).toBe(false);
+    expect(sim.fila).toHaveLength(1);
+    sim.fimDaTransicao();
+    sim.quadro();
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
+    expect(sim.fila).toHaveLength(0);
+  });
+
+  test('painel visível antes dos filhos: o foco no PRÓPRIO painel não encerra a espera — vai ao primeiro item', () => {
+    const ctx = montar();
+    const sim = painelComTransicao(ctx, { comGetAnimations: false });
+    abrir(ctx);
+    sim.estado.nivel = 1; /* painel visível, filhos ainda hidden */
+    sim.quadro();
+    expect(ctx.doc.activeElement).toBe(ctx.nav);
+    expect(sim.fila).toHaveLength(1);
+    sim.fimDaTransicao();
+    sim.quadro();
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
+  });
+
+  test('depois do foco tardio: Tab nas bordas circula e Escape devolve ao gatilho', () => {
+    const ctx = montar();
+    const sim = painelComTransicao(ctx, { comGetAnimations: false });
+    abrir(ctx);
+    sim.fimDaTransicao();
+    sim.quadro();
+    ctx.q('item-b').focus();
+    tabDepoisDoUltimo(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
+    ctx.tecla('Escape');
+    expect(ctx.doc.activeElement).toBe(ctx.q('gatilho'));
+    expect(ctx.q('casca').hasAttribute('inert')).toBe(false);
+  });
+
+  test('fechou antes de o painel ficar visível: o quadro pendente não puxa o foco para a gaveta fechada', () => {
+    const ctx = montar();
+    const sim = painelComTransicao(ctx, { comGetAnimations: false });
+    abrir(ctx);
+    ctx.tecla('Escape');
+    expect(ctx.doc.activeElement).toBe(ctx.q('gatilho'));
+    sim.fimDaTransicao();
+    sim.quadro();
+    expect(ctx.doc.activeElement).toBe(ctx.q('gatilho'));
+    expect(sim.fila).toHaveLength(0);
+  });
+
+  test('o usuário chegou antes (foco já num item): o quadro pendente não o move', () => {
+    const ctx = montar();
+    const sim = painelComTransicao(ctx, { comGetAnimations: false });
+    abrir(ctx);
+    sim.fimDaTransicao();
+    ctx.q('item-b').focus();
+    sim.quadro();
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-b'));
+    expect(sim.fila).toHaveLength(0);
+  });
+
+  test('painel que nunca fica visível: a rede desiste depois de 60 quadros', () => {
+    const ctx = montar();
+    const sim = painelComTransicao(ctx, { comGetAnimations: false });
+    abrir(ctx);
+    let quadros = 0;
+    while (sim.fila.length && quadros < 1000) {
+      sim.quadro();
+      quadros++;
+    }
+    expect(quadros).toBe(60);
+  });
+
+  test('sem CSSOM e sem transição (o caso de sempre): foco síncrono, nenhum quadro agendado', () => {
+    const ctx = montar();
+    const fila = [];
+    ctx.janela.requestAnimationFrame = (fn) => fila.push(fn);
+    abrir(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
+    expect(fila).toHaveLength(0);
   });
 });
