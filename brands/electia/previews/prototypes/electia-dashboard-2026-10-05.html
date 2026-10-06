@@ -36,9 +36,15 @@
   <link rel="stylesheet" href="../../../../dist/icons.min.css">
   <link rel="stylesheet" href="../../../../components/data-cards.css">
   <style>
-    :root { --dash-gap: var(--space-5); --dash-page: 1280px; --dash-scroll-offset: calc(var(--header-height) + var(--space-4)); }
+    :root { --dash-gap: var(--space-5); --dash-page: 1280px; --dash-scroll-offset: calc(var(--header-height) + var(--space-4));
+      /* Faixa do toast fixo no pé (C9): o foco por Tab para acima dele (WCAG 2.4.11). */
+      --dash-toast-space: calc(var(--space-4) * 2 + 3rem); }
     /* O header é sticky: todo destino de foco/âncora para abaixo dele. */
-    html { scroll-padding-block-start: var(--dash-scroll-offset); }
+    /* O DS liga scroll-behavior: smooth no html. Num app com rotas por hash e
+       foco programático, cada rolagem suave (âncora, foco por Tab) seguia por
+       ~550 ms e, numa sequência rápida, terminava depois da troca de tela,
+       levando o foco para fora da vista. Aqui toda rolagem é instantânea. */
+    html { scroll-padding-block-start: var(--dash-scroll-offset); scroll-padding-block-end: var(--dash-toast-space); scroll-behavior: auto; }
     .screen h1, .panel, .composer-input { scroll-margin-block-start: var(--dash-scroll-offset); }
 
     /* ── DS, só o que é desta página ─────────────────────────────────────── */
@@ -325,7 +331,7 @@
 
         <div class="dash">
           <div class="dash-col">
-            <section class="panel" aria-labelledby="vagas-titulo" id="vagas" tabindex="-1">
+            <section class="panel" aria-labelledby="vagas-titulo" id="painel-vagas" tabindex="-1">
               <div class="panel-head"><h2 id="vagas-titulo">Vagas ativas</h2><a href="#recrutamento" data-fora>Ver todas</a></div>
               <ul class="list-item-group" data-vagas-list></ul>
               <noscript><p class="panel-note">As vagas e o kanban deste protótipo precisam de JavaScript.</p></noscript>
@@ -346,7 +352,7 @@
           </div>
 
           <div class="dash-col">
-            <section class="panel nexus" id="nexus" aria-labelledby="nexus-titulo">
+            <section class="panel nexus" id="painel-nexus" aria-labelledby="nexus-titulo">
               <div class="nexus-head">
                 <span class="brand-orb brand-orb-electia brand-orb-md" aria-hidden="true"></span>
                 <div><h2 id="nexus-titulo">Nexus</h2><p>Pergunte sobre perfis, cargos ou desenvolvimento de equipe.</p></div>
@@ -560,7 +566,13 @@
       if (col) col.hidden = !on;
     }));
 
-    /* ── Rotas: #inicio · #vagas · #nexus · #vaga/<id> ──────────────── */
+    /* ── Rotas: #inicio · #vagas · #nexus · #vaga/<id> ────────────────
+       Nenhuma rota casa com o id de um elemento (os painéis são #painel-*).
+       Se casasse, a navegação de fragmento nativa rolaria até ele, e com o
+       scroll-behavior: smooth do DS essa rolagem começa já no location.hash =
+       e segue por ~550 ms. Uma rolagem instantânea para a posição em que a
+       página já está não a cancela: numa rajada de hashes terminando em
+       #inicio, o título ficava em y = −1036 (medido na re-revisão da #85). */
     const nav = $('#app-nav');
     function rota() {
       const [tela, id] = (location.hash.slice(1) || 'inicio').split('/');
@@ -576,13 +588,11 @@
       $('[data-top-title]').textContent = ehVaga ? 'Recrutamento & Seleção' : 'Início';
       document.title = `${ehVaga ? VAGAS[id].titulo : 'Início'} · electia`;
       if (ehVaga) return '#vaga-titulo';
-      return { vagas: '#vagas', nexus: '#nexus-input' }[tela] || '#inicio-titulo';
+      return { vagas: '#painel-vagas', nexus: '#nexus-input' }[tela] || '#inicio-titulo';
     }
     /* Troca de tela: rolagem instantânea (o DS liga scroll-behavior: smooth),
-       para o destino do foco já estar visível, abaixo do header sticky. A
-       rolagem nativa da âncora (ex.: #vagas) ou uma suave ainda pendente de
-       outra troca pode chegar depois: o reposicionamento se repete no quadro
-       seguinte, e uma rolagem instantânea cancela a suave em curso. */
+       para o destino do foco já estar visível, abaixo do header sticky. O
+       reposicionamento se repete no quadro seguinte, por segurança. */
     let quadroRota = 0;
     function posicionar(alvo) {
       alvo.scrollIntoView({ block: alvo.id === 'nexus-input' ? 'center' : 'start', behavior: 'instant' });

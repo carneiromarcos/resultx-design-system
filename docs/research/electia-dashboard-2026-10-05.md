@@ -58,6 +58,7 @@ O corte segue o DS: a gaveta vale até 1024 px, inclusive, porque o DS usa `max-
 | C5 | `.attention-mark` / `.attention-list` | Baixa | Prevista na ficha Talio §5 |
 | C9 | `.toast-region` (posição fixa, `role="status"`) | Baixa | O `.toast` do DS não se posiciona sozinho |
 | C10 | Estado **desmarcado** do `.stage-chip` filtro (`aria-pressed="false"`) | **Alta** | O DS só desenha o marcado. Opacidade reprova contraste (2,46–3,97:1, achado do Revisor na #85). Proposta: contorno tracejado em `currentcolor`, fundo da página, tinta `--text-secondary`, marcador vazado e nome riscado. **Sem transição de `background-color` na troca:** o DS (`stage-chip.css`, `:is(a, button)`) interpola o fundo por 150 ms enquanto a tinta troca na hora, e no escuro os quadros intermediários de Oferta medem 4,08:1. No filtro, fundo e tinta trocam no mesmo quadro; só `transform` anima |
+| C13 | Diretriz: em app com rota por hash, nenhuma rota casa com um id e o `scroll-behavior: smooth` global do DS fica desligado (ou o DS o restringe a landings) | Média | A rolagem suave da âncora nativa e a do foco por Tab terminavam depois da troca de tela e levavam o foco para fora da vista (P3 da #85). Rolagem suave global também atrasa o foco do teclado em qualquer app |
 | C12 | Invocador da gaveta = o gatilho, não o `document.activeElement` (temporário; a PR #86 corrige no DS) | **Alta** | No Safari, ou com `button.click()`, o botão não ganha foco ao ser clicado. O script guardava o elemento focado antes (ex.: `#nexus-input`), que fica inert com a gaveta aberta, e no Escape o foco caía no `body`. O protótipo foca o gatilho num listener de `click` em captura, antes do handler do script. Se mesmo assim o foco terminar no `body` ao fechar, ele vai para o gatilho |
 | C11 | `dist/sidebar-overlay.js` modal de verdade | **Alta** | Hoje o script prende o Tab, mas não dá `role="dialog"`/`aria-modal` nem isola o fundo. O protótipo faz isso no evento `sidebartoggle`. No DS o `inert` precisa sair **antes** de o script devolver o foco ao gatilho; por isso, aqui, o gatilho fica fora do inert. O atalho do agente (⌘K) fecha a gaveta antes de focar |
 
@@ -152,6 +153,18 @@ Os valores são o mínimo entre os quadros. Controle negativo: devolvendo a tran
     - 6 trocas de hash na mesma tarefa.
 
     Em todos os casos o foco termina visível abaixo do header (antes, uma das sequências deixava o título em y = −227).
+- **Estresse de rotas (re-revisão final da #85)** — 667×375, documento novo a cada execução, medição 1 s depois:
+  - **Causa medida.** Duas rotas casavam com ids de painel (`#vagas`, `#nexus`). Ao atribuir `location.hash`, a navegação de fragmento nativa já rolava até o painel, e com o `scroll-behavior: smooth` que o DS liga no `html` essa rolagem durava cerca de 550 ms. A rolagem instantânea do roteador mirava a posição em que a página ainda estava (0) e por isso não a cancelava. Resultado: na rajada `vaga/analista-dp, inicio, vagas, vaga/recepcionista, nexus, inicio`, o título de Início terminava em y = −1036 (scrollY 1136), o mesmo número do Revisor. Uma segunda origem eram as rolagens suaves do foco por Tab no meio das rajadas de teclado.
+  - **Correção:**
+    1. Os painéis viraram `#painel-vagas` e `#painel-nexus`, então nenhuma rota casa com um id.
+    2. O protótipo usa `html { scroll-behavior: auto }`: num app com rotas por hash e foco programático, a rolagem é sempre instantânea.
+    3. `scroll-padding-block-end` reserva a faixa do toast fixo. Duas falhas restantes vinham do toast de "fora do protótipo" cobrindo um elemento focado por Tab no pé da tela (WCAG 2.4.11).
+  - **Evidência:** 3 rodadas de 10 execuções independentes por cenário, todas 10/10:
+    - a rajada de hashes do Revisor;
+    - 4 × (13 Tab + Enter) sem pausa;
+    - trocas isoladas para `#vaga/analista-dp`, `#vagas`, `#nexus` e `#inicio` (vindo da vaga já rolada).
+
+    No total, 180 de 180 execuções passaram. Antes da correção 3, a rajada de Tab dava 8/10.
 
 **Capturas:**
 
