@@ -543,3 +543,51 @@ describe('Revisor #86 — navegação nativa por dentro, bordas pelo script', ()
     expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
   });
 });
+
+/**
+ * Revisor da #86 (P2 novo): ao deduplicar o grupo de rádios, o representante
+ * ficava na posição do PRIMEIRO rádio do grupo, não na do marcado. Caso do
+ * Revisor: r1 (não marcado), "Ajuda", r2 (marcado). Ordem nativa: Ajuda → r2;
+ * o script calculava r2 → Ajuda, e Tab em r2 voltava a r2.
+ *
+ * A regra copiada da navegação nativa do Chrome (medida sem a gaveta): o grupo
+ * (mesmo name, escopado pelo form dono) vale uma parada, na posição de DOM do
+ * rádio escolhido — o marcado, se ele aceitar foco; senão o primeiro rádio
+ * válido do grupo, nos dois sentidos. O mini-dom não tem
+ * compareDocumentPosition: aqui vale o fallback por posição na lista (que
+ * querySelectorAll já entrega em ordem de documento). A comparação com a
+ * ordem nativa real é do Playwright.
+ */
+describe('Revisor #86 — representante do grupo de rádio na posição do escolhido', () => {
+  const radio = (el, id, extra = {}) => el('input', { type: 'radio', name: 'r', id, ...extra });
+  const bordas = (ctx) => {
+    tabDepoisDoUltimo(ctx);
+    const primeiro = ctx.doc.activeElement.id;
+    shiftTabAntesDoPrimeiro(ctx);
+    const ultimo = ctx.doc.activeElement.id;
+    return [primeiro, ultimo];
+  };
+
+  test.each([
+    ['caso do Revisor: r1, Ajuda, r2 marcado', (el) => [radio(el, 'r1'), el('a', { href: '#h', id: 'ajuda' }), radio(el, 'r2', { checked: '' })], ['ajuda', 'r2']],
+    ['marcado no fim, depois de dois não marcados', (el) => [radio(el, 'r1'), radio(el, 'r2'), el('a', { href: '#h', id: 'ajuda' }), radio(el, 'r3', { checked: '' })], ['ajuda', 'r3']],
+    ['nenhum marcado: vale o primeiro, nos dois sentidos', (el) => [radio(el, 'r1'), el('a', { href: '#h', id: 'ajuda' }), radio(el, 'r2'), radio(el, 'r3')], ['r1', 'ajuda']],
+    ['marcado desabilitado: vale o primeiro válido', (el) => [radio(el, 'r1'), el('a', { href: '#h', id: 'ajuda' }), radio(el, 'r2', { checked: '', disabled: '' }), radio(el, 'r3')], ['r1', 'ajuda']],
+    ['marcado inerte: vale o primeiro válido', (el) => [radio(el, 'r1'), el('a', { href: '#h', id: 'ajuda' }), el('span', { inert: '' }, radio(el, 'r2', { checked: '' })), radio(el, 'r3')], ['r1', 'ajuda']],
+    ['dois forms com o mesmo name: dois grupos', (el) => [
+      el('form', { id: 'f1' }, radio(el, 'a1'), radio(el, 'a2', { checked: '' })),
+      el('a', { href: '#h', id: 'ajuda' }),
+      el('form', { id: 'f2' }, radio(el, 'b1', { checked: '' }), radio(el, 'b2')),
+    ], ['a2', 'b1']],
+    ['fieldsets diferentes, mesmo name, sem form: um grupo só', (el) => [
+      el('fieldset', {}, radio(el, 'a1'), radio(el, 'a2')),
+      el('a', { href: '#h', id: 'ajuda' }),
+      el('fieldset', {}, radio(el, 'b1', { checked: '' })),
+    ], ['ajuda', 'b1']],
+  ])('%s', (_, filhos, esperado) => {
+    const ctx = montar({ filhos });
+    abrir(ctx);
+    expect(ctx.doc.activeElement.id).toBe(esperado[0]); /* foco inicial = primeira parada */
+    for (let i = 0; i < 10; i++) expect(bordas(ctx)).toEqual(esperado);
+  });
+});

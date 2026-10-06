@@ -45,8 +45,10 @@
  *     which sends it to the last. "Valid" excludes [inert] ancestors, hidden,
  *     effectively :disabled (covers <fieldset disabled>, keeps the first
  *     <legend>) and tabindex=-1; includes contenteditable; a radio group
- *     counts once (its checked radio, or the first if none is checked); order
- *     is sequential (positive tabindex first). Every .focus() is checked
+ *     (same name, scoped by its form owner) counts once, AT THE DOM POSITION
+ *     OF THE CHOSEN RADIO: the checked one if it accepts focus, otherwise the
+ *     first valid radio of the group (as Chrome's native order does); order
+ *     is sequential (positive tabindex first, then document position). Every .focus() is checked
  *     against activeElement and the next candidate is tried; if nothing
  *     accepts, the panel itself (tabindex=-1) takes focus. One keydown edge
  *     case: Tab while the panel ITSELF has focus goes to the first/last stop
@@ -136,48 +138,74 @@
     return t > 0 ? t : 0;
   }
 
-  /* Paradas de Tab validas, na ordem sequencial do navegador: tabindex
-     positivo primeiro (crescente), depois os demais em ordem de DOM. Um grupo
-     de radio vale uma parada so: o marcado, ou o primeiro se nenhum estiver
-     marcado. As sentinelas nao contam. */
+  /* Paradas de Tab validas, na ordem sequencial do navegador.
+     Grupo de radio (mesmo name, escopado pelo form dono — radio.form; fora de
+     form, o documento; fieldsets nao separam grupos) vale UMA parada, e ela
+     fica na posicao de DOM do proprio radio escolhido:
+       - o marcado, se ele aceitar foco;
+       - senao (nenhum marcado, ou o marcado desabilitado/inerte/oculto), o
+         primeiro radio valido do grupo em ordem de DOM — nos dois sentidos.
+     Medido na navegacao nativa do Chrome, sem a gaveta (Revisor da #86).
+     Depois da escolha, ordena: tabindex positivo primeiro (crescente), depois
+     os demais; empate pela posicao no documento (compareDocumentPosition).
+     As sentinelas nao contam. */
   function focusablesIn(el) {
     var todos = el.querySelectorAll(FOCUSABLE);
     var validos = [];
     var grupos = [];
-    for (var i = 0; i < todos.length; i++) {
+    var i;
+    for (i = 0; i < todos.length; i++) {
       var no = todos[i];
       if (no.hasAttribute(SENTINEL_ATTR) || !focavel(no)) continue;
-      var chave = chaveDoGrupo(no);
-      if (chave) {
-        var grupo = null;
-        for (var g = 0; g < grupos.length; g++) {
-          if (grupos[g].nome === chave.nome && grupos[g].form === chave.form) grupo = grupos[g];
-        }
-        if (!grupo) {
-          grupo = { nome: chave.nome, form: chave.form, indice: validos.length };
-          grupos.push(grupo);
-          validos.push(no);
-        } else if (marcado(no) && !marcado(validos[grupo.indice])) {
-          validos[grupo.indice] = no;
-        }
-        continue;
-      }
       validos.push(no);
+      var chave = chaveDoGrupo(no);
+      if (!chave) continue;
+      var grupo = null;
+      for (var g = 0; g < grupos.length; g++) {
+        if (grupos[g].nome === chave.nome && grupos[g].form === chave.form) grupo = grupos[g];
+      }
+      if (!grupo) {
+        grupo = { nome: chave.nome, form: chave.form, primeiro: no, marcado: null };
+        grupos.push(grupo);
+      }
+      if (!grupo.marcado && marcado(no)) grupo.marcado = no;
     }
-    var comOrdem = validos.map(function (no, posicao) {
-      return { no: no, ordem: ordemSequencial(no), posicao: posicao };
-    });
-    comOrdem.sort(function (a, b) {
+    var paradas = [];
+    for (i = 0; i < validos.length; i++) {
+      var v = validos[i];
+      var k = chaveDoGrupo(v);
+      if (k) {
+        for (var j = 0; j < grupos.length; j++) {
+          if (grupos[j].nome === k.nome && grupos[j].form === k.form) {
+            if ((grupos[j].marcado || grupos[j].primeiro) !== v) v = null;
+            break;
+          }
+        }
+      }
+      if (v) paradas.push({ no: v, ordem: ordemSequencial(v), posicao: i });
+    }
+    paradas.sort(function (a, b) {
       if (a.ordem !== b.ordem) {
         if (a.ordem === 0) return 1;
         if (b.ordem === 0) return -1;
         return a.ordem - b.ordem;
       }
-      return a.posicao - b.posicao;
+      return emOrdemDeDocumento(a, b);
     });
-    return comOrdem.map(function (x) {
+    return paradas.map(function (x) {
       return x.no;
     });
+  }
+
+  /* Posicao no documento. querySelectorAll ja devolve nessa ordem; o
+     compareDocumentPosition deixa explicito e nao depende disso. */
+  function emOrdemDeDocumento(a, b) {
+    if (a.no.compareDocumentPosition) {
+      var rel = a.no.compareDocumentPosition(b.no);
+      if (rel & 4) return -1; /* DOCUMENT_POSITION_FOLLOWING: b vem depois */
+      if (rel & 2) return 1; /* DOCUMENT_POSITION_PRECEDING */
+    }
+    return a.posicao - b.posicao;
   }
 
   /* Foca o primeiro alvo (na direcao pedida) que de fato receber o foco;
