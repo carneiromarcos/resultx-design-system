@@ -1,0 +1,567 @@
+<!doctype html>
+<!--
+  Protótipo Electia — Assessments (modelos), Testes criados e Ranking — 06/10/2026.
+  Mesmo padrão do dashboard (#85): tudo o que é componente vem do DS; o CSS e
+  o JS daqui só compõem a página. Ficha: docs/research/electia-assessments-2026-10-06.md
+
+  Componentes do DS consumidos
+    .sidebar .sidebar-overlay .sidebar-panel  navegação (dist/sidebar-overlay.js; painel no
+                               desktop, gaveta modal até 1024 px — lote D, #86)
+    .header .btn-icon .brand-orb-electia     topo e Nexus (pílula = C3 do dashboard)
+    .test-mark                 a forma do teste, pintada pelo gancho --test-mark-color
+    .dl-statcard--compact      KPIs          .dl-table(-wrap)  listas tabulares
+    .dl-status                 status de aplicação            .progress-track/-fill  respostas
+    .tabs/.tab                 abas do Ranking (tablist APG local: C14 do dashboard)
+    .form-input .form-select(-wrap) .form-label-eyebrow       filtros
+    .disclosure                "Ver como tabela" dos gráficos
+    .btn .tag .toast .empty-state-inline .skip-link .icon .sr-only
+
+  Peças locais marcadas "CANDIDATO" = faltam no DS (lista na ficha, C15–C22).
+  Dados fictícios. Nenhuma pessoa real.
+-->
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Protótipo navegável do electia: Assessments como catálogo de modelos, a página Testes criados e o Ranking com gráficos por teste.">
+  <title>Assessments · electia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../../dist/tokens.min.css">
+  <link rel="stylesheet" href="../../tokens/ds-bridge.css">
+  <link rel="stylesheet" href="../../../../dist/components.min.css">
+  <link rel="stylesheet" href="../../../../dist/icons.min.css">
+  <link rel="stylesheet" href="../../../../components/data-cards.css">
+  <style>
+    :root { --pg-gap: var(--space-5); --pg-page: 1280px; --pg-scroll-offset: calc(var(--header-height) + var(--space-4)); --pg-toast-space: 4.3rem; }
+    @media (max-width: 479.98px) { :root { --pg-toast-space: 5.6rem; } }
+    /* Rota por hash + foco programático: rolagem instantânea (C13 do dashboard). */
+    html { scroll-padding-block-start: var(--pg-scroll-offset); scroll-padding-block-end: var(--pg-toast-space); scroll-behavior: auto; }
+    .app-nav { scroll-padding-block-end: var(--pg-toast-space); }
+
+    /* ── CANDIDATO 15 — paleta categórica dos testes ─────────────────────
+       Mesmos matizes do app (viz-tokens.css, --theory-*), com a luminosidade
+       reajustada para passar o validador (faixa de L, croma, CVD, 3:1 contra
+       --bg-base). A cor nunca anda sozinha: a forma (.test-mark) e o nome vão
+       junto. Ordem fixa = ordem do catálogo. */
+    [data-theme="light"] {
+      --test-disc: #0086dd; --test-tipologia: #773ac1; --test-eneagrama: #b97515;
+      --test-bigfive: #197037; --test-temperamentos: #c94363; --test-motivadores: #009c9c;
+    }
+    [data-theme="dark"] {
+      --test-disc: #069ce4; --test-tipologia: #8347cf; --test-eneagrama: #c58501;
+      --test-bigfive: #1d7d3e; --test-temperamentos: #d8516a; --test-motivadores: #12a7a7;
+    }
+    .t-disc { --test: var(--test-disc); } .t-tipologia { --test: var(--test-tipologia); }
+    .t-eneagrama { --test: var(--test-eneagrama); } .t-bigfive { --test: var(--test-bigfive); }
+    .t-temperamentos { --test: var(--test-temperamentos); } .t-motivadores { --test: var(--test-motivadores); }
+    .test-mark { --test-mark-color: var(--test, var(--text-secondary)); }
+
+    /* ── Casca (do dashboard; C1/C2/C11/C12 já estão no DS desde a #86) ── */
+    .app-nav .sidebar-item { min-block-size: 40px; }
+    .app-brand { display: grid; gap: 2px; padding: 0 var(--space-5); margin-block-end: var(--space-5); color: var(--sidebar-text-bright); text-decoration: none; }
+    .app-brand strong { font: 600 1.35rem/1 var(--font-mono); letter-spacing: -0.06em; }
+    .app-brand span { color: var(--sidebar-text); font-size: var(--text-xs); }
+    .app-company { margin: 0 var(--space-3) var(--space-4); padding: var(--space-2) var(--space-3); border: 1px solid var(--sidebar-divider); border-radius: var(--radius-md); color: var(--sidebar-text); font-size: var(--text-xs); }
+    .app-company b { display: block; color: var(--sidebar-text-bright); font-size: var(--text-sm); font-weight: var(--font-medium); }
+    .app-top { gap: var(--space-3); }
+    .app-top-start, .app-top-end { display: flex; align-items: center; gap: var(--space-2); min-inline-size: 0; }
+    .app-top-title { overflow: hidden; color: var(--text-secondary); font-size: var(--text-sm); font-weight: var(--font-medium); text-overflow: ellipsis; white-space: nowrap; }
+    .app-top .btn-icon { inline-size: 40px; block-size: 40px; }
+    /* CANDIDATO 3 (do dashboard) — pílula do Nexus */
+    .agent-pill { display: inline-flex; align-items: center; gap: var(--space-2); min-block-size: 40px; padding: var(--space-1) var(--space-3) var(--space-1) var(--space-1); border: 1px solid var(--border-default); border-radius: var(--radius-full); background: var(--bg-base); color: var(--text-primary); font: var(--font-semibold) var(--text-sm) var(--font-heading); cursor: pointer; transition: border-color var(--transition-fast), box-shadow var(--transition-fast); }
+    .agent-pill:hover { border-color: var(--accent-primary); box-shadow: var(--shadow-glow); }
+    .agent-pill:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+    .agent-pill kbd { padding: 1px var(--space-1-5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-secondary); font: 500 var(--text-xs) var(--font-mono); }
+    a.btn { text-decoration: none; }
+    /* Link solto sem anel do DS: só o do navegador (outline: auto, 1 px) casava.
+       Aqui o mesmo anel dos botões; na sidebar escura, o anel da sidebar. */
+    .app-content a:not(.btn):focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: 2px; border-radius: 2px; }
+    .app-brand:focus-visible { outline: var(--focus-ring-width) solid var(--sidebar-focus-ring, var(--focus-ring-color)); outline-offset: 2px; border-radius: var(--radius-sm); }
+    /* .skip-link do DS é absolute e anima top: focado com a página rolada
+       (o Tab que dá a volta), ficava fora da vista. Fixo e sem animação. */
+    .skip-link { position: fixed; transition: none; }
+    .skip-link:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: 2px; }
+    /* Troca de tema: sem transição, para nenhuma cor passar por quadros do
+       tema anterior (o rótulo da aba ia a 2,1:1 no escuro durante 150 ms). */
+    .theme-switching, .theme-switching * { transition: none !important; }
+
+    /* ── Página ─────────────────────────────────────────────────────── */
+    .content.app-content { inline-size: 100%; max-inline-size: var(--pg-page); margin-inline: auto; padding: var(--space-6) var(--space-6) var(--space-16); }
+    .screen h1 { scroll-margin-block-start: var(--pg-scroll-offset); }
+    .screen h1:focus { outline: none; }
+    .page-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-4); margin-block-end: var(--space-6); }
+    .page-head h1 { margin-block: var(--space-1); font: 700 clamp(1.6rem, 1.2rem + 1.4vw, 2.1rem)/1.15 var(--font-heading); letter-spacing: -0.04em; }
+    .page-head p { max-inline-size: 60ch; color: var(--text-secondary); font-size: var(--text-sm); }
+    .page-head p a, .panel-note a { color: var(--accent-primary-text); }
+    .eyebrow { color: var(--accent-primary-text); font: var(--font-semibold) var(--text-xs) var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; }
+    .page-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2) var(--space-4); margin-block: var(--space-10) var(--space-4); }
+    .page-head + .section-head { margin-block-start: 0; }
+    .section-head h2 { font: var(--font-semibold) var(--text-xl)/1.25 var(--font-heading); letter-spacing: -0.03em; }
+    .section-head p { color: var(--text-secondary); font-size: var(--text-sm); }
+    .panel { min-inline-size: 0; padding: var(--space-5); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); background: var(--bg-base); }
+    .panel-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2); margin-block-end: var(--space-4); }
+    .panel-head h2 { font: var(--font-semibold) var(--text-lg)/1.3 var(--font-heading); letter-spacing: -0.02em; }
+    .panel-head small, .panel-note { color: var(--text-secondary); font-size: var(--text-xs); line-height: var(--leading-relaxed); }
+    .panel-note { margin-block-start: var(--space-3); }
+    .tag-quiet { border: 1px solid var(--border-subtle); background: var(--bg-surface-2); color: var(--text-primary); font-size: var(--text-xs); }
+    .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); margin-block-end: var(--pg-gap); }
+    .kpis .dl-statcard-compare { color: var(--text-secondary); }
+
+    /* ── CANDIDATO 16 — .model-card: cartão de MODELO de teste ───────────
+       Hierarquia: a forma grande do teste é a assinatura; nome; ficha
+       (questões · tempo); descrição; o que revela; uso ("15 enviados") que
+       leva a Testes criados filtrado; e as ações. O cartão não é um link:
+       as ações são explícitas (no app, card clicável + botões aninhados). */
+    .models { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+    .models > li { min-inline-size: 0; }
+    .model-card { position: relative; display: grid; grid-template-rows: auto 1fr auto; gap: var(--space-3); block-size: 100%; padding: var(--space-5); overflow: hidden; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); background: var(--bg-base); transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform 320ms cubic-bezier(.16, 1, .3, 1); }
+    /* Faixa no topo com a cor do teste: identidade sem pintar texto. */
+    .model-card::before { content: ''; position: absolute; inset: 0 0 auto; block-size: 4px; background: var(--test, var(--accent-primary-text)); }
+    .model-card:hover, .model-card:focus-within { border-color: var(--test, var(--accent-primary-text)); box-shadow: var(--elevation-2); transform: translateY(-2px); }
+    .model-head { display: flex; align-items: center; gap: var(--space-3); }
+    .model-sigil { display: grid; flex: none; place-items: center; inline-size: 52px; block-size: 52px; border-radius: var(--radius-md); background: color-mix(in srgb, var(--test, var(--accent-primary)) 10%, var(--bg-base)); }
+    .model-sigil .test-mark { --test-mark-size: 28px; transition: transform 320ms cubic-bezier(.16, 1, .3, 1); }
+    .model-card:hover .model-sigil .test-mark { transform: rotate(-12deg) scale(1.06); }
+    .model-head h3 { font: var(--font-semibold) var(--text-lg)/1.2 var(--font-heading); letter-spacing: -0.02em; }
+    .model-facts { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); margin-block-start: 2px; color: var(--text-secondary); font-size: var(--text-xs); }
+    .model-body { display: grid; align-content: start; gap: var(--space-3); }
+    .model-desc { color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-relaxed); }
+    .model-reveals { justify-self: start; }
+    .model-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); padding-block-start: var(--space-3); border-block-start: 1px solid var(--border-subtle); }
+    .model-usage { display: inline-flex; align-items: center; min-block-size: 24px; color: var(--text-primary); font-size: var(--text-xs); text-decoration: underline; text-decoration-color: var(--text-secondary); text-underline-offset: 3px; }
+    .model-usage:hover { text-decoration-color: currentcolor; }
+    .model-usage.is-empty { color: var(--text-secondary); text-decoration: none; }
+    .model-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+    /* Situacionais: nível N1–N4 como escada (ordinal, uma tinta só). */
+    .models-situ { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .level-mark { display: inline-flex; align-items: flex-end; gap: 3px; block-size: 28px; }
+    .level-mark i { inline-size: 6px; border-radius: 2px 2px 0 0; background: var(--accent-primary-text); }
+    .level-mark i:nth-child(1) { block-size: 25%; } .level-mark i:nth-child(2) { block-size: 50%; }
+    .level-mark i:nth-child(3) { block-size: 75%; } .level-mark i:nth-child(4) { block-size: 100%; }
+    .level-mark i.is-off { background: transparent; box-shadow: inset 0 0 0 1.5px var(--text-secondary); }
+    .model-code { color: var(--text-secondary); font: var(--font-semibold) var(--text-xs) var(--font-mono); }
+    .privacy-note { display: flex; gap: var(--space-2); color: var(--text-primary); font-size: var(--text-xs); line-height: var(--leading-relaxed); }
+    .privacy-note .icon { flex: none; margin-block-start: 1px; }
+    .model-card-form { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); }
+    .model-card-form::before { background: var(--border-default); }
+    .model-card-form h3 { font: var(--font-semibold) var(--text-lg)/1.2 var(--font-heading); }
+
+    /* ── Testes criados ─────────────────────────────────────────────── */
+    /* CANDIDATO 17 — barra de filtros (uma linha acima da lista; a URL guarda o estado) */
+    .filters { display: grid; grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr)) auto; align-items: end; gap: var(--space-3); margin-block-end: var(--space-3); }
+    .filters .form-group { margin: 0; min-inline-size: 0; }
+    .filters .form-input, .filters .form-select { min-block-size: 44px; }
+    /* O DS anima o anel de foco do campo de 0 até a cor (quadros abaixo de
+       3:1). Aqui o anel entra inteiro, no mesmo quadro do foco. */
+    .filters .form-input, .filters .form-select, .rk-filters .form-select { transition: none; }
+    .filters .btn { min-block-size: 44px; }
+    .filters-count { margin-block-end: var(--space-3); color: var(--text-secondary); font-size: var(--text-sm); }
+    .run-name { display: flex; align-items: flex-start; gap: var(--space-3); min-inline-size: 14rem; }
+    .run-name .test-mark { --test-mark-size: 14px; margin-block-start: 3px; }
+    .run-name .level-mark { block-size: 16px; gap: 2px; margin-block-start: 2px; }
+    .run-name .level-mark i { inline-size: 4px; }
+    .run-name b { display: block; font-weight: var(--font-medium); }
+    .run-model { color: var(--text-secondary); font-size: var(--text-xs); }
+    .run-progress { display: grid; gap: var(--space-1); min-inline-size: 9rem; }
+    .run-progress .progress-track { position: relative; display: block; overflow: visible; }
+    .run-progress .progress-fill { display: block; background: var(--accent-primary-text); }
+    /* Mínimo de 5 do Termômetro: um traço na trilha, nomeado em texto embaixo. */
+    .run-min { position: absolute; inset-block: -3px; inline-size: 2px; margin-inline-start: -1px; background: var(--text-primary); }
+    .run-progress small, .muted { color: var(--text-secondary); font-size: var(--text-xs); }
+    .runs-table .btn { white-space: nowrap; }
+    .dl-table thead th { color: var(--text-secondary); }
+    /* Um .sr-only (absolute) dentro do .dl-table-wrap vazava a rolagem da página:
+       o wrap rola mas não é bloco de contenção. */
+    .dl-table-wrap { position: relative; }
+    .dl-table .tag { white-space: nowrap; }
+    .dl-table a:not(.btn) { display: inline-flex; align-items: center; min-block-size: 24px; color: var(--accent-primary-text); }
+    /* Barras de uma série: --accent-primary dá 2,5:1 no escuro (abaixo de 3:1);
+       --accent-primary-text passa nos dois temas. */
+    .dl-status--draft { --status-color: var(--text-secondary); background: var(--bg-surface-2); }
+
+    /* ── Ranking ───────────────────────────────────────────────────── */
+    /* Abas: .tabs/.tab do DS; indicador na tinta do rótulo (defeito 10 / C14). */
+    .rk-tabs { margin-block-end: var(--pg-gap); }
+    .rk-tabs .tab { min-block-size: 44px; color: var(--text-secondary); transition-property: color; }
+    .rk-tabs .tab.active { color: var(--accent-primary-text); border-bottom-color: var(--accent-primary-text); }
+    .rk-tabpanel[hidden] { display: none; }
+    .rk-filters { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-3); margin-block-end: var(--pg-gap); }
+    .rk-filters .form-group { margin: 0; min-inline-size: 14rem; }
+    .rk-filters .form-select { min-block-size: 44px; }
+    .rk-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start; gap: var(--pg-gap); margin-block-end: var(--pg-gap); }
+
+    /* CANDIDATO 18 — .podium: os três primeiros, com o fit em cada teste */
+    .podium { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); margin: 0 0 var(--pg-gap); padding: 0; list-style: none; }
+    .podium > li { position: relative; display: grid; gap: var(--space-3); min-inline-size: 0; padding: var(--space-4) var(--space-5); overflow: hidden; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); background: var(--bg-base); }
+    .podium > li:first-child { border-color: var(--accent-primary-text); background: linear-gradient(160deg, var(--accent-primary-muted), transparent 60%), var(--bg-base); }
+    .podium-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-3); }
+    .podium-rank { color: var(--accent-primary-text); font: 700 1.75rem/1 var(--font-heading); letter-spacing: -0.04em; }
+    .podium-who { display: grid; gap: 2px; min-inline-size: 0; }
+    .podium-who b { font: var(--font-semibold) var(--text-base)/1.3 var(--font-heading); }
+    .podium-who span { color: var(--text-secondary); font-size: var(--text-xs); }
+    .podium-score { text-align: end; }
+    .podium-score b { display: block; font: 700 1.75rem/1 var(--font-heading); letter-spacing: -0.03em; }
+    .podium-score small { color: var(--text-secondary); font-size: var(--text-xs); }
+    /* Tira por teste: seis colunas finas; altura = fit naquele teste; forma embaixo. */
+    .strip { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; block-size: 72px; margin: 0; padding: 0; list-style: none; }
+    .strip li { display: grid; grid-template-rows: minmax(0, 1fr) auto; justify-items: center; gap: 4px; }
+    .strip .col { display: flex; align-items: flex-end; justify-content: center; inline-size: 100%; block-size: 100%; border-block-end: 1px solid var(--border-strong); }
+    .strip .bar { inline-size: min(100%, 14px); min-block-size: 2px; border-radius: 4px 4px 0 0; background: var(--test); transform-origin: bottom; animation: col-in 600ms cubic-bezier(.16, 1, .3, 1) both; }
+    .strip .none { color: var(--text-secondary); font-size: 10px; line-height: 1; }
+    .strip .test-mark { --test-mark-size: 10px; }
+
+    /* CANDIDATO 19 — .bar-list: barras horizontais rotuladas, com marca de referência */
+    .bar-list { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+    .bar-list li { display: grid; grid-template-columns: minmax(0, 10.5rem) minmax(0, 1fr) 4.5rem; align-items: center; gap: var(--space-3); font-size: var(--text-sm); }
+    .bar-list .who { display: flex; align-items: center; gap: var(--space-2); min-inline-size: 0; }
+    .bar-list .who .test-mark { --test-mark-size: 14px; }
+    .bar-list .who span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bar-track { position: relative; block-size: 24px; background: linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px) 0 0 / 25% 100% repeat-x; box-shadow: inset 1px 0 0 var(--border-strong); }
+    .bar-track .bar { position: absolute; inset-block: 5px; inset-inline-start: 0; border-radius: 0 4px 4px 0; background: var(--test, var(--accent-primary-text)); transform-origin: left; animation: bar-in 600ms cubic-bezier(.16, 1, .3, 1) both; }
+    .bar-track .tick { position: absolute; inset-block: 1px; inline-size: 2px; margin-inline-start: -1px; border-radius: 1px; background: var(--text-primary); box-shadow: 0 0 0 2px var(--bg-base); }
+    .bar-list .val { justify-self: end; font: var(--font-semibold) var(--text-sm) var(--font-mono); font-variant-numeric: tabular-nums; text-align: end; }
+    .bar-list .val small { display: block; color: var(--text-secondary); font: 500 var(--text-xs) var(--font-body); }
+    .legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin-block-start: var(--space-4); color: var(--text-secondary); font-size: var(--text-xs); }
+    .legend span[hidden] { display: none; }
+    .legend span { display: inline-flex; align-items: center; gap: var(--space-1-5); }
+    .legend .key-tick { inline-size: 2px; block-size: 14px; background: var(--text-primary); }
+    .legend .key-bar { display: inline-flex; gap: 2px; }
+    .legend .key-bar .test-mark { --test-mark-size: 10px; }
+    @keyframes bar-in { from { transform: scaleX(0); } }
+
+    /* CANDIDATO 20 — .histogram: distribuição em faixas ordenadas (uma série, uma cor) */
+    .histogram { display: grid; grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr)); align-items: end; gap: var(--space-3); block-size: 168px; margin: 0; padding: 0; list-style: none; border-block-end: 1px solid var(--border-strong); }
+    .histogram li { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; block-size: 100%; }
+    .histogram li b { margin-block-end: var(--space-1); font: var(--font-semibold) var(--text-sm) var(--font-mono); }
+    .histogram li i { display: block; inline-size: min(100%, 24px); min-block-size: 2px; border-radius: 4px 4px 0 0; background: var(--accent-primary-text); transform-origin: bottom; animation: col-in 600ms cubic-bezier(.16, 1, .3, 1) both; }
+    .histogram-labels { display: grid; grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr)); gap: var(--space-3); margin: var(--space-2) 0 0; padding: 0; list-style: none; color: var(--text-secondary); font-size: var(--text-xs); text-align: center; }
+    .histogram-labels b { display: block; color: var(--text-primary); font-weight: var(--font-medium); }
+    @keyframes col-in { from { transform: scaleY(0); } }
+
+    /* Fit e nota na tabela: barra de uma série (accent) + valor. */
+    .fit-cell { display: grid; grid-template-columns: minmax(4rem, 1fr) 3.25rem; align-items: center; gap: var(--space-2); min-inline-size: 10rem; }
+    .fit-cell .bar-track { block-size: 16px; }
+    .fit-cell .bar-track .bar { inset-block: 3px; background: var(--accent-primary-text); }
+    .fit-cell b { justify-self: end; font: var(--font-semibold) var(--text-sm) var(--font-mono); font-variant-numeric: tabular-nums; }
+    .marks { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+    .marks .test-mark { --test-mark-size: 13px; }
+    .rk-rank { color: var(--text-secondary); font: var(--font-semibold) var(--text-sm) var(--font-mono); }
+    .rk-person b { display: block; font-weight: var(--font-medium); }
+    .rk-person small { color: var(--text-secondary); font-size: var(--text-xs); }
+    .rk-top td:first-child .rk-rank { color: var(--accent-primary-text); }
+
+    /* "Ver como tabela" dos gráficos (.disclosure do DS) */
+    .chart-table { margin-block-start: var(--space-4); }
+    .chart-table .dl-table { font-size: var(--text-xs); }
+
+    /* CANDIDATO 21 — dica no hover das marcas (o DS só tem .dl-tooltip-callout estático) */
+    .viz-tip { position: fixed; z-index: var(--z-tooltip); max-inline-size: 16rem; padding: var(--space-2) var(--space-3); border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--bg-base); box-shadow: var(--elevation-3); color: var(--text-primary); font-size: var(--text-xs); line-height: 1.4; pointer-events: none; }
+    .viz-tip[hidden] { display: none; }
+
+    /* CANDIDATO 9 (do dashboard) — região de toasts */
+    .toast-region { position: fixed; inset-inline: var(--space-4); inset-block-end: var(--space-4); z-index: var(--z-tooltip); display: grid; justify-items: center; pointer-events: none; }
+    .toast-region .toast { max-inline-size: 480px; margin: 0; background: var(--bg-base); box-shadow: var(--elevation-3); pointer-events: auto; }
+
+    /* ── Responsivo ─────────────────────────────────────────────────── */
+    @media (max-width: 1279.98px) { .models-situ { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 1100px) {
+      .models { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .rk-grid { grid-template-columns: 1fr; }
+      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .filters .form-group:first-child { grid-column: 1 / -1; }
+    }
+    @media (max-width: 899.98px) { .podium { grid-template-columns: 1fr; } }
+    @media (max-width: 959.98px) {
+      /* CANDIDATO 22 — tabela vira lista de cartões (rótulo de cada célula via data-label) */
+      .stack-table thead { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); }
+      .stack-table, .stack-table tbody, .stack-table tr, .stack-table td { display: block; }
+      .stack-table tr { padding: var(--space-3) var(--space-4); border-block-end: 1px solid var(--border-subtle); }
+      .stack-table tbody tr:last-child { border-block-end: 0; }
+      .stack-table tbody td { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); align-items: center; gap: var(--space-2); padding: var(--space-1) 0; border: 0; }
+      .stack-table tbody td::before { content: attr(data-label); color: var(--text-secondary); font-size: var(--text-xs); font-weight: var(--font-medium); }
+      .stack-table tbody td.no-label { grid-template-columns: minmax(0, 1fr); }
+      .stack-table tbody td.no-label::before { display: none; }
+      .stack-table .run-name, .stack-table .run-progress, .stack-table .fit-cell { min-inline-size: 0; }
+      .dl-table-wrap:has(.stack-table) { overflow-x: visible; }
+    }
+    @media (max-width: 767.98px) {
+      .content.app-content { padding: var(--space-4) var(--space-4) var(--space-12); }
+      .models, .models-situ { grid-template-columns: 1fr; }
+      .page-actions { inline-size: 100%; }
+      .page-actions .btn { flex: 1; }
+      .panel { padding: var(--space-4); }
+      .filters { grid-template-columns: 1fr; }
+      .filters .form-group:first-child { grid-column: auto; }
+      .rk-filters .form-group { flex: 1; min-inline-size: 0; }
+      .bar-list li { grid-template-columns: minmax(0, 1fr) 4.5rem; }
+      .bar-list .bar-track { grid-column: 1 / -1; grid-row: 2; }
+    }
+    @media (max-width: 479.98px) {
+      .rk-tabs .tab { flex: 1 1 0; justify-content: center; padding-inline: var(--space-2); text-align: center; }
+      .agent-pill kbd, .app-top-title { display: none; }
+      .model-actions { inline-size: 100%; }
+      .model-actions .btn { flex: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .agent-pill, .model-card, .model-sigil .test-mark { transition: none; }
+      .model-card:hover, .model-card:focus-within, .model-card:hover .model-sigil .test-mark { transform: none; }
+      .bar-track .bar, .histogram li i, .strip .bar { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2 .7 3.5 2.6 3.5 5.5"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></symbol>
+    <symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12 20 4l-4 16-4-6zM12 14l8-10"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-9-9.5C2 7 4.3 4 7.5 4c2 0 3.5 1.2 4.5 2.6C13 5.2 14.5 4 16.5 4 19.7 4 22 7 21 10.5 19.5 15.4 12 20 12 20z"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 21h8M9 17h6"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></symbol>
+    <symbol id="i-search-user" viewBox="0 0 24 24"><circle cx="10" cy="8" r="4"/><path d="M3 20c0-3.5 3-6 7-6M19.2 19.2l2.3 2.3"/><circle cx="17" cy="17" r="3"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M9 7h1M14 7h1M9 11h1M14 11h1M9 15h1M14 15h1M10 21v-3h4v3"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  </svg>
+
+  <aside class="sidebar sidebar-overlay sidebar-panel app-nav" id="app-nav" aria-label="Navegação do electia" data-sidebar-overlay data-sidebar-media="(max-width: 1024px)">
+    <a class="app-brand" href="#assessments"><strong>electia</strong><span>by emprega+</span></a>
+    <p class="app-company"><b>Clínica Horizonte</b>Empresa ativa</p>
+    <nav aria-label="Módulos">
+      <a class="sidebar-item" href="#inicio" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-home"/></svg><span class="sidebar-label">Início</span></a>
+      <a class="sidebar-item" href="#colaboradores" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-users"/></svg><span class="sidebar-label">Colaboradores</span></a>
+      <a class="sidebar-item" href="#cargos" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-briefcase"/></svg><span class="sidebar-label">Cargos</span></a>
+      <a class="sidebar-item" href="#assessments" data-nav="assessments"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-clipboard"/></svg><span class="sidebar-label">Assessments</span></a>
+      <!-- Recomendação (ficha §Menu): o item "Situacional" vira "Testes criados". -->
+      <a class="sidebar-item" href="#testes-criados" data-nav="criados"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-send"/></svg><span class="sidebar-label">Testes criados</span></a>
+      <a class="sidebar-item" href="#bem-estar" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-heart"/></svg><span class="sidebar-label">Bem-Estar</span></a>
+      <a class="sidebar-item" href="#ranking" data-nav="ranking"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-trophy"/></svg><span class="sidebar-label">Ranking</span></a>
+      <a class="sidebar-item" href="#performance" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-target"/></svg><span class="sidebar-label">Performance</span></a>
+      <a class="sidebar-item" href="#recrutamento" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-search-user"/></svg><span class="sidebar-label">Recrutamento &amp; Seleção</span></a>
+      <hr class="sidebar-divider">
+      <a class="sidebar-item" href="#empresa" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-building"/></svg><span class="sidebar-label">Empresa</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <span class="sidebar-user-avatar" aria-hidden="true">MC</span>
+        <div><div class="sidebar-user-name">Marina Couto</div><div class="sidebar-user-role">RH</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="header app-top">
+      <div class="app-top-start">
+        <button class="btn-icon sidebar-panel-toggle" type="button" data-sidebar-toggle="app-nav" aria-controls="app-nav" aria-expanded="false" aria-label="Abrir navegação" hidden><svg class="icon icon-md" aria-hidden="true"><use href="#i-menu"/></svg></button>
+        <span class="app-top-title" data-top-title>Assessments</span>
+      </div>
+      <button class="agent-pill" type="button" data-fora-btn="Nexus" aria-keyshortcuts="Meta+K Control+K">
+        <span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span>Nexus<kbd aria-hidden="true">⌘K</kbd>
+      </button>
+      <div class="app-top-end">
+        <button class="btn-icon" type="button" data-fora-btn="Notificações" aria-label="Notificações"><svg class="icon icon-md" aria-hidden="true"><use href="#i-bell"/></svg></button>
+        <button class="btn-icon" type="button" data-theme-toggle aria-label="Ativar tema escuro"><svg class="icon icon-md" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      </div>
+    </header>
+
+    <main class="content app-content" id="conteudo">
+      <!-- ═══ Tela 1: Assessments = catálogo de MODELOS ═══ -->
+      <section class="screen" data-screen="assessments" aria-labelledby="assessments-titulo">
+        <header class="page-head">
+          <div>
+            <span class="eyebrow">Modelos de teste</span>
+            <h1 id="assessments-titulo" tabindex="-1">Assessments</h1>
+            <p>Escolha um modelo e aplique. O que já foi enviado fica em <a href="#testes-criados">Testes criados</a>.</p>
+          </div>
+          <div class="page-actions">
+            <a class="btn btn-secondary" href="#testes-criados">Ver testes criados</a>
+          </div>
+        </header>
+
+        <div class="section-head">
+          <h2 id="comp-titulo">Comportamentais</h2>
+          <p>Perfil de cada pessoa. A forma identifica o teste em todo o electia.</p>
+        </div>
+        <ul class="models" aria-labelledby="comp-titulo" data-models-comp></ul>
+
+        <div class="section-head">
+          <h2 id="situ-titulo">Situacionais</h2>
+          <p>Cenários gerados por IA a partir dos construtos que você escolhe, em quatro níveis.</p>
+        </div>
+        <ul class="models models-situ" aria-labelledby="situ-titulo" data-models-situ></ul>
+
+        <div class="section-head">
+          <h2 id="form-titulo">Formulário próprio</h2>
+        </div>
+        <article class="model-card model-card-form" aria-labelledby="form-card-titulo">
+          <div>
+            <h3 id="form-card-titulo">Monte suas perguntas</h3>
+            <p class="model-desc">Para o que os modelos não cobrem: pesquisa interna, checklist de integração, avaliação de treinamento.</p>
+          </div>
+          <a class="btn btn-secondary" href="#forms-novo" data-fora>Criar formulário</a>
+        </article>
+      </section>
+
+      <!-- ═══ Tela 2: Testes criados ═══ -->
+      <section class="screen" data-screen="criados" aria-labelledby="criados-titulo" hidden>
+        <header class="page-head">
+          <div>
+            <span class="eyebrow">Acompanhamento</span>
+            <h1 id="criados-titulo" tabindex="-1">Testes criados</h1>
+            <p>Tudo o que saiu de um modelo: envios comportamentais e testes situacionais, com respostas e prazo.</p>
+          </div>
+          <div class="page-actions">
+            <a class="btn btn-primary" href="#assessments">Aplicar um modelo</a>
+          </div>
+        </header>
+
+        <div class="kpis" data-runs-kpis></div>
+
+        <form class="filters" role="search" aria-label="Filtrar testes criados" data-filters>
+          <div class="form-group">
+            <label class="form-label-eyebrow" for="f-busca">Buscar</label>
+            <input class="form-input" id="f-busca" type="search" placeholder="Nome do teste" autocomplete="off" data-f="q">
+          </div>
+          <div class="form-group">
+            <label class="form-label-eyebrow" for="f-modelo">Modelo</label>
+            <span class="form-select-wrap"><select class="form-select" id="f-modelo" data-f="modelo"></select></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label-eyebrow" for="f-status">Status</label>
+            <span class="form-select-wrap"><select class="form-select" id="f-status" data-f="status">
+              <option value="">Todos</option>
+              <option value="andamento">Em andamento</option>
+              <option value="rascunho">Rascunho</option>
+              <option value="encerrado">Encerrado</option>
+              <option value="expirado">Expirado</option>
+            </select></span>
+          </div>
+          <button class="btn btn-ghost" type="button" data-limpar>Limpar filtros</button>
+        </form>
+        <p class="filters-count" role="status" aria-live="polite" data-runs-count></p>
+
+        <div class="dl-table-wrap" data-runs-wrap>
+          <table class="dl-table runs-table stack-table">
+            <caption class="sr-only">Testes criados, com modelo, status, respostas, prazo e data de criação</caption>
+            <thead><tr><th scope="col">Teste</th><th scope="col">Status</th><th scope="col">Respostas</th><th scope="col">Prazo</th><th scope="col">Criado em</th><th scope="col"><span class="sr-only">Ação</span></th></tr></thead>
+            <tbody data-runs></tbody>
+          </table>
+        </div>
+        <p class="empty-state-inline" data-runs-empty hidden>Nenhum teste com esses filtros. <button class="btn btn-ghost btn-sm" type="button" data-limpar>Limpar filtros</button></p>
+        <p class="panel-note">O Termômetro Organizacional é anônimo: aqui aparece só quantas respostas chegaram, e o relatório abre a partir de 5. Nenhum nome aparece.</p>
+      </section>
+
+      <!-- ═══ Tela 3: Ranking ═══ -->
+      <section class="screen" data-screen="ranking" aria-labelledby="ranking-titulo" hidden>
+        <header class="page-head">
+          <div>
+            <span class="eyebrow">Comparação</span>
+            <h1 id="ranking-titulo" tabindex="-1">Ranking</h1>
+            <p>Quem está mais perto do perfil-alvo do próprio cargo, teste a teste, e a leitura da última avaliação de desempenho.</p>
+          </div>
+        </header>
+
+        <div class="tabs rk-tabs" role="tablist" aria-label="Visões do ranking">
+          <button class="tab active" type="button" role="tab" id="aba-fit" aria-selected="true" aria-controls="painel-fit" data-aba="fit">Por fit ao cargo</button>
+          <button class="tab" type="button" role="tab" id="aba-ad" aria-selected="false" aria-controls="painel-ad" tabindex="-1" data-aba="ad">Por desempenho (AD)</button>
+        </div>
+
+        <!-- Aba 1: fit ao cargo -->
+        <div class="rk-tabpanel" role="tabpanel" id="painel-fit" aria-labelledby="aba-fit">
+          <div class="rk-filters">
+            <div class="form-group">
+              <label class="form-label-eyebrow" for="rk-depto">Departamento</label>
+              <span class="form-select-wrap"><select class="form-select" id="rk-depto" data-rk-depto></select></span>
+            </div>
+          </div>
+          <div class="kpis" data-fit-kpis></div>
+          <h2 class="sr-only" id="podio-titulo">Três maiores fits</h2>
+          <ol class="podium" aria-labelledby="podio-titulo" data-podium></ol>
+
+          <div class="rk-grid">
+            <section class="panel" aria-labelledby="porteste-titulo">
+              <div class="panel-head"><h2 id="porteste-titulo">Fit por teste</h2><small data-porteste-n></small></div>
+              <ul class="bar-list" data-porteste></ul>
+              <p class="legend" aria-hidden="true"><span class="key-bar"><span class="test-mark test-mark-disc t-disc"></span><span class="test-mark test-mark-bigfive t-bigfive"></span></span>Barra: média do recorte<span data-key-tick hidden><i class="key-tick"></i>Traço: média da empresa</span></p>
+              <details class="disclosure chart-table">
+                <summary class="disclosure-summary"><span class="disclosure-label">Ver como tabela</span><svg class="disclosure-chevron icon icon-sm" aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+                <div class="disclosure-panel"><div class="disclosure-content"><table class="dl-table"><caption class="sr-only">Fit médio por teste</caption><thead><tr><th scope="col">Teste</th><th scope="col">Recorte</th><th scope="col">Empresa</th><th scope="col">Pessoas</th></tr></thead><tbody data-porteste-tabela></tbody></table></div></div>
+              </details>
+            </section>
+            <section class="panel" aria-labelledby="dist-fit-titulo">
+              <div class="panel-head"><h2 id="dist-fit-titulo">Distribuição do fit</h2><small>pessoas por faixa</small></div>
+              <ol class="histogram" aria-hidden="true" data-dist-fit></ol>
+              <ol class="histogram-labels" data-dist-fit-labels></ol>
+              <p class="panel-note" data-dist-fit-note></p>
+            </section>
+          </div>
+
+          <section class="panel" aria-labelledby="lista-fit-titulo">
+            <div class="panel-head"><h2 id="lista-fit-titulo">Todas as pessoas</h2><small>maior fit primeiro; sem dado no fim</small></div>
+            <div class="dl-table-wrap">
+              <table class="dl-table stack-table">
+                <caption class="sr-only">Ranking por fit ao cargo</caption>
+                <thead><tr><th scope="col">#</th><th scope="col">Colaborador</th><th scope="col">Departamento</th><th scope="col">Testes feitos</th><th scope="col">Fit com o cargo</th></tr></thead>
+                <tbody data-fit-rows></tbody>
+              </table>
+            </div>
+            <p class="panel-note">Fit = aderência ao perfil-alvo do cargo, combinando os testes feitos. Cargo sem perfil-alvo fica sem dado. Gestores de departamento veem só o próprio escopo.</p>
+          </section>
+        </div>
+
+        <!-- Aba 2: desempenho (AD). Sem departamento: Performance nunca usa dado de departamento. -->
+        <div class="rk-tabpanel" role="tabpanel" id="painel-ad" aria-labelledby="aba-ad" hidden>
+          <div class="rk-filters">
+            <div class="form-group">
+              <label class="form-label-eyebrow" for="rk-cargo">Cargo</label>
+              <span class="form-select-wrap"><select class="form-select" id="rk-cargo" data-rk-cargo></select></span>
+            </div>
+          </div>
+          <div class="kpis" data-ad-kpis></div>
+          <div class="rk-grid">
+            <section class="panel" aria-labelledby="dist-ad-titulo">
+              <div class="panel-head"><h2 id="dist-ad-titulo">Distribuição da nota geral</h2><small>escala 1–4 do gestor</small></div>
+              <ol class="histogram" aria-hidden="true" data-dist-ad></ol>
+              <ol class="histogram-labels" data-dist-ad-labels></ol>
+            </section>
+            <section class="panel" aria-labelledby="ad-leitura-titulo">
+              <div class="panel-head"><h2 id="ad-leitura-titulo">Como ler</h2></div>
+              <p class="model-desc">A nota é a média do gestor na última AD concluída de cada pessoa. Ela fica ao lado do perfil para orientar a conversa, não para decidir bônus.</p>
+              <p class="panel-note">Sem departamento nesta aba: o recorte é por cargo. Indicadores de desempenho ficam na tela Performance.</p>
+            </section>
+          </div>
+          <section class="panel" aria-labelledby="lista-ad-titulo">
+            <div class="panel-head"><h2 id="lista-ad-titulo">Última AD por pessoa</h2><small>nota maior primeiro; sem AD no fim</small></div>
+            <div class="dl-table-wrap">
+              <table class="dl-table stack-table">
+                <caption class="sr-only">Ranking por desempenho na última AD</caption>
+                <thead><tr><th scope="col">#</th><th scope="col">Colaborador</th><th scope="col">Última AD</th><th scope="col">Nota geral (1–4)</th></tr></thead>
+                <tbody data-ad-rows></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="viz-tip" aria-hidden="true" hidden data-viz-tip></div>
+  <div class="toast-region" role="status" aria-live="polite"><div class="toast toast-info" data-toast hidden></div></div>
+
+  <script src="../../../../dist/sidebar-overlay.js" defer></script>
+  <script src="electia-assessments-2026-10-06.js" defer></script>
+</body>
+</html>
