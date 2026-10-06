@@ -74,7 +74,6 @@
     .agent-pill { display: inline-flex; align-items: center; gap: var(--space-2); min-block-size: 40px; padding: var(--space-1) var(--space-3) var(--space-1) var(--space-1); border: 1px solid var(--border-default); border-radius: var(--radius-full); background: var(--bg-base); color: var(--text-primary); font: var(--font-semibold) var(--text-sm) var(--font-heading); cursor: pointer; transition: border-color var(--transition-fast), box-shadow var(--transition-fast); }
     .agent-pill:hover { border-color: var(--accent-primary); box-shadow: var(--shadow-glow); }
     .agent-pill:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
-    .agent-pill kbd { padding: 1px var(--space-1-5); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-secondary); font: 500 var(--text-xs) var(--font-mono); }
     a.btn { text-decoration: none; }
     /* Link solto sem anel do DS: só o do navegador (outline: auto, 1 px) casava.
        Aqui o mesmo anel dos botões; na sidebar escura, o anel da sidebar. */
@@ -260,12 +259,19 @@
     .chart-table .dl-table { font-size: var(--text-xs); }
 
     /* CANDIDATO 21 — dica no hover das marcas (o DS só tem .dl-tooltip-callout estático) */
-    .viz-tip { position: fixed; z-index: var(--z-tooltip); max-inline-size: 16rem; padding: var(--space-2) var(--space-3); border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--bg-base); box-shadow: var(--elevation-3); color: var(--text-primary); font-size: var(--text-xs); line-height: 1.4; pointer-events: none; }
+    .viz-tip { position: fixed; z-index: var(--z-tooltip); max-inline-size: 16rem; padding: var(--space-2) var(--space-3); border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--bg-base); box-shadow: var(--elevation-3); color: var(--text-primary); font-size: var(--text-xs); line-height: 1.4; }
     .viz-tip[hidden] { display: none; }
+    /* WCAG 1.4.13: a dica fica ancorada à marca (não segue o ponteiro), aceita o
+       ponteiro sobre ela, não some por tempo e fecha com Escape. */
 
     /* CANDIDATO 9 (do dashboard) — região de toasts */
     .toast-region { position: fixed; inset-inline: var(--space-4); inset-block-end: var(--space-4); z-index: var(--z-tooltip); display: grid; justify-items: center; pointer-events: none; }
     .toast-region .toast { max-inline-size: 480px; margin: 0; background: var(--bg-base); box-shadow: var(--elevation-3); pointer-events: auto; }
+    /* Na gaveta: preso ao pé dela (a gaveta tem transform, então "fixed" aqui
+       é relativo a ela), acima do bloco do usuário. Acima de 1024 px não há
+       gaveta e esta região nunca recebe aviso. */
+    .toast-region-gaveta { position: absolute; inset-inline: var(--space-3); inset-block-end: calc(var(--space-16) + var(--space-4)); }
+    .toast-region-gaveta .toast { color: var(--text-primary); }
 
     /* ── Responsivo ─────────────────────────────────────────────────── */
     @media (max-width: 1279.98px) { .models-situ { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -304,7 +310,7 @@
     }
     @media (max-width: 479.98px) {
       .rk-tabs .tab { flex: 1 1 0; justify-content: center; padding-inline: var(--space-2); text-align: center; }
-      .agent-pill kbd, .app-top-title { display: none; }
+      .app-top-title { display: none; }
       .model-actions { inline-size: 100%; }
       .model-actions .btn { flex: 1; }
     }
@@ -316,7 +322,9 @@
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <!-- O roteador lê o hash: o pulo é tratado no script (foca o h1 da tela
+       atual, sem mudar a rota). Sem JS, o #conteudo segue valendo. -->
+  <a class="skip-link" href="#conteudo" data-skip>Pular para o conteúdo</a>
 
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></symbol>
@@ -354,6 +362,10 @@
       <hr class="sidebar-divider">
       <a class="sidebar-item" href="#empresa" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-building"/></svg><span class="sidebar-label">Empresa</span></a>
     </nav>
+    <!-- Com a gaveta aberta, todo irmão dela vira inert, inclusive a região
+         de toasts do <body>. Esta segunda região mora DENTRO da gaveta e recebe
+         os avisos enquanto ela está aberta (CANDIDATO 9b). -->
+    <div class="toast-region toast-region-gaveta" role="status" aria-live="polite"><div class="toast toast-info" data-toast-gaveta hidden></div></div>
     <div class="sidebar-footer">
       <div class="sidebar-user">
         <span class="sidebar-user-avatar" aria-hidden="true">MC</span>
@@ -368,8 +380,10 @@
         <button class="btn-icon sidebar-panel-toggle" type="button" data-sidebar-toggle="app-nav" aria-controls="app-nav" aria-expanded="false" aria-label="Abrir navegação" hidden><svg class="icon icon-md" aria-hidden="true"><use href="#i-menu"/></svg></button>
         <span class="app-top-title" data-top-title>Assessments</span>
       </div>
-      <button class="agent-pill" type="button" data-fora-btn="Nexus" aria-keyshortcuts="Meta+K Control+K">
-        <span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span>Nexus<kbd aria-hidden="true">⌘K</kbd>
+      <!-- Sem ⌘K aqui: o Nexus fica fora deste protótipo, e atalho anunciado sem
+           efeito é promessa falsa (o dashboard tem o painel e o atalho). -->
+      <button class="agent-pill" type="button" data-fora-btn="Nexus">
+        <span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span>Nexus
       </button>
       <div class="app-top-end">
         <button class="btn-icon" type="button" data-fora-btn="Notificações" aria-label="Notificações"><svg class="icon icon-md" aria-hidden="true"><use href="#i-bell"/></svg></button>

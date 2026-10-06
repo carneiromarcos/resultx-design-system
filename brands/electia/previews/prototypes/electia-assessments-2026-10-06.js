@@ -96,14 +96,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const nav = $('#app-nav');
 
   /* ── Toast e "fora do protótipo" ─────────────────────────────────── */
-  const toast = $('[data-toast]');
+  /* Duas regiões: a do <body> e a de dentro da gaveta. Com a gaveta aberta
+     o script do DS deixa inert tudo o que é irmão dela (a região do <body>
+     junto), e um aviso ali não seria lido nem visto. */
+  const TOASTS = [$('[data-toast]'), $('[data-toast-gaveta]')];
   let toastTimer;
   function avisar(texto) {
-    toast.textContent = texto;
-    toast.hidden = false;
+    const gavetaAberta = nav.hasAttribute('data-open');
+    const [alvo, outro] = gavetaAberta ? [TOASTS[1], TOASTS[0]] : TOASTS;
+    outro.hidden = true;
+    outro.textContent = '';
+    alvo.textContent = texto;
+    alvo.hidden = false;
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => { toast.hidden = true; }, 4000);
+    toastTimer = setTimeout(() => { alvo.hidden = true; }, 4000);
   }
+  nav.addEventListener('sidebartoggle', () => { TOASTS.forEach((t) => { t.hidden = true; }); });
   document.addEventListener('click', (ev) => {
     const fora = ev.target.closest('[data-fora], [data-fora-btn]');
     if (fora) {
@@ -115,23 +123,47 @@ document.addEventListener('DOMContentLoaded', () => {
     if (ev.target.closest('#app-nav a') && nav.hasAttribute('data-open')) window.ResultXSidebarOverlay?.close(nav);
   });
 
-  /* ── CANDIDATO 21: dica no hover das marcas dos gráficos ─────────────
-     Só ponteiro: o mesmo dado está no texto visível ou na tabela. */
+  /* ── CANDIDATO 21: dica das marcas dos gráficos (WCAG 1.4.13) ────────
+     Só ponteiro: o mesmo dado está no texto visível ou na tabela. A dica se
+     ancora à marca, aceita o ponteiro sobre ela (hoverable), não some por
+     tempo (persistent) e fecha com Escape sem mexer no foco (dismissible).
+     Fechada com Escape, só reabre quando o ponteiro entra em outra marca. */
   const tip = $('[data-viz-tip]');
-  document.addEventListener('pointerover', (ev) => {
-    const alvo = ev.target.closest('[data-tip]');
-    if (!alvo) { tip.hidden = true; return; }
-    tip.textContent = alvo.dataset.tip;
+  const TIP_SAIDA_MS = 300; // folga para o ponteiro ir da marca à dica
+  let tipDe = null;
+  let tipDispensada = null;
+  let tipSaida = 0;
+  function mostrarTip(marcaEl) {
+    clearTimeout(tipSaida);
+    if (marcaEl === tipDispensada) return;
+    tipDispensada = null;
+    tipDe = marcaEl;
+    tip.textContent = marcaEl.dataset.tip;
     tip.hidden = false;
-  });
-  document.addEventListener('pointermove', (ev) => {
-    if (tip.hidden) return;
-    const x = Math.min(ev.clientX + 14, window.innerWidth - tip.offsetWidth - 8);
-    const y = Math.min(ev.clientY + 14, window.innerHeight - tip.offsetHeight - 8);
+    const r = marcaEl.getBoundingClientRect();
+    const x = Math.max(8, Math.min(r.left + r.width / 2 - tip.offsetWidth / 2, window.innerWidth - tip.offsetWidth - 8));
+    const acima = r.top - tip.offsetHeight - 6;
     tip.style.left = `${x}px`;
-    tip.style.top = `${y}px`;
+    tip.style.top = `${acima >= 8 ? acima : r.bottom + 6}px`;
+  }
+  function esconderTip() { clearTimeout(tipSaida); tip.hidden = true; tipDe = null; }
+  document.addEventListener('pointerover', (ev) => {
+    if (tip.contains(ev.target)) { clearTimeout(tipSaida); return; }
+    const alvo = ev.target.closest('[data-tip]');
+    if (alvo) { if (alvo !== tipDe || tip.hidden) mostrarTip(alvo); return; }
+    if (!tip.hidden) { clearTimeout(tipSaida); tipSaida = setTimeout(esconderTip, TIP_SAIDA_MS); }
   });
-  document.documentElement.addEventListener('pointerleave', () => { tip.hidden = true; });
+  document.addEventListener('pointerout', (ev) => {
+    const marcaSaida = ev.target.closest('[data-tip]');
+    if (marcaSaida && !marcaSaida.contains(ev.relatedTarget) && marcaSaida === tipDispensada) tipDispensada = null;
+  });
+  document.addEventListener('keydown', (ev) => {
+    if (ev.key !== 'Escape' || tip.hidden) return;
+    tipDispensada = tipDe;
+    esconderTip();
+  });
+  /* Rolagem: a dica acompanha a marca (não some sozinha). */
+  window.addEventListener('scroll', () => { if (!tip.hidden && tipDe) mostrarTip(tipDe); }, { passive: true });
 
   const marca = (id) => `<span class="test-mark test-mark-${id} t-${id}" aria-hidden="true"></span>`;
   const nivel = (n) => `<span class="level-mark" aria-hidden="true">${[1, 2, 3, 4].map((i) => `<i${i > n ? ' class="is-off"' : ''}></i>`).join('')}</span>`;
@@ -444,6 +476,17 @@ document.addEventListener('DOMContentLoaded', () => {
     quadro = requestAnimationFrame(() => { if (document.activeElement === alvo) alvo.scrollIntoView({ block: 'start', behavior: 'instant' }); });
   }
   window.addEventListener('hashchange', aplicarRota);
+
+  /* ── Pular para o conteúdo ──────────────────────────────────────────
+     O href="#conteudo" passaria pelo roteador (hash desconhecido = tela
+     padrão) e trocava a tela. Aqui o pulo só leva o foco ao h1 da tela
+     atual, sem tocar na URL. */
+  $('[data-skip]').addEventListener('click', (ev) => {
+    ev.preventDefault();
+    const h1 = $('[data-screen]:not([hidden]) h1');
+    h1.focus({ preventScroll: true });
+    h1.scrollIntoView({ block: 'start', behavior: 'instant' });
+  });
 
   /* ── Tema ────────────────────────────────────────────────────────── */
   const temaBtn = $('[data-theme-toggle]');

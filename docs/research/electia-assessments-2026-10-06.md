@@ -133,7 +133,8 @@ O validador deixa um único **WARN**: Temperamentos × Big Five com ΔE 7,5 (pro
 | C18 | `.podium` + `.strip` (top 3 com a contribuição por categoria) | Média | Ranking; pode servir ao Xscore |
 | C19 | `.bar-list` (barra horizontal rotulada com marcador de referência) | **Alta** | Testes por tipo do dashboard, Fit por teste e Matching usam o mesmo desenho |
 | C20 | `.histogram` (faixas ordenadas, uma série, valor no topo, rótulos de faixa) | Média | Distribuições de fit, AD e notas |
-| C21 | `.viz-tip` (dica no hover que acompanha o ponteiro; o dado também fica no texto ou na tabela) | Média | O DS só tem `.dl-tooltip-callout` estático |
+| C21 | `.viz-tip` (dica de gráfico conforme a WCAG 1.4.13: ancorada à marca, aceita o ponteiro, não some por tempo, fecha com Escape sem mover o foco; o dado também fica no texto ou na tabela) | Média | O DS só tem `.dl-tooltip-callout` estático |
+| C9b | Região de toasts **dentro** da gaveta (`.toast-region-gaveta`), usada enquanto ela está aberta | **Alta** | Com a gaveta aberta, o `sidebar-overlay.js` deixa inert tudo o que é irmão dela, inclusive a região de toasts do `<body>`. O aviso não era lido nem visto |
 | C22 | `.stack-table` (tabela vira cartões abaixo de 960 px, com `data-label`) | **Alta** | Toda tabela do app rola na horizontal no celular |
 | — | `.level-mark` (escada N1–N4) | Baixa | Só situacional |
 | — | `.dl-status--draft` (neutro) | Baixa | O DS não tem o estado "rascunho" |
@@ -148,6 +149,8 @@ O validador deixa um único **WARN**: Temperamentos × Big Five com ΔE 7,5 (pro
 6. **A troca de tema passa pelas cores do tema anterior.** O rótulo da aba medido em 2,12:1 no escuro durante os 150 ms da transição. O contorno local desliga transições por 2 quadros na troca. O `dist/theme-toggle.js` deveria fazer isso.
 7. **O indicador da `.tab.active` em `--accent-primary`** continua com 2,39:1 no escuro (defeito 10 da ficha do dashboard, ainda aberto).
 8. **`.badge-disc`, `.badge-bigfive` etc. pintam o teste** com uma paleta própria que difere da do app e da regra (ver C15).
+9. **A gaveta modal do DS e a região de toasts não combinam.** O `sidebar-overlay.js` aplica inert em todos os irmãos do painel, exceto o scrim. Uma região `role="status"` no `<body>` fica muda e inerte enquanto a gaveta está aberta. O DS precisa de um padrão: região de avisos dentro do painel, ou uma lista de exceções do inert. Contorno local: C9b.
+10. **Um skip-link `href="#conteudo"` colide com o roteador por hash.** O `#conteudo` desconhecido levava à tela padrão. Contorno local: o clique é tratado no script, que foca o h1 da tela atual sem tocar na URL. Vale como diretriz junto da C13: em app com rota por hash, o pulo não pode depender do fragmento.
 
 ## Suposições
 
@@ -157,6 +160,33 @@ O validador deixa um único **WARN**: Temperamentos × Big Five com ΔE 7,5 (pro
 - **O fit por pessoa no protótipo** é a média simples dos `theory_matches`. O app pondera as 6 teorias.
 - **O texto de "o que revela"** ("4 dimensões", "16 tipos"…) é derivado das descrições do app.
 - **O nome "Testes criados" e a rota `/tests/criados`** são propostas a confirmar.
+
+## Rodada 2 — correções pedidas pelo Revisor na PR #88
+
+| # | Achado | Correção |
+|---|---|---|
+| P2 | O skip-link `#conteudo` trocava a tela: de Ranking, ia para Assessments | O handler do `[data-skip]` faz `preventDefault`, foca o h1 da tela visível e o rola para a vista. A URL, a aba e os filtros não mudam. Sem JS, o `#conteudo` nativo continua valendo |
+| P2 | O toast de `data-fora` ficava inerte com a gaveta aberta | Segunda região `role="status"` **dentro** da gaveta (C9b). `avisar()` escreve nela quando `#app-nav[data-open]` existe e na do `<body>` quando não existe. A troca da gaveta limpa as duas |
+| P2 | A dica dos gráficos não fechava com Escape, não aceitava o ponteiro e acompanhava o cursor | A dica fica ancorada à marca, sem `pointer-events: none`, e só fecha 300 ms depois que o ponteiro sai da marca e da dica. Não há timeout enquanto o ponteiro está sobre elas. Escape fecha sem mover o foco, e a dica só reabre quando o ponteiro sai e volta. Na rolagem, ela acompanha a marca |
+| P3 | ⌘K/Ctrl+K anunciado sem handler | Removi `aria-keyshortcuts` e o `<kbd>`. O Nexus fica fora deste protótipo, e um atalho sem efeito seria uma promessa falsa. O dashboard (#85) tem o painel e o atalho |
+
+Provas novas (`rev.mjs`, **16/16**):
+- **Skip-link nas 4 telas** (Assessments, Testes criados com `?modelo=disc`, Ranking por fit e Ranking AD), a 1440 e a 375, com a página rolada. O primeiro Tab cai nele e o link fica visível. Depois do Enter, o hash, a tela, a aba e o filtro são os mesmos, e o foco está no h1 da tela atual, visível abaixo do header.
+- **Toast com a gaveta aberta, a 1024 e a 375:**
+  - não fica sob `[inert]`, tem `aria-live="polite"` e está dentro da gaveta;
+  - fica inteiro na tela e por cima (`elementFromPoint`), com a gaveta ainda aberta e o foco dentro dela;
+  - na árvore de acessibilidade (CDP), o texto "fica fora" aparece sob um `status` não ignorado.
+- **Toast com a gaveta fechada:** a região do `<body>`, fora de inert.
+- **Contraste do texto do toast e da dica:** 17,87:1 no claro e 16,35:1 no escuro.
+- **Dica, claro e escuro:**
+  - abre no hover e aceita o ponteiro sobre ela;
+  - continua visível depois de 3,5 s;
+  - Escape fecha, com o foco ainda no `#rk-depto`;
+  - não reabre na mesma marca, reabre depois de sair e voltar, e fecha ao sair.
+- **Atalho:** zero `aria-keyshortcuts`, zero `<kbd>`, e Ctrl+K não muda nada.
+- **Console:** zero erros e avisos.
+
+Captura: `assets/electia-assessments-2026-10-06/gaveta-toast-375-claro.png`.
 
 ## Medições (Playwright, Chrome do sistema, `channel: 'chrome'`, `file://`; scripts no scratch)
 
@@ -176,5 +206,5 @@ O validador deixa um único **WARN**: Temperamentos × Big Five com ΔE 7,5 (pro
   - Reduced-motion: sem animação de barras, colunas nem do card.
   - Contraste do rótulo da aba durante a troca: mínimo de 7,22:1 no claro e 5,89:1 no escuro, amostrado a cada 15 ms.
   - Zero erros e zero avisos no console.
-- **Repositório:** `npm test` deu 634/634, `npm run lint` passou limpo e `npm run build` não gerou diff em `dist/`.
+- **Repositório** (refeito na rodada 2): `npm test` deu 634/634, `npm run lint` passou limpo e `npm run build` não gerou diff em `dist/`. As 56 combinações (overflow e contraste) e as 35 provas de teclado continuam passando depois das correções.
 - **Paleta:** `validate_palette.js` da skill `dataviz` no claro (superfície `#ffffff`) e no escuro (`#0B0E14`). Passa em faixa, croma, visão normal e 3:1, com o único WARN de CVD citado.
