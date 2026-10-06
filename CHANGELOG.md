@@ -5,6 +5,78 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Fixed + Added — lote D: casca de dashboard promovida do protótipo da #85 (05/10/2026)
+
+Defeitos que o protótipo do dashboard Electia (#85) achou no DS, mais os pontos do
+parecer do Revisor nessa PR. Também os candidatos C1, C6, C7 e C8. Só tokens, dois temas, movimento só em
+`transform`/`opacity`/cor, tudo desligado sob `prefers-reduced-motion`. Demo nova
+`demos/app-shell.html`; capturas em `docs/research/assets/lote-d-2026-10-05/`.
+Medido no Chrome do sistema (Playwright, `channel: 'chrome'`): 141 verificações em
+320/375/768/1024/1440 px, claro e escuro, DS e Electia.
+
+**Defeitos corrigidos**
+
+- **Texto sobre a sidebar.** A sidebar é escura nos dois temas, e nenhuma regra
+  `.sidebar*` usa mais `--text-primary`. Os números a seguir são do claro, antes → depois.
+  - Nome do usuário: 1,03 → 17,39.
+  - Papel: 2,94 → 7,91, agora em `--text-xs` + `--sidebar-text` e sem opacidade.
+  - Iniciais: 4,00–4,22 → 6,70. Usam `--accent-primary` + `--text-inverse`, a tinta medida por marca.
+  - Marca: 1,03 → 17,39.
+  - Logo: 2,67 → 6,70.
+  - Item em hover e foco: 1,14 → 15,71.
+
+  `.sidebar-item[aria-current="page"]` pinta como `.active`. Um teste trava todos os
+  estados do item (repouso, hover, active, current e focus-visible) em ≥ 4,5:1 nos
+  quatro escopos do DS e em cada ponte.
+- **`--sidebar-focus-ring`.** O token é novo, está nos quatro escopos de `tokens/tokens.css`
+  (#2DD4BF escuro, #60A5FA claro) e é emitido por marca em cada `ds-bridge.css`.
+  `scripts/build-brand-bridges.js` usa o papel de texto do tema escuro da marca e reprova o
+  build abaixo de 3:1 contra o fundo e o hover da sidebar. A `.sidebar` redefine
+  `--focus-ring-color` com ele, o que cobre todo focável dentro dela. Anel no claro, antes → depois:
+  DS 2,60 → 6,84; Electia 2,29 → 6,58; Emprega+ 1,71 → 9,49. Pior caso no claro: 5,94, no
+  item focado da Electia.
+- **`.dl-status--*`.** A tinta passa a ser `color-mix(in oklab, cor 60%, --text-primary)`,
+  a fórmula do `.stage-chip`. No claro, o `done` foi de 2,77 → 5,76 e o pior caso de 2,67 → 5,56.
+  No escuro, o pior caso foi de 3,65 → 6,79. O `rgba` cru do `need-review` saiu.
+- **Ícones sem `dist/icons.min.css`.** Um `<svg class="icon">` sem tamanho saía com 300 × 150 px.
+  O bundle principal ganhou um piso, `:where(svg.icon) { width: 1em; height: 1em; … }`, de
+  especificidade zero, que `icons.css` sobrescreve em qualquer ordem. `icons.min.css` e o import
+  separado de `data-cards.css` **continuam contratos publicados**, como confirmou o Revisor.
+  `data-cards` segue fora do bundle porque tem export próprio e depende dos tokens da camada de
+  dados. A dependência está documentada em `docs/components/data-cards.md`.
+- **Gaveta `.sidebar-overlay` modal de verdade** (Revisor da #85). Aberta, ela vira
+  `role="dialog"` + `aria-modal="true"`, e os irmãos de cada ancestral até o `<body>` ficam
+  `inert`, exceto o scrim. Tudo se desfaz ao fechar, inclusive no resize para o modo painel ou
+  rail. Fechada, nada muda para os consumidores atuais. Teste comportamental em
+  `tests/sidebar-overlay-behavior.test.js`. O `tests/lib/mini-dom.js` ganhou `.classe`,
+  `offsetParent` e `matchMedia` controlável.
+
+**Adicionado**
+
+- **`.sidebar-panel` (C1):** painel de 240 px a partir de 1025 px e gaveta até 1024 px, num
+  `<aside>` só e com o mesmo `dist/sidebar-overlay.js`. O gatilho com `.sidebar-panel-toggle`
+  some acima do corte.
+- **`.test-mark` (C7, `components/test-mark.css`):** a forma identifica o teste.
+  - DISC é um círculo em quatro, Tipologia um quadrado e Eneagrama um eneágono.
+  - Big Five é um pentágono, Temperamentos um triângulo vazado e Motivadores um hexágono.
+  - Nenhum token de teoria. A cor padrão é neutra (`--text-secondary`, 7,56/6,28) e há o gancho
+    `--test-mark-color`. `CanvasText` em cores forçadas.
+- **`.zone-distribution` (C8, `components/zone-distribution.css`):** distribuição agregada
+  Saudável · Atenção · Alerta, com barra empilhada e legenda com contagem e percentual.
+  - Cada zona tem cor, padrão e forma próprios: sólido/círculo, listras/triângulo,
+    xadrez/losango.
+  - Marcas a ≥ 5,51 no claro e ≥ 7,56 no escuro. Ganchos `--zone-color-*` para as cores do produto.
+  - `.zone-distribution--insufficient` cobre grupos com menos de 5 respostas (ADR-018) e
+    esconde barra e números.
+- **`.composer-chip` (C6, em `composer.css`):** sugestões com alvo de 32 px. O
+  `[data-composer-fill]` preenche o campo e foca, sem nunca enviar. O texto do chip ou o valor
+  do atributo vai para `#data-composer-target`. A API ganhou `ResultXComposer.fill(input, text)`.
+- **`tests/lote-d.test.js`:** contratos e gates de contraste calculados a partir dos tokens, com
+  `tests/lib/color.js` resolvendo `color-mix(in oklab)`.
+
+**Pendente:** `.sidebar-section-label` (`--sidebar-text-label`, branco a 30 %, 10 px) mede
+2,71:1 no claro e 2,62:1 no escuro. Pede uma decisão de token e não foi alterado aqui.
+
 ### Added — lote P: componentes de landing promovidos do protótipo da #80 (05/10/2026)
 
 Seis arquivos novos em `components/` (importados em `components.css`, publicados

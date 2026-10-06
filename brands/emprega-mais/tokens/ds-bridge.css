@@ -43,6 +43,7 @@
 
   --sidebar-active-bg: rgba(79, 70, 229, 0.15);
   --sidebar-text-active: #b9baf9;
+  --sidebar-focus-ring: #b9baf9;   /* --emp-indigo-ink do escuro — minimo 10.04:1 na sidebar */
 
   --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.15);
   --shadow-glow-lg: 0 0 40px rgba(79, 70, 229, 0.2), 0 0 80px rgba(79, 70, 229, 0.08);
@@ -67,6 +68,7 @@
 
   --sidebar-active-bg: #4f46e5;
   --sidebar-text-active: #FFFFFF;
+  --sidebar-focus-ring: #b9baf9;   /* --emp-indigo-ink do escuro — minimo 8.57:1 na sidebar */
 
   --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.15);
   --shadow-glow-lg: 0 0 40px rgba(79, 70, 229, 0.2), 0 0 80px rgba(79, 70, 229, 0.08);
@@ -92,6 +94,7 @@
 
     --sidebar-active-bg: rgba(79, 70, 229, 0.15);
     --sidebar-text-active: #b9baf9;
+    --sidebar-focus-ring: #b9baf9;   /* --emp-indigo-ink do escuro — minimo 10.04:1 na sidebar */
 
     --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.15);
     --shadow-glow-lg: 0 0 40px rgba(79, 70, 229, 0.2), 0 0 80px rgba(79, 70, 229, 0.08);
@@ -117,6 +120,7 @@
 
     --sidebar-active-bg: #4f46e5;
     --sidebar-text-active: #FFFFFF;
+    --sidebar-focus-ring: #b9baf9;   /* --emp-indigo-ink do escuro — minimo 8.57:1 na sidebar */
 
     --shadow-glow: 0 0 20px rgba(79, 70, 229, 0.15);
     --shadow-glow-lg: 0 0 40px rgba(79, 70, 229, 0.2), 0 0 80px rgba(79, 70, 229, 0.08);

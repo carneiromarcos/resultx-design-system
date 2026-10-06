@@ -222,6 +222,7 @@ Dispatches `sidebartoggle` with `detail: { open }`.
 - Page scroll is locked while open, and the previous value is **restored**, not zeroed.
 - The trigger ships `hidden` and the script reveals it. Without JavaScript the panel cannot open, and a button that does nothing is worse than no button.
 - `data-sidebar-media` closes the panel when the query stops matching — a stuck overlay would outlive its reason to exist and leave the scroll lock behind.
+- **While open it is a modal dialog for real (lote D, 05/10/2026, from the Revisor's review of #85).** The panel gets `role="dialog"` + `aria-modal="true"`. Every sibling on the path from the panel up to `<body>` gets `[inert]`, except the scrim, because inert would also block the click that closes. Before this, `<main>` and the header stayed exposed: a page shortcut such as Ctrl+K pulled focus behind the drawer, and screen readers kept reading the page. Everything is undone on close, whether by Escape, the scrim, the API, or the close that `data-sidebar-media` triggers when the window grows into panel/rail mode. Elements that were already inert stay inert, and a `role` the consumer had put on the panel comes back. Closed, the `<aside>` is the same navigation landmark as before, so current consumers see no change until the drawer opens. Covered by `tests/sidebar-overlay-behavior.test.js` (mini-dom) and verified in Chrome at 375 and 1024 px, in both themes: Ctrl+K kept focus inside, 20 Tab + 20 Shift+Tab never escaped, Escape returned focus to the trigger, and resizing to 1440 px closed the drawer, removed inert and released the scroll lock.
 
 > The scrim is **not** `.modal-overlay`: that one lives at `--z-modal` and centers its child, so it is coupled to the modal. This one sits at `--z-overlay` and only dims.
 
@@ -230,6 +231,47 @@ Dispatches `sidebartoggle` with `detail: { open }`.
 **`.sidebar-item` was transitioning `all`** — which includes `visibility`, which the item inherits from the sidebar. The link reported `visibility: hidden` at the exact moment the script called `.focus()`, and focusing an invisible element fails silently, leaving focus trapped on the button. A nav item only ever needed to animate colour and background; it now says so.
 
 **`visibility` must flip instantly on open, and wait on close.** Transitioning it in both directions reproduces the same silent failure. The pattern is `visibility 0s linear var(--transition-slow)` when closed and `visibility 0s` when open.
+
+
+### Panel mode on the desktop — `.sidebar-panel` (lote D, 05/10/2026)
+
+The pairing that was missing: the **240 px panel with labels above 1024 px, and the drawer up to 1024 px, from a single `<aside>`**. This is what Electia and IMO use, since the rail only shows icons. Promoted from the Electia dashboard prototype (#85, C1).
+
+```html
+<button class="btn-icon sidebar-panel-toggle" type="button" data-sidebar-toggle="nav"
+        aria-expanded="false" aria-label="Abrir navegação" hidden>…</button>
+
+<aside class="sidebar sidebar-overlay sidebar-panel" id="nav" aria-label="Navegação"
+       data-sidebar-overlay data-sidebar-media="(max-width: 1024px)">…</aside>
+<div class="main">…</div>
+```
+
+| Class | Role |
+|-------|------|
+| `.sidebar-panel` | With `.sidebar-overlay`: from 1025 px up it stops floating (`visibility: visible`, `transform: none`, `z-index: var(--z-sidebar)`) and takes the space `.main` already reserves |
+| `.sidebar-panel-toggle` | On the trigger: hidden from 1025 px up, where it would have nothing to open |
+
+The same `dist/sidebar-overlay.js` is used, with no new script. Up to 1024 px nothing changes: it is the overlay drawer. Verified in Chrome (`demos/app-shell.html`, DS and Electia, light and dark): at 1440 px the panel is fixed, the trigger is hidden and `.main` keeps its 240 px offset. At 1024, 768, 375 and 320 px the drawer is closed with the trigger visible. There is no horizontal overflow at any of these widths.
+
+### Ink and focus on the dark sidebar (lote D, 05/10/2026)
+
+The sidebar is dark in **both** themes, so nothing inside it may use `--text-primary`, which is dark in the light theme. A test now fails if any `.sidebar*` rule paints text with it.
+
+| Element | Before | Now | Light before → after | Dark before → after |
+|---|---|---|---|---|
+| `.sidebar-user-name` | `--text-primary` | `--sidebar-text-bright` | 1,03 → 17,39 | 16,66 → 19,68 |
+| `.sidebar-user-role` | 10 px, `opacity: .5` | `--text-xs`, `--sidebar-text` | 2,94 → 7,91 | 2,16 → 5,36 |
+| `.sidebar-user-avatar` initials | gradient #6366F1 → #8B5CF6 + `--text-primary` | `--accent-primary` + `--text-inverse` (ink measured per brand) | 4,00–4,22 → 6,70 | 3,58–3,78 → 10,38 |
+| `.sidebar-brand-text` | `--text-primary` | `--sidebar-text-bright` | 1,03 → 17,39 | 16,66 → 19,68 |
+| `.sidebar-logo` | `--text-primary` on the accent | `--text-inverse` | 2,67 → 6,70 | 1,58 → 10,38 |
+| `.sidebar-item:hover` | `--text-primary` | `--sidebar-text-bright` | 1,14 → 15,71 | 15,57 → 18,40 |
+| `.sidebar-item:focus-visible` | `--text-primary` | `--sidebar-text-bright` | 1,14 → 15,71 | 15,57 → 18,40 |
+
+Measured in Chrome for the DS without a bridge. Electia's light theme gives the same values, with initials at 7,59. `.sidebar-item[aria-current="page"]` now paints like `.active`. `tests/lote-d.test.js` checks every item state (rest, hover, active, current, focus-visible) at 4.5:1 or above in the four DS scopes and in each brand bridge.
+
+**Focus ring.** `.sidebar` redefines `--focus-ring-color: var(--sidebar-focus-ring, var(--sidebar-text-bright))`, so every focusable element inside it (item, footer link, button) gets a ring made for the dark background. The DS light ring was 2,60:1 on the navy; it is now 6,84 against the sidebar and 6,18 against the focused item. Values per brand are in [brand-bridge.md](../brand-bridge.md). The white fallback covers the alternative themes in `tokens/themes/`, which do not declare the token.
+
+**Still pending (not changed here):** `.sidebar-section-label` uses `--sidebar-text-label` (white at 30 %) at 10 px, which is 2,71:1 light and 2,62:1 dark. It needs a token decision.
 
 ---
 

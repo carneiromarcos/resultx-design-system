@@ -166,10 +166,63 @@
   padding: var(--space-2) var(--space-3);
 }
 
+/* ── Chips de sugestão (lote D, C6) ─────────────────────────────────────
+   Perguntas prontas acima do composer. O clique PREENCHE o campo e põe o
+   foco nele — nunca envia: a pessoa revisa e decide (o envio é política do
+   produto, como o Enter). O preenchimento vive em dist/composer.js:
+
+   <div class="composer-chips" role="group" aria-label="Sugestões de pergunta">
+     <button class="composer-chip" type="button"
+             data-composer-fill data-composer-target="nexus-input">
+       Resumir as vagas paradas
+     </button>
+   </div>
+
+   data-composer-fill vazio usa o texto do chip; com valor, usa o valor.
+   data-composer-target aponta o id do .composer-input; sem ele, vale o
+   composer do mesmo [data-composer] ou o primeiro da página. */
+.composer-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.composer-chip {
+  min-block-size: var(--space-8);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: var(--text-xs);
+  line-height: 1.35;
+  text-align: start;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.composer-chip:hover {
+  border-color: var(--accent-primary);
+  background: var(--accent-primary-muted);
+}
+
+.composer-chip:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.composer-chip:active {
+  transform: scale(0.97);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .composer,
   .composer-tool,
-  .composer-send { transition: none; }
+  .composer-send,
+  .composer-chip { transition: none; }
+
+  .composer-chip:active { transform: none; }
 
   .composer-send:active { transform: none; }
 }

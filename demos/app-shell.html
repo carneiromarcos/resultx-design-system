@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<!--
+  Demo do lote D (05/10/2026): a casca de app promovida do protótipo do
+  dashboard Electia (#85), no tema padrão do DS (ou numa marca, com ?brand=).
+    .sidebar-overlay.sidebar-panel  painel fixo >= 1025 px, gaveta até 1024 px
+                                    (components.css · dist/sidebar-overlay.js)
+    --sidebar-focus-ring            anel de foco dentro da sidebar escura
+    .test-mark                      components/test-mark.css
+    .zone-distribution              components/zone-distribution.css
+    .dl-status--*                   components/data-cards.css (camada à parte)
+    .composer-chip                  components/composer.css · dist/composer.js
+  Sem dist/icons.min.css de propósito: os <svg class="icon"> ficam no tamanho
+  padrão de 1em que o bundle principal agora garante.
+  ?theme=dark|light abre num tema; ?brand=electia (ou outra marca) carrega a
+  ponte. Ctrl/⌘+K leva ao campo do Nexus — com a gaveta aberta, não leva: o
+  fundo está inerte. Dados fictícios; nenhuma pessoa real.
+-->
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Casca de app — ResultX DS</title>
+  <script>
+    /* Antes do CSS, para não piscar no tema errado. */
+    (function () {
+      var t = new URLSearchParams(location.search).get('theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../dist/tokens.min.css">
+  <script>
+    /* A ponte de marca vem DEPOIS dos tokens do DS (document.write a insere aqui). */
+    (function () {
+      var b = new URLSearchParams(location.search).get('brand');
+      if (b && /^[a-z-]+$/.test(b)) {
+        document.write('<link rel="stylesheet" href="../brands/' + b + '/tokens/ds-bridge.css">');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="../dist/components.min.css">
+  <!-- data-cards é uma camada à parte (export ./components/data-cards): fora do bundle. -->
+  <link rel="stylesheet" href="../components/data-cards.css">
+  <style>
+    /* Só a página da demo. Os componentes vêm todos do DS. */
+    .shell-top { gap: var(--space-3); }
+    .shell-top-start, .shell-top-end { display: flex; align-items: center; gap: var(--space-2); min-inline-size: 0; }
+    .shell-title { overflow: hidden; font: var(--font-semibold) var(--text-lg)/1.2 var(--font-heading); text-overflow: ellipsis; white-space: nowrap; }
+    .shell-top .btn-icon .icon { font-size: 20px; }
+    .shell-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); align-items: start; gap: var(--space-5); padding: var(--space-6); }
+    .shell-card { display: grid; gap: var(--space-4); min-inline-size: 0; padding: var(--space-5); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); background: var(--bg-base); }
+    .shell-card h2 { font: var(--font-semibold) var(--text-lg)/1.3 var(--font-heading); letter-spacing: -0.02em; }
+    .shell-card p, .shell-note { color: var(--text-secondary); font-size: var(--text-sm); }
+    .shell-brand { display: grid; gap: 2px; padding: 0 var(--space-5); margin-block-end: var(--space-5); color: var(--sidebar-text-bright); text-decoration: none; }
+    .shell-brand strong { font: 600 1.35rem/1 var(--font-heading); letter-spacing: -0.04em; }
+    .shell-brand span { color: var(--sidebar-text); font-size: var(--text-xs); }
+    .shell-nav { display: grid; }
+    .shell-tests { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+    .shell-tests li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--space-3); font-size: var(--text-sm); }
+    .shell-tests output { color: var(--text-secondary); font: var(--font-medium) var(--text-xs) var(--font-mono); font-variant-numeric: tabular-nums; }
+    .shell-marks { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; --test-mark-size: 24px; }
+    .shell-statuses { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .shell-statuses-surface { padding: var(--space-3); border-radius: var(--radius-md); background: var(--bg-surface-1); }
+    @media (max-width: 767.98px) {
+      .shell-content { padding: var(--space-4); gap: var(--space-4); }
+      .shell-card { padding: var(--space-4); }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2 .7 3.5 2.6 3.5 5.5"/></symbol>
+    <symbol id="i-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-9-9.5C2 7 4.3 4 7.5 4c2 0 3.5 1.2 4.5 2.6C13 5.2 14.5 4 16.5 4 19.7 4 22 7 21 10.5 19.5 15.4 12 20 12 20z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m4 12 16-8-6 16-2.5-6.5z"/></symbol>
+  </svg>
+
+  <aside class="sidebar sidebar-overlay sidebar-panel" id="app-nav" aria-label="Navegação do app"
+         data-sidebar-overlay data-sidebar-media="(max-width: 1024px)">
+    <a class="shell-brand" href="#conteudo"><strong>electia</strong><span>Clínica Horizonte</span></a>
+    <nav class="shell-nav" aria-label="Módulos">
+      <div class="sidebar-section-label">Principal</div>
+      <a class="sidebar-item" href="#conteudo" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#i-home"/></svg><span class="sidebar-label">Início</span></a>
+      <a class="sidebar-item" href="#colaboradores"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg><span class="sidebar-label">Colaboradores</span></a>
+      <a class="sidebar-item" href="#testes"><svg class="icon" aria-hidden="true"><use href="#i-clipboard"/></svg><span class="sidebar-label">Assessments</span></a>
+      <a class="sidebar-item" href="#bem-estar"><svg class="icon" aria-hidden="true"><use href="#i-heart"/></svg><span class="sidebar-label">Bem-Estar</span></a>
+      <a class="sidebar-item" href="#vagas"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><span class="sidebar-label">Recrutamento &amp; Seleção</span><span class="badge-count">3</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <span class="sidebar-user-avatar" aria-hidden="true">MC</span>
+        <div><div class="sidebar-user-name">Marina Couto</div><div class="sidebar-user-role">RH</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="header shell-top">
+      <div class="shell-top-start">
+        <!-- Nasce hidden: o script o revela. Acima de 1024 px .sidebar-panel-toggle o esconde. -->
+        <button class="btn-icon sidebar-panel-toggle" type="button" data-sidebar-toggle="app-nav"
+                aria-expanded="false" aria-label="Abrir navegação" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+        <h1 class="shell-title">Início</h1>
+      </div>
+      <div class="shell-top-end">
+        <button class="btn-icon" type="button" id="tema" aria-label="Alternar tema">
+          <svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="shell-content" id="conteudo" tabindex="-1">
+      <section class="shell-card" id="testes" aria-labelledby="t-testes">
+        <h2 id="t-testes">Testes por tipo</h2>
+        <p>A forma identifica o teste; a cor fica livre para o resultado (aqui, neutra).</p>
+        <ul class="shell-tests">
+          <li><span class="test-mark test-mark-disc" aria-hidden="true"></span><span>DISC</span><output>13 de 15</output></li>
+          <li><span class="test-mark test-mark-tipologia" aria-hidden="true"></span><span>Tipologia Cognitiva</span><output>6 de 9</output></li>
+          <li><span class="test-mark test-mark-eneagrama" aria-hidden="true"></span><span>Eneagrama</span><output>5 de 8</output></li>
+          <li><span class="test-mark test-mark-bigfive" aria-hidden="true"></span><span>Big Five</span><output>6 de 8</output></li>
+          <li><span class="test-mark test-mark-temperamentos" aria-hidden="true"></span><span>Temperamentos</span><output>3 de 5</output></li>
+          <li><span class="test-mark test-mark-motivadores" aria-hidden="true"></span><span>Motivadores</span><output>4 de 7</output></li>
+        </ul>
+        <p>Sozinhas, com nome (role="img"), a 24 px:</p>
+        <div class="shell-marks">
+          <span class="test-mark test-mark-disc" role="img" aria-label="DISC"></span>
+          <span class="test-mark test-mark-tipologia" role="img" aria-label="Tipologia Cognitiva"></span>
+          <span class="test-mark test-mark-eneagrama" role="img" aria-label="Eneagrama"></span>
+          <span class="test-mark test-mark-bigfive" role="img" aria-label="Big Five"></span>
+          <span class="test-mark test-mark-temperamentos" role="img" aria-label="Temperamentos"></span>
+          <span class="test-mark test-mark-motivadores" role="img" aria-label="Motivadores"></span>
+        </div>
+      </section>
+
+      <section class="shell-card" id="bem-estar" aria-labelledby="t-bem-estar">
+        <h2 id="t-bem-estar">Bem-Estar da empresa</h2>
+        <figure class="zone-distribution">
+          <figcaption>Distribuição por zona · 86 respostas</figcaption>
+          <div class="zone-distribution-bar" aria-hidden="true">
+            <span class="zone-distribution-segment zone-saudavel" style="--zone-share: 58"></span>
+            <span class="zone-distribution-segment zone-atencao" style="--zone-share: 31"></span>
+            <span class="zone-distribution-segment zone-alerta" style="--zone-share: 11"></span>
+          </div>
+          <ul class="zone-distribution-legend">
+            <li class="zone-saudavel"><span class="zone-distribution-mark" aria-hidden="true"></span><span class="zone-distribution-label">Saudável</span><span class="zone-distribution-value">50 · 58%</span></li>
+            <li class="zone-atencao"><span class="zone-distribution-mark" aria-hidden="true"></span><span class="zone-distribution-label">Atenção</span><span class="zone-distribution-value">27 · 31%</span></li>
+            <li class="zone-alerta"><span class="zone-distribution-mark" aria-hidden="true"></span><span class="zone-distribution-label">Alerta</span><span class="zone-distribution-value">9 · 11%</span></li>
+          </ul>
+        </figure>
+
+        <h2>Equipe Recepção</h2>
+        <!-- Grupo insuficiente: o consumidor não renderiza contagem nem percentual. -->
+        <figure class="zone-distribution zone-distribution--insufficient">
+          <figcaption>Distribuição por zona · grupo insuficiente</figcaption>
+          <div class="zone-distribution-bar" aria-hidden="true"></div>
+          <ul class="zone-distribution-legend">
+            <li class="zone-saudavel"><span class="zone-distribution-mark" aria-hidden="true"></span><span class="zone-distribution-label">Saudável</span></li>
+            <li class="zone-atencao"><span class="zone-distribution-mark" aria-hidden="true"></span><span class="zone-distribution-label">Atenção</span></li>
+            <li class="zone-alerta"><span class="zone-distribution-mark" aria-hidden="true"></span><span class="zone-distribution-label">Alerta</span></li>
+          </ul>
+          <p class="zone-distribution-note">São necessárias ao menos 5 respostas para mostrar a distribuição deste grupo, para que ninguém seja identificável.</p>
+        </figure>
+      </section>
+
+      <section class="shell-card" aria-labelledby="t-status">
+        <h2 id="t-status">Status</h2>
+        <div class="shell-statuses">
+          <span class="dl-status dl-status--in-progress">Em andamento</span>
+          <span class="dl-status dl-status--done">Ativa</span>
+          <span class="dl-status dl-status--need-review">Revisar</span>
+          <span class="dl-status dl-status--pending">Pendente</span>
+          <span class="dl-status dl-status--blocked">Bloqueada</span>
+        </div>
+        <div class="shell-statuses shell-statuses-surface">
+          <span class="dl-status dl-status--in-progress">Em andamento</span>
+          <span class="dl-status dl-status--done">Ativa</span>
+          <span class="dl-status dl-status--need-review">Revisar</span>
+          <span class="dl-status dl-status--pending">Pendente</span>
+          <span class="dl-status dl-status--blocked">Bloqueada</span>
+        </div>
+      </section>
+
+      <section class="shell-card" aria-labelledby="t-nexus">
+        <h2 id="t-nexus">Nexus</h2>
+        <p>Os chips preenchem o campo e põem o foco nele. Não enviam.</p>
+        <div class="composer-chips" role="group" aria-label="Sugestões de pergunta">
+          <button class="composer-chip" type="button" data-composer-fill data-composer-target="nexus-input">Resumir as vagas paradas</button>
+          <button class="composer-chip" type="button" data-composer-fill data-composer-target="nexus-input">Quais instrumentos aplicar primeiro num time que ainda não fez nenhum?</button>
+          <button class="composer-chip" type="button" data-composer-fill="Como adaptar minha comunicação ao perfil de cada pessoa?" data-composer-target="nexus-input">Comunicação por perfil</button>
+        </div>
+        <div class="composer" data-composer>
+          <div class="composer-row">
+            <label class="sr-only" for="nexus-input">Pergunte ao Nexus</label>
+            <textarea class="composer-input" id="nexus-input" rows="1" placeholder="Pergunte ou peça algo…"></textarea>
+            <button class="composer-send" type="button" aria-label="Enviar"><svg class="icon" aria-hidden="true"><use href="#i-send"/></svg></button>
+          </div>
+        </div>
+        <p class="shell-note" id="nexus-status" role="status"></p>
+      </section>
+    </main>
+  </div>
+
+  <script src="../dist/sidebar-overlay.js"></script>
+  <script src="../dist/composer.js"></script>
+  <script>
+    (function () {
+      var raiz = document.documentElement;
+      document.getElementById('tema').addEventListener('click', function () {
+        raiz.dataset.theme = raiz.dataset.theme === 'dark' ? 'light' : 'dark';
+      });
+      /* Atalho da página: com a gaveta aberta o fundo é inerte e o foco fica. */
+      document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          document.getElementById('nexus-input').focus();
+        }
+      });
+      /* Envio de mentira: só para provar que o chip não envia. */
+      document.querySelector('.composer-send').addEventListener('click', function () {
+        document.getElementById('nexus-status').textContent = 'Enviado (demo).';
+      });
+    })();
+  </script>
+</body>
+</html>

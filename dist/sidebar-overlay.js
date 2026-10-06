@@ -24,6 +24,14 @@
  *   - Focus moves into the panel on open and returns to the trigger on close
  *   - Tab is trapped inside the panel while it is open — an open overlay that
  *     lets Tab wander into the page behind it is a maze for keyboard users
+ *   - While open it is a modal dialog for real: role="dialog" +
+ *     aria-modal="true" on the panel, and every sibling on the path from the
+ *     panel up to <body> gets [inert] (except the scrim, which must stay
+ *     clickable). A shortcut that calls .focus() on the page behind can no
+ *     longer pull focus out, and screen readers stop reading the background.
+ *     Everything is undone on close — including the close that
+ *     data-sidebar-media triggers when the window grows into panel/rail mode.
+ *     Elements that were already [inert] are left alone.
  *   - Locks page scroll while open
  *   - Optional data-sidebar-media="(max-width: 1024px)" closes the panel when
  *     the query stops matching, so a stuck overlay never survives a resize
@@ -78,6 +86,48 @@
     return el.hasAttribute(OPEN_ATTR);
   }
 
+  /* Fundo inerte enquanto a gaveta esta aberta. Marca os irmaos de cada
+     ancestral, do painel ate o <body>, e guarda quem marcou para desfazer so
+     isso ao fechar. O scrim fica de fora: inert tambem bloqueia o clique, e o
+     clique no scrim fecha a gaveta. */
+  function isolarFundo(el) {
+    var marcados = [];
+    var scrim = el._scrim;
+    for (var no = el; no && no.parentNode && no !== document.body; no = no.parentNode) {
+      var irmaos = no.parentNode.children;
+      for (var i = 0; i < irmaos.length; i++) {
+        var irmao = irmaos[i];
+        if (irmao === no || irmao === scrim) continue;
+        if (irmao.tagName === 'SCRIPT' || irmao.tagName === 'STYLE') continue;
+        if (irmao.hasAttribute('inert')) continue;
+        irmao.setAttribute('inert', '');
+        marcados.push(irmao);
+      }
+    }
+    el._inertes = marcados;
+  }
+
+  function liberarFundo(el) {
+    var marcados = el._inertes || [];
+    for (var i = 0; i < marcados.length; i++) marcados[i].removeAttribute('inert');
+    el._inertes = null;
+  }
+
+  /* Semantica de dialogo so enquanto aberta: fechada, o <aside> volta a ser
+     o landmark de navegacao que era (e o role anterior, se havia, volta). */
+  function tornarModal(el) {
+    el._roleAnterior = el.getAttribute('role');
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-modal', 'true');
+  }
+
+  function desfazerModal(el) {
+    if (el._roleAnterior) el.setAttribute('role', el._roleAnterior);
+    else el.removeAttribute('role');
+    el.removeAttribute('aria-modal');
+    el._roleAnterior = null;
+  }
+
   function emit(el, aberto) {
     el.dispatchEvent(
       new CustomEvent('sidebartoggle', { bubbles: true, detail: { open: aberto } })
@@ -96,6 +146,9 @@
 
     el._overflowAnterior = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+
+    tornarModal(el);
+    isolarFundo(el);
 
     /* Foco sincrono, e nao num quadro futuro: o CSS aplica visibility com
        `0s` ao abrir justamente para que o painel ja esteja visivel aqui.
@@ -118,6 +171,11 @@
     if (gatilho) gatilho.setAttribute('aria-expanded', 'false');
 
     document.body.style.overflow = el._overflowAnterior || '';
+
+    /* Antes de devolver o foco: o gatilho esta no fundo, e um elemento
+       inerte nao recebe foco. */
+    liberarFundo(el);
+    desfazerModal(el);
 
     /* Devolver o foco a quem abriu. Sem isto ele volta ao topo da pagina e o
        usuario de teclado perde o lugar. */
