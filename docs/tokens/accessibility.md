@@ -89,10 +89,12 @@ Use `--text-inverse` when you need text that contrasts against the opposite them
 
 | Pair | Contrast Ratio | WCAG Level |
 |------|---------------|------------|
-| `--text-primary` (#E6EDF3) on `--bg-base` (#0B0E14) | ~15.5:1 | AAA |
-| `--text-secondary` (#8B949E) on `--bg-base` (#0B0E14) | ~7.5:1 | AAA |
-| `--text-muted` (#848D97) on `--bg-base` (#0B0E14) | 5.74:1 | AA |
-| `--text-muted` (#848D97) on `--bg-surface-3` (#1C2333) | 4.66:1 | AA |
+| `--text-primary` (#E6EDF3) on `--bg-base` (#0B0E14) | 16.35:1 | AAA |
+| `--text-secondary` (#8B949E) on `--bg-base` (#0B0E14) | 6.28:1 | AA |
+| `--text-secondary` (#8B949E) on `--bg-surface-3` (#1C2333) | 5.10:1 | AA |
+| `--text-muted` (#8A939D) on `--bg-base` (#0B0E14) | 6.20:1 | AA |
+| `--text-muted` (#8A939D) on `--bg-surface-3` (#1C2333) | 5.04:1 | AA |
+| `--text-muted` (#8A939D) on Electia/Xscore `--surface-3` (#232B3B) | 4.55:1 | AA |
 | `--accent-primary` (#2DD4BF) on `--bg-base` (#0B0E14) | ~11.5:1 | AAA |
 | `--text-on-color` (#FFFFFF) on `--accent-primary` (#2DD4BF) | ~3.2:1 | AA Large |
 
@@ -100,13 +102,17 @@ Use `--text-inverse` when you need text that contrasts against the opposite them
 
 | Pair | Contrast Ratio | WCAG Level |
 |------|---------------|------------|
-| `--text-primary` (#0F1729) on `--bg-base` (#FFFFFF) | ~17.5:1 | AAA |
-| `--text-secondary` (#586069) on `--bg-base` (#FFFFFF) | ~5.9:1 | AA |
-| `--text-muted` (#8B949E) on `--bg-base` (#FFFFFF) | ~3.5:1 | AA Large |
+| `--text-primary` (#0F1729) on `--bg-base` (#FFFFFF) | 17.87:1 | AAA |
+| `--text-secondary` (#4B5563) on `--bg-base` (#FFFFFF) | 7.56:1 | AAA |
+| `--text-secondary` (#4B5563) on `--bg-surface-3` (#E8ECF0) | 6.37:1 | AA |
+| `--text-muted` (#5F6672) on `--bg-base` (#FFFFFF) | 5.78:1 | AA |
+| `--text-muted` (#5F6672) on `--bg-surface-3` (#E8ECF0) | 4.87:1 | AA |
 | `--accent-primary` (#1D4ED8) on `--bg-base` (#FFFFFF) | ~6.0:1 | AA |
 | `--text-on-color` (#FFFFFF) on `--accent-primary` (#1D4ED8) | ~6.0:1 | AA |
 
-> **Note:** The contrast ratios above are approximate. Always verify with a contrast checker when combining tokens on non-standard surfaces (e.g., `--text-secondary` on `--bg-surface-2`).
+Text ratios are exact (unrounded value truncated to two decimals) and enforced by `tests/contrast-tokens.test.js` in the four DS scopes (`dark`/`light`, attribute and `prefers-color-scheme`) and in the light and dark themes of every brand that redeclares `--text-muted` (today Electia and Xscore), against the DS surfaces plus every brand surface in effect in that theme (inherited ones included). The runtime themes (`premium-light`, `sober-dark`, `vibrant-dark`) are **not** covered and still fail for `--text-muted`: 3.15–3.58:1, 2.37–3.45:1 and 2.92–4.37:1. The one exception is a brand `--surface-4` equal to its `--border` (Electia and Xscore: `#2A3444` dark, `#D1D9E0` light): it is a border tone, not a text surface — even `--text-secondary` fails there in the dark (4.08:1). Put `--text-primary` on it, never muted or secondary. (This is option A, pending Marcos's decision; see CHANGELOG.)
+
+> **Note:** The accent ratios above are approximate. Always verify with a contrast checker when combining tokens on non-standard surfaces (e.g., `--text-secondary` on `--bg-surface-2`).
 
 ---
 
@@ -141,6 +147,6 @@ The design system does not include a `prefers-reduced-motion` token, but all ani
 
 - Don't remove focus indicators. If the default ring doesn't fit a component's design, customize it but never hide it.
 - Don't rely solely on color to convey meaning. Pair color with icons, labels, or patterns (e.g., error = red + icon + message text).
-- Don't use `--text-muted` for essential information. It passes AA Large but fails AA Normal on base backgrounds.
+- Don't use `--text-muted` for essential information. In the DS and in Electia/Xscore it passes AA Normal on every text surface (brand `--surface-4` excluded; runtime themes still fail), but it is the lowest step of the hierarchy; essential content goes in `--text-primary` or `--text-secondary`.
 - Don't override `--focus-ring-color` per component unless there is a specific accessibility reason.
 - Don't assume `--text-on-color` works on every colored background. Verify contrast for lighter colors like `--color-warning` and `--theory-jung`.

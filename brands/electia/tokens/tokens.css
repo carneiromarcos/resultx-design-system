@@ -4,7 +4,7 @@
    Atualizacao 2026-06-26 (v2.6 — alinhamento DS↔LP real):
    - Navy #1B2A4A APOSENTADO → grafite #0B0E14 canonical (base unica em tudo: tokens, web, social, Canva, e-mail, image-prompts)
    - Surface scale rebaseada sobre grafite: #161B26 / #1C2333 / #232B3B / #2A3444 (= LP --bg-card / --bg-card-hover / derivados / border)
-   - Text alinhada a LP: --text-primary #E6EDF3, --text-secondary #8B949E, --text-muted #848D97 (era #6E7681; 05/10/2026 — AA ate a surface-2, pendente na 3/4) (gray-200/gray-500 derivados)
+   - Text alinhada a LP: --text-primary #E6EDF3, --text-secondary #8B949E, --text-muted #8A939D (era #848D97, antes #6E7681; 05/10/2026 — AA no fundo e nas surfaces 1-3; surface-4 = borda, sem texto) (gray-200/gray-500 derivados)
    - Border: default #2A3444, hover #3A4554, + novo --border-focus #6f32b1
    - Semanticos VIVOS (LP): --success #22C55E, --warning #F59E0B, --error #EF4444
    - Glass scale rgba rebaseada navy (28,42,74) → grafite (22,27,38 = #161B26)
@@ -75,9 +75,9 @@
   --white: #FFFFFF;
   --text-primary: #E6EDF3;
   --text-secondary: #8B949E;
-  --text-muted: #848D97;   /* AA no fundo e nas surfaces 1-2: 5.74 / 5.12 / 4.66:1 (era #6E7681: 4.2 / 3.75 / 3.42).
-                              REPROVA na surface-3 #232B3B (4.21:1) e na surface-4 #2A3444 (3.73:1):
-                              pendente de decisao (tests/contrast-tokens.test.js, KNOWN_MUTED_GAPS). */
+  --text-muted: #8A939D;   /* AA no fundo e nas surfaces 1-3: 6.20 / 5.53 / 5.04 / 4.55:1 (era #848D97: 5.74 / 5.12 / 4.66 / 4.21).
+                              surface-4 #2A3444 e o tom de --border, nao fundo de texto: nem --text-secondary
+                              passa ali (4.08:1). Texto sobre ela usa --text-primary. */
   --gray-200: #C9D1D9;    /* derivado — texto de corpo claro */
   --gray-500: #545D68;    /* derivado — labels sutis, timestamps */
 
@@ -199,6 +199,11 @@
   --bg: #FFFFFF;
   --surface-1: #F8FAFB;   /* card */
   --surface-2: #F0F3F5;   /* card hover */
+  /* Ate 05/10/2026 o claro nao redeclarava a 3/4 e herdava as escuras do :root
+     (#232B3B / #2A3444): muted claro 2,45 / 2,17:1 e hierarquia invertida.
+     Espelha o Xscore. A 4 e o --border claro: tom de borda, sem texto. */
+  --surface-3: #E9EDF1;   /* linhas alternadas — muted 4,92:1, secondary 6,42:1 */
+  --surface-4: #D1D9E0;   /* = --border */
 
   /* ---- Border (light) ---- */
   --border: #D1D9E0;
@@ -212,7 +217,7 @@
   /* ---- Text (light) ---- */
   --text-primary: #0F1729;
   --text-secondary: #4B5563;
-  --text-muted: #6B7280;
+  --text-muted: #5F6672;   /* 5.19:1 sobre surface-2, 4.87:1 sobre a surface-3 do DS (era #6B7280: 4.34 / 4.07) */
 
   /* ---- Semantic (light) ---- */
   --success: #16A34A;

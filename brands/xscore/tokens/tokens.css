@@ -71,7 +71,8 @@
   --white: #FFFFFF;
   --text-primary: #E6EDF3;
   --text-secondary: #8B949E;
-  --text-muted: #848D97;   /* 4.66:1 sobre surface-2 (era 3.42:1) */
+  --text-muted: #8A939D;   /* 5.04:1 sobre surface-2, 4.55:1 sobre surface-3 (era #848D97: 4.66 / 4.21).
+                              surface-4 = --border, nao fundo de texto (secondary da 4.08:1 ali). */
 
   /* ---- Border ---- */
   --border: #2A3444;
@@ -200,7 +201,8 @@
 
   --text-primary: #0F1729;
   --text-secondary: #4B5563;
-  --text-muted: #5F6672;   /* 5.19:1 sobre surface-2 (era 4.34:1) */
+  --text-muted: #5F6672;   /* 5.19:1 sobre surface-2, 4.92:1 sobre surface-3 (era 4.34:1). Mesmo valor do DS.
+                              surface-4 #D1D9E0 = --border, nao fundo de texto (4.05:1). */
 
   --success: #166534;   /* selo 5.33:1 (era 2.65:1) */
   --warning: #92400E;   /* selo 5.28:1 (era 2.57:1) */

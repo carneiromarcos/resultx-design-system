@@ -20,7 +20,7 @@
 Principais grupos:
 - `color.purple` — `#a55eea` (light) / `#6f32b1` (DEFAULT/accent-primary) / `#5a2890` (dark) / `#3d1a64` (muted) / `#c084fc` (on-dark — texto/ícone/borda roxo sobre fundo escuro, 7.1:1 vs `#0B0E14`, nunca fill de botão)
 - `color.bg` — `#0B0E14` (base, grafite canonical — navy `#1B2A4A` aposentado 26/06) → `#161B26` (surface-1/card) → `#1C2333` (surface-2/card-hover) → `#232B3B` → `#2A3444` (= border)
-- `color.text` — `#E6EDF3` (primary) / `#8B949E` (secondary) / `#848D97` (muted — era `#6E7681`; AA até a surface-2, reprova na 3/4 — pendente de decisão)
+- `color.text` — `#E6EDF3` (primary) / `#8B949E` (secondary) / `#8A939D` (muted — era `#848D97`, antes `#6E7681`; AA no fundo e nas surfaces 1–3; surface-4 = borda, sem texto muted — pendente de decisão; claro `#5F6672`, surfaces claras 3/4 `#E9EDF1`/`#D1D9E0`)
 - `color.border` — `#2A3444` (default) / `#6f32b1` (focus ring purple)
 - `color.semantic` — success `#22C55E` / warning `#F59E0B` / danger `#EF4444`
 - `color.theory` — 6 cores (DISC azul, Tipologia Cognitiva roxo, Eneagrama âmbar, Big Five verde, Le Senne rosa, Motivadores ciano)
