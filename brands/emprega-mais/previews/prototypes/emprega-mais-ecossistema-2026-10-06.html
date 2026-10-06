@@ -27,7 +27,7 @@
   <title>Ecossistema Emprega+</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@600&family=Sora:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@600&family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../../../dist/tokens.min.css">
   <link rel="stylesheet" href="../../tokens/tokens.css">
   <link rel="stylesheet" href="../../tokens/ds-bridge.css">
@@ -47,11 +47,15 @@
       --eco-prestige: var(--emp-gold-ink);
 
       /* Acento por produto. Emprega+ e EditalHub herdam o índigo da marca-mãe
-         (o DS não tem marca EditalHub); electia usa o roxo de IA do DS. */
-      --eco-electia-ink: var(--ai-electia-glow);   /* 7,3:1 no escuro */
+         (o DS não tem marca EditalHub).
+         electia: aliases locais dos valores da marca. brands/electia/tokens/
+         tokens.css não é carregado aqui porque redefine papéis genéricos
+         (--bg, --border, --text-*) e brigaria com a marca Emprega+. */
+      --eco-accent-electia: #6f32b1;           /* = electia --purple (fill) */
+      --eco-accent-electia-ink: #c084fc;       /* = electia --purple-on-dark; 7,1:1 no escuro, nunca fill */
     }
     [data-theme="light"] {
-      --eco-electia-ink: var(--ai-electia-core);   /* 7,6:1 no claro */
+      --eco-accent-electia-ink: #6f32b1;       /* = electia --purple; 7,6:1 sobre branco */
     }
 
     /* ── Base ────────────────────────────────────────────────────────────── */
@@ -116,7 +120,7 @@
     }
     .product::before { content: ''; position: absolute; inset: 0 0 auto; block-size: 3px; background: linear-gradient(90deg, var(--product-fill), var(--product-ink)); }
     .product:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--product-ink) 55%, var(--border-default)); box-shadow: var(--elevation-3); }
-    .product-electia { --product-ink: var(--eco-electia-ink); --product-fill: var(--ai-electia-core); }
+    .product-electia { --product-ink: var(--eco-accent-electia-ink); --product-fill: var(--eco-accent-electia); }
     .product .eyebrow { color: var(--product-ink); }
     .product-logo { display: flex; align-items: center; gap: var(--space-3); min-block-size: 48px; margin-block: var(--space-5) var(--space-6); color: var(--text-primary); }
     .product-logo .emp-mark { inline-size: 44px; block-size: 44px; border-radius: var(--radius-lg); }
@@ -124,9 +128,12 @@
     .product-logo .emp-word { font-size: 2rem; }
     .wordmark-editalhub { font: var(--font-semibold) 2rem/1 var(--font-heading); letter-spacing: -0.035em; }
     .wordmark-editalhub span { color: var(--product-ink); }
-    .wordmark-electia { display: inline-flex; align-items: baseline; gap: var(--space-2); }
-    .wordmark-electia b { font: 600 2.25rem/1 var(--font-mono); letter-spacing: -0.04em; }
-    .wordmark-electia small { color: var(--text-secondary); font: var(--font-semibold) var(--text-xs)/1 var(--font-heading); white-space: nowrap; }
+    /* Spec do brand book electia §3: "electia" Mono 600; "by" Sora 400 ~30 %;
+       "emprega+" Sora 800 ~50 % do tamanho do wordmark. */
+    .wordmark-electia { display: inline-flex; align-items: baseline; gap: 0.18em; font-size: 2.25rem; line-height: 1; white-space: nowrap; }
+    .wordmark-electia b { font: 600 1em/1 var(--font-mono); letter-spacing: -0.04em; }
+    .wordmark-electia .by { color: var(--text-secondary); font: 400 0.3em/1 var(--font-heading); }
+    .wordmark-electia .emp { color: var(--text-primary); font: 800 0.5em/1 var(--font-heading); letter-spacing: -0.01em; }
     .product h3 { font-size: var(--text-xl); font-weight: var(--font-semibold); line-height: var(--leading-snug); letter-spacing: -0.02em; text-wrap: balance; }
     .product-desc { margin-block: var(--space-3) var(--space-6); color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-relaxed); }
     .product-audience { display: flex; align-items: flex-start; gap: var(--space-3); margin-block: auto var(--space-6); padding-block-start: var(--space-5); border-top: 1px solid var(--border-subtle); color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-normal); }
@@ -180,7 +187,7 @@
       .hero-aside { padding-inline-start: var(--space-4); }
       .product { padding-inline: var(--space-5); }
       .product-logo .emp-word, .wordmark-editalhub { font-size: 1.75rem; }
-      .wordmark-electia b { font-size: 2rem; }
+      .wordmark-electia { font-size: 2rem; }
       .benefit-list { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
       .benefit-list li { padding: var(--space-4) 0; }
       .benefit-list li + li { border-inline-start: 0; border-top: 1px solid var(--border-subtle); }
@@ -284,7 +291,7 @@
               <h3 id="p1-title">Crie seu próprio portal de empregos com a sua marca.</h3>
               <p class="product-desc">Conecte empresas e profissionais da sua região ou comunidade e fortaleça a empregabilidade local.</p>
               <p class="product-audience"><svg class="icon icon-md" aria-hidden="true"><use href="#i-users"/></svg>Para associações, sindicatos, prefeituras, entidades e comunidades.</p>
-              <a class="product-cta" href="#emprega-mais">Conhecer o Emprega+ <svg class="icon icon-md" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+              <a class="product-cta" href="https://empregamais.me" rel="noopener">Conhecer o Emprega+ <svg class="icon icon-md" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
             </article>
           </li>
           <li>
@@ -294,17 +301,18 @@
               <h3 id="p2-title">Simplifique a gestão de editais e processos seletivos.</h3>
               <p class="product-desc">Plataforma completa com IA para criação, revisão, publicação e gestão de editais, inscrições, documentos, recursos, títulos e todas as etapas do processo seletivo.</p>
               <p class="product-audience"><svg class="icon icon-md" aria-hidden="true"><use href="#i-landmark"/></svg>Para instituições, organizadoras, prefeituras e empresas.</p>
+              <!-- TODO destino real: o DS não documenta domínio do EditalHub -->
               <a class="product-cta" href="#editalhub">Conhecer o EditalHub <svg class="icon icon-md" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
             </article>
           </li>
           <li>
             <article class="product product-electia" id="electia" aria-labelledby="p3-title">
               <p class="eyebrow">Gestão de pessoas e desenvolvimento</p>
-              <div class="product-logo"><span class="wordmark-electia" role="img" aria-label="electia by emprega+"><b>electia</b><small>by emprega+</small></span></div>
+              <div class="product-logo"><span class="wordmark-electia" role="img" aria-label="electia by emprega+"><b>electia</b><span class="by">by</span><span class="emp">emprega+</span></span></div>
               <h3 id="p3-title">Inteligência para contratar, desenvolver e gerir pessoas.</h3>
               <p class="product-desc">Recrutamento inteligente, testes comportamentais, acompanhamento de desempenho, metas, transcrição de reuniões e muito mais em um único ambiente.</p>
               <p class="product-audience"><svg class="icon icon-md" aria-hidden="true"><use href="#i-building"/></svg>Para RHs, gestores e empresas.</p>
-              <a class="product-cta" href="#electia">Conhecer o electia <svg class="icon icon-md" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+              <a class="product-cta" href="https://electia.empregamais.me" rel="noopener">Conhecer o electia <svg class="icon icon-md" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
             </article>
           </li>
         </ul>
@@ -328,7 +336,8 @@
           <h2 class="cta-panel-title" id="cta-title">Por onde você quer <span class="cta-panel-title-tone">começar?</span></h2>
           <p class="cta-panel-lead">Fale com nossa equipe e descubra como nossas soluções podem gerar mais oportunidades na sua região.</p>
           <div class="cta-panel-actions">
-            <a class="btn btn-primary btn-sheen" href="#"><svg class="icon icon-md" aria-hidden="true"><use href="#i-message"/></svg>Falar pelo WhatsApp</a>
+            <!-- TODO destino real: número/link do WhatsApp não definido; não inventar -->
+            <a class="btn btn-primary btn-sheen" href="#whatsapp"><svg class="icon icon-md" aria-hidden="true"><use href="#i-message"/></svg>Falar pelo WhatsApp</a>
           </div>
         </div>
       </div>
