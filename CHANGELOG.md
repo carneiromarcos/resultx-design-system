@@ -5,6 +5,15 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Added — protótipo da página do ecossistema Emprega+ (06/10/2026)
+
+`brands/emprega-mais/previews/prototypes/emprega-mais-ecossistema-2026-10-06.html` adapta
+ao DS um mockup externo (roxo neon e esfera de partículas). Mantém a copy e usa a marca
+Emprega+: navy e índigo de ação pela ponte, conforme o ADR-0002, e ouro só no "+".
+Consome `.header-float`, `.menu-drawer`, `.brand-orb-emprega` (o "IA" do hero, em
+repouso), `.cta-panel`, `.btn-sheen` e os ícones Lucide. Funciona nos temas claro e
+escuro. Não altera componente nem token.
+
 ## [2.7.0] - 2026-10-06
 
 ### Fixed — foco inicial da gaveta com `prefers-reduced-motion` (06/10/2026)
