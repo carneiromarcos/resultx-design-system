@@ -49,7 +49,7 @@ O corte segue o DS: a gaveta vale até 1024 px, inclusive, porque o DS usa `max-
 | # | Candidato | Prioridade | Por quê |
 |---|---|---|---|
 | C1 | `.sidebar-overlay` com modo **painel** no desktop (hoje só existe rail + overlay) | **Alta** | Todo app com sidebar de rótulos (Electia, IMO) precisa disso. São 4 linhas de CSS |
-| C2 | Token `--sidebar-focus-ring` (e revisão de `.sidebar-user-name` / `-role` / `-avatar`) | **Alta** | Defeitos do DS, detalhados abaixo. Hoje a sidebar escura usa o anel do tema claro (roxo #6f32b1 sobre navy) |
+| C2 | Token `--sidebar-focus-ring` (e revisão de `.sidebar-item:hover`, `.sidebar-user-name` / `-role` / `-avatar`); override temporário até o lote D | **Alta** | Defeitos do DS, detalhados abaixo. Hoje a sidebar escura usa o anel do tema claro (roxo #6f32b1 sobre navy) |
 | C7 | `.test-mark` (forma por teste: DISC círculo em 4, Tipologia quadrado, Eneagrama eneágono, Big Five pentágono, Temperamentos triângulo, Motivadores hexágono) | **Alta** | Regra de produto do Electia. As `.badge-disc` e `.badge-bigfive` do DS pintam o teste pela cor, o contrário da regra |
 | C8 | `.zone-distribution` (Saudável · Atenção · Alerta) | **Alta** | Linguagem de Saúde Mental pedida em 30/09. O app tem `wellbeing-zones` (PR #640); o DS ainda não |
 | C6 | `.composer-chip` (chips de sugestão) | Média | Já estava previsto na ficha Talio §4 (`.composer--assistant`) |
@@ -57,6 +57,8 @@ O corte segue o DS: a gaveta vale até 1024 px, inclusive, porque o DS usa `max-
 | C4 | `.list-item-chips` | Média | Linha de vaga com etapas (Talio §5). É um gancho pequeno no `.list-item` |
 | C5 | `.attention-mark` / `.attention-list` | Baixa | Prevista na ficha Talio §5 |
 | C9 | `.toast-region` (posição fixa, `role="status"`) | Baixa | O `.toast` do DS não se posiciona sozinho |
+| C10 | Estado **desmarcado** do `.stage-chip` filtro (`aria-pressed="false"`) | **Alta** | O DS só desenha o marcado. Opacidade reprova contraste (2,46–3,97:1, achado do Revisor na #85). Proposta: contorno tracejado em `currentcolor`, fundo da página, tinta `--text-secondary`, marcador vazado e nome riscado |
+| C11 | `dist/sidebar-overlay.js` modal de verdade | **Alta** | Hoje o script prende o Tab, mas não dá `role="dialog"`/`aria-modal` nem isola o fundo. O protótipo faz isso no evento `sidebartoggle`. No DS o `inert` precisa sair **antes** de o script devolver o foco ao gatilho; por isso, aqui, o gatilho fica fora do inert. O atalho do agente (⌘K) fecha a gaveta antes de focar |
 
 ## Medições
 
@@ -66,7 +68,7 @@ As medições foram feitas com Playwright no Chrome do sistema (`channel: 'chrom
 
 **Alvos de toque:** nenhum interativo visível fica abaixo de 24 px em nenhuma largura. Os links de texto "Ver todas" e o breadcrumb ganharam `min-block-size: 24px`.
 
-**Contraste de texto:** o mínimo é 4,62:1 no claro (placeholder e breadcrumb) e 5,36:1 no escuro (itens da sidebar). Em pontos de interesse:
+**Contraste de texto:** o mínimo é 4,62:1 no claro (placeholder e breadcrumb) e 5,36:1 no escuro (itens da sidebar), já contando os estados de hover, foco, atual, pressionado, filtros marcados e desmarcados e a mensagem enviada ao Nexus. Em pontos de interesse:
 
 | Par | Claro | Escuro |
 |---|---|---|
@@ -78,6 +80,12 @@ As medições foram feitas com Playwright no Chrome do sistema (`channel: 'chrom
 | Status "Ativa" (com a correção local) | 5,76 | 8,68 |
 | Item da sidebar / ativo | 7,91 / 7,59 | 5,36 / 6,93 |
 | Iniciais do avatar (correção local) | 7,59 | 7,59 |
+| Mensagem enviada ao Nexus (`.message-text` na bolha roxa; era 2,36 no claro) | 7,59 | 7,59 |
+| Resposta do Nexus | 16,04 | 14,58 |
+| Sidebar: repouso / hover / foco / pressionado | 7,91 / 15,71 / 15,71 / 15,71 | 5,36 / 18,40 / 18,40 / 18,40 |
+| Sidebar: atual / atual + hover | 7,59 / 7,59 | 6,93 / 6,93 |
+| Filtro de etapa marcado (mínimo das 5) | 5,13 | 6,29 |
+| Filtro de etapa desmarcado (as 5; era 2,46–3,97) | 7,56 | 6,28 |
 
 **Não texto:**
 
@@ -87,8 +95,9 @@ As medições foram feitas com Playwright no Chrome do sistema (`channel: 'chrom
 | Anel de foco no conteúdo | 7,59 | 7,31 |
 | Marcador de atenção | 5,51 | 10,95 |
 | Marca de teste | 7,56 | 6,28 |
+| Contorno do filtro desmarcado | 7,22 | 5,89 |
 
-**Comportamento:** 26 de 26 verificações passaram.
+**Comportamento:** 26 de 26 verificações na matriz geral e mais 31 de 31 nas provas da revisão da #85. As provas da revisão rodaram 4 vezes seguidas, sem falha.
 
 - Gaveta em 375 px:
   - o foco entra ao abrir, com `aria-expanded="true"`;
@@ -108,13 +117,27 @@ As medições foram feitas com Playwright no Chrome do sistema (`channel: 'chrom
   - "Avançar para…" move o card, foca o card movido, atualiza as contagens (kanban e Início) e avisa no toast;
   - o filtro de etapa oculta a coluna e marca `aria-pressed`.
 - Com `prefers-reduced-motion: reduce`, nenhuma orb anima.
+- **Gaveta modal (revisão da #85):**
+  - aberta, o `<aside>` tem `role="dialog"` + `aria-modal="true"`;
+  - o skip link, `#conteudo`, a pílula do Nexus e as ações do topo ficam `inert`;
+  - na árvore de acessibilidade do Chrome (CDP `Accessibility.getFullAXTree`) aparece o diálogo "Navegação do electia" e nada do fundo;
+  - Ctrl+K e ⌘K com a gaveta aberta fecham a gaveta, limpam inert e role e focam `#nexus-input`, visível abaixo do header; o Tab seguinte fica no conteúdo;
+  - Escape limpa tudo e devolve o foco ao gatilho;
+  - redimensionar de 900 para 1200 px com a gaveta aberta fecha, limpa inert e role, destrava a rolagem e mantém o foco num item visível do painel;
+  - no desktop, o painel não tem `role`.
+- **Foco após trocar de tela:** `#vaga/analista-dp`, `#inicio`, `#vagas`, `#vaga/recepcionista` e `#nexus`, partindo do fim da página, em 667×375, 320×568, 375×812 e 1440×900:
+  - o hit-test no centro do elemento focado acerta o próprio elemento, nunca o header;
+  - o topo fica entre 100 e 144 px, com o header terminando em 56 px.
+  - Como garante: `scroll-padding`/`scroll-margin` = `--header-height` + `--space-4`. A rolagem da troca de tela é `instant`, porque o DS liga `scroll-behavior: smooth` e o destino ficava fora de vista durante a animação.
 
 **Capturas:**
 
 - `inicio-1440-{claro,escuro}.png` e `inicio-375-{claro,escuro}.png`
 - `vaga-kanban-1440-{claro,escuro}.png` e `vaga-kanban-375-{claro,escuro}.png`
 - `gaveta-375-aberta-{claro,escuro}.png`
-- `nexus-respondendo-1440-claro.png`
+- `nexus-respondendo-1440-claro.png` e `nexus-mensagem-1440-{claro,escuro}.png` (mensagem enviada e resposta)
+- `filtro-etapas-misto-1440-{claro,escuro}.png` (Triagem e Contratado desmarcados)
+- `vaga-foco-667x375-claro.png` (título focado abaixo do header)
 
 Nas capturas de página inteira, a sidebar (`position: fixed`) aparece com a altura da viewport. É um artefato da captura, não do layout.
 
@@ -128,6 +151,9 @@ Nas capturas de página inteira, a sidebar (`position: fixed`) aparece com a alt
 4. `.dl-status--done` pinta o texto com `--color-success` puro: **2,77:1** no claro. A correção local usa a fórmula de tinta do `.stage-chip`.
 5. `components/data-cards.css` **não entra** em `dist/components.min.css`, então os consumidores precisam importá-lo à parte (a landing-kit também faz isso). `.icon` também está fora do bundle de componentes (`dist/icons.min.css`); sem ele, cada SVG sai com 300 px e gera 246 px de overflow.
 6. `.kanban-card` tem `cursor: grab`, mas não há arraste no DS. Usei movimento por botão.
+7. `.message-text` fixa `color: var(--text-primary)` e vence a tinta posta na `.message-bubble`. Sobre um fundo de accent, como a mensagem enviada, o texto dá 2,36:1 no claro. No protótipo, a tinta vai no próprio `.message-text`.
+8. `.sidebar-item:hover` usa `--text-primary`: 1,14:1 sobre o navy no claro. No protótipo usei `--sidebar-text-bright`. O override é temporário: o lote D corrige no DS.
+9. `.sidebar-overlay` não isola o fundo nem anuncia um diálogo (ver C11).
 
 ## Suposições
 
@@ -150,7 +176,7 @@ Nas capturas de página inteira, a sidebar (`position: fixed`) aparece com a alt
 
 ## Pendências
 
-- Levar C1, C2, C7 e C8 para `components/` em PR própria, com testes. Corrigir os defeitos 1 a 4 no DS.
+- Levar C1, C2, C7, C8, C10 e C11 para `components/`/`dist/` em PR própria, com testes. Corrigir os defeitos 1 a 4 e 7 no DS. O 8 está com o lote D, e o override deste protótipo sai quando ele entrar.
 - Migrar `.pipeline-stage-*` / `.kanban-column-dot` para `.stage-chip` no DS. Este protótipo já usa o chip no cabeçalho e não usa o ponto. É pendência do lote P.
 - O Marcos decide o vocabulário das etapas: DS (5) ou app (9 status). Também decide se o kanban entra no produto.
 - Revisar contra a paleta de resultado do app (`viz-tokens.css`) quando ela vier ao DS. Quando C7 existir, colorir a marca DISC pelo resultado.

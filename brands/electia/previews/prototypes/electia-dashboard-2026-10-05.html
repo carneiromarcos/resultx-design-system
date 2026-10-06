@@ -36,7 +36,10 @@
   <link rel="stylesheet" href="../../../../dist/icons.min.css">
   <link rel="stylesheet" href="../../../../components/data-cards.css">
   <style>
-    :root { --dash-gap: var(--space-5); --dash-page: 1280px; }
+    :root { --dash-gap: var(--space-5); --dash-page: 1280px; --dash-scroll-offset: calc(var(--header-height) + var(--space-4)); }
+    /* O header é sticky: todo destino de foco/âncora para abaixo dele. */
+    html { scroll-padding-block-start: var(--dash-scroll-offset); }
+    .screen h1, .panel, .composer-input { scroll-margin-block-start: var(--dash-scroll-offset); }
 
     /* ── DS, só o que é desta página ─────────────────────────────────────── */
 
@@ -54,6 +57,11 @@
     /* Papel do usuário: o DS usa 10 px com opacity .5 (abaixo de AA). */
     .app-nav .sidebar-user-role { opacity: 1; color: var(--sidebar-text); font-size: var(--text-xs); }
     .app-nav .sidebar-item { min-block-size: 40px; }
+    /* CANDIDATO 2 (temporário, o lote D corrige no DS): o :hover do DS usa
+       --text-primary, que no claro dá 1,14:1 sobre o navy. */
+    .app-nav .sidebar-item:hover,
+    .app-nav .sidebar-item:focus-visible { color: var(--sidebar-text-bright); }
+    .app-nav .sidebar-item.active:hover { color: var(--sidebar-text-active); }
     /* .sidebar-user-name usa --text-primary: no tema claro sai escuro sobre o navy. */
     .app-nav .sidebar-user-name { color: var(--sidebar-text-bright); }
     /* Iniciais: o gradiente do DS (#6366f1 → #8b5cf6) dá 4,23–4,47:1 com branco
@@ -133,7 +141,9 @@
     .nexus .message-stream { max-block-size: 320px; margin-inline: calc(var(--space-4) * -1); overflow-y: auto; }
     .nexus .message-stream:empty { display: none; }
     .nexus .message-bubble { max-inline-size: 92%; }
-    .nexus .message-out .message-bubble { background: var(--accent-primary); border-color: transparent; color: var(--text-on-accent); }
+    .nexus .message-out .message-bubble { background: var(--accent-primary); border-color: transparent; }
+    /* A tinta vai no .message-text: o DS o pinta com --text-primary e venceria a da bolha. */
+    .nexus .message-out .message-text { color: var(--text-inverse); }
     .nexus .brand-orb-lockup { font-size: var(--text-xs); }
     /* CANDIDATO 6 — chips de sugestão do composer (.composer-chip) */
     .nexus-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-block: var(--space-3); }
@@ -186,7 +196,14 @@
     .stage-filter { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-block-end: var(--space-4); }
     .stage-filter > span { color: var(--text-secondary); font-size: var(--text-sm); }
     .stage-filter .stage-chip { min-block-size: 32px; padding-inline: var(--space-3); }
-    .stage-filter .stage-chip[aria-pressed="false"] { opacity: 0.62; text-decoration: line-through; }
+    /* CANDIDATO 10 — estado "desmarcado" do .stage-chip filtro. Sem opacidade:
+       contorno tracejado neutro, fundo da página, tinta secundária, marcador
+       vazado e o nome riscado. Marcado = chip do DS + borda na tinta. */
+    .stage-filter .stage-chip[aria-pressed="false"] {
+      border: 1px dashed currentcolor; background: var(--bg-base);
+      color: var(--text-secondary); text-decoration: line-through;
+    }
+    .stage-filter .stage-chip[aria-pressed="false"]::before { background: transparent; clip-path: none; border: 2px solid currentcolor; border-radius: 2px; }
     .pipeline:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
     .cand-head { display: flex; align-items: center; gap: var(--space-2); margin-block-end: var(--space-2); }
     .cand-head .kanban-card-title { margin: 0; }
@@ -558,8 +575,22 @@
     }
     window.addEventListener('hashchange', () => {
       const alvo = $(rota());
+      /* Troca de tela: rolagem instantânea (o DS liga scroll-behavior: smooth),
+         para o destino do foco já estar visível, abaixo do header sticky. */
       alvo.focus({ preventScroll: true });
-      alvo.scrollIntoView({ block: alvo.id === 'nexus-input' ? 'center' : 'start' });
+      alvo.scrollIntoView({ block: alvo.id === 'nexus-input' ? 'center' : 'start', behavior: 'instant' });
+    });
+
+    /* CANDIDATO 11 — gaveta modal de verdade. dist/sidebar-overlay.js prende o
+       Tab, mas não isola o fundo nem dá papel de diálogo. Enquanto aberta: o
+       <aside> vira role="dialog" + aria-modal e o fundo fica inert. O gatilho
+       fica fora do inert porque o script devolve o foco a ele ANTES de emitir
+       o evento de fechamento (inert ali faria o foco falhar em silêncio). */
+    const FUNDO = ['.skip-link', '#conteudo', '.app-top-title', '.agent-pill', '.app-top-end'];
+    nav.addEventListener('sidebartoggle', (ev) => {
+      const aberto = ev.detail.open;
+      FUNDO.forEach((s) => { $(s).inert = aberto; });
+      if (aberto) { nav.setAttribute('role', 'dialog'); nav.setAttribute('aria-modal', 'true'); } else { nav.removeAttribute('role'); nav.removeAttribute('aria-modal'); }
     });
 
     /* Itens fora do protótipo avisam e ficam onde estão. */
@@ -630,7 +661,9 @@
       if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); form.requestSubmit(); }
     });
     function abrirNexus() {
-      if (location.hash === '#nexus') { input.focus(); input.scrollIntoView({ block: 'center' }); } else location.hash = 'nexus';
+      /* Com a gaveta aberta, fecha antes: o Nexus está atrás dela. */
+      if (nav.hasAttribute('data-open')) window.ResultXSidebarOverlay.close(nav);
+      if (location.hash === '#nexus') { input.focus({ preventScroll: true }); input.scrollIntoView({ block: 'center', behavior: 'instant' }); } else location.hash = 'nexus';
     }
     $('[data-nexus-open]').addEventListener('click', abrirNexus);
     document.addEventListener('keydown', (ev) => {
