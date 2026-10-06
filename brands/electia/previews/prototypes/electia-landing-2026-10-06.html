@@ -1,0 +1,1024 @@
+<!doctype html>
+<!--
+  Protótipo de landing do Electia — 06/10/2026, com a copy aprovada pelo Marcos
+  (26 seções, texto íntegro). Base visual: electia-landing-talio-2026-10-05.html
+  (#80), que fica como está.
+
+  Componentes do DS consumidos (nada disso é redefinido aqui):
+    .header-float   components/header-float.css + dist/header-float.js
+    .menu-drawer    components/menu-drawer.css  + dist/menu-drawer.js
+    .btn .btn-sheen components/btn-sheen.css
+    .brand-orb      components/brand-orb.css: só onde quem fala é a Nexus
+                    (hero, Nexus Recruit, seção Nexus, "Pergunte à Nexus")
+    .test-mark      components/test-mark.css: a forma identifica o teste
+    .tag            selos de lista (ATS, identificação nas reuniões)
+    .cta-panel      components/cta-panel.css (data-theme="dark" no elemento)
+    .cta-dock       components/cta-dock.css     + dist/cta-dock.js
+
+  Faixa escura: o bloco da Nexus (17–19) leva data-theme="dark", como o
+  .cta-panel, e os tokens resolvem no escopo escuro só ali dentro.
+
+  O CSS abaixo é só da página. Peças locais que podem virar componente estão
+  marcadas "CANDIDATO".
+-->
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Protótipo de landing do Electia com a copy de 06/10/2026: People Intelligence, Nexus, recrutamento, performance, reuniões, saúde mental e governança.">
+  <title>Electia — Você conhece as pessoas que trabalham na sua empresa?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../../dist/tokens.min.css">
+  <link rel="stylesheet" href="../../tokens/ds-bridge.css">
+  <link rel="stylesheet" href="../../../../dist/components.min.css">
+  <style>
+    /* ── Escala da página ─────────────────────────────────────────────── */
+    :root {
+      --landing-page: 1180px;
+      --landing-gutter: var(--space-4);
+      --landing-h1: clamp(2.4rem, 1.1rem + 4.6vw, 4.4rem);
+      --landing-h2: clamp(1.9rem, 1.25rem + 2.4vw, 3rem);
+      --landing-h2-xl: clamp(2.2rem, 1.2rem + 3.6vw, 4rem);
+      --landing-section: clamp(4rem, 2.6rem + 4.6vw, 7rem);
+      --landing-measure: 62ch;
+      --cta-panel-title-size: var(--landing-h2);
+    }
+    html { scroll-padding-block-start: calc(var(--space-24) + var(--space-4)); }
+
+    /* ── Componentes do DS: só o que é desta marca ────────────────────── */
+    .header-float-brand strong { font: 600 1.3rem/1 var(--font-mono); letter-spacing: -0.06em; }
+    .menu-drawer-label { letter-spacing: 0.12em; }
+    @media (min-width: 1024px) and (max-width: 1239.98px) {
+      .header-float-actions .btn-secondary { display: none; } /* a 1024 px os 5 links + 2 botões não cabem */
+    }
+
+    /* ════════════════════════════════════════════════════════════════════
+       PÁGINA
+       ════════════════════════════════════════════════════════════════════ */
+    body { position: relative; display: flow-root; background: var(--bg-surface-1); color: var(--text-primary); }
+    .wrap { inline-size: min(var(--landing-page), calc(100% - 2 * var(--landing-gutter))); margin-inline: auto; }
+    .skip-link { position: absolute; top: var(--space-2); left: var(--space-2); z-index: 60; padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); background: var(--bg-base); color: var(--text-primary); transform: translateY(-200%); }
+    .skip-link:focus { transform: none; }
+    h1, h2, h3 { font-family: var(--font-heading); color: var(--text-primary); text-wrap: balance; }
+    p, li { text-wrap: pretty; }
+    a:focus-visible, button:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
+    .eyebrow { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--accent-primary-text); font: var(--font-semibold) var(--text-xs) var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+    .eyebrow::before { content: ''; inline-size: 20px; block-size: 1px; background: currentColor; }
+    .section { padding-block: var(--landing-section); }
+    .section + .section { border-top: 1px solid var(--border-subtle); }
+    .section-head { max-inline-size: 760px; margin-block-end: var(--space-10); }
+    .section-head-wide { max-inline-size: 960px; }
+    .section-head h2, .h2 { margin-block: var(--space-3) var(--space-5); font-size: var(--landing-h2); line-height: 1.1; letter-spacing: -0.045em; }
+    .section-head .h2-xl, .h2-xl { font-size: var(--landing-h2-xl); line-height: 1.04; letter-spacing: -0.055em; }
+    .prose { display: grid; gap: var(--space-4); max-inline-size: var(--landing-measure); color: var(--text-secondary); font-size: var(--text-lg); line-height: var(--leading-relaxed); }
+    .prose strong { color: var(--text-primary); }
+    .lede { color: var(--text-secondary); font-size: var(--text-lg); line-height: var(--leading-relaxed); }
+    .lede strong { color: var(--text-primary); }
+    .sub { color: var(--text-secondary); }
+    .center { margin-inline: auto; text-align: center; }
+    .center .eyebrow { justify-content: center; }
+
+    /* Fecho de seção: a frase que resume. CANDIDATO components/pull-statement */
+    .pull { display: grid; gap: var(--space-2); max-inline-size: 760px; margin-block-start: var(--space-12); padding-inline-start: var(--space-5); border-inline-start: 3px solid var(--accent-primary); }
+    .pull p { color: var(--text-secondary); font-size: var(--text-lg); }
+    .pull > strong, .pull-strong { display: block; color: var(--text-primary); font: var(--font-semibold) clamp(1.3rem, 1rem + 1.1vw, 1.75rem)/1.25 var(--font-heading); letter-spacing: -0.03em; }
+    .pull p strong { color: var(--text-primary); }
+    .statement { margin-block-start: var(--space-12); font: 700 var(--landing-h2-xl)/1.04 var(--font-heading); letter-spacing: -0.055em; color: var(--text-primary); text-wrap: balance; }
+    .statement-md { margin-block-start: var(--space-8); font-size: var(--landing-h2); }
+    .statement-lead { margin-block-start: var(--space-12); color: var(--text-secondary); font-size: var(--text-lg); }
+    .statement-lead + .statement { margin-block-start: var(--space-3); }
+
+    /* Listas com marcador da marca */
+    .ticks { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+    .ticks li { position: relative; padding-inline-start: var(--space-6); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+    .ticks li::before { content: ''; position: absolute; inset-inline-start: 0; inset-block-start: 0.6em; inline-size: 10px; block-size: 10px; border: 2px solid var(--accent-primary); border-radius: 50%; }
+    .ticks-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-8); }
+
+    /* Superfície de conteúdo (o .card do DS sobe no hover; aqui não é alvo de clique) */
+    .panel { padding: clamp(var(--space-5), 3vw, var(--space-8)); border: 1px solid var(--border-default); border-radius: var(--radius-xl); background: var(--bg-base); box-shadow: var(--elevation-1); }
+    .panel-label { display: block; margin-block-end: var(--space-4); color: var(--text-secondary); font: var(--font-semibold) var(--text-sm) var(--font-heading); }
+    .panel-label-gap { margin-block: var(--space-6) var(--space-3); }
+
+    /* ── 01 Hero ─────────────────────────────────────────────────────── */
+    .hero { position: relative; overflow: hidden; padding-block: clamp(var(--space-12), 7vw, var(--space-24)) var(--space-16); }
+    .hero::before { content: ''; position: absolute; inset: -20% 0 auto 35%; block-size: 640px; background: radial-gradient(closest-side, var(--accent-primary-muted), transparent); pointer-events: none; }
+    .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); align-items: center; gap: clamp(var(--space-10), 6vw, var(--space-20)); }
+    .hero h1 { margin-block: var(--space-5); font-size: var(--landing-h1); font-weight: 700; line-height: 1.04; letter-spacing: -0.06em; }
+    .hero-copy { display: grid; gap: var(--space-4); max-inline-size: 58ch; color: var(--text-secondary); font-size: var(--text-lg); line-height: var(--leading-relaxed); }
+    .hero-copy strong { color: var(--accent-primary-text); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-block-start: var(--space-8); }
+    .hero-actions .btn { min-block-size: 48px; padding-inline: var(--space-6); font-size: var(--text-base); font-weight: var(--font-semibold); text-decoration: none; }
+    .hero-note { margin-block-start: var(--space-6); padding-block-start: var(--space-5); border-top: 1px solid var(--border-default); color: var(--text-primary); font-family: var(--font-heading); }
+
+    /* Constelação: a Nexus no centro dos módulos. Decorativa (o texto está ao lado). CANDIDATO */
+    .constellation { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); grid-template-rows: repeat(3, auto); align-items: center; gap: var(--space-8) var(--space-4); padding: var(--space-10) var(--space-5); border: 1px solid var(--border-default); border-radius: var(--radius-xl); background: var(--bg-base); box-shadow: var(--elevation-3); isolation: isolate; }
+    .constellation::before, .constellation::after { content: ''; position: absolute; inset-block-start: 50%; inset-inline-start: 50%; border: 1px dashed var(--border-strong); border-radius: 50%; transform: translate(-50%, -50%); z-index: -1; }
+    .constellation::before { inline-size: min(72%, 300px); aspect-ratio: 1; }
+    .constellation::after { inline-size: min(46%, 200px); aspect-ratio: 1; border-style: solid; border-color: var(--border-accent); }
+    .constellation-core { grid-area: 2 / 2; display: grid; justify-items: center; gap: var(--space-2); font: var(--font-semibold) var(--text-sm) var(--font-heading); }
+    .node { padding: var(--space-2) var(--space-3); border: 1px solid var(--border-default); border-radius: var(--radius-full); background: var(--bg-surface-1); color: var(--text-primary); font-size: var(--text-xs); font-weight: var(--font-medium); line-height: 1.3; text-align: center; }
+    .node-1, .node-3, .node-5 { justify-self: end; }
+    .node-2, .node-4, .node-6 { justify-self: start; }
+    .node-1 { grid-area: 1 / 1; } .node-2 { grid-area: 1 / 3; }
+    .node-3 { grid-area: 2 / 1; } .node-4 { grid-area: 2 / 3; }
+    .node-5 { grid-area: 3 / 1; } .node-6 { grid-area: 3 / 3; }
+    .node-accent { border-color: var(--border-accent); background: var(--accent-primary-muted); color: var(--accent-primary-text); }
+
+    /* ── Coluna editorial (02, 06, 08, 09, 18, 20, 25) ───────────────── */
+    .split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(var(--space-8), 6vw, var(--space-20)); align-items: start; }
+    .split-sticky { position: sticky; inset-block-start: calc(var(--space-24) + var(--space-4)); }
+    .questions { margin: 0; padding: 0; list-style: none; counter-reset: q; border-top: 1px solid var(--border-default); }
+    .questions li { display: grid; grid-template-columns: 3ch minmax(0, 1fr); gap: var(--space-4); padding-block: var(--space-4); border-bottom: 1px solid var(--border-default); color: var(--text-primary); font: var(--font-medium) var(--text-lg)/1.4 var(--font-heading); letter-spacing: -0.02em; counter-increment: q; }
+    .questions li::before { content: counter(q, decimal-leading-zero); color: var(--accent-primary-text); font: var(--font-semibold) var(--text-xs)/2.2 var(--font-mono); }
+
+    /* ── 03 Jornada: trilho de cinco momentos. CANDIDATO components/journey ── */
+    .journey { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+    .journey li { position: relative; padding-block-start: var(--space-8); }
+    .journey li::before { content: ''; position: absolute; inset-block-start: 7px; inset-inline: 0 calc(-1 * var(--space-4)); block-size: 2px; background: var(--border-default); }
+    .journey li:last-child::before { inset-inline-end: 0; }
+    .journey li::after { content: ''; position: absolute; inset-block-start: 0; inset-inline-start: 0; inline-size: 16px; block-size: 16px; border: 3px solid var(--accent-primary); border-radius: 50%; background: var(--bg-surface-1); }
+    .journey li:last-child::after { background: var(--accent-primary); }
+    .journey h3 { margin-block-end: var(--space-2); font-size: var(--text-lg); letter-spacing: -0.02em; }
+    .journey p { color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-relaxed); }
+
+    /* ── 04 People Intelligence: faixa âncora + bento ─────────────────── */
+    .band-tint { background: radial-gradient(70% 60% at 85% 0%, var(--accent-primary-muted), transparent), var(--bg-base); }
+    .bento { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--space-4); }
+    .bento-cell { display: grid; align-content: start; gap: var(--space-2); padding: var(--space-6); border: 1px solid var(--border-default); border-radius: var(--radius-lg); background: var(--bg-surface-1); }
+    .bento-cell h3 { font-size: var(--text-xl); letter-spacing: -0.03em; }
+    .bento-cell p { color: var(--text-secondary); line-height: var(--leading-relaxed); }
+    .bento-cell b { color: var(--accent-primary-text); font: var(--font-semibold) var(--text-xs) var(--font-mono); letter-spacing: 0.1em; }
+    .span-2 { grid-column: span 2; } .span-4 { grid-column: span 4; }
+    .bento-hero { grid-row: span 2; align-content: end; min-block-size: 260px; background: linear-gradient(160deg, var(--accent-primary-muted), transparent 70%), var(--bg-surface-1); border-color: var(--border-accent); }
+    .bento-hero h3 { font-size: var(--text-3xl); }
+    .bento-care { border-style: dashed; background: transparent; }
+
+    /* ── 05 Assessments: a forma identifica o teste ──────────────────── */
+    .assess { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--border-default); border-inline-start: 1px solid var(--border-default); }
+    .assess li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-2) var(--space-4); align-items: start; padding: var(--space-6); border-inline-end: 1px solid var(--border-default); border-bottom: 1px solid var(--border-default); transition: background-color var(--transition-base); }
+    .assess li:hover { background: var(--bg-base); }
+    .assess .test-mark { --test-mark-size: 36px; --test-mark-color: var(--accent-primary-text); grid-row: span 2; transition: transform 320ms var(--spring-smooth); }
+    .assess li:hover .test-mark { transform: rotate(-12deg) scale(1.06); }
+    .assess h3 { font-size: var(--text-lg); letter-spacing: -0.02em; }
+    .assess p { color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-relaxed); }
+
+    /* ── 06 Pessoa × Cargo ───────────────────────────────────────────── */
+    .contrast { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-4); margin-block-start: var(--space-10); }
+    .contrast > div { padding: var(--space-6); border-radius: var(--radius-lg); }
+    .contrast p { color: var(--text-secondary); }
+    .contrast strong { display: block; margin-block-start: var(--space-2); font: var(--font-semibold) clamp(1.3rem, 1rem + 1.2vw, 1.9rem)/1.2 var(--font-heading); letter-spacing: -0.03em; }
+    .contrast-before { border: 1px solid var(--border-default); }
+    .contrast-before strong { color: var(--text-secondary); }
+    .contrast-after { border: 1px solid var(--border-accent); background: var(--accent-primary-muted); }
+    .contrast-after strong { color: var(--accent-primary-text); }
+
+    /* ── 07 Matching: número × explicação ────────────────────────────── */
+    .explain { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--space-4); align-items: stretch; }
+    .score { display: grid; align-content: center; justify-items: start; gap: var(--space-3); padding: var(--space-8); border: 1px dashed var(--border-strong); border-radius: var(--radius-xl); color: var(--text-secondary); }
+    .score strong { color: var(--text-secondary); font: 600 clamp(2.4rem, 1.6rem + 3vw, 3.6rem)/1 var(--font-mono); letter-spacing: -0.05em; }
+    .reasons { margin: 0; padding: 0; list-style: none; }
+    .reasons li { display: flex; align-items: center; gap: var(--space-4); padding-block: var(--space-3); border-bottom: 1px solid var(--border-subtle); font-family: var(--font-heading); font-size: var(--text-lg); }
+    .reasons li:last-child { border-bottom: 0; }
+    .reasons li::before { content: ''; flex: none; box-sizing: border-box; inline-size: 12px; block-size: 12px; border: 2px solid var(--accent-primary); border-radius: 50%; background: var(--accent-primary); }
+    .reasons li:nth-child(2)::before { background: transparent; }
+    .reasons li:nth-child(4)::before { background: transparent; border-style: dashed; border-color: var(--text-secondary); }
+    .reasons li:nth-child(5)::before { border-radius: 2px; transform: rotate(45deg); }
+
+    /* ── Conversa ilustrativa (base: .copilot do protótipo #80). CANDIDATO components/chat-showcase ── */
+    .chat { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+    .chat-head { display: flex; align-items: center; gap: var(--space-3); padding-block-end: var(--space-4); margin-block-end: var(--space-4); border-bottom: 1px solid var(--border-subtle); font: var(--font-semibold) var(--text-base) var(--font-heading); }
+    .chat-msg { max-inline-size: 88%; padding: var(--space-3) var(--space-4); border-radius: var(--radius-lg); font-size: var(--text-sm); line-height: var(--leading-relaxed); }
+    .chat-msg strong { font-weight: var(--font-medium); }
+    .chat-ai { justify-self: start; background: var(--bg-surface-2); color: var(--text-primary); border-end-start-radius: var(--radius-sm); }
+    .chat-user { justify-self: end; background: var(--accent-primary); color: var(--text-on-accent); border-end-end-radius: var(--radius-sm); }
+    .chat-foot { margin-block-start: var(--space-5); color: var(--text-secondary); font-size: var(--text-sm); }
+
+    /* ── Pares (11–12, 14–15, 22–23) ────────────────────────────────── */
+    .duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-4); align-items: start; }
+    .duo > section { padding: clamp(var(--space-6), 4vw, var(--space-12)); border: 1px solid var(--border-default); border-radius: var(--radius-xl); background: var(--bg-base); }
+    .duo .h2 { font-size: clamp(1.6rem, 1.15rem + 1.6vw, 2.4rem); }
+    .duo .ticks { margin-block: var(--space-6); }
+    .duo .pull { margin-block-start: var(--space-8); }
+    .formula { margin-block-start: var(--space-3); padding: var(--space-5); border-radius: var(--radius-lg); background: var(--accent-primary-muted); color: var(--accent-primary-text); font: var(--font-semibold) var(--text-xl)/1.35 var(--font-heading); letter-spacing: -0.02em; }
+    .flow { margin-block: var(--space-6); color: var(--text-secondary); line-height: 2.6; }
+    .flow span { display: inline-block; padding: 0 var(--space-3); border: 1px solid var(--border-default); border-radius: var(--radius-full); background: var(--bg-surface-1); color: var(--text-primary); font: var(--font-medium) var(--text-sm)/2 var(--font-body); white-space: nowrap; }
+    .flow span:first-child, .flow span:last-child { border-color: var(--border-accent); background: var(--accent-primary-muted); color: var(--accent-primary-text); }
+    .flow-wide { max-inline-size: 980px; margin-inline: auto; text-align: center; }
+    .flow-wide span { font-size: var(--text-base); }
+
+    /* ── 13–15 Reuniões ──────────────────────────────────────────────── */
+    .meet-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(var(--space-8), 5vw, var(--space-16)); align-items: start; }
+    .meet-list { color: var(--text-primary); font: var(--font-medium) var(--text-xl)/1.5 var(--font-heading); letter-spacing: -0.02em; }
+    .meet-after { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(var(--space-8), 5vw, var(--space-16)); margin-block-start: var(--space-16); padding-block-start: var(--space-12); border-top: 1px solid var(--border-default); }
+    .meet-after h3 { margin-block-end: var(--space-4); font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.2rem); line-height: 1.15; letter-spacing: -0.04em; }
+    .meet-after .ticks { margin-block-end: var(--space-2); }
+    .tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+    .tags .tag { padding-block: var(--space-2); border: 1px solid var(--border-default); background: var(--bg-base); color: var(--text-primary); font-size: var(--text-sm); font-weight: var(--font-medium); }
+    .tags-gap { margin-block: var(--space-5); }
+    .memory { display: grid; gap: var(--space-3); margin-block: var(--space-6); padding: 0; list-style: none; }
+    .memory li { padding: var(--space-4) var(--space-5); border-inline-start: 2px solid var(--border-strong); border-radius: 0 var(--radius-md) var(--radius-md) 0; background: var(--bg-surface-1); color: var(--text-secondary); }
+
+    /* ── 16 Saúde mental: tom cuidadoso, sem número, score nem ranking ── */
+    .care { max-inline-size: 760px; }
+    .care-box { margin-block-start: var(--space-10); padding: clamp(var(--space-6), 4vw, var(--space-10)); border-radius: var(--radius-xl); background: var(--accent-secondary-muted); }
+    .care-box h3 { margin-block-end: var(--space-3); font-size: var(--text-2xl); letter-spacing: -0.03em; }
+    .care-box p { color: var(--text-primary); line-height: var(--leading-relaxed); }
+    .care-box p + p { margin-block-start: var(--space-3); }
+
+    /* ── 17–19 Nexus: faixa escura âncora ───────────────────────────── */
+    .band-dark { background: radial-gradient(60% 40% at 50% 0%, var(--accent-primary-muted), transparent), var(--bg-base); color: var(--text-primary); }
+    .band-dark .section + .section { border-top-color: var(--border-subtle); }
+    .nexus-intro { display: grid; justify-items: center; gap: var(--space-4); text-align: center; }
+    .nexus-intro .h2-xl { margin-block: 0 var(--space-6); max-inline-size: 18ch; }
+    .nexus-intro h3 { margin-block-start: var(--space-2); font-size: var(--text-2xl); letter-spacing: -0.03em; }
+    .nexus-intro p { max-inline-size: 56ch; color: var(--text-secondary); font-size: var(--text-lg); }
+    .asks { columns: 3 260px; column-gap: var(--space-4); margin-block: var(--space-12) 0; padding: 0; list-style: none; }
+    .asks li { break-inside: avoid; margin-block-end: var(--space-4); padding: var(--space-4) var(--space-5); border: 1px solid var(--border-default); border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-lg); background: var(--bg-surface-1); font-family: var(--font-heading); line-height: 1.4; }
+    .asks strong { font-weight: var(--font-medium); }
+    .asks li:nth-child(3n+2) { border-color: transparent; background: var(--accent-primary); color: var(--text-on-accent); }
+    .nexus-outro { max-inline-size: 60ch; margin-block-start: var(--space-8); }
+    .context { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--border-default); }
+    .context li { padding-block: var(--space-4); border-bottom: 1px solid var(--border-default); color: var(--text-primary); font: var(--font-medium) var(--text-lg)/1.4 var(--font-heading); }
+    .verbs { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--space-3); margin: 0; padding: 0; list-style: none; counter-reset: v; }
+    .verbs li { padding: var(--space-5) var(--space-4); border: 1px solid var(--border-default); border-radius: var(--radius-lg); background: var(--bg-surface-1); counter-increment: v; }
+    .verbs li::before { content: counter(v, decimal-leading-zero); display: block; margin-block-end: var(--space-6); color: var(--accent-primary-text); font: var(--font-semibold) var(--text-xs) var(--font-mono); }
+    .verbs h3 { margin-block-end: var(--space-2); font-size: var(--text-lg); }
+    .verbs p { color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-relaxed); }
+    .verbs li:last-child { border-color: var(--border-accent); }
+
+    /* ── 20 People Graph: espinha de nós ────────────────────────────── */
+    .graph { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-areas: "text spine" "close spine"; gap: var(--space-4) clamp(var(--space-8), 6vw, var(--space-20)); align-items: start; }
+    .graph-text { grid-area: text; } .graph-close { grid-area: close; } .graph .spine { grid-area: spine; }
+    .graph-close .prose { margin-block-start: var(--space-4); }
+    .spine { display: grid; justify-items: center; gap: var(--space-1); padding: var(--space-6); border: 1px solid var(--border-default); border-radius: var(--radius-xl); background: var(--bg-base); color: var(--text-secondary); font-size: var(--text-sm); line-height: 1; }
+    .spine strong { padding: var(--space-2) var(--space-4); border: 1px solid var(--border-default); border-radius: var(--radius-full); background: var(--bg-surface-1); color: var(--text-primary); font: var(--font-semibold) var(--text-sm) var(--font-heading); }
+    .spine strong:first-child, .spine strong:last-child { border-color: var(--border-accent); background: var(--accent-primary-muted); color: var(--accent-primary-text); }
+
+    /* ── 21–23 Para quem ────────────────────────────────────────────── */
+    .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+    .grid-4 li { padding: var(--space-5); border-top: 2px solid var(--accent-primary); border-radius: 0 0 var(--radius-md) var(--radius-md); background: var(--bg-surface-1); }
+    .grid-4 h3 { margin-block-end: var(--space-2); font-size: var(--text-lg); }
+    .grid-4 p { color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-relaxed); }
+    .before { display: grid; gap: var(--space-1); margin-block: var(--space-6); color: var(--text-primary); font: var(--font-medium) var(--text-xl)/1.35 var(--font-heading); letter-spacing: -0.02em; }
+    .before p:nth-child(even) { color: var(--text-secondary); }
+    .ask-nexus { display: inline-flex; align-items: center; gap: var(--space-3); color: var(--accent-primary-text); font: 700 var(--text-2xl) var(--font-heading); letter-spacing: -0.03em; }
+
+    /* ── 26 CTA final ───────────────────────────────────────────────── */
+    .cta-verbs { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2) var(--space-5); margin-block: var(--space-2) var(--space-6); color: var(--text-primary); font: var(--font-semibold) var(--text-lg) var(--font-heading); }
+    .cta-verbs p:last-child { color: var(--accent-primary-text); }
+    .cta-brand { padding-block-start: var(--space-6); border-top: 1px solid var(--border-default); }
+    .cta-brand h3 { font: 600 1.6rem/1 var(--font-mono); letter-spacing: -0.06em; }
+    .cta-brand p { margin-block-start: var(--space-2); color: var(--text-secondary); }
+
+    .site-footer { padding-block: var(--space-8); border-top: 1px solid var(--border-default); }
+    .site-footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); color: var(--text-secondary); font-size: var(--text-sm); }
+
+    @media (max-width: 1023.98px) {
+      .graph { grid-template-columns: 1fr; grid-template-areas: "text" "spine" "close"; }
+      .hero-grid, .split, .meet-intro, .meet-after, .explain, .duo { grid-template-columns: 1fr; }
+      .split-sticky { position: static; }
+      .journey { grid-template-columns: 1fr; gap: 0; }
+      .journey li { padding-block: 0 var(--space-6); padding-inline-start: var(--space-10); }
+      .journey li::before { inset: 16px auto 0 7px; inline-size: 2px; block-size: auto; }
+      .journey li:last-child::before { display: none; }
+      .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .bento .span-2, .bento .span-4 { grid-column: span 1; }
+      .bento .bento-hero, .bento .bento-care { grid-column: 1 / -1; grid-row: auto; min-block-size: 0; }
+      .assess { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .verbs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 639.98px) {
+      .hero-actions { display: grid; }
+      .hero-copy, .prose, .lede, .pull p { font-size: var(--text-base); }
+      .constellation { gap: var(--space-6) var(--space-2); padding: var(--space-8) var(--space-3); }
+      .node { padding-inline: var(--space-2); font-size: var(--text-2xs); }
+      .bento, .assess, .contrast, .grid-4, .ticks-2 { grid-template-columns: 1fr; }
+      .verbs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .questions li, .context li, .meet-list, .before { font-size: var(--text-base); }
+      .chat-msg { max-inline-size: 100%; }
+      .flow span { white-space: normal; }
+      .pull { padding-inline-start: var(--space-4); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .assess li, .assess .test-mark { transition: none; }
+      .assess li:hover .test-mark { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header-float-sentinel" data-header-float-sentinel aria-hidden="true"></div>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+  <header class="header-float" data-header-float>
+    <div class="header-float-bar">
+      <a class="header-float-brand" href="#inicio" aria-label="electia by emprega+, início">
+        <strong>electia</strong><span class="header-float-brand-tag">by emprega+</span>
+      </a>
+      <nav class="header-float-links" aria-label="Navegação principal">
+        <a href="#plataforma">Plataforma</a>
+        <a href="#people-intelligence">People Intelligence</a>
+        <a href="#recrutamento">Recrutamento</a>
+        <a href="#nexus">Nexus</a>
+        <a href="#governanca">Governança</a>
+      </nav>
+      <div class="header-float-actions">
+        <button class="header-float-icon" type="button" data-theme-toggle aria-label="Ativar tema escuro"><span aria-hidden="true">☾</span></button>
+        <a class="btn btn-secondary btn-sm" href="#cta-final">Falar com um especialista</a>
+        <a class="btn btn-primary btn-sm btn-sheen" href="#plataforma">Conhecer o Electia</a>
+        <a class="header-float-icon header-float-menu" id="menu-abrir" href="#menu-gaveta" data-menu-drawer-toggle="menu-gaveta" aria-label="Abrir menu"><span aria-hidden="true">☰</span></a>
+      </div>
+    </div>
+  </header>
+
+  <section class="menu-drawer" id="menu-gaveta" aria-label="Menu" data-menu-drawer data-menu-drawer-media="(max-width: 1023.98px)">
+    <div class="menu-drawer-head">
+      <span class="menu-drawer-label">Navegue</span>
+      <a class="menu-drawer-close" href="#menu-abrir" data-menu-drawer-close aria-label="Fechar menu"><span aria-hidden="true">✕</span></a>
+    </div>
+    <div class="menu-drawer-body">
+      <nav class="menu-drawer-nav" aria-label="Navegação principal (móvel)">
+        <a href="#plataforma">Plataforma</a>
+        <a href="#people-intelligence">People Intelligence</a>
+        <a href="#recrutamento">Recrutamento</a>
+        <a href="#nexus">Nexus</a>
+        <a href="#governanca">Governança</a>
+      </nav>
+      <div class="menu-drawer-actions">
+        <a class="btn btn-secondary" href="#cta-final">Falar com um especialista</a>
+        <a class="btn btn-primary" href="#plataforma">Conhecer o Electia</a>
+      </div>
+    </div>
+  </section>
+  <div class="menu-drawer-scrim" data-menu-drawer-scrim></div>
+
+  <main id="main">
+    <!-- 01 — HERO -->
+    <section class="hero" id="inicio" aria-labelledby="s01-title">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="eyebrow">People Intelligence</span>
+          <h1 id="s01-title">Você conhece as pessoas que trabalham na sua empresa?</h1>
+          <div class="hero-copy">
+            <p>O Electia conecta comportamento, competências, desempenho, reuniões e contexto profissional para ajudar sua empresa a <strong>selecionar, posicionar, desenvolver e liderar melhor.</strong></p>
+            <p>Testes comportamentais, recrutamento inteligente, avaliação de desempenho, desenvolvimento, saúde mental e People Intelligence em uma única plataforma — conectados pela Nexus, sua inteligência de gestão de pessoas.</p>
+          </div>
+          <div class="hero-actions" data-hero-cta>
+            <a class="btn btn-primary btn-sheen" href="#plataforma">Conhecer o Electia</a>
+            <a class="btn btn-secondary" href="#cta-final">Falar com um especialista</a>
+          </div>
+          <p class="hero-note"><strong>Da candidatura ao desenvolvimento. Uma visão contínua sobre suas pessoas.</strong></p>
+        </div>
+
+        <div class="constellation" aria-hidden="true">
+          <span class="node node-1">Testes comportamentais</span>
+          <span class="node node-2">Recrutamento inteligente</span>
+          <span class="node node-3">Avaliação de desempenho</span>
+          <span class="constellation-core"><span class="brand-orb brand-orb-electia brand-orb-lg"></span>Nexus</span>
+          <span class="node node-4">Desenvolvimento</span>
+          <span class="node node-5">Saúde mental</span>
+          <span class="node node-6 node-accent">People Intelligence</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 — O PROBLEMA -->
+    <section class="section" id="problema" aria-labelledby="s02-title">
+      <div class="wrap split">
+        <div class="split-sticky">
+          <span class="eyebrow">O problema</span>
+          <h2 class="h2" id="s02-title">Quanto da sua gestão de pessoas ainda depende de percepção, planilhas e informações isoladas?</h2>
+        </div>
+        <div>
+          <ol class="questions">
+            <li>Você sabe quem tem potencial para assumir uma nova posição?</li>
+            <li>Quais competências estão faltando em cada equipe?</li>
+            <li>Quem está no cargo certo — e quem poderia entregar mais em outra função?</li>
+            <li>Por que um profissional com ótimo currículo não performou como esperado?</li>
+            <li>Quem precisa de desenvolvimento agora?</li>
+            <li>Como preparar uma conversa de feedback?</li>
+            <li>Quais candidatos realmente atendem aos requisitos de uma vaga?</li>
+            <li>Existe algum sinal relevante acontecendo com uma equipe que o RH ainda não percebeu?</li>
+          </ol>
+          <div class="pull">
+            <p>O problema não é necessariamente falta de informação.</p>
+            <strong>É que comportamento, competências, recrutamento, desempenho, reuniões e desenvolvimento normalmente vivem separados.</strong>
+            <p>O Electia conecta esses pontos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 — POSICIONAMENTO -->
+    <section class="section" id="plataforma" aria-labelledby="s03-title">
+      <div class="wrap">
+        <header class="section-head">
+          <span class="eyebrow">Posicionamento</span>
+          <h2 id="s03-title">Decisões melhores sobre pessoas começam por conhecê-las melhor.</h2>
+          <p class="lede">O Electia constrói uma visão contínua das pessoas ao longo de sua relação com a organização.</p>
+        </header>
+        <ol class="journey">
+          <li><h3>Antes de entrar</h3><p>Recrutamento, análise de currículo, requisitos, competências, hard skills, entrevistas e aderência à vaga.</p></li>
+          <li><h3>Ao entrar</h3><p>Perfil profissional, comportamento, competências, cargo e expectativas.</p></li>
+          <li><h3>Durante a jornada</h3><p>Metas, indicadores, avaliações, reuniões, feedbacks e desempenho.</p></li>
+          <li><h3>Para desenvolver</h3><p>Gaps, competências, PDI, recomendações e acompanhamento.</p></li>
+          <li><h3>Para decidir</h3><p>Matching, mobilidade interna, composição de equipes, sucessão e desenvolvimento de lideranças.</p></li>
+        </ol>
+        <div class="pull">
+          <p>A pessoa deixa de ser apenas um cadastro no RH.</p>
+          <strong>Ela passa a ter uma história profissional que evolui junto com a organização.</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 — PEOPLE INTELLIGENCE (âncora) -->
+    <section class="section band-tint" id="people-intelligence" aria-labelledby="s04-title">
+      <div class="wrap">
+        <header class="section-head section-head-wide">
+          <span class="eyebrow">People Intelligence</span>
+          <h2 class="h2-xl" id="s04-title">Transforme dados sobre pessoas em decisões melhores sobre pessoas.</h2>
+          <p class="lede">O Electia reúne diferentes sinais para construir uma visão mais completa de cada profissional.</p>
+        </header>
+        <div class="bento">
+          <article class="bento-cell bento-hero span-2"><b>01</b><h3>Perfil</h3><p>Comportamento, características, motivadores e contexto profissional.</p></article>
+          <article class="bento-cell span-2"><b>02</b><h3>Competências</h3><p>Hard skills, competências comportamentais, conhecimentos e evidências.</p></article>
+          <article class="bento-cell span-2"><b>03</b><h3>Cargo</h3><p>Responsabilidades, requisitos, competências esperadas, indicadores e perfil da posição.</p></article>
+          <article class="bento-cell span-2"><b>04</b><h3>Performance</h3><p>Metas, KPIs, avaliações e evolução.</p></article>
+          <article class="bento-cell span-2"><b>05</b><h3>Conversas</h3><p>Reuniões, feedbacks, compromissos, decisões e contexto.</p></article>
+          <article class="bento-cell span-2"><b>06</b><h3>Desenvolvimento</h3><p>Gaps, PDI, ações e histórico.</p></article>
+          <article class="bento-cell bento-care span-4"><b>07</b><h3>Bem-estar</h3><p>Indicadores organizacionais de saúde mental e bem-estar, respeitando privacidade, finalidade e níveis de acesso.</p></article>
+        </div>
+        <p class="statement-lead">Tudo conectado para responder uma pergunta fundamental:</p>
+        <p class="statement">A pessoa certa está no lugar certo?</p>
+      </div>
+    </section>
+
+    <!-- 05 — ASSESSMENTS -->
+    <section class="section" id="assessments" aria-labelledby="s05-title">
+      <div class="wrap">
+        <header class="section-head">
+          <span class="eyebrow">Assessments</span>
+          <h2 id="s05-title">Vá além de um único teste.</h2>
+          <div class="prose">
+            <p>Pessoas são complexas demais para serem resumidas por quatro letras ou um único score.</p>
+            <p>O Electia permite construir uma leitura multidimensional utilizando diferentes instrumentos e perspectivas.</p>
+          </div>
+        </header>
+        <ul class="assess">
+          <li><span class="test-mark test-mark-disc" aria-hidden="true"></span><h3>DISC</h3><p>Preferências comportamentais e tendências de interação.</p></li>
+          <li><span class="test-mark test-mark-bigfive" aria-hidden="true"></span><h3>Big Five</h3><p>Dimensões amplamente estudadas da personalidade.</p></li>
+          <li><span class="test-mark test-mark-motivadores" aria-hidden="true"></span><h3>Motivadores</h3><p>O que tende a mobilizar e gerar interesse no indivíduo.</p></li>
+          <li><span class="test-mark test-mark-temperamentos" aria-hidden="true"></span><h3>Temperamentos</h3><p>Tendências gerais de reação e comportamento.</p></li>
+          <li><span class="test-mark test-mark-tipologia" aria-hidden="true"></span><h3>Tipologia Cognitiva</h3><p>Preferências relacionadas à forma de perceber informações e tomar decisões.</p></li>
+          <li><span class="test-mark test-mark-eneagrama" aria-hidden="true"></span><h3>Eneagrama</h3><p>Instrumento complementar para autoconhecimento e desenvolvimento.</p></li>
+        </ul>
+        <div class="pull">
+          <p>Os resultados não ficam presos em um PDF.</p>
+          <strong>Eles passam a fazer parte da inteligência da pessoa dentro do Electia.</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 — PESSOA × CARGO -->
+    <section class="section" id="pessoa-cargo" aria-labelledby="s06-title">
+      <div class="wrap split">
+        <div>
+          <span class="eyebrow">Pessoa × Cargo</span>
+          <h2 class="h2" id="s06-title">A pessoa certa está no lugar certo?</h2>
+          <div class="prose">
+            <p>Não basta conhecer uma pessoa.</p>
+            <p>É preciso entender o contexto no qual ela precisa performar.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <p class="panel-label">Cada cargo pode possuir seu próprio perfil de inteligência:</p>
+          <ul class="ticks ticks-2">
+            <li>missão e responsabilidades;</li>
+            <li>requisitos obrigatórios;</li>
+            <li>requisitos desejáveis;</li>
+            <li>hard skills;</li>
+            <li>competências técnicas;</li>
+            <li>competências comportamentais;</li>
+            <li>indicadores;</li>
+            <li>metas;</li>
+            <li>senioridade;</li>
+            <li>experiência;</li>
+            <li>características relevantes para a função.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="wrap">
+        <p class="lede" style="margin-block-start: var(--space-10)">O Electia confronta o perfil da pessoa com o que a posição exige.</p>
+        <div class="contrast">
+          <div class="contrast-before"><p>Assim, o RH deixa de perguntar apenas:</p><strong>“Essa pessoa é boa?”</strong></div>
+          <div class="contrast-after"><p>E passa a perguntar:</p><strong>“Essa pessoa faz sentido para este desafio?”</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 — MATCHING -->
+    <section class="section" id="matching" aria-labelledby="s07-title">
+      <div class="wrap">
+        <header class="section-head">
+          <span class="eyebrow">Matching</span>
+          <h2 id="s07-title">Encontre aderência. Identifique gaps. Entenda o porquê.</h2>
+          <p class="lede">O Matching Electia cruza pessoa, cargo, competências, comportamento, requisitos e evidências.</p>
+        </header>
+        <div class="explain">
+          <div class="score"><p>Em vez de entregar apenas:</p><strong>82% de fit</strong></div>
+          <div class="panel">
+            <p class="panel-label">o Electia ajuda a explicar:</p>
+            <ul class="reasons">
+              <li><strong>O que está aderente.</strong></li>
+              <li><strong>Onde existem gaps.</strong></li>
+              <li><strong>Quais requisitos possuem evidência.</strong></li>
+              <li><strong>Onde ainda não existem informações suficientes.</strong></li>
+              <li><strong>O que merece ser validado.</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pull">
+          <p>Porque ausência de informação não significa ausência de competência.</p>
+          <strong>E um número sem contexto não deveria decidir o futuro de uma pessoa.</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08 — NEXUS RECRUIT -->
+    <section class="section" id="recrutamento" aria-labelledby="s08-title">
+      <div class="wrap split">
+        <div>
+          <span class="eyebrow">Nexus Recruit</span>
+          <h2 class="h2" id="s08-title">Currículos contam uma parte da história. A Nexus investiga o restante.</h2>
+          <div class="prose">
+            <p>Um candidato pode saber fazer muito mais do que conseguiu colocar em duas páginas de currículo.</p>
+            <p>A Nexus Recruit analisa currículo, experiência, requisitos da vaga, hard skills, competências e demais informações disponíveis.</p>
+            <p>Quando encontra uma lacuna, pode investigar.</p>
+          </div>
+        </div>
+        <div>
+          <div class="panel">
+            <p class="chat-head"><span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span>Nexus Recruit</p>
+            <ol class="chat" aria-label="Perguntas ilustrativas da Nexus Recruit">
+              <li class="chat-msg chat-ai"><strong>“Você informou experiência com análise de dados. Quais ferramentas utilizava?”</strong></li>
+              <li class="chat-msg chat-ai"><strong>“Já trabalhou com Power BI?”</strong></li>
+              <li class="chat-msg chat-ai"><strong>“Em qual contexto?”</strong></li>
+              <li class="chat-msg chat-ai"><strong>“Durante quanto tempo?”</strong></li>
+            </ol>
+            <p class="chat-foot">A partir das respostas e evidências disponíveis, o perfil profissional é enriquecido progressivamente.</p>
+          </div>
+          <div class="pull">
+            <h3 class="pull-strong">O resultado?</h3>
+            <p>O recrutador recebe uma análise muito mais rica da aderência entre <strong>pessoa e oportunidade</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 — RECRUTAMENTO EXPLICÁVEL -->
+    <section class="section" id="recrutamento-explicavel" aria-labelledby="s09-title">
+      <div class="wrap split">
+        <div>
+          <span class="eyebrow">Recrutamento explicável</span>
+          <h2 class="h2" id="s09-title">IA para ampliar a análise humana — não para escondê-la.</h2>
+        </div>
+        <div>
+          <div class="panel">
+            <p class="panel-label">Para cada candidato, o Electia pode organizar:</p>
+            <ul class="ticks ticks-2">
+              <li>requisitos atendidos;</li>
+              <li>requisitos ainda não identificados;</li>
+              <li>hard skills;</li>
+              <li>competências;</li>
+              <li>experiência relacionada;</li>
+              <li>evidências encontradas;</li>
+              <li>informações que precisam ser confirmadas;</li>
+              <li>pontos de atenção;</li>
+              <li>aderência à posição;</li>
+              <li>perguntas sugeridas para entrevista.</li>
+            </ul>
+          </div>
+          <div class="prose" style="margin-block-start: var(--space-8)">
+            <p>A Nexus também pode ajudar a estruturar e analisar entrevistas.</p>
+          </div>
+          <div class="pull">
+            <p>O recrutador continua tomando a decisão.</p>
+            <strong>A diferença é que passa a decidir com muito mais informação.</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 — INTEGRAÇÃO COM ATS -->
+    <section class="section" id="ats" aria-labelledby="s10-title">
+      <div class="wrap">
+        <header class="section-head">
+          <span class="eyebrow">Integração com ATS</span>
+          <h2 id="s10-title">O Electia não precisa substituir seu ATS para tornar o recrutamento mais inteligente.</h2>
+          <div class="prose">
+            <p>Conecte o Electia ao sistema de recrutamento da sua empresa e utilize a Nexus como camada de inteligência sobre candidatos e vagas.</p>
+            <p>Quando determinadas informações não estiverem disponíveis no ATS, o próprio Electia permite complementar:</p>
+          </div>
+        </header>
+        <ul class="tags">
+          <li class="tag">requisitos;</li>
+          <li class="tag">desejáveis;</li>
+          <li class="tag">atividades;</li>
+          <li class="tag">competências;</li>
+          <li class="tag">hard skills;</li>
+          <li class="tag">informações da posição;</li>
+          <li class="tag">critérios de análise.</li>
+        </ul>
+        <div class="pull"><strong>A inteligência não fica limitada pela ferramenta utilizada para publicar a vaga.</strong></div>
+      </div>
+    </section>
+
+    <!-- 11–12 — PERFORMANCE e AVALIAÇÃO QUE GERA AÇÃO -->
+    <div class="section" id="performance">
+      <div class="wrap duo">
+        <section aria-labelledby="s11-title">
+          <span class="eyebrow">Performance</span>
+          <h2 class="h2" id="s11-title">Do perfil esperado ao desempenho real.</h2>
+          <div class="prose">
+            <p>Potencial é importante.</p>
+            <p><strong>Entrega também.</strong></p>
+            <p>O Electia conecta o que se espera de uma pessoa ao que acontece na prática.</p>
+            <p>Acompanhe:</p>
+          </div>
+          <ul class="ticks ticks-2">
+            <li>indicadores por cargo;</li>
+            <li>indicadores individuais;</li>
+            <li>metas;</li>
+            <li>competências;</li>
+            <li>autoavaliação;</li>
+            <li>avaliação do gestor;</li>
+            <li>avaliação 180°;</li>
+            <li>evolução ao longo do tempo.</li>
+          </ul>
+          <p class="sub">Isso permite confrontar:</p>
+          <p class="formula"><strong>Perfil esperado × Perfil observado × Performance real.</strong></p>
+        </section>
+        <section aria-labelledby="s12-title">
+          <span class="eyebrow">Avaliação que gera ação</span>
+          <h2 class="h2" id="s12-title">Um relatório não desenvolve ninguém.</h2>
+          <div class="prose">
+            <p>Uma avaliação só cria valor quando provoca uma boa conversa e uma ação de desenvolvimento.</p>
+            <p>Por isso, o Electia conecta:</p>
+          </div>
+          <p class="flow"><span>Avaliação</span> → <span>Gaps</span> → <span>Feedback</span> → <span>Conversa</span> → <span>PDI</span> → <span>Ações</span> → <span>Acompanhamento</span> → <span>Nova avaliação</span></p>
+          <div class="pull">
+            <p>O desenvolvimento deixa de ser um evento anual.</p>
+            <strong>Passa a ser um processo contínuo.</strong>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- 13 — TRANSCRIÇÃO INTELIGENTE DE REUNIÕES -->
+    <section class="section band-tint" id="reunioes" aria-labelledby="s13-title">
+      <div class="wrap">
+        <header class="section-head section-head-wide">
+          <span class="eyebrow">Transcrição inteligente de reuniões</span>
+          <h2 class="h2-xl" id="s13-title">Sua empresa realiza milhares de conversas sobre pessoas. O Electia transforma essas conversas em contexto.</h2>
+        </header>
+        <div class="meet-intro">
+          <div class="prose">
+            <p>As conversas mais importantes da sua empresa não deveriam desaparecer quando a reunião termina.</p>
+            <p>Reuniões entre gestores e colaboradores carregam informações que dificilmente aparecem em um sistema:</p>
+            <p class="meet-list">dificuldades, expectativas, compromissos, feedbacks, decisões, percepções, necessidades de desenvolvimento e próximos passos.</p>
+          </div>
+          <div class="prose">
+            <p>O Electia permite <strong>transcrever e organizar essas conversas</strong>, transformando reuniões em contexto para a gestão de pessoas.</p>
+            <p>Isso inclui reuniões individuais — também conhecidas como <strong>1:1</strong> —, feedbacks, acompanhamentos e outras conversas relevantes entre gestores e suas equipes.</p>
+          </div>
+        </div>
+        <div class="meet-after">
+          <div>
+            <h3>A reunião termina. O contexto permanece.</h3>
+            <p class="sub">Com autorização e respeitando regras de acesso e privacidade, a Nexus pode utilizar essas transcrições junto com outras informações disponíveis no Electia:</p>
+          </div>
+          <div>
+            <ul class="ticks ticks-2">
+              <li>perfil profissional;</li>
+              <li>cargo;</li>
+              <li>competências;</li>
+              <li>avaliações;</li>
+              <li>metas e indicadores;</li>
+              <li>feedbacks;</li>
+              <li>planos de desenvolvimento;</li>
+              <li>histórico profissional.</li>
+            </ul>
+            <div class="pull">
+              <p>Uma conversa deixa de ser uma informação isolada.</p>
+              <strong>Ela passa a fazer parte do contexto daquela pessoa ao longo do tempo.</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14–15 — DA CONVERSA À AÇÃO e MEMÓRIA PARA GESTÃO -->
+    <div class="section" id="memoria">
+      <div class="wrap duo">
+        <section aria-labelledby="s14-title">
+          <span class="eyebrow">Da conversa à ação</span>
+          <h2 class="h2" id="s14-title">Não apenas transcreva. Entenda o que aconteceu.</h2>
+          <p class="sub">A Nexus pode ajudar a identificar nas reuniões:</p>
+          <ul class="tags tags-gap">
+            <li class="tag"><strong>Decisões tomadas</strong></li>
+            <li class="tag"><strong>Compromissos assumidos</strong></li>
+            <li class="tag"><strong>Pontos de atenção</strong></li>
+            <li class="tag"><strong>Feedbacks realizados</strong></li>
+            <li class="tag"><strong>Dificuldades relatadas</strong></li>
+            <li class="tag"><strong>Competências mencionadas</strong></li>
+            <li class="tag"><strong>Necessidades de desenvolvimento</strong></li>
+            <li class="tag"><strong>Ações combinadas</strong></li>
+            <li class="tag"><strong>Responsáveis e próximos passos</strong></li>
+          </ul>
+          <p class="sub">E utilizar essas informações como contexto em interações futuras.</p>
+          <p class="panel-label panel-label-gap">Pergunte:</p>
+          <ol class="chat" aria-label="Perguntas de exemplo à Nexus sobre reuniões">
+            <li class="chat-msg chat-user"><strong>“O que ficou combinado na última reunião com a Ana?”</strong></li>
+            <li class="chat-msg chat-user"><strong>“Quais dificuldades o João vem relatando nos últimos meses?”</strong></li>
+            <li class="chat-msg chat-user"><strong>“Prepare minha próxima conversa com a Maria considerando nossas reuniões anteriores.”</strong></li>
+            <li class="chat-msg chat-user"><strong>“Existe algum compromisso assumido com esse colaborador que ainda não foi acompanhado?”</strong></li>
+            <li class="chat-msg chat-user"><strong>“Quais temas aparecem com frequência nas minhas conversas com esta equipe?”</strong></li>
+          </ol>
+        </section>
+        <section aria-labelledby="s15-title">
+          <span class="eyebrow">Memória para gestão</span>
+          <h2 class="h2" id="s15-title">Uma conversa importante não deveria depender da memória de quem estava na sala.</h2>
+          <ul class="memory">
+            <li>Um gestor pode esquecer o que foi discutido há três meses.</li>
+            <li>Uma pessoa pode trocar de gestor.</li>
+            <li>Um compromisso pode não ser acompanhado.</li>
+            <li>Uma decisão pode ficar registrada apenas na memória de quem participou.</li>
+          </ul>
+          <div class="prose">
+            <p>O Electia transforma essas conversas, quando autorizadas, em <strong>memória organizacional estruturada e contextualizada</strong>.</p>
+          </div>
+          <div class="pull">
+            <p>Assim, a Nexus não conhece apenas os números.</p>
+            <strong>Ela também conhece o contexto por trás deles.</strong>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- 16 — SAÚDE MENTAL E BEM-ESTAR (sem número, score nem ranking) -->
+    <section class="section" id="bem-estar" aria-labelledby="s16-title">
+      <div class="wrap care">
+        <span class="eyebrow">Saúde mental e bem-estar</span>
+        <h2 class="h2" id="s16-title">Pessoas não deixam de ser pessoas quando começam a trabalhar.</h2>
+        <div class="prose">
+          <p>O Electia permite acompanhar indicadores de saúde mental e bem-estar utilizando instrumentos específicos e regras próprias de acesso e privacidade.</p>
+          <p>A organização pode identificar tendências e sinais relevantes em equipes e departamentos sem transformar informações sensíveis em instrumentos indevidos de avaliação profissional.</p>
+        </div>
+        <div class="care-box">
+          <h3>Bem-estar não é performance.</h3>
+          <p>São dimensões diferentes e precisam ser tratadas com responsabilidade.</p>
+          <p>O objetivo é permitir que a organização perceba sinais importantes antes que se transformem em problemas maiores.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17–19 — NEXUS (âncora, faixa escura) -->
+    <div class="band-dark" data-theme="dark" id="nexus">
+      <section class="section" aria-labelledby="s17-title">
+        <div class="wrap">
+          <div class="nexus-intro">
+            <span class="eyebrow">Nexus</span>
+            <h2 class="h2-xl" id="s17-title">Conheça a inteligência que conecta tudo isso.</h2>
+            <span class="brand-orb brand-orb-electia" style="--orb-size: 112px" aria-hidden="true"></span>
+            <h3>Olá, sou a Nexus.</h3>
+            <p>Eu transformo os dados do Electia em contexto para ajudar você a tomar decisões melhores sobre pessoas.</p>
+            <p>Em vez de procurar informações em diferentes telas, converse comigo.</p>
+          </div>
+          <ul class="asks" aria-label="Perguntas de exemplo à Nexus">
+            <li><strong>“Quem da minha equipe apresenta maior aderência para assumir essa posição?”</strong></li>
+            <li><strong>“Quais são os principais gaps deste colaborador?”</strong></li>
+            <li><strong>“Prepare minha próxima conversa com a Ana.”</strong></li>
+            <li><strong>“Quais competências deveríamos desenvolver nesta equipe?”</strong></li>
+            <li><strong>“Analise os candidatos desta vaga.”</strong></li>
+            <li><strong>“Quais requisitos ainda preciso validar com este candidato?”</strong></li>
+            <li><strong>“Existe alguma diferença relevante entre a autoavaliação do João e a avaliação do gestor?”</strong></li>
+            <li><strong>“Monte uma sugestão de PDI.”</strong></li>
+            <li><strong>“O que combinamos nas últimas reuniões com o Carlos?”</strong></li>
+          </ul>
+          <p class="lede center nexus-outro">A Nexus utiliza o contexto disponível no Electia para transformar informação em <strong>orientação e próximos passos</strong>.</p>
+        </div>
+      </section>
+
+      <section class="section" id="mais-que-um-chat" aria-labelledby="s18-title">
+        <div class="wrap split">
+          <div>
+            <span class="eyebrow">Mais que um chat</span>
+            <h2 class="h2" id="s18-title">A Nexus não é apenas um chat. Ela entende o contexto.</h2>
+            <p class="statement statement-md"><strong>Contexto muda tudo.</strong></p>
+          </div>
+          <ul class="context">
+            <li>Ao analisar um candidato, a Nexus conhece o contexto daquela vaga.</li>
+            <li>Ao acessar um colaborador, conhece seu perfil.</li>
+            <li>Ao analisar uma avaliação, entende competências e gaps.</li>
+            <li>Ao preparar uma conversa, pode considerar o histórico das reuniões anteriores.</li>
+            <li>Ao olhar para uma equipe, conecta informações das pessoas que fazem parte dela.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="do-dado-a-decisao" aria-labelledby="s19-title">
+        <div class="wrap">
+          <header class="section-head">
+            <span class="eyebrow">Do dado à decisão</span>
+            <h2 id="s19-title">A inteligência não termina na resposta.</h2>
+            <p class="lede">A Nexus ajuda você a:</p>
+          </header>
+          <ol class="verbs">
+            <li><h3>Entender</h3><p>O que está acontecendo.</p></li>
+            <li><h3>Investigar</h3><p>O que ainda não sabemos.</p></li>
+            <li><h3>Comparar</h3><p>Pessoas, cargos, competências e resultados.</p></li>
+            <li><h3>Recomendar</h3><p>Possíveis próximos passos.</p></li>
+            <li><h3>Preparar</h3><p>Entrevistas, feedbacks, reuniões e PDIs.</p></li>
+            <li><h3>Executar</h3><p>Ações autorizadas dentro dos fluxos da plataforma.</p></li>
+            <li><h3>Registrar</h3><p>Decisões, compromissos e histórico.</p></li>
+          </ol>
+          <div class="pull">
+            <p>A tecnologia faz o trabalho pesado.</p>
+            <strong>A decisão continua sendo humana.</strong>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 20 — PEOPLE GRAPH -->
+    <section class="section" id="people-graph" aria-labelledby="s20-title">
+      <div class="wrap graph">
+        <div class="graph-text">
+          <span class="eyebrow">People Graph</span>
+          <h2 class="h2" id="s20-title">Cada nova interação torna o contexto mais rico.</h2>
+          <div class="prose">
+            <p>Uma avaliação não precisa desaparecer depois de entregue.</p>
+            <p>Uma reunião não precisa virar apenas uma lembrança.</p>
+            <p>Uma experiência profissional não precisa ficar escondida em um currículo.</p>
+            <p>Um feedback não precisa ser esquecido.</p>
+            <p>O Electia conecta essas informações ao longo do tempo.</p>
+          </div>
+        </div>
+        <p class="spine"><strong>Pessoa</strong> ↕ <strong>Cargo</strong> ↕ <strong>Competências</strong> ↕ <strong>Experiências</strong> ↕ <strong>Assessments</strong> ↕ <strong>Performance</strong> ↕ <strong>Reuniões</strong> ↕ <strong>Feedbacks</strong> ↕ <strong>Desenvolvimento</strong> ↕ <strong>Histórico</strong></p>
+        <div class="graph-close">
+          <div class="prose"><p>A organização começa a construir uma memória estruturada sobre suas pessoas.</p></div>
+          <div class="pull"><strong>E a Nexus utiliza essa memória para oferecer contexto cada vez melhor.</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 21 — PARA O RH -->
+    <section class="section band-tint" id="para-quem" aria-labelledby="s21-title">
+      <div class="wrap">
+        <header class="section-head">
+          <span class="eyebrow">Para o RH</span>
+          <h2 id="s21-title">Mais inteligência para decisões que já fazem parte do seu dia.</h2>
+        </header>
+        <ul class="grid-4">
+          <li><h3>Recrutamento</h3><p>Encontre aderência e gaps antes da entrevista.</p></li>
+          <li><h3>Seleção</h3><p>Compare candidatos utilizando critérios estruturados e evidências.</p></li>
+          <li><h3>Onboarding</h3><p>Comece conhecendo melhor quem acabou de chegar.</p></li>
+          <li><h3>Performance</h3><p>Conecte competências, indicadores e avaliações.</p></li>
+          <li><h3>Desenvolvimento</h3><p>Transforme gaps em feedback, conversas e PDI.</p></li>
+          <li><h3>Mobilidade</h3><p>Encontre talentos dentro da própria organização.</p></li>
+          <li><h3>Sucessão</h3><p>Identifique pessoas que podem estar preparadas para novos desafios.</p></li>
+          <li><h3>Gestão</h3><p>Dê aos líderes contexto para tomar decisões melhores sobre suas equipes.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 22–23 — PARA O GESTOR e PARA AS PESSOAS -->
+    <div class="section" id="gestor-pessoas">
+      <div class="wrap duo">
+        <section aria-labelledby="s22-title">
+          <span class="eyebrow">Para o gestor</span>
+          <h2 class="h2" id="s22-title">Você não precisa virar especialista em RH para liderar melhor.</h2>
+          <p class="sub">O Electia transforma informações complexas em contexto para o dia a dia da liderança.</p>
+          <div class="before">
+            <p>Antes de uma conversa.</p>
+            <p>Antes de um feedback.</p>
+            <p>Antes de promover.</p>
+            <p>Antes de contratar.</p>
+            <p>Antes de montar uma equipe.</p>
+            <p>Antes de criar um plano de desenvolvimento.</p>
+          </div>
+          <p class="ask-nexus"><span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span><strong>Pergunte à Nexus.</strong></p>
+        </section>
+        <section aria-labelledby="s23-title">
+          <span class="eyebrow">Para as pessoas</span>
+          <h2 class="h2" id="s23-title">Mais do que ser avaliado. Ser compreendido.</h2>
+          <div class="prose">
+            <p>O profissional pode conhecer melhor suas características, competências, pontos fortes e oportunidades de desenvolvimento.</p>
+            <p>E acompanhar sua própria evolução ao longo da jornada.</p>
+          </div>
+          <div class="pull">
+            <p>Porque People Intelligence não deveria existir apenas para dizer algo sobre as pessoas.</p>
+            <strong>Deveria também gerar valor para elas.</strong>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- 24 — VISÃO INTEGRADA -->
+    <section class="section" id="visao-integrada" aria-labelledby="s24-title">
+      <div class="wrap">
+        <header class="section-head center">
+          <span class="eyebrow">Visão integrada</span>
+          <h2 class="h2-xl" id="s24-title">Uma plataforma. Uma visão contínua.</h2>
+          <p class="lede">Da candidatura ao desenvolvimento.</p>
+        </header>
+        <p class="flow flow-wide"><span>Recrutamento</span> → <span>Seleção</span> → <span>Perfil</span> → <span>Cargo</span> → <span>Matching</span> → <span>Performance</span> → <span>Reuniões</span> → <span>Feedback</span> → <span>PDI</span> → <span>Desenvolvimento</span> → <span>Mobilidade</span> → <span>Sucessão</span></p>
+        <p class="lede center">Tudo conectado pela mesma camada de inteligência.</p>
+      </div>
+    </section>
+
+    <!-- 25 — GOVERNANÇA -->
+    <section class="section" id="governanca" aria-labelledby="s25-title">
+      <div class="wrap split">
+        <div>
+          <span class="eyebrow">Governança</span>
+          <h2 class="h2" id="s25-title">Inteligência sobre pessoas exige responsabilidade.</h2>
+          <div class="prose"><p>Dados de pessoas não devem ser tratados como qualquer outro dado.</p></div>
+          <div class="pull"><strong>IA apoia decisões. Pessoas continuam responsáveis por elas.</strong></div>
+        </div>
+        <div class="panel">
+          <p class="panel-label">Por isso, o Electia trabalha com princípios de:</p>
+          <ul class="ticks ticks-2">
+            <li>acesso por perfil e escopo;</li>
+            <li>isolamento entre organizações;</li>
+            <li>consentimento;</li>
+            <li>proteção de informações sensíveis;</li>
+            <li>rastreabilidade;</li>
+            <li>registro das ações;</li>
+            <li>controle de permissões;</li>
+            <li>separação entre saúde e performance;</li>
+            <li>transparência sobre o uso de IA;</li>
+            <li>supervisão humana nas decisões relevantes.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 26 — CTA FINAL -->
+    <section class="section" id="cta-final" aria-labelledby="s26-title">
+      <div class="wrap">
+        <div class="cta-panel" data-theme="dark" data-cta-final>
+          <h2 class="cta-panel-title" id="s26-title">Pessoas são complexas. <span class="cta-panel-title-tone">Suas decisões sobre elas não precisam ser baseadas em pouca informação.</span></h2>
+          <div class="cta-verbs">
+            <p><strong>Conheça melhor.</strong></p>
+            <p><strong>Selecione melhor.</strong></p>
+            <p><strong>Posicione melhor.</strong></p>
+            <p><strong>Desenvolva melhor.</strong></p>
+            <p><strong>Lidere melhor.</strong></p>
+          </div>
+          <div class="cta-brand">
+            <h3>Electia</h3>
+            <p><strong>People Intelligence para transformar dados sobre pessoas em decisões melhores sobre pessoas.</strong></p>
+          </div>
+          <div class="cta-panel-actions">
+            <a class="btn btn-primary btn-sheen" href="#">Quero conhecer o Electia</a>
+            <a class="btn btn-secondary btn-sheen" href="#">Falar com um especialista</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <a class="header-float-brand" href="#inicio" aria-label="electia by emprega+, voltar ao início"><strong>electia</strong><span class="header-float-brand-tag">by emprega+</span></a>
+      <span>People Intelligence</span>
+    </div>
+  </footer>
+
+  <aside class="cta-dock" aria-label="Atalho para conhecer o Electia" data-cta-dock data-cta-dock-after="[data-hero-cta]" data-cta-dock-until="[data-cta-final]">
+    <span class="cta-dock-text">Da candidatura ao desenvolvimento.</span>
+    <a class="btn btn-primary" href="#cta-final">Conhecer o Electia</a>
+  </aside>
+
+  <script src="../../../../dist/header-float.js" defer></script>
+  <script src="../../../../dist/menu-drawer.js" defer></script>
+  <script src="../../../../dist/cta-dock.js" defer></script>
+  <script>
+    (() => {
+      /* Tema claro/escuro. A faixa da Nexus e o painel CTA têm data-theme próprio e não mudam. */
+      const root = document.documentElement;
+      const themeButton = document.querySelector('[data-theme-toggle]');
+      themeButton.addEventListener('click', () => {
+        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        themeButton.setAttribute('aria-label', next === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro');
+        themeButton.firstElementChild.textContent = next === 'dark' ? '☼' : '☾';
+      });
+    })();
+  </script>
+</body>
+</html>
