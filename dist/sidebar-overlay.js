@@ -47,7 +47,9 @@
  *     <legend>) and tabindex=-1; includes contenteditable; a radio group
  *     (same name, scoped by its form owner) counts once, AT THE DOM POSITION
  *     OF THE CHOSEN RADIO: the checked one if it accepts focus, otherwise the
- *     first valid radio of the group (as Chrome's native order does); order
+ *     first valid radio of the group in sequential order (positive tabindex
+ *     first, then DOM), the same for Tab and Shift+Tab, as Chrome's native
+ *     order does; order
  *     is sequential (positive tabindex first, then document position). Every .focus() is checked
  *     against activeElement and the next candidate is tried; if nothing
  *     accepts, the panel itself (tabindex=-1) takes focus. One keydown edge
@@ -144,7 +146,9 @@
      fica na posicao de DOM do proprio radio escolhido:
        - o marcado, se ele aceitar foco;
        - senao (nenhum marcado, ou o marcado desabilitado/inerte/oculto), o
-         primeiro radio valido do grupo em ordem de DOM — nos dois sentidos.
+         primeiro radio valido do grupo na ordem SEQUENCIAL (tabindex
+         positivo crescente primeiro, depois DOM) — o mesmo nos dois
+         sentidos, como o Chrome nativo.
      Medido na navegacao nativa do Chrome, sem a gaveta (Revisor da #86).
      Depois da escolha, ordena: tabindex positivo primeiro (crescente), depois
      os demais; empate pela posicao no documento (compareDocumentPosition).
@@ -167,6 +171,8 @@
       if (!grupo) {
         grupo = { nome: chave.nome, form: chave.form, primeiro: no, marcado: null };
         grupos.push(grupo);
+      } else if (vemAntes(no, grupo.primeiro)) {
+        grupo.primeiro = no;
       }
       if (!grupo.marcado && marcado(no)) grupo.marcado = no;
     }
@@ -195,6 +201,19 @@
     return paradas.map(function (x) {
       return x.no;
     });
+  }
+
+  /* `a` vem antes de `b` na ordem SEQUENCIAL? Tabindex positivo antes de
+     qualquer 0 (e menor antes de maior); empate, quem ja estava (os nos
+     chegam em ordem de DOM). Medido no Chrome: sem radio marcado, a parada
+     do grupo e o primeiro nesta ordem, e e a MESMA no Tab e no Shift+Tab. */
+  function vemAntes(a, b) {
+    var oa = ordemSequencial(a);
+    var ob = ordemSequencial(b);
+    if (oa === ob) return false;
+    if (oa === 0) return false;
+    if (ob === 0) return true;
+    return oa < ob;
   }
 
   /* Posicao no documento. querySelectorAll ja devolve nessa ordem; o

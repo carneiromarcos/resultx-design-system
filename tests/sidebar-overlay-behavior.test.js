@@ -591,3 +591,32 @@ describe('Revisor #86 — representante do grupo de rádio na posição do escol
     for (let i = 0; i < 10; i++) expect(bordas(ctx)).toEqual(esperado);
   });
 });
+
+/**
+ * P3 da aprovação da #86: sem rádio marcado, o representante era o primeiro
+ * válido em ordem de DOM, antes de considerar o tabindex. Medido no Chrome
+ * (sequência completa a partir do início do documento): sem marcado, a
+ * parada é o primeiro rádio na ordem SEQUENCIAL — tabindex positivo
+ * crescente, depois DOM —, a mesma no Tab e no Shift+Tab. Como no bloco
+ * anterior, o mini-dom usa o fallback de posição; a comparação com o nativo
+ * é do Playwright.
+ */
+describe('P3 da #86 — sem marcado, o representante segue a ordem sequencial', () => {
+  const radio = (el, id, extra = {}) => el('input', { type: 'radio', name: 'r', id, ...extra });
+
+  test.each([
+    ['r1, Ajuda, r2 tabindex=2: abre em r2 e cicla r2 ↔ Ajuda', (el) => [radio(el, 'r1'), el('a', { href: '#h', id: 'ajuda' }), radio(el, 'r2', { tabindex: '2' })], ['r2', 'ajuda']],
+    ['r1 tabindex=3, Ajuda, r2 tabindex=2: o menor positivo vence', (el) => [radio(el, 'r1', { tabindex: '3' }), el('a', { href: '#h', id: 'ajuda' }), radio(el, 'r2', { tabindex: '2' })], ['r2', 'ajuda']],
+    ['marcado sem tabindex vence o positivo não marcado', (el) => [radio(el, 'r1', { checked: '' }), el('a', { href: '#h', id: 'ajuda' }), radio(el, 'r2', { tabindex: '2' })], ['r1', 'ajuda']],
+  ])('%s', (_, filhos, [primeiro, ultimo]) => {
+    const ctx = montar({ filhos });
+    abrir(ctx);
+    expect(ctx.doc.activeElement.id).toBe(primeiro);
+    for (let i = 0; i < 10; i++) {
+      tabDepoisDoUltimo(ctx);
+      expect(ctx.doc.activeElement.id).toBe(primeiro);
+      shiftTabAntesDoPrimeiro(ctx);
+      expect(ctx.doc.activeElement.id).toBe(ultimo);
+    }
+  });
+});
