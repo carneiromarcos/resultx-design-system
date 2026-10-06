@@ -37,10 +37,15 @@ protótipo `electia-dashboard-2026-10-05.html`.
   o foco por estar invisível. Sem `getAnimations`, o foco entra em 2–3 quadros.
 - **Anel do primeiro alvo.** O primeiro focável das duas páginas é um link de marca sem
   regra de foco, e mostrava o anel do navegador abaixo de 3:1 sobre a sidebar escura. A
-  regra nova `:where(.sidebar) :focus-visible` usa `--focus-ring-color` com
-  `outline-offset: -2px`. Como tem especificidade de pseudo-classe só, qualquer anel do
-  DS ou do consumidor continua vencendo. Medido: 6,84:1 no claro e 10,57:1 no escuro
-  (DS); 6,58:1 e 7,45:1 (Electia).
+  regra nova `:where(.sidebar :focus-visible)` usa `--focus-ring-color` com
+  `outline-offset: -2px`. O `:where()` envolve o seletor inteiro, e a especificidade é
+  0,0,0. Assim, qualquer regra de foco do DS ou do consumidor vence, inclusive um
+  `:focus-visible` global carregado antes do bundle. A primeira forma,
+  `:where(.sidebar) :focus-visible`, tinha 0,1,0 e sobrescrevia essa regra (P3 do
+  Revisor na #89). Medido sem regra do consumidor: 6,84:1 no claro e 10,57:1 no escuro
+  (DS); 6,58:1 e 7,45:1 (Electia). Com `:focus-visible` global ou `a:focus-visible`
+  carregados antes do bundle, vale a regra do consumidor; com o CSS de 628c863, a
+  global perdia nas 4 combinações de página e tema.
 - **O que segue igual:** sentinelas, `inert` no fundo, `role`/`aria-modal` restaurados,
   foco devolvido ao gatilho, Escape com `defaultPrevented` e o rádio.
 - **Prova.** Mini-dom: 8 testes novos em `tests/sidebar-overlay-behavior.test.js`; 4

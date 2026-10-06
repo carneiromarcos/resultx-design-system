@@ -791,3 +791,38 @@ describe('Revisor #88 (P2) — abertura síncrona com o painel ainda invisível 
     expect(fila).toHaveLength(0);
   });
 });
+
+/**
+ * Contrato de CSS da mesma correção (components/components.css e o bundle).
+ * A prova de cascata com regra do consumidor carregada antes do bundle é do
+ * Playwright; aqui fica travada a forma dos seletores.
+ */
+describe('Revisor #88/#89 — CSS da abertura e do anel de fallback', () => {
+  const { css, regras, regra, valor, emReduzido } = require('./lib/css');
+  const fonte = css('components', 'components.css');
+  const bundle = css('dist', 'components.min.css');
+
+  test('reduced-motion zera a transição também no estado aberto (painel e scrim)', () => {
+    const reduzidas = regras(fonte).filter(emReduzido).map((r) => r.seletor);
+    for (const sel of ['.sidebar-overlay', '.sidebar-overlay[data-open]', '.sidebar-scrim', '.sidebar-scrim[data-open]']) {
+      expect(reduzidas).toContain(sel);
+    }
+    expect(valor(regra(fonte, '.sidebar-overlay[data-open]', { contexto: 'prefers-reduced-motion' }), 'transition')).toBe('none');
+  });
+
+  test('anel de fallback da sidebar com especificidade 0,0,0: o :where() envolve o seletor inteiro', () => {
+    const seletores = regras(fonte).map((r) => r.seletor);
+    expect(seletores).toContain(':where(.sidebar :focus-visible)');
+    /* a forma antiga (0,1,0) vencia um :focus-visible global do consumidor carregado antes */
+    expect(seletores.filter((s) => /:focus-visible/.test(s) && /\.sidebar\b/.test(s) && !s.startsWith(':where(') && !/\.sidebar-/.test(s))).toEqual([]);
+    expect(seletores).not.toContain(':where(.sidebar) :focus-visible');
+    const corpo = regra(fonte, ':where(.sidebar :focus-visible)');
+    expect(valor(corpo, 'outline')).toBe('var(--focus-ring-width) solid var(--focus-ring-color)');
+    expect(valor(corpo, 'outline-offset')).toBe('-2px');
+  });
+
+  test('o bundle publicado traz a mesma forma', () => {
+    expect(bundle).toContain(':where(.sidebar :focus-visible){');
+    expect(bundle).not.toContain(':where(.sidebar) :focus-visible');
+  });
+});

@@ -80,11 +80,14 @@ body {
 /* "O que vier" só lê a variável se tiver regra de foco. Um focável sem anel
    próprio — o link de marca do app-shell e do protótipo Electia, que é o
    PRIMEIRO alvo da gaveta ao abrir — ficava com o anel do navegador: azul
-   escuro sobre a sidebar escura, abaixo de 3:1. :where() zera a
-   especificidade da sidebar, então qualquer anel do DS (.sidebar-item,
-   .btn…) ou do consumidor continua vencendo. -2px, como o .sidebar-item: o
-   overflow da sidebar cortaria um anel por fora nas laterais. */
-:where(.sidebar) :focus-visible {
+   escuro sobre a sidebar escura, abaixo de 3:1. O :where() envolve o
+   seletor INTEIRO (especificidade 0,0,0): qualquer regra de foco do DS
+   (.sidebar-item, .btn…) ou do consumidor vence — inclusive um
+   `:focus-visible` global (0,1,0) carregado ANTES deste bundle, que um
+   `:where(.sidebar) :focus-visible` (0,1,0, declarado depois) sobrescrevia
+   (Revisor da #89, P3). -2px, como o .sidebar-item: o overflow da sidebar
+   cortaria um anel por fora nas laterais. */
+:where(.sidebar :focus-visible) {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: -2px;
 }
