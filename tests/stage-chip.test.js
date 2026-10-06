@@ -100,7 +100,7 @@ describe('.dl-statcard--compact', () => {
     expect(valor(r, 'font-variant-numeric')).toBe('tabular-nums');
   });
 
-  test('rótulo e comparação em --text-secondary: --text-muted não passa AA no escuro', () => {
+  test('rótulo e comparação em --text-secondary (leitura do número, não metadado)', () => {
     expect(valor(regra(cards, '.dl-statcard--compact .dl-statcard-label'), 'color')).toBe(
       'var(--text-secondary)',
     );

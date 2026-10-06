@@ -77,8 +77,9 @@
 /* Compacta (lote P, 05/10/2026): KPI denso para moldura de demo e painéis
    com muitos números. Sem elevação nem altura mínima; valor em mono para os
    algarismos alinharem entre cartões vizinhos. Rótulo e comparação em
-   --text-secondary: no escuro o --text-muted dá 4,2:1, abaixo de AA para
-   texto deste tamanho. */
+   --text-secondary: o rótulo carrega a leitura do número; muted fica para
+   metadado. (Desde 05/10/2026 o muted passa AA nas superfícies de texto do DS e de
+   Electia/Xscore; não nos temas de runtime.) */
 .dl-statcard--compact {
   min-height: 0;
   padding: var(--space-3);

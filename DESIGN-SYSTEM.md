@@ -57,7 +57,7 @@ Este DS atende **dois universos** com a mesma fundação de tokens:
 |-------|-----|-----|
 | `--text-primary` | `#E6EDF3` | Headings, texto principal |
 | `--text-secondary` | `#8B949E` | Texto de suporte, descrições |
-| `--text-muted` | `#848D97` | Metadata, timestamps, placeholders (≥4.5:1 em todas as superfícies escuras) |
+| `--text-muted` | `#8A939D` | Metadata, timestamps, placeholders (≥4.5:1 nas superfícies de texto do DS e de Electia/Xscore, inclusive a surface-3 `#232B3B`; surface-4 = borda, sem texto; claro: `#5F6672`. Temas de runtime ainda reprovam) |
 | `--text-inverse` | `#0B0E14` | Texto sobre accent colors |
 
 ### 1.4 Accent Colors

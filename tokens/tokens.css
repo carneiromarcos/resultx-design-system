@@ -171,8 +171,9 @@
   /* ── Text ──────────────────────────────────────────────────────────────── */
   --text-primary: #E6EDF3;
   --text-secondary: #8B949E;
-  /* 4.66:1 sobre surface-3, 5.74:1 sobre o fundo (era #6E7681: 3.42 / 4.2) */
-  --text-muted: #848D97;
+  /* 5.04:1 sobre surface-3, 6.20:1 sobre o fundo; 4.55:1 na surface-3 de
+     Electia/Xscore (#232B3B). Era #848D97 (4.21:1 ali) e, antes, #6E7681. */
+  --text-muted: #8A939D;
   --text-inverse: #0B0E14;
 
   /* ── Accent ────────────────────────────────────────────────────────────── */
@@ -313,7 +314,8 @@
   /* ── Text (contrast-corrected for WCAG AA on all surfaces) ──────────── */
   --text-primary: #0F1729;
   --text-secondary: #4B5563;
-  --text-muted: #6B7280;
+  /* 4.87:1 sobre surface-3, 5.78:1 sobre o fundo (era #6B7280: 4.07 / 4.83) */
+  --text-muted: #5F6672;
   --text-inverse: #FFF;
 
   /* ── Accent ────────────────────────────────────────────────────────────── */
@@ -434,7 +436,7 @@
     --border-subtle: #1E2736; --border-default: #2A3444;
     --border-strong: #3D4A5C; --border-accent: rgba(45, 212, 191, 0.20);
     --text-primary: #E6EDF3; --text-secondary: #8B949E;
-    --text-muted: #848D97; --text-inverse: #0B0E14;
+    --text-muted: #8A939D; --text-inverse: #0B0E14;
     --accent-primary: #2DD4BF; --accent-primary-hover: #5EEAD4;
     --accent-primary-muted: rgba(45, 212, 191, 0.15); --accent-secondary: #C49A3C;
     --accent-primary-text: #2DD4BF;
@@ -491,7 +493,7 @@
     --border-subtle: #E8ECF0; --border-default: #D1D9E0;
     --border-strong: #B0BAC5; --border-accent: rgba(29, 78, 216, 0.25);
     --text-primary: #0F1729; --text-secondary: #4B5563;
-    --text-muted: #6B7280; --text-inverse: #FFF;
+    --text-muted: #5F6672; --text-inverse: #FFF;
     --accent-primary: #1D4ED8; --accent-primary-hover: #1E40AF;
     --accent-primary-muted: rgba(29, 78, 216, 0.12); --accent-secondary: #C49A3C;
     --accent-primary-text: #1D4ED8;
