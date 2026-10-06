@@ -108,10 +108,33 @@ document.addEventListener('DOMContentLoaded', () => {
     outro.textContent = '';
     alvo.textContent = texto;
     alvo.hidden = false;
+    if (gavetaAberta) reservarAvisoNaGaveta();
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => { alvo.hidden = true; }, 4000);
+    toastTimer = setTimeout(() => { alvo.hidden = true; liberarAvisoNaGaveta(); }, 4000);
   }
-  nav.addEventListener('sidebartoggle', () => { TOASTS.forEach((t) => { t.hidden = true; }); });
+  /* O aviso grudado no pé da gaveta reserva a própria altura no
+     scroll-padding dela: foco por Tab e scrollIntoView param acima dele. O
+     item já focado volta para a área livre na hora. */
+  function reservarAvisoNaGaveta() {
+    const altura = TOASTS[1].parentElement.getBoundingClientRect().height;
+    nav.style.scrollPaddingBlockEnd = `${Math.ceil(altura) + 8}px`;
+    liberarItemFocado();
+  }
+  function liberarAvisoNaGaveta() { nav.style.scrollPaddingBlockEnd = ''; }
+  /* O Chrome não aplica o scroll-padding na rolagem do foco por Tab (o item
+     parava rente ao pé, metade sob o aviso). Aqui, a cada foco na gaveta com
+     o aviso visível, o item sobe até ficar inteiro acima dele. */
+  function liberarItemFocado() {
+    const aviso = TOASTS[1];
+    const a = document.activeElement;
+    if (aviso.hidden || !nav.contains(a) || aviso.parentElement.contains(a)) return;
+    const topoAviso = aviso.parentElement.getBoundingClientRect().top;
+    const r = a.getBoundingClientRect();
+    if (r.bottom > topoAviso - 4) nav.scrollTop += r.bottom - topoAviso + 8;
+    if (a.getBoundingClientRect().top < nav.getBoundingClientRect().top) a.scrollIntoView({ block: 'start', behavior: 'instant' });
+  }
+  nav.addEventListener('focusin', () => requestAnimationFrame(liberarItemFocado));
+  nav.addEventListener('sidebartoggle', () => { TOASTS.forEach((t) => { t.hidden = true; }); liberarAvisoNaGaveta(); });
   document.addEventListener('click', (ev) => {
     const fora = ev.target.closest('[data-fora], [data-fora-btn]');
     if (fora) {
@@ -150,7 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('pointerover', (ev) => {
     if (tip.contains(ev.target)) { clearTimeout(tipSaida); return; }
     const alvo = ev.target.closest('[data-tip]');
-    if (alvo) { if (alvo !== tipDe || tip.hidden) mostrarTip(alvo); return; }
+    /* Toda reentrada cancela o fechamento pendente ANTES de qualquer saída
+       antecipada: voltar à mesma marca em menos de 300 ms mantinha o timer. */
+    if (alvo) { clearTimeout(tipSaida); if (alvo !== tipDe || tip.hidden) mostrarTip(alvo); return; }
     if (!tip.hidden) { clearTimeout(tipSaida); tipSaida = setTimeout(esconderTip, TIP_SAIDA_MS); }
   });
   document.addEventListener('pointerout', (ev) => {

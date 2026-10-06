@@ -134,7 +134,7 @@ O validador deixa um único **WARN**: Temperamentos × Big Five com ΔE 7,5 (pro
 | C19 | `.bar-list` (barra horizontal rotulada com marcador de referência) | **Alta** | Testes por tipo do dashboard, Fit por teste e Matching usam o mesmo desenho |
 | C20 | `.histogram` (faixas ordenadas, uma série, valor no topo, rótulos de faixa) | Média | Distribuições de fit, AD e notas |
 | C21 | `.viz-tip` (dica de gráfico conforme a WCAG 1.4.13: ancorada à marca, aceita o ponteiro, não some por tempo, fecha com Escape sem mover o foco; o dado também fica no texto ou na tabela) | Média | O DS só tem `.dl-tooltip-callout` estático |
-| C9b | Região de toasts **dentro** da gaveta (`.toast-region-gaveta`), usada enquanto ela está aberta | **Alta** | Com a gaveta aberta, o `sidebar-overlay.js` deixa inert tudo o que é irmão dela, inclusive a região de toasts do `<body>`. O aviso não era lido nem visto |
+| C9b | Região de toasts **dentro** da gaveta (`.toast-region-gaveta`), usada enquanto ela está aberta. Fica **em fluxo**, como último filho: grudada no pé quando a gaveta rola, e o item focado sobe para ficar inteiro acima dela | **Alta** | Com a gaveta aberta, o `sidebar-overlay.js` deixa inert tudo o que é irmão dela, inclusive a região de toasts do `<body>`. O aviso não era lido nem visto |
 | C22 | `.stack-table` (tabela vira cartões abaixo de 960 px, com `data-label`) | **Alta** | Toda tabela do app rola na horizontal no celular |
 | — | `.level-mark` (escada N1–N4) | Baixa | Só situacional |
 | — | `.dl-status--draft` (neutro) | Baixa | O DS não tem o estado "rascunho" |
@@ -188,6 +188,32 @@ Provas novas (`rev.mjs`, **16/16**):
 
 Captura: `assets/electia-assessments-2026-10-06/gaveta-toast-375-claro.png`.
 
+## Rodada 3 — resíduos do Revisor na PR #88 (225a371)
+
+| # | Achado | Correção |
+|---|---|---|
+| P2 | Dica: voltar à **mesma** marca antes dos 300 ms não cancelava o timer de fechamento, e a dica sumia com o ponteiro em cima | O `pointerover` numa marca chama `clearTimeout` **antes** de qualquer saída antecipada. Reentrar na dica já cancelava |
+| P2 | O toast da gaveta (`position: absolute`) cobria inteiro o item focado ("Cargos" em 667×375, "Performance" em 320×568) | A região saiu do absoluto. Agora é o último filho da gaveta, **em fluxo** e `position: sticky` no pé. Ver as quatro peças abaixo |
+
+O que mudou no toast da gaveta:
+- **Lista que cabe:** o aviso ocupa o próprio espaço, abaixo do usuário, e não cobre nada.
+- **Gaveta que rola:** o aviso gruda no pé. O recuo negativo de `--space-5` fecha o vão do padding da gaveta, por onde os itens apareciam.
+- **Foco por Tab:** o Chrome não aplica o `scroll-padding` à rolagem do foco por Tab; medi o item parando rente ao pé, com 2 de 5 pontos sob o aviso. Por isso, a cada `focusin` na gaveta com o aviso visível, o script sobe o item até ficar inteiro, 8 px acima do aviso. O `scroll-padding-block-end` com a altura do aviso continua valendo para o `scrollIntoView`.
+- **Item já focado quando o aviso aparece:** sobe na hora.
+
+Provas novas (`rev2.mjs`, **17/17**):
+- **Dica, claro e escuro:**
+  - sai da marca e volta à **mesma** marca em 50, 150 e 250 ms; a dica fica visível em todas as amostras de 100 ms durante 1 s;
+  - 6 idas e voltas marca↔dica, com pausas de 120 a 320 ms, sem a dica sumir em nenhum momento;
+  - visível 800 ms depois da última ida.
+- **Toast na gaveta**, em 320×568, 375×667, 667×375 e 1024×768, nos dois temas:
+  - com a gaveta aberta e o aviso visível o tempo todo, percorri a ordem de Tab inteira: as 11 paradas, Início → Empresa → marca, até dar a volta;
+  - em cada parada, testei 5 pontos com `elementFromPoint` (centro e cantos recuados 2 px): **nenhum ponto de nenhum item cai sob o aviso**, e nenhum item fica inteiramente coberto;
+  - o 3/5 por item vem dos cantos arredondados da `.sidebar-item`, que o teste de acerto respeita, e não do aviso.
+- **Console:** zero erros e avisos.
+
+Capturas: `gaveta-toast-667x375-claro.png` e `gaveta-toast-667x375-escuro.png` (foco em "Cargos", aviso abaixo dele) e `gaveta-toast-375-claro.png`.
+
 ## Medições (Playwright, Chrome do sistema, `channel: 'chrome'`, `file://`; scripts no scratch)
 
 - **Overflow e contraste (56/56):** 4 telas (Assessments, Testes criados, Ranking fit, Ranking AD) × 7 larguras (320, 375, 390, 768, 1024, 1440, 1920) × 2 temas.
@@ -206,5 +232,5 @@ Captura: `assets/electia-assessments-2026-10-06/gaveta-toast-375-claro.png`.
   - Reduced-motion: sem animação de barras, colunas nem do card.
   - Contraste do rótulo da aba durante a troca: mínimo de 7,22:1 no claro e 5,89:1 no escuro, amostrado a cada 15 ms.
   - Zero erros e zero avisos no console.
-- **Repositório** (refeito na rodada 2): `npm test` deu 634/634, `npm run lint` passou limpo e `npm run build` não gerou diff em `dist/`. As 56 combinações (overflow e contraste) e as 35 provas de teclado continuam passando depois das correções.
+- **Repositório** (refeito na rodada 2): `npm test` deu 634/634, `npm run lint` passou limpo e `npm run build` não gerou diff em `dist/`. Depois das rodadas 2 e 3, continuam passando as 56 combinações de overflow e contraste, as 35 provas de teclado, as 16 da rodada 2 e as 17 da rodada 3.
 - **Paleta:** `validate_palette.js` da skill `dataviz` no claro (superfície `#ffffff`) e no escuro (`#0B0E14`). Passa em faixa, croma, visão normal e 3:1, com o único WARN de CVD citado.

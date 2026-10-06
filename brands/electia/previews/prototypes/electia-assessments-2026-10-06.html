@@ -267,11 +267,17 @@
     /* CANDIDATO 9 (do dashboard) — região de toasts */
     .toast-region { position: fixed; inset-inline: var(--space-4); inset-block-end: var(--space-4); z-index: var(--z-tooltip); display: grid; justify-items: center; pointer-events: none; }
     .toast-region .toast { max-inline-size: 480px; margin: 0; background: var(--bg-base); box-shadow: var(--elevation-3); pointer-events: auto; }
-    /* Na gaveta: preso ao pé dela (a gaveta tem transform, então "fixed" aqui
-       é relativo a ela), acima do bloco do usuário. Acima de 1024 px não há
-       gaveta e esta região nunca recebe aviso. */
-    .toast-region-gaveta { position: absolute; inset-inline: var(--space-3); inset-block-end: calc(var(--space-16) + var(--space-4)); }
-    .toast-region-gaveta .toast { color: var(--text-primary); }
+    /* Na gaveta (C9b): em FLUXO, último filho da gaveta, nunca sobreposto.
+       Se a lista cabe, o aviso fica no próprio espaço, abaixo do usuário.
+       Se a gaveta rola, ele gruda no pé (sticky) e a gaveta ganha
+       scroll-padding-block-end com a altura dele (JS): o item focado por Tab
+       para acima do aviso (WCAG 2.4.11). Vazia, a região não ocupa espaço,
+       mas continua na árvore (live region montada antes do aviso). */
+    /* A gaveta tem padding no pé (--space-5) e o sticky para antes dele:
+       sem o recuo negativo, os itens apareciam por baixo, no vão de 20 px. */
+    .toast-region-gaveta { position: sticky; inset-block-end: calc(var(--space-5) * -1); z-index: 1; flex: none; display: grid; margin-block-end: calc(var(--space-5) * -1); }
+    .toast-region-gaveta:has(.toast:not([hidden])) { padding: var(--space-2) var(--space-3) calc(var(--space-3) + var(--space-5)); background: var(--sidebar-bg); }
+    .toast-region-gaveta .toast { margin: 0; background: var(--bg-base); box-shadow: var(--elevation-3); color: var(--text-primary); }
 
     /* ── Responsivo ─────────────────────────────────────────────────── */
     @media (max-width: 1279.98px) { .models-situ { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -362,16 +368,16 @@
       <hr class="sidebar-divider">
       <a class="sidebar-item" href="#empresa" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-building"/></svg><span class="sidebar-label">Empresa</span></a>
     </nav>
-    <!-- Com a gaveta aberta, todo irmão dela vira inert, inclusive a região
-         de toasts do <body>. Esta segunda região mora DENTRO da gaveta e recebe
-         os avisos enquanto ela está aberta (CANDIDATO 9b). -->
-    <div class="toast-region toast-region-gaveta" role="status" aria-live="polite"><div class="toast toast-info" data-toast-gaveta hidden></div></div>
     <div class="sidebar-footer">
       <div class="sidebar-user">
         <span class="sidebar-user-avatar" aria-hidden="true">MC</span>
         <div><div class="sidebar-user-name">Marina Couto</div><div class="sidebar-user-role">RH</div></div>
       </div>
     </div>
+    <!-- Com a gaveta aberta, todo irmão dela vira inert, inclusive a região
+         de toasts do <body>. Esta segunda região mora DENTRO da gaveta, em
+         fluxo, no fim dela (CANDIDATO 9b). -->
+    <div class="toast-region-gaveta" role="status" aria-live="polite"><div class="toast toast-info" data-toast-gaveta hidden></div></div>
   </aside>
 
   <div class="main">
