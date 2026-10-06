@@ -33,7 +33,13 @@
  *     panel and outside the background that turns inert; otherwise to the
  *     first trigger.
  *   - Tab is trapped inside the panel while it is open — an open overlay that
- *     lets Tab wander into the page behind it is a maze for keyboard users
+ *     lets Tab wander into the page behind it is a maze for keyboard users.
+ *     The script moves focus itself on every Tab/Shift+Tab: next valid
+ *     target in DOM order, wrapping at the ends, checking activeElement after
+ *     each .focus() and skipping any target that refuses focus. Targets are
+ *     filtered for [inert] ancestors, hidden, effectively :disabled (which
+ *     covers <fieldset disabled>) and tabindex=-1. Positive tabindex order is
+ *     not honoured inside the panel (DOM order is).
  *   - While open it is a modal dialog for real: role="dialog" +
  *     aria-modal="true" on the panel, and every sibling on the path from the
  *     panel up to <body> gets [inert] (except the scrim, which must stay
@@ -70,10 +76,27 @@
      tabindex=-1. Sem este filtro o primeiro alvo podia ser um desses: o
      .focus() falhava em silencio, o foco ficava no <body> e o Tab nao
      circulava do ultimo para o primeiro. */
+  /* Desabilitacao EFETIVA. Um controle dentro de <fieldset disabled> tem
+     .disabled === false, mas casa com :disabled e recusa o foco. :disabled
+     ja respeita a excecao do primeiro <legend> do fieldset (que continua
+     habilitado). Sem suporte a :disabled, o fallback e conservador: exclui
+     qualquer coisa dentro de fieldset[disabled]. */
+  function desabilitado(no) {
+    try {
+      return no.matches(':disabled');
+    } catch (e) {
+      return !!(
+        no.disabled ||
+        no.hasAttribute('disabled') ||
+        (no.closest && no.closest('fieldset[disabled]'))
+      );
+    }
+  }
+
   function focavel(no) {
     if (no.offsetParent === null) return false;
     if (no.closest('[inert]')) return false;
-    if (no.disabled || no.hasAttribute('disabled')) return false;
+    if (desabilitado(no)) return false;
     if (no.getAttribute('tabindex') === '-1') return false;
     if (typeof window.getComputedStyle === 'function') {
       var estilo = window.getComputedStyle(no);
@@ -268,33 +291,32 @@
     else open(el, invocador);
   }
 
-  /* Usa a lista filtrada: o ciclo so passa por quem aceita o foco. */
+  /* O Tab dentro da gaveta aberta e todo nosso: a lista filtrada e a fonte,
+     o passo vai para o proximo alvo na direcao do Tab (dando a volta nas
+     pontas) e, depois de cada .focus(), confere document.activeElement. Se um
+     alvo recusar o foco por qualquer motivo que o filtro nao previu, avanca
+     para o seguinte. Assim o ciclo nunca sai do painel nem trava numa ponta
+     que recusa foco (o caso do <fieldset disabled>, Revisor da #86). Sem
+     nenhum alvo que aceite, o foco fica no proprio painel. */
   function trapTab(el, event) {
+    event.preventDefault();
     var alvos = focusablesIn(el);
-    if (!alvos.length) {
-      event.preventDefault();
+    var n = alvos.length;
+    if (!n) {
       el.focus();
       return;
     }
-    var primeiro = alvos[0];
-    var ultimo = alvos[alvos.length - 1];
-    var ativo = document.activeElement;
-
-    /* Foco fora da lista (no proprio painel, ou num alvo que deixou de
-       valer): entra pela ponta certa em vez de deixar o navegador decidir. */
-    if (alvos.indexOf(ativo) === -1) {
-      event.preventDefault();
-      (event.shiftKey ? ultimo : primeiro).focus();
-      return;
+    var passo = event.shiftKey ? -1 : 1;
+    var atual = alvos.indexOf(document.activeElement);
+    /* Fora da lista (no proprio painel): o Tab entra pelo primeiro, o
+       Shift+Tab pelo ultimo. */
+    if (atual === -1) atual = event.shiftKey ? n : -1;
+    for (var k = 1; k <= n; k++) {
+      var alvo = alvos[(((atual + passo * k) % n) + n) % n];
+      alvo.focus();
+      if (document.activeElement === alvo) return;
     }
-
-    if (event.shiftKey && ativo === primeiro) {
-      event.preventDefault();
-      ultimo.focus();
-    } else if (!event.shiftKey && ativo === ultimo) {
-      event.preventDefault();
-      primeiro.focus();
-    }
+    el.focus();
   }
 
   function enhance(el) {

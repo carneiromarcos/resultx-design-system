@@ -315,3 +315,89 @@ describe('Revisor #86 (P3-1) — aria-modal preexistente volta ao fechar', () =>
     expect(ctx.nav.getAttribute('aria-modal')).toBe('false');
   });
 });
+
+/**
+ * Revisor da #86 (P2 restante): um controle dentro de <fieldset disabled> tem
+ * .disabled === false, mas casa com :disabled e recusa o foco. Ele entrava na
+ * lista e o trap o usava como ponta: Tab no último ficava no último e
+ * Shift+Tab no primeiro podia cair no <body>.
+ *
+ * O que o mini-dom simula aqui, e o que não: há um STUB de matches(':disabled')
+ * (próprio [disabled] ou ancestral fieldset[disabled] fora do primeiro
+ * <legend>) e o .focus() recusa elementos desabilitados ou inertes. A
+ * navegação nativa do Tab NÃO é simulada: estes testes provam o que o script
+ * faz no keydown (que agora move o foco ele mesmo em todo Tab). A prova com a
+ * navegação real do navegador é do Playwright.
+ */
+describe('Revisor #86 (P2) — <fieldset disabled> e alvos que recusam foco', () => {
+  const comFieldsets = (el) => [
+    el('fieldset', { id: 'fs-ini', disabled: '' }, el('button', { id: 'off-ini' })),
+    el('a', { href: '#a', id: 'item-a' }),
+    el(
+      'fieldset',
+      { id: 'fs-leg', disabled: '' },
+      el('legend', {}, el('input', { id: 'na-legenda' })),
+      el('input', { id: 'fora-da-legenda' }),
+    ),
+    el('a', { href: '#b', id: 'item-b' }),
+    el('fieldset', { id: 'fs-fim', disabled: '' }, el('button', { id: 'off-fim' })),
+  ];
+
+  test('controle em fieldset disabled não é alvo; o do primeiro legend é', () => {
+    const ctx = montar({ filhos: comFieldsets });
+    expect(ctx.q('off-ini').disabled).toBeUndefined(); /* como .disabled === false no navegador */
+    expect(ctx.q('off-ini').matches(':disabled')).toBe(true);
+    expect(ctx.q('na-legenda').matches(':disabled')).toBe(false);
+    abrir(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
+  });
+
+  test('Tab percorre só os válidos e dá a volta, 10 repetições, nunca no <body>', () => {
+    const ctx = montar({ filhos: comFieldsets });
+    abrir(ctx);
+    const ordem = ['na-legenda', 'item-b', 'item-a'];
+    for (let i = 0; i < 10; i++) {
+      expect(ctx.tecla('Tab')).toBe(false);
+      expect(ctx.doc.activeElement).toBe(ctx.q(ordem[i % 3]));
+    }
+  });
+
+  test('Shift+Tab no primeiro vai ao último, 10 repetições, nunca no <body>', () => {
+    const ctx = montar({ filhos: comFieldsets });
+    abrir(ctx);
+    const ordem = ['item-b', 'na-legenda', 'item-a'];
+    for (let i = 0; i < 10; i++) {
+      expect(ctx.tecla('Tab', { shiftKey: true })).toBe(false);
+      expect(ctx.doc.activeElement).toBe(ctx.q(ordem[i % 3]));
+    }
+  });
+
+  test('um alvo que recusa o foco por motivo que o filtro não previu é pulado', () => {
+    const ctx = montar({
+      filhos: (el) => [
+        el('a', { href: '#a', id: 'item-a' }),
+        el('a', { href: '#b', id: 'item-b' }),
+        el('a', { href: '#c', id: 'recusa' }),
+      ],
+    });
+    /* Simulação declarada: este nó ignora .focus(), como um alvo que o
+       navegador recusasse. É a ponta final da lista. */
+    ctx.q('recusa').focus = () => {};
+    abrir(ctx);
+    ctx.q('item-b').focus();
+    ctx.tecla('Tab');
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
+    ctx.tecla('Tab', { shiftKey: true });
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-b'));
+  });
+
+  test('nenhum alvo aceita o foco: o foco fica no próprio painel', () => {
+    const ctx = montar({
+      filhos: (el) => [el('fieldset', { disabled: '' }, el('button', { id: 'off' }))],
+    });
+    abrir(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.nav);
+    ctx.tecla('Tab');
+    expect(ctx.doc.activeElement).toBe(ctx.nav);
+  });
+});

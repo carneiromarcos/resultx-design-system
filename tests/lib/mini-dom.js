@@ -195,9 +195,27 @@ class MiniNode {
     for (let n = this; n && n.tagName; n = n.parentNode) if (n.hasAttribute('inert')) return true;
     return false;
   }
-  /* Elemento inerte (ou dentro de um) não recebe foco: a chamada é ignorada. */
+  /* STUB de :disabled — só o necessário para os testes, não o algoritmo do
+     navegador inteiro: o próprio [disabled], ou um ancestral
+     <fieldset disabled> fora do primeiro <legend> dele (a exceção da spec).
+     Qualquer outro seletor vai para o casador simples. */
+  matches(sel) {
+    if (sel !== ':disabled') return casa(this, sel);
+    if (this.hasAttribute('disabled')) return true;
+    for (let n = this.parentNode; n && n.tagName; n = n.parentNode) {
+      if (n.tagName === 'FIELDSET' && n.hasAttribute('disabled')) {
+        const legenda = n.children.find((c) => c.tagName === 'LEGEND');
+        if (!(legenda && legenda.contains(this))) return true;
+      }
+    }
+    return false;
+  }
+
+  /* Elemento inerte (ou dentro de um) ou desabilitado não recebe foco: a
+     chamada é ignorada, como no navegador. */
   focus() {
     if (this.inertEfetivo) return;
+    if (this.matches(':disabled')) return;
     this.ownerDocument.activeElement = this;
   }
 

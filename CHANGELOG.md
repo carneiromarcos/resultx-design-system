@@ -78,6 +78,7 @@ Medido no Chrome do sistema (Playwright, `channel: 'chrome'`): 141 verificaçõe
 
 - **`.sidebar-item` sem transição de cor e fundo (P2-1).** Com ponte de preenchimento claro, focar o item atual invertia a polaridade (tinta escura sobre dourado → branco sobre navy), e os quadros do meio caíam a ~2:1. A troca agora é instantânea. Um teste amostra 11 quadros de cada par de estados em todos os escopos e pontes, e mais a troca de tema do fundo da sidebar.
 - **Foco só em alvos que aceitam foco (P2-2).** A gaveta ignora focáveis dentro de `[inert]`, ocultos (`display`/`visibility`), desabilitados ou com `tabindex=-1`, tanto no foco inicial quanto no ciclo de Tab. Sem alvo válido, o próprio painel recebe o foco.
+- **`<fieldset disabled>` na gaveta (P2 restante).** A desabilitação efetiva agora é filtrada por `:disabled`, que respeita o primeiro `<legend>`; sem suporte a `:disabled`, o fallback exclui tudo dentro de `fieldset[disabled]`. O script move ele mesmo o foco em cada Tab e, depois de cada `.focus()`, confere `activeElement` e pula o alvo que recusar. No Chrome, foram 10 Tab no último e 10 Shift+Tab no primeiro, mais 30 + 30 em ciclo contínuo: nenhuma ida ao BODY. No HEAD anterior foram 68.
 - **`aria-modal` preexistente volta ao fechar (P3-1)**, com presença e valor, como já acontecia com o `role`.
 
 **Pendente:** `.sidebar-section-label` (`--sidebar-text-label`, branco a 30 %, 10 px) mede
