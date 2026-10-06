@@ -34,12 +34,24 @@
  *     first trigger.
  *   - Tab is trapped inside the panel while it is open — an open overlay that
  *     lets Tab wander into the page behind it is a maze for keyboard users.
- *     The script moves focus itself on every Tab/Shift+Tab: next valid
- *     target in DOM order, wrapping at the ends, checking activeElement after
- *     each .focus() and skipping any target that refuses focus. Targets are
- *     filtered for [inert] ancestors, hidden, effectively :disabled (which
- *     covers <fieldset disabled>) and tabindex=-1. Positive tabindex order is
- *     not honoured inside the panel (DOM order is).
+ *     Inside the panel the BROWSER navigates (radio groups, contenteditable,
+ *     positive tabindex, widgets that consume Tab all keep their native
+ *     behaviour). The script only acts at the edges, with focus sentinels:
+ *     two empty, aria-hidden, tabbable elements inserted at the start
+ *     (tabindex=1, so it precedes even positive tabindex) and at the end
+ *     (tabindex=0) of the panel while it is open, removed on close. Tab past
+ *     the last stop lands on the end sentinel, which sends focus to the first
+ *     valid stop; Shift+Tab before the first lands on the start sentinel,
+ *     which sends it to the last. "Valid" excludes [inert] ancestors, hidden,
+ *     effectively :disabled (covers <fieldset disabled>, keeps the first
+ *     <legend>) and tabindex=-1; includes contenteditable; a radio group
+ *     counts once (its checked radio, or the first if none is checked); order
+ *     is sequential (positive tabindex first). Every .focus() is checked
+ *     against activeElement and the next candidate is tried; if nothing
+ *     accepts, the panel itself (tabindex=-1) takes focus. One keydown edge
+ *     case: Tab while the panel ITSELF has focus goes to the first/last stop
+ *     (the browser would otherwise leave the page). No keydown handler acts
+ *     on an event whose defaultPrevented is already true.
  *   - While open it is a modal dialog for real: role="dialog" +
  *     aria-modal="true" on the panel, and every sibling on the path from the
  *     panel up to <body> gets [inert] (except the scrim, which must stay
@@ -67,7 +79,10 @@
     'textarea:not([disabled])',
     'summary',
     '[tabindex]:not([tabindex="-1"])',
+    '[contenteditable]:not([contenteditable="false"])',
   ].join(',');
+
+  var SENTINEL_ATTR = 'data-sidebar-sentinel';
 
   /* Um alvo so vale se o navegador aceitar o .focus(). Fica de fora o que
      esta dentro de um [inert] (inclusive um grupo inerte dentro do painel),
@@ -105,23 +120,118 @@
     return true;
   }
 
+  function marcado(radio) {
+    return radio.checked === true || (radio.checked === undefined && radio.hasAttribute('checked'));
+  }
+
+  function chaveDoGrupo(radio) {
+    var nome = radio.getAttribute('name');
+    if (radio.tagName !== 'INPUT' || radio.getAttribute('type') !== 'radio' || !nome) return null;
+    var form = radio.form || (radio.closest && radio.closest('form'));
+    return { nome: nome, form: form || null };
+  }
+
+  function ordemSequencial(no) {
+    var t = parseInt(no.getAttribute('tabindex'), 10);
+    return t > 0 ? t : 0;
+  }
+
+  /* Paradas de Tab validas, na ordem sequencial do navegador: tabindex
+     positivo primeiro (crescente), depois os demais em ordem de DOM. Um grupo
+     de radio vale uma parada so: o marcado, ou o primeiro se nenhum estiver
+     marcado. As sentinelas nao contam. */
   function focusablesIn(el) {
     var todos = el.querySelectorAll(FOCUSABLE);
     var validos = [];
+    var grupos = [];
     for (var i = 0; i < todos.length; i++) {
-      if (focavel(todos[i])) validos.push(todos[i]);
+      var no = todos[i];
+      if (no.hasAttribute(SENTINEL_ATTR) || !focavel(no)) continue;
+      var chave = chaveDoGrupo(no);
+      if (chave) {
+        var grupo = null;
+        for (var g = 0; g < grupos.length; g++) {
+          if (grupos[g].nome === chave.nome && grupos[g].form === chave.form) grupo = grupos[g];
+        }
+        if (!grupo) {
+          grupo = { nome: chave.nome, form: chave.form, indice: validos.length };
+          grupos.push(grupo);
+          validos.push(no);
+        } else if (marcado(no) && !marcado(validos[grupo.indice])) {
+          validos[grupo.indice] = no;
+        }
+        continue;
+      }
+      validos.push(no);
     }
-    return validos;
+    var comOrdem = validos.map(function (no, posicao) {
+      return { no: no, ordem: ordemSequencial(no), posicao: posicao };
+    });
+    comOrdem.sort(function (a, b) {
+      if (a.ordem !== b.ordem) {
+        if (a.ordem === 0) return 1;
+        if (b.ordem === 0) return -1;
+        return a.ordem - b.ordem;
+      }
+      return a.posicao - b.posicao;
+    });
+    return comOrdem.map(function (x) {
+      return x.no;
+    });
   }
 
-  /* Foca o primeiro alvo que de fato receber o foco; sem nenhum, o proprio
-     painel (tabindex=-1, posto no enhance). Nunca deixa o foco no <body>. */
-  function focarDentro(el, alvos) {
+  /* Foca o primeiro alvo (na direcao pedida) que de fato receber o foco;
+     sem nenhum, o proprio painel (tabindex=-1, posto no enhance). Nunca
+     deixa o foco no <body>. */
+  function focarDentro(el, alvos, doFim) {
     for (var i = 0; i < alvos.length; i++) {
-      alvos[i].focus();
-      if (document.activeElement === alvos[i]) return;
+      var alvo = alvos[doFim ? alvos.length - 1 - i : i];
+      alvo.focus();
+      if (document.activeElement === alvo) return;
     }
     el.focus();
+  }
+
+  /* Sentinela: vazia, fora da arvore de acessibilidade, tabulavel. Estilo
+     pelo CSSOM (el.style), que uma CSP sem 'unsafe-inline' permite. */
+  function criarSentinela(el, tabindex, aoFocar) {
+    var s = document.createElement('span');
+    s.setAttribute(SENTINEL_ATTR, '');
+    s.setAttribute('tabindex', tabindex);
+    s.setAttribute('aria-hidden', 'true');
+    s.style.position = 'absolute';
+    s.style.width = '1px';
+    s.style.height = '1px';
+    s.style.overflow = 'hidden';
+    s.style.clipPath = 'inset(50%)';
+    s.style.whiteSpace = 'nowrap';
+    s.addEventListener('focus', aoFocar);
+    return s;
+  }
+
+  function porSentinelas(el) {
+    var inicio = criarSentinela(el, '1', function (event) {
+      /* Chegou de dentro do painel (Shift+Tab antes da primeira parada): vai
+         para a ultima. De fora ou do proprio painel: entra pela primeira. */
+      var de = event.relatedTarget;
+      var deDentro = de && de !== el && el.contains(de) && !de.hasAttribute(SENTINEL_ATTR);
+      focarDentro(el, focusablesIn(el), !!deDentro);
+    });
+    var fim = criarSentinela(el, '0', function () {
+      /* Tab depois da ultima parada: volta para a primeira. */
+      focarDentro(el, focusablesIn(el), false);
+    });
+    el.insertBefore(inicio, el.firstChild);
+    el.appendChild(fim);
+    el._sentinelas = [inicio, fim];
+  }
+
+  function tirarSentinelas(el) {
+    var lista = el._sentinelas || [];
+    for (var i = 0; i < lista.length; i++) {
+      if (lista[i].parentNode) lista[i].parentNode.removeChild(lista[i]);
+    }
+    el._sentinelas = null;
   }
 
   function triggersFor(el) {
@@ -251,6 +361,7 @@
 
     tornarModal(el);
     isolarFundo(el);
+    porSentinelas(el);
 
     /* Foco sincrono, e nao num quadro futuro: o CSS aplica visibility com
        `0s` ao abrir justamente para que o painel ja esteja visivel aqui.
@@ -275,6 +386,7 @@
        inerte nao recebe foco. */
     liberarFundo(el);
     desfazerModal(el);
+    tirarSentinelas(el);
 
     /* Devolver o foco a quem abriu. Sem isto ele volta ao topo da pagina e o
        usuario de teclado perde o lugar. */
@@ -291,32 +403,14 @@
     else open(el, invocador);
   }
 
-  /* O Tab dentro da gaveta aberta e todo nosso: a lista filtrada e a fonte,
-     o passo vai para o proximo alvo na direcao do Tab (dando a volta nas
-     pontas) e, depois de cada .focus(), confere document.activeElement. Se um
-     alvo recusar o foco por qualquer motivo que o filtro nao previu, avanca
-     para o seguinte. Assim o ciclo nunca sai do painel nem trava numa ponta
-     que recusa foco (o caso do <fieldset disabled>, Revisor da #86). Sem
-     nenhum alvo que aceite, o foco fica no proprio painel. */
-  function trapTab(el, event) {
+  /* Unico caso de borda no teclado: o foco esta no PROPRIO painel
+     (tabindex=-1, sem parada sequencial). Dali o navegador procuraria a
+     parada seguinte pela posicao no DOM — e o fundo esta inerte, entao o
+     foco sairia da pagina. Nas paradas de verdade, nada e interceptado. */
+  function tabNoPainel(el, event) {
+    if (document.activeElement !== el) return;
     event.preventDefault();
-    var alvos = focusablesIn(el);
-    var n = alvos.length;
-    if (!n) {
-      el.focus();
-      return;
-    }
-    var passo = event.shiftKey ? -1 : 1;
-    var atual = alvos.indexOf(document.activeElement);
-    /* Fora da lista (no proprio painel): o Tab entra pelo primeiro, o
-       Shift+Tab pelo ultimo. */
-    if (atual === -1) atual = event.shiftKey ? n : -1;
-    for (var k = 1; k <= n; k++) {
-      var alvo = alvos[(((atual + passo * k) % n) + n) % n];
-      alvo.focus();
-      if (document.activeElement === alvo) return;
-    }
-    el.focus();
+    focarDentro(el, focusablesIn(el), event.shiftKey);
   }
 
   function enhance(el) {
@@ -344,11 +438,14 @@
 
     document.addEventListener('keydown', function (event) {
       if (!isOpen(el)) return;
+      /* Um widget dentro da gaveta que ja consumiu a tecla (um editor que usa
+         Tab para indentar, um combobox que fecha com Escape) manda. */
+      if (event.defaultPrevented) return;
       if (event.key === 'Escape') {
         event.preventDefault();
         close(el);
       } else if (event.key === 'Tab') {
-        trapTab(el, event);
+        tabNoPainel(el, event);
       }
     });
 

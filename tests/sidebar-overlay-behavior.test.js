@@ -67,6 +67,18 @@ const abrir = ({ q }) => {
   q('gatilho').click();
 };
 
+/**
+ * A navegação nativa do Tab NÃO é simulada no mini-dom. Dentro da gaveta quem
+ * navega é o navegador; o script só age nas bordas, pelas sentinelas. Estes
+ * ajudantes reproduzem o único efeito do navegador que importa aqui: Tab
+ * depois da última parada FOCA a sentinela do fim; Shift+Tab antes da
+ * primeira FOCA a do início (com relatedTarget = quem tinha o foco). A prova
+ * com Tab de verdade é do Playwright.
+ */
+const sentinelas = ({ nav }) => nav.children.filter((c) => c.hasAttribute('data-sidebar-sentinel'));
+const tabDepoisDoUltimo = (ctx) => sentinelas(ctx)[1].focus();
+const shiftTabAntesDoPrimeiro = (ctx) => sentinelas(ctx)[0].focus();
+
 describe('Fechada: nada muda para quem já consome', () => {
   test('sem role de diálogo e sem inert no fundo', () => {
     const { nav, q } = montar();
@@ -160,16 +172,45 @@ describe('Fechar desfaz tudo e devolve o foco ao gatilho', () => {
   });
 });
 
-describe('Tab continua preso na gaveta aberta', () => {
-  test('Tab no último volta ao primeiro; Shift+Tab no primeiro vai ao último', () => {
+describe('Tab continua preso na gaveta aberta (sentinelas nas bordas)', () => {
+  test('aberta: uma sentinela no início (tabindex=1) e outra no fim (tabindex=0), vazias e aria-hidden', () => {
+    const ctx = montar();
+    abrir(ctx);
+    const [inicio, fim] = sentinelas(ctx);
+    expect(ctx.nav.children[0]).toBe(inicio);
+    expect(ctx.nav.children[ctx.nav.children.length - 1]).toBe(fim);
+    expect(inicio.getAttribute('tabindex')).toBe('1');
+    expect(fim.getAttribute('tabindex')).toBe('0');
+    for (const s of [inicio, fim]) {
+      expect(s.getAttribute('aria-hidden')).toBe('true');
+      expect(s.children).toHaveLength(0);
+    }
+  });
+
+  test('fechada: as sentinelas saem', () => {
+    const ctx = montar();
+    abrir(ctx);
+    ctx.tecla('Escape');
+    expect(sentinelas(ctx)).toHaveLength(0);
+  });
+
+  test('Tab depois do último volta ao primeiro; Shift+Tab antes do primeiro vai ao último', () => {
     const ctx = montar();
     abrir(ctx);
     expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
     ctx.q('item-b').focus();
-    expect(ctx.tecla('Tab')).toBe(false); /* preventDefault */
+    tabDepoisDoUltimo(ctx);
     expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
-    expect(ctx.tecla('Tab', { shiftKey: true })).toBe(false);
+    shiftTabAntesDoPrimeiro(ctx);
     expect(ctx.doc.activeElement).toBe(ctx.q('item-b'));
+  });
+
+  test('Tab numa parada de verdade NÃO é interceptado (o navegador navega)', () => {
+    const ctx = montar();
+    abrir(ctx);
+    expect(ctx.tecla('Tab')).toBe(true);
+    expect(ctx.tecla('Tab', { shiftKey: true })).toBe(true);
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
   });
 });
 
@@ -249,13 +290,13 @@ describe('Revisor #86 (P2-2) — só alvos que aceitam o foco', () => {
     expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
   });
 
-  test('primeiro grupo inerte: Tab no último volta ao primeiro VÁLIDO; Shift+Tab no primeiro vai ao último', () => {
+  test('primeiro grupo inerte: as bordas pulam o grupo inerte', () => {
     const ctx = montar({ filhos: comGrupoInerte });
     abrir(ctx);
     ctx.q('item-b').focus();
-    expect(ctx.tecla('Tab')).toBe(false);
+    tabDepoisDoUltimo(ctx);
     expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
-    expect(ctx.tecla('Tab', { shiftKey: true })).toBe(false);
+    shiftTabAntesDoPrimeiro(ctx);
     expect(ctx.doc.activeElement).toBe(ctx.q('item-b'));
   });
 
@@ -271,7 +312,7 @@ describe('Revisor #86 (P2-2) — só alvos que aceitam o foco', () => {
     expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
   });
 
-  test('painel sem focáveis: o foco vai ao próprio painel (tabindex=-1) e Tab o mantém lá', () => {
+  test('painel sem focáveis: o foco vai ao próprio painel (tabindex=-1) e lá fica', () => {
     const ctx = montar({ filhos: (el) => [el('p', { id: 'texto' })] });
     abrir(ctx);
     expect(ctx.nav.getAttribute('tabindex')).toBe('-1');
@@ -280,9 +321,13 @@ describe('Revisor #86 (P2-2) — só alvos que aceitam o foco', () => {
     expect(ctx.doc.activeElement).toBe(ctx.nav);
     expect(ctx.tecla('Tab', { shiftKey: true })).toBe(false);
     expect(ctx.doc.activeElement).toBe(ctx.nav);
+    tabDepoisDoUltimo(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.nav);
+    shiftTabAntesDoPrimeiro(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.nav);
   });
 
-  test('foco no próprio painel com alvos: Tab entra pelo primeiro, Shift+Tab pelo último', () => {
+  test('foco no próprio painel com alvos: Tab entra pelo primeiro, Shift+Tab pelo último (único caso de borda no keydown)', () => {
     const ctx = montar();
     abrir(ctx);
     ctx.nav.focus();
@@ -319,15 +364,13 @@ describe('Revisor #86 (P3-1) — aria-modal preexistente volta ao fechar', () =>
 /**
  * Revisor da #86 (P2 restante): um controle dentro de <fieldset disabled> tem
  * .disabled === false, mas casa com :disabled e recusa o foco. Ele entrava na
- * lista e o trap o usava como ponta: Tab no último ficava no último e
- * Shift+Tab no primeiro podia cair no <body>.
+ * lista e virava ponta do ciclo.
  *
  * O que o mini-dom simula aqui, e o que não: há um STUB de matches(':disabled')
  * (próprio [disabled] ou ancestral fieldset[disabled] fora do primeiro
  * <legend>) e o .focus() recusa elementos desabilitados ou inertes. A
- * navegação nativa do Tab NÃO é simulada: estes testes provam o que o script
- * faz no keydown (que agora move o foco ele mesmo em todo Tab). A prova com a
- * navegação real do navegador é do Playwright.
+ * navegação nativa do Tab NÃO é simulada (ver os ajudantes de sentinela no
+ * topo). A prova com Tab de verdade é do Playwright.
  */
 describe('Revisor #86 (P2) — <fieldset disabled> e alvos que recusam foco', () => {
   const comFieldsets = (el) => [
@@ -352,23 +395,15 @@ describe('Revisor #86 (P2) — <fieldset disabled> e alvos que recusam foco', ()
     expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
   });
 
-  test('Tab percorre só os válidos e dá a volta, 10 repetições, nunca no <body>', () => {
+  test('bordas, 10 repetições: depois do último → primeiro válido; antes do primeiro → último válido', () => {
     const ctx = montar({ filhos: comFieldsets });
     abrir(ctx);
-    const ordem = ['na-legenda', 'item-b', 'item-a'];
     for (let i = 0; i < 10; i++) {
-      expect(ctx.tecla('Tab')).toBe(false);
-      expect(ctx.doc.activeElement).toBe(ctx.q(ordem[i % 3]));
-    }
-  });
-
-  test('Shift+Tab no primeiro vai ao último, 10 repetições, nunca no <body>', () => {
-    const ctx = montar({ filhos: comFieldsets });
-    abrir(ctx);
-    const ordem = ['item-b', 'na-legenda', 'item-a'];
-    for (let i = 0; i < 10; i++) {
-      expect(ctx.tecla('Tab', { shiftKey: true })).toBe(false);
-      expect(ctx.doc.activeElement).toBe(ctx.q(ordem[i % 3]));
+      ctx.q('item-b').focus();
+      tabDepoisDoUltimo(ctx);
+      expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
+      shiftTabAntesDoPrimeiro(ctx);
+      expect(ctx.doc.activeElement).toBe(ctx.q('item-b'));
     }
   });
 
@@ -384,11 +419,11 @@ describe('Revisor #86 (P2) — <fieldset disabled> e alvos que recusam foco', ()
        navegador recusasse. É a ponta final da lista. */
     ctx.q('recusa').focus = () => {};
     abrir(ctx);
-    ctx.q('item-b').focus();
-    ctx.tecla('Tab');
-    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
-    ctx.tecla('Tab', { shiftKey: true });
+    ctx.q('item-a').focus();
+    shiftTabAntesDoPrimeiro(ctx);
     expect(ctx.doc.activeElement).toBe(ctx.q('item-b'));
+    tabDepoisDoUltimo(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
   });
 
   test('nenhum alvo aceita o foco: o foco fica no próprio painel', () => {
@@ -397,7 +432,114 @@ describe('Revisor #86 (P2) — <fieldset disabled> e alvos que recusam foco', ()
     });
     abrir(ctx);
     expect(ctx.doc.activeElement).toBe(ctx.nav);
-    ctx.tecla('Tab');
+    tabDepoisDoUltimo(ctx);
     expect(ctx.doc.activeElement).toBe(ctx.nav);
+  });
+});
+
+/**
+ * Revisor da #86 (regressões do Tab gerenciado): o script não pode tomar o
+ * Tab de quem o consumiu (um editor que indenta) e a escolha das pontas segue
+ * a ordem do navegador — contenteditable entra, grupo de radio vale uma
+ * parada (o marcado, ou o primeiro), tabindex positivo vem antes.
+ */
+describe('Revisor #86 — navegação nativa por dentro, bordas pelo script', () => {
+  test('Tab consumido por um widget (defaultPrevented) não move o foco', () => {
+    const ctx = montar({
+      filhos: (el) => [
+        el('a', { href: '#a', id: 'item-a' }),
+        el('textarea', { id: 'editor' }),
+        el('a', { href: '#b', id: 'item-b' }),
+      ],
+    });
+    ctx.q('editor').addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') e.preventDefault(); /* indenta */
+    });
+    abrir(ctx);
+    ctx.q('editor').focus();
+    ctx.tecla('Tab', { alvo: ctx.q('editor') });
+    expect(ctx.doc.activeElement).toBe(ctx.q('editor'));
+  });
+
+  test('Escape consumido por um widget (defaultPrevented) não fecha a gaveta', () => {
+    const ctx = montar();
+    ctx.q('item-a').addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') e.preventDefault(); /* ex.: combobox fechando a lista */
+    });
+    abrir(ctx);
+    ctx.tecla('Escape', { alvo: ctx.q('item-a') });
+    expect(ctx.nav.hasAttribute('data-open')).toBe(true);
+    ctx.tecla('Escape');
+    expect(ctx.nav.hasAttribute('data-open')).toBe(false);
+  });
+
+  test('Tab no próprio painel com defaultPrevented: o script não age', () => {
+    const ctx = montar();
+    ctx.nav.addEventListener('keydown', (e) => e.preventDefault());
+    abrir(ctx);
+    ctx.nav.focus();
+    ctx.tecla('Tab', { alvo: ctx.nav });
+    expect(ctx.doc.activeElement).toBe(ctx.nav);
+  });
+
+  test('contenteditable conta como parada (entra no foco inicial e nas bordas)', () => {
+    const ctx = montar({
+      filhos: (el) => [el('div', { id: 'edit', contenteditable: '' }), el('a', { href: '#a', id: 'item-a' })],
+    });
+    abrir(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('edit'));
+    ctx.q('item-a').focus();
+    tabDepoisDoUltimo(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('edit'));
+  });
+
+  test('contenteditable="false" não conta', () => {
+    const ctx = montar({
+      filhos: (el) => [el('div', { id: 'nao', contenteditable: 'false' }), el('a', { href: '#a', id: 'item-a' })],
+    });
+    abrir(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
+  });
+
+  const radios = (marcado) => (el) => [
+    el('a', { href: '#a', id: 'item-a' }),
+    ...[1, 2, 3].map((n) =>
+      el('input', { type: 'radio', name: 'r', id: `r${n}`, ...(marcado === n ? { checked: '' } : {}) }),
+    ),
+  ];
+
+  test('grupo de radio como última parada: Shift+Tab antes do primeiro vai ao MARCADO (2º)', () => {
+    const ctx = montar({ filhos: radios(2) });
+    abrir(ctx);
+    shiftTabAntesDoPrimeiro(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('r2'));
+  });
+
+  test('grupo de radio sem marcado: vale o primeiro do grupo', () => {
+    const ctx = montar({ filhos: radios(null) });
+    abrir(ctx);
+    shiftTabAntesDoPrimeiro(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('r1'));
+  });
+
+  test('grupo de radio como primeira parada: o foco inicial vai ao marcado', () => {
+    const ctx = montar({
+      filhos: (el) => [
+        ...[1, 2, 3].map((n) => el('input', { type: 'radio', name: 'r', id: `r${n}`, ...(n === 2 ? { checked: '' } : {}) })),
+        el('a', { href: '#a', id: 'item-a' }),
+      ],
+    });
+    abrir(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('r2'));
+  });
+
+  test('tabindex positivo vem antes na ordem: é a primeira parada', () => {
+    const ctx = montar({
+      filhos: (el) => [el('a', { href: '#a', id: 'item-a' }), el('button', { id: 'pos', tabindex: '2' })],
+    });
+    abrir(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('pos'));
+    shiftTabAntesDoPrimeiro(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
   });
 });

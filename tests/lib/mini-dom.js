@@ -65,6 +65,7 @@ class MiniEvent {
     this.detail = init.detail;
     this.key = init.key;
     this.shiftKey = !!init.shiftKey;
+    this.relatedTarget = init.relatedTarget || null;
     this.defaultPrevented = false;
   }
   preventDefault() {
@@ -216,7 +217,13 @@ class MiniNode {
   focus() {
     if (this.inertEfetivo) return;
     if (this.matches(':disabled')) return;
-    this.ownerDocument.activeElement = this;
+    const doc = this.ownerDocument;
+    const anterior = doc.activeElement;
+    if (anterior === this) return;
+    doc.activeElement = this;
+    /* Como o navegador: 'focus' não borbulha e traz quem perdeu o foco em
+       relatedTarget. É o que as sentinelas do sidebar-overlay escutam. */
+    this.dispatchEvent(new MiniEvent('focus', { relatedTarget: anterior === doc.body ? null : anterior }));
   }
 
   /* eventos */
@@ -283,8 +290,10 @@ function criarDocumento() {
     return janela;
   };
 
-  const tecla = (key, extra = {}) =>
-    doc.dispatchEvent(new MiniEvent('keydown', { key, bubbles: true, ...extra }));
+  /* keydown que borbulha até o documento. `alvo` (opcional) é onde o evento
+     nasce — para um widget dentro da gaveta poder consumi-lo antes. */
+  const tecla = (key, { alvo, ...extra } = {}) =>
+    (alvo || doc).dispatchEvent(new MiniEvent('keydown', { key, bubbles: true, ...extra }));
 
   const rodarQuadros = () => quadros.splice(0).forEach((fn) => fn());
 
