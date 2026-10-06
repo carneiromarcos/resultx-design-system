@@ -5,6 +5,25 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+## [2.8.0] - 2026-10-06
+
+### Added — protótipo da landing do Electia com a copy de 06/10 (06/10/2026)
+
+`brands/electia/previews/prototypes/electia-landing-2026-10-06.html` aplica a copy
+aprovada pelo Marcos em 06/10. São 26 seções, com o texto palavra por palavra, e o H1
+"Você conhece as pessoas que trabalham na sua empresa?". A linguagem visual é a da
+landing Talio (#80), cujo arquivo `electia-landing-talio-2026-10-05.html` não foi
+alterado.
+
+- Consome `.header-float`, `.menu-drawer`, `.brand-orb` (só onde quem fala é a Nexus),
+  `.test-mark`, `.cta-panel` e `.cta-dock`.
+- Nos temas claro e escuro. Os CTAs são só os da copy; os do final ainda têm destino
+  placeholder.
+- CSS local feito só com tokens. Peças candidatas a componente: `pull`, `journey`,
+  `constellation`, `chat-showcase`, `flow`, `spine`, `bento`, `ticks`, `contrast` e
+  `verbs`.
+- Não altera componente nem token.
+
 ### Added — protótipo da página do ecossistema Emprega+ (06/10/2026)
 
 `brands/emprega-mais/previews/prototypes/emprega-mais-ecossistema-2026-10-06.html` adapta
