@@ -48,14 +48,16 @@
 
       /* Acento por produto. Emprega+ e EditalHub herdam o índigo da marca-mãe
          (o DS não tem marca EditalHub).
-         electia: aliases locais dos valores da marca. brands/electia/tokens/
-         tokens.css não é carregado aqui porque redefine papéis genéricos
-         (--bg, --border, --text-*) e brigaria com a marca Emprega+. */
-      --eco-accent-electia: #6f32b1;           /* = electia --purple (fill) */
-      --eco-accent-electia-ink: #c084fc;       /* = electia --purple-on-dark; 7,1:1 no escuro, nunca fill */
+         electia: aliases locais. --ai-electia-core/-glow são a cópia, dentro
+         do DS, de --purple / --purple-on-dark do Electia (brand-orb.md
+         §Decisões); sem hex aqui (ADR-0001). brands/electia/tokens/tokens.css
+         não é carregado: redefine papéis genéricos (--bg, --border, --text-*)
+         e brigaria com a marca Emprega+. */
+      --eco-accent-electia: var(--ai-electia-core);      /* fill */
+      --eco-accent-electia-ink: var(--ai-electia-glow);  /* tinta no escuro; nunca fill */
     }
     [data-theme="light"] {
-      --eco-accent-electia-ink: #6f32b1;       /* = electia --purple; 7,6:1 sobre branco */
+      --eco-accent-electia-ink: var(--ai-electia-core);  /* tinta no claro */
     }
 
     /* ── Base ────────────────────────────────────────────────────────────── */
