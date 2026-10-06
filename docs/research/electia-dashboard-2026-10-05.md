@@ -146,25 +146,38 @@ Os valores são o mínimo entre os quadros. Controle negativo: devolvendo a tran
 - **Foco após trocar de tela:** `#vaga/analista-dp`, `#inicio`, `#vagas`, `#vaga/recepcionista` e `#nexus`, partindo do fim da página, em 667×375, 320×568, 375×812 e 1440×900:
   - o hit-test no centro do elemento focado acerta o próprio elemento, nunca o header;
   - o topo fica entre 100 e 144 px, com o header terminando em 56 px.
-  - Como garante: `scroll-padding`/`scroll-margin` = `--header-height` + `--space-4`. A rolagem da troca de tela é `instant`, porque o DS liga `scroll-behavior: smooth` e o destino ficava fora de vista durante a animação.
-  - **Teclado sem pausa (2ª revisão):** no quadro seguinte o protótipo reposiciona de novo, cancelando o quadro pendente da troca anterior. Uma rolagem instantânea também interrompe a suave que estiver em curso, inclusive a da âncora nativa (`#vagas`). Provas em 667×375:
-    - `Tab×n + Enter` para n de 1 a 30 (8 links de rota);
-    - 4 rajadas de 13 Tab + Enter seguidas;
-    - 6 trocas de hash na mesma tarefa.
+  - Como garante: `scroll-padding`/`scroll-margin` = `--header-height` + `--space-4`, com rolagem instantânea (ver "Estresse de rotas" abaixo).
+- **Estresse de rotas (vigente desde a re-revisão final da #85):** viewport de 667×375, documento novo a cada execução, medição 1 s depois.
+  - **Hipótese superada (2ª revisão):** o reposicionamento repetido no quadro seguinte, com rolagem `instant`, cancelaria qualquer rolagem suave pendente, inclusive a da âncora nativa `#vagas`. As provas da época (Tab×n + Enter com n de 1 a 30, 4 rajadas de 13 Tab + Enter, 6 trocas de hash na mesma tarefa, uma execução de cada) passaram. Na re-revisão, porém, a rajada do Revisor falhou em 3 de 3 execuções, e as rajadas de Tab falharam às vezes. Uma rolagem instantânea para a posição em que a página **já está** é um no-op e não interrompe a suave em curso. A explicação não se sustenta.
+  - **Causa medida (vigente):** o scrollY foi registrado quadro a quadro durante a rajada `vaga/analista-dp, inicio, vagas, vaga/recepcionista, nexus, inicio`.
+    - Duas rotas casavam com ids de painel (`#vagas`, `#nexus`). Ao atribuir `location.hash`, a navegação de fragmento nativa já começava a rolar até o painel.
+    - Com o `scroll-behavior: smooth` que o DS liga no `html`, essa rolagem durava cerca de 550 ms (de 0 a 1136 px).
+    - Os seis `hashchange` chegam juntos com scrollY = 0, então a rolagem instantânea do roteador não a cancelava, e o título de Início terminava em y = −1036. Com `scroll-behavior: auto`, a mesma rajada termina em y = 100.
+    - Uma segunda origem eram as rolagens suaves do foco por Tab no meio das rajadas de teclado.
+  - **Correção (vigente):**
+    1. Os painéis viraram `#painel-vagas` e `#painel-nexus`; nenhuma rota casa com um id.
+    2. `html { scroll-behavior: auto }` no protótipo: toda rolagem é instantânea.
+    3. Reserva inferior para o toast fixo (C9), com `scroll-padding-block-end` = altura real do toast + recuo + 8 px de margem. Medi clicando em cada um dos 18 itens que caem no aviso "fora do protótipo" (Início e vaga) e no aviso mais longo do kanban:
+       - a partir de 480 px de largura, a faixa é de 60,8 px, em 1 linha (reserva de 68,8 px);
+       - abaixo disso, é de 81,6 px, em 2 linhas (reserva de 89,6 px).
 
-    Em todos os casos o foco termina visível abaixo do header (antes, uma das sequências deixava o título em y = −227).
-- **Estresse de rotas (re-revisão final da #85)** — 667×375, documento novo a cada execução, medição 1 s depois:
-  - **Causa medida.** Duas rotas casavam com ids de painel (`#vagas`, `#nexus`). Ao atribuir `location.hash`, a navegação de fragmento nativa já rolava até o painel, e com o `scroll-behavior: smooth` que o DS liga no `html` essa rolagem durava cerca de 550 ms. A rolagem instantânea do roteador mirava a posição em que a página ainda estava (0) e por isso não a cancelava. Resultado: na rajada `vaga/analista-dp, inicio, vagas, vaga/recepcionista, nexus, inicio`, o título de Início terminava em y = −1036 (scrollY 1136), o mesmo número do Revisor. Uma segunda origem eram as rolagens suaves do foco por Tab no meio das rajadas de teclado.
-  - **Correção:**
-    1. Os painéis viraram `#painel-vagas` e `#painel-nexus`, então nenhuma rota casa com um id.
-    2. O protótipo usa `html { scroll-behavior: auto }`: num app com rotas por hash e foco programático, a rolagem é sempre instantânea.
-    3. `scroll-padding-block-end` reserva a faixa do toast fixo. Duas falhas restantes vinham do toast de "fora do protótipo" cobrindo um elemento focado por Tab no pé da tela (WCAG 2.4.11).
-  - **Evidência:** 3 rodadas de 10 execuções independentes por cenário, todas 10/10:
+       A primeira medição (81,6 e 102,4 px, reservas de 90 e 110,4 px) usava os avisos antigos, que colavam o texto inteiro dos cards. Com os rótulos curtos (ver Observação), a reserva diminuiu.
+    4. A mesma reserva vale na gaveta (`.app-nav`), que rola por conta própria.
+  - **Sobreposição do toast:** o Revisor observou que, em 3 rajadas, o toast cobria cerca de 3,4 px de um link de 40 px. Reproduzi: era um item da gaveta aberta, focado por Tab no pé dela. Isso é sobreposição parcial e não ocultação total, então já atendia o 2.4.11 (AA). Mesmo assim fiz a folga, com a correção 4: a sobreposição máxima medida caiu de 3,4 px (em 3 a 5 execuções por rodada) para **0 px**.
+  - **Provas vigentes** (repetidas com a reserva menor): 3 rodadas de 10 execuções independentes por cenário, todas 10/10 (180 de 180), com sobreposição máxima do toast de 0 px:
     - a rajada de hashes do Revisor;
     - 4 × (13 Tab + Enter) sem pausa;
     - trocas isoladas para `#vaga/analista-dp`, `#vagas`, `#nexus` e `#inicio` (vindo da vaga já rolada).
 
-    No total, 180 de 180 execuções passaram. Antes da correção 3, a rajada de Tab dava 8/10.
+    Também passam a matriz de foco por troca de tela (cinco destinos em 667×375, 320×568, 375×812 e 1440×900, hit-test no centro) e as provas das revisões anteriores.
+  - **Rótulo do aviso "fora do protótipo" (corrigido):** antes, o aviso usava o `textContent` do link inteiro e colava o conteúdo dos cards (ex.: "Testes concluídos37de 52…"). Agora a ordem é:
+    1. `data-label` explícito;
+    2. o nome do botão;
+    3. o título do item (`.list-item-title`, `.dl-statcard-label`, `.sidebar-label`);
+    4. `aria-label`;
+    5. o texto do link.
+
+    Os espaços são normalizados. Conferi os 18 avisos, todos curtos e limpos, por exemplo "“Testes concluídos” fica fora deste protótipo." e "“15 convites de teste sem resposta” fica fora deste protótipo.".
 
 **Capturas:**
 

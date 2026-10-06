@@ -37,8 +37,16 @@
   <link rel="stylesheet" href="../../../../components/data-cards.css">
   <style>
     :root { --dash-gap: var(--space-5); --dash-page: 1280px; --dash-scroll-offset: calc(var(--header-height) + var(--space-4));
-      /* Faixa do toast fixo no pé (C9): o foco por Tab para acima dele (WCAG 2.4.11). */
-      --dash-toast-space: calc(var(--space-4) * 2 + 3rem); }
+      /* Faixa do toast fixo no pé (C9): o foco por Tab para acima dele (WCAG
+         2.4.11). Medida com todos os avisos reais: recuo + toast mais alto =
+         60,8 px a partir de 480 px de largura (1 linha) e 81,6 px abaixo
+         (2 linhas); reserva = isso + 8 px. */
+      --dash-toast-space: 4.3rem; }
+    @media (max-width: 479.98px) { :root { --dash-toast-space: 5.6rem; } }
+    /* A gaveta rola por conta própria (.sidebar tem overflow-y: auto): a reserva
+       do toast vale também nela, senão um item focado por Tab no pé da gaveta
+       fica parcialmente sob o toast. */
+    .app-nav { scroll-padding-block-end: var(--dash-toast-space); }
     /* O header é sticky: todo destino de foco/âncora para abaixo dele. */
     /* O DS liga scroll-behavior: smooth no html. Num app com rotas por hash e
        foco programático, cada rolagem suave (âncora, foco por Tab) seguia por
@@ -629,13 +637,22 @@
       if (ev.target.closest('[data-sidebar-toggle="app-nav"]') && !nav.hasAttribute('data-open')) gatilho.focus({ preventScroll: true });
     }, true);
 
-    /* Itens fora do protótipo avisam e ficam onde estão. */
+    /* Itens fora do protótipo avisam e ficam onde estão. O nome no aviso é
+       curto: rótulo explícito, senão o título do card/linha/item, senão o
+       texto do link — sempre com espaços normalizados. O textContent inteiro
+       de um card colava rótulo, valor e legenda ("Testes concluídos37de 52…"). */
+    const TITULO_FORA = '.list-item-title, .dl-statcard-label, .sidebar-label';
+    function rotuloFora(el) {
+      const bruto = el.dataset.label || el.dataset.foraBtn || el.querySelector(TITULO_FORA)?.textContent
+        || el.getAttribute('aria-label') || el.textContent;
+      return bruto.replace(/\s+/g, ' ').trim();
+    }
     document.addEventListener('click', (ev) => {
       if (ev.target.closest('[data-noop]')) { ev.preventDefault(); return; }
       const fora = ev.target.closest('[data-fora], [data-fora-btn]');
       if (fora) {
         ev.preventDefault();
-        avisar(`“${fora.dataset.foraBtn || fora.textContent.trim()}” fica fora deste protótipo.`);
+        avisar(`“${rotuloFora(fora)}” fica fora deste protótipo.`);
         return;
       }
       if (ev.target.closest('#app-nav a') && nav.hasAttribute('data-open')) window.ResultXSidebarOverlay?.close(nav);
