@@ -21,20 +21,58 @@ O protótipo segue o padrão da landing da #80. É HTML estático e consome o DS
   - ADR-039 D6: indicador sem nota.
   - ADR-054: o Nexus não lê desempenho, metas nem anotações.
 
+## Decisão do Marcos (06/10/2026): duas abas
+
+> "A tela dashboard Electia deve ter 2 abas: 1. Gestão de pessoas, 2. Recrutamento e seleção. A tela principal é Gestão de pessoas."
+
+Referência: o dashboard real (`app/(dashboard)/dashboard/page.tsx`). Título "Dashboard", subtítulo "Visão geral da sua organização", ações "Adicionar Colaborador" e "Criar Teste", KPIs (Total colaboradores, Testes realizados, Matching médio, Índice Bem-Estar), Atividade recente, Ações rápidas e Testes por tipo.
+
+A tela inicial do protótipo deixou de misturar tudo e foi dividida assim:
+
+- **Cabeçalho:** a saudação e a data ficam no eyebrow ("Boa tarde, Marina · Segunda-feira, 5 de outubro"). O h1 é **"Dashboard"**, e o subtítulo é "Clínica Horizonte · 124 colaboradores ativos". O título do topo diz "Dashboard", e o `<title>` segue a aba ("Gestão de pessoas · Dashboard · electia").
+- **As ações seguem a aba.** Gestão: "Adicionar colaborador" e "Enviar teste". R&S: "Ver candidatos" e "Nova vaga". São dois `div.page-actions` com `role="group"` e nome próprio ("Ações de Gestão de pessoas" e "Ações de Recrutamento e seleção"). O grupo inativo fica `hidden`, fora da tela, da ordem de Tab e da árvore de acessibilidade. Ficam no cabeçalho, e não entre as abas e o painel, para que o Tab saia da aba direto para o painel (APG).
+- **Aba Gestão de pessoas** (padrão):
+  - KPIs: Colaboradores (124 · 8 sem nenhum teste), Testes concluídos (37 de 52), Matching médio (estado sem dado: "—" + "Defina o perfil-alvo de um cargo", como o "--" do app) e Índice Bem-Estar (58% na zona Saudável · 86 respostas; agregado, n ≥ 5).
+  - Testes por tipo, com a forma de cada teste.
+  - Bem-Estar da empresa (ADR-018).
+  - Nexus.
+  - Precisa de atenção (só pessoas): 15 convites sem resposta e 8 colaboradores sem nenhum teste.
+  - Seus indicadores.
+- **Aba Recrutamento e seleção:**
+  - KPIs: Vagas ativas (limite do plano), Candidatos em andamento (5 novos na semana), Em oferta e Contratados. Os quatro são contados dos dados das vagas e se atualizam quando um candidato avança no kanban.
+  - Vagas ativas, com os chips de etapa.
+  - Precisa de atenção de R&S (as duas vagas).
+  - Clicar numa vaga abre o kanban. O "Voltar", o breadcrumb "Recrutamento e seleção" e o Voltar do navegador retornam à aba R&S, com o foco na linha da vaga que estava aberta.
+- **Atividade recente e Ações rápidas ficaram de fora.** As ações rápidas do app (Adicionar colaborador, Criar teste, Gerenciar cargos) repetiriam o cabeçalho. A atividade recente exigiria eventos que o protótipo não tem; o próprio app mostra "Atividade recente aparecerá aqui." Ver Suposições.
+
+### Abas: `.tabs`/`.tab` do DS + comportamento local (C14)
+
+O DS já tem `.tabs`/`.tab` em `components.css` (doc em `navigation.md`). O `segmented` é outra coisa: a doc dele diz que aba troca a **vista**, e segmented escolhe um **valor**. Usei `.tabs`/`.tab`. O DS só desenha o estado (`.tab.active`). Não há script, papéis ARIA nem teclado, por isso o comportamento ficou local:
+
+- `role="tablist"` com nome ("Áreas do dashboard"); cada aba é um `<button role="tab">` com `aria-selected` e `aria-controls`; cada painel é `role="tabpanel"` com `aria-labelledby`.
+- Tabindex móvel: só a aba selecionada fica na ordem de Tab, e o Tab seguinte entra no painel.
+- `←`/`→` circulam, `Home`/`End` vão às pontas, com **ativação automática** (a seta já troca o painel).
+- `.active` acompanha `aria-selected`, para que o visual continue sendo o do DS.
+- **URL:** Gestão = `#inicio`, R&S = `#inicio/recrutamento`. A aba atualiza a URL com `history.replaceState`, que **não** dispara `hashchange`: o foco fica na aba e a página não rola nem pula para o h1. Recarregar, o deep link e o Voltar do navegador mantêm a aba. Nenhuma rota casa com um id (abas `#aba-*`, painéis `#painel-*`), para não reintroduzir o bug das rajadas (ver "Estresse de rotas"). As rotas antigas continuam: `#vagas` abre R&S com foco no painel de vagas, e `#nexus` (e ⌘K/Ctrl+K, de qualquer aba) abre Gestão com foco no campo do Nexus.
+- **Sidebar:** "Início" leva a Gestão e fica com `aria-current` nessa aba. "Recrutamento & Seleção" leva à aba R&S e fica `aria-current` nela e na vaga aberta.
+- **Indicador da aba ativa (defeito 10 do DS):** o DS pinta a borda com `--accent-primary`, que no escuro dá 2,39:1 sobre o fundo. O protótipo usa `--accent-primary-text` (6,85:1 no escuro, 7,25:1 no claro). Além disso, a borda não transiciona: o DS anima a cor da borda de transparente até o accent, e os primeiros quadros mediam 1,16:1. Só a tinta do rótulo anima. Vale também para a `.vaga-nav`.
+- Em telas de até 479 px, as duas abas dividem a largura, os ícones somem e o rótulo pode quebrar em 2 linhas (a aba fica com 58 px de altura em 320 px).
+
 ## Telas e componentes
 
 | Tela / região | Componentes do DS | Local (CANDIDATO) |
 |---|---|---|
 | Casca: navegação | `.sidebar.sidebar-overlay` + `dist/sidebar-overlay.js`, `.sidebar-item` com `aria-current`, `.sidebar-divider`, `.sidebar-footer`/`.sidebar-user`, `.icon` | C1 painel no desktop, C2 anel de foco sobre a sidebar escura |
 | Casca: topo | `.header` (sticky, vidro), `.btn-icon`, `.brand-orb-sm` | C3 pílula do agente (Nexus, ⌘K) |
-| Início: cabeçalho | `.btn-primary`, `.btn-secondary` | — |
-| Início: KPIs | `.dl-statcard.dl-statcard--compact` como `<a>` | — |
-| Início: Vagas ativas | `.list-item-group` / `.list-item`, `.stage-chip` + `.stage-chip-count` | C4 linha de chips no list-item |
-| Início: Testes por tipo | `.progress-track` / `.progress-fill` | C7 marca de teste por forma |
-| Início: Nexus | `.brand-orb-electia` (md no cabeçalho, sm na resposta, `data-state="active"` só ao responder), `.composer` + `dist/composer.js`, `.message-stream` / `.message` / `.message-out`, `.brand-orb-lockup`, `.sr-only` com `aria-live` | C6 chips de sugestão |
-| Início: Precisa de atenção | `.list-item.list-item-compact` | C5 marcador de atenção |
-| Início: Bem-Estar | `.tag` | C8 distribuição por zona (barra e legenda com forma) |
-| Início: Seus indicadores | `.tag` ("Meu" / "Do cargo · compartilhado") | — |
+| Dashboard: cabeçalho | `.btn-primary`, `.btn-secondary` (um grupo por aba) | — |
+| Dashboard: abas | `.tabs`/`.tab` (`.active`), `.icon` | C14 tablist APG (papéis, teclado, tabindex móvel, URL) |
+| Dashboard: KPIs (das duas abas) | `.dl-statcard.dl-statcard--compact` como `<a>` | — |
+| R&S: Vagas ativas | `.list-item-group` / `.list-item`, `.stage-chip` + `.stage-chip-count` | C4 linha de chips no list-item |
+| Gestão: Testes por tipo | `.progress-track` / `.progress-fill` | C7 marca de teste por forma |
+| Gestão: Nexus | `.brand-orb-electia` (md no cabeçalho, sm na resposta, `data-state="active"` só ao responder), `.composer` + `dist/composer.js`, `.message-stream` / `.message` / `.message-out`, `.brand-orb-lockup`, `.sr-only` com `aria-live` | C6 chips de sugestão |
+| Gestão e R&S: Precisa de atenção (um painel por aba) | `.list-item.list-item-compact` | C5 marcador de atenção |
+| Gestão: Bem-Estar | `.tag` | C8 distribuição por zona (barra e legenda com forma) |
+| Gestão: Seus indicadores | `.tag` ("Meu" / "Do cargo · compartilhado") | — |
 | Vaga aberta | `.breadcrumb`, `.dl-status--done`, `.tabs`/`.tab` como navegação com `aria-current`, `.stage-chip` como filtro (`aria-pressed`) e como cabeçalho de coluna, `.kanban.pipeline`, `.kanban-card`, `.avatar-sm`, `.empty-state-inline`, `.btn-sm` | — |
 | Avisos | `.toast.toast-info` | C9 região fixa de toasts |
 
@@ -60,9 +98,47 @@ O corte segue o DS: a gaveta vale até 1024 px, inclusive, porque o DS usa `max-
 | C10 | Estado **desmarcado** do `.stage-chip` filtro (`aria-pressed="false"`) | **Alta** | O DS só desenha o marcado. Opacidade reprova contraste (2,46–3,97:1, achado do Revisor na #85). Proposta: contorno tracejado em `currentcolor`, fundo da página, tinta `--text-secondary`, marcador vazado e nome riscado. **Sem transição de `background-color` na troca:** o DS (`stage-chip.css`, `:is(a, button)`) interpola o fundo por 150 ms enquanto a tinta troca na hora, e no escuro os quadros intermediários de Oferta medem 4,08:1. No filtro, fundo e tinta trocam no mesmo quadro; só `transform` anima |
 | C13 | Diretriz: em app com rota por hash, nenhuma rota casa com um id e o `scroll-behavior: smooth` global do DS fica desligado (ou o DS o restringe a landings) | Média | A rolagem suave da âncora nativa e a do foco por Tab terminavam depois da troca de tela e levavam o foco para fora da vista (P3 da #85). Rolagem suave global também atrasa o foco do teclado em qualquer app |
 | C12 | Invocador da gaveta = o gatilho, não o `document.activeElement` (temporário; a PR #86 corrige no DS) | **Alta** | No Safari, ou com `button.click()`, o botão não ganha foco ao ser clicado. O script guardava o elemento focado antes (ex.: `#nexus-input`), que fica inert com a gaveta aberta, e no Escape o foco caía no `body`. O protótipo foca o gatilho num listener de `click` em captura, antes do handler do script. Se mesmo assim o foco terminar no `body` ao fechar, ele vai para o gatilho |
+| C14 | Comportamento de **tabs** para `.tabs`/`.tab`: estilo por `[aria-selected="true"]` além de `.active`, e um `dist/tabs.js` (APG: papéis, `←`/`→`/`Home`/`End`, tabindex móvel, ativação automática, evento de troca para a URL). Junto, o indicador da aba ativa em `--accent-primary-text` e sem transição de `border-color` (defeito 10) | **Alta** | O DS desenha a aba mas não entrega o padrão de teclado nem os papéis. Todo app com abas reescreveria isso, e a doc do `segmented` já aponta `.tabs` como "o componente de vista" |
 | C11 | `dist/sidebar-overlay.js` modal de verdade | **Alta** | Hoje o script prende o Tab, mas não dá `role="dialog"`/`aria-modal` nem isola o fundo. O protótipo faz isso no evento `sidebartoggle`. No DS o `inert` precisa sair **antes** de o script devolver o foco ao gatilho; por isso, aqui, o gatilho fica fora do inert. O atalho do agente (⌘K) fecha a gaveta antes de focar |
 
 ## Medições
+
+### Abas (06/10/2026)
+
+As provas foram feitas com Playwright no Chrome do sistema (`channel: 'chrome'`), arquivo aberto via `file://`, com os scripts no scratch. Resultado: **96 de 96**.
+
+- **Sem overflow horizontal** em 320, 768, 1024 e 1440 px, claro e escuro, nas abas Gestão e R&S e na vaga (24 combinações).
+- **Abas:** alvo de 44 px em 390, 768 e 1440 px e de 58 px em 320 px (2 linhas), sem rótulo cortado.
+- **Teclado:**
+  - `→` ativa R&S, mantém o foco na aba e a rolagem em 0, e troca o painel, as ações, o `aria-current` da sidebar, o título e a URL (`#inicio/recrutamento`);
+  - `→` e `←` circulam; `Home` e `End` funcionam;
+  - o Tab a partir da aba ativa entra no painel (primeiro KPI), nas duas abas;
+  - o Shift+Tab volta à aba ativa, e o próximo Shift+Tab cai nas ações da aba, nunca na aba inativa;
+  - o clique ativa a aba e a foca;
+  - um único painel e um único grupo de ações ficam renderizados.
+- **Árvore de acessibilidade** (CDP `Accessibility.getFullAXTree`): tablist "Áreas do dashboard" com 2 tabs, "Recrutamento e seleção" selecionada, e só um tabpanel exposto, com o nome da aba.
+- **Deep link:** `#inicio/recrutamento` e `#vagas` abrem R&S; `#inicio`, vazio, `#nexus` e `#inicio/gestao` abrem Gestão. Recarregar mantém a aba.
+- **Vaga a partir da aba R&S** (1440×900, 375×812 e 667×375):
+  - a vaga abre com foco no h1;
+  - o "Voltar", o breadcrumb e o Voltar do navegador retornam à aba R&S;
+  - nos dois primeiros, o foco volta à linha da vaga, visível abaixo do header (o hit-test no centro acerta o link);
+  - "Precisa de atenção" de R&S também abre a vaga;
+  - avançar Giovana de Oferta para Contratado muda os KPIs de 2/1 para 1/2.
+- **⌘K/Ctrl+K** na aba R&S leva a Gestão e foca o campo do Nexus. O pior caso (hash já `#nexus` com R&S visível) também passa.
+- **Rajada de hashes nova** (`vaga/analista-dp, inicio/recrutamento, vagas, vaga/recepcionista, nexus, inicio/recrutamento, inicio`) em 667×375, saindo do fim da página: 5 de 5 terminam em Gestão, com o h1 focado em y = 100.
+- **Gaveta em 1024 px:** continua `dialog` com fundo inert. O Escape devolve o foco ao gatilho, e "Início" dentro da gaveta leva a Gestão e fecha a gaveta.
+- **Reduced-motion:** nenhuma orb anima.
+- **Console:** zero erros.
+
+| Contraste (abas) | Claro | Escuro |
+|---|---|---|
+| Textos novos (eyebrow, h1, subtítulo, ações, KPIs, atenção, chips; mínimo) | 4,83 (`.list-item-meta`) | 5,74 (`.list-item-meta`) |
+| Aba ativa / inativa / inativa em hover | 7,25 / 7,22 / 7,22 | 6,85 / 5,89 / 5,89 |
+| Indicador da aba ativa (não texto) | 7,25 | 6,85 (era 2,39 com o DS) |
+| Anel de foco na aba | 7,25 | 6,85 |
+| Troca de aba, quadro a quadro (~26 quadros, 400 ms): mínimo do texto / do indicador | 7,22 / 7,25 | 5,89 / 6,85 (o indicador era 1,16 com a transição do DS) |
+
+### Medições de 05/10 (antes das abas)
 
 As medições foram feitas com Playwright no Chrome do sistema (`channel: 'chrome'`), em 05/10/2026. Os scripts ficaram no scratch, fora do repo.
 
@@ -181,7 +257,7 @@ Os valores são o mínimo entre os quadros. Controle negativo: devolvendo a tran
 
 **Capturas:**
 
-- `inicio-1440-{claro,escuro}.png` e `inicio-375-{claro,escuro}.png`
+- Abas (06/10): `dashboard-gestao-{1440,390}-{claro,escuro}.png` e `dashboard-recrutamento-{1440,390}-{claro,escuro}.png`. Substituem as antigas `inicio-*`. Refeitas com o cabeçalho novo: `vaga-kanban-*`, `gaveta-375-aberta-*` e `vaga-foco-667x375-claro.png`. As de Nexus e do filtro são recortes do painel e não mudaram.
 - `vaga-kanban-1440-{claro,escuro}.png` e `vaga-kanban-375-{claro,escuro}.png`
 - `gaveta-375-aberta-{claro,escuro}.png`
 - `nexus-respondendo-1440-claro.png` e `nexus-mensagem-1440-{claro,escuro}.png` (mensagem enviada e resposta)
@@ -203,13 +279,20 @@ Nas capturas de página inteira, a sidebar (`position: fixed`) aparece com a alt
 7. `.message-text` fixa `color: var(--text-primary)` e vence a tinta posta na `.message-bubble`. Sobre um fundo de accent, como a mensagem enviada, o texto dá 2,36:1 no claro. No protótipo, a tinta vai no próprio `.message-text`.
 8. `.sidebar-item:hover` usa `--text-primary`: 1,14:1 sobre o navy no claro. No protótipo usei `--sidebar-text-bright`. O override é temporário: o lote D corrige no DS.
 9. `.sidebar-overlay` não isola o fundo nem anuncia um diálogo (ver C11).
+10. `.tab.active` pinta o indicador com `--accent-primary`: **2,39:1** sobre o fundo no escuro, abaixo dos 3:1 de não texto. A borda também transiciona de transparente até o accent (1,16:1 nos primeiros quadros). `.tab` não tem estilo por `[aria-selected]`, e o DS não tem script de abas (ver C14).
 
 ## Suposições
 
 - **Usuário de exemplo:** papel **RH** (rótulo do app), "Marina Couto", empresa "Clínica Horizonte".
   - O menu é o desse papel: sem Assinatura, Integrações e Super Admin; com Empresa.
   - "Colaborador" não é papel do app.
-- **Início:** junta a `/inicio` do app (Nexus como entrada, ADR-055) com os KPIs e cards pedidos. O título é uma saudação ("Boa tarde, Marina"), e não "Por onde você quer começar?".
+- **Dashboard (decisão de 06/10):** o item "Início" da sidebar (rótulo do app) abre o Dashboard na aba Gestão de pessoas, a tela principal. O Nexus (ADR-055) continua dentro de Gestão. O h1 passou a ser "Dashboard", e a saudação foi para o eyebrow.
+- **Rotas:** `#inicio` = Gestão e `#inicio/recrutamento` = R&S. Mantive o prefixo `inicio` para não quebrar os links existentes (sidebar, breadcrumb, `#vagas`, `#nexus`).
+- **Matching médio:** o protótipo não tem dado de aderência de colaboradores (só de candidatos), então o KPI mostra o estado sem dado, como o "--" do app, sem inventar número.
+- **Índice Bem-Estar:** é o percentual na zona Saudável (58%), tirado da distribuição que o protótipo já mostrava (86 respostas, n ≥ 5). Não é um índice novo. Se o produto tiver outra fórmula de índice, troca-se só o número.
+- **Em oferta / Contratados:** os KPIs novos de R&S são contados dos candidatos fictícios, sem número novo.
+- **Atividade recente e Ações rápidas:** ficaram de fora (ver a decisão de 06/10). Se o Marcos quiser a atividade, o caminho é um feed com eventos reais (testes concluídos, candidatos que avançaram), não números inventados.
+- **Seus indicadores:** continuam em Gestão, como foi pedido. Os dois indicadores do exemplo são do trabalho de RH da Marina (tempo para fechar vaga, entrevistas); são da Performance dela, não do funil.
 - **Etapas:** Triagem, Entrevista, Oferta, Contratado e Rejeitado (decisão do DS). O app usa outro vocabulário: Recebido, Triagem, Áudio, Testes, Em análise, Aprovado, Reprovado, Expirado e Contratado.
 - **Kanban:** o app não tem kanban (a lista de candidatos é uma lista), então a tela da vaga é uma **proposta**.
 - **Avanço de etapa:** Triagem → Entrevista → Oferta → Contratado. Rejeitado e Contratado não avançam. Reprovar ficou fora do escopo.
@@ -225,7 +308,7 @@ Nas capturas de página inteira, a sidebar (`position: fixed`) aparece com a alt
 
 ## Pendências
 
-- Levar C1, C2, C7, C8, C10 e C11 para `components/`/`dist/` em PR própria, com testes. Quando a #86 entrar, tirar o contorno C12 do protótipo. Corrigir os defeitos 1 a 4 e 7 no DS. O 8 está com o lote D, e o override deste protótipo sai quando ele entrar.
+- Levar C1, C2, C7, C8, C10, C11 e C14 (com o defeito 10) para `components/`/`dist/` em PR própria, com testes. Quando a #86 entrar, tirar o contorno C12 do protótipo. Corrigir os defeitos 1 a 4 e 7 no DS. O 8 está com o lote D, e o override deste protótipo sai quando ele entrar.
 - Migrar `.pipeline-stage-*` / `.kanban-column-dot` para `.stage-chip` no DS. Este protótipo já usa o chip no cabeçalho e não usa o ponto. É pendência do lote P.
 - O Marcos decide o vocabulário das etapas: DS (5) ou app (9 status). Também decide se o kanban entra no produto.
 - Revisar contra a paleta de resultado do app (`viz-tokens.css`) quando ela vier ao DS. Quando C7 existir, colorir a marca DISC pelo resultado.

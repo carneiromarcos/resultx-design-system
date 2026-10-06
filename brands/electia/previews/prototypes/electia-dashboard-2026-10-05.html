@@ -15,7 +15,9 @@
     .kanban.pipeline           vaga aberta (o ponto antigo .kanban-column-dot não é usado)
     .composer + .message       conversa com o Nexus
     .progress-track/-fill      testes por tipo
-    .icon (dist/icons.min.css)  .toast  .tag  .avatar  .btn  .btn-icon  .breadcrumb  .tabs  .dl-status  .empty-state-inline  .skip-link
+    .tabs/.tab                 abas do dashboard (tablist APG, comportamento local: CANDIDATO 14)
+                               e navegação da vaga (links com aria-current)
+    .icon (dist/icons.min.css)  .toast  .tag  .avatar  .btn  .btn-icon  .breadcrumb  .dl-status  .empty-state-inline  .skip-link
 
   Peças locais marcadas "CANDIDATO" = faltam no DS (lista na ficha).
   Dados fictícios. Nenhuma pessoa real.
@@ -25,8 +27,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
-  <meta name="description" content="Protótipo navegável do dashboard do electia: início do RH com vagas, Nexus, Bem-Estar agregado e a vaga aberta em kanban.">
-  <title>Início · electia</title>
+  <meta name="description" content="Protótipo navegável do dashboard do electia: abas Gestão de pessoas (padrão) e Recrutamento e seleção, Nexus, Bem-Estar agregado e a vaga aberta em kanban.">
+  <title>Gestão de pessoas · Dashboard · electia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
@@ -124,6 +126,9 @@
     .page-head p { color: var(--text-secondary); font-size: var(--text-sm); }
     .eyebrow { color: var(--accent-primary-text); font: var(--font-semibold) var(--text-xs) var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; }
     .page-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    /* O display: flex venceria o [hidden] do navegador: as ações da aba inativa
+       ficariam na tela. */
+    .page-actions[hidden], .dash-tabpanel[hidden] { display: none; }
     a.btn { text-decoration: none; } /* .btn em <a> herda o sublinhado do link */
 
     .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); margin-block-end: var(--dash-gap); }
@@ -202,6 +207,22 @@
     .indicators dd { margin: 0; font: var(--font-semibold) var(--text-lg) var(--font-mono); font-variant-numeric: tabular-nums; }
     .indicators .tag { border: 1px solid var(--border-subtle); background: var(--bg-surface-2); color: var(--text-primary); grid-column: 1; justify-self: start; font-size: var(--text-xs); }
 
+    /* CANDIDATO 14 — abas do dashboard. Visual = .tabs/.tab do DS; aqui só
+       o alvo de 44 px, a tinta da aba inativa em --text-secondary (a mesma da
+       .vaga-nav) e o encaixe em telas estreitas. */
+    .dash-tabs { margin-block-end: var(--dash-gap); }
+    .dash-tabs .tab { min-block-size: 44px; color: var(--text-secondary); }
+    .dash-tabs .tab.active { color: var(--accent-primary-text); }
+    /* O DS pinta o indicador com --accent-primary: 2,39:1 sobre o fundo no
+       escuro (o mínimo de não texto é 3:1). Aqui ele usa a mesma tinta do
+       rótulo ativo. E a borda não transiciona: o DS anima a cor da borda de
+       transparente até o accent, e os primeiros quadros mediam 1,16:1. Só a
+       tinta do rótulo anima (todos os quadros acima de 4,5:1). Vale também
+       para a .vaga-nav, que usa o mesmo .tab. */
+    :is(.dash-tabs, .vaga-nav) .tab { transition-property: color; }
+    :is(.dash-tabs, .vaga-nav) .tab.active { border-bottom-color: var(--accent-primary-text); }
+    .dash-tabs .tab .icon { flex: none; }
+
     /* Vaga */
     .vaga-title { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
     .vaga-nav { margin-block: var(--space-2) var(--space-4); overflow-x: auto; }
@@ -248,6 +269,9 @@
     }
     @media (max-width: 479.98px) {
       .kpis { gap: var(--space-2); }
+      /* Duas abas dividem a largura e o rótulo quebra em 2 linhas se precisar. */
+      .dash-tabs .tab { flex: 1 1 0; justify-content: center; padding-inline: var(--space-2); text-align: center; }
+      .dash-tabs .tab .icon { display: none; }
       .agent-pill kbd, .app-top-title { display: none; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -280,7 +304,7 @@
     <a class="app-brand" href="#inicio"><strong>electia</strong><span>by emprega+</span></a>
     <p class="app-company"><b>Clínica Horizonte</b>Empresa ativa</p>
     <nav aria-label="Módulos">
-      <a class="sidebar-item" href="#inicio" data-nav="inicio"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-home"/></svg><span class="sidebar-label">Início</span></a>
+      <a class="sidebar-item" href="#inicio" data-nav="gestao"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-home"/></svg><span class="sidebar-label">Início</span></a>
       <a class="sidebar-item" href="#colaboradores" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-users"/></svg><span class="sidebar-label">Colaboradores</span></a>
       <a class="sidebar-item" href="#cargos" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-briefcase"/></svg><span class="sidebar-label">Cargos</span></a>
       <a class="sidebar-item" href="#assessments" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-clipboard"/></svg><span class="sidebar-label">Assessments</span></a>
@@ -288,7 +312,7 @@
       <a class="sidebar-item" href="#bem-estar" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-heart"/></svg><span class="sidebar-label">Bem-Estar</span></a>
       <a class="sidebar-item" href="#ranking" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-trophy"/></svg><span class="sidebar-label">Ranking</span></a>
       <a class="sidebar-item" href="#performance" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-target"/></svg><span class="sidebar-label">Performance</span></a>
-      <a class="sidebar-item" href="#vagas" data-nav="vaga"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-search-user"/></svg><span class="sidebar-label">Recrutamento &amp; Seleção</span></a>
+      <a class="sidebar-item" href="#inicio/recrutamento" data-nav="recrutamento"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-search-user"/></svg><span class="sidebar-label">Recrutamento &amp; Seleção</span></a>
       <hr class="sidebar-divider">
       <a class="sidebar-item" href="#empresa" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-building"/></svg><span class="sidebar-label">Empresa</span></a>
     </nav>
@@ -304,7 +328,7 @@
     <header class="header app-top">
       <div class="app-top-start">
         <button class="btn-icon app-menu-btn" type="button" data-sidebar-toggle="app-nav" aria-controls="app-nav" aria-expanded="false" aria-label="Abrir navegação" hidden><svg class="icon icon-md" aria-hidden="true"><use href="#i-menu"/></svg></button>
-        <span class="app-top-title" data-top-title>Início</span>
+        <span class="app-top-title" data-top-title>Dashboard</span>
       </div>
       <button class="agent-pill" type="button" data-nexus-open aria-keyshortcuts="Meta+K Control+K">
         <span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span>Nexus<kbd aria-hidden="true">⌘K</kbd>
@@ -316,102 +340,142 @@
     </header>
 
     <main class="content app-content" id="conteudo">
-      <!-- ═══ Tela 1: Início ═══ -->
+      <!-- ═══ Tela 1: Dashboard (abas Gestão de pessoas · Recrutamento e seleção) ═══ -->
       <section class="screen" data-screen="inicio" aria-labelledby="inicio-titulo">
         <header class="page-head">
           <div>
-            <span class="eyebrow">Segunda-feira, 5 de outubro</span>
-            <h1 id="inicio-titulo" tabindex="-1">Boa tarde, Marina</h1>
+            <span class="eyebrow">Boa tarde, Marina · Segunda-feira, 5 de outubro</span>
+            <h1 id="inicio-titulo" tabindex="-1">Dashboard</h1>
             <p>Clínica Horizonte · 124 colaboradores ativos</p>
           </div>
-          <div class="page-actions">
+          <!-- As ações seguem a aba. Cada grupo tem nome próprio, e o inativo
+               fica hidden (fora da ordem de Tab e da árvore de acessibilidade). -->
+          <div class="page-actions" role="group" aria-label="Ações de Gestão de pessoas" data-acoes="gestao">
             <a class="btn btn-secondary" href="#colaboradores" data-fora>Adicionar colaborador</a>
             <a class="btn btn-primary" href="#assessments" data-fora>Enviar teste</a>
           </div>
+          <div class="page-actions" role="group" aria-label="Ações de Recrutamento e seleção" data-acoes="recrutamento" hidden>
+            <a class="btn btn-secondary" href="#candidatos-todos" data-fora>Ver candidatos</a>
+            <a class="btn btn-primary" href="#nova-vaga" data-fora>Nova vaga</a>
+          </div>
         </header>
 
-        <div class="kpis">
-          <a class="dl-statcard dl-statcard--compact" href="#vagas"><span class="dl-statcard-label">Vagas ativas</span><span class="dl-statcard-value">3</span><span class="dl-statcard-compare">Limite do plano: 5 simultâneas</span></a>
-          <a class="dl-statcard dl-statcard--compact" href="#vagas"><span class="dl-statcard-label">Candidatos em andamento</span><span class="dl-statcard-value" data-kpi-andamento>13</span><span class="dl-statcard-compare">5 entraram nesta semana</span></a>
-          <a class="dl-statcard dl-statcard--compact" href="#assessments" data-fora><span class="dl-statcard-label">Testes concluídos</span><span class="dl-statcard-value">37</span><span class="dl-statcard-compare">de 52 enviados em 30 dias</span></a>
-          <a class="dl-statcard dl-statcard--compact" href="#colaboradores" data-fora><span class="dl-statcard-label">Colaboradores</span><span class="dl-statcard-value">124</span><span class="dl-statcard-compare">8 sem nenhum teste</span></a>
+        <!-- CANDIDATO 14 — .tabs/.tab do DS como tablist APG. O DS só desenha
+             (.tab.active); papéis, aria-selected, tabindex móvel e teclado são
+             deste script. Ids das abas/painéis nunca coincidem com uma rota. -->
+        <div class="tabs dash-tabs" role="tablist" aria-label="Áreas do dashboard">
+          <button class="tab active" type="button" role="tab" id="aba-gestao" aria-selected="true" aria-controls="painel-gestao" data-aba="gestao"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-users"/></svg>Gestão de pessoas</button>
+          <button class="tab" type="button" role="tab" id="aba-recrutamento" aria-selected="false" aria-controls="painel-recrutamento" tabindex="-1" data-aba="recrutamento"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-search-user"/></svg>Recrutamento e seleção</button>
         </div>
 
-        <div class="dash">
-          <div class="dash-col">
-            <section class="panel" aria-labelledby="vagas-titulo" id="painel-vagas" tabindex="-1">
-              <div class="panel-head"><h2 id="vagas-titulo">Vagas ativas</h2><a href="#recrutamento" data-fora>Ver todas</a></div>
-              <ul class="list-item-group" data-vagas-list></ul>
-              <noscript><p class="panel-note">As vagas e o kanban deste protótipo precisam de JavaScript.</p></noscript>
-            </section>
-
-            <section class="panel" aria-labelledby="testes-titulo">
-              <div class="panel-head"><h2 id="testes-titulo">Testes por tipo</h2><small>Últimos 30 dias</small></div>
-              <ul class="tests">
-                <li><span class="test-mark test-mark-disc" aria-hidden="true"></span><span>DISC</span><span class="progress-track"><span class="progress-fill" style="width:87%"></span></span><output>13 de 15</output></li>
-                <li><span class="test-mark test-mark-tipologia" aria-hidden="true"></span><span>Tipologia Cognitiva</span><span class="progress-track"><span class="progress-fill" style="width:67%"></span></span><output>6 de 9</output></li>
-                <li><span class="test-mark test-mark-eneagrama" aria-hidden="true"></span><span>Eneagrama</span><span class="progress-track"><span class="progress-fill" style="width:63%"></span></span><output>5 de 8</output></li>
-                <li><span class="test-mark test-mark-bigfive" aria-hidden="true"></span><span>Big Five</span><span class="progress-track"><span class="progress-fill" style="width:75%"></span></span><output>6 de 8</output></li>
-                <li><span class="test-mark test-mark-temperamentos" aria-hidden="true"></span><span>Temperamentos</span><span class="progress-track"><span class="progress-fill" style="width:60%"></span></span><output>3 de 5</output></li>
-                <li><span class="test-mark test-mark-motivadores" aria-hidden="true"></span><span>Motivadores</span><span class="progress-track"><span class="progress-fill" style="width:57%"></span></span><output>4 de 7</output></li>
-              </ul>
-              <p class="panel-note">Concluídos sobre enviados. A forma identifica o teste; o resultado de cada pessoa fica no perfil dela.</p>
-            </section>
+        <!-- ── Aba 1: Gestão de pessoas (padrão) ── -->
+        <div class="dash-tabpanel" role="tabpanel" id="painel-gestao" aria-labelledby="aba-gestao">
+          <div class="kpis">
+            <a class="dl-statcard dl-statcard--compact" href="#colaboradores" data-fora><span class="dl-statcard-label">Colaboradores</span><span class="dl-statcard-value">124</span><span class="dl-statcard-compare">8 sem nenhum teste</span></a>
+            <a class="dl-statcard dl-statcard--compact" href="#assessments" data-fora><span class="dl-statcard-label">Testes concluídos</span><span class="dl-statcard-value">37</span><span class="dl-statcard-compare">de 52 enviados em 30 dias</span></a>
+            <a class="dl-statcard dl-statcard--compact" href="#cargos" data-fora><span class="dl-statcard-label">Matching médio</span><span class="dl-statcard-value"><span aria-hidden="true">—</span><span class="sr-only">Sem dado</span></span><span class="dl-statcard-compare">Defina o perfil-alvo de um cargo</span></a>
+            <a class="dl-statcard dl-statcard--compact" href="#bem-estar" data-fora><span class="dl-statcard-label">Índice Bem-Estar</span><span class="dl-statcard-value">58%</span><span class="dl-statcard-compare">na zona Saudável · 86 respostas</span></a>
           </div>
 
-          <div class="dash-col">
-            <section class="panel nexus" id="painel-nexus" aria-labelledby="nexus-titulo">
-              <div class="nexus-head">
-                <span class="brand-orb brand-orb-electia brand-orb-md" aria-hidden="true"></span>
-                <div><h2 id="nexus-titulo">Nexus</h2><p>Pergunte sobre perfis, cargos ou desenvolvimento de equipe.</p></div>
-              </div>
-              <div class="message-stream" aria-label="Conversa com o Nexus" data-nexus-log></div>
-              <div class="nexus-chips" role="group" aria-label="Sugestões de pergunta">
-                <button class="nexus-chip" type="button" data-nexus-chip="vagas">Resumir as vagas paradas</button>
-                <button class="nexus-chip" type="button" data-nexus-chip="instrumentos">Quais instrumentos aplicar primeiro num time que ainda não fez nenhum?</button>
-                <button class="nexus-chip" type="button" data-nexus-chip="comunicacao">Como adaptar minha comunicação ao perfil de cada pessoa?</button>
-              </div>
-              <form class="composer" data-composer data-nexus-form>
-                <div class="composer-row">
-                  <label class="sr-only" for="nexus-input">Pergunta ao Nexus</label>
-                  <textarea class="composer-input" id="nexus-input" rows="1" placeholder="Pergunte ou peça algo..."></textarea>
-                  <button class="composer-send" type="submit" aria-label="Enviar ao Nexus"><svg class="icon icon-md" aria-hidden="true"><use href="#i-send"/></svg></button>
+          <div class="dash">
+            <div class="dash-col">
+              <section class="panel" aria-labelledby="testes-titulo">
+                <div class="panel-head"><h2 id="testes-titulo">Testes por tipo</h2><small>Últimos 30 dias</small></div>
+                <ul class="tests">
+                  <li><span class="test-mark test-mark-disc" aria-hidden="true"></span><span>DISC</span><span class="progress-track"><span class="progress-fill" style="width:87%"></span></span><output>13 de 15</output></li>
+                  <li><span class="test-mark test-mark-tipologia" aria-hidden="true"></span><span>Tipologia Cognitiva</span><span class="progress-track"><span class="progress-fill" style="width:67%"></span></span><output>6 de 9</output></li>
+                  <li><span class="test-mark test-mark-eneagrama" aria-hidden="true"></span><span>Eneagrama</span><span class="progress-track"><span class="progress-fill" style="width:63%"></span></span><output>5 de 8</output></li>
+                  <li><span class="test-mark test-mark-bigfive" aria-hidden="true"></span><span>Big Five</span><span class="progress-track"><span class="progress-fill" style="width:75%"></span></span><output>6 de 8</output></li>
+                  <li><span class="test-mark test-mark-temperamentos" aria-hidden="true"></span><span>Temperamentos</span><span class="progress-track"><span class="progress-fill" style="width:60%"></span></span><output>3 de 5</output></li>
+                  <li><span class="test-mark test-mark-motivadores" aria-hidden="true"></span><span>Motivadores</span><span class="progress-track"><span class="progress-fill" style="width:57%"></span></span><output>4 de 7</output></li>
+                </ul>
+                <p class="panel-note">Concluídos sobre enviados. A forma identifica o teste; o resultado de cada pessoa fica no perfil dela.</p>
+              </section>
+
+              <section class="panel" aria-labelledby="bem-estar-titulo">
+                <div class="panel-head"><h2 id="bem-estar-titulo">Bem-Estar da empresa</h2><span class="tag">Agregado e anônimo</span></div>
+                <div class="zone-bar" role="img" aria-label="Distribuição por zona: Saudável 58%, Atenção 31%, Alerta 11%">
+                  <span class="zone-saudavel" style="width:58%"></span><span class="zone-atencao" style="width:31%"></span><span class="zone-alerta" style="width:11%"></span>
                 </div>
-              </form>
-              <p class="sr-only" role="status" aria-live="polite" data-nexus-status></p>
-              <p class="panel-note">O Nexus lê o que já está na sua conta. Não lê desempenho, metas, anotações nem resultados individuais de Saúde Mental.</p>
-            </section>
+                <ul class="zone-legend">
+                  <li class="zone-saudavel"><span class="zone-mark" aria-hidden="true"></span>Saudável<b>58%</b></li>
+                  <li class="zone-atencao"><span class="zone-mark" aria-hidden="true"></span>Atenção<b>31%</b></li>
+                  <li class="zone-alerta"><span class="zone-mark" aria-hidden="true"></span>Alerta<b>11%</b></li>
+                </ul>
+                <p class="panel-note">86 respostas em 6 departamentos. Grupos com menos de 5 respostas não aparecem. Resultado individual só o profissional de saúde e o próprio colaborador veem.</p>
+              </section>
+            </div>
 
-            <section class="panel" aria-labelledby="atencao-titulo">
-              <div class="panel-head"><h2 id="atencao-titulo">Precisa de atenção</h2></div>
-              <ul class="list-item-group">
-                <li><a class="list-item list-item-compact" href="#vaga/analista-dp"><span class="attention-mark" aria-hidden="true"></span><span class="list-item-body"><span class="list-item-head"><span class="list-item-title">2 candidatos parados em Entrevista há 8 dias</span></span><span class="list-item-meta">Analista de Departamento Pessoal</span></span></a></li>
-                <li><a class="list-item list-item-compact" href="#vaga/recepcionista"><span class="attention-mark" aria-hidden="true"></span><span class="list-item-body"><span class="list-item-head"><span class="list-item-title">Vaga sem candidatos novos há 10 dias</span></span><span class="list-item-meta">Recepcionista</span></span></a></li>
-                <li><a class="list-item list-item-compact" href="#assessments" data-fora><span class="attention-mark" aria-hidden="true"></span><span class="list-item-body"><span class="list-item-head"><span class="list-item-title">15 convites de teste sem resposta</span></span><span class="list-item-meta">Assessments · enviados há mais de 5 dias</span></span></a></li>
-              </ul>
-            </section>
+            <div class="dash-col">
+              <section class="panel nexus" id="painel-nexus" aria-labelledby="nexus-titulo">
+                <div class="nexus-head">
+                  <span class="brand-orb brand-orb-electia brand-orb-md" aria-hidden="true"></span>
+                  <div><h2 id="nexus-titulo">Nexus</h2><p>Pergunte sobre perfis, cargos ou desenvolvimento de equipe.</p></div>
+                </div>
+                <div class="message-stream" aria-label="Conversa com o Nexus" data-nexus-log></div>
+                <div class="nexus-chips" role="group" aria-label="Sugestões de pergunta">
+                  <button class="nexus-chip" type="button" data-nexus-chip="vagas">Resumir as vagas paradas</button>
+                  <button class="nexus-chip" type="button" data-nexus-chip="instrumentos">Quais instrumentos aplicar primeiro num time que ainda não fez nenhum?</button>
+                  <button class="nexus-chip" type="button" data-nexus-chip="comunicacao">Como adaptar minha comunicação ao perfil de cada pessoa?</button>
+                </div>
+                <form class="composer" data-composer data-nexus-form>
+                  <div class="composer-row">
+                    <label class="sr-only" for="nexus-input">Pergunta ao Nexus</label>
+                    <textarea class="composer-input" id="nexus-input" rows="1" placeholder="Pergunte ou peça algo..."></textarea>
+                    <button class="composer-send" type="submit" aria-label="Enviar ao Nexus"><svg class="icon icon-md" aria-hidden="true"><use href="#i-send"/></svg></button>
+                  </div>
+                </form>
+                <p class="sr-only" role="status" aria-live="polite" data-nexus-status></p>
+                <p class="panel-note">O Nexus lê o que já está na sua conta. Não lê desempenho, metas, anotações nem resultados individuais de Saúde Mental.</p>
+              </section>
 
-            <section class="panel" aria-labelledby="bem-estar-titulo">
-              <div class="panel-head"><h2 id="bem-estar-titulo">Bem-Estar da empresa</h2><span class="tag">Agregado e anônimo</span></div>
-              <div class="zone-bar" role="img" aria-label="Distribuição por zona: Saudável 58%, Atenção 31%, Alerta 11%">
-                <span class="zone-saudavel" style="width:58%"></span><span class="zone-atencao" style="width:31%"></span><span class="zone-alerta" style="width:11%"></span>
-              </div>
-              <ul class="zone-legend">
-                <li class="zone-saudavel"><span class="zone-mark" aria-hidden="true"></span>Saudável<b>58%</b></li>
-                <li class="zone-atencao"><span class="zone-mark" aria-hidden="true"></span>Atenção<b>31%</b></li>
-                <li class="zone-alerta"><span class="zone-mark" aria-hidden="true"></span>Alerta<b>11%</b></li>
-              </ul>
-              <p class="panel-note">86 respostas em 6 departamentos. Grupos com menos de 5 respostas não aparecem. Resultado individual só o profissional de saúde e o próprio colaborador veem.</p>
-            </section>
+              <section class="panel" aria-labelledby="atencao-gestao-titulo">
+                <div class="panel-head"><h2 id="atencao-gestao-titulo">Precisa de atenção</h2></div>
+                <ul class="list-item-group">
+                  <li><a class="list-item list-item-compact" href="#assessments" data-fora><span class="attention-mark" aria-hidden="true"></span><span class="list-item-body"><span class="list-item-head"><span class="list-item-title">15 convites de teste sem resposta</span></span><span class="list-item-meta">Assessments · enviados há mais de 5 dias</span></span></a></li>
+                  <li><a class="list-item list-item-compact" href="#colaboradores-sem-teste" data-fora><span class="attention-mark" aria-hidden="true"></span><span class="list-item-body"><span class="list-item-head"><span class="list-item-title">8 colaboradores ainda sem nenhum teste</span></span><span class="list-item-meta">Colaboradores · comece pelo DISC</span></span></a></li>
+                </ul>
+              </section>
 
-            <section class="panel" aria-labelledby="indicadores-titulo">
-              <div class="panel-head"><h2 id="indicadores-titulo">Seus indicadores</h2></div>
-              <dl class="indicators">
-                <div><dt>Tempo médio para fechar vaga</dt><dd>18 dias</dd><span class="tag">Do cargo · compartilhado</span></div>
-                <div><dt>Entrevistas conduzidas no mês</dt><dd>14</dd><span class="tag">Meu</span></div>
-              </dl>
-              <p class="panel-note">Só indicadores do seu cargo e seus. Sem nota e sem comparação entre pessoas ou departamentos.</p>
-            </section>
+              <section class="panel" aria-labelledby="indicadores-titulo">
+                <div class="panel-head"><h2 id="indicadores-titulo">Seus indicadores</h2></div>
+                <dl class="indicators">
+                  <div><dt>Tempo médio para fechar vaga</dt><dd>18 dias</dd><span class="tag">Do cargo · compartilhado</span></div>
+                  <div><dt>Entrevistas conduzidas no mês</dt><dd>14</dd><span class="tag">Meu</span></div>
+                </dl>
+                <p class="panel-note">Só indicadores do seu cargo e seus. Sem nota e sem comparação entre pessoas ou departamentos.</p>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Aba 2: Recrutamento e seleção ── -->
+        <div class="dash-tabpanel" role="tabpanel" id="painel-recrutamento" aria-labelledby="aba-recrutamento" hidden>
+          <div class="kpis">
+            <a class="dl-statcard dl-statcard--compact" href="#vagas"><span class="dl-statcard-label">Vagas ativas</span><span class="dl-statcard-value" data-kpi-vagas>3</span><span class="dl-statcard-compare">Limite do plano: 5 simultâneas</span></a>
+            <a class="dl-statcard dl-statcard--compact" href="#vagas"><span class="dl-statcard-label">Candidatos em andamento</span><span class="dl-statcard-value" data-kpi-andamento>13</span><span class="dl-statcard-compare">5 entraram nesta semana</span></a>
+            <a class="dl-statcard dl-statcard--compact" href="#vagas"><span class="dl-statcard-label">Em oferta</span><span class="dl-statcard-value" data-kpi-etapa="oferta">2</span><span class="dl-statcard-compare">última etapa antes da contratação</span></a>
+            <a class="dl-statcard dl-statcard--compact" href="#vagas"><span class="dl-statcard-label">Contratados</span><span class="dl-statcard-value" data-kpi-etapa="contratado">1</span><span class="dl-statcard-compare">nas vagas ativas</span></a>
+          </div>
+
+          <div class="dash">
+            <div class="dash-col">
+              <section class="panel" aria-labelledby="vagas-titulo" id="painel-vagas" tabindex="-1">
+                <div class="panel-head"><h2 id="vagas-titulo">Vagas ativas</h2><a href="#recrutamento" data-fora>Ver todas</a></div>
+                <ul class="list-item-group" data-vagas-list></ul>
+                <noscript><p class="panel-note">As vagas e o kanban deste protótipo precisam de JavaScript.</p></noscript>
+              </section>
+            </div>
+
+            <div class="dash-col">
+              <section class="panel" aria-labelledby="atencao-rs-titulo">
+                <div class="panel-head"><h2 id="atencao-rs-titulo">Precisa de atenção</h2></div>
+                <ul class="list-item-group">
+                  <li><a class="list-item list-item-compact" href="#vaga/analista-dp"><span class="attention-mark" aria-hidden="true"></span><span class="list-item-body"><span class="list-item-head"><span class="list-item-title">2 candidatos parados em Entrevista há 8 dias</span></span><span class="list-item-meta">Analista de Departamento Pessoal</span></span></a></li>
+                  <li><a class="list-item list-item-compact" href="#vaga/recepcionista"><span class="attention-mark" aria-hidden="true"></span><span class="list-item-body"><span class="list-item-head"><span class="list-item-title">Vaga sem candidatos novos há 10 dias</span></span><span class="list-item-meta">Recepcionista</span></span></a></li>
+                </ul>
+              </section>
+            </div>
           </div>
         </div>
       </section>
@@ -419,8 +483,8 @@
       <!-- ═══ Tela 2: vaga aberta ═══ -->
       <section class="screen" data-screen="vaga" aria-labelledby="vaga-titulo" hidden>
         <nav class="breadcrumb" aria-label="Você está em">
-          <a class="breadcrumb-item" href="#inicio">Início</a><span class="breadcrumb-sep" aria-hidden="true">/</span>
-          <a class="breadcrumb-item" href="#vagas">Vagas</a><span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <a class="breadcrumb-item" href="#inicio">Dashboard</a><span class="breadcrumb-sep" aria-hidden="true">/</span>
+          <a class="breadcrumb-item" href="#inicio/recrutamento">Recrutamento e seleção</a><span class="breadcrumb-sep" aria-hidden="true">/</span>
           <span class="breadcrumb-item" aria-current="page" data-vaga-crumb></span>
         </nav>
         <header class="page-head">
@@ -429,7 +493,7 @@
             <p data-vaga-meta></p>
           </div>
           <div class="page-actions">
-            <a class="btn btn-ghost" href="#inicio"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-back"/></svg>Voltar</a>
+            <a class="btn btn-ghost" href="#inicio/recrutamento"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-back"/></svg>Voltar</a>
             <a class="btn btn-secondary" href="#cadastrar" data-fora>Cadastrar candidato</a>
           </div>
         </header>
@@ -519,9 +583,10 @@
             <span class="list-item-meta">${esc(v.meta)}</span>
             <span class="list-item-chips">${ETAPAS.map(([e, r]) => chip(e, r, contar(v, e))).join('')}</span>
           </span></a></li>`).join('');
-      const andamento = Object.values(VAGAS)
-        .reduce((s, v) => s + v.cands.filter((x) => proxima(x.etapa)).length, 0);
-      $('[data-kpi-andamento]').textContent = andamento;
+      const todos = Object.values(VAGAS).flatMap((v) => v.cands);
+      $('[data-kpi-vagas]').textContent = Object.keys(VAGAS).length;
+      $('[data-kpi-andamento]').textContent = todos.filter((x) => proxima(x.etapa)).length;
+      $$('[data-kpi-etapa]').forEach((el) => { el.textContent = todos.filter((x) => x.etapa === el.dataset.kpiEtapa).length; });
     }
 
     /* ── Vaga: kanban ────────────────────────────────────────────────── */
@@ -574,29 +639,90 @@
       if (col) col.hidden = !on;
     }));
 
-    /* ── Rotas: #inicio · #vagas · #nexus · #vaga/<id> ────────────────
-       Nenhuma rota casa com o id de um elemento (os painéis são #painel-*).
-       Se casasse, a navegação de fragmento nativa rolaria até ele, e com o
-       scroll-behavior: smooth do DS essa rolagem começa já no location.hash =
-       e segue por ~550 ms. Uma rolagem instantânea para a posição em que a
-       página já está não a cancela: numa rajada de hashes terminando em
-       #inicio, o título ficava em y = −1036 (medido na re-revisão da #85). */
+    /* ── Abas do dashboard (CANDIDATO 14) ───────────────────────────────
+       Padrão APG Tabs com ativação automática: ←/→ circulam, Home/End vão
+       às pontas, a aba recebe o foco e o painel troca no mesmo gesto. Só a
+       aba selecionada fica na ordem de Tab (tabindex móvel); o Tab seguinte
+       entra no painel. A URL acompanha por history.replaceState, que NÃO
+       dispara hashchange: o foco fica na aba, sem rolagem nem salto para o
+       h1. Assim o Voltar do navegador e o recarregar mantêm a aba. */
+    const ABAS = {
+      gestao: { hash: '#inicio', titulo: 'Gestão de pessoas' },
+      recrutamento: { hash: '#inicio/recrutamento', titulo: 'Recrutamento e seleção' },
+    };
+    const abas = $$('[role="tab"][data-aba]');
+    let abaAtual = 'gestao';
+    function marcarNav(item) {
+      $$('[data-nav]').forEach((a) => {
+        const sim = a.dataset.nav === item;
+        a.classList.toggle('active', sim);
+        if (sim) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      });
+    }
+    function selecionarAba(nome) {
+      abaAtual = nome;
+      abas.forEach((t) => {
+        const sim = t.dataset.aba === nome;
+        t.setAttribute('aria-selected', String(sim));
+        t.tabIndex = sim ? 0 : -1;
+        t.classList.toggle('active', sim);
+        $(`#${t.getAttribute('aria-controls')}`).hidden = !sim;
+      });
+      $$('[data-acoes]').forEach((g) => { g.hidden = g.dataset.acoes !== nome; });
+      /* "Início" é a tela principal (Gestão); a aba R&S acende o módulo R&S. */
+      marcarNav(nome);
+      document.title = `${ABAS[nome].titulo} · Dashboard · electia`;
+    }
+    function ativarPeloUsuario(tab) {
+      selecionarAba(tab.dataset.aba);
+      tab.focus();
+      history.replaceState(null, '', ABAS[tab.dataset.aba].hash);
+    }
+    abas.forEach((t) => t.addEventListener('click', () => ativarPeloUsuario(t)));
+    $('[role="tablist"]').addEventListener('keydown', (ev) => {
+      const i = abas.indexOf(document.activeElement);
+      if (i < 0) return;
+      const n = abas.length;
+      const destino = { ArrowRight: (i + 1) % n, ArrowLeft: (i - 1 + n) % n, Home: 0, End: n - 1 }[ev.key];
+      if (destino === undefined) return;
+      ev.preventDefault();
+      ativarPeloUsuario(abas[destino]);
+    });
+
+    /* ── Rotas ────────────────────────────────────────────────────────
+       #inicio (= Gestão de pessoas) · #inicio/recrutamento · #vagas (R&S,
+       foco no painel de vagas) · #nexus (Gestão, foco no campo) · #vaga/<id>.
+       Nenhuma rota casa com o id de um elemento (os painéis são #painel-*,
+       as abas #aba-*). Se casasse, a navegação de fragmento nativa rolaria
+       até ele, e com o scroll-behavior: smooth do DS essa rolagem começa já
+       no location.hash = e segue por ~550 ms. Uma rolagem instantânea para a
+       posição em que a página já está não a cancela: numa rajada de hashes
+       terminando em #inicio, o título ficava em y = −1036 (medido na
+       re-revisão da #85). */
     const nav = $('#app-nav');
+    let telaAtual = null;
     function rota() {
       const [tela, id] = (location.hash.slice(1) || 'inicio').split('/');
       const ehVaga = tela === 'vaga' && Boolean(VAGAS[id]);
       const atual = ehVaga ? 'vaga' : 'inicio';
+      const vindoDe = telaAtual;
+      telaAtual = atual;
       $$('[data-screen]').forEach((s) => { s.hidden = s.dataset.screen !== atual; });
-      $$('[data-nav]').forEach((a) => {
-        const sim = a.dataset.nav === atual;
-        a.classList.toggle('active', sim);
-        if (sim) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
-      });
-      if (ehVaga && vagaAtual !== id) renderKanban(id);
-      $('[data-top-title]').textContent = ehVaga ? 'Recrutamento & Seleção' : 'Início';
-      document.title = `${ehVaga ? VAGAS[id].titulo : 'Início'} · electia`;
-      if (ehVaga) return '#vaga-titulo';
-      return { vagas: '#painel-vagas', nexus: '#nexus-input' }[tela] || '#inicio-titulo';
+      if (ehVaga) {
+        if (vagaAtual !== id) renderKanban(id);
+        marcarNav('recrutamento');
+        $('[data-top-title]').textContent = 'Recrutamento & Seleção';
+        document.title = `${VAGAS[id].titulo} · electia`;
+        return '#vaga-titulo';
+      }
+      const rs = (tela === 'inicio' && id === 'recrutamento') || tela === 'vagas';
+      selecionarAba(rs ? 'recrutamento' : 'gestao');
+      $('[data-top-title]').textContent = 'Dashboard';
+      if (tela === 'vagas') return '#painel-vagas';
+      if (tela === 'nexus') return '#nexus-input';
+      /* Voltando da vaga para a aba R&S: o foco volta à linha da vaga aberta. */
+      if (rs && vindoDe === 'vaga' && vagaAtual) return `[data-vagas-list] a[href="#vaga/${vagaAtual}"]`;
+      return '#inicio-titulo';
     }
     /* Troca de tela: rolagem instantânea (o DS liga scroll-behavior: smooth),
        para o destino do foco já estar visível, abaixo do header sticky. O
@@ -605,13 +731,14 @@
     function posicionar(alvo) {
       alvo.scrollIntoView({ block: alvo.id === 'nexus-input' ? 'center' : 'start', behavior: 'instant' });
     }
-    window.addEventListener('hashchange', () => {
-      const alvo = $(rota());
+    function aplicarRota() {
+      const alvo = $(rota()) || $('#inicio-titulo');
       alvo.focus({ preventScroll: true });
       posicionar(alvo);
       cancelAnimationFrame(quadroRota);
       quadroRota = requestAnimationFrame(() => { if (document.activeElement === alvo) posicionar(alvo); });
-    });
+    }
+    window.addEventListener('hashchange', aplicarRota);
 
     /* CANDIDATO 11 — gaveta modal de verdade. dist/sidebar-overlay.js prende o
        Tab, mas não isola o fundo nem dá papel de diálogo. Enquanto aberta: o
@@ -716,7 +843,7 @@
     function abrirNexus() {
       /* Com a gaveta aberta, fecha antes: o Nexus está atrás dela. */
       if (nav.hasAttribute('data-open')) window.ResultXSidebarOverlay.close(nav);
-      if (location.hash === '#nexus') { input.focus({ preventScroll: true }); input.scrollIntoView({ block: 'center', behavior: 'instant' }); } else location.hash = 'nexus';
+      if (location.hash === '#nexus') aplicarRota(); else location.hash = 'nexus';
     }
     $('[data-nexus-open]').addEventListener('click', abrirNexus);
     document.addEventListener('keydown', (ev) => {
