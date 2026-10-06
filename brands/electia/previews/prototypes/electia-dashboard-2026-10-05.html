@@ -196,6 +196,11 @@
     .stage-filter { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-block-end: var(--space-4); }
     .stage-filter > span { color: var(--text-secondary); font-size: var(--text-sm); }
     .stage-filter .stage-chip { min-block-size: 32px; padding-inline: var(--space-3); }
+    /* Parte do CANDIDATO 10: o DS transiciona o background em 150 ms, e a
+       tinta troca na hora. No escuro, desmarcar Oferta passava por quadros de
+       4,09:1. No filtro, fundo e tinta trocam juntos, no mesmo quadro; só a
+       pressão (transform) anima. */
+    .stage-filter .stage-chip { transition: transform var(--transition-fast); }
     /* CANDIDATO 10 — estado "desmarcado" do .stage-chip filtro. Sem opacidade:
        contorno tracejado neutro, fundo da página, tinta secundária, marcador
        vazado e o nome riscado. Marcado = chip do DS + borda na tinta. */
@@ -573,12 +578,21 @@
       if (ehVaga) return '#vaga-titulo';
       return { vagas: '#vagas', nexus: '#nexus-input' }[tela] || '#inicio-titulo';
     }
+    /* Troca de tela: rolagem instantânea (o DS liga scroll-behavior: smooth),
+       para o destino do foco já estar visível, abaixo do header sticky. A
+       rolagem nativa da âncora (ex.: #vagas) ou uma suave ainda pendente de
+       outra troca pode chegar depois: o reposicionamento se repete no quadro
+       seguinte, e uma rolagem instantânea cancela a suave em curso. */
+    let quadroRota = 0;
+    function posicionar(alvo) {
+      alvo.scrollIntoView({ block: alvo.id === 'nexus-input' ? 'center' : 'start', behavior: 'instant' });
+    }
     window.addEventListener('hashchange', () => {
       const alvo = $(rota());
-      /* Troca de tela: rolagem instantânea (o DS liga scroll-behavior: smooth),
-         para o destino do foco já estar visível, abaixo do header sticky. */
       alvo.focus({ preventScroll: true });
-      alvo.scrollIntoView({ block: alvo.id === 'nexus-input' ? 'center' : 'start', behavior: 'instant' });
+      posicionar(alvo);
+      cancelAnimationFrame(quadroRota);
+      quadroRota = requestAnimationFrame(() => { if (document.activeElement === alvo) posicionar(alvo); });
     });
 
     /* CANDIDATO 11 — gaveta modal de verdade. dist/sidebar-overlay.js prende o
@@ -587,11 +601,23 @@
        fica fora do inert porque o script devolve o foco a ele ANTES de emitir
        o evento de fechamento (inert ali faria o foco falhar em silêncio). */
     const FUNDO = ['.skip-link', '#conteudo', '.app-top-title', '.agent-pill', '.app-top-end'];
+    const gatilho = $('[data-sidebar-toggle="app-nav"]');
     nav.addEventListener('sidebartoggle', (ev) => {
       const aberto = ev.detail.open;
       FUNDO.forEach((s) => { $(s).inert = aberto; });
       if (aberto) { nav.setAttribute('role', 'dialog'); nav.setAttribute('aria-modal', 'true'); } else { nav.removeAttribute('role'); nav.removeAttribute('aria-modal'); }
+      /* Rede de segurança: se a devolução do script falhou, o foco cai no body. */
+      if (!aberto && document.activeElement === document.body && gatilho.offsetParent !== null) gatilho.focus();
     });
+    /* CANDIDATO 12 (temporário, a PR #86 corrige no DS): o script guarda
+       document.activeElement como invocador. No Safari, ou com button.click(),
+       o botão não recebe foco no clique, e o invocador salvo é o que estava
+       focado antes (ex.: #nexus-input). Ele fica inert com a gaveta aberta, e
+       no Escape o foco caía no body. Em captura, antes do handler do script,
+       o gatilho se foca e passa a ser o invocador. */
+    document.addEventListener('click', (ev) => {
+      if (ev.target.closest('[data-sidebar-toggle="app-nav"]') && !nav.hasAttribute('data-open')) gatilho.focus({ preventScroll: true });
+    }, true);
 
     /* Itens fora do protótipo avisam e ficam onde estão. */
     document.addEventListener('click', (ev) => {

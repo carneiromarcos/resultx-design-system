@@ -57,7 +57,8 @@ O corte segue o DS: a gaveta vale até 1024 px, inclusive, porque o DS usa `max-
 | C4 | `.list-item-chips` | Média | Linha de vaga com etapas (Talio §5). É um gancho pequeno no `.list-item` |
 | C5 | `.attention-mark` / `.attention-list` | Baixa | Prevista na ficha Talio §5 |
 | C9 | `.toast-region` (posição fixa, `role="status"`) | Baixa | O `.toast` do DS não se posiciona sozinho |
-| C10 | Estado **desmarcado** do `.stage-chip` filtro (`aria-pressed="false"`) | **Alta** | O DS só desenha o marcado. Opacidade reprova contraste (2,46–3,97:1, achado do Revisor na #85). Proposta: contorno tracejado em `currentcolor`, fundo da página, tinta `--text-secondary`, marcador vazado e nome riscado |
+| C10 | Estado **desmarcado** do `.stage-chip` filtro (`aria-pressed="false"`) | **Alta** | O DS só desenha o marcado. Opacidade reprova contraste (2,46–3,97:1, achado do Revisor na #85). Proposta: contorno tracejado em `currentcolor`, fundo da página, tinta `--text-secondary`, marcador vazado e nome riscado. **Sem transição de `background-color` na troca:** o DS (`stage-chip.css`, `:is(a, button)`) interpola o fundo por 150 ms enquanto a tinta troca na hora, e no escuro os quadros intermediários de Oferta medem 4,08:1. No filtro, fundo e tinta trocam no mesmo quadro; só `transform` anima |
+| C12 | Invocador da gaveta = o gatilho, não o `document.activeElement` (temporário; a PR #86 corrige no DS) | **Alta** | No Safari, ou com `button.click()`, o botão não ganha foco ao ser clicado. O script guardava o elemento focado antes (ex.: `#nexus-input`), que fica inert com a gaveta aberta, e no Escape o foco caía no `body`. O protótipo foca o gatilho num listener de `click` em captura, antes do handler do script. Se mesmo assim o foco terminar no `body` ao fechar, ele vai para o gatilho |
 | C11 | `dist/sidebar-overlay.js` modal de verdade | **Alta** | Hoje o script prende o Tab, mas não dá `role="dialog"`/`aria-modal` nem isola o fundo. O protótipo faz isso no evento `sidebartoggle`. No DS o `inert` precisa sair **antes** de o script devolver o foco ao gatilho; por isso, aqui, o gatilho fica fora do inert. O atalho do agente (⌘K) fecha a gaveta antes de focar |
 
 ## Medições
@@ -97,7 +98,19 @@ As medições foram feitas com Playwright no Chrome do sistema (`channel: 'chrom
 | Marca de teste | 7,56 | 6,28 |
 | Contorno do filtro desmarcado | 7,22 | 5,89 |
 
-**Comportamento:** 26 de 26 verificações na matriz geral e mais 31 de 31 nas provas da revisão da #85. As provas da revisão rodaram 4 vezes seguidas, sem falha.
+**Comportamento:** 26 de 26 verificações na matriz geral, 34 de 34 nas provas da 1ª revisão da #85 e 18 de 18 nas da 2ª revisão.
+
+**Contraste em transição (2ª revisão da #85):** medi o contraste em cada quadro (`requestAnimationFrame`, 400 ms após o clique, cerca de 26 quadros) ao desmarcar e ao marcar as cinco etapas, nos dois temas.
+
+| Etapa | Claro: desmarcar / marcar | Escuro: desmarcar / marcar |
+|---|---|---|
+| Triagem | 7,56 / 7,95 | 6,28 / 6,56 |
+| Entrevista | 7,56 / 6,53 | 6,28 / 6,29 |
+| Oferta | 7,56 / 5,13 | 6,28 / 7,56 |
+| Contratado | 7,56 / 5,28 | 6,28 / 7,42 |
+| Rejeitado | 7,56 / 6,05 | 6,28 / 6,46 |
+
+Os valores são o mínimo entre os quadros. Controle negativo: devolvendo a transição do DS, o mesmo medidor acusa 4,08:1 nos primeiros 64 ms de Oferta no escuro, o achado do Revisor.
 
 - Gaveta em 375 px:
   - o foco entra ao abrir, com `aria-expanded="true"`;
@@ -125,10 +138,20 @@ As medições foram feitas com Playwright no Chrome do sistema (`channel: 'chrom
   - Escape limpa tudo e devolve o foco ao gatilho;
   - redimensionar de 900 para 1200 px com a gaveta aberta fecha, limpa inert e role, destrava a rolagem e mantém o foco num item visível do painel;
   - no desktop, o painel não tem `role`.
+  - **Gatilho sem foco (2ª revisão):** nos três casos o foco termina no gatilho:
+    - `button.click()` a partir do `#nexus-input` + Escape;
+    - ponteiro com `mousedown.preventDefault()`, que simula o Safari, + Escape;
+    - `button.click()` + clique no véu.
 - **Foco após trocar de tela:** `#vaga/analista-dp`, `#inicio`, `#vagas`, `#vaga/recepcionista` e `#nexus`, partindo do fim da página, em 667×375, 320×568, 375×812 e 1440×900:
   - o hit-test no centro do elemento focado acerta o próprio elemento, nunca o header;
   - o topo fica entre 100 e 144 px, com o header terminando em 56 px.
   - Como garante: `scroll-padding`/`scroll-margin` = `--header-height` + `--space-4`. A rolagem da troca de tela é `instant`, porque o DS liga `scroll-behavior: smooth` e o destino ficava fora de vista durante a animação.
+  - **Teclado sem pausa (2ª revisão):** no quadro seguinte o protótipo reposiciona de novo, cancelando o quadro pendente da troca anterior. Uma rolagem instantânea também interrompe a suave que estiver em curso, inclusive a da âncora nativa (`#vagas`). Provas em 667×375:
+    - `Tab×n + Enter` para n de 1 a 30 (8 links de rota);
+    - 4 rajadas de 13 Tab + Enter seguidas;
+    - 6 trocas de hash na mesma tarefa.
+
+    Em todos os casos o foco termina visível abaixo do header (antes, uma das sequências deixava o título em y = −227).
 
 **Capturas:**
 
@@ -176,7 +199,7 @@ Nas capturas de página inteira, a sidebar (`position: fixed`) aparece com a alt
 
 ## Pendências
 
-- Levar C1, C2, C7, C8, C10 e C11 para `components/`/`dist/` em PR própria, com testes. Corrigir os defeitos 1 a 4 e 7 no DS. O 8 está com o lote D, e o override deste protótipo sai quando ele entrar.
+- Levar C1, C2, C7, C8, C10 e C11 para `components/`/`dist/` em PR própria, com testes. Quando a #86 entrar, tirar o contorno C12 do protótipo. Corrigir os defeitos 1 a 4 e 7 no DS. O 8 está com o lote D, e o override deste protótipo sai quando ele entrar.
 - Migrar `.pipeline-stage-*` / `.kanban-column-dot` para `.stage-chip` no DS. Este protótipo já usa o chip no cabeçalho e não usa o ponto. É pendência do lote P.
 - O Marcos decide o vocabulário das etapas: DS (5) ou app (9 status). Também decide se o kanban entra no produto.
 - Revisar contra a paleta de resultado do app (`viz-tokens.css`) quando ela vier ao DS. Quando C7 existir, colorir a marca DISC pelo resultado.
