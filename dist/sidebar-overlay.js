@@ -63,15 +63,42 @@
     '[tabindex]:not([tabindex="-1"])',
   ].join(',');
 
+  /* Um alvo so vale se o navegador aceitar o .focus(). Fica de fora o que
+     esta dentro de um [inert] (inclusive um grupo inerte dentro do painel),
+     o que esta escondido (display:none corta o offsetParent; visibility:
+     hidden nao corta, por isso o getComputedStyle), o desabilitado e o
+     tabindex=-1. Sem este filtro o primeiro alvo podia ser um desses: o
+     .focus() falhava em silencio, o foco ficava no <body> e o Tab nao
+     circulava do ultimo para o primeiro. */
+  function focavel(no) {
+    if (no.offsetParent === null) return false;
+    if (no.closest('[inert]')) return false;
+    if (no.disabled || no.hasAttribute('disabled')) return false;
+    if (no.getAttribute('tabindex') === '-1') return false;
+    if (typeof window.getComputedStyle === 'function') {
+      var estilo = window.getComputedStyle(no);
+      if (estilo.visibility !== 'visible' || estilo.display === 'none') return false;
+    }
+    return true;
+  }
+
   function focusablesIn(el) {
     var todos = el.querySelectorAll(FOCUSABLE);
-    var visiveis = [];
+    var validos = [];
     for (var i = 0; i < todos.length; i++) {
-      /* offsetParent nulo = escondido. Um item invisivel no ciclo de foco
-         manda o usuario para o nada. */
-      if (todos[i].offsetParent !== null) visiveis.push(todos[i]);
+      if (focavel(todos[i])) validos.push(todos[i]);
     }
-    return visiveis;
+    return validos;
+  }
+
+  /* Foca o primeiro alvo que de fato receber o foco; sem nenhum, o proprio
+     painel (tabindex=-1, posto no enhance). Nunca deixa o foco no <body>. */
+  function focarDentro(el, alvos) {
+    for (var i = 0; i < alvos.length; i++) {
+      alvos[i].focus();
+      if (document.activeElement === alvos[i]) return;
+    }
+    el.focus();
   }
 
   function triggersFor(el) {
@@ -160,16 +187,23 @@
   /* Semantica de dialogo so enquanto aberta: fechada, o <aside> volta a ser
      o landmark de navegacao que era (e o role anterior, se havia, volta). */
   function tornarModal(el) {
+    /* null = ausente. Guarda presenca e valor dos dois atributos. */
     el._roleAnterior = el.getAttribute('role');
+    el._ariaModalAnterior = el.getAttribute('aria-modal');
     el.setAttribute('role', 'dialog');
     el.setAttribute('aria-modal', 'true');
   }
 
+  function restaurar(el, nome, anterior) {
+    if (anterior === null || anterior === undefined) el.removeAttribute(nome);
+    else el.setAttribute(nome, anterior);
+  }
+
   function desfazerModal(el) {
-    if (el._roleAnterior) el.setAttribute('role', el._roleAnterior);
-    else el.removeAttribute('role');
-    el.removeAttribute('aria-modal');
+    restaurar(el, 'role', el._roleAnterior);
+    restaurar(el, 'aria-modal', el._ariaModalAnterior);
     el._roleAnterior = null;
+    el._ariaModalAnterior = null;
   }
 
   function emit(el, aberto) {
@@ -199,9 +233,7 @@
        `0s` ao abrir justamente para que o painel ja esteja visivel aqui.
        Focar um elemento ainda invisivel falha em silencio, e o foco fica
        preso no botao — foi o que aconteceu antes do ajuste no CSS. */
-    var alvos = focusablesIn(el);
-    if (alvos.length) alvos[0].focus();
-    else el.focus();
+    focarDentro(el, focusablesIn(el));
 
     emit(el, true);
   }
@@ -236,19 +268,30 @@
     else open(el, invocador);
   }
 
+  /* Usa a lista filtrada: o ciclo so passa por quem aceita o foco. */
   function trapTab(el, event) {
     var alvos = focusablesIn(el);
     if (!alvos.length) {
       event.preventDefault();
+      el.focus();
       return;
     }
     var primeiro = alvos[0];
     var ultimo = alvos[alvos.length - 1];
+    var ativo = document.activeElement;
 
-    if (event.shiftKey && document.activeElement === primeiro) {
+    /* Foco fora da lista (no proprio painel, ou num alvo que deixou de
+       valer): entra pela ponta certa em vez de deixar o navegador decidir. */
+    if (alvos.indexOf(ativo) === -1) {
+      event.preventDefault();
+      (event.shiftKey ? ultimo : primeiro).focus();
+      return;
+    }
+
+    if (event.shiftKey && ativo === primeiro) {
       event.preventDefault();
       ultimo.focus();
-    } else if (!event.shiftKey && document.activeElement === ultimo) {
+    } else if (!event.shiftKey && ativo === ultimo) {
       event.preventDefault();
       primeiro.focus();
     }

@@ -26,7 +26,8 @@ const fs = require('fs');
 const path = require('path');
 
 const { css, regra, regras, valor, texto, ROOT, emReduzido } = require('./lib/css');
-const { mixOklab, paint, contrastOn } = require('./lib/color');
+const { mixOklab, paint, contrastOn, parseColor } = require('./lib/color');
+const { contrastRatio } = require('../scripts/lib/contrast');
 const { extractBlock, parseDeclarations } = require('../scripts/build-brand-bridges');
 const { BRANDS } = require('../scripts/brand-bridges.config');
 const { AA_NORMAL, AA_LARGE } = require('../scripts/lib/contrast');
@@ -159,6 +160,133 @@ describe('Revisor (a) — estados do .sidebar-item com tinta da sidebar', () => 
       return daPonte !== undefined ? daPonte : tok(e, nome);
     };
     expect(reprovados(paresDosEstados(id, ds, valorDe), AA_NORMAL)).toEqual([]);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Revisor da #86 (P2-1) — AA em TODOS os quadros das transições da sidebar
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Com ponte de fundo claro (PdV, ResultX, Xscore), o item atual é tinta escura
+ * sobre dourado e o foco/hover é tinta branca sobre navy. Com color + background
+ * interpolando juntos, os quadros do meio caíam a ~2:1. Este teste lê do CSS
+ * quais propriedades transicionam e amostra 11 quadros entre as pontas de cada
+ * par de estados (nos dois sentidos), em cada escopo do DS e em cada ponte. O
+ * que não transiciona troca na hora: só as pontas existem.
+ *
+ * Inclui a troca de tema: o fundo da .sidebar transiciona, e o texto em
+ * repouso (que troca na hora) é medido contra cada quadro desse fundo.
+ */
+const rgbaDe = (valorCor) => {
+  const { hex, alpha } = parseColor(valorCor);
+  return [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16)).concat(alpha);
+};
+const hexDe = (rgb) => `#${rgb.slice(0, 3).map((c) => Math.round(c).toString(16).padStart(2, '0')).join('')}`;
+const sobre = (cor, bgRgb) => [0, 1, 2].map((i) => cor[i] * cor[3] + bgRgb[i] * (1 - cor[3])).concat(1);
+/** Interpolação pré-multiplicada (como o navegador interpola cores com alfa). */
+const lerpCor = (a, b, t) => {
+  const alfa = a[3] + (b[3] - a[3]) * t;
+  if (alfa === 0) return [0, 0, 0, 0];
+  return [0, 1, 2].map((i) => (a[i] * a[3] + (b[i] * b[3] - a[i] * a[3]) * t) / alfa).concat(alfa);
+};
+const QUADROS = Array.from({ length: 11 }, (_, i) => i / 10);
+
+/** Propriedades que a regra transiciona (nomes da shorthand `transition`). */
+const transicionadas = (seletor) => {
+  const t = valor(regra(componentes, seletor), 'transition') || '';
+  return t
+    .split(',')
+    .map((p) => p.trim().split(/\s+/)[0])
+    .filter(Boolean);
+};
+const anima = (props, nome) => props.some((p) => p === 'all' || p === nome || p.startsWith(`${nome}-`));
+
+const ESTADOS_ITEM = {
+  repouso: ['--sidebar-text', null],
+  hover: ['--sidebar-text-bright', '--sidebar-bg-hover'],
+  atual: ['--sidebar-text-active', '--sidebar-active-bg'],
+  foco: ['--sidebar-text-bright', '--sidebar-bg-hover'],
+};
+
+/** Pontas pintadas de um estado: [tinta rgba, fundo rgb opaco]. */
+const pontas = (valorDe, e, [tinta, fundo]) => {
+  const sb = rgbaDe(valorDe(e, '--sidebar-bg'));
+  const bg = fundo ? sobre(rgbaDe(valorDe(e, fundo)), sb) : sb;
+  return [rgbaDe(valorDe(e, tinta)), bg];
+};
+
+function quadrosReprovados(rotulo, valorDe) {
+  const props = transicionadas('.sidebar-item');
+  const corAnima = anima(props, 'color');
+  const fundoAnima = anima(props, 'background');
+  const nomes = Object.keys(ESTADOS_ITEM);
+  const falhas = [];
+  for (const e of ds) {
+    for (const de of nomes) {
+      for (const para of nomes) {
+        if (de === para) continue;
+        const [tA, bA] = pontas(valorDe, e, ESTADOS_ITEM[de]);
+        const [tB, bB] = pontas(valorDe, e, ESTADOS_ITEM[para]);
+        for (const t of QUADROS) {
+          // O que não transiciona já está na ponta de chegada no 1º quadro.
+          const tinta = corAnima ? lerpCor(tA, tB, t) : t === 0 ? tA : tB;
+          const fundo = fundoAnima ? lerpCor(bA, bB, t) : t === 0 ? bA : bB;
+          const r = contrastRatio(hexDe(sobre(tinta, fundo)), hexDe(fundo));
+          if (r < AA_NORMAL) falhas.push(`${rotulo} ${e.nome} ${de}→${para} t=${t}: ${r.toFixed(2)}:1`);
+        }
+      }
+    }
+  }
+  return falhas;
+}
+
+describe('Revisor #86 (P2-1) — quadros das transições da sidebar', () => {
+  test('o item não transiciona color nem background (a polaridade inverte entre estados)', () => {
+    const props = transicionadas('.sidebar-item');
+    expect(anima(props, 'color')).toBe(false);
+    expect(anima(props, 'background')).toBe(false);
+  });
+
+  test('nenhum estado do item reintroduz transição de cor ou fundo', () => {
+    const culpadas = regras(componentes)
+      .filter((r) => r.seletor.startsWith('.sidebar-item'))
+      .filter((r) => /(^|[\s,:])(color|background|all)\b/.test(valor(r.corpo, 'transition') || ''))
+      .map((r) => r.seletor);
+    expect(culpadas).toEqual([]);
+  });
+
+  test('DS: todo quadro de todo par de estados >= 4,5:1, nos quatro escopos', () => {
+    expect(quadrosReprovados('DS', tok)).toEqual([]);
+  });
+
+  test.each(BRANDS.map((b) => b.id))('ponte %s: todo quadro de todo par de estados >= 4,5:1', (id) => {
+    const ponte = escopos(texto('brands', id, 'tokens', 'ds-bridge.css'));
+    const valorDe = (e, nome) => {
+      const daPonte = ponte.find((x) => x.nome === e.nome).d[nome];
+      return daPonte !== undefined ? daPonte : tok(e, nome);
+    };
+    expect(quadrosReprovados(id, valorDe)).toEqual([]);
+  });
+
+  test('troca de tema: o fundo da .sidebar interpola e o texto em repouso passa em cada quadro', () => {
+    const props = transicionadas('.sidebar');
+    const fundoAnima = anima(props, 'background');
+    const [escuro, claro] = [ds[0], ds[1]];
+    const falhas = [];
+    for (const [de, para] of [[escuro, claro], [claro, escuro]]) {
+      const bA = rgbaDe(tok(de, '--sidebar-bg'));
+      const bB = rgbaDe(tok(para, '--sidebar-bg'));
+      for (const tinta of ['--sidebar-text', '--sidebar-text-bright']) {
+        const cor = rgbaDe(tok(para, tinta)); // texto troca na hora
+        for (const t of QUADROS) {
+          const fundo = fundoAnima ? lerpCor(bA, bB, t) : bB;
+          const r = contrastRatio(hexDe(sobre(cor, fundo)), hexDe(fundo));
+          if (r < AA_NORMAL) falhas.push(`${de.nome}→${para.nome} ${tinta} t=${t}: ${r.toFixed(2)}`);
+        }
+      }
+    }
+    expect(falhas).toEqual([]);
   });
 });
 
@@ -478,12 +606,16 @@ describe('C6 — .composer-chip', () => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * No protótipo, desmarcar um filtro deu 4,09:1 no escuro a 13–29 ms. A causa
- * era local (opacity .62 no [aria-pressed="false"]), mas o DS expõe o estado
- * pressionado e transiciona o fundo entre 12 % e 20 % da cor da etapa. A tinta
- * não muda nessa troca; o fundo vai de uma ponta à outra. Aqui: a tinta não
- * entra na transição, o DS não esmaece o chip desmarcado, e cada quadro
+ * O que este bloco garante, só para o .stage-chip puro do DS: o estado
+ * pressionado transiciona o fundo entre 12 % e 20 % da cor da etapa, e a
+ * tinta não muda nessa troca. Aqui: color e opacity não entram na transição,
+ * o DS não altera tinta nem opacidade do chip desmarcado, e cada quadro
  * intermediário (11 amostras entre as pontas) passa 4,5:1 nos quatro escopos.
+ *
+ * Não cobre o caso visto na re-revisão da #85 (snapshot 1db1f9b, 4,09:1 no
+ * escuro a 13–29 ms): lá a tinta do protótipo trocava na hora para
+ * --text-secondary enquanto o fundo interpolava. Isso é composição local do
+ * protótipo e não foi resolvido nesta PR.
  */
 const ETAPA_COR = {
   triagem: '--text-secondary',

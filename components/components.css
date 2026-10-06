@@ -124,13 +124,14 @@ body {
   /* Navegação deve ser <a>, não <div>. Sem este reset o link chega sublinhado
      e o item só fica correto com markup não semântico. */
   text-decoration: none;
-  /* `all` incluía `visibility`, e o item herda a do sidebar. No modo overlay
-     isso fazia o link reportar `visibility: hidden` no instante em que o
-     script tentava focá-lo — e `.focus()` num elemento invisível falha em
-     silêncio, deixando o foco preso no botão que abriu o painel.
-     Um item de navegação só precisa animar cor e fundo. */
-  transition: color 150ms var(--spring-snappy),
-    background 150ms var(--spring-snappy);
+  /* Sem transição de cor nem de fundo — a troca de estado é instantânea.
+     Na sidebar a polaridade inverte entre estados: com ponte de fundo claro
+     (PdV, ResultX, Xscore) o item atual é tinta escura sobre dourado, e o
+     foco/hover é tinta branca sobre navy. Com color + background
+     interpolando juntos por 150 ms, os quadros a ~15 ms davam 2,05–2,11:1
+     (Revisor da #86). Instantâneo, só existem as pontas, todas >= 4,5:1.
+     (Antes ainda: a transição de `all` incluía `visibility`, e o .focus() do
+     script falhava no modo overlay. Nunca volte a `all`.) */
   border-radius: var(--radius-md);
 }
 .sidebar-item:hover { color: var(--sidebar-text-bright); background: var(--sidebar-bg-hover); }

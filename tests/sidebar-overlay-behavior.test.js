@@ -20,7 +20,7 @@
 
 const { criarDocumento } = require('./lib/mini-dom');
 
-function montar({ role } = {}) {
+function montar({ role, ariaModal, filhos } = {}) {
   const dom = criarDocumento();
   const { doc, el } = dom;
   const attrsAside = {
@@ -31,9 +31,11 @@ function montar({ role } = {}) {
     'data-sidebar-media': '(max-width: 1024px)',
   };
   if (role) attrsAside.role = role;
-  doc.body.appendChild(
-    el('aside', attrsAside, el('a', { href: '#a', id: 'item-a' }), el('a', { href: '#b', id: 'item-b' })),
-  );
+  if (ariaModal !== undefined) attrsAside['aria-modal'] = ariaModal;
+  const conteudo = filhos
+    ? filhos(el)
+    : [el('a', { href: '#a', id: 'item-a' }), el('a', { href: '#b', id: 'item-b' })];
+  doc.body.appendChild(el('aside', attrsAside, ...conteudo));
   doc.body.appendChild(
     el(
       'div',
@@ -224,5 +226,92 @@ describe('Foco volta ao gatilho que abriu, mesmo sem ele ter recebido foco', () 
     ctx.api.open(ctx.nav);
     ctx.tecla('Escape');
     expect(ctx.doc.activeElement).toBe(ctx.q('gatilho'));
+  });
+});
+
+/**
+ * Revisor da #86 (P2-2): um focável dentro de um ancestral [inert], desabilitado
+ * ou com tabindex=-1 era escolhido como primeiro alvo; o .focus() falhava, o foco
+ * ficava no <body> e o Tab não circulava. O mini-dom respeita inert por ancestral
+ * no .focus(), como o navegador; visibilidade CSS NÃO é simulada aqui — essa
+ * prova é do Playwright (visibility:hidden no primeiro alvo).
+ */
+describe('Revisor #86 (P2-2) — só alvos que aceitam o foco', () => {
+  const comGrupoInerte = (el) => [
+    el('div', { id: 'grupo', inert: '' }, el('a', { href: '#x', id: 'inerte-1' }), el('a', { href: '#y', id: 'inerte-2' })),
+    el('a', { href: '#a', id: 'item-a' }),
+    el('a', { href: '#b', id: 'item-b' }),
+  ];
+
+  test('primeiro grupo inerte: o foco inicial vai ao primeiro alvo válido', () => {
+    const ctx = montar({ filhos: comGrupoInerte });
+    abrir(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
+  });
+
+  test('primeiro grupo inerte: Tab no último volta ao primeiro VÁLIDO; Shift+Tab no primeiro vai ao último', () => {
+    const ctx = montar({ filhos: comGrupoInerte });
+    abrir(ctx);
+    ctx.q('item-b').focus();
+    expect(ctx.tecla('Tab')).toBe(false);
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
+    expect(ctx.tecla('Tab', { shiftKey: true })).toBe(false);
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-b'));
+  });
+
+  test('desabilitado e tabindex=-1 não são alvos', () => {
+    const ctx = montar({
+      filhos: (el) => [
+        el('button', { id: 'off', disabled: '' }),
+        el('a', { href: '#z', id: 'fora-do-tab', tabindex: '-1' }),
+        el('a', { href: '#a', id: 'item-a' }),
+      ],
+    });
+    abrir(ctx);
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
+  });
+
+  test('painel sem focáveis: o foco vai ao próprio painel (tabindex=-1) e Tab o mantém lá', () => {
+    const ctx = montar({ filhos: (el) => [el('p', { id: 'texto' })] });
+    abrir(ctx);
+    expect(ctx.nav.getAttribute('tabindex')).toBe('-1');
+    expect(ctx.doc.activeElement).toBe(ctx.nav);
+    expect(ctx.tecla('Tab')).toBe(false);
+    expect(ctx.doc.activeElement).toBe(ctx.nav);
+    expect(ctx.tecla('Tab', { shiftKey: true })).toBe(false);
+    expect(ctx.doc.activeElement).toBe(ctx.nav);
+  });
+
+  test('foco no próprio painel com alvos: Tab entra pelo primeiro, Shift+Tab pelo último', () => {
+    const ctx = montar();
+    abrir(ctx);
+    ctx.nav.focus();
+    expect(ctx.tecla('Tab')).toBe(false);
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
+    ctx.nav.focus();
+    expect(ctx.tecla('Tab', { shiftKey: true })).toBe(false);
+    expect(ctx.doc.activeElement).toBe(ctx.q('item-b'));
+  });
+});
+
+describe('Revisor #86 (P3-1) — aria-modal preexistente volta ao fechar', () => {
+  test.each([
+    ['ausente', undefined, null],
+    ['"false"', 'false', 'false'],
+    ['"true"', 'true', 'true'],
+  ])('aria-modal %s', (_, inicial, esperado) => {
+    const ctx = montar({ ariaModal: inicial });
+    abrir(ctx);
+    expect(ctx.nav.getAttribute('aria-modal')).toBe('true');
+    ctx.tecla('Escape');
+    expect(ctx.nav.getAttribute('aria-modal')).toBe(esperado);
+  });
+
+  test('role e aria-modal do consumidor voltam juntos', () => {
+    const ctx = montar({ role: 'navigation', ariaModal: 'false' });
+    abrir(ctx);
+    ctx.tecla('Escape');
+    expect(ctx.nav.getAttribute('role')).toBe('navigation');
+    expect(ctx.nav.getAttribute('aria-modal')).toBe('false');
   });
 });

@@ -210,7 +210,9 @@ describe('Sidebar overlay — terceiro modo', () => {
     // `all` incluia visibility, e foi exatamente o que prendeu o foco no botao.
     const regra = rule(componentsCss, '.sidebar-item {');
     expect(regra).not.toMatch(/transition:\s*all/);
-    expect(regra).toContain('transition: color');
+    // Lote D / Revisor da #86: nem cor nem fundo transicionam (a polaridade
+    // inverte entre estados e os quadros intermediarios caiam a ~2:1).
+    expect(regra).not.toMatch(/transition:[^;]*\b(color|background)/);
   });
 
   test('o scrim nao e o .modal-overlay', () => {
