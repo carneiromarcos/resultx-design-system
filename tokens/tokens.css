@@ -156,6 +156,11 @@
   --sidebar-text-bright: #FFF;
   --sidebar-badge-bg: rgba(255, 255, 255, 0.15);
   --sidebar-badge-active-bg: rgba(255, 255, 255, 0.25);
+  /* Anel de foco DENTRO da sidebar, que é escura nos dois temas. O anel do
+     tema não serve: no claro, #1D4ED8 sobre #0F1A2E dá 2,6:1. A .sidebar
+     redefine o anel com este valor. WCAG 1.4.11 pede 3:1; medido 10,57 sobre
+     o fundo da sidebar e 9,89 sobre o hover. */
+  --sidebar-focus-ring: #2DD4BF;
 
   /* ── Borders ───────────────────────────────────────────────────────────── */
   --border-subtle: #1E2736;
@@ -296,6 +301,9 @@
   --sidebar-text-bright: #FFF;
   --sidebar-badge-bg: rgba(255, 255, 255, 0.15);
   --sidebar-badge-active-bg: rgba(255, 255, 255, 0.25);
+  /* Azul claro, o par do accent claro que se lê sobre o navy: 6,84 sobre o
+     fundo da sidebar e 6,18 sobre o hover. */
+  --sidebar-focus-ring: #60A5FA;
 
   /* ── Borders ───────────────────────────────────────────────────────────── */
   --border-subtle: #E8ECF0;
@@ -424,6 +432,7 @@
     --sidebar-text: rgba(255, 255, 255, 0.50); --sidebar-text-label: rgba(255, 255, 255, 0.30); --sidebar-text-active: #2DD4BF;
     --sidebar-divider: rgba(255, 255, 255, 0.06); --sidebar-text-bright: #FFF;
     --sidebar-badge-bg: rgba(255, 255, 255, 0.15); --sidebar-badge-active-bg: rgba(255, 255, 255, 0.25);
+    --sidebar-focus-ring: #2DD4BF;
     --border-subtle: #1E2736; --border-default: #2A3444;
     --border-strong: #3D4A5C; --border-accent: rgba(45, 212, 191, 0.20);
     --text-primary: #E6EDF3; --text-secondary: #8B949E;
@@ -480,6 +489,7 @@
     --sidebar-text: rgba(255, 255, 255, 0.65); --sidebar-text-label: rgba(255, 255, 255, 0.30); --sidebar-text-active: #FFF;
     --sidebar-divider: rgba(255, 255, 255, 0.08); --sidebar-text-bright: #FFF;
     --sidebar-badge-bg: rgba(255, 255, 255, 0.15); --sidebar-badge-active-bg: rgba(255, 255, 255, 0.25);
+    --sidebar-focus-ring: #60A5FA;
     --border-subtle: #E8ECF0; --border-default: #D1D9E0;
     --border-strong: #B0BAC5; --border-accent: rgba(29, 78, 216, 0.25);
     --text-primary: #0F1729; --text-secondary: #4B5563;

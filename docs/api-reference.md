@@ -53,6 +53,8 @@ See [tokens/](tokens/) for detailed documentation per category.
 | `.main-rail` | Content offset paired with `.sidebar-rail` | [navigation.md](components/navigation.md) |
 | `.sidebar-overlay` | Overlay mode: floats above the content, which does not move | [navigation.md](components/navigation.md) |
 | `.sidebar-scrim` | Backdrop for the overlay. Created by the script if absent | [navigation.md](components/navigation.md) |
+| `.sidebar-panel` | With `.sidebar-overlay`: 240px panel from 1025px, drawer up to 1024px, one `<aside>` | [navigation.md](components/navigation.md) |
+| `.sidebar-panel-toggle` | On the drawer trigger: hidden from 1025px, where the panel is fixed | [navigation.md](components/navigation.md) |
 | `.sidebar-brand` | Brand logo area | |
 | `.sidebar-logo` | Logo icon (32px, accent bg) | |
 | `.sidebar-brand-text` | Brand name text | |
@@ -341,6 +343,7 @@ See [tokens/](tokens/) for detailed documentation per category.
 | `.message-day` | Sticky date marker | [conversation.md](components/conversation.md) |
 | `.audio-player` | Waveform player over a native `<audio>` | [conversation.md](components/conversation.md) |
 | `.composer` | Message composition bar; field grows with content | [conversation.md](components/conversation.md) |
+| `.composer-chips` / `.composer-chip` | Suggestion chips: `[data-composer-fill]` fills the field and focuses it, never sends | [conversation.md](components/conversation.md) |
 | `.brand-orb` | Animated orb that identifies an AI agent (Nexus, Copilot Electia, IMO, Xscore); CSS only | [brand-orb.md](components/brand-orb.md) |
 
 Behaviour scripts: `resultx-design-system/disclosure`, `/split-pane`, `/audio-player`, `/composer`. `.segmented` needs none.
@@ -412,6 +415,11 @@ Behaviour scripts: `resultx-design-system/disclosure`, `/split-pane`, `/audio-pl
 | `.stage-chip-{triagem,entrevista,oferta,contratado,rejeitado}` | One color and one marker shape per stage |
 | `.stage-chip-count` | Optional mono count |
 | `.dl-statcard--compact` | Dense KPI statcard: `--space-3`, mono `--text-xl`, no elevation ([data-cards.md](components/data-cards.md)) |
+| `.test-mark` | Assessment mark: the SHAPE identifies the test, the color is a hook (`--test-mark-color`) ([test-mark.md](components/test-mark.md)) |
+| `.test-mark-{disc,tipologia,eneagrama,bigfive,temperamentos,motivadores}` | Quartered circle, square, nonagon, pentagon, hollow triangle, hexagon |
+| `.zone-distribution` | Aggregate Bem-Estar distribution: Saudável · Atenção · Alerta, bar + legend ([zone-distribution.md](components/zone-distribution.md)) |
+| `.zone-distribution-{bar,segment,legend,mark,label,value,note}` | Parts; `.zone-{saudavel,atencao,alerta}` per zone (color + pattern + shape) |
+| `.zone-distribution--insufficient` | Group under 5 responses (ADR-018): no bar, no numbers |
 
 ### Profile
 

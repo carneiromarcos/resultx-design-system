@@ -19,6 +19,16 @@ The ResultX Design System uses **inline SVGs** for icons. Any icon library that 
 </span>
 ```
 
+## Without `dist/icons.min.css`
+
+`dist/icons.min.css` is a separate, published entry point (`resultx-design-system/icons`), and it stays that way. It is the full icon contract: sizes, colors, stroke and wrappers. The main bundle `dist/components.min.css` now carries only a **size floor**:
+
+```css
+:where(svg.icon) { width: 1em; height: 1em; flex-shrink: 0; vertical-align: middle; }
+```
+
+Without it, an `<svg class="icon">` with no `width`/`height` rendered at the replaced-element default of 300 × 150 px. The Electia dashboard prototype measured 246 px of horizontal overflow from that. `:where()` has zero specificity, so every rule in `icons.css` (`.icon-sm`, `.icon-wrapper .icon`, …) wins whether it loads before or after the bundle. Fill and stroke are deliberately **not** in the floor: CSS beats an SVG's `fill="currentColor"` attribute even at zero specificity, and a solid icon would go blank. Load `icons.min.css` for the stroke defaults. (Lote D, 05/10/2026.)
+
 ## Sizes
 
 | Class | Size | Use case |

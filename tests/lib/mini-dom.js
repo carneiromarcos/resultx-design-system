@@ -1,9 +1,11 @@
 /**
  * DOM mínimo para testar os scripts de dist/ no Jest sem jsdom.
  *
- * Cobre só o que dist/menu-drawer.js usa: árvore de elementos, atributos,
- * eventos com bolha e currentTarget, foco (respeitando [inert]), e seletores simples (tag,
- * [attr], [attr="v"], :not(...), listas com vírgula; sem combinadores).
+ * Cobre só o que dist/menu-drawer.js e dist/sidebar-overlay.js usam: árvore
+ * de elementos, atributos, eventos com bolha e currentTarget, foco
+ * (respeitando [inert]), offsetParent, matchMedia controlável e seletores
+ * simples (tag, .classe, [attr], [attr="v"], :not(...), listas com vírgula;
+ * sem combinadores).
  * Como no Safari, element.click() NÃO move o foco — é justamente o caso
  * que os testes precisam reproduzir.
  */
@@ -38,7 +40,9 @@ function casaComposto(el, sel) {
   }
   while (resto.length) {
     let m;
-    if ((m = /^\[([\w-]+)(?:="([^"]*)")?\]/.exec(resto))) {
+    if ((m = /^\.([\w-]+)/.exec(resto))) {
+      if (!el.className.split(/\s+/).includes(m[1])) return false;
+    } else if ((m = /^\[([\w-]+)(?:="([^"]*)")?\]/.exec(resto))) {
       if (!el.hasAttribute(m[1])) return false;
       if (m[2] !== undefined && el.getAttribute(m[1]) !== m[2]) return false;
     } else if ((m = /^:not\((.+?\])\)/.exec(resto))) {
@@ -61,6 +65,7 @@ class MiniEvent {
     this.detail = init.detail;
     this.key = init.key;
     this.shiftKey = !!init.shiftKey;
+    this.relatedTarget = init.relatedTarget || null;
     this.defaultPrevented = false;
   }
   preventDefault() {
@@ -183,14 +188,42 @@ class MiniNode {
     for (let n = this; n && n.tagName; n = n.parentNode) if (n.hidden) return [];
     return [{}];
   }
+  /* Como no navegador: nulo quando o elemento não é renderizado. */
+  get offsetParent() {
+    return this.getClientRects().length ? this.parentNode : null;
+  }
   get inertEfetivo() {
     for (let n = this; n && n.tagName; n = n.parentNode) if (n.hasAttribute('inert')) return true;
     return false;
   }
-  /* Elemento inerte (ou dentro de um) não recebe foco: a chamada é ignorada. */
+  /* STUB de :disabled — só o necessário para os testes, não o algoritmo do
+     navegador inteiro: o próprio [disabled], ou um ancestral
+     <fieldset disabled> fora do primeiro <legend> dele (a exceção da spec).
+     Qualquer outro seletor vai para o casador simples. */
+  matches(sel) {
+    if (sel !== ':disabled') return casa(this, sel);
+    if (this.hasAttribute('disabled')) return true;
+    for (let n = this.parentNode; n && n.tagName; n = n.parentNode) {
+      if (n.tagName === 'FIELDSET' && n.hasAttribute('disabled')) {
+        const legenda = n.children.find((c) => c.tagName === 'LEGEND');
+        if (!(legenda && legenda.contains(this))) return true;
+      }
+    }
+    return false;
+  }
+
+  /* Elemento inerte (ou dentro de um) ou desabilitado não recebe foco: a
+     chamada é ignorada, como no navegador. */
   focus() {
     if (this.inertEfetivo) return;
-    this.ownerDocument.activeElement = this;
+    if (this.matches(':disabled')) return;
+    const doc = this.ownerDocument;
+    const anterior = doc.activeElement;
+    if (anterior === this) return;
+    doc.activeElement = this;
+    /* Como o navegador: 'focus' não borbulha e traz quem perdeu o foco em
+       relatedTarget. É o que as sentinelas do sidebar-overlay escutam. */
+    this.dispatchEvent(new MiniEvent('focus', { relatedTarget: anterior === doc.body ? null : anterior }));
   }
 
   /* eventos */
@@ -229,8 +262,18 @@ function criarDocumento() {
   };
 
   const quadros = [];
+  /* Uma consulta só, controlável: `midia(false)` simula a janela saindo da
+     faixa (ex.: crescer além de 1024 px) e dispara os ouvintes de 'change'. */
+  const consulta = { matches: true, ouvintes: [] };
+  consulta.addEventListener = (tipo, fn) => {
+    if (tipo === 'change') consulta.ouvintes.push(fn);
+  };
+  const midia = (casa) => {
+    consulta.matches = casa;
+    consulta.ouvintes.forEach((fn) => fn({ matches: casa }));
+  };
   const janela = {
-    matchMedia: () => ({ matches: true, addEventListener() {} }),
+    matchMedia: () => consulta,
   };
   const contexto = {
     window: janela,
@@ -247,12 +290,14 @@ function criarDocumento() {
     return janela;
   };
 
-  const tecla = (key, extra = {}) =>
-    doc.dispatchEvent(new MiniEvent('keydown', { key, bubbles: true, ...extra }));
+  /* keydown que borbulha até o documento. `alvo` (opcional) é onde o evento
+     nasce — para um widget dentro da gaveta poder consumi-lo antes. */
+  const tecla = (key, { alvo, ...extra } = {}) =>
+    (alvo || doc).dispatchEvent(new MiniEvent('keydown', { key, bubbles: true, ...extra }));
 
   const rodarQuadros = () => quadros.splice(0).forEach((fn) => fn());
 
-  return { doc, el, carregar, tecla, rodarQuadros };
+  return { doc, el, carregar, tecla, rodarQuadros, midia };
 }
 
 module.exports = { criarDocumento };

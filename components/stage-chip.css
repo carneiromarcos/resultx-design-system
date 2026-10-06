@@ -110,6 +110,12 @@
 }
 
 /* ── Quando o chip é alvo (filtro do funil, coluna do kanban) ───────────── */
+/* Só o fundo transiciona (12 % → 20 % da cor da etapa); a tinta não muda
+   entre repouso e pressionado. Para este chip, todo quadro da troca passa AA
+   (pior caso calculado 5,34:1, oferta no claro); tests/lote-d.test.js
+   amostra 11 quadros. Quem trocar a tinta no estado desmarcado (ex.: para
+   --text-secondary) enquanto o fundo interpola sai desta garantia — a troca
+   de tinta é instantânea e o fundo ainda está no meio do caminho. */
 .stage-chip:is(a, button) {
   cursor: pointer;
   transition: background-color var(--transition-fast), transform var(--transition-fast);

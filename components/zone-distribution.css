@@ -1,0 +1,167 @@
+/* ==========================================================================
+   .zone-distribution — distribuição agregada de Bem-Estar por zona
+   Lote D, 05/10/2026. Promovido do protótipo do dashboard Electia (#85, C8).
+
+   Zonas, com estes nomes e nesta ordem: Saudável · Atenção · Alerta.
+   É sempre um AGREGADO de grupo (ADR-018): nunca resultado individual, nunca
+   nome. Abaixo de 5 respostas o grupo é insuficiente e quem consome NÃO
+   renderiza contagem nem percentual (.zone-distribution--insufficient). O CSS
+   ainda esconde barra e números nesse estado, como rede de segurança — mas
+   esconder não é anonimizar: o dado não deve chegar ao HTML.
+
+   Três leituras, nenhuma só por cor:
+     zona       cor padrão        barra             legenda
+     Saudável   --color-success   sólida            círculo
+     Atenção    --color-warning   listras 45°       triângulo
+     Alerta     --color-error     xadrez cruzado    losango
+
+   <figure class="zone-distribution">
+     <figcaption>Bem-Estar · 86 respostas</figcaption>
+     <div class="zone-distribution-bar" aria-hidden="true">
+       <span class="zone-distribution-segment zone-saudavel" style="--zone-share: 58"></span>
+       …
+     </div>
+     <ul class="zone-distribution-legend">
+       <li class="zone-saudavel">
+         <span class="zone-distribution-mark" aria-hidden="true"></span>
+         <span class="zone-distribution-label">Saudável</span>
+         <span class="zone-distribution-value">50 · 58%</span>
+       </li>
+       …
+     </ul>
+   </figure>
+
+   A barra é decorativa (aria-hidden); a legenda é o conteúdo acessível.
+   --zone-share é um número (a porcentagem sem o %): vira flex-grow, então as
+   proporções ficam exatas mesmo com o filete entre os segmentos. Omita o
+   segmento de uma zona com zero.
+
+   Ganchos de produto: --zone-color-saudavel, --zone-color-atencao e
+   --zone-color-alerta (ex.: o Electia pode apontar para --viz-zone-*).
+   ========================================================================== */
+
+.zone-distribution {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  min-inline-size: 0;
+}
+
+.zone-distribution figcaption {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.zone-distribution .zone-saudavel { --zone-color: var(--zone-color-saudavel, var(--color-success)); }
+.zone-distribution .zone-atencao { --zone-color: var(--zone-color-atencao, var(--color-warning)); }
+.zone-distribution .zone-alerta { --zone-color: var(--zone-color-alerta, var(--color-error)); }
+
+/* A tinta: a cor da zona puxada para --text-primary (escurece no claro,
+   clareia no escuro). Marca e barra usam ela: >= 3:1 contra o fundo e a
+   surface-1 nos dois temas (WCAG 1.4.11). */
+.zone-distribution-segment,
+.zone-distribution-mark {
+  --zone-ink: color-mix(in oklab, var(--zone-color) 70%, var(--text-primary));
+}
+
+/* ── Barra empilhada ─────────────────────────────────────────────────── */
+.zone-distribution-bar {
+  display: flex;
+  gap: 2px;
+  block-size: 0.875rem;
+  overflow: hidden;
+  border-radius: var(--radius-full);
+}
+
+.zone-distribution-segment {
+  flex: var(--zone-share, 1) 1 0;
+  min-inline-size: 2px;
+}
+
+.zone-distribution-segment.zone-saudavel {
+  background: var(--zone-ink);
+}
+
+.zone-distribution-segment.zone-atencao {
+  background:
+    repeating-linear-gradient(
+      45deg,
+      var(--zone-ink) 0 3px,
+      color-mix(in srgb, var(--zone-ink) 45%, transparent) 3px 6px
+    );
+}
+
+.zone-distribution-segment.zone-alerta {
+  background:
+    repeating-linear-gradient(45deg, var(--zone-ink) 0 2px, transparent 2px 5px),
+    repeating-linear-gradient(-45deg, var(--zone-ink) 0 2px, transparent 2px 5px),
+    color-mix(in srgb, var(--zone-ink) 45%, transparent);
+}
+
+/* ── Legenda ─────────────────────────────────────────────────────────── */
+.zone-distribution-legend {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.zone-distribution-legend li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+}
+
+.zone-distribution-mark {
+  flex: none;
+  inline-size: 12px;
+  block-size: 12px;
+  background: var(--zone-ink);
+}
+
+.zone-saudavel .zone-distribution-mark { border-radius: 50%; }
+.zone-atencao .zone-distribution-mark { clip-path: polygon(50% 0%, 100% 100%, 0% 100%); }
+.zone-alerta .zone-distribution-mark { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+
+.zone-distribution-value {
+  margin-inline-start: auto;
+  font-family: var(--font-mono);
+  font-weight: var(--font-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.zone-distribution-note {
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+/* ── Grupo insuficiente (N < 5) ──────────────────────────────────────── */
+.zone-distribution--insufficient .zone-distribution-bar {
+  border: 1px dashed var(--border-strong);
+  background:
+    repeating-linear-gradient(
+      135deg,
+      var(--border-default) 0 2px,
+      transparent 2px 6px
+    );
+}
+
+.zone-distribution--insufficient .zone-distribution-segment,
+.zone-distribution--insufficient .zone-distribution-value {
+  display: none;
+}
+
+/* Cores forçadas: o navegador repinta background-color com Canvas e a barra
+   e as marcas sumiriam. Aqui elas saem do ajuste e usam as cores do sistema,
+   mantendo os padrões — a leitura sem cor continua de pé. */
+@media (forced-colors: active) {
+  .zone-distribution-segment,
+  .zone-distribution-mark {
+    forced-color-adjust: none;
+    --zone-ink: CanvasText;
+  }
+}

@@ -65,6 +65,19 @@ Os dois últimos não são opcionais: sem eles, quem **não** seta `data-theme` 
 auto-detecção suportado — continua vendo teal. `tests/brand-bridge.test.js` reprova a ponte que
 esquecer qualquer um.
 
+## Anel de foco da sidebar — `--sidebar-focus-ring` (lote D, 05/10/2026)
+
+A sidebar é escura nos **dois** temas, e o anel do tema não é. No claro, o anel da Electia (#6f32b1) dava 2,29:1 sobre a sidebar navy e o do DS (#1D4ED8) dava 2,60:1. A WCAG 1.4.11 pede 3:1. A `.sidebar` agora redefine `--focus-ring-color` com `--sidebar-focus-ring`, e a ponte emite esse token por marca nos quatro escopos.
+
+O valor é o papel de **texto do tema escuro** da marca (`brand.dark.text`), resolvido no escopo escuro mesmo para o tema claro. A Electia redefine `--purple-on-dark` como roxo escuro dentro do bloco claro, e é exatamente isso que não serve aqui. O build mede o anel contra o fundo da sidebar e contra o fundo do item focado (`--sidebar-bg-hover`) e falha abaixo de 3:1. `tests/lote-d.test.js` refaz a medição a partir do CSS gerado.
+
+| Marca | Anel | Mínimo no claro | Mínimo no escuro |
+|---|---|---|---|
+| DS (sem ponte) | #60A5FA no claro, #2DD4BF no escuro | 6,18 | 9,89 |
+| electia | #c084fc | 5,94 | 6,96 |
+| emprega-mais | #b9baf9 | 8,57 | 10,04 |
+| pdv, resultx, xscore | #c4993b | 5,96 | 6,98 |
+
 ## Uso
 
 Importar **depois** dos tokens do DS, para vencer na cascata:

@@ -210,7 +210,9 @@ describe('Sidebar overlay — terceiro modo', () => {
     // `all` incluia visibility, e foi exatamente o que prendeu o foco no botao.
     const regra = rule(componentsCss, '.sidebar-item {');
     expect(regra).not.toMatch(/transition:\s*all/);
-    expect(regra).toContain('transition: color');
+    // Lote D / Revisor da #86: nem cor nem fundo transicionam (a polaridade
+    // inverte entre estados e os quadros intermediarios caiam a ~2:1).
+    expect(regra).not.toMatch(/transition:[^;]*\b(color|background)/);
   });
 
   test('o scrim nao e o .modal-overlay', () => {
@@ -221,9 +223,13 @@ describe('Sidebar overlay — terceiro modo', () => {
   });
 
   test('o foco fica preso enquanto o painel esta aberto', () => {
-    expect(overlayJs).toContain('function trapTab');
+    // Revisor da #86: navegacao nativa por dentro, sentinelas de foco nas
+    // bordas (o comportamento e coberto em sidebar-overlay-behavior.test.js
+    // e provado no Chrome). Nenhum keydown do script age com defaultPrevented.
+    expect(overlayJs).toContain('data-sidebar-sentinel');
     expect(overlayJs).toContain("event.key === 'Tab'");
     expect(overlayJs).toContain('event.shiftKey');
+    expect(overlayJs).toContain('if (event.defaultPrevented) return;');
   });
 
   test('Escape fecha e o foco volta para quem abriu', () => {

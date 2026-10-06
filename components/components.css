@@ -19,6 +19,8 @@
 @import url('./cta-panel.css');
 @import url('./cta-dock.css');
 @import url('./stage-chip.css');
+@import url('./test-mark.css');
+@import url('./zone-distribution.css');
 
 /* ══════════════════════════════════════════════════════════════════
    RESET & BASE
@@ -37,6 +39,22 @@ body {
   transition: background-color var(--transition-slow), color var(--transition-slow);
 }
 
+/* Tamanho seguro para .icon quando dist/icons.min.css não foi carregado.
+   Sem isto, um <svg class="icon"> sem width/height sai com 300 × 150 px (o
+   tamanho padrão de elemento substituído) e derruba o layout: o protótipo do
+   dashboard Electia mediu 246 px de overflow. Especificidade zero (:where):
+   qualquer regra de icons.css (.icon-sm, .icon-wrapper .icon …) vence,
+   carregada antes ou depois deste bundle. icons.css continua o contrato
+   completo de ícones (tamanhos, cores, traço, wrappers); isto é só o piso
+   de tamanho. Fill e stroke ficam de fora de propósito: CSS vence o atributo
+   fill="currentColor" de um ícone sólido mesmo com especificidade zero. */
+:where(svg.icon) {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
 /* ══════════════════════════════════════════════════════════════════
    SIDEBAR — DARK
    ══════════════════════════════════════════════════════════════════ */
@@ -52,6 +70,12 @@ body {
   z-index: 30;
   overflow-y: auto;
   transition: background-color var(--transition-slow);
+  /* A sidebar é escura nos dois temas, e o anel do tema não: no claro,
+     #1D4ED8 sobre #0F1A2E dava 2,6:1 (a WCAG 1.4.11 pede 3:1). Todo focável
+     aqui dentro lê --focus-ring-color, então trocar a variável no contêiner
+     cobre item, botão, link do rodapé e o que vier. O fallback branco vale
+     para os temas alternativos (tokens/themes/), que não declaram o token. */
+  --focus-ring-color: var(--sidebar-focus-ring, var(--sidebar-text-bright));
 }
 .sidebar-brand {
   padding: 0 var(--space-5);
@@ -68,13 +92,17 @@ body {
   font-family: var(--font-heading);
   font-weight: var(--font-bold);
   font-size: var(--text-sm);
-  color: var(--text-primary);
+  /* Tinta medida sobre o accent (a do .btn-primary). --text-primary dava
+     2,67:1 no claro e 1,58:1 no escuro. */
+  color: var(--text-inverse);
 }
 .sidebar-brand-text {
   font-family: var(--font-heading);
   font-weight: var(--font-bold);
   font-size: var(--text-lg);
-  color: var(--text-primary);
+  /* Texto sobre a sidebar: tokens da sidebar, nunca --text-primary, que no
+     tema claro é escuro e sumia no navy (1,03:1). */
+  color: var(--sidebar-text-bright);
 }
 .sidebar-brand-text span { color: var(--accent-secondary); }
 .sidebar-section-label {
@@ -96,17 +124,21 @@ body {
   /* Navegação deve ser <a>, não <div>. Sem este reset o link chega sublinhado
      e o item só fica correto com markup não semântico. */
   text-decoration: none;
-  /* `all` incluía `visibility`, e o item herda a do sidebar. No modo overlay
-     isso fazia o link reportar `visibility: hidden` no instante em que o
-     script tentava focá-lo — e `.focus()` num elemento invisível falha em
-     silêncio, deixando o foco preso no botão que abriu o painel.
-     Um item de navegação só precisa animar cor e fundo. */
-  transition: color 150ms var(--spring-snappy),
-    background 150ms var(--spring-snappy);
+  /* Sem transição de cor nem de fundo — a troca de estado é instantânea.
+     Na sidebar a polaridade inverte entre estados: com ponte de fundo claro
+     (PdV, ResultX, Xscore) o item atual é tinta escura sobre dourado, e o
+     foco/hover é tinta branca sobre navy. Com color + background
+     interpolando juntos por 150 ms, os quadros a ~15 ms davam 2,05–2,11:1
+     (Revisor da #86). Instantâneo, só existem as pontas, todas >= 4,5:1.
+     (Antes ainda: a transição de `all` incluía `visibility`, e o .focus() do
+     script falhava no modo overlay. Nunca volte a `all`.) */
   border-radius: var(--radius-md);
 }
-.sidebar-item:hover { color: var(--text-primary); background: var(--sidebar-bg-hover); }
-.sidebar-item.active {
+.sidebar-item:hover { color: var(--sidebar-text-bright); background: var(--sidebar-bg-hover); }
+/* aria-current é o estado semântico do item da página atual; .active fica
+   por compatibilidade. Os dois pintam igual. */
+.sidebar-item.active,
+.sidebar-item[aria-current="page"] {
   color: var(--sidebar-text-active);
   background: var(--sidebar-active-bg);
 }
@@ -119,7 +151,8 @@ body {
   font-family: var(--font-mono);
   font-size: 10px;
 }
-.sidebar-item.active .badge-count { background: var(--sidebar-badge-active-bg); }
+.sidebar-item.active .badge-count,
+.sidebar-item[aria-current="page"] .badge-count { background: var(--sidebar-badge-active-bg); }
 .sidebar-divider {
   border: none;
   border-top: 1px solid var(--sidebar-divider);
@@ -138,17 +171,24 @@ body {
 .sidebar-user-avatar {
   width: 32px; height: 32px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--avatar-gradient-start), var(--avatar-gradient-end));
+  /* Preenchimento do accent com a tinta medida para ele (a do .btn-primary,
+     que cada ponte de marca recalcula). O gradiente #6366F1 → #8B5CF6 dava
+     4,00–4,22:1 no claro e 3,58–3,78:1 no escuro, abaixo de AA. */
+  background: var(--accent-primary);
   display: flex; align-items: center; justify-content: center;
-  font-size: var(--text-xs); font-weight: var(--font-bold); color: var(--text-primary);
+  flex-shrink: 0;
+  font-size: var(--text-xs); font-weight: var(--font-bold); color: var(--text-inverse);
 }
 .sidebar-user-name {
-  color: var(--text-primary);
+  /* --text-primary é escuro no tema claro e sumia no navy (1,03:1). */
+  color: var(--sidebar-text-bright);
   font-weight: var(--font-medium);
 }
 .sidebar-user-role {
-  font-size: 10px;
-  opacity: 0.5;
+  /* Era 10px com opacity .5: 2,94:1 no claro e 2,16:1 no escuro. O tom
+     secundário da sidebar já é a hierarquia; a opacidade só tirava contraste. */
+  font-size: var(--text-xs);
+  color: var(--sidebar-text);
 }
 
 /* ── Modo rail (64px, só ícones) ─────────────────────────────────────────
@@ -283,6 +323,31 @@ body {
     visibility: visible;
     transform: none;
   }
+}
+
+/* ── Modo painel no desktop (.sidebar-panel) ─────────────────────────────
+   O par que faltava: painel de 240 px com rótulos acima de 1024 px e gaveta
+   até 1024 px, num <aside> só. É o que Electia e IMO usam (o rail só mostra
+   ícones). Acima do corte o overlay para de flutuar e volta a ocupar o lugar
+   que .main já reserva (margin-left: --sidebar-width); abaixo, nada muda: é a
+   gaveta do .sidebar-overlay, com o mesmo dist/sidebar-overlay.js.
+
+   <button class="btn-icon sidebar-panel-toggle" data-sidebar-toggle="nav"
+           aria-expanded="false" aria-label="Abrir navegação" hidden>…</button>
+   <aside class="sidebar sidebar-overlay sidebar-panel" id="nav" aria-label="…"
+          data-sidebar-overlay data-sidebar-media="(max-width: 1024px)">…</aside>
+
+   data-sidebar-media é o que fecha (e libera o fundo) quando a janela cresce
+   com a gaveta aberta. .sidebar-panel-toggle esconde o gatilho acima do
+   corte, onde ele não teria o que abrir. ─────────────────────────────── */
+@media (min-width: 1025px) {
+  .sidebar-overlay.sidebar-panel {
+    z-index: var(--z-sidebar);
+    visibility: visible;
+    transform: none;
+    transition: none;
+  }
+  .sidebar-panel-toggle[data-sidebar-toggle] { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2373,7 +2438,8 @@ tr:hover td { background: var(--bg-surface-1); }
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
   outline-offset: -2px;
   background: var(--sidebar-bg-hover);
-  color: var(--text-primary);
+  /* --text-primary é escuro no tema claro: o item focado caía para 1,14:1. */
+  color: var(--sidebar-text-bright);
 }
 .tab:focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);

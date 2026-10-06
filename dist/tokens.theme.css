@@ -16,7 +16,7 @@
   /* Auto-classified tokens exposed as Tailwind v4 utilities. */
   /* Uses var() references so runtime theme switching keeps working. */
 
-  /* color (112) */
+  /* color (113) */
   --color-accent-primary: var(--accent-primary);
   --color-accent-primary-hover: var(--accent-primary-hover);
   --color-accent-primary-muted: var(--accent-primary-muted);
@@ -103,6 +103,7 @@
   --color-sidebar-bg: var(--sidebar-bg);
   --color-sidebar-bg-hover: var(--sidebar-bg-hover);
   --color-sidebar-divider: var(--sidebar-divider);
+  --color-sidebar-focus-ring: var(--sidebar-focus-ring);
   --color-sidebar-text: var(--sidebar-text);
   --color-sidebar-text-active: var(--sidebar-text-active);
   --color-sidebar-text-bright: var(--sidebar-text-bright);
@@ -365,6 +366,7 @@
   --sidebar-text-bright: #FFF;
   --sidebar-badge-bg: rgba(255, 255, 255, 0.15);
   --sidebar-badge-active-bg: rgba(255, 255, 255, 0.25);
+  --sidebar-focus-ring: #2DD4BF;
   --border-subtle: #1E2736;
   --border-default: #2A3444;
   --border-strong: #3D4A5C;
@@ -460,6 +462,7 @@
   --sidebar-text-bright: #FFF;
   --sidebar-badge-bg: rgba(255, 255, 255, 0.15);
   --sidebar-badge-active-bg: rgba(255, 255, 255, 0.25);
+  --sidebar-focus-ring: #60A5FA;
   --border-subtle: #E8ECF0;
   --border-default: #D1D9E0;
   --border-strong: #B0BAC5;
@@ -787,6 +790,7 @@
     --sidebar-text-bright: #FFF;
     --sidebar-badge-bg: rgba(255, 255, 255, 0.15);
     --sidebar-badge-active-bg: rgba(255, 255, 255, 0.25);
+    --sidebar-focus-ring: #2DD4BF;
     --border-subtle: #1E2736;
     --border-default: #2A3444;
     --border-strong: #3D4A5C;
@@ -884,6 +888,7 @@
     --sidebar-text-bright: #FFF;
     --sidebar-badge-bg: rgba(255, 255, 255, 0.15);
     --sidebar-badge-active-bg: rgba(255, 255, 255, 0.25);
+    --sidebar-focus-ring: #60A5FA;
     --border-subtle: #E8ECF0;
     --border-default: #D1D9E0;
     --border-strong: #B0BAC5;

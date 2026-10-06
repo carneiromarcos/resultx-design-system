@@ -51,6 +51,8 @@
     "components/cta-panel.css",
     "components/cta-dock.css",
     "components/stage-chip.css",
+    "components/test-mark.css",
+    "components/zone-distribution.css",
     "components/data-cards.css",
     "components/icons.css",
     "docs/",

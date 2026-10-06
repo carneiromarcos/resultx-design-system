@@ -1,0 +1,83 @@
+/* ==========================================================================
+   .test-mark — a forma identifica o teste
+   Lote D, 05/10/2026. Promovido do protótipo do dashboard Electia (#85, C7).
+
+   Regra de produto do Electia: o teste se reconhece pela FORMA, e a cor fica
+   livre para o resultado. As .badge-disc / .badge-bigfive do DS fazem o
+   contrário (pintam o teste), por isso este componente não usa nenhum token
+   de teoria. A paleta de resultado não mora no DS: a cor padrão é neutra e
+   quem consome pinta pelo gancho --test-mark-color.
+
+     DISC           círculo em quatro quadrantes
+     Tipologia      quadrado            (Tipologia Cognitiva; nunca "MBTI")
+     Eneagrama      eneágono (9 lados)
+     Big Five       pentágono
+     Temperamentos  triângulo vazado
+     Motivadores    hexágono
+
+   <span class="test-mark test-mark-disc" aria-hidden="true"></span> DISC
+
+   Decorativa quando há texto ao lado (aria-hidden="true"). Sozinha, precisa
+   de nome: role="img" aria-label="DISC". Elemento não textual: a cor padrão
+   (--text-secondary) passa 3:1 em toda superfície dos dois temas; uma cor de
+   resultado posta pelo gancho precisa passar também.
+
+   Ganchos: --test-mark-color (cor) e --test-mark-size (lado, padrão 1em, que
+   acompanha o texto ao lado).
+   ========================================================================== */
+
+.test-mark {
+  display: inline-block;
+  flex: none;
+  inline-size: var(--test-mark-size, 1em);
+  block-size: var(--test-mark-size, 1em);
+  background: var(--test-mark-color, var(--text-secondary));
+  vertical-align: middle;
+}
+
+/* Quatro quadrantes separados por uma cruz. A máscara usa currentcolor só
+   pelo canal alfa; a cor pintada continua sendo o background. */
+.test-mark-disc {
+  border-radius: 50%;
+  mask: conic-gradient(
+    from 6deg,
+    currentcolor 0 78deg,
+    transparent 0 90deg,
+    currentcolor 0 168deg,
+    transparent 0 180deg,
+    currentcolor 0 258deg,
+    transparent 0 270deg,
+    currentcolor 0 348deg,
+    transparent 0
+  );
+}
+
+.test-mark-tipologia {
+  border-radius: 2px;
+}
+
+.test-mark-eneagrama {
+  clip-path: polygon(50% 0%, 82.1% 12.1%, 99.2% 42.6%, 93.3% 77.3%, 67.1% 100%, 32.9% 100%, 6.7% 77.3%, 0.8% 42.6%, 17.9% 12.1%);
+}
+
+.test-mark-bigfive {
+  clip-path: polygon(50% 0%, 97.6% 38.2%, 79.4% 100%, 20.6% 100%, 2.4% 38.2%);
+}
+
+/* Triângulo com o miolo vazado (evenodd): o contorno de um triângulo. */
+.test-mark-temperamentos {
+  clip-path: polygon(evenodd, 50% 0%, 100% 100%, 0% 100%, 50% 0%, 50% 34%, 22% 86%, 78% 86%, 50% 34%);
+}
+
+.test-mark-motivadores {
+  clip-path: polygon(25% 7%, 75% 7%, 100% 50%, 75% 93%, 25% 93%, 0% 50%);
+}
+
+/* Cores forçadas: o navegador repinta o background com Canvas e a marca
+   sumiria. Sai do ajuste e usa a cor de texto do sistema. */
+@media (forced-colors: active) {
+  .test-mark {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+}

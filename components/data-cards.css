@@ -442,11 +442,18 @@
    9. STATUS PILL
    ══════════════════════════════════════════════════════════════════════════ */
 .dl-status {
+  /* Cada variante declara só --status-color. A tinta é essa cor puxada para
+     --text-primary (a fórmula do .stage-chip): escurece no claro e clareia no
+     escuro. Antes o texto era a cor pura: 2,77:1 no "done" do tema claro e
+     nenhuma variante passava AA nos dois temas. */
+  --status-color: var(--text-secondary);
   display: inline-flex;
   align-items: center;
   gap: 5px;
   padding: 3px 10px;
   border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--status-color) 12%, transparent);
+  color: color-mix(in oklab, var(--status-color) 60%, var(--text-primary));
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
   white-space: nowrap;
@@ -459,24 +466,26 @@
   background: currentColor;
 }
 .dl-status--in-progress {
+  --status-color: var(--color-warning);
   background: var(--surface-accent-amber, var(--color-warning-bg));
-  color: var(--color-warning);
 }
 .dl-status--done {
+  --status-color: var(--color-success);
   background: var(--surface-accent-green, var(--color-success-bg));
-  color: var(--color-success);
 }
+/* Magenta da camada de dados quando ela está carregada; sem ela, o rosa do
+   DS. O fundo era um rgba cru; agora sai da mesma cor. */
 .dl-status--need-review {
-  background: var(--surface-accent-magenta, rgba(255, 71, 137, 0.12));
-  color: var(--grad-magenta-end);
+  --status-color: var(--grad-magenta-end, var(--theory-lesenne));
+  background: var(--surface-accent-magenta, color-mix(in srgb, var(--status-color) 12%, transparent));
 }
 .dl-status--pending {
+  --status-color: var(--color-info);
   background: var(--surface-accent-cyan, var(--color-info-bg));
-  color: var(--color-info);
 }
 .dl-status--blocked {
+  --status-color: var(--color-error);
   background: var(--color-error-bg);
-  color: var(--color-error);
 }
 
 /* ══════════════════════════════════════════════════════════════════════════

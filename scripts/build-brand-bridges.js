@@ -51,6 +51,8 @@ const ALPHA = {
 
 /** The sidebar stays dark in both themes — these are the DS sidebar backgrounds. */
 const SIDEBAR_BG = { dark: '#080B12', light: '#0F1A2E' };
+/** --sidebar-bg-hover: the fill of a focused .sidebar-item, where the ring sits. */
+const SIDEBAR_BG_HOVER = { dark: '#0F1420', light: '#162240' };
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Reading brand tokens
@@ -146,6 +148,14 @@ function resolveTheme(brand, theme, resolve) {
   // with room — measured below against every surface anyway.
   const focusRing = text || accent;
 
+  // The sidebar is dark in BOTH themes, so the theme's ring is wrong there in
+  // light (a dark purple on navy). The ring inside it is the brand color made
+  // to be read on dark — the DARK-theme text role, resolved in the dark scope
+  // even for the light theme (Electia redefines --purple-on-dark to a dark
+  // purple inside its light block). Measured against the sidebar and the
+  // focused item's fill below.
+  const sidebarFocusRing = resolve(brand.dark.text, 'dark') || resolve(brand.dark.accent, 'dark');
+
   const checks = [
     {
       label: 'rotulo sobre o botao primario',
@@ -200,7 +210,31 @@ function resolveTheme(brand, theme, resolve) {
     });
   }
 
-  return { accent, hover, secondary, text, ink, inkOnHover, sidebarTextActive, focusRing, checks };
+  for (const [nome, bg] of [
+    ['fundo da sidebar', SIDEBAR_BG[theme]],
+    ['item focado da sidebar', SIDEBAR_BG_HOVER[theme]],
+  ]) {
+    checks.push({
+      label: `anel de foco da sidebar sobre o ${nome}`,
+      fg: sidebarFocusRing,
+      bg,
+      ratio: ratio(sidebarFocusRing, bg),
+      required: AA_LARGE,
+    });
+  }
+
+  return {
+    accent,
+    hover,
+    secondary,
+    text,
+    ink,
+    inkOnHover,
+    sidebarTextActive,
+    focusRing,
+    sidebarFocusRing,
+    checks,
+  };
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -253,6 +287,15 @@ function declarations(brand, theme, r, indent) {
     theme === 'dark' ? rgba(r.accent, alpha.sidebarActive) : r.accent
   );
   push('--sidebar-text-active', r.sidebarTextActive);
+  const sidebarRingMin = Math.min(
+    ratio(r.sidebarFocusRing, SIDEBAR_BG[theme]),
+    ratio(r.sidebarFocusRing, SIDEBAR_BG_HOVER[theme])
+  );
+  push(
+    '--sidebar-focus-ring',
+    r.sidebarFocusRing,
+    `${brand.dark.text || brand.dark.accent} do escuro — minimo ${sidebarRingMin}:1 na sidebar`
+  );
 
   lines.push('');
   push('--shadow-glow', `0 0 20px rgba(${rgb}, 0.15)`);

@@ -218,10 +218,26 @@ Dispatches `sidebartoggle` with `detail: { open }`.
 #### Accessibility — this is a modal panel, and it behaves like one
 
 - **Focus moves into the panel on open and returns to the trigger on close.** Verified: 12 Tabs and 6 Shift+Tabs, zero escapes.
+- **Only targets that accept focus count (Revisor of #86).** Initial focus and the Tab cycle skip anything inside an `[inert]` ancestor, hidden (`display: none` or `visibility: hidden`), effectively disabled (`:disabled`, which covers controls inside `<fieldset disabled>` while the first `<legend>` stays usable), or `tabindex="-1"`. Inside the drawer **the browser navigates natively**. Radio groups enter on the checked radio and leave the group, `contenteditable` is a stop, positive `tabindex` keeps its order, and a widget that consumes Tab (an editor that indents) keeps the focus. The script only acts at the edges, through **focus sentinels**: two empty, `aria-hidden`, tabbable elements inserted while the drawer is open and removed on close. The start sentinel has `tabindex="1"` so it precedes even positive tabindex; the end one has `tabindex="0"`.
+  - Tab past the last stop lands on the end sentinel, which sends focus to the first valid stop.
+  - Shift+Tab before the first stop lands on the start sentinel, which sends focus to the last valid stop.
+  - Picking first and last follows sequential order: positive tabindex first, a radio group (same `name`, scoped by its form owner; fieldsets do not split groups) counts once, **at the DOM position of the chosen radio**: the checked radio if it accepts focus, otherwise the first valid radio of the group in sequential order, which means positive `tabindex` first and then DOM order. That covers nothing checked, or a checked radio that is disabled or inert. The choice is the same radio for Tab and Shift+Tab. This is Chrome's native order, measured without the drawer, and `contenteditable` is included. Each `.focus()` is checked against `activeElement`; if nothing accepts, the panel itself takes focus.
+  - The keydown handler has one edge case only: Tab while the panel **itself** has focus goes to the first or last stop, because the browser would otherwise leave the page.
+  - No keydown handler of the script acts when `event.defaultPrevented` is already true. That covers Escape too, so a combobox can close its list without closing the drawer.
+
+  Why sentinels rather than a keydown handler on the first and last stop: knowing which element is the last stop at keydown time means re-implementing the browser's sequential order (radio groups, shadow DOM, positive tabindex, editors). A sentinel lets the browser decide and only catches focus when it actually crosses an edge. It is the same pattern as focus-trap and Radix/React Aria `FocusScope`. Verified in Chrome against 78860ec and 4342b03:
+  - textarea consuming Tab keeps focus;
+  - Tab enters the `contenteditable`;
+  - three radios with the 2nd checked enter on the 2nd and Tab leaves to the next stop;
+  - fieldset/legend, inert and hidden still pass;
+  - edges pass 10/10 in both directions with no BODY;
+  - the Inbox and App Shell demos keep focus inside, and Escape returns focus to the trigger. Before, such an element could be chosen as the first target: `.focus()` failed silently, focus stayed on `<body>`, and Tab did not wrap from last to first. With no valid target, the panel itself (`tabindex="-1"`) takes focus. Focus returns to the trigger that was **clicked** (`event.currentTarget`), even when the click did not focus it (Safari, `button.click()`).
+- **No colour or background transition on `.sidebar-item` (Revisor of #86).** Polarity flips between states: with a light-fill bridge (PdV, ResultX, Xscore), the current item is dark ink on gold and the focused/hovered item is white on navy. Interpolating both over 150 ms dropped mid-frames to about 2:1. State changes are now instant, so only the endpoints exist, and all of them are at 4.5:1 or above. `tests/lote-d.test.js` samples 11 frames for every state pair, in every scope and bridge, plus the theme switch of the `.sidebar` background.
 - **Escape closes it.** Clicking the scrim closes it.
 - Page scroll is locked while open, and the previous value is **restored**, not zeroed.
 - The trigger ships `hidden` and the script reveals it. Without JavaScript the panel cannot open, and a button that does nothing is worse than no button.
 - `data-sidebar-media` closes the panel when the query stops matching — a stuck overlay would outlive its reason to exist and leave the scroll lock behind.
+- **While open it is a modal dialog for real (lote D, 05/10/2026, from the Revisor's review of #85).** The panel gets `role="dialog"` + `aria-modal="true"`. Every sibling on the path from the panel up to `<body>` gets `[inert]`, except the scrim, because inert would also block the click that closes. Before this, `<main>` and the header stayed exposed: a page shortcut such as Ctrl+K pulled focus behind the drawer, and screen readers kept reading the page. Everything is undone on close, whether by Escape, the scrim, the API, or the close that `data-sidebar-media` triggers when the window grows into panel/rail mode. Elements that were already inert stay inert, and a `role` and an `aria-modal` the consumer had put on the panel come back, with presence and value. Closed, the `<aside>` is the same navigation landmark as before, so current consumers see no change until the drawer opens. Covered by `tests/sidebar-overlay-behavior.test.js` (mini-dom) and verified in Chrome at 375 and 1024 px, in both themes: Ctrl+K kept focus inside, 20 Tab + 20 Shift+Tab never escaped, Escape returned focus to the trigger, and resizing to 1440 px closed the drawer, removed inert and released the scroll lock.
 
 > The scrim is **not** `.modal-overlay`: that one lives at `--z-modal` and centers its child, so it is coupled to the modal. This one sits at `--z-overlay` and only dims.
 
@@ -230,6 +246,47 @@ Dispatches `sidebartoggle` with `detail: { open }`.
 **`.sidebar-item` was transitioning `all`** — which includes `visibility`, which the item inherits from the sidebar. The link reported `visibility: hidden` at the exact moment the script called `.focus()`, and focusing an invisible element fails silently, leaving focus trapped on the button. A nav item only ever needed to animate colour and background; it now says so.
 
 **`visibility` must flip instantly on open, and wait on close.** Transitioning it in both directions reproduces the same silent failure. The pattern is `visibility 0s linear var(--transition-slow)` when closed and `visibility 0s` when open.
+
+
+### Panel mode on the desktop — `.sidebar-panel` (lote D, 05/10/2026)
+
+The pairing that was missing: the **240 px panel with labels above 1024 px, and the drawer up to 1024 px, from a single `<aside>`**. This is what Electia and IMO use, since the rail only shows icons. Promoted from the Electia dashboard prototype (#85, C1).
+
+```html
+<button class="btn-icon sidebar-panel-toggle" type="button" data-sidebar-toggle="nav"
+        aria-expanded="false" aria-label="Abrir navegação" hidden>…</button>
+
+<aside class="sidebar sidebar-overlay sidebar-panel" id="nav" aria-label="Navegação"
+       data-sidebar-overlay data-sidebar-media="(max-width: 1024px)">…</aside>
+<div class="main">…</div>
+```
+
+| Class | Role |
+|-------|------|
+| `.sidebar-panel` | With `.sidebar-overlay`: from 1025 px up it stops floating (`visibility: visible`, `transform: none`, `z-index: var(--z-sidebar)`) and takes the space `.main` already reserves |
+| `.sidebar-panel-toggle` | On the trigger: hidden from 1025 px up, where it would have nothing to open |
+
+The same `dist/sidebar-overlay.js` is used, with no new script. Up to 1024 px nothing changes: it is the overlay drawer. Verified in Chrome (`demos/app-shell.html`, DS and Electia, light and dark): at 1440 px the panel is fixed, the trigger is hidden and `.main` keeps its 240 px offset. At 1024, 768, 375 and 320 px the drawer is closed with the trigger visible. There is no horizontal overflow at any of these widths.
+
+### Ink and focus on the dark sidebar (lote D, 05/10/2026)
+
+The sidebar is dark in **both** themes, so nothing inside it may use `--text-primary`, which is dark in the light theme. A test now fails if any `.sidebar*` rule paints text with it.
+
+| Element | Before | Now | Light before → after | Dark before → after |
+|---|---|---|---|---|
+| `.sidebar-user-name` | `--text-primary` | `--sidebar-text-bright` | 1,03 → 17,39 | 16,66 → 19,68 |
+| `.sidebar-user-role` | 10 px, `opacity: .5` | `--text-xs`, `--sidebar-text` | 2,94 → 7,91 | 2,16 → 5,36 |
+| `.sidebar-user-avatar` initials | gradient #6366F1 → #8B5CF6 + `--text-primary` | `--accent-primary` + `--text-inverse` (ink measured per brand) | 4,00–4,22 → 6,70 | 3,58–3,78 → 10,38 |
+| `.sidebar-brand-text` | `--text-primary` | `--sidebar-text-bright` | 1,03 → 17,39 | 16,66 → 19,68 |
+| `.sidebar-logo` | `--text-primary` on the accent | `--text-inverse` | 2,67 → 6,70 | 1,58 → 10,38 |
+| `.sidebar-item:hover` | `--text-primary` | `--sidebar-text-bright` | 1,14 → 15,71 | 15,57 → 18,40 |
+| `.sidebar-item:focus-visible` | `--text-primary` | `--sidebar-text-bright` | 1,14 → 15,71 | 15,57 → 18,40 |
+
+Measured in Chrome for the DS without a bridge. Electia's light theme gives the same values, with initials at 7,59. `.sidebar-item[aria-current="page"]` now paints like `.active`. `tests/lote-d.test.js` checks every item state (rest, hover, active, current, focus-visible) at 4.5:1 or above in the four DS scopes and in each brand bridge.
+
+**Focus ring.** `.sidebar` redefines `--focus-ring-color: var(--sidebar-focus-ring, var(--sidebar-text-bright))`, so every focusable element inside it (item, footer link, button) gets a ring made for the dark background. The DS light ring was 2,60:1 on the navy; it is now 6,84 against the sidebar and 6,18 against the focused item. Values per brand are in [brand-bridge.md](../brand-bridge.md). The white fallback covers the alternative themes in `tokens/themes/`, which do not declare the token.
+
+**Still pending (not changed here):** `.sidebar-section-label` uses `--sidebar-text-label` (white at 30 %) at 10 px, which is 2,71:1 light and 2,62:1 dark. It needs a token decision.
 
 ---
 

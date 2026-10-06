@@ -121,6 +121,30 @@ Measured in Chrome, which has `field-sizing` natively, so the CSS alone did it: 
 | `ResultXComposer.resize(input)` | Recompute one field |
 | `ResultXComposer.clear(input)` | Empty it and collapse it |
 | `ResultXComposer.supportsNative` | Whether the browser handles growth itself |
+| `ResultXComposer.fill(input, text)` | Put text in the field, grow it, focus it at the end. Never sends |
+
+### Suggestion chips — `.composer-chip` (lote D, 05/10/2026)
+
+Ready-made questions above the composer, promoted from the Electia dashboard prototype (#85, C6). A click **fills the field and focuses it, and stops there**. The person reviews and sends, because sending is product policy, like Enter.
+
+```html
+<div class="composer-chips" role="group" aria-label="Sugestões de pergunta">
+  <button class="composer-chip" type="button" data-composer-fill data-composer-target="nexus-input">
+    Resumir as vagas paradas
+  </button>
+  <button class="composer-chip" type="button"
+          data-composer-fill="Como adaptar minha comunicação ao perfil de cada pessoa?"
+          data-composer-target="nexus-input">Comunicação por perfil</button>
+</div>
+```
+
+- `data-composer-fill` with no value uses the chip's text; with a value, it uses the value (a short label for a long question).
+- The field is `#<data-composer-target>`. Without it, the script uses the `.composer-input` of the chip's `[data-composer]`, else the first one on the page.
+- An `input` event is dispatched, so a product's own listeners (counter, enabling the send button) see the change.
+- The click listener is delegated on the document, so chips rendered later work too. No `keydown` was added.
+- Target is 32 px tall (`--space-8`) with the DS focus ring. Only colour and border transition, and nothing transitions under reduced motion.
+
+Verified in Chrome (`demos/app-shell.html`, both themes): the chip filled the field, focus moved to it, and the demo's fake send never fired.
 
 ---
 

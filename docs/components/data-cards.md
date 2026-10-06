@@ -6,6 +6,8 @@
 **Import:** `import 'resultx-design-system/components/data-cards'`
 **Preview ao vivo:** [`tokens/themes/preview.html`](../../tokens/themes/preview.html)
 
+> **Camada à parte, fora do `dist/components.min.css`.** `data-cards.css` não entra no bundle principal, e isso é contrato publicado: tem export próprio (`resultx-design-system/components/data-cards`) e depende dos tokens da camada de dados (`tokens/themes/_data-layer-shared.css` e os temas `premium-light`, `sober-dark` e `vibrant-dark`) para gradientes, coins, deltas e donuts. Quem usa qualquer `.dl-*` carrega este arquivo **depois** de `components.min.css`. `.dl-statcard--compact` e `.dl-status` funcionam só com os tokens do DS, porque têm fallback para os tokens semânticos. Decisão do lote D (05/10/2026), confirmada pelo Revisor na #85: fundir no bundle mudaria o peso e a cascata de todos os consumidores.
+
 ---
 
 ## Índice
@@ -253,6 +255,26 @@ Pílula semântica com 5 variants pré-definidas.
 ```
 
 Cada variant inclui um dot colorido via `::before`.
+
+**Contraste (lote D, 05/10/2026).** Cada variante declara só `--status-color`. A tinta do texto é essa cor puxada para o texto do tema, a mesma fórmula do `.stage-chip`:
+
+```css
+color: color-mix(in oklab, var(--status-color) 60%, var(--text-primary));
+```
+
+Antes o texto era a cor pura e nenhuma variante passava AA no claro (`done` 2,77:1, `in-progress` 2,67:1). No escuro, `need-review`, `pending` e `blocked` também reprovavam. O fundo de `need-review` era um `rgba` cru e agora sai da mesma cor. Sem a camada de dados, `need-review` usa `--theory-lesenne` no lugar de `--grad-magenta-end`.
+
+Medido no Chrome sobre `--bg-base` e `--bg-surface-1`:
+
+| Variante | Claro antes → depois | Escuro antes → depois |
+|---|---|---|
+| `in-progress` | 2,67 → 5,56 | 6,93 → 8,97 |
+| `done` | 2,77 → 5,76 | 6,55 → 8,68 |
+| `need-review` | 3,61 → 6,47 | 3,65 → 6,79 |
+| `pending` | 4,18 → 7,30 | 4,26 → 7,03 |
+| `blocked` | 3,84 → 6,86 | 4,32 → 7,17 |
+
+`tests/lote-d.test.js` refaz a conta a partir dos tokens nos quatro escopos e reprova abaixo de 4,5:1.
 
 ---
 
