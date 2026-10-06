@@ -5,6 +5,57 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Fixed — foco inicial da gaveta com `prefers-reduced-motion` (06/10/2026)
+
+Ressalva P2 do Revisor na #88, herdada do DS. Sob `prefers-reduced-motion: reduce`,
+quando a gaveta (`dist/sidebar-overlay.js`) abria, por Enter ou por clique, o foco não
+entrava: ficava no gatilho, que fica inerte, e o Tab seguinte partia do `<body>`.
+Reproduzido no Chrome em 667×375, 375×667 e 1024×768, em `demos/app-shell.html` e no
+protótipo `electia-dashboard-2026-10-05.html`.
+
+- **Causa.** A regra global de reduced-motion (`transition-duration: 0.01ms !important`)
+  transformava o `visibility 0s` da abertura numa transição de verdade. A
+  `.sidebar-overlay[data-open]` é mais específica e vencia o `transition: none` de
+  reduced-motion. Além disso, cada filho, com o `transition-property: all` padrão,
+  ganhava a própria transição da `visibility` herdada, um nível de cada vez. No
+  instante do `.focus()` síncrono, o painel e os itens ainda estavam `hidden`, e o
+  `.focus()` falhava sem erro.
+- **CSS.** O bloco de reduced-motion cobre também `.sidebar-overlay[data-open]` e
+  `.sidebar-scrim[data-open]`. Sozinho, isso não basta, porque os filhos continuam em
+  transição. Medido: com o JS antigo e o CSS novo, o foco cai no próprio painel.
+- **JS.** `open()` encerra só as transições de `visibility` do painel e da subárvore
+  (`getAnimations({ subtree: true })` com `finish()`, em rodadas, 5 no app-shell). O
+  deslize do `transform` não é tocado. Se o foco ainda não entrou, uma rede de segurança
+  tenta de novo a cada `requestAnimationFrame`, sem `transitionend` e sem duração
+  adivinhada. Ela para quando:
+  - o foco chega a um item;
+  - a gaveta fecha;
+  - o usuário já focou um item;
+  - passam 60 quadros.
+
+  Foco no próprio painel não encerra a espera enquanto houver um item que só recusou
+  o foco por estar invisível. Sem `getAnimations`, o foco entra em 2–3 quadros.
+- **Anel do primeiro alvo.** O primeiro focável das duas páginas é um link de marca sem
+  regra de foco, e mostrava o anel do navegador abaixo de 3:1 sobre a sidebar escura. A
+  regra nova `:where(.sidebar :focus-visible)` usa `--focus-ring-color` com
+  `outline-offset: -2px`. O `:where()` envolve o seletor inteiro, e a especificidade é
+  0,0,0. Assim, qualquer regra de foco do DS ou do consumidor vence, inclusive um
+  `:focus-visible` global carregado antes do bundle. A primeira forma,
+  `:where(.sidebar) :focus-visible`, tinha 0,1,0 e sobrescrevia essa regra (P3 do
+  Revisor na #89). Medido sem regra do consumidor: 6,84:1 no claro e 10,57:1 no escuro
+  (DS); 6,58:1 e 7,45:1 (Electia). Com `:focus-visible` global ou `a:focus-visible`
+  carregados antes do bundle, vale a regra do consumidor; com o CSS de 628c863, a
+  global perdia nas 4 combinações de página e tema.
+- **O que segue igual:** sentinelas, `inert` no fundo, `role`/`aria-modal` restaurados,
+  foco devolvido ao gatilho, Escape com `defaultPrevented` e o rádio.
+- **Prova.** Mini-dom: 8 testes novos em `tests/sidebar-overlay-behavior.test.js`; 4
+  deles falham com o JS antigo. Playwright (`channel: 'chrome'`): 48/48. São 2 páginas ×
+  com/sem reduced-motion × claro/escuro × 3 viewports × Enter/clique. Cada caso exige:
+  - foco no primeiro item da gaveta;
+  - o próximo Tab dentro da gaveta, com `:focus-visible`;
+  - anel sólido de 3 px a pelo menos 3:1 contra o item e contra o painel;
+  - Escape devolvendo o foco ao gatilho.
+
 ### Fixed + Added — lote D: casca de dashboard promovida do protótipo da #85 (05/10/2026)
 
 Defeitos que o protótipo do dashboard Electia (#85) achou no DS, mais os pontos do

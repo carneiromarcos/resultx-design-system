@@ -22,6 +22,15 @@
  * Behavior:
  *   - Creates its own .sidebar-scrim when the page has none
  *   - Escape closes; clicking the scrim closes
+ *   - Initial focus only lands once the panel can take it. A `visibility`
+ *     transition still running (e.g. a global prefers-reduced-motion rule
+ *     that stretches every transition to 0.01ms, which also hits each
+ *     child's inherited visibility) keeps the panel `hidden` in the opening
+ *     frame and .focus() fails silently. open() finishes ONLY those
+ *     visibility transitions (getAnimations({ subtree: true }), level by
+ *     level; the transform slide is untouched) and, if focus still is not
+ *     in, retries on the next animation frames (max 60) until it is —
+ *     no transitionend, no guessed durations.
  *   - Focus moves into the panel on open and returns, on close, to the
  *     trigger that opened it: event.currentTarget of the click, never
  *     document.activeElement. In Safari (and with button.click(), or a
@@ -112,12 +121,14 @@
     }
   }
 
-  function focavel(no) {
+  /* ignorarVisibilidade: so para saber se o alvo falha APENAS por estar
+     invisivel (ver alvoAguardandoVisibilidade). */
+  function focavel(no, ignorarVisibilidade) {
     if (no.offsetParent === null) return false;
     if (no.closest('[inert]')) return false;
     if (desabilitado(no)) return false;
     if (no.getAttribute('tabindex') === '-1') return false;
-    if (typeof window.getComputedStyle === 'function') {
+    if (!ignorarVisibilidade && typeof window.getComputedStyle === 'function') {
       var estilo = window.getComputedStyle(no);
       if (estilo.visibility !== 'visible' || estilo.display === 'none') return false;
     }
@@ -413,10 +424,104 @@
     /* Foco sincrono, e nao num quadro futuro: o CSS aplica visibility com
        `0s` ao abrir justamente para que o painel ja esteja visivel aqui.
        Focar um elemento ainda invisivel falha em silencio, e o foco fica
-       preso no botao — foi o que aconteceu antes do ajuste no CSS. */
+       preso no botao (ou no <body>). Mas o `0s` pode virar uma transicao de
+       verdade fora do controle do DS: a regra global de reduced-motion
+       (transition-duration: 0.01ms !important) estica qualquer mudanca de
+       visibility — a do painel e a herdada por cada filho com o
+       `transition-property: all` padrao. Entao o script nao confia so no CSS:
+       termina essas transicoes antes de focar e, se o foco ainda nao entrar,
+       tenta de novo nos quadros seguintes. */
+    revelar(el);
     focarDentro(el, focusablesIn(el));
+    if (!focoResolvido(el)) focarQuandoVisivel(el);
 
     emit(el, true);
+  }
+
+  /* Uma transicao de `visibility` em curso deixa o elemento `hidden` ate o
+     fim dela (visibility nao interpola: no instante da abertura ainda vale o
+     valor antigo). Termina so ESSAS transicoes, no painel e na subarvore — o
+     deslize do transform e qualquer outra transicao seguem intactos.
+     getAnimations() aplica o estilo pendente antes de responder, entao a
+     transicao que o [data-open] acabou de disparar ja esta na lista.
+     Em rodadas: o filho so dispara a PROPRIA transicao (da visibility que
+     herda) quando o pai termina a dele, um nivel por vez — medido no Chrome
+     com reduced-motion, 5 rodadas ate o link do app-shell. PROFUNDIDADE_MAX
+     limita o laco. */
+  var PROFUNDIDADE_MAX = 64;
+
+  function revelar(el) {
+    if (typeof el.getAnimations !== 'function') return;
+    for (var rodada = 0; rodada < PROFUNDIDADE_MAX; rodada++) {
+      var animacoes;
+      try {
+        animacoes = el.getAnimations({ subtree: true });
+      } catch (e) {
+        return; /* fica para focarQuandoVisivel */
+      }
+      var terminou = false;
+      for (var i = 0; i < animacoes.length; i++) {
+        var a = animacoes[i];
+        if (a.transitionProperty !== 'visibility' || typeof a.finish !== 'function') continue;
+        if (a.playState === 'finished') continue;
+        try {
+          a.finish();
+          terminou = true;
+        } catch (e) {
+          /* finish() numa duracao infinita lanca: fica para focarQuandoVisivel. */
+        }
+      }
+      if (!terminou) return;
+    }
+  }
+
+  /* Ha um alvo que so nao recebeu o foco por estar invisivel (a transicao de
+     visibility ainda nao acabou)? E o unico motivo para tentar de novo. */
+  function alvoAguardandoVisibilidade(el) {
+    var todos = el.querySelectorAll(FOCUSABLE);
+    for (var i = 0; i < todos.length; i++) {
+      var no = todos[i];
+      if (no.hasAttribute(SENTINEL_ATTR)) continue;
+      if (focavel(no, true) && !focavel(no)) return true;
+    }
+    return false;
+  }
+
+  /* O foco inicial chegou ao destino? Num alvo de verdade, sim. No proprio
+     painel, so se nao houver alvo esperando ficar visivel (painel sem
+     focaveis, ou todos recusando por outro motivo, e o destino final). */
+  function focoResolvido(el) {
+    var ativo = document.activeElement;
+    if (!ativo || !el.contains(ativo)) return false;
+    if (ativo !== el) return true;
+    return !alvoAguardandoVisibilidade(el);
+  }
+
+  /* Rede de seguranca: sem getAnimations, ou com um CSS do consumidor que
+     ainda segure o painel invisivel, tenta a cada quadro ate o alvo ficar
+     visivel — sem adivinhar duracao e sem transitionend. Para quando a
+     gaveta fecha (close() troca o _abertura; reabrir nao ressuscita o laco
+     antigo), quando o foco ja
+     esta resolvido (inclusive se o usuario chegou antes) ou depois de
+     QUADROS_MAX quadros (~1 s a 60 Hz). */
+  var QUADROS_MAX = 60;
+
+  function focarQuandoVisivel(el) {
+    if (typeof window.requestAnimationFrame !== 'function') return;
+    var abertura = (el._abertura = (el._abertura || 0) + 1);
+    var restantes = QUADROS_MAX;
+    var tentar = function () {
+      if (!isOpen(el) || el._abertura !== abertura) return;
+      /* Ja num alvo de verdade (o usuario chegou antes): nao mexe. No proprio
+         painel ainda nao: o alvo pode ter acabado de ficar visivel. */
+      var ativo = document.activeElement;
+      if (ativo && ativo !== el && el.contains(ativo)) return;
+      revelar(el);
+      focarDentro(el, focusablesIn(el));
+      if (focoResolvido(el)) return;
+      if (--restantes > 0) window.requestAnimationFrame(tentar);
+    };
+    window.requestAnimationFrame(tentar);
   }
 
   function close(el) {
@@ -424,6 +529,7 @@
 
     el.removeAttribute(OPEN_ATTR);
     scrimFor(el).removeAttribute(OPEN_ATTR);
+    el._abertura = (el._abertura || 0) + 1; /* cancela um focarQuandoVisivel pendente */
 
     setExpanded(el, false);
 
