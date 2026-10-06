@@ -79,6 +79,8 @@
     .lede strong { color: var(--text-primary); }
     .sub { color: var(--text-secondary); }
     .center { margin-inline: auto; text-align: center; }
+    .gap-top { margin-block-start: var(--space-8); }
+    .gap-top-lg { margin-block-start: var(--space-10); }
     .center .eyebrow { justify-content: center; }
 
     /* Fecho de seção: a frase que resume. CANDIDATO components/pull-statement */
@@ -204,10 +206,11 @@
     .duo .pull { margin-block-start: var(--space-8); }
     .formula { margin-block-start: var(--space-3); padding: var(--space-5); border-radius: var(--radius-lg); background: var(--accent-primary-muted); color: var(--accent-primary-text); font: var(--font-semibold) var(--text-xl)/1.35 var(--font-heading); letter-spacing: -0.02em; }
     .flow { margin-block: var(--space-6); color: var(--text-secondary); line-height: 2.6; }
-    .flow span { display: inline-block; padding: 0 var(--space-3); border: 1px solid var(--border-default); border-radius: var(--radius-full); background: var(--bg-surface-1); color: var(--text-primary); font: var(--font-medium) var(--text-sm)/2 var(--font-body); white-space: nowrap; }
-    .flow span:first-child, .flow span:last-child { border-color: var(--border-accent); background: var(--accent-primary-muted); color: var(--accent-primary-text); }
+    .flow-step { white-space: nowrap; } /* a seta nunca fica sozinha no fim da linha */
+    .flow b { display: inline-block; padding: 0 var(--space-3); border: 1px solid var(--border-default); border-radius: var(--radius-full); background: var(--bg-surface-1); color: var(--text-primary); font: var(--font-medium) var(--text-sm)/2 var(--font-body); white-space: nowrap; }
+    .flow > b, .flow-step:last-child b { border-color: var(--border-accent); background: var(--accent-primary-muted); color: var(--accent-primary-text); }
     .flow-wide { max-inline-size: 980px; margin-inline: auto; text-align: center; }
-    .flow-wide span { font-size: var(--text-base); }
+    .flow-wide b { font-size: var(--text-base); }
 
     /* ── 13–15 Reuniões ──────────────────────────────────────────────── */
     .meet-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(var(--space-8), 5vw, var(--space-16)); align-items: start; }
@@ -300,7 +303,7 @@
       .verbs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .questions li, .context li, .meet-list, .before { font-size: var(--text-base); }
       .chat-msg { max-inline-size: 100%; }
-      .flow span { white-space: normal; }
+      .flow b { white-space: normal; }
       .pull { padding-inline-start: var(--space-4); }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -511,7 +514,7 @@
         </div>
       </div>
       <div class="wrap">
-        <p class="lede" style="margin-block-start: var(--space-10)">O Electia confronta o perfil da pessoa com o que a posição exige.</p>
+        <p class="lede gap-top-lg">O Electia confronta o perfil da pessoa com o que a posição exige.</p>
         <div class="contrast">
           <div class="contrast-before"><p>Assim, o RH deixa de perguntar apenas:</p><strong>“Essa pessoa é boa?”</strong></div>
           <div class="contrast-after"><p>E passa a perguntar:</p><strong>“Essa pessoa faz sentido para este desafio?”</strong></div>
@@ -601,7 +604,7 @@
               <li>perguntas sugeridas para entrevista.</li>
             </ul>
           </div>
-          <div class="prose" style="margin-block-start: var(--space-8)">
+          <div class="prose gap-top">
             <p>A Nexus também pode ajudar a estruturar e analisar entrevistas.</p>
           </div>
           <div class="pull">
@@ -668,7 +671,7 @@
             <p>Uma avaliação só cria valor quando provoca uma boa conversa e uma ação de desenvolvimento.</p>
             <p>Por isso, o Electia conecta:</p>
           </div>
-          <p class="flow"><span>Avaliação</span> → <span>Gaps</span> → <span>Feedback</span> → <span>Conversa</span> → <span>PDI</span> → <span>Ações</span> → <span>Acompanhamento</span> → <span>Nova avaliação</span></p>
+          <p class="flow"><b>Avaliação</b> <span class="flow-step">→ <b>Gaps</b></span> <span class="flow-step">→ <b>Feedback</b></span> <span class="flow-step">→ <b>Conversa</b></span> <span class="flow-step">→ <b>PDI</b></span> <span class="flow-step">→ <b>Ações</b></span> <span class="flow-step">→ <b>Acompanhamento</b></span> <span class="flow-step">→ <b>Nova avaliação</b></span></p>
           <div class="pull">
             <p>O desenvolvimento deixa de ser um evento anual.</p>
             <strong>Passa a ser um processo contínuo.</strong>
@@ -817,8 +820,8 @@
           <div>
             <span class="eyebrow">Mais que um chat</span>
             <h2 class="h2" id="s18-title">A Nexus não é apenas um chat. Ela entende o contexto.</h2>
-            <p class="statement statement-md"><strong>Contexto muda tudo.</strong></p>
           </div>
+          <div>
           <ul class="context">
             <li>Ao analisar um candidato, a Nexus conhece o contexto daquela vaga.</li>
             <li>Ao acessar um colaborador, conhece seu perfil.</li>
@@ -826,6 +829,8 @@
             <li>Ao preparar uma conversa, pode considerar o histórico das reuniões anteriores.</li>
             <li>Ao olhar para uma equipe, conecta informações das pessoas que fazem parte dela.</li>
           </ul>
+          <p class="statement statement-md"><strong>Contexto muda tudo.</strong></p>
+          </div>
         </div>
       </section>
 
@@ -935,7 +940,7 @@
           <h2 class="h2-xl" id="s24-title">Uma plataforma. Uma visão contínua.</h2>
           <p class="lede">Da candidatura ao desenvolvimento.</p>
         </header>
-        <p class="flow flow-wide"><span>Recrutamento</span> → <span>Seleção</span> → <span>Perfil</span> → <span>Cargo</span> → <span>Matching</span> → <span>Performance</span> → <span>Reuniões</span> → <span>Feedback</span> → <span>PDI</span> → <span>Desenvolvimento</span> → <span>Mobilidade</span> → <span>Sucessão</span></p>
+        <p class="flow flow-wide"><b>Recrutamento</b> <span class="flow-step">→ <b>Seleção</b></span> <span class="flow-step">→ <b>Perfil</b></span> <span class="flow-step">→ <b>Cargo</b></span> <span class="flow-step">→ <b>Matching</b></span> <span class="flow-step">→ <b>Performance</b></span> <span class="flow-step">→ <b>Reuniões</b></span> <span class="flow-step">→ <b>Feedback</b></span> <span class="flow-step">→ <b>PDI</b></span> <span class="flow-step">→ <b>Desenvolvimento</b></span> <span class="flow-step">→ <b>Mobilidade</b></span> <span class="flow-step">→ <b>Sucessão</b></span></p>
         <p class="lede center">Tudo conectado pela mesma camada de inteligência.</p>
       </div>
     </section>
@@ -947,8 +952,8 @@
           <span class="eyebrow">Governança</span>
           <h2 class="h2" id="s25-title">Inteligência sobre pessoas exige responsabilidade.</h2>
           <div class="prose"><p>Dados de pessoas não devem ser tratados como qualquer outro dado.</p></div>
-          <div class="pull"><strong>IA apoia decisões. Pessoas continuam responsáveis por elas.</strong></div>
         </div>
+        <div>
         <div class="panel">
           <p class="panel-label">Por isso, o Electia trabalha com princípios de:</p>
           <ul class="ticks ticks-2">
@@ -963,6 +968,8 @@
             <li>transparência sobre o uso de IA;</li>
             <li>supervisão humana nas decisões relevantes.</li>
           </ul>
+        </div>
+        <div class="pull"><strong>IA apoia decisões. Pessoas continuam responsáveis por elas.</strong></div>
         </div>
       </div>
     </section>
@@ -984,8 +991,10 @@
             <p><strong>People Intelligence para transformar dados sobre pessoas em decisões melhores sobre pessoas.</strong></p>
           </div>
           <div class="cta-panel-actions">
-            <a class="btn btn-primary btn-sheen" href="#">Quero conhecer o Electia</a>
-            <a class="btn btn-secondary btn-sheen" href="#">Falar com um especialista</a>
+            <!-- TODO destino real -->
+            <a class="btn btn-primary btn-sheen" href="#agendar-demo">Quero conhecer o Electia</a>
+            <!-- TODO destino real -->
+            <a class="btn btn-secondary btn-sheen" href="#falar-especialista">Falar com um especialista</a>
           </div>
         </div>
       </div>
@@ -1001,7 +1010,7 @@
 
   <aside class="cta-dock" aria-label="Atalho para conhecer o Electia" data-cta-dock data-cta-dock-after="[data-hero-cta]" data-cta-dock-until="[data-cta-final]">
     <span class="cta-dock-text">Da candidatura ao desenvolvimento.</span>
-    <a class="btn btn-primary" href="#cta-final">Conhecer o Electia</a>
+    <a class="btn btn-primary" href="#plataforma">Conhecer o Electia</a>
   </aside>
 
   <script src="../../../../dist/header-float.js" defer></script>
