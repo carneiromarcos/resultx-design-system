@@ -9,6 +9,13 @@
  *     menos o scrim (inert bloquearia o clique que fecha);
  * e tudo se desfaz ao fechar — pelo Escape, pelo scrim, pela API e quando a
  * janela cresce para o modo painel/rail (data-sidebar-media deixa de casar).
+ *
+ * Re-revisão da #85: o destino do foco era document.activeElement. Quando o
+ * gatilho é ativado sem receber foco (Safari, button.click(), mousedown com
+ * preventDefault), o destino era outro elemento — um campo do fundo, que fica
+ * inerte — e após o Escape o foco caía no <body>. Como no menu-drawer da #83:
+ * o clique registra event.currentTarget; a API sem invocador usa activeElement
+ * só se estiver fora da gaveta e fora do fundo inerte, senão o gatilho.
  */
 
 const { criarDocumento } = require('./lib/mini-dom');
@@ -37,7 +44,13 @@ function montar({ role } = {}) {
         el('button', { id: 'gatilho', 'data-sidebar-toggle': 'nav', hidden: '' }),
         el('input', { id: 'busca' }),
       ),
-      el('main', { id: 'principal' }, el('a', { href: '#x', id: 'link-fundo' })),
+      el(
+        'main',
+        { id: 'principal' },
+        el('a', { href: '#x', id: 'link-fundo' }),
+        el('textarea', { id: 'campo' }),
+        el('button', { id: 'gatilho-2', 'data-sidebar-toggle': 'nav', hidden: '' }),
+      ),
     ),
   );
   doc.body.appendChild(el('div', { id: 'ja-inerte', inert: '' }));
@@ -155,5 +168,61 @@ describe('Tab continua preso na gaveta aberta', () => {
     expect(ctx.doc.activeElement).toBe(ctx.q('item-a'));
     expect(ctx.tecla('Tab', { shiftKey: true })).toBe(false);
     expect(ctx.doc.activeElement).toBe(ctx.q('item-b'));
+  });
+});
+
+describe('Foco volta ao gatilho que abriu, mesmo sem ele ter recebido foco', () => {
+  test('dois gatilhos: click() no SEGUNDO com o foco num campo do fundo → Escape → segundo', () => {
+    const ctx = montar();
+    ctx.q('campo').focus();
+    ctx.q('gatilho-2').click(); /* como no Safari: o clique não foca o botão */
+    expect(ctx.nav.contains(ctx.doc.activeElement)).toBe(true);
+    ctx.tecla('Escape');
+    expect(ctx.doc.activeElement).toBe(ctx.q('gatilho-2'));
+  });
+
+  test('dois gatilhos: click() no PRIMEIRO com o foco num campo do fundo → Escape → primeiro', () => {
+    const ctx = montar();
+    ctx.q('campo').focus();
+    ctx.q('gatilho').click();
+    ctx.tecla('Escape');
+    expect(ctx.doc.activeElement).toBe(ctx.q('gatilho'));
+  });
+
+  test('os dois gatilhos são revelados e acompanham aria-expanded', () => {
+    const ctx = montar();
+    for (const id of ['gatilho', 'gatilho-2']) {
+      expect(ctx.q(id).hidden).toBe(false);
+      expect(ctx.q(id).getAttribute('aria-controls')).toBe('nav');
+    }
+    ctx.q('gatilho-2').click();
+    expect(ctx.q('gatilho').getAttribute('aria-expanded')).toBe('true');
+    expect(ctx.q('gatilho-2').getAttribute('aria-expanded')).toBe('true');
+    ctx.tecla('Escape');
+    expect(ctx.q('gatilho').getAttribute('aria-expanded')).toBe('false');
+    expect(ctx.q('gatilho-2').getAttribute('aria-expanded')).toBe('false');
+  });
+
+  test('API sem invocador, foco num campo do fundo (que fica inerte) → volta ao primeiro gatilho', () => {
+    const ctx = montar();
+    ctx.q('campo').focus();
+    ctx.api.open(ctx.nav);
+    ctx.api.close(ctx.nav);
+    expect(ctx.doc.activeElement).toBe(ctx.q('gatilho'));
+  });
+
+  test('API com invocador explícito → volta a ele', () => {
+    const ctx = montar();
+    ctx.api.open(ctx.nav, ctx.q('gatilho-2'));
+    ctx.tecla('Escape');
+    expect(ctx.doc.activeElement).toBe(ctx.q('gatilho-2'));
+  });
+
+  test('API sem invocador e sem foco em lugar nenhum → primeiro gatilho', () => {
+    const ctx = montar();
+    expect(ctx.doc.activeElement).toBe(ctx.doc.body);
+    ctx.api.open(ctx.nav);
+    ctx.tecla('Escape');
+    expect(ctx.doc.activeElement).toBe(ctx.q('gatilho'));
   });
 });

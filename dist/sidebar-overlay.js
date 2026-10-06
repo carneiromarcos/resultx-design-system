@@ -7,9 +7,10 @@
  *
  * API:
  *   ResultXSidebarOverlay.init(root)  — enhance every [data-sidebar-overlay]
- *   ResultXSidebarOverlay.open(el)
+ *   ResultXSidebarOverlay.open(el[, invocador])   — invocador: where focus
+ *                                                   returns on close
  *   ResultXSidebarOverlay.close(el)
- *   ResultXSidebarOverlay.toggle(el)
+ *   ResultXSidebarOverlay.toggle(el[, invocador])
  *
  * Markup:
  *   <button data-sidebar-toggle="nav" aria-expanded="false" hidden>Menu</button>
@@ -21,7 +22,16 @@
  * Behavior:
  *   - Creates its own .sidebar-scrim when the page has none
  *   - Escape closes; clicking the scrim closes
- *   - Focus moves into the panel on open and returns to the trigger on close
+ *   - Focus moves into the panel on open and returns, on close, to the
+ *     trigger that opened it: event.currentTarget of the click, never
+ *     document.activeElement. In Safari (and with button.click(), or a
+ *     pointer whose mousedown is prevented) the click does not focus the
+ *     button, so activeElement would be whatever had focus before — a field
+ *     in the page that the drawer makes inert. Every [data-sidebar-toggle]
+ *     for the panel works, not just the first. Opened by the API without an
+ *     invocador, focus returns to activeElement only if it sits outside the
+ *     panel and outside the background that turns inert; otherwise to the
+ *     first trigger.
  *   - Tab is trapped inside the panel while it is open — an open overlay that
  *     lets Tab wander into the page behind it is a maze for keyboard users
  *   - While open it is a modal dialog for real: role="dialog" +
@@ -64,8 +74,15 @@
     return visiveis;
   }
 
-  function triggerFor(el) {
-    return document.querySelector('[data-sidebar-toggle="' + el.id + '"]');
+  function triggersFor(el) {
+    return document.querySelectorAll('[data-sidebar-toggle="' + el.id + '"]');
+  }
+
+  function setExpanded(el, aberto) {
+    var gatilhos = triggersFor(el);
+    for (var i = 0; i < gatilhos.length; i++) {
+      gatilhos[i].setAttribute('aria-expanded', aberto ? 'true' : 'false');
+    }
   }
 
   function scrimFor(el) {
@@ -107,6 +124,33 @@
     el._inertes = marcados;
   }
 
+  /* O no ficaria inerte com a gaveta aberta? E o mesmo percurso de
+     isolarFundo: irmaos de cada ancestral do painel ate o <body>. */
+  function ficaraInerte(el, no) {
+    var scrim = el._scrim;
+    for (var n = el; n && n.parentNode && n !== document.body; n = n.parentNode) {
+      var irmaos = n.parentNode.children;
+      for (var i = 0; i < irmaos.length; i++) {
+        if (irmaos[i] !== n && irmaos[i] !== scrim && irmaos[i].contains(no)) return true;
+      }
+    }
+    return false;
+  }
+
+  /* Destino do foco quando a API abre sem invocador. */
+  function invocadorPadrao(el) {
+    var ativo = document.activeElement;
+    if (
+      ativo &&
+      ativo !== document.body &&
+      !el.contains(ativo) &&
+      !ficaraInerte(el, ativo)
+    ) {
+      return ativo;
+    }
+    return triggersFor(el)[0] || null;
+  }
+
   function liberarFundo(el) {
     var marcados = el._inertes || [];
     for (var i = 0; i < marcados.length; i++) marcados[i].removeAttribute('inert');
@@ -134,15 +178,16 @@
     );
   }
 
-  function open(el) {
+  /* invocador: o gatilho que abriu (event.currentTarget do clique). */
+  function open(el, invocador) {
     if (isOpen(el)) return;
 
-    el._devolverFocoPara = document.activeElement;
+    scrimFor(el); /* o scrim precisa existir antes de decidir o que fica inerte */
+    el._devolverFocoPara = invocador || invocadorPadrao(el);
     el.setAttribute(OPEN_ATTR, '');
     scrimFor(el).setAttribute(OPEN_ATTR, '');
 
-    var gatilho = triggerFor(el);
-    if (gatilho) gatilho.setAttribute('aria-expanded', 'true');
+    setExpanded(el, true);
 
     el._overflowAnterior = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -167,8 +212,7 @@
     el.removeAttribute(OPEN_ATTR);
     scrimFor(el).removeAttribute(OPEN_ATTR);
 
-    var gatilho = triggerFor(el);
-    if (gatilho) gatilho.setAttribute('aria-expanded', 'false');
+    setExpanded(el, false);
 
     document.body.style.overflow = el._overflowAnterior || '';
 
@@ -187,9 +231,9 @@
     emit(el, false);
   }
 
-  function toggle(el) {
+  function toggle(el, invocador) {
     if (isOpen(el)) close(el);
-    else open(el);
+    else open(el, invocador);
   }
 
   function trapTab(el, event) {
@@ -217,13 +261,15 @@
     el.setAttribute(READY_ATTR, '');
     if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1');
 
-    var gatilho = triggerFor(el);
-    if (gatilho) {
+    var gatilhos = triggersFor(el);
+    for (var g = 0; g < gatilhos.length; g++) {
+      var gatilho = gatilhos[g];
       gatilho.hidden = false;
       gatilho.setAttribute('aria-controls', el.id);
       gatilho.setAttribute('aria-expanded', isOpen(el) ? 'true' : 'false');
-      gatilho.addEventListener('click', function () {
-        toggle(el);
+      gatilho.addEventListener('click', function (event) {
+        /* currentTarget, nao activeElement: o clique pode nao focar o botao. */
+        toggle(el, event.currentTarget);
       });
     }
 

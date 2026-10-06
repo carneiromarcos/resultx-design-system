@@ -36,6 +36,7 @@ const dataCards = css('components', 'data-cards.css');
 const testMark = css('components', 'test-mark.css');
 const zonas = css('components', 'zone-distribution.css');
 const composer = css('components', 'composer.css');
+const stageChip = css('components', 'stage-chip.css');
 const agregadorBruto = texto('components', 'components.css');
 const pkg = JSON.parse(texto('package.json'));
 
@@ -469,6 +470,61 @@ describe('C6 — .composer-chip', () => {
     expect(js).toContain('data-composer-fill');
     expect(js).toMatch(/fill:\s*fill/);
     expect(js).not.toMatch(/requestSubmit|\.submit\(/);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Re-revisão da #85 — .stage-chip pressionado: AA em todos os quadros
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * No protótipo, desmarcar um filtro deu 4,09:1 no escuro a 13–29 ms. A causa
+ * era local (opacity .62 no [aria-pressed="false"]), mas o DS expõe o estado
+ * pressionado e transiciona o fundo entre 12 % e 20 % da cor da etapa. A tinta
+ * não muda nessa troca; o fundo vai de uma ponta à outra. Aqui: a tinta não
+ * entra na transição, o DS não esmaece o chip desmarcado, e cada quadro
+ * intermediário (11 amostras entre as pontas) passa 4,5:1 nos quatro escopos.
+ */
+const ETAPA_COR = {
+  triagem: '--text-secondary',
+  entrevista: '--color-info',
+  oferta: '--color-warning',
+  contratado: '--color-success',
+  rejeitado: '--color-error',
+};
+
+describe('Re-revisão #85 — .stage-chip pressionado/desmarcado', () => {
+  const pct = (sel) =>
+    Number(/var\(--stage-color\) (\d+)%, transparent/.exec(valor(regra(stageChip, sel), 'background'))[1]);
+
+  test('a transição não inclui color nem opacity (só fundo e transform)', () => {
+    const t = valor(regra(stageChip, '.stage-chip:is(a, button)'), 'transition');
+    expect(t).not.toMatch(/(^|[ ,])(color|opacity|all)\b/);
+  });
+
+  test('o DS não esmaece nem risca o chip desmarcado', () => {
+    const desmarcado = regras(stageChip).filter((r) => /aria-pressed=['"]false/.test(r.seletor));
+    for (const r of desmarcado) {
+      expect(valor(r.corpo, 'opacity')).toBeNull();
+      expect(valor(r.corpo, 'color')).toBeNull();
+    }
+  });
+
+  test('todo quadro entre repouso e pressionado passa 4,5:1, nos quatro escopos', () => {
+    const repouso = pct('.stage-chip');
+    const pressionado = pct(".stage-chip:is(a, button)[aria-pressed='true']");
+    const tinta = /(\d+)%/.exec(valor(regra(stageChip, '.stage-chip'), '--stage-ink'))[1];
+    const pares = ds.flatMap((e) =>
+      Object.entries(ETAPA_COR).flatMap(([etapa, cor]) => {
+        const c = tok(e, cor);
+        const ink = mixOklab(c, Number(tinta), tok(e, '--text-primary'));
+        return Array.from({ length: 11 }, (_, i) => {
+          const alfa = (repouso + ((pressionado - repouso) * i) / 10) / 100;
+          return [`${e.nome} ${etapa} quadro ${i}/10`, ink, mixSrgbAlpha(c, alfa, tok(e, '--bg-base'))];
+        });
+      }),
+    );
+    expect(reprovados(pares, AA_NORMAL)).toEqual([]);
   });
 });
 

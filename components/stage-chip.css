@@ -110,6 +110,10 @@
 }
 
 /* ── Quando o chip é alvo (filtro do funil, coluna do kanban) ───────────── */
+/* Só o fundo transiciona (12 % → 20 % da cor da etapa) e a tinta fica parada:
+   todo quadro da troca passa AA (pior caso 5,34:1, oferta no claro). Não
+   esmaeça o chip desmarcado com opacity — no protótipo da #85 isso levou um
+   quadro da transição a 4,09:1. tests/lote-d.test.js amostra 11 quadros. */
 .stage-chip:is(a, button) {
   cursor: pointer;
   transition: background-color var(--transition-fast), transform var(--transition-fast);
