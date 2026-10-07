@@ -5,6 +5,28 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+## [2.8.1] - 2026-10-07
+
+### Changed — página do ecossistema Emprega+ pronta para o evento (07/10/2026)
+
+`brands/emprega-mais/previews/prototypes/emprega-mais-ecossistema-2026-10-06.html`, que
+também está publicada em www.empregamais.me/hub/ como destino dos QR codes do stand.
+
+- Logomarca oficial da Emprega+ (navy e branca, por tema) em
+  `brands/emprega-mais/assets/logo/`, no header, nos cards e no rodapé (#92).
+- Orb da IA menor, sem anéis e com movimento mais suave; parado com
+  `prefers-reduced-motion` (#92).
+- Cards novos: Vagas Tech, Emprega+ Saúde (#92) e Profissional de Valor (#94). A grade
+  passa a 3 + 3, com cards da mesma altura.
+- O acento do card do Profissional de Valor usa o ouro da marca PdV, restrito ao card,
+  por aliases para `--emp-gold` e `--emp-gold-ink`, sem hex novo (#94).
+- Header na proporção do www.empregamais.me (logo 25 px, links 16 px, barra 76 px) (#93).
+- Rodapé igual ao publicado no site, com os selos dos parceiros em
+  `brands/emprega-mais/assets/partners/` (#93).
+- Links reais: WhatsApp, EditalHub, Vagas Tech, Emprega+ Saúde e Profissional de Valor;
+  os TODOs de destino saíram (#92).
+- Não altera componente nem token.
+
 ## [2.8.0] - 2026-10-06
 
 ### Added — protótipo da landing do Electia com a copy de 06/10 (06/10/2026)
