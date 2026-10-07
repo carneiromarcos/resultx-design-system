@@ -5,6 +5,9 @@
 > Documento de identidade visual, posicionamento e diretrizes de marca.
 > Single source of truth para toda comunicacao visual e de marketing.
 > Nascido da historia, dos valores e da personalidade do fundador Marcos Carneiro.
+>
+> **Profissional de Valor — comunidade católica de inovação e inteligência artificial.** Uma iniciativa Emprega+.
+> Revisado em 2026-10-07 para refletir as decisões do Marcos já aplicadas no site (`empregamais/emprega-mais-pdv`, PR #25).
 
 ---
 
@@ -14,7 +17,9 @@
 
 A Comunidade Profissional de Valor nao nasceu de um plano de negocios. Nasceu de uma vida forjada pelo fogo.
 
-Marcos Carneiro — engenheiro por formacao, empreendedor por vocacao, idealista por natureza. Aos 23, largou a engenharia e fundou a CRONIC Jeans com 3 socios, construindo uma marca de moda com relevancia nacional. Aos 31, acordou as 5:15 da manha com uma ligacao: "Senhor Marcos, a sua fabrica esta pegando fogo." Perdeu tudo — R$1.5M em estoque, maquinas, sonhos. Sem seguro. Demitiu mais de 100 pessoas sem ter dinheiro para pagar as rescisoes.
+Marcos Carneiro — engenheiro por formacao, empreendedor por vocacao, idealista por natureza. Largou a engenharia e fundou, com socios, uma confeccao de moda. Anos depois, acordou as 5:15 da manha com uma ligacao: "Senhor Marcos, a sua fabrica esta pegando fogo." Perdeu tudo — o incendio consumiu a empresa, 100 empregos e R$ 1,5 milhao. Sem seguro.
+
+> **Regra da biografia (decisao do Marcos, 07/10/2026):** sem o nome da antiga confeccao e sem idades. Os numeros do incendio seguem a versao publicada no site (100 empregos, R$ 1,5 milhao, sem seguro). O incendio faz parte da historia do Marcos, mas o PdV nasceu anos depois, de outra dor (profissionais desvalorizados por falta de habilidades comportamentais) — nunca criar relacao causal entre os dois.
 
 Naquele dia, recebeu uma mensagem que se tornou a alma da marca:
 
@@ -87,17 +92,20 @@ Ser a principal comunidade de formacao humana e profissional do Brasil, onde tra
 
 ## 3. Posicionamento Estrategico
 
-### Mudanca de posicionamento (marco 2026-03-27)
+### Mudanca de posicionamento
 
-| Aspecto | Antes | Agora |
-|---------|-------|-------|
-| **Core** | Mentoria de recolocacao profissional | Comunidade de formacao humana e profissional |
-| **Recolocacao** | Era O produto | E UM produto dentro do ecossistema |
-| **Foco** | Conseguir emprego | Formar a pessoa inteira (virtudes + IA + comunidade) |
+| Aspecto | Antes | Marco 2026-03-27 | Atual (decisao do Marcos, 07/10/2026) |
+|---------|-------|------------------|----------------------------------------|
+| **Core** | Mentoria de recolocacao profissional | Comunidade de formacao humana e profissional | **Comunidade catolica de inovacao e inteligencia artificial** |
+| **Recolocacao** | Era O produto | E UM produto dentro do ecossistema | Continua sendo um tema, nao o centro |
+| **Foco** | Conseguir emprego | Formar a pessoa inteira (virtudes + IA + comunidade) | Inovacao, IA, formacao humana e virtudes, a luz da Doutrina Social da Igreja |
+| **Fe** | — | Implicita (regra anterior, substituida) | Identidade catolica declarada no texto, com sobriedade (ver "Identidade catolica") |
+
+**Frase de posicionamento (oficial):** "Comunidade catolica de inovacao e inteligencia artificial." O tema nao e so religioso: o centro e inovacao, IA, formacao humana e virtudes.
 
 ### Declaracao de posicionamento
 
-> Para lideres, gestores e empreendedores que ja investiram em diplomas e cursos mas continuam estagnados, frustrados e sem reconhecimento — Profissional de Valor e uma comunidade de formacao humana e profissional que, diferente de coaching, gurus e cursos tecnicos, desenvolve a pessoa inteira — virtudes como metodo, IA como ferramenta, e comunidade como ambiente — para que o membro encontre proposito, seja reconhecido pelo que realmente vale, e construa uma vida profissional e pessoal equilibrada.
+> Para profissionais, gestores e empreendedores catolicos que seguem a Doutrina Social da Igreja, ja investiram em diplomas e cursos mas continuam estagnados, frustrados e sem reconhecimento — Profissional de Valor e uma comunidade catolica de inovacao e inteligencia artificial que, diferente de coaching, gurus e cursos tecnicos, desenvolve a pessoa inteira — virtudes como metodo, IA como ferramenta, e comunidade como ambiente — para que o membro encontre proposito, seja reconhecido pelo que realmente vale, e construa uma vida profissional e pessoal equilibrada.
 
 ### Dois pilares que permeiam tudo
 
@@ -112,10 +120,10 @@ Independente do produto, conteudo ou comunicacao, estes dois elementos estao sem
 
 | Atributo | Definicao |
 |----------|-----------|
-| **Quem** | Gerentes, diretores, lideres, pequenos e medios empreendedores |
+| **Quem** | Profissionais, gestores e empreendedores catolicos que seguem a Doutrina Social da Igreja — gerentes, diretores, lideres, pequenos e medios empreendedores (ICP de 07/10/2026) |
 | **Renda** | R$ 15-20k+ (salario ou faturamento) |
 | **Perfil** | Competente tecnicamente, mas estagnado. Sabe que falta algo, nao sabe o que |
-| **Idade** | Predominantemente 30-55 anos (maturidade profissional + disposicao para mudanca) |
+| **Idade** | Predominantemente 30-55 anos (maturidade profissional + disposicao para mudanca) — *faixa herdada da versao de marco; nao consta do ICP de 07/10/2026, a confirmar com o Marcos* |
 
 ### A dor — nas palavras deles
 
@@ -152,7 +160,7 @@ O que essas frases revelam: **o problema nunca foi tecnico**. E falta de posicio
 1. **Formacao humana integral** — Nao e so tecnica, nao e so comportamento. E a pessoa inteira
 2. **Sucesso redefinido** — Equilibrio de vida, nao acumulo de riqueza
 3. **Virtudes como metodo concreto** — Nao motivacao vazia, mas pratica aplicada ao trabalho
-4. **Catolicismo aplicado** — Proposito transcendente (implicito, nunca simbolos religiosos)
+4. **Identidade catolica declarada** — Proposito transcendente e Doutrina Social da Igreja como referencia explicita, com tom sobrio e sem proselitismo (regra de 07/10/2026 — ver "Identidade catolica e Doutrina Social da Igreja")
 5. **Esporte de alta performance** — Resiliencia vivida, nao teorica
 6. **Jornada real do fundador** — Marcos errou, perdeu, reconstruiu. Credibilidade pela verdade
 7. **Comunidade de iguais** — Pertencimento entre pessoas que comungam dos mesmos valores
@@ -169,18 +177,68 @@ O que essas frases revelam: **o problema nunca foi tecnico**. E falta de posicio
 
 *Nota: provas atuais sao de recolocacao (posicionamento anterior). Coletar provas do novo posicionamento: promocoes internas, impacto de virtudes na lideranca, uso de IA no dia a dia, equilibrio vida pessoal/profissional, empreendedores que melhoraram negocios.*
 
+*Nota (07/10/2026): os resultados desta tabela (prazos, salarios) nao tem fonte registrada neste documento e nao aparecem no site atual — **a confirmar com o Marcos** (fonte e autorizacao de cada pessoa) antes de qualquer uso publico. Depoimentos publicados usam avatar de iniciais; nunca foto de banco nem rosto gerado por IA.*
+
 ### Por que agora
 
 - **Diploma nao garante mais emprego** — O mercado mudou, o modelo mental das pessoas nao
-- **IA esta reestruturando o mercado** — 92 milhoes de empregos vao desaparecer. Adaptacao e urgente
+- **IA esta reestruturando o mercado** — Ate 2030, 92 milhoes de funcoes devem ser deslocadas e 170 milhoes novas devem surgir (Forum Economico Mundial, *Future of Jobs 2025*). Adaptacao e urgente — e ha espaco para quem se preparar
 - **Crise de proposito generalizada** — Pessoas buscam sentido, nao so salario
-- **A cruz e o caminho da ressurreicao** — Nao ha vida plena sem esforco e fortalecimento. O mercado esta cheio de promessas de atalho. O PdV e o caminho verdadeiro
+- **A Igreja tambem esta pensando a IA** — A encíclica *Magnifica Humanitas* (Leão XIV, 15/05/2026) trata da salvaguarda da pessoa humana na era da inteligência artificial. A comunidade se inspira nela, sem falar em nome da Igreja
+- **A cruz e o caminho da ressurreicao** — Nao ha vida plena sem esforco e fortalecimento. O mercado esta cheio de promessas de atalho. O PdV e o caminho verdadeiro *(linguagem de fundamento, para uso interno e conteudo de formacao; em peca publica, com a sobriedade da secao "Identidade catolica")*
 
 ### Categoria de mercado
 
 **Comunidade de desenvolvimento pessoal e profissional.**
 
-Nao e coaching. Nao e escola. Nao e consultoria. E uma comunidade onde pessoas que compartilham valores se desenvolvem juntas — com metodo, virtude e IA — guiadas por alguem que percorreu o caminho.
+Nao e coaching. Nao e escola. Nao e consultoria. E uma comunidade catolica de inovacao e inteligencia artificial, onde pessoas que compartilham valores se desenvolvem juntas — com metodo, virtude e IA — guiadas por alguem que percorreu o caminho.
+
+### Identidade católica e Doutrina Social da Igreja
+
+> **Regra vigente desde 07/10/2026 (decisão do Marcos).** Substitui a regra anterior — "catolicismo implícito, nunca símbolos religiosos" e "isso nunca aparece com linguagem religiosa" —, que deixa de valer.
+
+**O que muda**
+
+| Tema | Regra |
+|------|-------|
+| **Identidade** | Declarada no texto: "Comunidade católica de inovação e inteligência artificial". A Doutrina Social da Igreja é referência explícita |
+| **Tom** | Sóbrio. Sem proselitismo, sem sermão, sem kitsch (nada de efeitos, emojis ou frases piedosas de enfeite). A fé aparece como fundamento, não como argumento de venda |
+| **Centro da conversa** | Inovação, IA, formação humana e virtudes. O tema não é só religioso |
+| **Igreja e Papa** | Nunca atribuir à Igreja ou ao Papa nada que não esteja nos textos oficiais. Nunca sugerir que a Igreja endossa o Profissional de Valor. Aviso de referência (usado no site): "O Profissional de Valor não fala em nome da Igreja." |
+| **Citações de documentos** | Sempre literais, do texto oficial em vatican.va, entre aspas, com o número do parágrafo (§) e link. Manter a grafia do original (o texto em português do Vaticano segue a grafia de Portugal) — não "corrigir" nem parafrasear entre aspas |
+| **Símbolos religiosos como elemento gráfico** (cruz, santos, igrejas, imagens sacras) | **Continuam fora das peças por padrão. Pendente de decisão do Marcos** — até lá, não usar. O visual segue navy + ouro |
+
+**Referência da comunidade: *Magnifica Humanitas***
+
+Carta encíclica do Papa Leão XIV sobre a salvaguarda da pessoa humana na era da inteligência artificial, datada de 15/05/2026. Texto oficial: <https://www.vatican.va/content/leo-xiv/pt/encyclicals/documents/20260515-magnifica-humanitas.html>
+
+Citações já conferidas e em uso no site (copiar exatamente assim, com o §):
+
+| § | Citação literal |
+|---|-----------------|
+| 100 | «a inteligência artificial pode ser uma ajuda preciosa, exigindo, ao mesmo tempo, uma abordagem sóbria e vigilante» |
+| 104 | «não podemos considerar a IA moralmente neutra» |
+| 149 | «o trabalho não é um mero instrumento, mas expressa e enriquece a dignidade da nossa vida» |
+
+Qualquer citação nova exige conferência no texto oficial antes de entrar numa peça. Fonte destas três: componente `magnifica-humanitas-section.tsx` do site (conferido em 07/10/2026).
+
+### Produtos e funil (07/10/2026)
+
+| Produto | Status | Dados oficiais |
+|---------|--------|----------------|
+| **Workshop** | Ativo — porta de entrada | Gratuito, ao vivo, semanal. **Toda quinta-feira, 8h30 (horario de Brasilia)**, no Google Meet. Sem limite de vagas informado: nada de contador nem aviso de escassez |
+| **MAPA PdV** | Ativo — programa | **R$ 397 ou 12x de R$ 33,09** (Hotmart). 12 meses, encontros quinzenais ao vivo, comunidade. **Garantia de 7 dias.** Quantidade de aulas/horas nao confirmada — nao publicar numero |
+| **Mentoria PdV** | **Retirada por enquanto** (decisao do Marcos, 07/10/2026) | Fora do site; `/mentoria` redireciona para `/workshop`. Nao divulgar como produto ativo |
+
+**Endosso:** "Profissional de Valor · uma iniciativa Emprega+" (ver secao 14).
+
+### Regras de verdade (07/10/2026)
+
+- **Sem escassez artificial** — nada de "vagas limitadas", "ultimas vagas" ou contadores sem limite real informado
+- **Sem numeros sem fonte** — nada de contagem de participantes, "profissionais impactados" ou "1.000+" ate haver fonte interna e data
+- **Dado do Forum Economico Mundial sempre com os dois lados** — 92 milhoes de funcoes deslocadas e 170 milhoes criadas ate 2030 (*Future of Jobs 2025*)
+- **Sem promessas de resultado** — nada de prazo de recolocacao ou ganho garantido
+- **Sem relacoes causais inventadas** — a historia do Marcos e contada como aconteceu
 
 ---
 
@@ -218,7 +276,7 @@ A montanha tem tres lados — e o profissional de valor se desenvolve em tres di
 | **Destaque** | IA como principal habilidade tecnica a ser desenvolvida |
 | **Palavras-chave** | IA aplicada, ferramentas, tecnologia, produtividade |
 | **Arquetipo** | Rebelde — quem nao dominar IA ficara para tras; confronto com a obsolescencia |
-| **Na comunicacao** | "92 milhoes de empregos vao desaparecer. Voce esta se preparando ou esperando?" |
+| **Na comunicacao** | "Ate 2030, 92 milhoes de funcoes deslocadas e 170 milhoes criadas (WEF). Voce esta se preparando ou esperando?" |
 
 ### Por que um triangulo?
 
@@ -236,7 +294,8 @@ Os tres pilares sao indissociaveis. E a logo do PdV — o monograma P/V isometri
 |---------|-----------------|---------------------|
 | **Workshop** (gratuito) | Pilar 1 (despertar para valores) | Pilar 3 (IA, dados de mercado) |
 | **MAPA PdV** (programa) | Pilar 2 (comportamentais + posicionamento) | Pilar 1 + 3 |
-| **Mentoria** (premium) | Todos os 3 em profundidade | Aplicacao pratica personalizada |
+
+*Mentoria: retirada por enquanto (decisao do Marcos, 07/10/2026). Nao aparece como produto ativo.*
 
 ---
 
@@ -290,9 +349,13 @@ O PdV nao e rebelde contra o sistema. E rebelde contra a **corrupcao moral** que
 | O Amante | Nao apelamos para desejo, sensualidade ou vaidade. Dignidade sempre |
 | O Inocente | Nao prometemos que vai ser facil. Prometemos que vai valer a pena |
 
-### Framework moral (implicito, nunca explicito)
+### Framework moral: vicios e virtudes
 
-A marca combate os 7 pecados capitais manifestados no mundo do trabalho, atraves das virtudes correspondentes. Isso NUNCA aparece com linguagem religiosa — aparece como posicionamento:
+A marca combate os 7 pecados capitais manifestados no mundo do trabalho, atraves das virtudes correspondentes.
+
+**Como usar (regra de 07/10/2026, substitui "implicito, nunca explicito"):** a linguagem crista de vicios e virtudes pode aparecer de forma explicita — e coerente com a identidade catolica declarada. Use com sobriedade: nomear o vicio e a virtude com clareza, sem moralismo, sem tom de sermao e sem apontar o dedo para pessoas. No dia a dia, a forma principal continua sendo o posicionamento (coluna da direita); o vocabulario classico ("pecado capital", "virtude") entra quando acrescenta clareza — conteudo de formacao, workshop, textos longos.
+
+*Pendente — a confirmar com o Marcos:* a coluna "Virtude PdV" usa virtudes adaptadas ao trabalho que nao coincidem uma a uma com a lista classica de virtudes opostas aos pecados capitais (ex.: Gratidao para Inveja, Prudencia para Gula). Antes de apresentar a tabela com a nomenclatura classica, confirmar a correspondencia a usar.
 
 | Pecado | Manifestacao no trabalho | Virtude PdV | Como aparece na comunicacao |
 |--------|--------------------------|-------------|----------------------------|
@@ -321,16 +384,17 @@ A marca combate os 7 pecados capitais manifestados no mundo do trabalho, atraves
 |----------|-------------------|-------------|
 | CTA | "Compre agora!" | "Se voce esta pronto pra escalar, o primeiro passo e gratuito." |
 | Dor | "Sabemos como e dificil..." | "Voce sabe que merece mais. O mercado nao sabe. Isso muda hoje." |
-| Autoridade | "Somos os melhores!" | "1.000+ profissionais ja passaram pela forja." |
-| Urgencia | "ULTIMAS VAGAS!!!" | "92 milhoes de empregos vao desaparecer. O seu?" |
+| Autoridade | "Somos os melhores!" / "1.000+ alunos!" (numero sem fonte) | "Depois de 20 anos contratando, promovendo e demitindo, percebi um padrao." (trajetoria real, como no site) |
+| Urgencia | "ULTIMAS VAGAS!!!" | "Ate 2030: 92 milhoes de funcoes deslocadas, 170 milhoes criadas (WEF). De que lado voce vai estar?" |
 | Confronto | "Voce merece ser feliz!" | "Se ter diplomas fosse suficiente, voce ja estaria onde deseja." |
 | Empreendedor | "Seja seu proprio patrao!" | "Trabalho e vocacao — de carteira assinada ou CNPJ." |
+| Fe | Frase piedosa de enfeite, emoji de oracao, "a Igreja recomenda o PdV" | «o trabalho não é um mero instrumento, mas expressa e enriquece a dignidade da nossa vida» (*Magnifica Humanitas*, §149) — citacao literal, com § e link |
 
 ### Vocabulario da marca
 
 **Usar sempre:** forjar, escalar, montanha, virtude, metodo, estrategia, valor, posicionamento, clareza, coragem, excelencia, verdade, carater, vencedor, vocacao, pilares, reputacao
 
-**Usar com cuidado:** sucesso (redefinir como "vida plena"), lider (nao como titulo, como postura)
+**Usar com cuidado:** sucesso (redefinir como "vida plena"), lider (nao como titulo, como postura), termos de fe (catolico, Igreja, Doutrina Social, pecado, graca) — sempre com a sobriedade da secao "Identidade catolica"
 
 **Nunca usar:** sucesso garantido, enriquecer, facil, rapido, hack, segredo, magica, coach (como substantivo), guru, forca do universo, energia positiva, lei da atracao, empoderamento
 
@@ -388,10 +452,12 @@ A forca do monograma esta na economia: nada foi adicionado, nada e decorativo. A
 
 | Contexto | Monograma | Barra | Fundo |
 |----------|-----------|-------|-------|
-| **Fundo escuro (padrao)** | Branco `#FFFFFF` | Ouro `#D4A928` | Navy `#1B2A4A` ou preto `#0F1A2E` |
-| **Fundo claro** | Navy escuro `#1B2A4A` | Ouro `#D4A928` | Branco ou claro |
-| **Outline (fundo claro)** | Contorno cinza/navy | Ouro `#D4A928` | Branco ou claro |
-| **Premium** | Ouro `#D4A928` | Ouro `#D4A928` | Escuro |
+| **Fundo escuro (padrao)** | Branco `--white` `#FFFFFF` | Ouro `--gold` `#c4993b` | Navy `--bg` `#1B2A4A` |
+| **Fundo claro** | Navy `--bg` `#1B2A4A` | Ouro `--gold` `#c4993b` | Branco ou claro |
+| **Outline (fundo claro)** | Contorno cinza/navy | Ouro `--gold` `#c4993b` | Branco ou claro |
+| **Premium** | Ouro `--gold` `#c4993b` | Ouro `--gold` `#c4993b` | Navy `--bg` `#1B2A4A` |
+
+*Valores = tokens v2.5 (`brands/pdv/tokens/tokens.css` / `tokens.json`). O hex vive nos tokens; ao mudar um token, esta tabela segue o token.*
 
 ### 7.5 Tipografia do wordmark
 
@@ -404,7 +470,7 @@ A forca do monograma esta na economia: nada foi adicionado, nada e decorativo. A
 
 | Forma | Cor | Regra |
 |-------|-----|-------|
-| "Profissional de **Valor**" | "Profissional de" em branco, "**Valor**" em ouro `#D4A928` | A palavra "Valor" e sempre ouro — reforça o significado da marca |
+| "Profissional de **Valor**" | "Profissional de" em branco, "**Valor**" em ouro `--gold` `#c4993b` | A palavra "Valor" e sempre ouro — reforça o significado da marca |
 | "**PdV**" | Cor UNIFORME (branco, ouro ou navy — conforme contexto) | NUNCA destacar letras individuais. "PdV" e uma unidade indivisivel |
 
 **Proibido:**
@@ -417,7 +483,7 @@ A forca do monograma esta na economia: nada foi adicionado, nada e decorativo. A
 - Minimo **1.5x** a altura do icone em todos os lados
 - Nunca encostar em bordas, textos ou outros elementos
 - A barra ouro faz parte do conjunto — a area de protecao inclui a barra
-- Em composicoes com "por Emprega+", manter separacao clara
+- Em composicoes com o endosso "uma iniciativa Emprega+", manter separacao clara
 
 ### 7.8 Usos proibidos
 
@@ -449,9 +515,9 @@ A logomarca oficial e desenhada no Canva (design `DAHE9pVX-BE`, 14 paginas com a
 
 **IMPORTANTE — Cores nos arquivos SVG/PNG:**
 Os arquivos fonte podem conter cores de exportacao (preto puro, branco puro). As cores oficiais da logomarca sao SEMPRE as definidas na secao 7.4 (Cores da logomarca). Ao aplicar a logo, respeitar a paleta oficial:
-- Monograma: Branco `#FFFFFF` (fundo escuro) ou Navy `#1B2A4A` (fundo claro)
-- Barra: Ouro `#D4A928`
-- Fundo: `#0F1A2E` (bg), `#1B2A4A` (navy) ou conforme contexto
+- Monograma: Branco `--white` `#FFFFFF` (fundo escuro) ou Navy `--bg` `#1B2A4A` (fundo claro)
+- Barra: Ouro `--gold` `#c4993b`
+- Fundo: Navy `--bg` `#1B2A4A` ou conforme contexto
 
 **Aplicacao no site (REFERENCIA OFICIAL):**
 
@@ -483,26 +549,29 @@ Os arquivos fonte podem conter cores de exportacao (preto puro, branco puro). As
 
 ### Filosofia da cor
 
-A paleta do PdV e monocromatica com um unico ponto de destaque: **ouro**. Fundo escuro como navy escuro Emprega+, ouro como o metal purificado pela forja. Nada e decorativo — cada cor tem funcao e significado. A restricao intencional de cores reforca a identidade premium e minimalista (referencia Apple + Academia Lendaria).
+A paleta do PdV e monocromatica com um unico ponto de destaque: **ouro**. Fundo navy (`--bg` `#1B2A4A`, o theme-color do ecossistema Emprega+), ouro como o metal purificado pela forja. Nada e decorativo — cada cor tem funcao e significado. A restricao intencional de cores reforca a identidade premium e minimalista (referencia Apple + Academia Lendaria).
+
+> **Fonte da verdade:** `brands/pdv/tokens/tokens.json` e `tokens.css` (v2.5, unificados em 2026-05-23 — ver `CHANGELOG.md`). As tabelas abaixo espelham os tokens; se houver divergencia, vale o token.
 
 ### 8.1 Cor de destaque: Ouro
 
 | Nome | Token | Hex | Uso |
 |------|-------|-----|-----|
-| **Gold Light** | `gold-light` | `#D4AD55` | Hover em CTAs, highlights |
-| **Gold** | `gold` | `#D4A928` | CTAs, destaques, links ativos, eyebrows. A cor que diz "isso tem valor" |
-| **Gold Dark** | `gold-dark` | `#9C7C1E` | Bordas de destaque, outline buttons |
-| **Gold Muted** | `gold-muted` | `#6D5918` | Badges premium, detalhes sutis |
+| **Gold Light** | `--gold-light` | `#d4ae54` | Hover em CTAs, highlights |
+| **Gold** | `--gold` | `#c4993b` | CTAs, destaques, links ativos, eyebrows. A cor que diz "isso tem valor" |
+| **Gold Ink** | `--gold-ink` | `#c4993b` | Texto e icone dourado (existe nos dois temas; no tema claro vira `#866425`) |
+| **Gold Dark** | `--gold-dark` | `#a07b2a` | Bordas de destaque, outline buttons |
+| **Gold Muted** | `--gold-muted` | `#8B6B2A` (css) / `#6D5918` (json) | Badges premium, detalhes sutis. Divergencia css/json registrada no CHANGELOG 2.5.0 |
 
 ### 8.2 Cores de fundo (background scale)
 
 | Nome | Token | Hex | Uso |
 |------|-------|-----|-----|
-| **Background** | `bg` | `#0F1A2E` | Fundo principal — navy escuro Emprega+ |
-| **Surface 1** | `surface-1` | `#132038` | Secoes alternadas, cards elevados |
-| **Surface 2** | `surface-2` | `#172640` | Cards, areas elevadas |
-| **Surface 3** | `surface-3` | `#1B2A4A` | Hover, estados interativos |
-| **Surface 4** | `surface-4` | `#223157` | Bordas ativas, inputs |
+| **Background** | `--bg` | `#1B2A4A` | Fundo principal — navy do ecossistema Emprega+ |
+| **Surface 1** | `--surface-1` | `#1c2a4a` | Secoes alternadas, cards elevados |
+| **Surface 2** | `--surface-2` | `#243661` | Cards, areas elevadas |
+| **Surface 3** | `--surface-3` | `#2d4378` | Hover, estados interativos |
+| **Surface 4** | `--surface-4` | `#36508f` | Bordas ativas, inputs |
 
 ### 8.3 Cores de texto
 
@@ -528,7 +597,7 @@ A paleta do PdV e monocromatica com um unico ponto de destaque: **ouro**. Fundo 
 
 | Nome | Valor | Uso |
 |------|-------|-----|
-| **Gold Gradient** | `135deg #D4A928 -> #6D5918` | CTAs principais, barras de destaque, hero |
+| **Gold Gradient** | `--gradient-brand`: `135deg #c4993b -> #d4ae54` | CTAs principais, barras de destaque, hero |
 | **Gold Subtle** | Gold gradient a 12% opacidade | Fundos de cards, hover sutil |
 | **Gold Line** | `90deg transparent -> gold 30% -> transparent` | Separadores, topo de cards featured |
 | **Radial Glow** | Elipse ouro 15% -> transparente | Efeito de foco atras de CTAs |
@@ -537,6 +606,7 @@ A paleta do PdV e monocromatica com um unico ponto de destaque: **ouro**. Fundo 
 
 1. **Fundo SEMPRE escuro** — A marca vive na escuridao da caverna/forja. Fundo claro e excecao rara e documentada
 2. **Ouro e a UNICA cor de destaque** — Nao existe segunda cor de acento. Ouro para tudo que precisa chamar atencao
+   - **Vermelho so para erro** — `--error` `#B83A3A` aparece apenas em estados de erro/destructive. Nunca para urgencia, contador ou escassez
 3. **Maximo 3 cores por peca** — Fundo escuro + ouro + branco. Simplicidade radical
 4. **Gradiente Gold com parcimonia** — Maximo 1 por secao
 5. **Contraste minimo** — WCAG AA (4.5:1 para texto, 3:1 para elementos grandes)
@@ -618,7 +688,7 @@ A marca usa animacoes com parcimonia — nunca decorativas, sempre com proposito
 |--------|-----------|---------|-----|-------|
 | **Glow Pulse** | `glow-pulse` | 8s loop | Hero background — radial gold pulsante | Maximo 1 por pagina |
 | **Tech Wave** | `tech-wave` | 12s loop | Background ambient sutil, movimento ondulatorio | Apenas em heroes e CTAs |
-| **Shimmer** | `badge-shimmer` | 4s loop | Badges de destaque ("Vagas limitadas", "Novo") | Maximo 2 badges por secao |
+| **Shimmer** | `badge-shimmer` | 4s loop | Badges de destaque ("Novo", "Gratuito") — nunca badge de escassez | Maximo 2 badges por secao |
 | **Gold Line** | `gold-line` | 1s reveal | Separadores que "acendem" ao entrar na viewport | 1 por secao, sem repetir |
 | **Hover Elevate** | `hover-elevate` | 250ms | Cards e botoes que sobem 2px no hover | Todos os cards interativos |
 | **Fade In Up** | (Framer Motion) | 700ms | Elementos que surgem ao fazer scroll | Padrao para todo conteudo |
@@ -682,7 +752,7 @@ A estetica do PdV segue o principio agostiniano: **a beleza revela o transcenden
 |-----------|-----------|-----|
 | **Montanha / natureza epica** | Picos, trilhas, nascer do sol no topo | Hero sections, fundos, capas |
 | **Forja / fogo** | Brasa, metal, faiscas, chama controlada | Metafora visual, backgrounds |
-| **Retrato profissional** | Pessoas reais, iluminacao dramatica | Depoimentos, social proof |
+| **Retrato profissional** | Pessoas reais, iluminacao dramatica | Conteudo editorial. Em depoimentos, avatar de iniciais (regra de 07/10/2026) |
 | **Marcos Carneiro** | Fundador em contexto de autoridade | Secao sobre, social, workshops |
 | **Trabalho real** | Pessoas em acao (nao posando) | Features, blog, carroseis |
 
@@ -692,11 +762,13 @@ A estetica do PdV segue o principio agostiniano: **a beleza revela o transcenden
 ```css
 background: linear-gradient(
   to bottom,
-  hsl(0 0% 3% / 0.8) 0%,
-  hsl(0 0% 3% / 0.3) 50%,
-  hsl(0 0% 3% / 0.8) 100%
+  rgb(27 42 74 / 0.8) 0%,   /* --bg #1B2A4A */
+  rgb(27 42 74 / 0.3) 50%,
+  rgb(27 42 74 / 0.8) 100%
 );
 ```
+
+*Overlay atualizado em 07/10/2026 para a cor de `--bg` (antes, quase preto da paleta pre-v2.5). Mesmas opacidades.*
 
 #### Color grade
 - **Saturacao**: Reduzir 30-40% (paleta solemne, nao vibrante)
@@ -721,7 +793,7 @@ Marcos Carneiro e o fundador, nao a marca. Sua presenca visual segue regras:
 | Contexto | Visual |
 |----------|--------|
 | **Workshop / dia a dia** | Camiseta preta lisa (boa gramatura, gola ajustada), jeans escuro, tenis premium limpo |
-| **Mentoria / videos gravados** | Henley ou polo preta, jeans escuro ou calca chino chumbo |
+| **Videos gravados** | Henley ou polo preta, jeans escuro ou calca chino chumbo |
 | **Evento / palco** | Blazer escuro (sem gravata) + camiseta preta + calca slim escura |
 | **Regra geral** | Monocromatico escuro, corte ajustado, zero ostentacao |
 | **Nunca** | Terno completo com gravata, cores vibrantes, estampas, camiseta larga |
@@ -735,6 +807,9 @@ Marcos Carneiro e o fundador, nao a marca. Sua presenca visual segue regras:
 - IA generativa com artefatos visiveis (maos, fundos impossiveis)
 - Cenarios de luxo ostensivo (carros, mansoes, relogios)
 - Imagens que reforcem cultura do "facil" ou "rapido"
+- Em depoimentos: foto de banco de imagem ou rosto gerado por IA (usar avatar de iniciais)
+- Simbolos religiosos como elemento grafico (cruz, santos, igrejas, imagens sacras) — fora por padrao; **pendente de decisao do Marcos** (ver "Identidade catolica")
+- Estetica religiosa kitsch (raios de luz divina, aureolas, brilhos "celestiais")
 
 ---
 
@@ -754,19 +829,22 @@ Marcos Carneiro e o fundador, nao a marca. Sua presenca visual segue regras:
 
 #### Workshop (gratuito — porta de entrada)
 - "O que ninguem te ensinou sobre o mercado de trabalho."
-- "92 milhoes de empregos vao desaparecer. E o seu?"
+- "92 milhoes de funcoes deslocadas, 170 milhoes criadas ate 2030 (WEF). De que lado voce vai estar?"
 - "Voce esta esperando ser reconhecido. O mercado esta esperando voce se posicionar."
-- "Toda quarta, ao vivo. Gratuito. Sem enrolacao."
+- "Toda quinta-feira, 8h30 (horario de Brasilia). Ao vivo. Gratuito. Sem enrolacao."
 
 #### MAPA PdV (programa completo)
 - "Voce nao precisa de mais um MBA. Precisa de um MAPA."
-- "40+ aulas. 12 meses. O metodo que faltava na sua carreira."
+- "12 meses. Encontros quinzenais ao vivo. O metodo que faltava na sua carreira."
 - "Do diagnostico a acao. Sem atalhos."
+- Oferta: "R$ 397 ou 12x de R$ 33,09. Garantia de 7 dias." (nao publicar quantidade de aulas/horas — nao confirmada)
 
-#### Mentoria (premium)
-- "Acompanhamento estrategico. Resultado real. Vagas limitadas."
-- "12 semanas na forja. Voce sai outro profissional."
-- "Para quem quer resultado, nao teoria."
+#### Mentoria
+*Retirada por enquanto (decisao do Marcos, 07/10/2026). Sem headlines ativas — nao divulgar.*
+
+#### Comunidade catolica (posicionamento de 07/10/2026)
+- "Comunidade catolica de inovacao e inteligencia artificial."
+- Usar a encíclica *Magnifica Humanitas* apenas com as citacoes literais da secao "Identidade catolica", com § e link
 
 ### 12.3 Headlines para empreendedores (novo publico)
 - "Trabalho e vocacao — de carteira assinada ou CNPJ."
@@ -779,7 +857,7 @@ Toda peca de marketing segue:
 
 | Etapa | Funcao | Exemplo |
 |-------|--------|---------|
-| **Provocacao** | Verdade que incomoda ou dado chocante | "92 milhoes de empregos vao desaparecer ate 2030." |
+| **Provocacao** | Verdade que incomoda ou dado com fonte | "Ate 2030, 92 milhoes de funcoes devem ser deslocadas e 170 milhoes criadas (WEF, *Future of Jobs 2025*)." |
 | **Autoidentificacao** | O publico se reconhece | "Voce envia curriculos e nao recebe resposta." |
 | **Iluminacao** | O caminho (nao o produto) | "O problema nao e falta de competencia. E falta de posicionamento." |
 | **Decisao** | CTA que desafia, nao que seduz | "Se voce esta pronto pra escalar, o primeiro passo e gratuito." |
@@ -803,7 +881,7 @@ Toda peca de marketing segue:
 
 ### 13.2 Regras visuais para qualquer peca
 
-1. **Fundo**: Sempre escuro (`#0F1A2E` ou `#132038`). NUNCA fundo branco
+1. **Fundo**: Sempre escuro (`--bg` `#1B2A4A` ou `--surface-1` `#1c2a4a`). NUNCA fundo branco
 2. **Titulo**: Sora Bold, branco ou ouro. Maximo 2 linhas
 3. **Texto de apoio**: Inter Regular, `gray-300`
 4. **Logo**: Sempre presente — canto inferior direito, versao icone
@@ -814,9 +892,9 @@ Toda peca de marketing segue:
 
 ### 13.3 Apresentacoes
 
-- Fundo: `#0F1A2E`
-- Texto principal: `#FFFFFF`
-- Destaques: Ouro `#D4A928`
+- Fundo: `--bg` `#1B2A4A`
+- Texto principal: `--white` `#FFFFFF`
+- Destaques: Ouro `--gold` `#c4993b`
 - Fonte titulo: Sora Bold 44pt
 - Fonte corpo: Inter Regular 20pt
 - Elemento recorrente: Linha fina horizontal em gold gradient (2px) como separador
@@ -856,7 +934,7 @@ Emprega+ (marca-mae)
 ### Regras de co-branding
 
 1. **PdV e sub-marca autonoma**: Tem identidade propria (ouro + dark), distinta da Emprega+ (verde)
-2. **Endorsement**: Usar "por Emprega+" ou logo Emprega+ menor em: footer, sobre nos, materiais institucionais
+2. **Endorsement (07/10/2026)**: assinatura "Profissional de Valor · uma iniciativa Emprega+" — so texto, com link para `https://www.empregamais.me/hub/` no digital. Usar em: footer, sobre nos, materiais institucionais. Substitui o antigo "por Emprega+"
 3. **Onde NAO co-brandar**: Posts de social media, CTAs, workshops, conteudo educativo — PdV brilha sozinha
 4. **As paletas NAO se misturam**: Verde Emprega+ nao aparece no universo visual PdV (e vice-versa)
 
@@ -879,15 +957,20 @@ Antes de publicar qualquer material visual:
 - [ ] Contraste acessivel (WCAG AA)?
 - [ ] Sem caixa alta em titulos ou paragrafos?
 - [ ] Gradiente usado com parcimonia (maximo 1 por secao)?
-- [ ] Virtudes implicitas (confronta um vicio, promove uma virtude)?
+- [ ] Virtudes presentes (confronta um vicio, promove uma virtude), com sobriedade?
+- [ ] Identidade catolica sobria: sem proselitismo, sem kitsch, sem sugerir endosso da Igreja?
+- [ ] Nenhum simbolo religioso como elemento grafico (pendente de decisao do Marcos)?
+- [ ] Citacao de documento da Igreja literal, com § e link oficial?
+- [ ] Sem escassez artificial ("vagas limitadas", contador) e sem numero sem fonte?
+- [ ] Dados do produto corretos (Workshop: quinta, 8h30, Brasilia; MAPA: R$ 397 ou 12x R$ 33,09, garantia de 7 dias; Mentoria fora)?
 - [ ] Conteudo reflete pelo menos 1 dos 3 pilares?
 - [ ] Trilha sonora classica/epica (se video)?
 - [ ] Marcos aparece como fundador (nao como a marca em si)?
 
 ---
 
-*Brand Book v2.4 — Profissional de Valor por Emprega+*
+*Brand Book v2.6 — Profissional de Valor · uma iniciativa Emprega+*
 *Forjando Vencedores.*
-*Criado em 2026-03-07. Atualizado em 2026-03-27 (posicionamento estrategico).*
+*Criado em 2026-03-07. Atualizado em 2026-03-27 (posicionamento estrategico) e em 2026-10-07 (comunidade catolica de inovacao e IA, cores dos tokens v2.5, funil e regras de verdade).*
 *Nascido da historia de Marcos Carneiro.*
 *Atualizar conforme a marca evolui.*

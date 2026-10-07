@@ -2,6 +2,10 @@
 
 > Guia de prompts para geracao de imagens com IA (Midjourney, DALL-E, Ideogram, Runway, Kling).
 > Todas as imagens devem refletir a estetica dark premium da marca.
+>
+> **Cores (07/10/2026):** valores alinhados aos tokens v2.5 (`brands/pdv/tokens/`) — fundo navy `--bg` `#1B2A4A`, ouro `--gold` `#c4993b` como unica cor de destaque, vermelho so para erro. Overlays usam a cor de `--bg` (`rgba(27, 42, 74, …)`) com as mesmas opacidades de antes.
+>
+> **Fe e imagem (07/10/2026):** a identidade catolica e declarada no texto (Brand Book, "Identidade catolica e Doutrina Social da Igreja"), mas simbolos religiosos como elemento grafico continuam fora por padrao — **pendente de decisao do Marcos**.
 
 ---
 
@@ -26,7 +30,7 @@ desaturated color palette, editorial photography style --ar 16:9 --style raw --v
 | Social stories | `--ar 9:16` | Reels, stories |
 | LinkedIn | `--ar 1200:627` ou `--ar 2:1` | Posts LinkedIn |
 | Thumbnail | `--ar 16:9` | YouTube, workshops |
-| Retrato | `--ar 3:4` | Depoimentos, sobre |
+| Retrato | `--ar 3:4` | Sobre, editorial (nao para depoimentos) |
 
 ---
 
@@ -105,7 +109,7 @@ shallow depth of field, film grain --ar 16:9 --style raw --v 6.1
 
 ### 2.3 RETRATO PROFISSIONAL
 
-**Uso:** Depoimentos, social proof, pagina "sobre", secao fundador
+**Uso:** Conteudo editorial, pagina "sobre", secao fundador. **Nunca** como rosto de depoimento ou prova social (regra de 07/10/2026 — depoimentos usam avatar de iniciais)
 
 #### Prompt: Profissional determinado (homem)
 ```
@@ -286,7 +290,7 @@ Aplicar em TODA imagem gerada:
 
 | Area | Cor | Saturacao |
 |------|-----|-----------|
-| **Shadows** | Amber (#C49A3C direction) | 15% |
+| **Shadows** | Amber (#c4993b / --gold direction) | 15% |
 | **Midtones** | Neutro | 0% |
 | **Highlights** | Cool blue-gray | 5% |
 
@@ -303,9 +307,9 @@ Aplicar em TODA imagem gerada:
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(8, 8, 10, 0.75) 0%,
-    rgba(8, 8, 10, 0.2) 40%,
-    rgba(8, 8, 10, 0.5) 100%
+    rgba(27, 42, 74, 0.75) 0%,
+    rgba(27, 42, 74, 0.2) 40%,
+    rgba(27, 42, 74, 0.5) 100%
   );
   pointer-events: none;
 }
@@ -319,9 +323,9 @@ Aplicar em TODA imagem gerada:
 
 ```
 Layout:
-- Fundo: #08080A solido
+- Fundo: #1B2A4A (--bg) solido
 - Texto principal: Sora Bold 64px, branco, centralizado
-- Palavra destaque: cor ouro #C49A3C
+- Palavra destaque: cor ouro #c4993b (--gold)
 - Barra inferior: 3px gold, 48px de largura
 - Logo: icone montanha, canto inferior direito, 32px, opacity 0.4
 - Handle: @profissionaldevalor, Inter 11px, gray-500, inferior esquerdo
@@ -332,8 +336,8 @@ Layout:
 
 ```
 Layout:
-- Fundo: #0E0E11 (surface-1)
-- Numero: Sora Bold 120px, ouro #C49A3C, centralizado superior
+- Fundo: #1c2a4a (--surface-1)
+- Numero: Sora Bold 120px, ouro #c4993b (--gold), centralizado superior
 - Contexto: Inter 500 20px, gray-200, abaixo do numero
 - Fonte: Inter 12px, gray-500, abaixo do contexto
 - Barra gold: 48px largura, 3px, entre numero e contexto
@@ -345,8 +349,8 @@ Layout:
 
 ```
 Layout:
-- Fundo: ouro #C49A3C solido
-- Titulo: Sora Bold 56px, #08080A (preto)
+- Fundo: ouro #c4993b (--gold) solido
+- Titulo: Sora Bold 56px, #1B2A4A (--bg, navy)
 - Subtitulo: Inter 16px, #3D2E0F (marrom escuro)
 - Logo: icone montanha escura, inferior direito, opacity 0.6
 - "Deslize →": Inter 11px, inferior esquerdo, #5C4518
@@ -357,7 +361,7 @@ Layout:
 
 ```
 Layout:
-- Fundo: #08080A
+- Fundo: #1B2A4A (--bg)
 - Numero do slide: Sora Bold 24px, ouro, superior esquerdo (ex: "01")
 - Titulo do ponto: Sora 600 28px, branco, abaixo do numero
 - Texto explicativo: Inter 400 18px, gray-300, abaixo do titulo
@@ -370,7 +374,7 @@ Layout:
 
 ```
 Layout:
-- Fundo: #08080A
+- Fundo: #1B2A4A (--bg)
 - Badge: "GRATUITO", badge-gold-solid, superior
 - Label: "WORKSHOP AO VIVO", Inter 600 12px, ouro, uppercase, 0.1em spacing
 - Titulo: Sora Bold 36px, branco, 2-3 linhas
@@ -380,6 +384,8 @@ Layout:
 ```
 
 ### 5.6 Instagram — Depoimento (1080x1080)
+
+> **Regra de 07/10/2026:** depoimento real usa avatar de iniciais. Foto so de pessoa real, com autorizacao — a confirmar com o Marcos caso a caso. Nunca foto de banco nem rosto gerado por IA.
 
 ```
 Layout:
@@ -396,7 +402,7 @@ Layout:
 
 ```
 Layout:
-- Fundo: #08080A
+- Fundo: #1B2A4A (--bg)
 - Layout split: esquerda texto (60%), direita imagem (40%) com overlay
 - Titulo: Sora Bold 36px, branco, ate 3 linhas
 - Subtitulo: Inter 400 16px, gray-300
@@ -411,7 +417,7 @@ Layout:
 Layout:
 - Fundo: foto (montanha/forja/retrato) com overlay escuro forte
 - Titulo: Sora Bold 48px, branco, maximo 2 linhas, sombra de texto
-- Palavra destaque: ouro #C49A3C
+- Palavra destaque: ouro #c4993b (--gold)
 - Badge numerico: circulo ouro com numero (ex: "EP. 12")
 - Rosto do Marcos: recortado, lado direito (se aplicavel)
 - Logo: icone, canto inferior esquerdo, pequeno
@@ -422,7 +428,7 @@ Layout:
 
 ```
 Layout:
-- Fundo: #08080A ou foto com overlay forte
+- Fundo: #1B2A4A (--bg) ou foto com overlay forte
 - Titulo: Sora Bold 48px, branco, centralizado, 2-3 linhas
 - Palavra destaque: ouro
 - CTA: badge-gold ou btn-gold na parte inferior
@@ -442,7 +448,9 @@ Layout:
 - Cores neon ou vibrantes no cenario
 - Mulheres ou homens em poses sensuais
 - IA com artefatos visiveis (6 dedos, fundos distorcidos)
-- Qualquer simbolo religioso explicito (cruzes, santos, igrejas)
+- Simbolos religiosos como elemento grafico (cruzes, santos, igrejas, imagens sacras) — fora por padrao, **pendente de decisao do Marcos**. A identidade catolica aparece no texto, nao na imagem
+- Estetica religiosa kitsch (raios de luz divina, aureolas, brilhos "celestiais")
+- Rostos gerados por IA ou fotos de banco usados como se fossem depoimentos reais
 - Imagens "motivacionais" genericas (punho cerrado, leao, aguia)
 
 ---
@@ -473,27 +481,27 @@ Toda foto usada em template precisa de overlay escuro para garantir legibilidade
 /* Overlay padrao (vertical) */
 background: linear-gradient(
   to bottom,
-  rgba(8, 8, 10, 0.75) 0%,
-  rgba(8, 8, 10, 0.15) 35%,
-  rgba(8, 8, 10, 0.15) 65%,
-  rgba(8, 8, 10, 0.75) 100%
+  rgba(27, 42, 74, 0.75) 0%,
+  rgba(27, 42, 74, 0.15) 35%,
+  rgba(27, 42, 74, 0.15) 65%,
+  rgba(27, 42, 74, 0.75) 100%
 );
 
 /* Overlay para split (esquerda-direita) */
 background: linear-gradient(
   to right,
-  rgba(8, 8, 10, 1) 0%,
-  rgba(8, 8, 10, 0.6) 30%,
-  rgba(8, 8, 10, 0.1) 100%
+  rgba(27, 42, 74, 1) 0%,
+  rgba(27, 42, 74, 0.6) 30%,
+  rgba(27, 42, 74, 0.1) 100%
 );
 
 /* Overlay bottom-heavy (texto embaixo) */
 background: linear-gradient(
   to top,
-  rgba(8, 8, 10, 0.9) 0%,
-  rgba(8, 8, 10, 0.5) 40%,
-  rgba(8, 8, 10, 0.1) 80%,
-  rgba(8, 8, 10, 0.3) 100%
+  rgba(27, 42, 74, 0.9) 0%,
+  rgba(27, 42, 74, 0.5) 40%,
+  rgba(27, 42, 74, 0.1) 80%,
+  rgba(27, 42, 74, 0.3) 100%
 );
 ```
 
@@ -523,12 +531,12 @@ Margem: 64px
 
 ```
 Split: 55% texto (esquerda) | 45% retrato (direita)
-Lado esquerdo: fundo #08080A solido
+Lado esquerdo: fundo #1B2A4A (--bg) solido
   Eyebrow: ouro, uppercase
   Titulo: Sora Bold 36px, branco, max 3 linhas
   Barra gold vertical: 3px larga, 48px alta, borda esquerda
 Lado direito: foto retrato com overlay left-to-right
-  Gradiente: rgba(8,8,10,1) 0% -> rgba(8,8,10,0.6) 30% -> rgba(8,8,10,0.1) 100%
+  Gradiente: rgba(27,42,74,1) 0% -> rgba(27,42,74,0.6) 30% -> rgba(27,42,74,0.1) 100%
 Logo: inferior direito sobre foto, opacity 0.4
 Margem: 48px (lado texto)
 ```
@@ -539,6 +547,8 @@ Margem: 48px (lado texto)
 
 ### 8.3 Feed — Depoimento com Foto (1080x1080)
 
+> **Regra de 07/10/2026:** so com foto real e autorizada da pessoa (a confirmar com o Marcos). Padrao: avatar de iniciais. Nunca foto de banco nem rosto gerado por IA.
+
 ```
 Foto: retrato da pessoa (full bleed, foco no rosto)
 Overlay: bottom-heavy forte
@@ -546,7 +556,7 @@ Aspas: """ Sora 120px, ouro, opacity 0.15, topo-esquerdo
 Citacao: Sora 300 22px, branco, italic, centralizada, max 4 linhas
 Text-shadow: 0 2px 12px rgba(0,0,0,0.6)
 Barra gold: 36px, 2px, centralizada abaixo da citacao
-Glass card (opcional): rgba(8,8,10,0.6) + blur 12px
+Glass card (opcional): rgba(27,42,74,0.6) + blur 12px
   Nome: Inter 600 14px, ouro
   Cargo: Inter 400 12px, gray-400
 Logo: inferior direito, opacity 0.4
@@ -618,12 +628,12 @@ SEM bordas, setas, emojis — minimalismo total
 
 ```
 Formato: ~2:1
-Split: 60% texto (esquerda, #08080A) | 40% foto (direita, com overlay)
+Split: 60% texto (esquerda, #1B2A4A (--bg)) | 40% foto (direita, com overlay)
 Esquerda:
   Eyebrow: ouro, uppercase
   Titulo: Sora Bold 32px, branco, max 3 linhas
   Body: Inter 400 14px, gray-300 (opcional)
-  Badge: produto (Workshop, MAPA, Mentoria) ou eixo
+  Badge: produto (Workshop, MAPA) ou eixo — Mentoria retirada em 07/10/2026
 Direita: foto com overlay left-blending
   Gold glow sutil na borda entre texto e foto
 Logo + "Forjando Vencedores.": inferior esquerdo
@@ -643,7 +653,7 @@ Badge: "GRATUITO", gold solid, texto escuro, topo
 Label: "WORKSHOP AO VIVO", Inter 600 12px, ouro, uppercase
 Titulo: Sora Bold 32px, branco, max 3 linhas
 Glass card (info do evento):
-  background: rgba(8,8,10,0.6), blur 16px
+  background: rgba(27,42,74,0.6), blur 16px
   border: 1px solid rgba(255,255,255,0.06), radius: 12px
   Dentro: "Quando" + "Onde" (label gray-400 + valor branco)
   Separador: 1px ouro entre itens
@@ -656,5 +666,6 @@ Margem: 56px
 
 ---
 
-*Image Prompts Guide v2.0 — Profissional de Valor*
+*Image Prompts Guide v2.1 — Profissional de Valor · uma iniciativa Emprega+*
+*Atualizado em 2026-10-07 (cores dos tokens v2.5, regra de fe e imagem, depoimentos).*
 *A beleza revela o transcendente.*

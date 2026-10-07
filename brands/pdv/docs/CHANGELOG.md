@@ -3,6 +3,49 @@
 Todas as mudancas notaveis neste design system serao documentadas aqui.
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
+## [2.6.0] - 2026-10-07
+
+### Changed — Documentação alinhada às decisões do Marcos de 07/10/2026
+
+Fonte: site em produção (`empregamais/emprega-mais-pdv`, PR #25, commit `1d34ca0`) e o
+`CLAUDE.md` daquele repo. Só documentação: nenhum token, componente ou template mudou.
+
+- **Posicionamento** (`BRAND-BOOK.md` §2–3): "Comunidade católica de inovação e inteligência
+  artificial." ICP: profissionais, gestores e empreendedores católicos que seguem a Doutrina
+  Social da Igreja. O centro é inovação, IA, formação humana e virtudes. Tagline "Forjando
+  Vencedores." mantida.
+- **Fé — regra substituída:** "catolicismo implícito, nunca símbolos religiosos" e "isso NUNCA
+  aparece com linguagem religiosa" deixam de valer. Nova seção "Identidade católica e Doutrina
+  Social da Igreja": identidade declarada no texto, tom sóbrio, sem proselitismo nem kitsch,
+  nada atribuído à Igreja/ao Papa fora dos textos oficiais, sem sugerir endosso, citações
+  literais com §. Símbolos religiosos como elemento gráfico seguem fora por padrão —
+  **pendente de decisão do Marcos**.
+- ***Magnifica Humanitas*** (Leão XIV, 15/05/2026) registrada como referência da comunidade,
+  com link oficial em vatican.va e só as três citações já usadas no site (§100, §104, §149),
+  copiadas literalmente.
+- **Framework moral** (vícios e virtudes): linguagem cristã de virtudes liberada, com
+  sobriedade. Correspondência da tabela com a lista clássica marcada como a confirmar.
+- **Cores no texto:** tabelas e regras do BRAND-BOOK, SOCIAL-MEDIA-GUIDE, IMAGE-PROMPTS,
+  MOTION-GUIDE e DESIGN-SYSTEM passam a citar os tokens v2.5 (nome + hex): fundo `--bg`
+  `#1B2A4A`, superfícies `#1c2a4a`→`#36508f`, ouro `--gold` `#c4993b`, `--gold-light`
+  `#d4ae54`, `--gold-dark` `#a07b2a`. Saem do texto os valores pré-v2.5 (`#0F1A2E`,
+  `#132038`, `#D4A928`, `#08080A`, `#0E0E11`). Overlays usam a cor de `--bg` com as mesmas
+  opacidades. Vermelho só para erro.
+- **Produtos/funil:** Workshop gratuito toda quinta-feira, 8h30 (horário de Brasília), ao
+  vivo; MAPA PdV R$ 397 ou 12x R$ 33,09, garantia de 7 dias, sem número de aulas; Mentoria
+  retirada (headlines, linha de produto, badge e dress code ajustados).
+- **Regras de verdade:** sem "vagas limitadas"/contador, sem "1.000+" ou números sem fonte,
+  dado do WEF sempre com os dois lados (92 mi deslocadas, 170 mi criadas até 2030), sem
+  promessa de resultado, depoimentos com avatar de iniciais.
+- **Biografia:** sem o nome da antiga confecção e sem idades.
+- **Endosso:** "Profissional de Valor · uma iniciativa Emprega+" (substitui "por Emprega+").
+
+### Notes — pendências
+- Símbolos religiosos como elemento gráfico: decisão do Marcos.
+- Templates de e-mail (`email-templates/`, `templates/email/`) ainda na paleta pré-v2.5;
+  `DESIGN-SYSTEM.md` documenta o alvo.
+- Resultados da tabela "Provas de resultado" e faixa etária do ICP: a confirmar com o Marcos.
+
 ## [2.5.0] - 2026-05-23
 
 ### Changed — Sinergia com ecossistema Emprega+

@@ -5,6 +5,17 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Changed — Brand Book do Profissional de Valor alinhado às decisões de 07/10
+
+`brands/pdv/docs/` (BRAND-BOOK, SOCIAL-MEDIA-GUIDE, IMAGE-PROMPTS, MOTION-GUIDE,
+DESIGN-SYSTEM) passa a refletir o que já está no site em produção
+(`empregamais/emprega-mais-pdv`, #25): comunidade católica de inovação e inteligência
+artificial, identidade católica explícita e sóbria (substitui a regra de fé implícita),
+*Magnifica Humanitas* como referência, cores dos tokens v2.5 no texto, Workshop às
+quintas 8h30, MAPA PdV com preço e garantia de 7 dias, Mentoria retirada e regras de
+verdade (sem escassez nem número sem fonte). Detalhes em `brands/pdv/docs/CHANGELOG.md`
+(2.6.0). Não altera componente nem token.
+
 ## [2.8.1] - 2026-10-07
 
 ### Changed — página do ecossistema Emprega+ pronta para o evento (07/10/2026)

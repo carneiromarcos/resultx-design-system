@@ -324,12 +324,12 @@ A navbar fica mais opaca e ganha borda inferior ao rolar.
 
 ```css
 .nav {
-  background: rgba(8, 8, 10, 0.6);
+  background: rgba(27, 42, 74, 0.6); /* --bg #1B2A4A (tokens v2.5) */
   border-bottom-color: transparent;
   transition: background 0.3s ease-out, border-color 0.3s ease-out;
 }
 .nav.scrolled {
-  background: rgba(8, 8, 10, 0.92);
+  background: rgba(27, 42, 74, 0.92); /* --bg #1B2A4A (tokens v2.5) */
   border-bottom-color: rgba(255, 255, 255, 0.06);
 }
 ```
@@ -371,7 +371,9 @@ A logo entra com scale + fade, os dois triangulos aparecem sequencialmente.
 
 ### 6.2 Counter Animado (numeros de impacto)
 
-Numeros como "92M" ou "1.000+" contam de 0 ate o valor final.
+Numeros como "92M" e "170M" (dado do WEF, sempre com os dois lados e a fonte) contam de 0 ate o valor final.
+
+> **Regra de 07/10/2026:** so animar numero com fonte. Nada de contagem de participantes, "1.000+" ou "profissionais impactados" ate haver fonte interna e data. Nunca usar contador para criar escassez (prazo, vagas).
 
 ```javascript
 // Duracao: 2 segundos
@@ -389,7 +391,9 @@ function countUp(element, target, duration = 2000) {
 }
 ```
 
-### 6.3 Gold Shimmer (badge "Novo" ou "Vagas limitadas")
+### 6.3 Gold Shimmer (badge "Novo" ou "Gratuito")
+
+> Nunca em badge de escassez ("Vagas limitadas", "Ultimas vagas") — regra de 07/10/2026.
 
 Um brilho dourado que percorre o badge de tempos em tempos.
 
@@ -530,5 +534,6 @@ function Reveal({ children, className, delay = 0 }) {
 
 ---
 
-*Motion Guide v1.0 — Profissional de Valor*
+*Motion Guide v1.1 — Profissional de Valor · uma iniciativa Emprega+*
+*Atualizado em 2026-10-07 (fundo navy dos tokens v2.5; sem escassez e sem numero sem fonte).*
 *Movimento e vida. Vida controlada.*

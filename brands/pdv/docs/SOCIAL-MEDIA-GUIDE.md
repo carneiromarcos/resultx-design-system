@@ -10,15 +10,17 @@
 
 Toda peca de social media deve respeitar:
 
-1. **Fundo**: Sempre escuro (`#08080A` ou `#0E0E11`). NUNCA fundo branco
+1. **Fundo**: Sempre escuro (`--bg` `#1B2A4A` ou `--surface-1` `#1c2a4a` — tokens v2.5). NUNCA fundo branco
 2. **Titulo**: Sora Bold, branco ou ouro. Maximo 2 linhas
 3. **Texto de apoio**: Inter Regular, `gray-300` (`#A0A0AC`)
-4. **Ouro**: Unica cor de destaque (`#C49A3C`). Maximo 1 gradiente por peca
+4. **Ouro**: Unica cor de destaque (`--gold` `#c4993b`). Maximo 1 gradiente por peca. Vermelho so para erro
 5. **Logo**: Sempre presente — canto inferior direito, versao icone (monograma P/V)
 6. **Margem interna**: Minimo 48px em todos os lados
 7. **Fotografia**: Se usar foto, sempre com overlay escuro
 8. **Maximo 3 cores por peca**: Fundo escuro + ouro + branco
 9. **Contraste**: WCAG AA (4.5:1 texto, 3:1 elementos grandes)
+10. **Identidade catolica sobria** (regra de 07/10/2026): pode declarar a identidade catolica e citar a Doutrina Social da Igreja; sem proselitismo, sem kitsch, sem sugerir endosso da Igreja. Simbolos religiosos como elemento grafico: fora por padrao, **pendente de decisao do Marcos**. Ver Brand Book, "Identidade catolica e Doutrina Social da Igreja"
+11. **Verdade**: sem escassez artificial ("vagas limitadas", contador), sem numero sem fonte, sem promessa de resultado
 
 ---
 
@@ -54,7 +56,7 @@ Toda peca de social media deve respeitar:
 | **Layout** | Numero grande em ouro centralizado + contexto abaixo |
 | **Elementos** | Numero (Sora Bold 72-96px ouro) + frase explicativa + fonte do dado + logo |
 | **Regra** | Sempre citar a fonte. Nunca inventar dados |
-| **Exemplo** | "92 milhoes" em ouro + "de empregos vao desaparecer ate 2030." + "Fonte: WEF" |
+| **Exemplo** | "92 milhoes" + "170 milhoes" em ouro + "funcoes deslocadas e criadas ate 2030." + "Fonte: Forum Economico Mundial, Future of Jobs 2025". Sempre os dois lados do dado |
 | **Pilar** | Pilar 3 (Tecnicas/IA) |
 
 ### 3.3 Dica pratica
@@ -71,10 +73,10 @@ Toda peca de social media deve respeitar:
 
 | Aspecto | Diretriz |
 |---------|----------|
-| **Layout** | Foto com overlay escuro + aspas |
-| **Elementos** | Glass card + retrato profissional + nome em ouro + cargo em gray-300 |
-| **Regra** | Depoimento real. Nunca inventar. Foto tratada (dessaturada, contraste alto) |
-| **Exemplo** | Patricia Andrade — "Em 22 dias, consegui o maior salario da minha vida." |
+| **Layout** | Glass card + aspas |
+| **Elementos** | Glass card + avatar de iniciais + nome em ouro + cargo em gray-300 |
+| **Regra** | Depoimento real e autorizado. Nunca inventar. Avatar de iniciais — nunca foto de banco nem rosto gerado por IA (regra de 07/10/2026). Sem promessa de resultado (prazo, salario) |
+| **Exemplo** | "Depois do workshop, entendi que o problema nao era meu curriculo — era como eu comunicava meu valor." (depoimento em uso no site) |
 | **Pilar** | Prova social |
 
 ### 3.5 Carrossel educativo
@@ -93,8 +95,8 @@ Toda peca de social media deve respeitar:
 |---------|----------|
 | **Layout** | Data/hora em destaque + badge "Gratuito" |
 | **Elementos** | Gold bar + monograma P/V sutil + dados do evento |
-| **Regra** | Sempre incluir: dia, hora, "ao vivo", "gratuito", link ou QR |
-| **Exemplo** | "Quarta, 20h. Ao vivo. Gratuito. O que ninguem te ensinou sobre o mercado." |
+| **Regra** | Sempre incluir: dia, hora (com fuso), "ao vivo", "gratuito", link ou QR. Sem contador e sem "vagas limitadas" (nao ha limite de vagas informado) |
+| **Exemplo** | "Quinta-feira, 8h30 (horario de Brasilia). Ao vivo. Gratuito. O que ninguem te ensinou sobre o mercado." |
 | **Pilar** | Porta de entrada |
 
 ### 3.7 Confronto
@@ -115,7 +117,7 @@ Toda peca de marketing segue esta sequencia:
 
 | Etapa | Funcao | Exemplo |
 |-------|--------|---------|
-| **Provocacao** | Verdade que incomoda ou dado chocante | "92 milhoes de empregos vao desaparecer ate 2030." |
+| **Provocacao** | Verdade que incomoda ou dado com fonte | "Ate 2030, 92 milhoes de funcoes deslocadas e 170 milhoes criadas (WEF)." |
 | **Autoidentificacao** | O publico se reconhece na dor | "Voce envia curriculos e nao recebe resposta." |
 | **Iluminacao** | O caminho (nao o produto) | "O problema nao e falta de competencia. E falta de posicionamento." |
 | **Decisao** | CTA que desafia, nao que seduz | "Se voce esta pronto pra escalar, o primeiro passo e gratuito." |
@@ -130,9 +132,9 @@ Os eixos definem os temas de conteudo. Cada eixo tem tom e abordagem proprios:
 |------|------|-----|---------|
 | **Empregabilidade** | Recolocacao, entrevistas, curriculo, LinkedIn | Pratico, direto | Pilar 2 + 3 |
 | **Crescimento** | Promocao, lideranca, gestao, empreendedorismo | Desafiador, estrategico | Pilar 1 + 2 |
-| **Virtudes** | Carater, etica, integridade, proposito | Profundo, reflexivo | Pilar 1 |
+| **Virtudes** | Carater, etica, integridade, proposito, Doutrina Social da Igreja | Profundo, reflexivo, sobrio | Pilar 1 |
 | **Hype** | Tendencias, dados de mercado, noticias relevantes | Provocador, atual | Pilar 3 |
-| **IA** | Ferramentas, aplicacoes praticas, impacto no mercado | Tecnico, acessivel | Pilar 3 |
+| **IA** | Ferramentas, aplicacoes praticas, impacto no mercado, IA a servico da pessoa (*Magnifica Humanitas*) | Tecnico, acessivel | Pilar 3 |
 
 **Regra:** Virtudes e IA devem permear TODOS os eixos, nao apenas seus eixos dedicados. Um post de Empregabilidade deve incluir virtudes (posicionar-se com verdade) e IA (usar IA para preparar entrevista).
 
@@ -188,13 +190,16 @@ Antes de publicar qualquer peca:
 - [ ] CTA desafiador e digno (maximo 2 por peca)?
 - [ ] Imagens tratadas (overlay, dessaturacao, contraste)?
 - [ ] Nenhuma imagem sensual, ostensiva ou generica?
-- [ ] Virtudes implicitas (confronta um vicio, promove uma virtude)?
+- [ ] Virtudes presentes (confronta um vicio, promove uma virtude), com sobriedade?
+- [ ] Identidade catolica sobria, sem simbolo religioso como elemento grafico (pendente de decisao do Marcos)?
+- [ ] Citacao de documento da Igreja literal, com § e link oficial?
+- [ ] Sem escassez artificial e sem numero sem fonte?
 - [ ] Conteudo reflete pelo menos 1 dos 3 pilares?
 - [ ] IA presente como ferramenta quando aplicavel?
 - [ ] Fonte citada para dados estatisticos?
 
 ---
 
-*Social Media Guide v1.0 — Profissional de Valor por Emprega+*
-*Complemento ao Brand Book v2.4*
-*Criado em 2026-03-27.*
+*Social Media Guide v1.1 — Profissional de Valor · uma iniciativa Emprega+*
+*Complemento ao Brand Book v2.6*
+*Criado em 2026-03-27. Atualizado em 2026-10-07 (comunidade catolica, tokens v2.5, Workshop as quintas, regras de verdade).*
