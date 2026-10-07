@@ -81,8 +81,26 @@
     .emp-logo { display: block; flex: none; inline-size: auto; block-size: var(--emp-logo-h, 24px); }
     [data-theme="dark"] .emp-logo-light,
     :root:not([data-theme="dark"]) .emp-logo-dark { display: none; }
-    .header-float-brand-tag { text-transform: uppercase; letter-spacing: 0.12em; }
-    .header-float-brand .brand-text { display: grid; justify-items: start; gap: 5px; }
+
+    /* ── Header na proporção de www.empregamais.me ───────────────────────── */
+    /* Medida no Navbar.tsx do site: logomarca de 25 px de altura, links de
+       16 px (text-base, medium) com 32 px entre eles, barra de ~76 px (16 px
+       de respiro + alvo de 44 px). Logo ≈ 1,56× o corpo do link e ≈ 1/3 da
+       barra; ela domina e não há lema competindo (o lema fica no rodapé).
+       Só a página muda: components/header-float.css segue intacto. */
+    .header-float { --emp-header-logo: 25px; --emp-header-link: 1rem; }
+    .header-float .emp-logo { --emp-logo-h: var(--emp-header-logo); }
+    .header-float .header-float-brand { min-block-size: 44px; }
+    @media (min-width: 1024px) {
+      .header-float .header-float-bar { min-block-size: calc(2 * var(--space-4) + 44px); }
+      /* 8 px de gap + 12 px de respiro de cada lado = 32 px entre os textos. */
+      .header-float .header-float-links { gap: var(--space-2); }
+      .header-float .header-float-links a { font-size: var(--emp-header-link); }
+    }
+    /* Gaveta (<1024 px): barra de 56 px do DS, logo a ~1/3 dela + folga. */
+    @media (max-width: 1023.98px) {
+      .header-float { --emp-header-logo: 20px; }
+    }
 
     /* ── Hero ────────────────────────────────────────────────────────────── */
     .hero { position: relative; overflow-x: clip; padding-block: clamp(var(--space-12), 6vw, var(--space-20)) clamp(var(--space-12), 5vw, var(--space-16)); isolation: isolate; }
@@ -203,13 +221,51 @@
     .cta-phone a:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); border-radius: var(--radius-sm); }
 
     /* ── Rodapé ──────────────────────────────────────────────────────────── */
-    .site-footer { padding-block: var(--space-10) var(--space-12); border-top: 1px solid var(--border-default); }
-    .footer-grid { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-6) var(--space-10); }
-    .footer-brand { display: grid; gap: var(--space-2); }
-    .footer-brand a { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--text-primary); text-decoration: none; border-radius: var(--radius-md); }
-    .footer-brand a:focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: var(--focus-ring-offset); }
-    .footer-motto { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-3); margin: 0; padding: 0; list-style: none; }
-    .footer-sign { margin: 0; color: var(--text-primary); font: var(--font-semibold) var(--text-xs)/1.6 var(--font-heading); letter-spacing: 0.16em; text-transform: uppercase; }
+    /* Espelho do rodapé publicado em www.empregamais.me (07/10): navy da marca
+       nos dois temas, títulos em mono dourado (ouro = prestígio, ADR-0002),
+       links a 70 % do branco, selos dos aceleradores em placas brancas.
+       Branco = --emp-light-bg (pigmento da marca); nenhum hex aqui (ADR-0001). */
+    .site-footer {
+      --ft-ink: var(--emp-light-bg);
+      --ft-ink-soft: color-mix(in srgb, var(--emp-light-bg) 70%, transparent);
+      --ft-ink-faint: color-mix(in srgb, var(--emp-light-bg) 50%, transparent);
+      --ft-rule: color-mix(in srgb, var(--emp-light-bg) 10%, transparent);
+      --ft-gold: var(--emp-gold-light);
+      position: relative; overflow: hidden; isolation: isolate;
+      padding-block-start: var(--space-16);
+      background: var(--emp-navy); color: var(--ft-ink);
+    }
+    .site-footer::before { content: ''; position: absolute; inset-block-start: -256px; inset-inline-start: -160px; z-index: -1; inline-size: 560px; block-size: 560px; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--emp-gold) 16%, transparent), transparent 70%); pointer-events: none; }
+    .site-footer ul { margin: 0; padding: 0; list-style: none; }
+    .site-footer a { color: var(--ft-ink-soft); text-decoration: none; transition: color var(--transition-fast), opacity var(--transition-fast), border-color var(--transition-fast); }
+    .site-footer a:hover { color: var(--ft-ink); }
+    .site-footer a:focus-visible { outline: 2px solid var(--ft-ink); outline-offset: 3px; border-radius: var(--radius-sm); }
+    .footer-grid { display: grid; grid-template-columns: minmax(0, 3fr) repeat(3, minmax(0, 2fr)) minmax(0, 3fr); gap: var(--space-8); }
+    .footer-brand > a { display: inline-flex; align-items: center; min-block-size: 44px; }
+    .footer-brand .emp-logo { --emp-logo-h: 20px; }
+    .footer-about { max-inline-size: 320px; margin: var(--space-4) 0 0; color: var(--ft-ink-soft); font-size: var(--text-sm); line-height: 1.43; }
+    .footer-label, .footer-col h2 { margin: 0 0 var(--space-3); font: var(--font-semibold) 11px/1.5 var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; }
+    .footer-label { margin-block-start: var(--space-8); color: var(--ft-ink-faint); }
+    .footer-col h2 { margin-block-end: var(--space-4); color: var(--ft-gold); }
+    .footer-partners { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+    .footer-partners a { display: flex; align-items: center; block-size: var(--space-12); padding-inline: var(--space-3); border-radius: var(--radius-md); background: var(--ft-ink); }
+    .footer-partners a:hover { opacity: 0.9; }
+    .footer-partners img { display: block; inline-size: auto; block-size: var(--space-8); max-inline-size: 100%; }
+    .footer-col li a { display: inline-flex; align-items: center; gap: var(--space-2); min-block-size: 44px; max-inline-size: 100%; font-size: var(--text-sm); overflow-wrap: anywhere; }
+    .footer-col .icon { flex: none; font-size: 14px; color: var(--ft-gold); }
+    .footer-bottom { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); margin-block-start: var(--space-12); padding-block: var(--space-6); border-top: 1px solid var(--ft-rule); }
+    .footer-copy { margin: 0; color: var(--ft-ink-faint); font-size: var(--text-xs); }
+    .footer-social { display: flex; gap: var(--space-2); }
+    .footer-social a { display: inline-grid; place-items: center; inline-size: 44px; block-size: 44px; border: 1px solid var(--ft-rule); border-radius: var(--radius-md); }
+    .footer-social a:hover { border-color: color-mix(in srgb, var(--emp-light-bg) 30%, transparent); }
+    .footer-social .icon { font-size: 16px; }
+    @media (max-width: 1023.98px) {
+      .footer-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 767.98px) {
+      .footer-grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-10); }
+    }
 
     /* ── Responsivo ──────────────────────────────────────────────────────── */
     @media (max-width: 1199.98px) {
@@ -220,12 +276,6 @@
     @media (max-width: 1023.98px) {
       .product-grid { grid-template-columns: minmax(0, 1fr); max-inline-size: 640px; margin-inline: auto; }
       .product-grid > li, .product-grid > li:nth-child(n + 4) { grid-column: auto; }
-    }
-    /* O lema em caixa alta é mais largo que o selo padrão do DS (que só sai
-       abaixo de 360 px): até 400 px ele encostava nos botões. Sai da pílula;
-       continua no nome acessível da marca e no rodapé. */
-    @media (max-width: 399.98px) {
-      .header-float .header-float-brand-tag { display: none; }
     }
     @media (max-width: 639.98px) {
       .hero-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "copy" "ai" "aside"; }
@@ -241,7 +291,6 @@
       .benefit-list { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
       .benefit-list li { padding: var(--space-4) 0; }
       .benefit-list li + li { border-inline-start: 0; border-top: 1px solid var(--border-subtle); }
-      .footer-grid { flex-direction: column; align-items: flex-start; }
     }
     @media (prefers-reduced-motion: reduce) {
       .product, .product-cta .icon, .hero-link .icon { transition: none; }
@@ -264,6 +313,10 @@
     <symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></symbol>
     <symbol id="i-stethoscope" viewBox="0 0 24 24"><path d="M11 2v2"/><path d="M5 2v2"/><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/></symbol>
     <symbol id="i-message" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-message-circle" viewBox="0 0 24 24"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><path d="M17.5 6.5h.01"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
@@ -275,8 +328,8 @@
 
   <header class="header-float" data-header-float>
     <div class="header-float-bar">
-      <a class="header-float-brand" href="#inicio" aria-label="emprega+, pessoas movem o amanhã — início">
-        <span class="brand-text"><img class="emp-logo emp-logo-light" src="../../assets/logo/emprega-plus-navy-600.png" alt="Emprega+" width="132" height="24"><img class="emp-logo emp-logo-dark" src="../../assets/logo/emprega-plus-white.png" alt="Emprega+" width="125" height="24"><span class="header-float-brand-tag">Pessoas movem o amanhã</span></span>
+      <a class="header-float-brand" href="#inicio" aria-label="Emprega+, voltar ao início">
+        <img class="emp-logo emp-logo-light" src="../../assets/logo/emprega-plus-navy-600.png" alt="Emprega+" width="138" height="25"><img class="emp-logo emp-logo-dark" src="../../assets/logo/emprega-plus-white.png" alt="Emprega+" width="130" height="25">
       </a>
       <nav class="header-float-links" aria-label="Soluções">
         <a href="#emprega-mais">Emprega+</a>
@@ -422,16 +475,58 @@
   <footer class="site-footer">
     <div class="wrap footer-grid">
       <div class="footer-brand">
-        <a href="#inicio" aria-label="emprega+, voltar ao início"><img class="emp-logo emp-logo-light" src="../../assets/logo/emprega-plus-navy-600.png" alt="Emprega+" width="132" height="24"><img class="emp-logo emp-logo-dark" src="../../assets/logo/emprega-plus-white.png" alt="Emprega+" width="125" height="24"></a>
-        <span class="eyebrow">Pessoas movem o amanhã</span>
+        <a href="https://www.empregamais.me/" target="_blank" rel="noopener" aria-label="Emprega+, site oficial"><img class="emp-logo" src="../../assets/logo/emprega-plus-white.png" alt="Emprega+" width="104" height="20"></a>
+        <p class="footer-about">Tecnologia que conecta políticas públicas, setores produtivos e pessoas ao trabalho.</p>
+        <p class="footer-label" id="ft-acelerada">Acelerada por</p>
+        <ul class="footer-partners" aria-labelledby="ft-acelerada">
+          <li><a href="https://www.sct.ce.gov.br/corredoresdigitais/" target="_blank" rel="noopener" title="Hub de inovação do Governo do Ceará"><img src="../../assets/partners/corredores-digitais.png" alt="Corredores Digitais" width="57" height="32" loading="lazy"></a></li>
+          <li><a href="https://unifor.br/web/pesquisa-inovacao/hub" target="_blank" rel="noopener" title="Hub de inovação da Unifor"><img src="../../assets/partners/unifor-hub.png" alt="Unifor Hub · Universidade de Fortaleza" width="214" height="32" loading="lazy"></a></li>
+        </ul>
       </div>
-      <ul class="footer-motto eyebrow" aria-label="Pilares">
-        <li>Empregabilidade</li><li class="plus" aria-hidden="true">+</li>
-        <li>Educação</li><li class="plus" aria-hidden="true">+</li>
-        <li>Tecnologia</li><li class="plus" aria-hidden="true">+</li>
-        <li>Impacto social</li>
+      <nav class="footer-col" aria-labelledby="ft-solucoes">
+        <h2 id="ft-solucoes">Soluções</h2>
+        <ul>
+          <li><a href="https://www.empregamais.me/gov" target="_blank" rel="noopener">Governos</a></li>
+          <li><a href="https://www.empregamais.me/editais" target="_blank" rel="noopener">Gestor de Editais</a></li>
+          <li><a href="https://www.empregamais.me/empresa" target="_blank" rel="noopener">Gestão de Pessoas</a></li>
+          <li><a href="https://electia.empregamais.me/" target="_blank" rel="noopener">Electia</a></li>
+          <li><a href="https://www.empregamais.me/saude" target="_blank" rel="noopener">Saúde</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-labelledby="ft-licenciamento">
+        <h2 id="ft-licenciamento">Licenciamento</h2>
+        <ul>
+          <li><a href="https://www.empregamais.me/#criar-portal" target="_blank" rel="noopener">Quero criar meu portal</a></li>
+          <li><a href="https://www.empregamais.me/#modelo" target="_blank" rel="noopener">Como funciona o modelo</a></li>
+          <li><a href="https://www.empregamais.me/#programa" target="_blank" rel="noopener">O que o licenciado recebe</a></li>
+          <li><a href="https://www.empregamais.me/#receitas" target="_blank" rel="noopener">Fontes de receita</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-labelledby="ft-institucional">
+        <h2 id="ft-institucional">Institucional</h2>
+        <ul>
+          <li><a href="https://www.empregamais.me/sobre" target="_blank" rel="noopener">Sobre nós</a></li>
+          <li><a href="https://www.empregamais.me/blog" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="https://www.empregamais.me/privacidade" target="_blank" rel="noopener">Política de Privacidade</a></li>
+          <li><a href="https://www.empregamais.me/termos" target="_blank" rel="noopener">Termos de uso</a></li>
+          <li><a href="https://www.empregamais.me/diversidade" target="_blank" rel="noopener">Diversidade e Inclusão</a></li>
+          <li><a href="https://www.empregamais.me/anticorrupcao" target="_blank" rel="noopener">Combate ao Suborno e à Corrupção</a></li>
+        </ul>
+      </nav>
+      <div class="footer-col">
+        <h2 id="ft-contato">Contato</h2>
+        <ul aria-labelledby="ft-contato">
+          <li><a href="mailto:contato@empregamais.me"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>contato@empregamais.me</a></li>
+          <li><a href="https://wa.me/5511976947557" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="#i-message-circle"/></svg>(11) 97694-7557</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <p class="footer-copy">© 2026 Emprega+. Todos os direitos reservados.</p>
+      <ul class="footer-social" aria-label="Redes sociais">
+        <li><a href="https://www.linkedin.com/company/empregaxmais/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg></a></li>
+        <li><a href="https://www.instagram.com/empregamais.me/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="icon" aria-hidden="true"><use href="#i-instagram"/></svg></a></li>
       </ul>
-      <p class="footer-sign">Juntos por mais oportunidades</p>
     </div>
   </footer>
 
