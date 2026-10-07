@@ -1,23 +1,28 @@
-# PDV Design System — Dark Fintech Premium
+# PDV Design System — Dark Premium (navy + ouro)
 
-Single source of truth: `client/src/index.css` (@theme inline)
+Single source of truth: `client/src/index.css` no site (`empregamais/emprega-mais-pdv`) — hex vivem só em `:root` (`--pdv-*`) e os componentes usam as utilidades (`bg-background`, `text-brand-dark`…). Os valores espelham os tokens da marca em `brands/pdv/tokens/` (v2.5).
 
-## Brand Colors (v2.2 — Gold)
+> **Atualizado em 2026-10-07:** paleta da v2.5 aplicada no site (PR #25 do `emprega-mais-pdv`). Fundo navy `#1B2A4A` (canônico), ouro `#c4993b` como ÚNICA cor de destaque, vermelho só para erro. `theme-color`/manifest = `#1B2A4A`. A paleta quase preta anterior (v2.2) está aposentada.
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `brand-dark` | `#C49A3C` (hsl 41 54% 50%) | Primary — CTAs, links, accents |
-| `brand-light` | `#D4AD55` (hsl 42 60% 58%) | Secondary — gradients, highlights |
-| `brand-soft` | hsl(240 8% 5%) | Soft background for elevated areas |
+## Brand Colors (v2.5 — Gold)
+
+| Token (site) | Token (marca) | Value | Usage |
+|--------------|---------------|-------|-------|
+| `brand-dark` | `--gold` / `--pdv-gold` | `#c4993b` | Primary — CTAs, links, accents |
+| `brand-light` | `--gold-light` / `--pdv-gold-light` | `#d4ae54` | Secondary — gradients, highlights |
+| `brand-soft` | `--surface-1` / `--pdv-surface-1` | `#1c2a4a` | Soft background for elevated areas |
+| `primary-border` | `--gold-dark` / `--pdv-gold-dark` | `#a07b2a` | Primary button border |
+| `destructive` | `--error` / `--pdv-error` | `#B83A3A` | Só erro / destructive. Nunca urgência ou escassez |
 
 ## Background Scale (progressive ladder)
 
-| Token | HSL | Hex | Usage |
-|-------|-----|-----|-------|
-| `background` | 240 11% 4% | `#08080A` | Deepest — page background |
-| `surface-1` | 240 10% 6% | `#0E0E11` | Sections, alternating BG |
-| `surface-2` | 240 7% 8% | `#131316` | Cards (= `card`) |
-| `surface-3` | 240 8% 12% | `#1C1C21` | Hover states |
+| Token (site) | Token (marca) | Hex | Usage |
+|--------------|---------------|-----|-------|
+| `background` | `--bg` / `--pdv-bg` | `#1B2A4A` | Page background (navy do ecossistema Emprega+) |
+| `surface-1` | `--surface-1` / `--pdv-surface-1` | `#1c2a4a` | Sections, alternating BG |
+| `surface-2` / `card` | `--surface-2` / `--pdv-surface-2` | `#243661` | Cards |
+| `surface-3` / `muted` / `border` | `--surface-3` / `--pdv-surface-3` | `#2d4378` | Hover states, borders |
+| — / `border-hover` | `--surface-4` / `--pdv-surface-4` | `#36508f` | Active borders, inputs |
 
 ## Border Tokens
 
@@ -33,9 +38,9 @@ Single source of truth: `client/src/index.css` (@theme inline)
 ## Glassmorphism
 
 ### CSS Variables
-- `--glass-bg`: `hsl(220 20% 10% / 0.6)`
-- `--glass-border`: `hsl(0 0% 100% / 0.08)`
-- `--glass-border-hover`: `hsl(0 0% 100% / 0.15)`
+- `--glass-bg`: `rgb(36 54 97 / 0.6)` (surface-2 a 60%)
+- `--glass-border`: `rgb(255 255 255 / 0.1)`
+- `--glass-border-hover`: `rgb(255 255 255 / 0.18)`
 - `--glass-blur`: `16px`
 
 ### Utility Classes
@@ -103,10 +108,10 @@ Single source of truth: `client/src/index.css` (@theme inline)
 | `ContextSection` | bg: `default` / `surface` | Text blocks |
 | `FeatureGrid` | columns: 2/3, cardVariant: `default`/`glass` | Feature cards |
 | `AudienceSection` | `checklist` / `for-not-for` | Target audience |
-| `TestimonialSection` | `chat-bubbles` / `cards` | Social proof |
+| `TestimonialSection` | `chat-bubbles` / `cards` | Social proof — avatar de iniciais (`InitialsAvatar`), nunca foto de banco nem rosto de IA |
 | `PricingSection` | Glass card + gradient bar | Pricing |
 | `BonusGrid` | columns: 2/3/4 | Bonus items |
-| `GuaranteeSection` | — | 7-day guarantee |
+| `GuaranteeSection` | — | Garantia de 7 dias (MAPA PdV) |
 | `AuthoritySection` | — | Photo + bio layout |
 | `CtaSection` | — | Final CTA with glow |
 
@@ -124,17 +129,21 @@ Templates HTML compatíveis com Brevo, Gmail, Apple Mail, Outlook. Dark-first, 6
 
 ### Email Color Tokens
 
-| Token | Hex | Uso |
-|-------|-----|-----|
-| Background | `#08080A` | Body e outer wrapper |
-| Surface 1 | `#0E0E11` | Cards de topico, highlight blocks |
-| Surface 2 | `#131316` | Product card, glass card |
-| Border | `#26262D` | Divisores, bordas de cards |
-| Gold Primary | `#C49A3C` | CTA button, links, labels, accents |
-| Gold Light | `#D4AD55` | Hover state, gradient accent bar |
-| Text Primary | `#FFFFFF` | Body copy, headings |
-| Text Muted | `#8A8A96` | Subtitles, descriptions, footer links |
-| Text Subtle | `#505058` | Legal text, copyright |
+> **Migração pendente:** os templates HTML em `brands/pdv/email-templates/` e `brands/pdv/templates/email/` ainda usam a paleta anterior à v2.5 (fundo quase preto e ouro `#C49A3C`). A tabela abaixo é o alvo, alinhado aos tokens v2.5; migrar os templates é tarefa separada (a confirmar com o Marcos). Até lá, vale a regra: e-mail novo usa os valores desta tabela.
+
+| Token | Token (marca) | Hex | Uso |
+|-------|---------------|-----|-----|
+| Background | `--bg` | `#1B2A4A` | Body e outer wrapper |
+| Surface 1 | `--surface-1` | `#1c2a4a` | Cards de topico, highlight blocks |
+| Surface 2 | `--surface-2` | `#243661` | Product card, glass card |
+| Border | `--border` | `#26262D` | Divisores, bordas de cards |
+| Gold Primary | `--gold` | `#c4993b` | CTA button, links, labels, accents |
+| Gold Light | `--gold-light` | `#d4ae54` | Hover state, gradient accent bar |
+| Text Primary | `--white` | `#FFFFFF` | Body copy, headings |
+| Text Muted | `--gray-300` | `#A0A0AC` | Subtitles, descriptions, footer links |
+| Text Subtle | `--gray-400` | `#7E7E8A` | Legal text, copyright (escolha do tom a confirmar com o Marcos) |
+
+*Contraste dos tons de texto sobre `#1B2A4A` a validar (WCAG AA) ao migrar os templates.*
 
 ### Email Typography
 
@@ -143,26 +152,26 @@ Templates HTML compatíveis com Brevo, Gmail, Apple Mail, Outlook. Dark-first, 6
 | H1 | Sora | 28px / 36px lh | 700 | `#FFFFFF` |
 | H2 | Sora | 20px / 28px lh | 700 | `#FFFFFF` |
 | Body | Inter | 16px / 26px lh | 400 | `#FFFFFF` |
-| Label | Sora | 11px | 600 | `#C49A3C` uppercase |
-| Subtitle | Inter | 15px / 24px lh | 400 | `#8A8A96` |
-| Footer | Inter | 11px / 18px lh | 400 | `#505058` |
+| Label | Sora | 11px | 600 | `#c4993b` uppercase |
+| Subtitle | Inter | 15px / 24px lh | 400 | `#A0A0AC` |
+| Footer | Inter | 11px / 18px lh | 400 | `#7E7E8A` |
 | Signature name | Sora | 16px | 700 | `#FFFFFF` |
-| Signature role | Inter | 13px | 400 | `#8A8A96` |
-| Signature tagline | Inter | 13px | 400 italic | `#C49A3C` |
+| Signature role | Inter | 13px | 400 | `#A0A0AC` |
+| Signature tagline | Inter | 13px | 400 italic | `#c4993b` |
 
 ### Email Components
 
 | Componente | Estilo |
 |------------|--------|
-| **CTA Primary** | bg `#C49A3C`, text `#08080A`, bold 16px, padding 14px 32px, radius 8px |
-| **CTA Secondary** | border `#C49A3C`, text `#C49A3C`, bold 14px, padding 12px 28px |
-| **Highlight Block** | bg `#0E0E11`, border-left 3px `#C49A3C`, padding 20px 24px |
-| **Glass Card** | bg `#131316`, border 1px `#26262D`, radius 12px, padding 24px |
+| **CTA Primary** | bg `#c4993b`, text `#1B2A4A`, bold 16px, padding 14px 32px, radius 8px |
+| **CTA Secondary** | border `#c4993b`, text `#c4993b`, bold 14px, padding 12px 28px |
+| **Highlight Block** | bg `#1c2a4a`, border-left 3px `#c4993b`, padding 20px 24px |
+| **Glass Card** | bg `#243661`, border 1px `#26262D`, radius 12px, padding 24px |
 | **Product Card** | Glass Card + gold gradient top bar (4px height) |
-| **Topic Card** | bg `#0E0E11`, border 1px `#26262D`, radius 12px + gold label |
-| **Edition Badge** | bg `#131316`, border `#26262D`, radius 20px, 11px uppercase |
+| **Topic Card** | bg `#1c2a4a`, border 1px `#26262D`, radius 12px + gold label |
+| **Edition Badge** | bg `#243661`, border `#26262D`, radius 20px, 11px uppercase |
 | **Divider** | border-top 1px `#26262D`, margin 32px |
-| **Gold Accent Line** | 60px x 2px `#C49A3C` centered (header) |
+| **Gold Accent Line** | 60px x 2px `#c4993b` centered (header) |
 
 ### Estrutura padrão
 
@@ -189,11 +198,12 @@ Forjando Vencedores.     (Inter 13px italic, gold)
 ### Regras de uso
 
 1. **Tom:** Carta pessoal do Marcos. Provocador, metódico, verdade. Estrutura PAID.
-2. **Dark-first:** Nunca usar fundo branco. Manter hierarquia `background → surface-1 → surface-2`.
+2. **Dark-first (navy):** Nunca usar fundo branco. Manter hierarquia `background → surface-1 → surface-2`.
 3. **Ouro com parcimônia:** CTA, labels, accent line, tagline. Nunca em body text.
 4. **600px max:** Container fixo, responsivo para mobile (padding reduz de 40px para 20px).
 5. **Inline styles:** Obrigatório para compatibilidade. Classes apenas como fallback.
 6. **VML:** Buttons com VML roundrect para Outlook.
+7. **Verdade e fé (07/10/2026):** sem escassez artificial nem número sem fonte; Mentoria retirada (não ofertar); Workshop às quintas, 8h30 (horário de Brasília); identidade católica sóbria, citações de documentos da Igreja literais e com §. Detalhes no `BRAND-BOOK.md`.
 
 ## Animations (`lib/animations.ts`)
 
