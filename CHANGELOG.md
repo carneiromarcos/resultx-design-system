@@ -5,6 +5,13 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Fixed — WhatsApp correto na página do ecossistema Emprega+
+
+`brands/emprega-mais/previews/prototypes/emprega-mais-ecossistema-2026-10-06.html`
+usava um número de WhatsApp errado (dígitos trocados). Os cinco links passam a
+`wa.me/5511967947557` e o telefone do CTA a (11) 96794-7557, conforme decisão do Marcos
+de 07/10. Não altera componente nem token.
+
 ### Changed — Brand Book do Profissional de Valor alinhado às decisões de 07/10
 
 `brands/pdv/docs/` (BRAND-BOOK, SOCIAL-MEDIA-GUIDE, IMAGE-PROMPTS, MOTION-GUIDE,
