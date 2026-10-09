@@ -242,7 +242,9 @@ describe('Hardcoded Color Detection', () => {
 describe('Viewer e demos andam juntos', () => {
   const ROOT = path.resolve(__dirname, '..');
   const viewer = fs.readFileSync(path.join(ROOT, 'docs', 'viewer.html'), 'utf-8');
-  const linkados = [...viewer.matchAll(/href="(demos\/[a-z0-9-]+\.html)"/g)].map((m) => m[1]);
+  // O viewer mora em docs/: os links sobem um nivel (`../demos/x.html`). O teste
+  // normaliza para `demos/x.html`, a forma relativa a raiz do repositorio.
+  const linkados = [...viewer.matchAll(/href="\.\.\/(demos\/[a-z0-9-]+\.html)"/g)].map((m) => m[1]);
   const emDisco = fs
     .readdirSync(path.join(ROOT, 'demos'))
     .filter((f) => f.endsWith('.html'))

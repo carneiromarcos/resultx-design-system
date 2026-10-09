@@ -10,9 +10,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- DS Tokens & Components (dist = inlined, works offline) -->
-  <link rel="stylesheet" href="dist/tokens.min.css">
-  <link rel="stylesheet" href="dist/components.min.css">
+  <!-- DS Tokens & Components (dist = inlined, works offline).
+       O arquivo mora em docs/, então os caminhos sobem um nível (../dist, ../demos).
+       O Pages publica um index.html que redireciona para docs/viewer.html. -->
+  <link rel="stylesheet" href="../dist/tokens.min.css">
+  <link rel="stylesheet" href="../dist/components.min.css">
 
   <style>
     /* ================================================================
@@ -542,28 +544,33 @@
     <a class="viewer-sidebar-link" href="#search-auto" onclick="closeSidebarMobile()">Search Autocomplete</a>
 
     <!-- Paginas completas: uma tela de produto inteira, com navegacao e dados.
-         demos/, nao pages/: a pasta foi renomeada em 2affe96 e estes links
+         ../demos/, nao pages/: a pasta foi renomeada em 2affe96 e estes links
          ficaram para tras, devolvendo 404 no site publicado. -->
     <div class="viewer-sidebar-section">Templates</div>
-    <a class="viewer-sidebar-link" href="demos/login.html" onclick="closeSidebarMobile()">Login</a>
-    <a class="viewer-sidebar-link" href="demos/dashboard.html" onclick="closeSidebarMobile()">Dashboard</a>
-    <a class="viewer-sidebar-link" href="demos/candidatos.html" onclick="closeSidebarMobile()">Candidatos</a>
-    <a class="viewer-sidebar-link" href="demos/triagem.html" onclick="closeSidebarMobile()">Triagem ★</a>
-    <a class="viewer-sidebar-link" href="demos/electia-copiloto.html" onclick="closeSidebarMobile()">Copiloto</a>
-    <a class="viewer-sidebar-link" href="demos/employer-jobs.html" onclick="closeSidebarMobile()">Minhas Vagas</a>
-    <a class="viewer-sidebar-link" href="demos/employer-job-applicants.html" onclick="closeSidebarMobile()">Candidatos na Vaga</a>
-    <a class="viewer-sidebar-link" href="demos/404.html" onclick="closeSidebarMobile()">404</a>
+    <a class="viewer-sidebar-link" href="../demos/login.html" onclick="closeSidebarMobile()">Login</a>
+    <a class="viewer-sidebar-link" href="../demos/dashboard.html" onclick="closeSidebarMobile()">Dashboard</a>
+    <a class="viewer-sidebar-link" href="../demos/candidatos.html" onclick="closeSidebarMobile()">Candidatos</a>
+    <a class="viewer-sidebar-link" href="../demos/triagem.html" onclick="closeSidebarMobile()">Triagem ★</a>
+    <a class="viewer-sidebar-link" href="../demos/electia-copiloto.html" onclick="closeSidebarMobile()">Copiloto</a>
+    <a class="viewer-sidebar-link" href="../demos/employer-jobs.html" onclick="closeSidebarMobile()">Minhas Vagas</a>
+    <a class="viewer-sidebar-link" href="../demos/employer-job-applicants.html" onclick="closeSidebarMobile()">Candidatos na Vaga</a>
+    <a class="viewer-sidebar-link" href="../demos/404.html" onclick="closeSidebarMobile()">404</a>
 
     <!-- Demos de componente: exercitam UMA familia a fundo, sem ser uma tela de
          produto. Separados porque onze links achatados numa lista so escondem a
          diferenca entre "veja o produto" e "veja este componente". -->
     <div class="viewer-sidebar-section">Component Demos</div>
-    <a class="viewer-sidebar-link" href="demos/filtros.html" onclick="closeSidebarMobile()">Modal de filtros</a>
-    <a class="viewer-sidebar-link" href="demos/inbox-panel.html" onclick="closeSidebarMobile()">Inbox / conversa</a>
-    <a class="viewer-sidebar-link" href="demos/brand-orb.html" onclick="closeSidebarMobile()">Orb de IA</a>
-    <a class="viewer-sidebar-link" href="demos/landing-kit.html" onclick="closeSidebarMobile()">Kit de landing</a>
-    <a class="viewer-sidebar-link" href="demos/app-shell.html" onclick="closeSidebarMobile()">Casca de app</a>
-    <a class="viewer-sidebar-link" href="demos/positioning-wheel-demo.html" onclick="closeSidebarMobile()">DISC Wheel</a>
+    <a class="viewer-sidebar-link" href="../demos/filtros.html" onclick="closeSidebarMobile()">Modal de filtros</a>
+    <a class="viewer-sidebar-link" href="../demos/inbox-panel.html" onclick="closeSidebarMobile()">Inbox / conversa</a>
+    <a class="viewer-sidebar-link" href="../demos/brand-orb.html" onclick="closeSidebarMobile()">Orb de IA</a>
+    <a class="viewer-sidebar-link" href="../demos/landing-kit.html" onclick="closeSidebarMobile()">Kit de landing</a>
+    <a class="viewer-sidebar-link" href="../demos/app-shell.html" onclick="closeSidebarMobile()">Casca de app</a>
+    <a class="viewer-sidebar-link" href="../demos/positioning-wheel-demo.html" onclick="closeSidebarMobile()">DISC Wheel</a>
+
+    <!-- Vitrines de marca: a página que mostra os tokens, o logo e os componentes
+         de UMA marca juntos. Só a ResultX tem vitrine navegável por enquanto. -->
+    <div class="viewer-sidebar-section">Brand Previews</div>
+    <a class="viewer-sidebar-link" href="../brands/resultx/previews/brand-system.html" onclick="closeSidebarMobile()">ResultX — vitrine da marca</a>
   </nav>
 
   <!-- ================================================================

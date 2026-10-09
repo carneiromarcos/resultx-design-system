@@ -47,12 +47,23 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p _site
-          cp docs/viewer.html _site/index.html
+          # O viewer usa caminhos relativos a docs/ (../dist, ../demos). Copiado
+          # para index.html na raiz eles apontariam para fora do site, entao a
+          # raiz so redireciona para docs/viewer.html, que ja vai em `cp -r docs`.
+          cat > _site/index.html <<'HTML'
+          <!DOCTYPE html>
+          <html lang="en"><head><meta charset="utf-8"><title>ResultX Design System</title>
+          <meta http-equiv="refresh" content="0; url=docs/viewer.html">
+          <link rel="canonical" href="docs/viewer.html"></head>
+          <body><p><a href="docs/viewer.html">ResultX Design System — abrir o viewer</a></p></body></html>
+          HTML
           cp -r dist _site/dist
           cp -r tokens _site/tokens
           cp -r components _site/components
           cp -r docs _site/docs
           cp -r demos _site/demos
+          mkdir -p _site/brands
+          cp -r brands/resultx _site/brands/resultx
           cp DESIGN-SYSTEM.md _site/
 
       - uses: actions/upload-pages-artifact@v5

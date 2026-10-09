@@ -5,6 +5,29 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Changed — marca ResultX alinhada ao site novo (resultx.app, tema grafite)
+
+`brands/resultx` deixa de ser navy/claro e passa a refletir o site: tokens no grafite
+`#0B0E14` (dark-first, claro opt-in), Sora + Inter + JetBrains Mono, regra de acento (ouro =
+ação, roxo = atmosfera), sem orb. Remove `--rx-font-*-legacy` e `--rx-weight-extrabold`
+(**quebra** só para quem os usava; o site novo não usa). Mapa antes → depois em
+`brands/resultx/docs/CHANGELOG.md` (2.0). A ponte `ds-bridge.css` não mudou. Docs (Brand Book,
+Design System, Motion, Image Prompts) reescritos para o site novo.
+
+### Added — logos, favicon e vitrine da ResultX
+
+`brands/resultx/assets/logo/` ganha o logo real do site em fundo escuro e claro, favicon SVG e
+PNG 16/32/180/512 e o gerador; `brands/resultx/previews/brand-system.html` é a vitrine da
+marca (também listada no viewer).
+
+### Fixed — viewer aberto de `docs/` aparecia sem estilo
+
+`docs/viewer.html` foi movido para `docs/` mas seguia apontando para `dist/` e `demos/` da
+raiz. Os caminhos agora são `../dist/...` e `../demos/...`. Como o Pages publicava o arquivo
+como `index.html` na raiz (onde `../` sairia do site), o workflow passa a publicar um
+`index.html` que redireciona para `docs/viewer.html` e a copiar `brands/resultx` para o
+site. O teste de viewer e demos foi ajustado ao novo caminho.
+
 ### Fixed — WhatsApp correto na página do ecossistema Emprega+
 
 `brands/emprega-mais/previews/prototypes/emprega-mais-ecossistema-2026-10-06.html`
