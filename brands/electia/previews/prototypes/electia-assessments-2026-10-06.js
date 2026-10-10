@@ -1,5 +1,5 @@
 /*
-  Protótipo Electia — Assessments, Testes criados e Ranking (06/10/2026).
+  Protótipo Electia — Assessments, Testes personalizados e Ranking (06/10/2026).
   Comportamento da página electia-assessments-2026-10-06.html. Dados fictícios.
   Ficha: docs/research/electia-assessments-2026-10-06.md
 */
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const MODELO = Object.fromEntries([...TESTES, ...SITU].map((m) => [m.id, m]));
   const MIN_ANONIMO = 5;
 
-  /* ── Testes criados: envios comportamentais + módulos situacionais ───
+  /* ── Testes personalizados: envios comportamentais + módulos situacionais ───
      Totais batem com o dashboard (#85): 52 enviados, 37 concluídos. */
   const r = (id, modelo, titulo, status, enviados, respostas, prazo, dias, criado) =>
     ({ id, modelo, titulo, status, enviados, respostas, prazo, dias, criado });
@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const texto = id.startsWith('n')
       ? `${runs.length} teste${runs.length > 1 ? 's' : ''} criado${runs.length > 1 ? 's' : ''}`
       : `${plural(runs.length, 'envio')} · ${resp} de ${env} respostas`;
-    return `<a class="model-usage" href="#testes-criados?modelo=${id}">${texto}</a>`;
+    return `<a class="model-usage" href="#testes-personalizados?modelo=${id}">${texto}</a>`;
   }
   function renderCatalogo() {
     $('[data-models-comp]').innerHTML = TESTES.map((t) => `
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </article></li>`).join('');
   }
 
-  /* ═══ Tela 2: Testes criados ══════════════════════════════════════ */
+  /* ═══ Tela 2: Testes personalizados ══════════════════════════════════════ */
   const filtros = { q: '', modelo: '', status: '' };
   const fModelo = $('#f-modelo');
   fModelo.innerHTML = `<option value="">Todos os modelos</option>
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pend = and.reduce((a, x) => a + (x.enviados - x.respostas), 0);
     const urg = and.filter((x) => x.dias != null && x.dias <= 3);
     $('[data-runs-kpis]').innerHTML = [
-      kpi('Em andamento', and.length, `de ${RUNS.length} testes criados`),
+      kpi('Em andamento', and.length, `de ${RUNS.length} testes personalizados`),
       kpi('Respostas pendentes', pend, 'nos testes em andamento'),
       kpi('Prazo em até 3 dias', urg.length, urg.length ? urg.map((x) => MODELO[x.modelo].nome).join(', ') : 'nenhum'),
       kpi('Rascunhos', RUNS.filter((x) => x.status === 'rascunho').length, 'prontos para publicar'),
@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function filtrosParaUrl() {
     const qs = new URLSearchParams(Object.entries(filtros).filter(([, v]) => v)).toString();
-    history.replaceState(null, '', `#testes-criados${qs ? `?${qs}` : ''}`);
+    history.replaceState(null, '', `#testes-personalizados${qs ? `?${qs}` : ''}`);
   }
   function filtrosDaUrl(query) {
     const ps = new URLSearchParams(query || '');
@@ -473,13 +473,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ═══ Rotas ═══════════════════════════════════════════════════════
-     #assessments (padrão) · #testes-criados[?modelo=&status=&q=] ·
+     #assessments (padrão) · #testes-personalizados[?modelo=&status=&q=] ·
      #ranking · #ranking/desempenho. Nenhuma rota casa com um id. */
-  const TITULOS = { assessments: 'Assessments', criados: 'Testes criados', ranking: 'Ranking' };
+  const TITULOS = { assessments: 'Assessments', personalizados: 'Testes personalizados', ranking: 'Ranking' };
   function rota() {
     const [caminho, query] = location.hash.slice(1).split('?');
     const [tela, sub] = (caminho || 'assessments').split('/');
-    const atual = { 'testes-criados': 'criados', ranking: 'ranking' }[tela] || 'assessments';
+    const atual = { 'testes-personalizados': 'personalizados', ranking: 'ranking' }[tela] || 'assessments';
     $$('[data-screen]').forEach((s) => { s.hidden = s.dataset.screen !== atual; });
     $$('[data-nav]').forEach((a) => {
       const sim = a.dataset.nav === atual;
@@ -488,7 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     $('[data-top-title]').textContent = TITULOS[atual];
     document.title = `${TITULOS[atual]} · electia`;
-    if (atual === 'criados') { filtrosDaUrl(query); renderRuns(); }
+    if (atual === 'personalizados') { filtrosDaUrl(query); renderRuns(); }
     if (atual === 'ranking') selecionarAba(sub === 'desempenho' ? 'ad' : 'fit');
     return `#${atual}-titulo`;
   }

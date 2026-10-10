@@ -1,5 +1,7 @@
 # Protótipo Assessments, Testes criados e Ranking — ficha (06/10/2026)
 
+> **Decisão (10/10/2026):** o Marcos definiu o nome **"Testes personalizados"** (no lugar de "Testes criados"). No protótipo, o menu, os títulos e os textos foram renomeados e a rota passou de `#testes-criados` para `#testes-personalizados`; no app, a rota sugerida vira `/tests/personalizados`. O resto desta ficha é o registro histórico de 06/10.
+
 Protótipo: [`brands/electia/previews/prototypes/electia-assessments-2026-10-06.html`](../../brands/electia/previews/prototypes/electia-assessments-2026-10-06.html). O comportamento está em `electia-assessments-2026-10-06.js`, na mesma pasta. Capturas: [`assets/electia-assessments-2026-10-06/`](assets/electia-assessments-2026-10-06/), com cada tela em claro e escuro, a 1440 e a 390 px.
 
 O padrão é o do dashboard da #85. O protótipo é HTML estático e consome `dist/tokens.min.css`, `brands/electia/tokens/ds-bridge.css`, `dist/components.min.css`, `dist/icons.min.css`, `components/data-cards.css` e `dist/sidebar-overlay.js`. O CSS e o JS locais só compõem a página. O que falta no DS ficou marcado `CANDIDATO`. Nada mudou em `components/`, `tokens/` nem `dist/`.

@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Protótipo Electia — Assessments (modelos), Testes criados e Ranking — 06/10/2026.
+  Protótipo Electia — Assessments (modelos), Testes personalizados e Ranking — 06/10/2026.
   Mesmo padrão do dashboard (#85): tudo o que é componente vem do DS; o CSS e
   o JS daqui só compõem a página. Ficha: docs/research/electia-assessments-2026-10-06.md
 
@@ -24,7 +24,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
-  <meta name="description" content="Protótipo navegável do electia: Assessments como catálogo de modelos, a página Testes criados e o Ranking com gráficos por teste.">
+  <meta name="description" content="Protótipo navegável do electia: Assessments como catálogo de modelos, a página Testes personalizados e o Ranking com gráficos por teste.">
   <title>Assessments · electia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -113,7 +113,7 @@
     /* ── CANDIDATO 16 — .model-card: cartão de MODELO de teste ───────────
        Hierarquia: a forma grande do teste é a assinatura; nome; ficha
        (questões · tempo); descrição; o que revela; uso ("15 enviados") que
-       leva a Testes criados filtrado; e as ações. O cartão não é um link:
+       leva a Testes personalizados filtrado; e as ações. O cartão não é um link:
        as ações são explícitas (no app, card clicável + botões aninhados). */
     .models { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
     .models > li { min-inline-size: 0; }
@@ -150,7 +150,7 @@
     .model-card-form::before { background: var(--border-default); }
     .model-card-form h3 { font: var(--font-semibold) var(--text-lg)/1.2 var(--font-heading); }
 
-    /* ── Testes criados ─────────────────────────────────────────────── */
+    /* ── Testes personalizados ─────────────────────────────────────────────── */
     /* CANDIDATO 17 — barra de filtros (uma linha acima da lista; a URL guarda o estado) */
     .filters { display: grid; grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr)) auto; align-items: end; gap: var(--space-3); margin-block-end: var(--space-3); }
     .filters .form-group { margin: 0; min-inline-size: 0; }
@@ -359,8 +359,8 @@
       <a class="sidebar-item" href="#colaboradores" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-users"/></svg><span class="sidebar-label">Colaboradores</span></a>
       <a class="sidebar-item" href="#cargos" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-briefcase"/></svg><span class="sidebar-label">Cargos</span></a>
       <a class="sidebar-item" href="#assessments" data-nav="assessments"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-clipboard"/></svg><span class="sidebar-label">Assessments</span></a>
-      <!-- Recomendação (ficha §Menu): o item "Situacional" vira "Testes criados". -->
-      <a class="sidebar-item" href="#testes-criados" data-nav="criados"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-send"/></svg><span class="sidebar-label">Testes criados</span></a>
+      <!-- Ficha §Menu + decisão do Marcos (10/10/2026): o item "Situacional" vira "Testes personalizados". -->
+      <a class="sidebar-item" href="#testes-personalizados" data-nav="personalizados"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-send"/></svg><span class="sidebar-label">Testes personalizados</span></a>
       <a class="sidebar-item" href="#bem-estar" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-heart"/></svg><span class="sidebar-label">Bem-Estar</span></a>
       <a class="sidebar-item" href="#ranking" data-nav="ranking"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-trophy"/></svg><span class="sidebar-label">Ranking</span></a>
       <a class="sidebar-item" href="#performance" data-fora><svg class="icon icon-sm" aria-hidden="true"><use href="#i-target"/></svg><span class="sidebar-label">Performance</span></a>
@@ -404,10 +404,10 @@
           <div>
             <span class="eyebrow">Modelos de teste</span>
             <h1 id="assessments-titulo" tabindex="-1">Assessments</h1>
-            <p>Escolha um modelo e aplique. O que já foi enviado fica em <a href="#testes-criados">Testes criados</a>.</p>
+            <p>Escolha um modelo e aplique. O que já foi enviado fica em <a href="#testes-personalizados">Testes personalizados</a>.</p>
           </div>
           <div class="page-actions">
-            <a class="btn btn-secondary" href="#testes-criados">Ver testes criados</a>
+            <a class="btn btn-secondary" href="#testes-personalizados">Ver testes personalizados</a>
           </div>
         </header>
 
@@ -435,12 +435,12 @@
         </article>
       </section>
 
-      <!-- ═══ Tela 2: Testes criados ═══ -->
-      <section class="screen" data-screen="criados" aria-labelledby="criados-titulo" hidden>
+      <!-- ═══ Tela 2: Testes personalizados ═══ -->
+      <section class="screen" data-screen="personalizados" aria-labelledby="personalizados-titulo" hidden>
         <header class="page-head">
           <div>
             <span class="eyebrow">Acompanhamento</span>
-            <h1 id="criados-titulo" tabindex="-1">Testes criados</h1>
+            <h1 id="personalizados-titulo" tabindex="-1">Testes personalizados</h1>
             <p>Tudo o que saiu de um modelo: envios comportamentais e testes situacionais, com respostas e prazo.</p>
           </div>
           <div class="page-actions">
@@ -450,7 +450,7 @@
 
         <div class="kpis" data-runs-kpis></div>
 
-        <form class="filters" role="search" aria-label="Filtrar testes criados" data-filters>
+        <form class="filters" role="search" aria-label="Filtrar testes personalizados" data-filters>
           <div class="form-group">
             <label class="form-label-eyebrow" for="f-busca">Buscar</label>
             <input class="form-input" id="f-busca" type="search" placeholder="Nome do teste" autocomplete="off" data-f="q">
@@ -475,7 +475,7 @@
 
         <div class="dl-table-wrap" data-runs-wrap>
           <table class="dl-table runs-table stack-table">
-            <caption class="sr-only">Testes criados, com modelo, status, respostas, prazo e data de criação</caption>
+            <caption class="sr-only">Testes personalizados, com modelo, status, respostas, prazo e data de criação</caption>
             <thead><tr><th scope="col">Teste</th><th scope="col">Status</th><th scope="col">Respostas</th><th scope="col">Prazo</th><th scope="col">Criado em</th><th scope="col"><span class="sr-only">Ação</span></th></tr></thead>
             <tbody data-runs></tbody>
           </table>
