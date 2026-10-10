@@ -1,61 +1,35 @@
-# Prompts de Imagem & Video — ResultX
+# Prompts de Imagem — ResultX
 
-> ⚠️ Template inicial. ResultX e consultoria de transformacao digital — esteticamente alinhada com "premium business" / "tech estrategica". Diferente de PdV (forja/montanha) ou Electia (tech/ciencia).
+**Versão:** 2.0 | **Data:** 2026-10-09 | Base: as artes de ambiência do site (geradas por IA em 08/10/2026 e aprovadas pelo Marcos). Este arquivo guarda **o briefing**, não os prompts originais, que não foram preservados no repositório.
 
----
+## 1. Papel da imagem
 
-## 1. Estilo Base (prefixo para TODOS os prompts)
+Ambiência: textura e luz **atrás** do conteúdo. Nunca prova, nunca cliente, nunca equipe.
 
-### Midjourney / DALL-E
+## 2. Briefing-base (todas as artes)
 
-`[TBD]` — Definir prompt-base. Esboco a refinar:
+- Fundo **grafite `#0B0E14`**, com **ouro `#c4993b`** e **roxo `#6f32b1`** da ponte como as únicas cores de luz.
+- Abstrata: painéis, linhas, feixes de luz, fluxo. Alto contraste de forma, baixo contraste de luz (o texto vai por cima).
+- **Sem orb, sem pessoas reconhecíveis, sem texto, sem logotipo, sem tela com dado legível, sem número.**
+- Exportar em WebP (qualidade ~78, < 250 KB) com versão menor para telas estreitas.
 
-```
-executive consulting atmosphere, deep navy and sophisticated tones,
-brazilian corporate context, modern offices, data dashboards in background,
-diverse executives in business attire, editorial photography style,
-shallow depth of field, high contrast --ar 16:9 --style raw --v 6.1
-```
+## 3. Slots do site
 
-### Variacoes por aspecto
+| Slot | Proporção | Composição |
+|---|---|---|
+| Abertura (hero) | 16:9 | assunto à direita; esquerda escura e limpa para o texto |
+| Serviços | 12:5 | painéis ouro → roxo, baixo contraste |
+| Método | 12:5 | linhas se ordenando da esquerda para a direita |
+| Diagnóstico | 12:5 | feixe de luz quente vindo de baixo, à esquerda |
 
-| Formato | Aspect Ratio | Uso |
-|---------|-------------|-----|
-| Hero site/LinkedIn | `--ar 16:9` | Banners, OG images |
-| Post quadrado | `--ar 1:1` | LinkedIn carrossel |
-| Case study cover | `--ar 4:3` | PDF capa |
+## 4. Aplicação no CSS
 
----
+Imagem em `position: absolute; inset: 0; z-index: -2`, `object-fit: cover`, opacidade 0,12 a 0,9 conforme o slot, **máscara que apaga as bordas** para o grafite. Em coluna única, a arte desce para trás do painel de vidro e fica mais apagada. A opacidade de cada slot é medida para o texto por cima manter 4,5:1 sobre o ponto mais claro.
 
-## 2. Categorias de Imagem
+## 5. Telas de produto
 
-`[TBD]` — Sugestoes:
-- Executivos brasileiros em ambiente corporativo (autenticidade — nao stock generico americano)
-- Sessoes de consultoria, workshops, whiteboards
-- Dados visualizados (dashboards, graficos elegantes)
-- Maquinario de operacao (telemetria, logistica — clientes ResultX)
-- Bastidores de empresa brasileira media
+Capturas reais de Electia e Xscore, com **dados de demonstração** identificados como tal, em moldura de navegador (`.screen-frame`). Nunca dado de cliente real.
 
----
+## 6. Superado
 
-## 3. Prompts de Video
-
-`[TBD]` — LinkedIn videos curtos, talking-heads Marcos, case studies.
-
----
-
-## 4. Tratamento Pos-Geracao
-
-`[TBD]` — Color grading neutro/premium.
-
----
-
-## 5. Imagens Proibidas
-
-`[TBD]` — Estereotipos consultor americano, gravatas-aperto-de-mao-genericas, AI-art obviamente generico.
-
----
-
-## 6. Banco de Imagens Recomendado
-
-`[TBD]` — Sugestoes: Unsplash (fotografos brasileiros), Adobe Stock, fotos proprias de clientes (com autorizacao).
+O esboço anterior pedia "diverse executives in business attire" e "deep navy". Está descartado: a marca não usa pessoas como cliente ou equipe, e o chão é grafite, não navy.

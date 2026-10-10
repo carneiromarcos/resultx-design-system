@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<!--
+  ResultX — vitrine da marca (v2.0, 09/10/2026)
+  Tema grafite (padrão), com o claro opt-in no botão do header.
+  Usa só os tokens do DS + tokens e ponte da marca + componentes do DS:
+    .header-float / .menu-drawer / .btn / .btn-sheen / .card / .icon
+  Conteúdo: textos de resultx.app e valores dos tokens. Nenhum número, cliente
+  ou depoimento. Sem orb (a orb é a assinatura dos agentes de IA do DS).
+  Abra pela raiz do repositório ou por file://; os caminhos são relativos.
+-->
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0B0E14">
+  <title>ResultX — vitrine da marca</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/logo/resultx-favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../../dist/tokens.min.css">
+  <link rel="stylesheet" href="../tokens/tokens.css">
+  <link rel="stylesheet" href="../tokens/ds-bridge.css">
+  <link rel="stylesheet" href="../../../dist/components.min.css">
+  <link rel="stylesheet" href="../../../dist/icons.min.css">
+  <style>
+    /* ==========================================================================
+       Escala da página — só decisões desta vitrine; cores e tipo vêm dos tokens.
+       ========================================================================== */
+    :root {
+      --page-max: var(--rx-container-max);
+      --page-gutter: var(--rx-gutter);
+      --page-section: var(--rx-space-section);
+      --page-h1: var(--rx-text-h1);
+      --page-h2: var(--rx-text-h2);
+      --font-heading: var(--rx-font-heading);
+      --font-body: var(--rx-font-body);
+      --font-mono: var(--rx-font-mono);
+      --logo-h: var(--rx-header-logo-h);
+    }
+    @media (max-width: 1023.98px) { :root { --logo-h: var(--rx-header-logo-h-compact); } }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--rx-header-bar-min) + var(--space-8)); }
+    body {
+      display: flow-root; /* o body do DS é flex (casca de app); aqui é página */
+      position: relative;
+      margin: 0;
+      overflow-x: clip;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: var(--leading-relaxed);
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, p, figure, dl, dd { margin: 0; }
+    h1, h2, h3 { font-family: var(--font-heading); line-height: var(--leading-tight); }
+    ul, ol { margin: 0; padding: 0; list-style: none; }
+    img { display: block; max-width: 100%; height: auto; }
+    code { font: var(--font-medium) 0.8125rem / 1.5 var(--font-mono); }
+    .sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    a:focus-visible, button:focus-visible, summary:focus-visible {
+      outline: var(--focus-ring-width) solid var(--focus-ring-color);
+      outline-offset: var(--focus-ring-offset);
+    }
+
+    .wrap { inline-size: min(var(--page-max), calc(100% - 2 * var(--page-gutter))); margin-inline: auto; }
+    .section { padding-block: var(--page-section); }
+    .band-tint { padding-block: var(--page-section); background: var(--bg-surface-1); border-block: 1px solid var(--border-subtle); }
+    .section-head { display: grid; gap: var(--space-4); max-inline-size: 760px; margin-block-end: var(--space-10); }
+    .section-head h2 { font-size: var(--page-h2); font-weight: var(--font-bold); letter-spacing: var(--tracking-tight); text-wrap: balance; }
+    .section-head p:not(.eyebrow) { color: var(--text-secondary); font-size: var(--text-lg); }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: var(--space-3);
+      color: var(--accent-primary-text);
+      font: var(--font-semibold) var(--rx-text-eyebrow) / 1.5 var(--font-heading);
+      letter-spacing: var(--rx-tracking-eyebrow); text-transform: uppercase;
+    }
+    .eyebrow::before { content: ''; inline-size: var(--space-8); block-size: 2px; border-radius: var(--radius-full); background: var(--rx-gradient-bridge); }
+    .skip-link { position: absolute; top: var(--space-2); left: var(--space-2); z-index: var(--z-toast); padding: var(--space-2) var(--space-4); border-radius: var(--radius-md); background: var(--bg-base); color: var(--text-primary); transform: translateY(-200%); }
+    .skip-link:focus { transform: none; }
+    .mono-label { color: var(--text-secondary); font: var(--font-semibold) 11px / 1.5 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* Header flutuante do DS na proporção do site */
+    .brand-logo { display: block; block-size: var(--logo-h); inline-size: auto; }
+    .brand-logo-light { display: none; }
+    [data-theme="light"] .brand-logo-dark { display: none; }
+    [data-theme="light"] .brand-logo-light { display: block; }
+    .header-float .header-float-brand { min-block-size: 44px; }
+    @media (min-width: 1024px) {
+      .header-float .header-float-bar { min-block-size: var(--rx-header-bar-min); }
+      .header-float .header-float-links { gap: var(--space-2); }
+      .header-float .header-float-links a { font-size: var(--rx-header-link); }
+    }
+
+    /* Hero: atmosfera (ouro e roxo da ponte) + grade que deriva devagar */
+    .hero { position: relative; isolation: isolate; overflow-x: clip; padding-block: clamp(var(--space-12), 7vw, var(--space-24)) clamp(var(--space-12), 6vw, var(--space-20)); }
+    .hero::before {
+      content: ''; position: absolute; inset: -20% -10% auto; z-index: -1; block-size: 120%;
+      background:
+        radial-gradient(40% 50% at 85% 20%, color-mix(in srgb, var(--rx-purple) 22%, transparent), transparent 70%),
+        radial-gradient(35% 45% at 10% 0%, color-mix(in srgb, var(--rx-gold) 14%, transparent), transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: -64px 0 0; z-index: -1;
+      background-image:
+        linear-gradient(to right, color-mix(in srgb, var(--text-primary) 5%, transparent) 1px, transparent 1px),
+        linear-gradient(to bottom, color-mix(in srgb, var(--text-primary) 5%, transparent) 1px, transparent 1px);
+      background-size: 64px 64px;
+      -webkit-mask-image: radial-gradient(70% 60% at 70% 35%, #000 0%, transparent 75%);
+      mask-image: radial-gradient(70% 60% at 70% 35%, #000 0%, transparent 75%);
+      pointer-events: none;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .hero::after { animation: grid-drift 18s linear infinite; }
+    }
+    @keyframes grid-drift { to { transform: translate3d(0, 64px, 0); } }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(var(--space-8), 5vw, var(--space-16)); align-items: center; }
+    .hero-copy { display: grid; gap: var(--space-6); justify-items: start; }
+    .hero h1 { font-size: var(--page-h1); font-weight: var(--font-bold); letter-spacing: var(--tracking-tighter); line-height: 1.08; text-wrap: balance; }
+    .hero-lead { max-inline-size: 60ch; color: var(--text-secondary); font-size: var(--text-xl); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+    a.btn { text-decoration: none; }
+    .hero-actions .btn { white-space: normal; text-align: start; }
+    .hero-note { color: var(--text-secondary); font-size: var(--text-sm); }
+    .hero-flow {
+      position: relative; display: grid; gap: var(--space-3); padding: var(--space-5); overflow: hidden;
+      border: 1px solid var(--glass-standard-border); border-radius: var(--radius-xl);
+      background: var(--glass-standard-bg); -webkit-backdrop-filter: blur(var(--glass-standard-blur)); backdrop-filter: blur(var(--glass-standard-blur));
+      box-shadow: var(--elevation-2);
+    }
+    .hero-flow::after { content: ''; position: absolute; inset: auto var(--space-5) 0; block-size: 2px; border-radius: var(--radius-full); background: var(--rx-gradient-bridge); }
+    .hero-flow-step { display: flex; gap: var(--space-4); align-items: center; padding: var(--space-4); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); background: var(--bg-surface-1); transition: border-color var(--rx-lift-duration), background-color var(--rx-lift-duration); }
+    .hero-flow-step:hover { border-color: var(--border-accent); background: var(--bg-surface-2); }
+    .hero-flow-step > span:last-child { display: grid; gap: var(--space-1); }
+    .hero-flow-step strong { font-family: var(--font-heading); }
+    .hero-flow-step span span { color: var(--text-secondary); font-size: var(--text-sm); }
+    .icon-chip { display: inline-grid; place-items: center; flex: none; inline-size: 40px; block-size: 40px; border: 1px solid var(--border-accent); border-radius: var(--radius-md); background: var(--accent-primary-muted); color: var(--accent-primary-text); }
+
+    /* Paleta */
+    .swatch-group { display: grid; gap: var(--space-3); }
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: var(--space-3); }
+    .swatch { display: grid; gap: var(--space-1); padding: var(--space-3); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); background: var(--bg-surface-2); }
+    .swatch-chip { block-size: 56px; border: 1px solid var(--border-default); border-radius: var(--radius-md); }
+    .swatch b { font: var(--font-semibold) var(--text-sm) / 1.4 var(--font-heading); }
+    .swatch small { color: var(--text-secondary); font-size: var(--text-xs); }
+    .palette-stack { display: grid; gap: var(--space-8); }
+    .palette-stack > .section-head { margin-block-end: 0; }
+    .bridge-bar { block-size: 72px; border-radius: var(--radius-lg); background: var(--rx-gradient-bridge); }
+    .rule-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+    .rule-card { display: grid; align-content: start; gap: var(--space-2); }
+
+    /* Tipografia */
+    .type-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--space-4); }
+    .type-specimen { display: grid; align-content: start; gap: var(--space-4); }
+    .type-row { display: grid; gap: var(--space-1); padding-block-end: var(--space-4); border-bottom: 1px solid var(--border-subtle); }
+    .type-row:last-child { border-bottom: 0; padding-block-end: 0; }
+    .t-h1 { font: var(--font-bold) var(--page-h1) / 1.08 var(--font-heading); letter-spacing: var(--tracking-tighter); }
+    .t-h2 { font: var(--font-bold) var(--page-h2) / 1.15 var(--font-heading); letter-spacing: var(--tracking-tight); }
+    .t-h3 { font: var(--font-semibold) var(--rx-text-h3) / 1.3 var(--font-heading); }
+    .t-body { font: var(--font-regular) var(--rx-text-body) / 1.6 var(--font-body); color: var(--text-secondary); }
+    .t-mono { font: var(--font-semibold) var(--text-sm) / 1.4 var(--font-mono); color: var(--accent-primary-text); letter-spacing: var(--tracking-wide); }
+
+    /* Logo e favicon */
+    .logo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+    .logo-stage { display: grid; place-items: center; margin: 0; min-block-size: 190px; padding: var(--space-8); border: 1px solid var(--border-default); border-radius: var(--radius-xl); }
+    .logo-stage img { inline-size: min(258px, 100%); }
+    .logo-stage-dark { background: #0B0E14; }
+    .logo-stage-light { background: #FFFFFF; }
+    .icon-row { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-6); }
+    .icon-row figure { display: grid; gap: var(--space-2); justify-items: start; }
+    .icon-row figcaption { color: var(--text-secondary); font-size: var(--text-xs); }
+
+    /* Cards e botões */
+    .area-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+    .area-card { display: grid; align-content: start; gap: var(--space-3); }
+    .area-card .card-title { font-size: var(--text-xl); }
+    .area-card .card-text { font-size: var(--text-base); }
+    .row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+    .state-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+    .state-card { display: grid; align-content: start; gap: var(--space-4); padding: var(--space-6); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); background: var(--bg-surface-1); }
+
+    /* Movimento: revelar e levantar (valores do site) */
+    .card-lift { position: relative; transition: transform var(--rx-lift-duration) var(--rx-ease-smooth), box-shadow var(--rx-lift-duration) var(--rx-ease-smooth), border-color var(--rx-lift-duration) var(--rx-ease-smooth); }
+    .card-lift::after { content: ''; position: absolute; inset: -1px var(--radius-lg) auto; block-size: 2px; border-radius: var(--radius-full); background: var(--rx-gradient-bridge); opacity: 0; transform: scaleX(0.4); transform-origin: left; transition: opacity var(--rx-lift-duration) var(--rx-ease-smooth), transform 600ms var(--rx-ease-smooth); pointer-events: none; }
+    .card-lift:hover, .card-lift:focus-within { transform: translateY(var(--rx-lift-distance)); border-color: var(--border-accent); box-shadow: var(--elevation-3), 0 22px 48px -28px color-mix(in srgb, var(--rx-gold) 38%, transparent), 0 0 0 1px var(--border-accent); }
+    .card-lift:hover::after, .card-lift:focus-within::after { opacity: 1; transform: none; }
+    .card-lift:active { transform: translateY(calc(var(--rx-lift-distance) / 2)); }
+    .js-reveal [data-reveal] { opacity: 0; translate: 0 var(--rx-reveal-distance); }
+    .js-reveal [data-reveal].is-revealed {
+      opacity: 1; translate: none;
+      transition: opacity var(--rx-reveal-duration) var(--rx-ease-smooth) calc(var(--i, 0) * var(--rx-reveal-step)), translate var(--rx-reveal-duration) var(--rx-ease-smooth) calc(var(--i, 0) * var(--rx-reveal-step)), transform var(--rx-lift-duration) var(--rx-ease-smooth), box-shadow var(--rx-lift-duration) var(--rx-ease-smooth), border-color var(--rx-lift-duration) var(--rx-ease-smooth);
+    }
+    .motion-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+    .motion-table { inline-size: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+    .motion-table th, .motion-table td { padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border-subtle); text-align: start; }
+    .motion-table th { color: var(--text-secondary); font: var(--font-semibold) 11px / 1.5 var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); background: var(--bg-surface-2); }
+
+    /* Método */
+    .method-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); }
+    .method-step { position: relative; display: grid; align-content: start; gap: var(--space-3); padding-block-start: var(--space-6); border-top: 1px solid var(--border-default); }
+    .method-step::before { content: ''; position: absolute; inset: -5px auto auto -1px; inline-size: 9px; block-size: 9px; border-radius: var(--radius-full); background: var(--rx-gold); box-shadow: 0 0 0 4px color-mix(in srgb, var(--rx-gold) 18%, transparent), 0 0 16px color-mix(in srgb, var(--rx-gold) 38%, transparent); z-index: 1; }
+    .method-step::after { content: ''; position: absolute; inset: -1px 0 auto; block-size: 2px; background: var(--rx-gradient-bridge); }
+    .method-num { font: var(--font-semibold) var(--text-sm) / 1 var(--font-mono); color: var(--accent-primary-text); }
+    .method-step h3 { font-size: var(--text-xl); }
+    .method-deliverable { display: grid; gap: var(--space-1); padding: var(--space-4); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); background: var(--bg-surface-1); color: var(--text-secondary); }
+    .method-deliverable span { color: var(--text-primary); font: var(--font-semibold) var(--text-xs) / 1.5 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* Regras de uso */
+    .usage-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+    .usage-card { display: grid; align-content: start; gap: var(--space-3); padding: var(--space-6); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); background: var(--bg-surface-1); }
+    .usage-card ul { display: grid; gap: var(--space-2); color: var(--text-secondary); }
+    .usage-card li { display: flex; gap: var(--space-3); align-items: baseline; }
+    .usage-card li::before { content: ''; flex: none; inline-size: 6px; block-size: 6px; border-radius: var(--radius-full); background: var(--accent-primary); transform: translateY(-2px); }
+    .usage-card.is-no li::before { background: var(--color-error); }
+    .light-sample { padding: var(--space-6); border: 1px solid var(--border-default); border-radius: var(--radius-xl); background: var(--bg-base); color: var(--text-primary); display: grid; gap: var(--space-3); }
+    .light-sample p { color: var(--text-secondary); }
+    footer { padding-block: var(--space-12); border-top: 1px solid var(--border-subtle); background: var(--bg-surface-1); color: var(--text-secondary); font-size: var(--text-sm); }
+    footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-4); }
+
+    @media (max-width: 1023.98px) {
+      .hero-grid, .type-grid { grid-template-columns: minmax(0, 1fr); }
+      .area-grid, .motion-grid, .rule-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .method-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-8) var(--space-4); }
+    }
+    @media (max-width: 639.98px) {
+      .area-grid, .motion-grid, .rule-grid, .method-list, .logo-grid, .state-grid, .usage-grid { grid-template-columns: minmax(0, 1fr); }
+      .hero-actions .btn { inline-size: 100%; justify-content: center; text-align: center; }
+      .logo-stage { padding: var(--space-5); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .card-lift, .card-lift:hover, .card-lift:focus-within, .card-lift:active { transform: none; transition-property: box-shadow, border-color; }
+      .card-lift::after { transform: none; transition: opacity var(--rx-lift-duration); }
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></symbol>
+    <symbol id="i-cap" viewBox="0 0 24 24"><path d="M22 10v6"/><path d="M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24"><path d="M22 7 13.5 15.5 8.5 10.5 2 17"/><path d="M16 7h6v6"/></symbol>
+    <symbol id="i-msg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+  </svg>
+
+  <div class="header-float-sentinel" data-header-float-sentinel aria-hidden="true"></div>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+  <header class="header-float" data-header-float>
+    <div class="header-float-bar">
+      <a class="header-float-brand" href="#inicio" aria-label="ResultX, voltar ao início">
+        <img class="brand-logo brand-logo-dark" src="../assets/logo/resultx-logo-on-dark.svg" alt="ResultX" width="83" height="25">
+        <img class="brand-logo brand-logo-light" src="../assets/logo/resultx-logo-on-light.svg" alt="ResultX" width="83" height="25">
+      </a>
+      <nav class="header-float-links" aria-label="Seções da vitrine">
+        <a href="#paleta">Paleta</a>
+        <a href="#tipografia">Tipografia</a>
+        <a href="#logo">Logo</a>
+        <a href="#componentes">Componentes</a>
+        <a href="#movimento">Movimento</a>
+        <a href="#regras">Regras</a>
+      </nav>
+      <div class="header-float-actions">
+        <button class="header-float-icon" type="button" data-theme-toggle aria-label="Ativar tema claro"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        <a class="header-float-icon header-float-menu" id="menu-abrir" href="#menu-gaveta" data-menu-drawer-toggle="menu-gaveta" aria-label="Abrir menu"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-menu"/></svg></a>
+      </div>
+    </div>
+  </header>
+
+  <section class="menu-drawer" id="menu-gaveta" aria-label="Menu" data-menu-drawer data-menu-drawer-media="(max-width: 1023.98px)">
+    <div class="menu-drawer-head">
+      <span class="menu-drawer-label">Menu</span>
+      <a class="menu-drawer-close" href="#menu-abrir" data-menu-drawer-close aria-label="Fechar menu"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-close"/></svg></a>
+    </div>
+    <div class="menu-drawer-body">
+      <nav class="menu-drawer-nav" aria-label="Seções da vitrine (móvel)">
+        <a href="#paleta">Paleta</a>
+        <a href="#tipografia">Tipografia</a>
+        <a href="#logo">Logo</a>
+        <a href="#componentes">Componentes</a>
+        <a href="#movimento">Movimento</a>
+        <a href="#regras">Regras</a>
+      </nav>
+    </div>
+  </section>
+  <div class="menu-drawer-scrim" data-menu-drawer-scrim></div>
+
+  <main id="main">
+    <!-- 1. Hero — a abertura do site, com os tokens da marca -->
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Implementação de IA e melhoria de processos</p>
+          <h1 id="hero-title">Sua empresa pode produzir mais com menos trabalho manual.</h1>
+          <p class="hero-lead">A ResultX identifica os gargalos da sua operação, implementa inteligência artificial e automações e capacita sua equipe para ganhar produtividade, reduzir custos e decidir com mais informação.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg btn-sheen" href="#componentes">Quero identificar oportunidades na minha empresa <svg class="icon icon-sm" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            <a class="btn btn-secondary btn-lg" href="#paleta">Ver a paleta</a>
+          </div>
+          <p class="hero-note">Comece com um diagnóstico gratuito dos seus desafios e das oportunidades de melhoria.</p>
+        </div>
+        <ol class="hero-flow" aria-label="Como a ResultX trabalha">
+          <li class="hero-flow-step"><span class="icon-chip" aria-hidden="true"><svg class="icon"><use href="#i-clock"/></svg></span><span><strong>Identificar os gargalos</strong><span>Onde a operação perde tempo e informação.</span></span></li>
+          <li class="hero-flow-step"><span class="icon-chip" aria-hidden="true"><svg class="icon"><use href="#i-bot"/></svg></span><span><strong>Implementar IA e automações</strong><span>Soluções conectadas aos seus processos.</span></span></li>
+          <li class="hero-flow-step"><span class="icon-chip" aria-hidden="true"><svg class="icon"><use href="#i-cap"/></svg></span><span><strong>Capacitar a equipe</strong><span>Para usar no dia a dia e ganhar autonomia.</span></span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 2. Paleta -->
+    <section class="band-tint" id="paleta" aria-labelledby="paleta-title">
+      <div class="wrap palette-stack">
+        <div class="section-head">
+          <p class="eyebrow">Paleta</p>
+          <h2 id="paleta-title">Grafite no chão, ouro na ação, roxo na atmosfera.</h2>
+          <p>Os valores abaixo são os tokens <code>--rx-*</code> da marca. As razões de contraste são medidas contra o grafite <code>#0B0E14</code>.</p>
+        </div>
+
+        <div class="swatch-group">
+          <h3 class="mono-label">Grafite — superfícies e bordas</h3>
+          <ul class="swatches">
+            <li class="swatch"><span class="swatch-chip" style="background:#0B0E14"></span><b>--rx-bg</b><small>#0B0E14 · página</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#111620"></span><b>--rx-surface-1</b><small>#111620 · faixas</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#161B26"></span><b>--rx-surface-2</b><small>#161B26 · cards</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#1C2333"></span><b>--rx-surface-3</b><small>#1C2333 · hover</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#1E2736"></span><b>--rx-border-subtle</b><small>#1E2736</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#2A3444"></span><b>--rx-border</b><small>#2A3444</small></li>
+          </ul>
+        </div>
+
+        <div class="swatch-group">
+          <h3 class="mono-label">Texto</h3>
+          <ul class="swatches">
+            <li class="swatch"><span class="swatch-chip" style="background:#E6EDF3"></span><b>--rx-text</b><small>#E6EDF3 · 16,3:1</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#8B949E"></span><b>--rx-text-secondary</b><small>#8B949E · 6,3:1</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#8A939D"></span><b>--rx-text-muted</b><small>#8A939D · 6,2:1</small></li>
+          </ul>
+        </div>
+
+        <div class="swatch-group">
+          <h3 class="mono-label">Acentos — ouro (ação) e roxo (atmosfera)</h3>
+          <ul class="swatches">
+            <li class="swatch"><span class="swatch-chip" style="background:#c4993b"></span><b>--rx-gold</b><small>#c4993b · preenchimento; como texto 7,33:1</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#d4ae54"></span><b>--rx-gold-light</b><small>#d4ae54 · hover do botão</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#a07b2a"></span><b>--rx-gold-dark</b><small>#a07b2a · contorno</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#866425"></span><b>--rx-gold-ink (claro)</b><small>#866425 · texto no claro, 5,44:1</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#6f32b1"></span><b>--rx-purple</b><small>#6f32b1 · glow e ponta da ponte</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#a55eea"></span><b>--rx-purple-light</b><small>#a55eea · reflexo</small></li>
+          </ul>
+        </div>
+
+        <div class="swatch-group">
+          <h3 class="mono-label">A ponte — --rx-gradient-bridge</h3>
+          <div class="bridge-bar" role="img" aria-label="Gradiente da ponte, de ouro a roxo"></div>
+        </div>
+
+        <div class="swatch-group">
+          <h3 class="mono-label">Semânticas (estado, nunca marca)</h3>
+          <ul class="swatches">
+            <li class="swatch"><span class="swatch-chip" style="background:#22c55e"></span><b>--rx-success</b><small>#22c55e</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#f59e0b"></span><b>--rx-warning</b><small>#f59e0b</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#ef4444"></span><b>--rx-error</b><small>#ef4444</small></li>
+            <li class="swatch"><span class="swatch-chip" style="background:#3b82f6"></span><b>--rx-info</b><small>#3b82f6</small></li>
+          </ul>
+        </div>
+
+        <div class="rule-grid">
+          <article class="card rule-card"><h3 class="card-title">Ouro = ação</h3><p class="card-text">Botão primário, eyebrow, ícone, link, foco, passo ativo do método. Como texto, use <code>--rx-gold-ink</code>.</p></article>
+          <article class="card rule-card"><h3 class="card-title">Roxo = atmosfera</h3><p class="card-text">Luz de fundo, moldura de tela, ponta do gradiente. Nunca texto (2,55:1) nem preenchimento de botão.</p></article>
+          <article class="card rule-card"><h3 class="card-title">Estado = semântica</h3><p class="card-text">Verde, âmbar, vermelho e azul só para estado. O âmbar nunca substitui o ouro da marca.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Tipografia -->
+    <section class="section" id="tipografia" aria-labelledby="tipografia-title">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Tipografia</p>
+          <h2 id="tipografia-title">Sora para títulos, Inter para ler, JetBrains Mono para rotular.</h2>
+          <p>Sora 500/600/700, Inter 400–700 e JetBrains Mono 500/600, com <code>font-display: swap</code>.</p>
+        </div>
+        <div class="type-grid">
+          <div class="card type-specimen">
+            <div class="type-row"><span class="mono-label">H1 · Sora 700 · --rx-text-h1</span><p class="t-h1">Sua empresa pode produzir mais.</p></div>
+            <div class="type-row"><span class="mono-label">H2 · Sora 700 · --rx-text-h2</span><p class="t-h2">Cada etapa termina em um entregável.</p></div>
+            <div class="type-row"><span class="mono-label">H3 · Sora 600 · --rx-text-h3</span><p class="t-h3">Processos organizados para crescer</p></div>
+            <div class="type-row"><span class="mono-label">Corpo · Inter 400 · --rx-text-body</span><p class="t-body">Revise fluxos, responsabilidades e indicadores para reduzir retrabalho e melhorar a execução.</p></div>
+            <div class="type-row"><span class="mono-label">Rótulo · JetBrains Mono 600</span><p class="t-mono">01 · ENTREGÁVEL</p></div>
+          </div>
+          <div class="card type-specimen">
+            <p class="eyebrow">Eyebrow · Sora 600 · 0,16em</p>
+            <p class="t-body">O eyebrow vai acima do título, em caixa alta, com o fio da ponte antes do texto. É sempre ouro (<code>--accent-primary-text</code>).</p>
+            <p class="mono-label">Pesos usados</p>
+            <p class="t-body">Títulos 700 (hero e seção) e 600 (cards, perguntas). Corpo 400, ênfase 500/600. Não há 800.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Logo e favicon -->
+    <section class="band-tint" id="logo" aria-labelledby="logo-title">
+      <div class="wrap palette-stack">
+        <div class="section-head">
+          <p class="eyebrow">Logo e favicon</p>
+          <h2 id="logo-title">A logomarca do site, em duas versões de fundo.</h2>
+          <p>Arquivos reais do site, recortados e com o "result" trocado para fundo claro. Regras completas em <code>assets/logo/README.md</code>.</p>
+        </div>
+        <div class="logo-grid">
+          <figure class="logo-stage logo-stage-dark"><img src="../assets/logo/resultx-logo-on-dark.svg" alt="ResultX, versão para fundo escuro" width="258" height="77"></figure>
+          <figure class="logo-stage logo-stage-light"><img src="../assets/logo/resultx-logo-on-light.svg" alt="ResultX, versão para fundo claro" width="258" height="77"></figure>
+        </div>
+        <div class="icon-row">
+          <figure><img src="../assets/logo/resultx-icon-512.png" alt="Ícone ResultX, 512 px" width="128" height="128"><figcaption>512 px (loja, OG)</figcaption></figure>
+          <figure><img src="../assets/logo/resultx-icon-180.png" alt="Ícone ResultX, 180 px" width="90" height="90"><figcaption>180 px (iOS)</figcaption></figure>
+          <figure><img src="../assets/logo/resultx-icon-32.png" alt="Ícone ResultX, 32 px" width="32" height="32"><figcaption>32 px</figcaption></figure>
+          <figure><img src="../assets/logo/resultx-icon-16.png" alt="Ícone ResultX, 16 px" width="16" height="16"><figcaption>16 px (aba)</figcaption></figure>
+          <figure><img src="../assets/logo/resultx-favicon.svg" alt="Favicon ResultX em SVG" width="64" height="64"><figcaption>favicon.svg</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Componentes -->
+    <section class="section" id="componentes" aria-labelledby="componentes-title">
+      <div class="wrap palette-stack">
+        <div class="section-head">
+          <p class="eyebrow">Componentes</p>
+          <h2 id="componentes-title">Botões, cards e header flutuante do DS, com a ponte ResultX.</h2>
+          <p>Nada foi redesenhado: a ponte da marca troca o accent do DS para o ouro e a tinta do botão é medida (7,33:1).</p>
+        </div>
+
+        <div class="state-grid">
+          <div class="state-card">
+            <h3 class="mono-label">Botões</h3>
+            <div class="row">
+              <a class="btn btn-primary" href="#componentes">Primário</a>
+              <a class="btn btn-secondary" href="#componentes">Secundário</a>
+              <a class="btn btn-ghost" href="#componentes">Ghost</a>
+              <a class="btn btn-primary btn-sheen" href="#componentes">Com reflexo</a>
+              <button class="btn btn-primary" type="button" disabled>Desativado</button>
+            </div>
+            <p class="hero-note">Passe o mouse ou use Tab: o foco é um anel dourado sólido, nunca só mudança de cor.</p>
+          </div>
+          <div class="state-card">
+            <h3 class="mono-label">Header flutuante</h3>
+            <p class="hero-note">É o componente <code>.header-float</code> do DS, no topo desta página: pílula de vidro, logomarca de 25 px, links de 16 px, barra de 76 px; abaixo de 1024 px os links viram a gaveta e a logo vai a 20 px. A sombra de destaque aparece ao rolar.</p>
+          </div>
+        </div>
+
+        <ul class="area-grid" aria-label="Aplicações por área">
+          <li class="card card-lift area-card" data-reveal style="--i:0"><span class="icon-chip" aria-hidden="true"><svg class="icon"><use href="#i-trend"/></svg></span><h3 class="card-title">Comercial</h3><p class="card-text">Organizar leads, apoiar propostas e acompanhar contatos pendentes.</p></li>
+          <li class="card card-lift area-card" data-reveal style="--i:1"><span class="icon-chip" aria-hidden="true"><svg class="icon"><use href="#i-msg"/></svg></span><h3 class="card-title">Atendimento</h3><p class="card-text">Responder dúvidas recorrentes e encaminhar solicitações.</p></li>
+          <li class="card card-lift area-card" data-reveal style="--i:2"><span class="icon-chip" aria-hidden="true"><svg class="icon"><use href="#i-wallet"/></svg></span><h3 class="card-title">Financeiro</h3><p class="card-text">Apoiar cobranças, consolidar informações e acompanhar a carteira.</p></li>
+        </ul>
+
+        <ol class="method-list" aria-label="Método de trabalho">
+          <li class="method-step" data-reveal style="--i:0"><span class="method-num" aria-hidden="true">01</span><h3>Entender a operação</h3><p class="method-deliverable"><span>Entregável</span>Resumo do problema prioritário, processo atual e indicador inicial.</p></li>
+          <li class="method-step" data-reveal style="--i:1"><span class="method-num" aria-hidden="true">02</span><h3>Definir o primeiro projeto</h3><p class="method-deliverable"><span>Entregável</span>Escopo, responsáveis, investimento, prazos e critérios de sucesso.</p></li>
+          <li class="method-step" data-reveal style="--i:2"><span class="method-num" aria-hidden="true">03</span><h3>Implementar e preparar a equipe</h3><p class="method-deliverable"><span>Entregável</span>Solução validada no fluxo acordado e orientação para uso.</p></li>
+          <li class="method-step" data-reveal style="--i:3"><span class="method-num" aria-hidden="true">04</span><h3>Acompanhar e melhorar</h3><p class="method-deliverable"><span>Entregável</span>Comparação dos indicadores e definição dos próximos ajustes.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 6. Movimento -->
+    <section class="band-tint" id="movimento" aria-labelledby="movimento-title">
+      <div class="wrap palette-stack">
+        <div class="section-head">
+          <p class="eyebrow">Movimento</p>
+          <h2 id="movimento-title">Expressivo, mas elegante: revela ao rolar, ganha profundidade no hover.</h2>
+          <p>Só <code>transform</code>, <code>opacity</code> e sombra. Com <code>prefers-reduced-motion</code>, nada se desloca e tudo fica visível.</p>
+        </div>
+        <div class="row"><button class="btn btn-secondary btn-sm" type="button" data-replay>Repetir a revelação</button></div>
+        <div class="motion-grid">
+          <article class="card card-lift" data-reveal style="--i:0"><h3 class="card-title">Revelar</h3><p class="card-text">Sobe 28 px e aparece em 800 ms, com 90 ms de atraso por item da lista.</p></article>
+          <article class="card card-lift" data-reveal style="--i:1"><h3 class="card-title">Levantar</h3><p class="card-text">No hover o card sobe 6 px em 280 ms, acende o fio da ponte e ganha a sombra e o brilho dourado.</p></article>
+          <article class="card card-lift" data-reveal style="--i:2"><h3 class="card-title">Fluxo</h3><p class="card-text">No método, o fio da ponte se desenha da esquerda para a direita e o nó dourado entra com mola.</p></article>
+        </div>
+        <div class="table-wrap">
+          <table class="motion-table">
+            <thead><tr><th scope="col">Token</th><th scope="col">Valor</th><th scope="col">Uso</th></tr></thead>
+            <tbody>
+              <tr><td><code>--rx-reveal-distance</code></td><td>28px</td><td>deslocamento inicial</td></tr>
+              <tr><td><code>--rx-reveal-duration</code></td><td>800ms</td><td>entrada ao rolar</td></tr>
+              <tr><td><code>--rx-reveal-step</code></td><td>90ms</td><td>atraso por item</td></tr>
+              <tr><td><code>--rx-lift-duration</code></td><td>280ms</td><td>hover de card</td></tr>
+              <tr><td><code>--rx-lift-distance</code></td><td>-6px</td><td>subida no hover</td></tr>
+              <tr><td><code>--rx-ease-smooth</code></td><td>cubic-bezier(0.22, 1, 0.36, 1)</td><td>mola suave do DS</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Regras de uso -->
+    <section class="section" id="regras" aria-labelledby="regras-title">
+      <div class="wrap palette-stack">
+        <div class="section-head">
+          <p class="eyebrow">Regras de uso</p>
+          <h2 id="regras-title">O que a marca faz, e o que não faz.</h2>
+        </div>
+        <div class="usage-grid">
+          <article class="usage-card"><h3>Faça</h3>
+            <ul>
+              <li>Fundo grafite, uma só cor de ação (ouro) por tela.</li>
+              <li>Imagens de ambiência atrás do conteúdo, apagadas nas bordas, com texto acima de 4,5:1.</li>
+              <li>Telas de produto em moldura de navegador, com dados de demonstração identificados como tal.</li>
+              <li>Mostrar o escopo como "exemplos de aplicações": o escopo real vai na proposta comercial.</li>
+            </ul></article>
+          <article class="usage-card is-no"><h3>Não faça</h3>
+            <ul>
+              <li>Orb: ela é a assinatura dos agentes de IA do DS, e a ResultX não tem agente próprio.</li>
+              <li>Roxo como texto ou botão; ouro como estado de erro ou aviso.</li>
+              <li>Número, cliente, depoimento ou promessa que não esteja publicado.</li>
+              <li>Pessoas como cliente ou equipe em imagem gerada; gradiente do logo em botão ou título.</li>
+            </ul></article>
+        </div>
+        <div class="light-sample" data-theme="light">
+          <p class="mono-label">Tema claro (opt-in, para propostas e documentos)</p>
+          <h3>Diagnóstico gratuito</h3>
+          <p>O mesmo conjunto de tokens, em <code>[data-theme="light"]</code>: o ouro vira <code>#866425</code> como texto (5,44:1) e segue <code>#c4993b</code> como preenchimento.</p>
+          <div class="row"><a class="btn btn-primary" href="#regras">Solicitar diagnóstico</a><a class="btn btn-secondary" href="#regras">Saber mais</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>ResultX — vitrine da marca v2.0 · 09/10/2026</span>
+      <span>Tokens: <code>brands/resultx/tokens</code> · Logo: <code>brands/resultx/assets/logo</code></span>
+    </div>
+  </footer>
+
+  <script src="../../../dist/header-float.js" defer></script>
+  <script src="../../../dist/menu-drawer.js" defer></script>
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      /* Tema claro/escuro da página inteira. */
+      const button = document.querySelector('[data-theme-toggle]');
+      const icon = button.querySelector('use');
+      const sync = () => {
+        const isDark = root.dataset.theme === 'dark';
+        button.setAttribute('aria-label', isDark ? 'Ativar tema claro' : 'Ativar tema escuro');
+        icon.setAttribute('href', isDark ? '#i-sun' : '#i-moon');
+      };
+      button.addEventListener('click', () => { root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark'; sync(); });
+      sync();
+
+      /* Revelar ao rolar. Sem JS ou com movimento reduzido, tudo fica visível. */
+      const items = [...document.querySelectorAll('[data-reveal]')];
+      if (!('IntersectionObserver' in window) || reduce.matches) return;
+      root.classList.add('js-reveal');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-revealed'); io.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+      items.forEach((el) => io.observe(el));
+      document.querySelector('[data-replay]').addEventListener('click', () => {
+        items.forEach((el) => el.classList.remove('is-revealed'));
+        requestAnimationFrame(() => requestAnimationFrame(() => items.forEach((el) => { if (el.getBoundingClientRect().top < innerHeight) el.classList.add('is-revealed'); else io.observe(el); })));
+      });
+    })();
+  </script>
+</body>
+</html>
