@@ -33,7 +33,7 @@ Para fundo claro **nunca** use o `on-dark` (o "result" branco some), e vice-vers
   família tipográfica do "result" **não está identificada**. Enquanto não houver o vetor
   original, não tente reproduzir a palavra com uma fonte.
 - **Ícone**: tile `32 × 32`, raio 8, preenchimento `#192744` (azul-marinho do arquivo
-  original — não é o grafite da interface), com um `X` em Poppins ExtraBold (24, base em y=25)
+  original — não é o grafite da interface), com um `X` em Poppins ExtraBold (24, base em y=25) — fonte do ativo herdado do site, **não** uma fonte da marca (a marca usa Sora e Inter) —
   e o mesmo gradiente. O `resultx-favicon.svg` é esse arquivo com a letra convertida em curva,
   para não depender de a Poppins estar instalada.
 

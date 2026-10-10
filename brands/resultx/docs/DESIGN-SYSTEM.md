@@ -35,7 +35,7 @@ O tema padrão é **grafite** (`data-theme="dark"`). O claro é opt-in (`data-th
 | `--rx-bg` / `--rx-surface-1/2/3` | `#0B0E14` / `#111620` / `#161B26` / `#1C2333` | página, faixa, card, hover |
 | `--rx-border-subtle` / `--rx-border` / `--rx-border-strong` | `#1E2736` / `#2A3444` / `#3D4A5C` | bordas |
 | `--rx-text` / `-secondary` / `-muted` | `#E6EDF3` / `#8B949E` / `#8A939D` | texto (≥ 5,0:1 em todas as superfícies) |
-| `--rx-text-inverse` | `#0B0E14` | tinta sobre o ouro e sobre superfícies claras |
+| `--rx-text-inverse` | `#0B0E14` (claro: `#FFFFFF`) | texto sobre superfície do tema oposto (no claro, sobre superfície **escura**). **Não** use sobre o ouro: no tema claro dá 2,64:1. Para botão ou texto sobre o ouro use `--text-on-accent` (`#0B0E14`, 7,33:1) |
 | `--rx-gold` / `-light` / `-dark` | `#c4993b` / `#d4ae54` / `#a07b2a` | preenchimento de ação / hover / contorno |
 | `--rx-gold-ink` | `#c4993b` (escuro), `#866425` (claro) | ouro como texto |
 | `--rx-purple` / `-light` / `-dark` | `#6f32b1` / `#a55eea` / `#5a2890` | atmosfera, reflexo |

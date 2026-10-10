@@ -109,3 +109,49 @@ describe('ResultX — vitrine e viewer', () => {
     expect(preview).not.toMatch(/brand-orb/);
   });
 });
+
+describe('ResultX — contraste AA (>= 4,5:1) nos dois temas', () => {
+  const { contrastRatio } = require('../scripts/lib/contrast');
+  const AA = 4.5;
+
+  /** Declaracoes `--x: #hex;` de um bloco, lidas do tokens.css (fonte dos valores). */
+  const declsOf = (block) =>
+    Object.fromEntries([...block.matchAll(/(--rx-[\w-]+):\s*(#[0-9a-fA-F]{3,6})\s*;/g)].map((m) => [m[1], m[2]]));
+  const lightStart = css.indexOf('\n[data-theme="light"] {');
+  const lightBlock = css.slice(lightStart, css.indexOf('\n}', lightStart));
+  const dark = declsOf(rootBlock);
+  const light = { ...dark, ...declsOf(lightBlock) };
+  const bridge = read('brands', 'resultx', 'tokens', 'ds-bridge.css');
+  const inkOnAccent = /--text-on-accent:\s*(#[0-9a-fA-F]{6})/.exec(bridge)[1];
+
+  const themes = [
+    ['escuro', dark],
+    ['claro', light],
+  ];
+  const surfaces = (t) => ['--rx-bg', '--rx-surface-1', '--rx-surface-2', '--rx-surface-3'].map((k) => [k, t[k]]);
+
+  test.each(themes)('tema %s: texto, secundario e muted sobre todas as superficies', (_, t) => {
+    const falhas = [];
+    for (const fg of ['--rx-text', '--rx-text-secondary', '--rx-text-muted']) {
+      for (const [name, bg] of surfaces(t)) {
+        const r = contrastRatio(t[fg], bg);
+        if (r < AA) falhas.push(`${fg} ${t[fg]} sobre ${name} ${bg} = ${r.toFixed(2)}`);
+      }
+    }
+    expect(falhas).toEqual([]);
+  });
+
+  test.each(themes)('tema %s: dourado como texto (--rx-gold-ink) sobre o fundo e as superficies', (_, t) => {
+    const falhas = surfaces(t)
+      .map(([name, bg]) => [name, contrastRatio(t['--rx-gold-ink'], bg)])
+      .filter(([, r]) => r < AA)
+      .map(([name, r]) => `gold-ink ${t['--rx-gold-ink']} sobre ${name} = ${r.toFixed(2)}`);
+    expect(falhas).toEqual([]);
+  });
+
+  test('tinta do botao (--text-on-accent) sobre o preenchimento dourado', () => {
+    expect(inkOnAccent.toUpperCase()).toBe('#0B0E14');
+    expect(contrastRatio(inkOnAccent, dark['--rx-gold'])).toBeGreaterThanOrEqual(AA);
+    expect(contrastRatio(inkOnAccent, dark['--rx-gold-light'])).toBeGreaterThanOrEqual(AA);
+  });
+});

@@ -20,7 +20,7 @@ Tema **grafite** como padrão (dark-first), Sora + Inter + JetBrains Mono, heade
 | `--rx-text` | `#FFFFFF` | `#E6EDF3` | visual |
 | `--rx-text-secondary` | `#bfd0ec` | `#8B949E` | visual |
 | `--rx-text-muted` | `#5a6b7c` (reprovava AA no grafite) | `#8A939D` | visual |
-| `--rx-text-inverse` | `#1B2A4A` | `#0B0E14` (claro: `#FFFFFF`) | visual |
+| `--rx-text-inverse` | `#1B2A4A` | `#0B0E14` (claro: `#FFFFFF`, texto sobre superfície escura; sobre o ouro use `--text-on-accent`) | visual |
 | `--rx-glass-dark-bg` | `rgba(28,42,74,.6)` | `rgba(22,27,38,.6)` | visual |
 | `--rx-success/-error/-warning` | `#16a34a` / `#ef4343` / `#d97706` | escuro `#22c55e` / `#ef4444` / `#f59e0b`; claro `#16a34a` / `#dc2626` / `#d97706` | visual |
 | `--rx-shadow-sm/md/lg` | navy `rgba(27,42,74,…)` | escuro: sombras pretas do DS; claro: as navy antigas | visual |
@@ -47,6 +47,8 @@ Tema **grafite** como padrão (dark-first), Sora + Inter + JetBrains Mono, heade
 ---
 
 ## [0.3] - 2026-05-23
+
+> Histórico — superado pela 2.0 (09/10/2026); a afirmação sobre tempo de operação não foi confirmada e não deve ser usada em material público.
 
 ### Added — Canonizacao paleta + tipografia + 3 pilares (extraido de resultx.app)
 
@@ -81,6 +83,8 @@ Tema **grafite** como padrão (dark-first), Sora + Inter + JetBrains Mono, heade
 ---
 
 ## [0.1] - 2026-05-11
+
+> Histórico — superado pela 2.0 (09/10/2026); a afirmação sobre tempo de operação não foi confirmada e não deve ser usada em material público.
 
 ### Added — Bootstrap inicial da brand
 - `docs/BRAND-BOOK.md` v0.1 — 10 seções com rascunho + varios `[TBD]` markers

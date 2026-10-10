@@ -63,8 +63,11 @@
   --rx-text: #E6EDF3;
   --rx-text-secondary: #8B949E;
   --rx-text-muted: #8A939D;
-  /* Tinta impressa sobre o preenchimento dourado (7,33:1) e sobre superfícies
-     claras. No tema claro vira branco. */
+  /* Texto sobre superfícies do tema OPOSTO ao ativo: aqui, tinta escura para
+     superfícies claras. No tema claro vira branco (texto sobre superfície
+     ESCURA). ⚠️ NÃO usar sobre o ouro no tema claro (#FFFFFF dá 2,64:1): para
+     botão ou texto sobre o ouro use --text-on-accent (#0B0E14, 7,33:1), que a
+     ponte emite igual nos dois temas. */
   --rx-text-inverse: #0B0E14;
 
   /* ---- Glass Light (heranca Emprega+) ---- */
@@ -177,7 +180,7 @@
   --rx-text: #0F1729;
   --rx-text-secondary: #4B5563;
   --rx-text-muted: #5F6672;
-  --rx-text-inverse: #FFFFFF;
+  --rx-text-inverse: #FFFFFF;   /* texto sobre superfície escura; NÃO sobre o ouro */
 
   --rx-success: #16a34a;
   --rx-error: #dc2626;

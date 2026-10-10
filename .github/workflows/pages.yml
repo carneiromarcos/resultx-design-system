@@ -52,9 +52,8 @@ jobs:
           # raiz so redireciona para docs/viewer.html, que ja vai em `cp -r docs`.
           cat > _site/index.html <<'HTML'
           <!DOCTYPE html>
-          <html lang="en"><head><meta charset="utf-8"><title>ResultX Design System</title>
-          <meta http-equiv="refresh" content="0; url=docs/viewer.html">
-          <link rel="canonical" href="docs/viewer.html"></head>
+          <html lang="pt-BR"><head><meta charset="utf-8"><title>ResultX Design System</title>
+          <meta http-equiv="refresh" content="0; url=docs/viewer.html"></head>
           <body><p><a href="docs/viewer.html">ResultX Design System — abrir o viewer</a></p></body></html>
           HTML
           cp -r dist _site/dist
