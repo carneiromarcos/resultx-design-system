@@ -5,6 +5,8 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+## [2.9.0] - 2026-10-10
+
 ### Changed — Electia: "Testes criados" passa a se chamar "Testes personalizados"
 
 Decisão do Marcos (10/10/2026). No protótipo de Assessments
@@ -64,6 +66,10 @@ artificial, identidade católica explícita e sóbria (substitui a regra de fé 
 quintas 8h30, MAPA PdV com preço e garantia de 7 dias, Mentoria retirada e regras de
 verdade (sem escassez nem número sem fonte). Detalhes em `brands/pdv/docs/CHANGELOG.md`
 (2.6.0). Não altera componente nem token.
+
+### Dependencies
+
+`source-map-js` 1.2.1 → 1.2.2 (dependência de desenvolvimento, #87).
 
 ## [2.8.1] - 2026-10-07
 
