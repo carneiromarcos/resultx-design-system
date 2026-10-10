@@ -5,6 +5,25 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Changed — Electia: "Testes criados" passa a se chamar "Testes personalizados"
+
+Decisão do Marcos (10/10/2026). No protótipo de Assessments
+(`brands/electia/previews/prototypes/electia-assessments-2026-10-06.html` e `.js`) mudam o item
+de menu, o h1, o título da aba, os links, o rótulo do filtro e a legenda da tabela; a rota passa
+de `#testes-criados` para `#testes-personalizados` (o link antigo cai em Assessments). A contagem
+do card ("2 testes criados", "Nenhum teste criado ainda") continua, porque ali "criado" é verbo.
+A ficha `docs/research/electia-assessments-2026-10-06.md` ganhou a linha da decisão e mantém o
+histórico de 06/10.
+
+### Fixed — viewer com scroll horizontal da página no celular
+
+`docs/viewer.html` passava da largura a 390 px (badges DNA e abas sem quebra) e a 320 px
+(também cabeçalho, cards de 300 px, stat cards, paginação, barra de ações e stepper). Uma media
+query `max-width: 480px`, só com tokens, quebra essas linhas, reduz o respiro lateral e esconde
+o rótulo "Dark Mode" do cabeçalho. As duas tabelas já rolavam dentro do `.table-card`; agora a
+região rolável tem `tabindex="0"`, `role="region"` e `aria-label`. Desktop inalterado.
+`scrollWidth <= clientWidth` medido a 320, 390, 768 e 1440 px.
+
 ### Changed — marca ResultX alinhada ao site novo (resultx.app, tema grafite)
 
 `brands/resultx` deixa de ser navy/claro e passa a refletir o site: tokens no grafite

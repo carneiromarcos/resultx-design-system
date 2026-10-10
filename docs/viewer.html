@@ -477,6 +477,36 @@
       }
     }
 
+    /* -- Telas estreitas (<= 480px): nada pode passar da largura da página.
+          Tabelas já rolam dentro do .table-card (overflow-x: auto); aqui só
+          os exemplos que ainda empurravam a página a 320/390 px. ----------- */
+    @media (max-width: 480px) {
+      .viewer-header {
+        padding: 0 var(--space-4);
+      }
+      .theme-indicator {
+        display: none;
+      }
+      .viewer-main {
+        padding: var(--space-8) var(--space-4);
+      }
+      .viewer-main .card-grid {
+        grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+      }
+      .viewer-main .stat-grid {
+        grid-template-columns: 1fr;
+      }
+      .viewer-main .stepper-connector {
+        min-width: var(--space-4);
+      }
+      .viewer-main .tabs,
+      .viewer-main .dna-badges,
+      .viewer-main .pagination,
+      .viewer-main .bulk-toolbar {
+        flex-wrap: wrap;
+      }
+    }
+
     /* -- Smooth theme transitions -------------------------------------- */
     *, *::before, *::after {
       transition-property: background-color, border-color, color, box-shadow;
@@ -1083,7 +1113,7 @@
         Data tables with hover states, avatar cells, score highlighting, and sortable headers.
       </p>
 
-      <div class="table-card">
+      <div class="table-card" tabindex="0" role="region" aria-label="Tabela de exemplo: Recent Assessments (rola na horizontal)">
         <div class="table-header">
           <div class="table-header-title">Recent Assessments</div>
           <button class="btn btn-sm btn-secondary">&#8599; Export</button>
@@ -1692,7 +1722,7 @@
       <h2 class="ds-section-title">Data Table (Enhanced)</h2>
       <p class="ds-section-desc">Sortable columns, row selection, color-coded cells, and bulk actions.</p>
       <div class="showcase">
-        <div class="table-card" style="margin-bottom: var(--space-4);">
+        <div class="table-card" style="margin-bottom: var(--space-4);" tabindex="0" role="region" aria-label="Tabela de exemplo: Data Table (rola na horizontal)">
           <table>
             <thead>
               <tr>
