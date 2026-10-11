@@ -5,6 +5,16 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Changed — README com distribuição por tag e status do ADR-0002
+
+`README.md` ganha a seção "Como consumir / Distribuição": o DS é instalado por tag do git
+(`github:carneiromarcos/resultx-design-system#vX.Y.Z`), não pelo npm — decisão de 11/10/2026
+com o motivo e a condição para reabrir — e a lista dos consumidores com o ref que cada `main`
+usa hoje (Electia e FinanceX em `v2.6.0`, ResultX Site em `v2.8.1`). Xscore entra no "Atende" e
+fica registrado que ele espelha os tokens à mão, sem o pacote. O status do ADR-0002 passa a dizer
+que o passo 4b chegou ao `main` do EditalHub (app#678) e que a trava de SHA (4c) vale nos três
+repos, conferido com `npm run check:eds-root` em 11/10. Só documentação.
+
 ## [2.9.0] - 2026-10-10
 
 ### Changed — Electia: "Testes criados" passa a se chamar "Testes personalizados"
