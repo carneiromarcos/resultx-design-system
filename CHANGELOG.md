@@ -5,6 +5,13 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Changed — Xscore entra na tabela de consumidores
+
+O Xscore passa a constar em "Consumidores conhecidos" com `#v2.9.0`: desde 12/10/2026
+(carneiromarcos/marcos-workspace#271) ele instala o pacote em
+`meus-projetos/resultx/labs/xscore/apps/web` e importa só `brands/xscore/tokens`, sem base e
+sem bridge. Sai do README a afirmação de que ele espelhava os tokens à mão. Só documentação.
+
 ### Changed — tabela de consumidores do README em `v2.9.0`
 
 Electia, FinanceX e ResultX Site passam a `#v2.9.0` na tabela de "Consumidores conhecidos",

@@ -41,10 +41,11 @@ Os caminhos importaveis estao em `exports` do [`package.json`](package.json).
 | `empregamais/electia` | `#v2.9.0` |
 | `carneiromarcos/financex` | `#v2.9.0` |
 | `carneiromarcos/resultx-site` | `#v2.9.0` |
+| `carneiromarcos/marcos-workspace` (Xscore, em `meus-projetos/resultx/labs/xscore/apps/web`) | `#v2.9.0` |
 
-Atualizacao dos tres para `v2.9.0` mergeada em 12/10/2026: empregamais/electia#678, carneiromarcos/financex#19, carneiromarcos/resultx-site#58.
+Atualizacao dos tres para `v2.9.0` mergeada em 12/10/2026: empregamais/electia#678, carneiromarcos/financex#19, carneiromarcos/resultx-site#58. O Xscore entrou ja em `v2.9.0` no mesmo dia: carneiromarcos/marcos-workspace#271.
 
-**Xscore nao consome o pacote** (`carneiromarcos/xscore`): tem copia manual dos tokens em `apps/web/app/brand-tokens.css`. Antes de trocar o espelho pelo pacote, comparar seletor a seletor (guard-rail do `PAPEIS.md`). IMO e EditalHub tambem nao instalam o pacote: leem uma copia vendored de `brands/emprega-mais/tokens/eds-root.css` travada por SHA ([ADR-0002](docs/adr/0002-emprega-brand-convergence.md); conferir com `npm run check:eds-root`).
+**Xscore consome o pacote desde 12/10/2026** (carneiromarcos/marcos-workspace#271; o repo `carneiromarcos/xscore` esta parado e nao e a fonte). Importa so `resultx-design-system/brands/xscore/tokens`, sem os tokens base e sem bridge; a copia manual `brand-tokens.css` foi apagada. A migracao completa (base + bridge) segue aberta no Xscore. IMO e EditalHub tambem nao instalam o pacote: leem uma copia vendored de `brands/emprega-mais/tokens/eds-root.css` travada por SHA ([ADR-0002](docs/adr/0002-emprega-brand-convergence.md); conferir com `npm run check:eds-root`).
 
 ---
 
