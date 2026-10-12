@@ -5,6 +5,12 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Changed — tabela de consumidores do README em `v2.9.0`
+
+Electia, FinanceX e ResultX Site passam a `#v2.9.0` na tabela de "Consumidores conhecidos",
+com as PRs de atualização mergeadas em 12/10/2026 (empregamais/electia#678,
+carneiromarcos/financex#19, carneiromarcos/resultx-site#58). Só documentação.
+
 ### Changed — README com distribuição por tag e status do ADR-0002
 
 `README.md` ganha a seção "Como consumir / Distribuição": o DS é instalado por tag do git
