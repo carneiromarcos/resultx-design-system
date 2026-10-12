@@ -34,15 +34,15 @@ Os caminhos importaveis estao em `exports` do [`package.json`](package.json).
 
 **Decisao de 11/10/2026** (delegada pelo Marcos ao Supervisor): manter a tag. Os consumidores ja usam tags; o repo e publico e instala sem token na Vercel e no CI; o npm criaria uma segunda fonte da verdade e exigiria segredo de publicacao; e publicacao no npm e dificil de desfazer. Reabrir se surgir consumidor que nao aceite dependencia git.
 
-**Consumidores conhecidos** — ref no `package.json` do `main` de cada repo, conferido em 11/10/2026:
+**Consumidores conhecidos** — ref no `package.json` do `main` de cada repo, conferido em 12/10/2026:
 
 | Repo | Ref hoje |
 |---|---|
-| `empregamais/electia` | `#v2.6.0` |
-| `carneiromarcos/financex` | `#v2.6.0` |
-| `carneiromarcos/resultx-site` | `#v2.8.1` |
+| `empregamais/electia` | `#v2.9.0` |
+| `carneiromarcos/financex` | `#v2.9.0` |
+| `carneiromarcos/resultx-site` | `#v2.9.0` |
 
-Atualizacao dos tres para `v2.9.0` aberta em 11/10/2026: empregamais/electia#678, carneiromarcos/financex#19, carneiromarcos/resultx-site#58 (aguardando merge).
+Atualizacao dos tres para `v2.9.0` mergeada em 12/10/2026: empregamais/electia#678, carneiromarcos/financex#19, carneiromarcos/resultx-site#58.
 
 **Xscore nao consome o pacote** (`carneiromarcos/xscore`): tem copia manual dos tokens em `apps/web/app/brand-tokens.css`. Antes de trocar o espelho pelo pacote, comparar seletor a seletor (guard-rail do `PAPEIS.md`). IMO e EditalHub tambem nao instalam o pacote: leem uma copia vendored de `brands/emprega-mais/tokens/eds-root.css` travada por SHA ([ADR-0002](docs/adr/0002-emprega-brand-convergence.md); conferir com `npm run check:eds-root`).
 
