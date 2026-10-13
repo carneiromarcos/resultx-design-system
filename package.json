@@ -113,9 +113,9 @@
   "devDependencies": {
     "@commitlint/cli": "^21.2.3",
     "@commitlint/config-conventional": "^21.2.3",
-    "@playwright/test": "^1.63.0",
+    "@playwright/test": "^1.64.0",
     "autoprefixer": "^10.6.1",
-    "cssnano": "^9.3.1",
+    "cssnano": "^9.5.0",
     "husky": "^9.1.7",
     "jest": "^30.5.2",
     "lint-staged": "^17.6.0",
