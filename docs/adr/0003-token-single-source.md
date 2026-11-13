@@ -51,7 +51,7 @@ Medido em `origin/main` `6083ce3` (13/11/2026):
 **Por quê.** Esta ADR foi escrita contra a v2.9.0 e previa a E1 como v2.10.0 "sem mudança de valor". Depois do aceite, a `main` recebeu mudanças distribuídas que alteram a tela para quem importa `components`: a correção de contraste do `.btn-success` no tema escuro (E0, #111) e a saída de `tokens/themes/preview.html` do pacote (#112). Uma v2.10.0 cortada da `main` atual não cumpre o critério original.
 
 **O que muda.**
-1. **v2.10.0** = `main` atual, com mudança visual **declarada** no CHANGELOG e o inventário completo `v2.9.0 → v2.10.0` (auditoria `docs/audits/2026-11-13-ds-auditoria/governanca-propagacao-conformidade.md` §2.6).
+1. **v2.10.0** = a `main` **no momento de cortar a tag** (não um SHA fixo de hoje), com mudança visual **declarada** no CHANGELOG e inventário completo `v2.9.0 →` SHA da tag, revisado de novo pelo Revisor nesse momento. O inventário de 13/11 (auditoria `docs/audits/2026-11-13-ds-auditoria/governanca-propagacao-conformidade.md` §2.6) é o ponto de partida, não a versão final.
 2. A **E1** (fonte única com saída equivalente) passa a ser **v2.11.0**, e a equivalência é medida contra a v2.10.0.
 3. A v2.10.0 só é cortada depois que o impacto em **todos** os consumidores conhecidos estiver preenchido. Consumidor com uso **desconhecido** (hoje FinanceX e ResultX Site) trava a tag, salvo ordem expressa do Marcos.
 
