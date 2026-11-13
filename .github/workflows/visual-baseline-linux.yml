@@ -1,0 +1,57 @@
+name: Visual Linux
+
+on:
+  # Não tornar este check obrigatório enquanto houver filtro de paths.
+  pull_request:
+    paths:
+      - 'tests/visual/**'
+      - 'assets/fonts/**'
+      - '**/preview.html'
+      - 'components/**'
+      - 'tokens/**'
+      - 'brands/**'
+      - 'dist/**'
+      - 'playwright.config.js'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/visual-baseline-linux.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  visual-linux:
+    runs-on: ubuntu-24.04
+    container:
+      # v1.64.1-noble, manifesto linux/amd64; manter alinhado ao lockfile.
+      image: mcr.microsoft.com/playwright@sha256:ee15712262f017b8157421b212b12099146645f44b1bc5c0514cbbe6a229b1d0
+    steps:
+      - uses: actions/checkout@v7
+      - name: Verificar versão da imagem
+        run: |
+          node -e "const v = require('./package-lock.json').packages['node_modules/@playwright/test'].version; if (v !== '1.64.1') { console.error('Atualize a imagem Playwright para a versão do lockfile: ' + v); process.exit(1); }"
+      - run: npm ci
+      # Fase B: as baselines aprovadas vêm do checkout; diferenças falham o job.
+      - name: Verificar baselines Linux do checkout
+        run: |
+          set -eu
+          snapshots=tests/visual/preview.spec.js-snapshots
+          for name in premium-light-frame preview-themes sober-dark-frame vibrant-dark-frame; do
+            file="$snapshots/$name-chromium-linux.png"
+            test -f "$file" || { echo "Baseline ausente: $file"; exit 1; }
+          done
+          count=$(find tests/visual -type f -name '*-chromium-linux.png' | wc -l)
+          if [ "$count" -ne 4 ]; then
+            echo "Esperadas exatamente 4 baselines Linux, encontradas $count."
+            exit 1
+          fi
+      - name: Comparar capturas com baselines Linux
+        run: npm run test:visual
+      - name: Publicar diagnóstico visual em caso de falha
+        if: failure()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: resultx-ds-visual-falha-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: test-results/
+          if-no-files-found: warn

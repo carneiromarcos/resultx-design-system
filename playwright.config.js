@@ -4,12 +4,13 @@ const { defineConfig, devices } = require('@playwright/test');
 /**
  * ResultX DS — Visual Regression Configuration
  *
- * Tests live in tests/visual/. The committed snapshots are for macOS;
- * visual tests are not yet run in CI and need verified Linux baselines.
+ * Tests live in tests/visual/. CI compares against committed Linux baselines.
+ * The macOS baselines are outdated and do not run in CI; their fate will be
+ * decided separately.
  *
  * Run locally:
  *   npm run test:visual              # compare against baseline
- *   npm run test:visual -- -u        # update baseline (after intentional change)
+ *   See CONTRIBUTING.md for the approved Linux baseline update process.
  */
 module.exports = defineConfig({
   testDir: './tests/visual',

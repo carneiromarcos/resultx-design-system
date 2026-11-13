@@ -5,6 +5,10 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Changed — pacote sem preview de desenvolvimento
+
+O preview de temas deixa o pacote distribuído; os arquivos CSS dos temas permanecem.
+
 ### Fixed — contraste do botão success no tema dark
 
 O botão success usa `--text-on-success` no dark explícito e no dark automático.

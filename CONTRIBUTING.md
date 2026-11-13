@@ -98,6 +98,15 @@ docs: update token documentation
 chore: update dependencies
 ```
 
+## Atualização de baseline visual Linux
+
+Após uma mudança visual intencional, rode o workflow **Visual Linux** na PR ou
+por `workflow_dispatch` e baixe o artefato de diagnóstico da execução que falhou.
+Peça ao Revisor para aprovar as imagens `actual` e, depois da aprovação, copie
+exatamente os PNGs aprovados para `tests/visual/preview.spec.js-snapshots/`, com
+os nomes `*-chromium-linux.png`. Confira o SHA-256 da cópia contra o artefato e
+versione as baselines junto à mudança. Nunca regenere baselines Linux no Mac.
+
 ## Release — feito à mão, de propósito
 
 Não existe script de release neste repo, e isso é decisão, não esquecimento.

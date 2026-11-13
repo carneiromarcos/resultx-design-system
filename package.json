@@ -33,6 +33,7 @@
     "tokens/tokens.css",
     "tokens/base/tokens-base.css",
     "tokens/themes/",
+    "!tokens/themes/preview.html",
     "tokens/tokens.json",
     "brands/*/tokens/ds-bridge.css",
     "brands/*/tokens/tokens.css",
