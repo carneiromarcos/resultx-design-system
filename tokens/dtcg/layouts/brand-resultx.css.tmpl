@@ -1,0 +1,236 @@
+/* Gerado por scripts/build-brand-tokens.mjs. Não editar. */
+/* ============================================
+   RESULTX — Design Tokens v2.0
+   Source of truth: tokens.json (W3C Design Tokens)
+   Marca de consultoria — ponte Emprega+ <-> Electia
+
+   v2.0 (09/10/2026) — alinhada ao site novo (resultx.app, tema GRAFITE):
+   - dark-first: o :root é o tema grafite do ecossistema (#0B0E14), o mesmo
+     chão do DS, do Electia e do Xscore; o claro é opt-in por
+     [data-theme="light"] (propostas e documentos).
+   - Sora (títulos) + Inter (corpo) + JetBrains Mono (dado e rótulo).
+   - Regra de acento: OURO = ação e estado ativo; ROXO = atmosfera e a ponta
+     do gradiente da ponte. Roxo não é texto nem preenchimento de botão.
+   - Sem orb: a orb animada é a assinatura dos agentes de IA do DS e a
+     ResultX não tem agente próprio.
+   O que mudou de valor/nome em relação à v1.0 está em docs/CHANGELOG.md.
+   ============================================ */
+
+:root {
+  /* ---- Gold accent (heranca Emprega+) ---- */
+  --rx-gold-light: __RX_b0000__;
+  --rx-gold: __RX_b0001__;
+  --rx-gold-dark: __RX_b0002__;
+  /* Texto/ícone dourado. No escuro é o próprio --rx-gold (7,33:1 sobre
+     #0B0E14); no light vira #866425, porque #c4993b reprova sobre branco
+     (2,64:1) e mesmo --rx-gold-dark para em 3,92:1.
+     ⚠️ Existe nos DOIS temas para que a interface use UM token só. Sem esta
+     declaração `var(--rx-gold-ink)` ficaria indefinido no escuro, e quem
+     precisasse de texto dourado cairia de volta em --rx-gold — que é
+     exatamente o bug que o token veio evitar. Mesmo padrão do Xscore. */
+  --rx-gold-ink: __RX_b0003__;
+
+  /* ---- Purple accent (heranca Electia) ---- */
+  --rx-purple-light: __RX_b0004__;
+  --rx-purple: __RX_b0005__;
+  --rx-purple-dark: __RX_b0006__;
+
+  /* ---- Bridge gradient (assinatura ResultX) ---- */
+  --rx-gradient-bridge: __RX_b0007__;
+  --rx-gradient-bridge-subtle: __RX_b0008__;
+  --rx-gradient-gold: __RX_b0009__;
+  --rx-gradient-purple: __RX_b0010__;
+
+  /* ---- Grafite (chão do ecossistema, tema padrão) ----
+     Mesma escala do DS (--bg-base .. --bg-surface-3) no tema escuro. */
+  --rx-bg: __RX_b0011__;
+  --rx-surface-1: __RX_b0012__;
+  --rx-surface-2: __RX_b0013__;
+  --rx-surface-3: __RX_b0014__;
+
+  /* ---- Bordas ---- */
+  --rx-border-subtle: __RX_b0015__;
+  --rx-border: __RX_b0016__;
+  --rx-border-strong: __RX_b0017__;
+
+  /* ---- Light surfaces (tema claro, opt-in) ---- */
+  --rx-light-bg: __RX_b0018__;
+  --rx-light-subtle: __RX_b0019__;
+  --rx-light-muted: __RX_b0020__;
+  --rx-light-border: __RX_b0021__;
+
+  /* ---- Text (escuro) ----
+     secondary e muted: 5,0 a 6,3:1 nas quatro superfícies do grafite (AA). */
+  --rx-text: __RX_b0022__;
+  --rx-text-secondary: __RX_b0023__;
+  --rx-text-muted: __RX_b0024__;
+  /* Texto sobre superfícies do tema OPOSTO ao ativo: aqui, tinta escura para
+     superfícies claras. No tema claro vira branco (texto sobre superfície
+     ESCURA). ⚠️ NÃO usar sobre o ouro no tema claro (#FFFFFF dá 2,64:1): para
+     botão ou texto sobre o ouro use --text-on-accent (#0B0E14, 7,33:1), que a
+     ponte emite igual nos dois temas. */
+  --rx-text-inverse: __RX_b0025__;
+
+  /* ---- Glass Light (heranca Emprega+) ---- */
+  --rx-glass-light-bg: __RX_b0026__;
+  --rx-glass-light-border: __RX_b0027__;
+  --rx-glass-light-blur: __RX_b0028__;
+
+  /* ---- Glass Dark (padrão do tema grafite = glass-standard do DS) ---- */
+  --rx-glass-dark-bg: __RX_b0029__;
+  --rx-glass-dark-border: __RX_b0030__;
+  --rx-glass-dark-blur: __RX_b0031__;
+
+  /* ---- Semantic (escuro = valores do DS; claro redeclara abaixo) ---- */
+  --rx-success: __RX_b0032__;
+  --rx-error: __RX_b0033__;
+  --rx-warning: __RX_b0034__;
+  --rx-info: __RX_b0035__;
+
+  /* ---- Typography ---- */
+  --rx-font-heading: __RX_b0036__;
+  --rx-font-body: __RX_b0037__;
+  --rx-font-mono: __RX_b0038__;
+
+  --rx-weight-regular: __RX_b0039__;
+  --rx-weight-medium: __RX_b0040__;
+  --rx-weight-semibold: __RX_b0041__;
+  --rx-weight-bold: __RX_b0042__;
+
+  /* ---- Typography Scale ----
+     h1/h2 são as escalas do site: fluidas, sem salto entre breakpoints. */
+  --rx-text-display: __RX_b0043__;
+  --rx-text-h1: __RX_b0044__;
+  --rx-text-h2: __RX_b0045__;
+  --rx-text-h3: __RX_b0046__;
+  --rx-text-eyebrow: __RX_b0047__;
+  --rx-text-body-lg: __RX_b0048__;
+  --rx-text-body: __RX_b0049__;
+  --rx-text-small: __RX_b0050__;
+  --rx-text-code: __RX_b0051__;
+  /* Eyebrow: Sora 600, caixa alta, com o fio da ponte antes. */
+  --rx-tracking-eyebrow: __RX_b0052__;
+
+  /* ---- Spacing ---- */
+  --rx-space-xs: __RX_b0053__;
+  --rx-space-sm: __RX_b0054__;
+  --rx-space-md: __RX_b0055__;
+  --rx-space-lg: __RX_b0056__;
+  --rx-space-xl: __RX_b0057__;
+  --rx-space-2xl: __RX_b0058__;
+  --rx-space-3xl: __RX_b0059__;
+  --rx-space-section: __RX_b0060__;
+
+  /* ---- Radius ---- */
+  --rx-radius-sm: __RX_b0061__;
+  --rx-radius-md: __RX_b0062__;
+  --rx-radius-lg: __RX_b0063__;
+  --rx-radius-xl: __RX_b0064__;
+
+  /* ---- Shadows (escuro = sombras do DS sobre grafite) ---- */
+  --rx-shadow-sm: __RX_b0065__;
+  --rx-shadow-md: __RX_b0066__;
+  --rx-shadow-lg: __RX_b0067__;
+  --rx-glow-gold: __RX_b0068__;
+  --rx-glow-purple: __RX_b0069__;
+  --rx-glow-bridge: __RX_b0070__;
+
+  /* ---- Motion ----
+     Só transform, opacity e sombra. Tudo respeita prefers-reduced-motion. */
+  --rx-duration-fast: __RX_b0071__;
+  --rx-duration-normal: __RX_b0072__;
+  --rx-duration-slow: __RX_b0073__;
+  --rx-ease-out-expo: __RX_b0074__;
+  --rx-ease-smooth: __RX_b0075__;   /* = --spring-smooth do DS */
+  /* Revelar ao rolar e card com profundidade (valores do site). */
+  --rx-reveal-distance: __RX_b0076__;
+  --rx-reveal-duration: __RX_b0077__;
+  --rx-reveal-step: __RX_b0078__;
+  --rx-lift-duration: __RX_b0079__;
+  --rx-lift-distance: __RX_b0080__;
+
+  /* ---- Layout ---- */
+  --rx-container-max: __RX_b0081__;
+  --rx-gutter: __RX_b0082__;
+  /* Header flutuante (DS .header-float) na proporção do site: logomarca de
+     25 px (20 px na gaveta, < 1024 px), links de 16 px, barra de 76 px. */
+  --rx-header-logo-h: __RX_b0083__;
+  --rx-header-logo-h-compact: __RX_b0084__;
+  --rx-header-link: __RX_b0085__;
+  --rx-header-bar-min: __RX_b0086__;
+}
+
+/* ============================================
+   TEMA LIGHT — opt-in via data-theme="light"
+   Só o que MUDA de valor sobre fundo claro.
+   ============================================ */
+[data-theme="light"] {
+  /* 5,44:1 sobre branco e 4,69:1 sobre a superfície com 12% de dourado (o
+     fundo de tag) — as duas medidas precisam passar. O dourado da marca segue
+     intacto como PREENCHIMENTO de botão, com tinta escura por cima. */
+  --rx-gold-ink: __RX_b0087__;
+
+  --rx-bg: __RX_b0088__;
+  --rx-surface-1: __RX_b0089__;
+  --rx-surface-2: __RX_b0090__;
+  --rx-surface-3: __RX_b0091__;
+  --rx-border-subtle: __RX_b0092__;
+  --rx-border: __RX_b0093__;
+  --rx-border-strong: __RX_b0094__;
+
+  --rx-text: __RX_b0095__;
+  --rx-text-secondary: __RX_b0096__;
+  --rx-text-muted: __RX_b0097__;
+  --rx-text-inverse: __RX_b0098__;   /* texto sobre superfície escura; NÃO sobre o ouro */
+
+  --rx-success: __RX_b0099__;
+  --rx-error: __RX_b0100__;
+  --rx-warning: __RX_b0101__;
+  --rx-info: __RX_b0102__;
+
+  --rx-shadow-sm: __RX_b0103__;
+  --rx-shadow-md: __RX_b0104__;
+  --rx-shadow-lg: __RX_b0105__;
+}
+
+/* ---- Animation: Scroll Reveal (mesmos números do site) ---- */
+@keyframes rx-fade-in-up {
+  from { opacity: 0; transform: translateY(var(--rx-reveal-distance)); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rx-reveal {
+  animation: rx-fade-in-up var(--rx-reveal-duration) var(--rx-ease-smooth) forwards;
+}
+.rx-reveal.d1 { animation-delay: calc(1 * var(--rx-reveal-step)); opacity: 0; }
+.rx-reveal.d2 { animation-delay: calc(2 * var(--rx-reveal-step)); opacity: 0; }
+.rx-reveal.d3 { animation-delay: calc(3 * var(--rx-reveal-step)); opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rx-reveal, .rx-reveal.d1, .rx-reveal.d2, .rx-reveal.d3 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- Utility: Bridge gradient text ---- */
+.rx-text-gradient-bridge {
+  background: var(--rx-gradient-bridge);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---- Utility: Light Glass (heranca Emprega+) ---- */
+.rx-glass-light {
+  background: var(--rx-glass-light-bg);
+  border: 1px solid var(--rx-glass-light-border);
+  backdrop-filter: blur(var(--rx-glass-light-blur));
+}
+
+/* ---- Utility: Dark Glass (heranca Electia) ---- */
+.rx-glass-dark {
+  background: var(--rx-glass-dark-bg);
+  border: 1px solid var(--rx-glass-dark-border);
+  backdrop-filter: blur(var(--rx-glass-dark-blur));
+}

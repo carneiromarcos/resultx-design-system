@@ -1,0 +1,265 @@
+/* Gerado por scripts/build-brand-tokens.mjs. Não editar. */
+/* ============================================
+   XSCORE BY RESULTX — Design Tokens v1.0
+   Criado 2026-07-30 · projeto `projeto-xscore-v1-2026-07-30.md` (decisões D1/D2)
+
+   IDENTIDADE — "mesa de crédito premium":
+   - Base grafite herdada do ecossistema (mesma do Electia): #0B0E14. Um só
+     fundo em toda a ResultX; o que distingue a marca é o accent, não o chão.
+   - GOLD #c4993b = cor de AÇÃO (botão primário, CTA, foco). Vem de
+     `brands/resultx` ("primary trust"): crédito se vende com confiança
+     institucional, não com energia.
+   - PURPLE #6f32b1 = cor de INTELIGÊNCIA (score, explicabilidade, IA).
+     Herdado do Electia — é a sinergia cross-brand que o DS já pratica.
+
+   ⚠️ REGRA DE USO (não negociável — se violada, a hierarquia morre):
+     ação = gold · insight = purple · estado = semântica (verde/âmbar/vermelho)
+   Nunca pintar um botão primário de roxo, nunca usar gold para score.
+
+   TEMA: dark é o default (`:root`), light é opt-in (`[data-theme="light"]`) —
+   mesma mecânica do Electia. Dado financeiro denso lê melhor em dark, e a
+   paridade permite ao usuário transitar entre os dois produtos sem reaprender.
+   ============================================ */
+
+:root {
+  /* ---- Gold (accent primário Xscore — AÇÃO) ---- */
+  --gold-light: __RX_b0000__;
+  --gold: __RX_b0001__;
+  --gold-dark: __RX_b0002__;
+  --gold-muted: __RX_b0003__;
+  /* Texto/ícone dourado. No escuro é o próprio --gold (6.54:1 sobre surface-1,
+     AA); no light vira #866425, porque #c4993b reprova sobre branco.
+     ⚠️ Existe nos DOIS temas para que a interface use UMA classe. Sem esta
+     declaração, `var(--gold-ink)` ficaria indefinido no escuro e quem
+     precisasse de texto dourado cairia de volta em --gold — que é exatamente o
+     bug que o token veio evitar (19 ocorrências no Xscore em 01/08). */
+  --gold-ink: __RX_b0004__;
+  /* Texto SOBRE o dourado (botão primário, selo de ação). Terceiro caso da
+     regra do dourado: fundo é --gold, tinta é --gold-ink, e o que fica em cima
+     do fundo dourado é --on-gold. Igual nos dois temas porque o fundo é o mesmo.
+     Nasceu no Xscore (M14, 16/09) no lugar do #1a1408 cravado em button.tsx —
+     o produto pediu, a fonte registra. Contraste sobre #c4993b: 6,9:1 (AA). */
+  --on-gold: __RX_b0005__;
+
+  /* ---- Gold ramp (500 = --gold canonical) ---- */
+  --gold-50: __RX_b0006__;
+  --gold-100: __RX_b0007__;
+  --gold-200: __RX_b0008__;
+  --gold-300: __RX_b0009__;
+  --gold-400: __RX_b0010__;
+  --gold-500: __RX_b0011__;
+  --gold-600: __RX_b0012__;
+  --gold-700: __RX_b0013__;
+  --gold-800: __RX_b0014__;
+  --gold-900: __RX_b0015__;
+  --gold-950: __RX_b0016__;
+
+  /* ---- Purple (INTELIGÊNCIA — score, explicação, IA). NÃO é primary ---- */
+  --intel: __RX_b0017__;
+  --intel-light: __RX_b0018__;
+  --intel-dark: __RX_b0019__;
+  /* Sobre fundo escuro: 7.1:1 vs #0B0E14 (AA). NÃO usar como fill de botão. */
+  --intel-on-dark: __RX_b0020__;
+
+  /* ---- Background Scale (grafite canônico do ecossistema) ---- */
+  --bg: __RX_b0021__;
+  --surface-1: __RX_b0022__;   /* cards, painéis */
+  --surface-2: __RX_b0023__;   /* hover / elevado */
+  --surface-3: __RX_b0024__;   /* linhas alternadas de tabela */
+  --surface-4: __RX_b0025__;   /* = --border */
+
+  /* ---- Text ---- */
+  --white: __RX_b0026__;
+  --text-primary: __RX_b0027__;
+  --text-secondary: __RX_b0028__;
+  --text-muted: __RX_b0029__;   /* 5.04:1 sobre surface-2, 4.55:1 sobre surface-3 (era #848D97: 4.66 / 4.21).
+                              surface-4 = --border, nao fundo de texto (secondary da 4.08:1 ali). */
+
+  /* ---- Border ---- */
+  --border: __RX_b0030__;
+  --border-hover: __RX_b0031__;
+  --border-focus: __RX_b0032__;   /* foco segue o accent de ação */
+
+  /* ---- Semantic ---- */
+  /* ⚠️ Em crédito estas cores têm significado FIXO, não decorativo:
+     success = melhora/aprovação · warning = atenção/vencendo
+     danger  = risco/corte/inadimplência · info = neutro informativo */
+  --success: __RX_b0033__;
+  --warning: __RX_b0034__;
+  --danger: __RX_b0035__;   /* 4.92:1 no selo a 16% (era 3.88:1) */
+  /* Texto sobre fundo --danger (botão de perigo). Escuro aqui: branco sobre
+     o vermelho claro dá 2.77:1. Mesmo padrão de --on-gold. */
+  --on-danger: __RX_b0036__;
+  --info: __RX_b0037__;
+
+  /* ---- Faixas de risco (tier 1..5) — escala contínua, não paleta arbitrária.
+     Tier 1 = melhor risco → 5 = pior. Usada em badge, tabela e gráfico. ---- */
+  --tier-1: __RX_b0038__;
+  --tier-2: __RX_b0039__;
+  --tier-3: __RX_b0040__;
+  --tier-4: __RX_b0041__;
+  --tier-5: __RX_b0042__;
+
+  /* ---- Delta financeiro (variação de limite) ----
+     Atenção à semântica: em revisão de limite, REDUZIR não é "ruim" para a
+     empresa — é proteção. Por isso o delta usa direção própria, e a cor de
+     risco fica reservada à faixa do cliente. */
+  --delta-up: __RX_b0043__;
+  --delta-down: __RX_b0044__;
+  --delta-flat: __RX_b0045__;
+
+  /* ---- Typography ---- */
+  /* Sora (display) e Inter (corpo) espelham o Electia. A terceira família é a
+     que diferencia um produto financeiro: MONO para todo número — valor,
+     score, documento, id. Alinhamento de coluna é requisito, não estética. */
+  --font-heading: __RX_b0046__;
+  --font-body: __RX_b0047__;   /* a fonte que o app carrega */
+  --font-mono: __RX_b0048__;
+
+  --text-display: __RX_b0049__;
+  --text-h1: __RX_b0050__;
+  --text-h2: __RX_b0051__;
+  --text-h3: __RX_b0052__;
+  --text-body: __RX_b0053__;
+  --text-sm: __RX_b0054__;
+  --text-xs: __RX_b0055__;
+  --text-eyebrow: __RX_b0056__;
+
+  --weight-regular: __RX_b0057__;
+  --weight-medium: __RX_b0058__;
+  --weight-semibold: __RX_b0059__;
+  --weight-bold: __RX_b0060__;
+
+  --leading-tight: __RX_b0061__;
+  --leading-heading: __RX_b0062__;
+  --leading-body: __RX_b0063__;
+
+  --tracking-tight: __RX_b0064__;
+  --tracking-wide: __RX_b0065__;
+  --tracking-eyebrow: __RX_b0066__;
+
+  /* ---- Radius ---- */
+  --radius-sm: __RX_b0067__;
+  --radius-md: __RX_b0068__;
+  --radius-lg: __RX_b0069__;
+  --radius-xl: __RX_b0070__;
+  --radius-full: __RX_b0071__;
+
+  /* ---- Elevation ---- */
+  --shadow-sm: __RX_b0072__;
+  --shadow-md: __RX_b0073__;
+  --shadow-lg: __RX_b0074__;
+  --shadow-gold: __RX_b0075__;
+
+  /* ---- Gradientes ----
+     Hierarquia deliberada: `action` é o padrão (CTA, botão primário);
+     `intel` aparece raro, só onde há inteligência em jogo (badge de score,
+     cabeçalho de explicabilidade). Se os dois aparecerem na mesma tela mais
+     de uma vez cada, provavelmente há excesso. */
+  --gradient-action: __RX_b0076__;
+  --gradient-intel: __RX_b0077__;
+  --gradient-surface: __RX_b0078__;
+
+  /* ---- Motion ---- */
+  --duration-fast: __RX_b0079__;
+  --duration-normal: __RX_b0080__;
+  --duration-slow: __RX_b0081__;
+  --ease-out: __RX_b0082__;
+
+  /* ---- Layout ---- */
+  --sidebar-width: __RX_b0083__;
+  --sidebar-width-collapsed: __RX_b0084__;
+  --header-height: __RX_b0085__;
+  --content-max: __RX_b0086__;
+}
+
+/* ============================================
+   TEMA LIGHT — opt-in via data-theme="light"
+   Contraste sobre branco: text-primary 16:1 · text-secondary 7:1.
+   ⚠️ O gold #c4993b tem ~2.8:1 sobre branco — REPROVA em AA para TEXTO.
+   Por isso no light o texto/ícone dourado usa --gold-ink (#866425, ~5.3:1);
+   o #c4993b permanece só como FILL de botão, com --on-gold (#1a1408, 7.33:1) por cima —
+   branco sobre #c4993b dá 2.64:1 e reprova.
+   ============================================ */
+[data-theme="light"] {
+  --bg: __RX_b0087__;
+  --surface-1: __RX_b0088__;
+  --surface-2: __RX_b0089__;
+  --surface-3: __RX_b0090__;
+  --surface-4: __RX_b0091__;
+
+  --border: __RX_b0092__;
+  --border-hover: __RX_b0093__;
+  --border-focus: __RX_b0094__;
+
+  --gold: __RX_b0095__;        /* fill de botão (texto --on-gold por cima) */
+  --gold-light: __RX_b0096__;
+  --gold-ink: __RX_b0097__;    /* texto/ícone dourado — AA sobre branco */
+  --on-gold: __RX_b0098__;     /* texto sobre fundo dourado — mesmo nos dois temas */
+
+  --intel: __RX_b0099__;
+  --intel-on-dark: __RX_b0100__;   /* sobre claro mantém identidade — 6.86:1 (AA) */
+
+  --text-primary: __RX_b0101__;
+  --text-secondary: __RX_b0102__;
+  --text-muted: __RX_b0103__;   /* 5.19:1 sobre surface-2, 4.92:1 sobre surface-3 (era 4.34:1). Mesmo valor do DS.
+                              surface-4 #D1D9E0 = --border, nao fundo de texto (4.05:1). */
+
+  --success: __RX_b0104__;   /* selo 5.33:1 (era 2.65:1) */
+  --warning: __RX_b0105__;   /* selo 5.28:1 (era 2.57:1) */
+  --danger: __RX_b0106__;   /* selo 4.69:1 (era 3.60:1) */
+  --on-danger: __RX_b0107__;
+  --info: __RX_b0108__;   /* selo 5.60:1 (era 3.21:1) */
+
+  --tier-1: __RX_b0109__;
+  --tier-2: __RX_b0110__;
+  --tier-3: __RX_b0111__;
+  --tier-4: __RX_b0112__;
+  --tier-5: __RX_b0113__;
+
+  --delta-up: __RX_b0114__;
+  --delta-down: __RX_b0115__;
+  --delta-flat: __RX_b0116__;
+
+  --shadow-sm: __RX_b0117__;
+  --shadow-md: __RX_b0118__;
+  --shadow-lg: __RX_b0119__;
+  --shadow-gold: __RX_b0120__;
+
+  --gradient-surface: __RX_b0121__;
+}
+
+/* ---- Utility classes ---- */
+
+.text-gradient-intel {
+  background: var(--gradient-intel);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Todo número do produto passa por aqui: tabular-nums alinha as colunas e
+   evita o "pulo" de dígito que faz uma tabela financeira parecer amadora. */
+.numeric {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Foco visível global (WCAG 2.2 SC 2.4.11). O offset garante que o anel não
+   seja engolido por fundos adjacentes. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

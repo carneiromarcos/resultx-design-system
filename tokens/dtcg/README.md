@@ -13,7 +13,12 @@ O núcleo dark/light vem da mesma fonte e de `layouts/core.css.tmpl`, gerado
 por `scripts/build-core.mjs`. O layout fixa seletores, escopos, comentários e
 regras CSS estruturais; os valores dos tokens vivem no JSON.
 
-A migração ainda não abrange marcas ou eds-root. Esses arquivos
+As folhas CSS das cinco marcas são geradas pela mesma fonte e pelos layouts
+estruturais `layouts/brand-*.css.tmpl`, antes do cálculo de contraste das pontes.
+Valores CSS sem tipo DTCG padronizado, como `clamp()`, usam extensões específicas
+na própria fonte.
+
+A migração ainda não abrange eds-root. Esses arquivos
 continuam manuais nesta etapa; `tokens/tokens.json` ainda é o legado. Não considere
 a E1 concluída até que os demais artefatos sejam migrados e verificados.
 

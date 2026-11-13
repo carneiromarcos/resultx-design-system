@@ -98,3 +98,22 @@ test('fonte DTCG gera o núcleo equivalente com escopos e cascata em diretório 
     fs.rmSync(output, { recursive: true, force: true });
   }
 });
+
+
+test('fonte DTCG gera os CSS das marcas com escopos equivalentes', () => {
+  const os = require('os');
+  const path = require('path');
+  const { execFileSync } = require('child_process');
+  const output = fs.mkdtempSync(path.join(os.tmpdir(), 'resultx-brands-'));
+  try {
+    execFileSync(process.execPath, ['scripts/build-brand-tokens.mjs'], {
+      env: { ...process.env, RESULTX_BRANDS_OUTPUT: output }, stdio: 'pipe',
+    });
+    for (const brand of ['electia', 'emprega-mais', 'pdv', 'resultx', 'xscore']) {
+      const file = `brands/${brand}/tokens/tokens.css`;
+      expect(normalizeCss(fs.readFileSync(path.join(output, brand, 'tokens/tokens.css'), 'utf8'), file)).toEqual(reference.css[file]);
+    }
+  } finally {
+    fs.rmSync(output, { recursive: true, force: true });
+  }
+});

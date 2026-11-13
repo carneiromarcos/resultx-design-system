@@ -1,0 +1,187 @@
+/* Gerado por scripts/build-brand-tokens.mjs. Não editar. */
+/* ============================================
+   EMPREGA+ — Design Tokens
+   Fonte da verdade: a produção (IMO + EditalHub), não o site.
+   ADR-0002 decisão 1 — 2026-09-17.
+
+   Identidade de PRODUTO: navy #1c2444 + índigo de ação #4f46e5 sobre
+   superfície clara. O ouro (#c49a3c) permanece como pigmento de
+   prestígio (site / PdV), não como accent do sistema.
+
+   Prefixos --emp-* são pigmento (ADR-0001: nomes de cor só nesta camada).
+   A ponte (ds-bridge.css) traduz para papéis --accent-*.
+   ============================================ */
+
+:root {
+  /* ---- Navy (base institucional, IMO) ---- */
+  --emp-navy: __RX_b0000__;
+  --emp-navy-2: __RX_b0001__;
+  --emp-table-head: __RX_b0002__;
+
+  /* ---- Índigo (ação de produto — preenchimento) ----
+     O FILL do botão de Ação no IMO é --eds-indigo-dark, não o índigo cru.
+     Cru #6366f1 + branco = 4,47:1 (abaixo de AA). #4f46e5 + branco = 6,29:1. */
+  --emp-indigo: __RX_b0003__;
+  --emp-indigo-dark: __RX_b0004__;
+  --emp-indigo-hover: __RX_b0005__; /* 92% do dark + preto; branco 7,10:1 */
+  --emp-violet: __RX_b0006__;
+  --emp-violet-dark: __RX_b0007__;
+
+  /* Tinta do índigo SOBRE superfície. Sólido — a ponte não aceita color-mix.
+     :root = tema escuro da ponte (45% índigo + branco). Light sobrescreve. */
+  --emp-indigo-ink: __RX_b0008__;
+
+  /* ---- Gold (prestígio — site, não o accent do produto) ---- */
+  --emp-gold-light: __RX_b0009__;
+  --emp-gold: __RX_b0010__;
+  --emp-gold-warm: __RX_b0011__;
+  --emp-gold-dark: __RX_b0012__;
+  --emp-gold-ink: __RX_b0013__;
+  --emp-purple: __RX_b0014__;
+  --emp-purple-light: __RX_b0015__;
+  --emp-purple-soft: __RX_b0016__;
+
+  /* ---- Superfícies — :root = escuro IMO (o resolver da ponte lê daqui) ---- */
+  --emp-bg: __RX_b0017__;
+  --emp-surface-1: __RX_b0018__;
+  --emp-surface-deep: __RX_b0019__;
+  --emp-surface: __RX_b0020__;
+  --emp-surface-tonal: __RX_b0021__;
+  --emp-border: __RX_b0022__;
+
+  /* ---- Superfícies claras (Gov, site, IMO light) ---- */
+  --emp-light-bg: __RX_b0023__;
+  --emp-light-subtle: __RX_b0024__;
+  --emp-light-muted: __RX_b0025__;
+  --emp-light-border: __RX_b0026__;
+
+  /* ---- Glass ---- */
+  --emp-glass-bg: __RX_b0027__;
+  --emp-glass-border: __RX_b0028__;
+  --emp-glass-border-hover: __RX_b0029__;
+
+  /* ---- Texto em fundo escuro ---- */
+  --emp-text: __RX_b0030__;
+  --emp-text-secondary: __RX_b0031__;
+  --emp-text-muted: __RX_b0032__;
+  --emp-text-subtle: __RX_b0033__;
+  --emp-text-inverse: __RX_b0034__;
+
+  /* ---- Semânticas (IMO claro; dark sobrescreve no bloco abaixo) ---- */
+  --emp-success: __RX_b0035__;
+  --emp-success-dark: __RX_b0036__;
+  --emp-error: __RX_b0037__;
+  --emp-error-dark: __RX_b0038__;
+  --emp-warning: __RX_b0039__;
+
+  /* ---- Tipografia (passo 1 — Sora/Inter, teto 600 no produto) ---- */
+  --emp-font-heading: __RX_b0040__;
+  --emp-font-sans: __RX_b0041__;
+  --emp-font-mono: __RX_b0042__;
+
+  --emp-weight-regular: __RX_b0043__;
+  --emp-weight-medium: __RX_b0044__;
+  --emp-weight-semibold: __RX_b0045__;
+  --emp-weight-bold: __RX_b0046__;
+  --emp-weight-extrabold: __RX_b0047__;
+
+  /* ---- Motion (IMO = site) ---- */
+  --emp-duration-fast: __RX_b0048__;
+  --emp-duration-normal: __RX_b0049__;
+  --emp-duration-slow: __RX_b0050__;
+  --emp-duration-reveal: __RX_b0051__;
+  --emp-ease-out-expo: __RX_b0052__;
+  --emp-ease-in-out: __RX_b0053__;
+
+  /* ---- Escala ---- */
+  --emp-text-display: __RX_b0054__;
+  --emp-text-h1: __RX_b0055__;
+  --emp-text-h2: __RX_b0056__;
+  --emp-text-h3: __RX_b0057__;
+  --emp-text-eyebrow: __RX_b0058__;
+  --emp-text-body-lg: __RX_b0059__;
+  --emp-text-body: __RX_b0060__;
+  --emp-text-small: __RX_b0061__;
+  --emp-text-code: __RX_b0062__;
+
+  /* ---- Espaçamento ---- */
+  --emp-space-xs: __RX_b0063__;
+  --emp-space-sm: __RX_b0064__;
+  --emp-space-md: __RX_b0065__;
+  --emp-space-lg: __RX_b0066__;
+  --emp-space-xl: __RX_b0067__;
+  --emp-space-2xl: __RX_b0068__;
+  --emp-space-3xl: __RX_b0069__;
+  --emp-space-section: __RX_b0070__;
+
+  /* ---- Sombras (IMO dark) ---- */
+  --emp-shadow-sm: __RX_b0071__;
+  --emp-shadow-md: __RX_b0072__;
+  --emp-shadow-lg: __RX_b0073__;
+  --emp-glow-brand: __RX_b0074__;
+  --emp-glow-brand-lg: __RX_b0075__;
+  --emp-glow-purple: __RX_b0076__;
+  --emp-glow-purple-lg: __RX_b0077__;
+
+  --emp-container-max: __RX_b0078__;
+  --emp-gutter: __RX_b0079__;
+  --emp-margin-mobile: __RX_b0080__;
+  --emp-margin-desktop: __RX_b0081__;
+
+  --emp-radius-sm: __RX_b0082__;
+  --emp-radius-md: __RX_b0083__;
+  --emp-radius-lg: __RX_b0084__;
+  --emp-radius-xl: __RX_b0085__;
+}
+
+/* Light = IMO :root. A ponte lê este bloco para o tema claro. */
+[data-theme="light"] {
+  --emp-indigo-ink: __RX_b0086__; /* 55% índigo + preto; 10,19:1 sobre branco */
+  --emp-gold-ink: __RX_b0087__;
+  --emp-bg: __RX_b0088__;
+  --emp-surface: __RX_b0089__;
+  --emp-surface-1: __RX_b0090__;
+  --emp-surface-tonal: __RX_b0091__;
+  --emp-surface-deep: __RX_b0092__;
+  --emp-border: __RX_b0093__;
+  --emp-table-head: __RX_b0094__;
+  --emp-text: __RX_b0095__;
+  --emp-text-secondary: __RX_b0096__;
+  --emp-text-muted: __RX_b0097__;
+  --emp-text-subtle: __RX_b0098__;
+  --emp-text-inverse: __RX_b0099__;
+  --emp-success: __RX_b0100__;
+  --emp-error: __RX_b0101__;
+  --emp-warning: __RX_b0102__;
+  --emp-shadow-sm: __RX_b0103__;
+  --emp-shadow-md: __RX_b0104__;
+  --emp-shadow-lg: __RX_b0105__;
+}
+
+@keyframes emp-fade-in-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.emp-reveal {
+  animation: emp-fade-in-up var(--emp-duration-reveal) var(--emp-ease-out-expo) forwards;
+}
+.emp-reveal.d1 { animation-delay: 100ms; opacity: 0; }
+.emp-reveal.d2 { animation-delay: 200ms; opacity: 0; }
+.emp-reveal.d3 { animation-delay: 300ms; opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .emp-reveal, .emp-reveal.d1, .emp-reveal.d2, .emp-reveal.d3 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.emp-glass {
+  background: var(--emp-glass-bg);
+  border: 1px solid var(--emp-glass-border);
+  backdrop-filter: blur(12px);
+}
+.emp-glass:hover {
+  border-color: var(--emp-glass-border-hover);
+}
