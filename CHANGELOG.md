@@ -5,6 +5,11 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Fixed — contraste do botão success no tema dark
+
+O botão success usa `--text-on-success` no dark explícito e no dark automático.
+A catraca de contraste registra os pares que ainda precisam de correção nos demais temas.
+
 ### Changed — Xscore entra na tabela de consumidores
 
 O Xscore passa a constar em "Consumidores conhecidos" com `#v2.9.0`: desde 12/10/2026
