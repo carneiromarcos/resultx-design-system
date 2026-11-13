@@ -5,13 +5,14 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
-### Fixed — 18 combinações de botão abaixo de WCAG AA
+### Fixed — 17 combinações de botão abaixo de WCAG AA
 
-As 18 entradas da catraca de contraste dos botões (temas dark, light, premium-light,
-sober-dark e vibrant-dark; variantes primary, success e danger, normal e hover) passam a
-≥ 4,5:1 e a lista de dívida fica vazia. Só regras de botão em `components/components.css`;
-nenhum token global, marca ou `eds-root.css` muda. `premium-light/secondary:hover` era falso
-positivo do modelo antigo (o navegador já media 13,60:1).
+As 18 entradas da catraca de contraste dos botões saem da dívida, que fica vazia: 17 pares
+efetivamente abaixo de AA (temas dark, light, premium-light, sober-dark e vibrant-dark;
+variantes primary, success e danger, normal e hover) passam a ≥ 4,5:1, e
+`premium-light/secondary:hover` era falso positivo do modelo antigo (o navegador já media
+13,60:1). Só regras de botão em `components/components.css`; nenhum token global, marca ou
+`eds-root.css` muda.
 
 **Mudança visual:** `.btn-danger` nos temas claros deixa de ser "tinta" (texto vermelho sobre
 fundo rosado) e vira botão cheio (branco sobre vermelho); success e danger nos temas escuros
