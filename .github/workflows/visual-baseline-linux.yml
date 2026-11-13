@@ -1,0 +1,50 @@
+name: Visual Linux
+
+on:
+  pull_request:
+    paths:
+      - 'tests/visual/**'
+      - '**/preview.html'
+      - 'components/**'
+      - 'tokens/**'
+      - 'brands/**'
+      - 'dist/**'
+      - 'playwright.config.js'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/visual-baseline-linux.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  visual-linux:
+    runs-on: ubuntu-latest
+    container:
+      # Mantenha a versão alinhada ao @playwright/test do package-lock.json.
+      image: mcr.microsoft.com/playwright:v1.64.1-noble
+    steps:
+      - uses: actions/checkout@v7
+      - name: Verificar versão da imagem
+        run: |
+          node -e "const v = require('./package-lock.json').packages['node_modules/@playwright/test'].version; if (v !== '1.64.1') { console.error('Atualize a imagem Playwright para a versão do lockfile: ' + v); process.exit(1); }"
+      - run: npm ci
+      # Fase A: gera as quatro imagens para revisão, sem exigir baseline Linux.
+      # Fase B: após revisão e versionamento das imagens, remova --update-snapshots
+      # para que o mesmo teste compare as capturas e falhe em diferenças.
+      - name: Gerar capturas Linux para revisão
+        run: npm run test:visual -- --update-snapshots
+      - name: Conferir quantidade de capturas
+        run: |
+          count=$(find tests/visual -type f -name '*-chromium-linux.png' | wc -l)
+          if [ "$count" -ne 4 ]; then
+            echo "Esperadas 4 capturas Linux, encontradas $count."
+            exit 1
+          fi
+      - name: Publicar capturas para revisão
+        uses: actions/upload-artifact@v4
+        with:
+          name: resultx-ds-visual-linux
+          path: tests/visual/**/*-chromium-linux.png
+          if-no-files-found: error

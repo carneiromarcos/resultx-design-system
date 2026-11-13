@@ -4,8 +4,9 @@ const { defineConfig, devices } = require('@playwright/test');
 /**
  * ResultX DS — Visual Regression Configuration
  *
- * Tests live in tests/visual/. The committed snapshots are for macOS;
- * visual tests are not yet run in CI and need verified Linux baselines.
+ * Tests live in tests/visual/. CI phase A generates Linux snapshots for review;
+ * macOS snapshots stay committed. After Linux snapshots are reviewed and
+ * committed, phase B will compare them in CI instead of updating them.
  *
  * Run locally:
  *   npm run test:visual              # compare against baseline
