@@ -47,6 +47,8 @@ casos_teste:
     descricao: Diálogo começa fechado.
   - id: dialog-loading-error
     descricao: Carregamento bloqueia confirmação e erro é anunciado.
+  - id: dialog-confirm
+    descricao: Após erro recuperável, nova confirmação fecha com resultado confirmado.
 conformidade: >-
   Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro
   adaptador não comprovam conformidade.

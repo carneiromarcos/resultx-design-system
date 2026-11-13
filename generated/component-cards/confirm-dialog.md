@@ -57,6 +57,7 @@
 - dialog-contrast: Texto do diálogo mantém contraste.
 - dialog-closed: Diálogo começa fechado.
 - dialog-loading-error: Carregamento bloqueia confirmação e erro é anunciado.
+- dialog-confirm: Após erro recuperável, nova confirmação fecha com resultado confirmado.
 
 ## Cobertura de estados
 

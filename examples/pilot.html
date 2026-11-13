@@ -77,8 +77,9 @@
     document.querySelector('#cancel').addEventListener('click', () => dialog.close());
     document.querySelector('#confirm-action').addEventListener('click', (event) => {
       const button = event.currentTarget, loading = document.querySelector('#dialog-loading'), error = document.querySelector('#dialog-error');
+      const retry = !error.hidden;
       dialog.setAttribute('aria-busy', 'true'); button.disabled = true; loading.hidden = false; error.hidden = true;
-      setTimeout(() => { dialog.removeAttribute('aria-busy'); button.disabled = false; loading.hidden = true; error.hidden = false; }, 500);
+      setTimeout(() => { dialog.removeAttribute('aria-busy'); button.disabled = false; loading.hidden = true; if (retry) dialog.close('confirmed'); else error.hidden = false; }, 500);
     });
     document.querySelector('#sort').addEventListener('click', () => {
       const header = document.querySelector('#sort').closest('th');
