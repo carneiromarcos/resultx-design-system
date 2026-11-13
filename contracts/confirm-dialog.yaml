@@ -43,3 +43,17 @@ casos_teste:
     descricao: Foco entra no modal, Escape fecha e retorna ao acionador.
   - id: dialog-contrast
     descricao: Texto do diálogo mantém contraste.
+  - id: dialog-closed
+    descricao: Diálogo começa fechado.
+  - id: dialog-loading-error
+    descricao: Carregamento bloqueia confirmação e erro é anunciado.
+conformidade: >-
+  Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro
+  adaptador não comprovam conformidade.
+cobertura_estados:
+  normal: dialog-closed
+  carregando: dialog-loading-error
+  vazio: null
+  erro: dialog-loading-error
+  desabilitado: dialog-loading-error
+  foco: dialog-keyboard

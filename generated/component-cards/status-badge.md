@@ -51,3 +51,18 @@
 - badge-semantics: Status textual é visível e não interativo.
 - badge-variants: Cada variante apresenta seu status em texto.
 - badge-contrast: Cada variante mantém contraste de texto.
+- badge-loading: Status em atualização expõe aria-busy e texto.
+- badge-empty: Status ausente é informado em texto.
+
+## Cobertura de estados
+
+- normal: badge-semantics
+- carregando: badge-loading
+- vazio: badge-empty
+- erro: badge-variants
+- desabilitado: não aplicável
+- foco: badge-semantics
+
+## Conformidade
+
+- Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro adaptador não comprovam conformidade.

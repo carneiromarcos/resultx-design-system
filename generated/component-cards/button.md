@@ -64,3 +64,18 @@
 - button-loading: Carregamento informa aria-busy e impede ativação.
 - button-keyboard: Tab mostra foco; Enter e Espaço acionam uma vez.
 - button-contrast: Texto, borda e foco mantêm contraste nos estados.
+
+## Cobertura de estados
+
+- normal: button-accessible
+- hover: button-contrast
+- ativo: button-contrast
+- carregando: button-loading
+- vazio: não aplicável
+- erro: não aplicável
+- desabilitado: button-disabled
+- foco: button-keyboard
+
+## Conformidade
+
+- Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro adaptador não comprovam conformidade.

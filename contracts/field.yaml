@@ -48,3 +48,17 @@ casos_teste:
     descricao: Tab foca e digitação altera o valor.
   - id: field-contrast
     descricao: Texto e bordas do campo mantêm contraste.
+  - id: field-loading
+    descricao: Grupo em carregamento indica aria-busy e desabilita controle.
+  - id: field-empty
+    descricao: Controle vazio opcional aceita valor vazio.
+conformidade: >-
+  Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro
+  adaptador não comprovam conformidade.
+cobertura_estados:
+  normal: field-label
+  carregando: field-loading
+  vazio: field-empty
+  erro: field-error
+  desabilitado: field-disabled
+  foco: field-keyboard

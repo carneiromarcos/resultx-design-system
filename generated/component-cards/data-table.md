@@ -54,3 +54,19 @@
 - table-sorting: Enter altera aria-sort da coluna.
 - table-loading: Carregamento expõe aria-busy.
 - table-contrast: Tabela mantém contraste do texto.
+- table-empty-error: Estados vazio e erro da tabela oferecem próximo passo.
+- table-disabled: Ação indisponível da tabela está desabilitada.
+- table-focus: Ordenação apresenta foco visível.
+
+## Cobertura de estados
+
+- normal: table-semantics
+- carregando: table-loading
+- vazio: table-empty-error
+- erro: table-empty-error
+- desabilitado: table-disabled
+- foco: table-focus
+
+## Conformidade
+
+- Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro adaptador não comprovam conformidade.

@@ -41,3 +41,15 @@ casos_teste:
     descricao: Ação é alcançável e foco é visível.
   - id: empty-contrast
     descricao: Textos dos estados vazio e erro mantêm contraste.
+  - id: empty-loading
+    descricao: Carregamento impede a ação indisponível.
+conformidade: >-
+  Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro
+  adaptador não comprovam conformidade.
+cobertura_estados:
+  normal: null
+  carregando: empty-loading
+  vazio: empty-content
+  erro: error-content
+  desabilitado: empty-loading
+  foco: empty-keyboard

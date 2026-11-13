@@ -39,3 +39,17 @@ casos_teste:
     descricao: Cada variante apresenta seu status em texto.
   - id: badge-contrast
     descricao: Cada variante mantém contraste de texto.
+  - id: badge-loading
+    descricao: Status em atualização expõe aria-busy e texto.
+  - id: badge-empty
+    descricao: Status ausente é informado em texto.
+conformidade: >-
+  Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro
+  adaptador não comprovam conformidade.
+cobertura_estados:
+  normal: badge-semantics
+  carregando: badge-loading
+  vazio: badge-empty
+  erro: badge-variants
+  desabilitado: null
+  foco: badge-semantics

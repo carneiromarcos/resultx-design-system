@@ -53,3 +53,18 @@
 - stat-empty: Ausência de valor mostra travessão.
 - stat-loading: Carregamento expõe aria-busy.
 - stat-contrast: Texto mantém contraste na superfície.
+- stat-error: Erro do indicador informa o problema e oferece repetição.
+- stat-link: Link do indicador é operável por teclado.
+
+## Cobertura de estados
+
+- normal: stat-value
+- carregando: stat-loading
+- vazio: stat-empty
+- erro: stat-error
+- desabilitado: não aplicável
+- foco: stat-link
+
+## Conformidade
+
+- Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro adaptador não comprovam conformidade.

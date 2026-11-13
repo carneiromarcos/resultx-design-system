@@ -55,3 +55,18 @@
 - dialog-semantics: Diálogo tem nome, descrição e modalidade.
 - dialog-keyboard: Foco entra no modal, Escape fecha e retorna ao acionador.
 - dialog-contrast: Texto do diálogo mantém contraste.
+- dialog-closed: Diálogo começa fechado.
+- dialog-loading-error: Carregamento bloqueia confirmação e erro é anunciado.
+
+## Cobertura de estados
+
+- normal: dialog-closed
+- carregando: dialog-loading-error
+- vazio: não aplicável
+- erro: dialog-loading-error
+- desabilitado: dialog-loading-error
+- foco: dialog-keyboard
+
+## Conformidade
+
+- Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro adaptador não comprovam conformidade.

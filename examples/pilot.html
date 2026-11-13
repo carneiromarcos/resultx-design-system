@@ -6,6 +6,7 @@
   <title>Contratos do lote piloto</title>
   <link rel="stylesheet" href="../tokens/tokens.css">
   <link rel="stylesheet" href="../adapters/css/pilot.css">
+  <style>.rx-button, .rx-badge { margin: var(--space-2); }</style>
 </head>
 <body class="rx-card">
   <h1>Lista de vagas e candidatos</h1>
@@ -26,27 +27,40 @@
     <input class="rx-field__control" id="invalid" type="email" aria-invalid="true" aria-describedby="invalid-message">
     <span class="rx-field__message" id="invalid-message">Informe um e-mail válido.</span>
   </div>
+  <div class="rx-field" id="field-loading" aria-busy="true"><label for="loading-field">Verificando</label><input class="rx-field__control" id="loading-field" disabled><span>Verificando campo</span></div>
   <label class="rx-field">Campo indisponível <input class="rx-field__control" id="disabled-field" disabled></label>
-  <article class="rx-card" id="card"><h2>Vagas recentes</h2><p>Veja as inscrições recebidas.</p><button class="rx-button">Ver vagas</button></article>
+  <article class="rx-card" id="card"><h2>Vagas recentes</h2><p>Veja as inscrições recebidas.</p><button class="rx-button">Ver vagas</button><button class="rx-button" id="card-disabled" disabled>Ação indisponível</button></article>
   <article class="rx-card rx-card--sm" id="card-sm"><h2>Cartão pequeno</h2></article>
   <article class="rx-card rx-card--md" id="card-md"><h2>Cartão médio</h2></article>
   <article class="rx-card rx-card--lg" id="card-lg"><h2>Cartão grande</h2></article>
+  <article class="rx-card" id="card-empty"><h2>Sem vagas</h2><div class="rx-state"><p>Publique uma vaga para começar.</p><button class="rx-button">Publicar</button></div></article>
+  <article class="rx-card" id="card-error"><h2>Falha nas vagas</h2><div class="rx-state" role="alert"><p>Tente novamente.</p><button class="rx-button">Repetir</button></div></article>
   <article class="rx-card" id="card-loading" aria-busy="true"><h2>Atualizando vagas</h2></article>
-  <article class="rx-stat-card" id="stat"><h2>Candidatos</h2><p class="rx-stat-card__value">42</p></article>
-  <article class="rx-stat-card" id="stat-empty"><h2>Novos candidatos</h2><p class="rx-stat-card__value">—</p></article>
+  <article class="rx-stat-card" id="stat"><h2>Candidatos</h2><p class="rx-stat-card__value" data-part="value">42</p></article>
+  <article class="rx-stat-card" id="stat-empty"><h2>Novos candidatos</h2><p class="rx-stat-card__value" data-part="value">—</p></article>
+  <article class="rx-stat-card" id="stat-error"><h2>Totais indisponíveis</h2><p>Não foi possível carregar os totais.</p><button class="rx-button">Tentar novamente</button></article>
+  <article class="rx-stat-card" id="stat-link"><h2>Candidaturas</h2><a href="#table">Ver candidaturas</a></article>
   <article class="rx-stat-card" id="stat-loading" aria-busy="true"><h2>Atualizando totais</h2></article>
   <table class="rx-table" id="table">
     <caption>Candidatos à vaga</caption>
     <thead><tr><th scope="col" aria-sort="ascending"><button class="rx-button" id="sort">Nome</button></th><th scope="col">Status</th></tr></thead>
     <tbody><tr><td>Ana Silva</td><td><span class="rx-badge rx-badge--success">Em análise</span></td></tr><tr><td>Bruno Costa</td><td><span class="rx-badge rx-badge--neutral">Pendente</span></td></tr></tbody>
   </table>
+  <section class="rx-state" id="table-empty"><h2>Sem candidatos</h2><p>Publique uma vaga para receber candidatos.</p><button class="rx-button">Publicar</button></section>
+  <section class="rx-state" id="table-error" role="alert"><h2>Falha ao carregar candidatos</h2><p>Tente novamente.</p><button class="rx-button">Repetir</button></section>
+  <button class="rx-button" id="table-disabled" disabled>Ação indisponível</button>
   <table class="rx-table" id="table-loading" aria-busy="true"><caption>Atualizando candidatos</caption><thead><tr><th scope="col">Nome</th></tr></thead><tbody><tr><td>Carregando</td></tr></tbody></table>
-  <p><span class="rx-badge rx-badge--neutral">Pendente</span> <span class="rx-badge rx-badge--success">Aprovado</span> <span class="rx-badge rx-badge--error">Recusado</span></p>
+  <span class="rx-badge" id="badge-loading" aria-busy="true">Atualizando status</span>
+  <span class="rx-badge" id="badge-empty">Sem status</span>
+  <p><span class="rx-badge rx-badge--neutral" id="badge-neutral">Pendente</span> <span class="rx-badge rx-badge--success" id="badge-success">Aprovado</span> <span class="rx-badge rx-badge--error" id="badge-error">Recusado</span></p>
   <section class="rx-state" id="empty"><h2>Nenhuma candidatura</h2><p>Publique uma vaga para receber candidatos.</p><button class="rx-button">Publicar vaga</button></section>
   <section class="rx-state" id="error" role="alert"><h2>Não foi possível carregar</h2><p>Tente novamente para ver os candidatos.</p><button class="rx-button">Tentar novamente</button></section>
+  <section class="rx-state" id="empty-loading" aria-busy="true"><h2>Atualizando lista</h2><button class="rx-button" disabled>Aguarde</button></section>
   <button class="rx-button" id="open-dialog">Excluir vaga</button>
   <dialog class="rx-dialog rx-dialog--danger" id="confirm" aria-labelledby="confirm-title" aria-describedby="confirm-description">
     <h2 id="confirm-title">Excluir vaga?</h2><p id="confirm-description">A vaga deixará de receber candidaturas.</p>
+    <p id="dialog-loading" role="status" hidden>Confirmando</p>
+    <p id="dialog-error" role="alert" hidden>Não foi possível confirmar. Tente novamente.</p>
     <button class="rx-button" id="cancel">Cancelar</button><button class="rx-button rx-button--danger" id="confirm-action">Excluir</button>
   </dialog>
   <script>
@@ -54,8 +68,18 @@
     if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
     const dialog = document.querySelector('#confirm');
     document.querySelector('#open-dialog').addEventListener('click', () => dialog.showModal());
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key !== 'Tab') return;
+      const controls = [...dialog.querySelectorAll('button:not(:disabled), a[href], input:not(:disabled)')];
+      if (event.shiftKey && document.activeElement === controls[0]) { event.preventDefault(); controls.at(-1).focus(); }
+      else if (!event.shiftKey && document.activeElement === controls.at(-1)) { event.preventDefault(); controls[0].focus(); }
+    });
     document.querySelector('#cancel').addEventListener('click', () => dialog.close());
-    document.querySelector('#confirm-action').addEventListener('click', () => dialog.close('confirmed'));
+    document.querySelector('#confirm-action').addEventListener('click', (event) => {
+      const button = event.currentTarget, loading = document.querySelector('#dialog-loading'), error = document.querySelector('#dialog-error');
+      dialog.setAttribute('aria-busy', 'true'); button.disabled = true; loading.hidden = false; error.hidden = true;
+      setTimeout(() => { dialog.removeAttribute('aria-busy'); button.disabled = false; loading.hidden = true; error.hidden = false; }, 500);
+    });
     document.querySelector('#sort').addEventListener('click', () => {
       const header = document.querySelector('#sort').closest('th');
       const next = header.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending';

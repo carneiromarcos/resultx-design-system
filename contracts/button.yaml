@@ -54,3 +54,15 @@ casos_teste:
     descricao: Tab mostra foco; Enter e Espaço acionam uma vez.
   - id: button-contrast
     descricao: Texto, borda e foco mantêm contraste nos estados.
+conformidade: >-
+  Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro
+  adaptador não comprovam conformidade.
+cobertura_estados:
+  normal: button-accessible
+  hover: button-contrast
+  ativo: button-contrast
+  carregando: button-loading
+  vazio: null
+  erro: null
+  desabilitado: button-disabled
+  foco: button-keyboard

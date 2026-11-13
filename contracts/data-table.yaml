@@ -43,3 +43,19 @@ casos_teste:
     descricao: Carregamento expõe aria-busy.
   - id: table-contrast
     descricao: Tabela mantém contraste do texto.
+  - id: table-empty-error
+    descricao: Estados vazio e erro da tabela oferecem próximo passo.
+  - id: table-disabled
+    descricao: Ação indisponível da tabela está desabilitada.
+  - id: table-focus
+    descricao: Ordenação apresenta foco visível.
+conformidade: >-
+  Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro
+  adaptador não comprovam conformidade.
+cobertura_estados:
+  normal: table-semantics
+  carregando: table-loading
+  vazio: table-empty-error
+  erro: table-empty-error
+  desabilitado: table-disabled
+  foco: table-focus

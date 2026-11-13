@@ -52,3 +52,20 @@
 - card-loading: Carregamento do cartão expõe aria-busy.
 - card-contrast: Texto mantém contraste na superfície.
 - card-sizes: Os três tamanhos usam espaçamentos crescentes.
+- card-shadow: Cartão não tem sombra em repouso.
+- card-empty-error: Cartão vazio e cartão com erro informam próximo passo.
+- card-keyboard: Ação interna recebe foco pelo teclado.
+- card-disabled: Ação interna indisponível permanece desabilitada.
+
+## Cobertura de estados
+
+- normal: card-heading
+- carregando: card-loading
+- vazio: card-empty-error
+- erro: card-empty-error
+- desabilitado: card-disabled
+- foco: card-keyboard
+
+## Conformidade
+
+- Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro adaptador não comprovam conformidade.

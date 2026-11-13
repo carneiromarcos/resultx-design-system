@@ -42,3 +42,17 @@ casos_teste:
     descricao: Carregamento expõe aria-busy.
   - id: stat-contrast
     descricao: Texto mantém contraste na superfície.
+  - id: stat-error
+    descricao: Erro do indicador informa o problema e oferece repetição.
+  - id: stat-link
+    descricao: Link do indicador é operável por teclado.
+conformidade: >-
+  Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro
+  adaptador não comprovam conformidade.
+cobertura_estados:
+  normal: stat-value
+  carregando: stat-loading
+  vazio: stat-empty
+  erro: stat-error
+  desabilitado: null
+  foco: stat-link

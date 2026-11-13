@@ -31,6 +31,8 @@
   .rx-button--danger:hover:where(:not(:disabled)),
   .rx-button--danger:active:where(:not(:disabled)) { color: var(--color-error); background: var(--bg-surface-1); border-color: var(--color-error); }
 
+  .rx-stat-card a { color: var(--accent-primary-text); }
+
   .rx-button:focus-visible,
   .rx-field__control:focus-visible,
   .rx-table button:focus-visible,
@@ -59,7 +61,7 @@
   .rx-table th { border-bottom: var(--focus-ring-width) solid var(--text-secondary); }
   .rx-dialog { border: var(--focus-ring-width) solid var(--text-secondary); }
   .rx-badge { display: inline-block; border: var(--focus-ring-width) solid var(--text-secondary); border-radius: var(--radius-md); padding: var(--space-2); }
-  .rx-badge--success { color: var(--text-on-success); background: var(--color-success); border-color: var(--text-on-success); }
+  .rx-badge--success { color: var(--text-on-success); background: var(--color-success); border-color: var(--text-secondary); }
   .rx-badge--error { color: var(--color-error); border-color: var(--color-error); }
   .rx-state { display: grid; gap: var(--space-2); }
 }

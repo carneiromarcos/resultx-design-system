@@ -58,3 +58,18 @@
 - field-disabled: Campo desabilitado não aceita interação.
 - field-keyboard: Tab foca e digitação altera o valor.
 - field-contrast: Texto e bordas do campo mantêm contraste.
+- field-loading: Grupo em carregamento indica aria-busy e desabilita controle.
+- field-empty: Controle vazio opcional aceita valor vazio.
+
+## Cobertura de estados
+
+- normal: field-label
+- carregando: field-loading
+- vazio: field-empty
+- erro: field-error
+- desabilitado: field-disabled
+- foco: field-keyboard
+
+## Conformidade
+
+- Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro adaptador não comprovam conformidade.

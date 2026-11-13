@@ -52,3 +52,17 @@
 - error-content: Erro tem alerta e ação de tentar novamente.
 - empty-keyboard: Ação é alcançável e foco é visível.
 - empty-contrast: Textos dos estados vazio e erro mantêm contraste.
+- empty-loading: Carregamento impede a ação indisponível.
+
+## Cobertura de estados
+
+- normal: não aplicável
+- carregando: empty-loading
+- vazio: empty-content
+- erro: error-content
+- desabilitado: empty-loading
+- foco: empty-keyboard
+
+## Conformidade
+
+- Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro adaptador não comprovam conformidade.

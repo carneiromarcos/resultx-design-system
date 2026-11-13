@@ -29,7 +29,14 @@ test.each(expected)('%s declara anatomia, estados, acessibilidade, aceite e test
   for (const state of states) expect(typeof c.estados[state] === 'string' && c.estados[state].trim().length > 0).toBe(true);
   for (const token of c.tokens) expect({ token, existe: semantic.has(token) }).toEqual({ token, existe: true });
   for (const item of c.casos_teste) expect(item).toEqual({ id: expect.stringMatching(/^[a-z][a-z0-9-]+$/), descricao: expect.any(String) });
-  expect(new Set(c.casos_teste.map((t) => t.id)).size).toBe(c.casos_teste.length);
+  const caseIds = new Set(c.casos_teste.map((t) => t.id));
+  expect(caseIds.size).toBe(c.casos_teste.length);
+  expect(c.conformidade).toMatch(/cada adaptador/i);
+  expect(Object.keys(c.cobertura_estados).sort()).toEqual(Object.keys(c.estados).sort());
+  for (const [state, id] of Object.entries(c.cobertura_estados)) {
+    if (id === null) expect(c.estados[state]).toMatch(/^Não aplicável/i);
+    else expect(caseIds.has(id)).toBe(true);
+  }
 });
 
 test('fichas versionadas são geradas a partir dos contratos', () => {
