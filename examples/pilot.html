@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contratos do lote piloto</title>
+  <link rel="stylesheet" href="../tokens/tokens.css">
+  <link rel="stylesheet" href="../adapters/css/pilot.css">
+</head>
+<body class="rx-card">
+  <h1>Lista de vagas e candidatos</h1>
+  <section aria-labelledby="actions-heading">
+    <h2 id="actions-heading">Ações</h2>
+    <button class="rx-button rx-button--primary" id="primary">Publicar vaga</button>
+    <button class="rx-button rx-button--secondary" id="secondary">Filtrar</button>
+    <button class="rx-button" id="disabled" disabled>Indisponível</button>
+    <button class="rx-button" id="loading-button" aria-busy="true" disabled>Salvando</button>
+  </section>
+  <div class="rx-field" id="field">
+    <label class="rx-field__label" for="search">Buscar candidato</label>
+    <input class="rx-field__control" id="search" type="search" aria-describedby="search-help">
+    <span class="rx-field__message" id="search-help">Informe nome ou cargo.</span>
+  </div>
+  <div class="rx-field" id="field-error">
+    <label class="rx-field__label" for="invalid">E-mail</label>
+    <input class="rx-field__control" id="invalid" type="email" aria-invalid="true" aria-describedby="invalid-message">
+    <span class="rx-field__message" id="invalid-message">Informe um e-mail válido.</span>
+  </div>
+  <label class="rx-field">Campo indisponível <input class="rx-field__control" id="disabled-field" disabled></label>
+  <article class="rx-card" id="card"><h2>Vagas recentes</h2><p>Veja as inscrições recebidas.</p><button class="rx-button">Ver vagas</button></article>
+  <article class="rx-card rx-card--sm" id="card-sm"><h2>Cartão pequeno</h2></article>
+  <article class="rx-card rx-card--md" id="card-md"><h2>Cartão médio</h2></article>
+  <article class="rx-card rx-card--lg" id="card-lg"><h2>Cartão grande</h2></article>
+  <article class="rx-card" id="card-loading" aria-busy="true"><h2>Atualizando vagas</h2></article>
+  <article class="rx-stat-card" id="stat"><h2>Candidatos</h2><p class="rx-stat-card__value">42</p></article>
+  <article class="rx-stat-card" id="stat-empty"><h2>Novos candidatos</h2><p class="rx-stat-card__value">—</p></article>
+  <article class="rx-stat-card" id="stat-loading" aria-busy="true"><h2>Atualizando totais</h2></article>
+  <table class="rx-table" id="table">
+    <caption>Candidatos à vaga</caption>
+    <thead><tr><th scope="col" aria-sort="ascending"><button class="rx-button" id="sort">Nome</button></th><th scope="col">Status</th></tr></thead>
+    <tbody><tr><td>Ana Silva</td><td><span class="rx-badge rx-badge--success">Em análise</span></td></tr><tr><td>Bruno Costa</td><td><span class="rx-badge rx-badge--neutral">Pendente</span></td></tr></tbody>
+  </table>
+  <table class="rx-table" id="table-loading" aria-busy="true"><caption>Atualizando candidatos</caption><thead><tr><th scope="col">Nome</th></tr></thead><tbody><tr><td>Carregando</td></tr></tbody></table>
+  <p><span class="rx-badge rx-badge--neutral">Pendente</span> <span class="rx-badge rx-badge--success">Aprovado</span> <span class="rx-badge rx-badge--error">Recusado</span></p>
+  <section class="rx-state" id="empty"><h2>Nenhuma candidatura</h2><p>Publique uma vaga para receber candidatos.</p><button class="rx-button">Publicar vaga</button></section>
+  <section class="rx-state" id="error" role="alert"><h2>Não foi possível carregar</h2><p>Tente novamente para ver os candidatos.</p><button class="rx-button">Tentar novamente</button></section>
+  <button class="rx-button" id="open-dialog">Excluir vaga</button>
+  <dialog class="rx-dialog rx-dialog--danger" id="confirm" aria-labelledby="confirm-title" aria-describedby="confirm-description">
+    <h2 id="confirm-title">Excluir vaga?</h2><p id="confirm-description">A vaga deixará de receber candidaturas.</p>
+    <button class="rx-button" id="cancel">Cancelar</button><button class="rx-button rx-button--danger" id="confirm-action">Excluir</button>
+  </dialog>
+  <script>
+    const theme = new URLSearchParams(location.search).get('theme');
+    if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+    const dialog = document.querySelector('#confirm');
+    document.querySelector('#open-dialog').addEventListener('click', () => dialog.showModal());
+    document.querySelector('#cancel').addEventListener('click', () => dialog.close());
+    document.querySelector('#confirm-action').addEventListener('click', () => dialog.close('confirmed'));
+    document.querySelector('#sort').addEventListener('click', () => {
+      const header = document.querySelector('#sort').closest('th');
+      const next = header.getAttribute('aria-sort') === 'ascending' ? 'descending' : 'ascending';
+      header.setAttribute('aria-sort', next);
+      const body = document.querySelector('#table tbody');
+      [...body.rows].sort((a, b) => (next === 'ascending' ? 1 : -1) * a.cells[0].textContent.localeCompare(b.cells[0].textContent, 'pt-BR')).forEach((row) => body.append(row));
+    });
+  </script>
+</body>
+</html>

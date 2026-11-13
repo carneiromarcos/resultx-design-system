@@ -1,0 +1,45 @@
+versao: 1
+componente: ConfirmDialog
+anatomia:
+  - dialog modal
+  - título
+  - descrição
+  - ações cancelar e confirmar
+variantes:
+  - default
+  - danger
+estados:
+  normal: Fechado até ação explícita.
+  carregando: aria-busy e confirmação desabilitada.
+  vazio: 'Não aplicável: título e descrição são obrigatórios.'
+  erro: Erro comunicado dentro do diálogo.
+  desabilitado: Ação indisponível usa disabled.
+  foco: Foco entra, permanece no modal e retorna ao acionador.
+tokens:
+  - '--bg-surface-1'
+  - '--text-primary'
+  - '--font-body'
+  - '--text-base'
+  - '--focus-ring-width'
+  - '--focus-ring-offset'
+  - '--accent-primary-text'
+  - '--text-secondary'
+  - '--space-4'
+  - '--radius-md'
+  - '--color-error'
+teclado:
+  - Tab permanece no modal.
+  - Escape cancela e devolve foco.
+aria:
+  - dialog com nome e descrição associados.
+  - Modalidade nativa showModal ou aria-modal equivalente.
+criterios_aceite:
+  - Esc fecha sem confirmar.
+  - Texto ≥ 4,5:1 e foco ≥ 3:1.
+casos_teste:
+  - id: dialog-semantics
+    descricao: Diálogo tem nome, descrição e modalidade.
+  - id: dialog-keyboard
+    descricao: Foco entra no modal, Escape fecha e retorna ao acionador.
+  - id: dialog-contrast
+    descricao: Texto do diálogo mantém contraste.

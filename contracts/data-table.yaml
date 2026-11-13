@@ -1,0 +1,45 @@
+versao: 1
+componente: DataTable
+anatomia:
+  - table com caption
+  - thead com th scope
+  - tbody com linhas
+  - estados e paginação externos
+variantes:
+  - default
+  - sortable
+estados:
+  normal: Linhas e cabeçalhos presentes.
+  carregando: aria-busy verdadeiro.
+  vazio: EmptyState informa próximo passo.
+  erro: ErrorState informa como tentar novamente.
+  desabilitado: Ações de linha podem ser disabled.
+  foco: Cabeçalhos ordenáveis têm foco visível.
+tokens:
+  - '--bg-surface-1'
+  - '--text-primary'
+  - '--font-body'
+  - '--text-base'
+  - '--focus-ring-width'
+  - '--focus-ring-offset'
+  - '--accent-primary-text'
+  - '--text-secondary'
+  - '--space-3'
+teclado:
+  - Tab alcança controles.
+  - Enter ou Espaço aciona ordenação.
+aria:
+  - caption nomeia tabela.
+  - th usa scope; aria-sort identifica coluna ordenada.
+criterios_aceite:
+  - Todos os dados têm cabeçalho associado.
+  - Texto ≥ 4,5:1; foco ≥ 3:1.
+casos_teste:
+  - id: table-semantics
+    descricao: Tabela tem caption e cabeçalho com scope.
+  - id: table-sorting
+    descricao: Enter altera aria-sort da coluna.
+  - id: table-loading
+    descricao: Carregamento expõe aria-busy.
+  - id: table-contrast
+    descricao: Tabela mantém contraste do texto.

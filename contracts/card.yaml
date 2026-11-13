@@ -1,0 +1,43 @@
+versao: 1
+componente: Card
+anatomia:
+  - contêiner
+  - título com nível contextual
+  - conteúdo
+variantes:
+  - sm
+  - md
+  - lg
+estados:
+  normal: Conteúdo disponível.
+  carregando: aria-busy comunica atualização.
+  vazio: Conteúdo substituído por EmptyState.
+  erro: Conteúdo substituído por ErrorState.
+  desabilitado: Não aplicável ao contêiner; ações internas podem ser disabled.
+  foco: Ações internas recebem foco.
+tokens:
+  - '--bg-surface-1'
+  - '--text-primary'
+  - '--font-body'
+  - '--text-base'
+  - '--space-2'
+  - '--space-4'
+  - '--radius-md'
+  - '--space-6'
+teclado:
+  - Tab percorre ações internas.
+aria:
+  - Título usa nível coerente com a página.
+  - aria-busy durante carregamento.
+criterios_aceite:
+  - Texto ≥ 4,5:1.
+  - Sem sombra em repouso.
+casos_teste:
+  - id: card-heading
+    descricao: Título expõe nível e nome acessíveis.
+  - id: card-loading
+    descricao: Carregamento do cartão expõe aria-busy.
+  - id: card-contrast
+    descricao: Texto mantém contraste na superfície.
+  - id: card-sizes
+    descricao: Os três tamanhos usam espaçamentos crescentes.

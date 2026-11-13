@@ -188,10 +188,11 @@ test.each(['dimensão EDS', 'cor vinculada da marca'])('trava EDS rejeita mudan�
 });
 
 
-test('exports existentes permanecem idênticos e só o export opt-in é novo', () => {
+test('exports existentes permanecem idênticos e os novos exports são explícitos', () => {
   const current = require('../package.json').exports;
   for (const [name, destination] of Object.entries(reference.exports)) expect(current[name]).toBe(destination);
-  expect(Object.keys(current).filter((name) => !(name in reference.exports))).toEqual([NEW_OPT_IN_ALIASES.export]);
+  expect(Object.keys(current).filter((name) => !(name in reference.exports))).toEqual([NEW_OPT_IN_ALIASES.export, './adapters/css/pilot']);
+  expect(current['./adapters/css/pilot']).toBe('./adapters/css/pilot.css');
 });
 
 test('build completo verifica EDS congelado antes de escrever qualquer artefato', () => {
