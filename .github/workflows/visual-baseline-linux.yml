@@ -5,6 +5,7 @@ on:
   pull_request:
     paths:
       - 'tests/visual/**'
+      - 'assets/fonts/**'
       - '**/preview.html'
       - 'components/**'
       - 'tokens/**'
