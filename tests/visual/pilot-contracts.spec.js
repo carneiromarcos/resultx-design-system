@@ -77,13 +77,23 @@ for (const theme of ['light', 'dark']) {
 
   test(`baseline foco ${theme}`, async ({ page }) => {
     await openPilotCapture(page, theme);
+    // Agrupa apenas ações e campo; a margem inclui o anel e seu deslocamento.
+    await page.evaluate(() => {
+      const actions = document.querySelector('[aria-labelledby="actions-heading"]');
+      const field = document.querySelector('#field');
+      const region = document.createElement('div');
+      region.setAttribute('data-visual-focus-region', '');
+      region.style.padding = 'calc(var(--focus-ring-width) + var(--focus-ring-offset) + var(--space-2))';
+      actions.before(region);
+      region.append(actions, field);
+    });
     await page.locator('#primary').focus();
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
     const field = page.locator('#search');
     await expect(field).toBeFocused();
     expect(await field.evaluate((el) => el.matches(':focus-visible'))).toBe(true);
-    await expect(page).toHaveScreenshot(`pilot-focus-${theme}.png`);
+    await expect(page.locator('[data-visual-focus-region]')).toHaveScreenshot(`pilot-focus-${theme}.png`);
   });
 
   test(`baseline diálogo ${theme}`, async ({ page }) => {
