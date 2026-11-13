@@ -20,3 +20,7 @@ dark/success:hover: 1.86832:1 (#FDFFFF sobre #25D967)
 ```
 
 Após a correção com `--text-on-success`, o mesmo comando passou: 1 suíte, 1 teste. O par dark normal passou a 8.47738:1 (#0B0E14 sobre #22C55E); o hover, após brilho, a 10.22289:1 (#0C0F16 sobre #25D967). A lista de dívidas e os valores de referência estão no teste. A variante warning não existe e não foi criada. Fundos translúcidos são compostos sobre `--bg-base`, e o filtro de brilho é aplicado ao texto e ao fundo.
+
+## Visual Linux — pendente
+
+Imagem oficial `mcr.microsoft.com/playwright:v1.64.1-noble` amd64 baixada no Colima arm64. A execução das quatro capturas falhou antes de gerar baselines: o kernel registrou `global_oom` e encerrou `chrome-headless`. Uma segunda tentativa com processo único falhou na emulação QEMU (`rcu_read_unlock` / SIGABRT). O CI visual não foi habilitado sem baselines verificadas. É necessário executar em Linux amd64 com memória suficiente e comparar as quatro capturas antes de versioná-las.
