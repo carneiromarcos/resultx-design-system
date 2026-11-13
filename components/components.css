@@ -457,6 +457,7 @@ body {
   color: var(--text-inverse);
   box-shadow: var(--elevation-1);
 }
+:where([data-theme="sober-dark"]) .btn-primary { color: var(--text-on-accent); }
 .btn-primary:hover {
   background: var(--accent-primary-hover);
   box-shadow: var(--elevation-2);
@@ -471,21 +472,24 @@ body {
 .btn-ghost { background: transparent; color: var(--text-secondary); }
 .btn-ghost:hover { color: var(--text-primary); background: var(--bg-surface-2); }
 .btn-danger {
-  background: var(--color-error-bg);
-  color: var(--color-error);
+  background: var(--color-error);
+  color: var(--text-inverse);
   border: 1px solid rgba(220,38,38,0.2);
 }
-.btn-danger:hover { background: var(--color-error); color: var(--text-primary); transform: translateY(-1px); }
+.btn-danger:hover { background: var(--color-error); color: var(--text-inverse); transform: translateY(-1px); }
 .btn-success {
   background: var(--color-success);
-  color: var(--text-primary);
+  color: var(--text-on-success);
   box-shadow: var(--elevation-1);
 }
-[data-theme="dark"] .btn-success { color: var(--text-on-success); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) .btn-success { color: var(--text-on-success); }
-}
+:where([data-theme="premium-light"]) .btn-success { color: var(--text-inverse); }
 .btn-success:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: var(--elevation-2); }
+
+/* Contraste das variantes nos temas opt-in. */
+:where([data-theme="vibrant-dark"]) .btn-primary:hover { background: var(--accent-primary); }
+:where([data-theme="premium-light"]) .btn-secondary:hover { color: var(--text-primary); }
+:where([data-theme="premium-light"]) .btn-success:hover { background: var(--accent-primary-hover); filter: none; }
+
 .btn-sm { padding: var(--space-1) var(--space-3); font-size: var(--text-xs); min-height: 36px; }
 .btn-lg { padding: var(--space-3) var(--space-8); font-size: var(--text-base); min-height: 48px; }
 
