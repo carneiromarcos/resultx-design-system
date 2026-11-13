@@ -913,7 +913,7 @@ resultx/electia/                         <- consumidor (LP + plataforma)
 Sempre que este Brand Book virar v2.1, v2.2, etc:
 1. Atualizar `brands/electia/` (fonte da verdade)
 2. Bump versão no `package.json` do DS root
-3. Republicar NPM se for um consumidor externo
+3. Criar a tag nova do DS (o DS não é publicado no npm; ver ADR-0005 D4)
 4. Na LP/plataforma, atualizar imports + copiar novos assets
 5. Documentar mudanças no CHANGELOG.md do Electia + da LP/plataforma
 
