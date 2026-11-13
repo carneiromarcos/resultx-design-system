@@ -5,6 +5,32 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Added — contratos do lote piloto e adaptador CSS opt-in (E2, ADR-0004)
+
+Oito contratos em `contracts/*.yaml` (entram no pacote): Button, Field, Card, StatCard,
+DataTable, ConfirmDialog, StatusBadge e EmptyState/ErrorState. Cada um declara anatomia,
+variantes, estados (carregando, vazio, erro, desabilitado, foco), tokens semânticos, teclado,
+ARIA, critérios mensuráveis e casos de teste; neutros quanto a biblioteca de ícone. Um teste
+falha se um contrato citar token que não existe na fonte única.
+
+Adaptador de referência `.rx-*` em `adapters/css/pilot.css`, dentro de `@layer components`,
+com o **export novo** `./adapters/css/pilot`. Só entra para quem importar esse caminho;
+`components/components.css` e as classes atuais não mudam.
+
+Os casos dos contratos rodam no navegador (Playwright) sobre o exemplo `examples/pilot.html`:
+borda medida por pixels contra o fundo externo nos quatro lados (estilo e largura), anel de foco
+realmente pintado (sem sobreposição nem recorte), contraste dos textos efetivos, diálogo modal
+com fundo inerte e foco preso nos dois sentidos, cabeçalho associado a todas as células,
+ordenação por Enter e Espaço, e estados de erro e carregamento. Ensaios negativos provam que cada
+defeito é rejeitado. **Conformidade de outro adaptador só vale rodando os mesmos casos contra ele**
+(`RESULTX_ADAPTER_URL`). Fichas geradas a partir dos contratos ficam em `generated/component-cards`
+(consulta no repositório, fora do pacote).
+
+**Pendência visual:** duas capturas da vitrine do adaptador estão desativadas e sem baseline.
+Não há cobertura visual do piloto declarada até a baseline ser gerada no workflow Visual Linux e
+aprovada pelo Revisor, com o workflow adaptado para aceitar as novas capturas (responsável:
+Supervisor, próxima PR).
+
 ### Changed — tokens com fonte única (E1, ADR-0003)
 
 Todos os valores de token (cor, sombra, dimensão, tempo) passam a viver numa fonte única DTCG
@@ -34,7 +60,8 @@ quem importar esse caminho; o CSS padrão não ganha nenhum token.
 ### Changed — dependências de desenvolvimento (interno)
 
 Entram `style-dictionary` 5.8.0, `postcss-value-parser` 4.2.0 e `color-name` 1.1.4 (os dois
-últimos já vinham como transitivos). O `npm audit` passa de 20 para 23 avisos (4 baixos, 19
+últimos já vinham como transitivos); a E2 acrescenta `js-yaml` 4.3.2 (antes transitivo) e
+`pngjs` 7.0.0 para os testes. O `npm audit` passa de 20 para 23 avisos (4 baixos, 19
 moderados); os três novos vêm do `style-dictionary` e de dependências embutidas dele, só em
 desenvolvimento, sem efeito demonstrado no pacote distribuído.
 
