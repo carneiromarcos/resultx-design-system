@@ -98,16 +98,29 @@ for (const theme of ['light', 'dark']) {
     const inputBox = await field.boundingBox();
     const viewport = page.viewportSize();
     expect(actionsBox && fieldBox && inputBox && viewport).toBeTruthy();
+    const adjacentEdge = (locator, direction) => locator.evaluate((element, step) => {
+      for (let sibling = element[step]; sibling; sibling = sibling[step]) {
+        const style = getComputedStyle(sibling);
+        const rect = sibling.getBoundingClientRect();
+        if (style.display !== 'none' && style.visibility === 'visible' &&
+            !['absolute', 'fixed'].includes(style.position) && rect.width > 0 && rect.height > 0) {
+          return step === 'previousElementSibling' ? rect.bottom : rect.top;
+        }
+      }
+      return null;
+    }, direction);
+    const previousBottom = await adjacentEdge(actions, 'previousElementSibling');
+    const nextTop = await adjacentEdge(fieldSection, 'nextElementSibling');
     const x = Math.max(0, Math.floor(Math.min(actionsBox.x, fieldBox.x) - margin));
-    const y = Math.max(0, Math.floor(Math.min(actionsBox.y, fieldBox.y) - margin));
+    const y = Math.max(0, Math.floor(Math.min(actionsBox.y, fieldBox.y) - margin), previousBottom === null ? 0 : Math.ceil(previousBottom));
     const right = Math.min(viewport.width, Math.ceil(Math.max(actionsBox.x + actionsBox.width, fieldBox.x + fieldBox.width) + margin));
-    const bottom = Math.min(viewport.height, Math.ceil(Math.max(actionsBox.y + actionsBox.height, fieldBox.y + fieldBox.height) + margin));
+    const bottom = Math.min(viewport.height, Math.ceil(Math.max(actionsBox.y + actionsBox.height, fieldBox.y + fieldBox.height) + margin), nextTop === null ? viewport.height : Math.floor(nextTop));
     const clip = { x, y, width: right - x, height: bottom - y };
     // Um corte no limite da viewport não pode esconder parte do anel.
-    expect(inputBox.x - ring[0] - ring[1]).toBeGreaterThanOrEqual(x);
-    expect(inputBox.y - ring[0] - ring[1]).toBeGreaterThanOrEqual(y);
-    expect(inputBox.x + inputBox.width + ring[0] + ring[1]).toBeLessThanOrEqual(right);
-    expect(inputBox.y + inputBox.height + ring[0] + ring[1]).toBeLessThanOrEqual(bottom);
+    expect(inputBox.x - ring[0] - ring[1], 'O recorte corta o lado esquerdo do anel de foco').toBeGreaterThanOrEqual(x);
+    expect(inputBox.y - ring[0] - ring[1], 'O recorte corta o topo do anel de foco').toBeGreaterThanOrEqual(y);
+    expect(inputBox.x + inputBox.width + ring[0] + ring[1], 'O recorte corta o lado direito do anel de foco').toBeLessThanOrEqual(right);
+    expect(inputBox.y + inputBox.height + ring[0] + ring[1], 'O recorte corta a base do anel de foco').toBeLessThanOrEqual(bottom);
     await expect(page).toHaveScreenshot(`pilot-focus-${theme}.png`, { clip });
   });
 
