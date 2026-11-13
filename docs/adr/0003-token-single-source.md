@@ -23,13 +23,13 @@ Medido em `origin/main` `6083ce3` (13/11/2026):
    - **de componente** — só quando o papel semântico não basta (`button.height.md`).
    Marcas (`brands/<id>/`) sobrescrevem **valores** de semânticos; não criam nomes novos fora do domínio da marca.
 2. **Gerador: Style Dictionary** (ou equivalente com a mesma capacidade, escolhido pelo Executor com parecer do @architect). Emite todos os artefatos consumidos hoje: `tokens/tokens.css`, `brands/*/tokens/tokens.css` e `ds-bridge.css`, `brands/emprega-mais/tokens/eds-root.css` (+ `.sha256`), `dist/tokens.theme.css` (Tailwind v4), `dist/tokens.ts` e os **aliases legados** da ADR-0001.
-3. **Primeira entrega com saída equivalente.** A troca de fonte só é aceita quando um teste prova que cada artefato gerado é **igual** ao atual (diff normalizado de declarações), exceto tokens novos explicitamente listados. Consumidores não percebem a troca.
+3. **Primeira entrega com saída equivalente.** A troca de fonte só é aceita quando um teste prova que cada artefato gerado é **igual** ao atual (diff normalizado de declarações que preserva também a ordem e o escopo da cascata: seletor, `@media`, `@layer`), exceto tokens novos explicitamente listados. Consumidores não percebem a troca.
 4. **Artefato gerado não se edita à mão.** O CI já falha se `npm run build` alterar `dist/` ou `brands/`; a regra passa a cobrir também `tokens/tokens.css` e `eds-root.css`.
 5. **O contraste continua medido no build.** A verificação atual da ponte (falha abaixo de 4,5:1) passa a rodar sobre a saída gerada.
 
 ## O que não muda
 
-- Os consumidores continuam importando os mesmos caminhos e a mesma tag git.
+- Os consumidores continuam importando os mesmos caminhos. Cada um permanece na tag que usa hoje até atualizar por conta própria, de forma gradual; a tag nova (v2.10.0) entrega a mesma saída semântica, então atualizar não muda nada visível.
 - `eds-root.css` continua copiado por SHA para IMO e EditalHub (ADR-0002). Alteração de **valor** nele segue a janela do EditalHub (nada antes do fim do recurso de 10/12).
 - Decisão de distribuição de 11/10 (tag git, não npm) mantida.
 
