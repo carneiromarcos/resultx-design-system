@@ -18,11 +18,12 @@ com o **export novo** `./adapters/css/pilot`. Só entra para quem importar esse 
 `components/components.css` e as classes atuais não mudam.
 
 Os casos dos contratos rodam no navegador (Playwright) sobre o exemplo `examples/pilot.html`:
-borda medida por pixels contra o fundo externo nos quatro lados (estilo e largura), anel de foco
-realmente pintado (sem sobreposição nem recorte), contraste dos textos efetivos, diálogo modal
+borda (estilo e largura nos quatro lados) e anel de foco realmente pintado, conferidos por
+**amostragem de um ponto no meio de cada lado** contra o fundo externo — pega sobreposição ou
+recorte nesses pontos, não em cantos ou entre eles —, contraste dos textos efetivos, diálogo modal
 com fundo inerte e foco preso nos dois sentidos, cabeçalho associado a todas as células,
-ordenação por Enter e Espaço, e estados de erro e carregamento. Ensaios negativos provam que cada
-defeito é rejeitado. **Conformidade de outro adaptador só vale rodando os mesmos casos contra ele**
+ordenação por Enter e Espaço, e estados de erro e carregamento. Ensaios negativos provam que os
+defeitos escolhidos são rejeitados (não toda variação possível). **Conformidade de outro adaptador só vale rodando os mesmos casos contra ele**
 (`RESULTX_ADAPTER_URL`). Fichas geradas a partir dos contratos ficam em `generated/component-cards`
 (consulta no repositório, fora do pacote).
 
