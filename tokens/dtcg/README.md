@@ -9,7 +9,11 @@ para os nomes CSS existentes. `npm run build:tokens` gera
 A mesma fonte contém os temas opt-in premium-light, sober-dark e
 vibrant-dark, gerados por `scripts/build-themes.mjs`. Não edite seus CSS.
 
-A migração ainda não abrange o núcleo de tema dark/light, marcas ou eds-root. Esses arquivos
+O núcleo dark/light vem da mesma fonte e de `layouts/core.css.tmpl`, gerado
+por `scripts/build-core.mjs`. O layout fixa seletores, escopos, comentários e
+regras CSS estruturais; os valores dos tokens vivem no JSON.
+
+A migração ainda não abrange marcas ou eds-root. Esses arquivos
 continuam manuais nesta etapa; `tokens/tokens.json` ainda é o legado. Não considere
 a E1 concluída até que os demais artefatos sejam migrados e verificados.
 
