@@ -45,3 +45,22 @@ test('fonte DTCG gera a camada compartilhada equivalente em diretório isolado',
     fs.rmSync(output, { recursive: true, force: true });
   }
 });
+
+
+test('fontes DTCG geram os três temas opt-in equivalentes em diretório isolado', () => {
+  const os = require('os');
+  const path = require('path');
+  const { execFileSync } = require('child_process');
+  const output = fs.mkdtempSync(path.join(os.tmpdir(), 'resultx-themes-'));
+  try {
+    execFileSync(process.execPath, ['scripts/build-themes.mjs'], {
+      env: { ...process.env, RESULTX_THEMES_OUTPUT: output }, stdio: 'pipe',
+    });
+    for (const theme of ['premium-light', 'sober-dark', 'vibrant-dark']) {
+      const file = `tokens/themes/${theme}.css`;
+      expect(normalizeCss(fs.readFileSync(path.join(output, `${theme}.css`), 'utf8'), file)).toEqual(reference.css[file]);
+    }
+  } finally {
+    fs.rmSync(output, { recursive: true, force: true });
+  }
+});
