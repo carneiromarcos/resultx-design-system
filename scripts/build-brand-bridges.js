@@ -21,8 +21,8 @@
  * The ink is therefore not configured anywhere — it is MEASURED per brand, and
  * the build fails if no candidate reaches AA.
  *
- * The brand CSS files stay the single source of truth: this script only reads
- * values out of them. Re-run after editing any brands/<id>/tokens/tokens.css.
+ * The brand CSS files are generated from DTCG before this script measures
+ * their values. Edit tokens/tokens.json, then run the build.
  *
  * Usage: npm run build:bridges
  */
@@ -31,6 +31,7 @@ const fs = require('fs');
 const path = require('path');
 
 const { BRANDS, INK_CANDIDATES, SURFACES } = require('./brand-bridges.config');
+const { opaqueHex, rgbaAlpha, selector } = require('./lib/core-token-values');
 const {
   AA_NORMAL,
   AA_LARGE,
@@ -43,16 +44,17 @@ const {
 
 const ROOT = path.resolve(__dirname, '..');
 
-/** Alpha values copied from tokens/tokens.css so the bridge matches the DS. */
-const ALPHA = {
-  dark: { muted: 0.15, border: 0.2, sidebarActive: 0.15 },
-  light: { muted: 0.12, border: 0.25, sidebarActive: null }, // light uses a solid fill
-};
-
-/** The sidebar stays dark in both themes — these are the DS sidebar backgrounds. */
-const SIDEBAR_BG = { dark: '#080B12', light: '#0F1A2E' };
-/** --sidebar-bg-hover: the fill of a focused .sidebar-item, where the ring sits. */
-const SIDEBAR_BG_HOVER = { dark: '#0F1420', light: '#162240' };
+/** Parâmetros da ponte são lidos da saída gerada do núcleo. */
+const ALPHA = Object.fromEntries(['dark', 'light'].map((theme) => {
+  const scope = selector(theme);
+  return [theme, {
+    muted: rgbaAlpha(scope, '--accent-primary-muted'),
+    border: rgbaAlpha(scope, '--border-accent'),
+    sidebarActive: theme === 'dark' ? rgbaAlpha(scope, '--sidebar-active-bg') : null,
+  }];
+}));
+const SIDEBAR_BG = Object.fromEntries(['dark', 'light'].map((theme) => [theme, opaqueHex(selector(theme), '--sidebar-bg')]));
+const SIDEBAR_BG_HOVER = Object.fromEntries(['dark', 'light'].map((theme) => [theme, opaqueHex(selector(theme), '--sidebar-bg-hover')]));
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Reading brand tokens

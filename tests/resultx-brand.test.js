@@ -2,7 +2,7 @@
 
 /**
  * Marca ResultX (v2.0, 09/10/2026): tema grafite, Sora/Inter, logos e vitrine.
- * Guarda tres coisas que ja quebraram em outras marcas: tokens.json e
+ * Guarda tres coisas que ja quebraram em outras marcas: fonte DTCG e
  * tokens.css divergindo, arquivo de marca prometido e ausente, e caminho
  * relativo do viewer apontando para fora do lugar.
  */
@@ -14,7 +14,18 @@ const ROOT = path.resolve(__dirname, '..');
 const BRAND = path.join(ROOT, 'brands', 'resultx');
 const read = (...p) => fs.readFileSync(path.join(ROOT, ...p), 'utf8');
 const css = read('brands', 'resultx', 'tokens', 'tokens.css');
-const json = JSON.parse(read('brands', 'resultx', 'tokens', 'tokens.json')).resultx;
+const source = JSON.parse(read('tokens', 'tokens.json'));
+const resolve = (value) => {
+  if (typeof value !== 'string' || !/^\{[^{}]+\}$/.test(value)) return value;
+  const token = value.slice(1, -1).split('.').reduce((node, key) => node[key], source);
+  return resolve(token.$value);
+};
+const dtcg = (name) => {
+  const value = resolve(source.brand.resultx.base[name].$value);
+  if (typeof value === 'object' && value.colorSpace === 'srgb') return value.hex;
+  if (typeof value === 'object' && value.unit) return value.value + value.unit;
+  return value;
+};
 
 /** `--rx-x: value;` do primeiro bloco :root. */
 const rootBlock = css.slice(css.indexOf('\n:root {'), css.indexOf('\n[data-theme="light"] {'));
@@ -42,22 +53,11 @@ describe('ResultX — tokens: tema grafite e fontes', () => {
   });
 
   test.each([
-    ['--rx-bg', json.color.bg.base],
-    ['--rx-surface-1', json.color.bg['surface-1']],
-    ['--rx-surface-2', json.color.bg['surface-2']],
-    ['--rx-surface-3', json.color.bg['surface-3']],
-    ['--rx-border', json.color.border.default],
-    ['--rx-text', json.color.text.primary],
-    ['--rx-text-secondary', json.color.text.secondary],
-    ['--rx-text-muted', json.color.text.muted],
-    ['--rx-gold', json.color.gold.DEFAULT],
-    ['--rx-purple', json.color.purple.DEFAULT],
-    ['--rx-success', json.color.semantic.success],
-    ['--rx-reveal-duration', json.motion.reveal.duration],
-    ['--rx-lift-distance', json.motion.lift.distance],
-    ['--rx-header-bar-min', json.layout.header['bar-min']],
-  ])('tokens.json e tokens.css concordam em %s', (name, token) => {
-    expect(norm(decl(name))).toBe(norm(token.$value));
+    'rx-bg', 'rx-surface-1', 'rx-surface-2', 'rx-surface-3', 'rx-border',
+    'rx-text', 'rx-text-secondary', 'rx-text-muted', 'rx-gold', 'rx-purple',
+    'rx-success', 'rx-reveal-duration', 'rx-lift-distance', 'rx-header-bar-min',
+  ])('fonte DTCG e tokens.css concordam em --%s', (name) => {
+    expect(norm(decl('--' + name))).toBe(norm(dtcg(name)));
   });
 });
 

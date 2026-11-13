@@ -5,6 +5,39 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Changed — tokens com fonte única (E1, ADR-0003)
+
+Todos os valores de token (cor, sombra, dimensão, tempo) passam a viver numa fonte única DTCG
+em `tokens/tokens.json`, e o Style Dictionary 5.8.0 gera os artefatos: `tokens/tokens.css`,
+temas, base, marcas e pontes (`brands/*/tokens/tokens.css` e `ds-bridge.css`),
+`dist/tokens.theme.css`, `dist/tokens.ts`, `dist/tokens.min.css` e o `eds-root.css` do
+Emprega+. **Saída equivalente à v2.10.0:** um teste compara declarações, ordem e escopo da
+cascata (seletor, media, layer) com uma referência tirada da tag, de forma independente do
+gerador; o `eds-root.css` sai idêntico byte a byte, mesmo SHA, e o build para antes de
+escrever qualquer arquivo se a fonte tentar mudá-lo (trava do recurso do EditalHub até 10/12).
+Consumidores não percebem a troca: mesmos caminhos e mesmos exports.
+
+- Uma catraca falha se um modelo de geração contiver valor visual literal (cor por hex, função
+  ou nome, número com qualquer unidade, fallback dentro de `var()`); exceções estruturais
+  listadas por propriedade e contexto no teste.
+- O CI passa a acusar build que altere `tokens/` além de `dist/` e `brands/`; o contraste das
+  pontes roda sobre a saída gerada.
+- Os JSON de marca em `brands/*/tokens/tokens.json` continuam escritos à mão e **não alimentam o
+  build**; o teste da ResultX passou a ler a fonte única. Eliminar esses JSON fica pendente.
+
+### Added — aliases legados opt-in
+
+Novo export `./tokens/legacy` (`tokens/legacy-aliases.css`) com `--bg-card`, `--accent-teal`,
+`--accent-teal-hover`, `--accent-teal-muted` e `--accent-on-dark` (ADR-0001). Só entra para
+quem importar esse caminho; o CSS padrão não ganha nenhum token.
+
+### Changed — dependências de desenvolvimento (interno)
+
+Entram `style-dictionary` 5.8.0, `postcss-value-parser` 4.2.0 e `color-name` 1.1.4 (os dois
+últimos já vinham como transitivos). O `npm audit` passa de 20 para 23 avisos (4 baixos, 19
+moderados); os três novos vêm do `style-dictionary` e de dependências embutidas dele, só em
+desenvolvimento, sem efeito demonstrado no pacote distribuído.
+
 ### Fixed — 17 combinações de botão abaixo de WCAG AA
 
 As 18 entradas da catraca de contraste dos botões saem da dívida, que fica vazia: 17 pares

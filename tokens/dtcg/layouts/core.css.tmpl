@@ -1,0 +1,598 @@
+/* Gerado por scripts/build-core.mjs a partir de tokens/tokens.json. Não editar. */
+/* ==========================================================================
+   ResultX Design System — Unified Tokens
+   v2.0.0 | Multi-product: Electia (B2B2C), IMO (B2G), Editais (B2G)
+
+   Usage:
+     <link rel="stylesheet" href="tokens/tokens.css">
+     <html data-theme="dark">  ← or "light"
+
+   Theme switching (JS):
+     document.documentElement.dataset.theme = 'dark' | 'light';
+
+   Auto-detect:
+     If no data-theme is set, falls back to prefers-color-scheme.
+     Dark is the default when system has no preference.
+
+   Architecture:
+     tokens-base.css  → shared across ALL ResultX design systems
+     tokens.css       → this file: App DS colors (dark + light) + overrides
+   ========================================================================== */
+
+@import url('./base/tokens-base.css');
+
+/* ── Data Layer themes (v2.1.0 — opt-in via data-theme attr) ──────────── */
+@import url('./themes/_data-layer-shared.css');
+@import url('./themes/premium-light.css');
+@import url('./themes/sober-dark.css');
+@import url('./themes/vibrant-dark.css');
+
+/* ══════════════════════════════════════════════════════════════════════════
+   SHARED TOKENS (theme-independent, App DS-specific)
+   Overrides tokens-base where data-dense UI requires different values.
+   ══════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* ── Typography — Size Overrides (data-dense UI: smaller than base) ──── */
+  --text-2xs: __RX_t0000__;    /* 10px — micro labels */
+  --text-base: __RX_t0001__;  /* 15px (base: 16px) */
+  --text-lg: __RX_t0002__;    /* 17px (base: 20px) */
+  --text-xl: __RX_t0003__;      /* 20px (base: 24px) */
+  --text-2xl: __RX_t0004__;      /* 24px (base: 28px) */
+  --text-3xl: __RX_t0005__;    /* 30px (base: 36px) */
+  --text-4xl: __RX_t0006__;     /* 36px (base: 44px) */
+  --text-display: __RX_t0007__;    /* 48px (App-specific) */
+
+  /* ── Typography — Weight Aliases (backward compat: 50+ refs in components) */
+  --font-light: __RX_t0008__;
+  --font-regular: __RX_t0009__;
+  --font-medium: __RX_t0010__;
+  --font-semibold: __RX_t0011__;
+  --font-bold: __RX_t0012__;
+
+  /* ── Layout ────────────────────────────────────────────────────────────── */
+  --sidebar-width: __RX_t0013__;
+  --sidebar-collapsed: __RX_t0014__;
+  --header-height: __RX_t0015__;
+  --content-max-width: __RX_t0016__;
+
+  /* Context panel — the resizable column beside the main content.
+     --panel-width is the DEFAULT. The live width lives in --split-pane-width,
+     set on the .split-pane element itself, so the panel and the space it takes
+     from the main column can never drift apart. */
+  --panel-width: __RX_t0017__;
+  --panel-width-min: __RX_t0018__;
+  --panel-width-max: __RX_t0019__;
+  --split-handle-width: __RX_t0020__;
+
+  /* Disclosure — the collapse/expand timing. Read by dist/disclosure.js so the
+     script waits exactly as long as the CSS animates. */
+  --disclosure-duration: __RX_t0021__;
+  --grid-gap: __RX_t0022__;
+  --card-min-width: __RX_t0023__;
+
+  /* ── Accessibility ─────────────────────────────────────────────────────── */
+  --focus-ring-width: __RX_t0024__;
+  --focus-ring-offset: __RX_t0025__;
+
+  /* ── Text on colored backgrounds ─────────────────────────────────────── */
+  --text-on-color: __RX_t0026__;
+
+  /* ── Text on specific semantic backgrounds (per-color contrast fix) ──── */
+  --text-on-accent: __RX_t0027__;
+  --text-on-success: __RX_t0028__;
+  --text-on-warning: __RX_t0029__;
+  --text-on-error: __RX_t0030__;
+  --text-on-info: __RX_t0031__;
+
+  /* ── Accent secondary muted ──────────────────────────────────────── */
+  --accent-secondary-muted: __RX_t0032__;
+
+  /* ── Avatar gradient ────────────────────────────────────────────────── */
+  --avatar-gradient-start: __RX_t0033__;
+  --avatar-gradient-end: __RX_t0034__;
+
+  /* ── AI orb pigments (components/brand-orb.css) ─────────────────────────
+     A orb animada é a assinatura dos agentes de IA (decisão de 05/10/2026).
+     Os valores são CÓPIA dos tokens de cada marca — tests/brand-orb.test.js
+     reprova se a marca mudar e esta cópia não acompanhar. Iguais nos dois
+     temas: a orb é um objeto com luz própria, não uma superfície.
+       core  = o foco principal da cor de IA da marca
+       glow  = o segundo foco, que dá a cor de reflexo
+       shade = o corpo escuro que dá volume                               */
+  --ai-electia-core: __RX_t0035__;   /* electia --purple */
+  --ai-electia-glow: __RX_t0036__;   /* electia --purple-on-dark */
+  --ai-electia-shade: __RX_t0037__;  /* electia --purple-950 */
+  --ai-emprega-core: __RX_t0038__;   /* emprega-mais --emp-indigo-dark (IMO) */
+  --ai-emprega-glow: __RX_t0039__;   /* emprega-mais --emp-indigo-ink (escuro) */
+  --ai-emprega-shade: __RX_t0040__;  /* emprega-mais --emp-navy */
+  --ai-xscore-core: __RX_t0041__;    /* xscore --intel (IA = roxo) */
+  --ai-xscore-glow: __RX_t0042__;    /* xscore --gold (reflexo, nunca o corpo) */
+  --ai-xscore-shade: __RX_t0043__;   /* xscore --bg (grafite) */
+
+  /* ── Spring Curves (physics-based motion) ───────────────────────────── */
+  --spring-bounce: __RX_t0044__;
+  --spring-smooth: __RX_t0045__;
+  --spring-snappy: __RX_t0046__;
+  --stagger-delay: __RX_t0047__;
+
+  /* ── Travessia (components/btn-sheen.css) ──────────────────────────────
+     Curva de um movimento que precisa ser VISTO de ponta a ponta, como o
+     reflexo que atravessa o botão. As molas acima chegam a ~90 % do trajeto
+     no primeiro quinto do tempo: num reflexo de 700 ms isso vira um clarão
+     de ~150 ms. Esta sai suave e desacelera pouco, então a passada se lê
+     inteira. Valor validado no protótipo da #80.                       */
+  --ease-sheen: __RX_t0048__;
+
+  /* ── Elevation System (shadow + z-index convention) ────────────────── */
+  --elevation-0: __RX_t0049__;
+  /* elevation-1 through 4 defined per-theme (different opacity) */
+
+  /* ── DISC gradient end stops ────────────────────────────────────────── */
+  --disc-d-light: __RX_t0050__;
+  --disc-i-light: __RX_t0051__;
+  --disc-s-light: __RX_t0052__;
+  --disc-c-light: __RX_t0053__;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   DARK THEME (default)
+   Applied when: data-theme="dark" OR no data-theme + system prefers dark
+   ══════════════════════════════════════════════════════════════════════════ */
+[data-theme="dark"] {
+  /* ── Backgrounds ───────────────────────────────────────────────────────── */
+  --bg-base: __RX_t0054__;
+  --bg-surface-1: __RX_t0055__;
+  --bg-surface-2: __RX_t0056__;
+  --bg-surface-3: __RX_t0057__;
+  --bg-overlay: __RX_t0058__;
+
+  /* ── Sidebar ───────────────────────────────────────────────────────────── */
+  --sidebar-bg: __RX_t0059__;
+  --sidebar-bg-hover: __RX_t0060__;
+  --sidebar-active-bg: __RX_t0061__;
+  --sidebar-text: __RX_t0062__;
+  --sidebar-text-label: __RX_t0063__;
+  --sidebar-text-active: __RX_t0064__;
+  --sidebar-divider: __RX_t0065__;
+  --sidebar-text-bright: __RX_t0066__;
+  --sidebar-badge-bg: __RX_t0067__;
+  --sidebar-badge-active-bg: __RX_t0068__;
+  /* Anel de foco DENTRO da sidebar, que é escura nos dois temas. O anel do
+     tema não serve: no claro, #1D4ED8 sobre #0F1A2E dá 2,6:1. A .sidebar
+     redefine o anel com este valor. WCAG 1.4.11 pede 3:1; medido 10,57 sobre
+     o fundo da sidebar e 9,89 sobre o hover. */
+  --sidebar-focus-ring: __RX_t0069__;
+
+  /* ── Borders ───────────────────────────────────────────────────────────── */
+  --border-subtle: __RX_t0070__;
+  --border-default: __RX_t0071__;
+  --border-strong: __RX_t0072__;
+  --border-accent: __RX_t0073__;
+
+  /* ── Text ──────────────────────────────────────────────────────────────── */
+  --text-primary: __RX_t0074__;
+  --text-secondary: __RX_t0075__;
+  /* 5.04:1 sobre surface-3, 6.20:1 sobre o fundo; 4.55:1 na surface-3 de
+     Electia/Xscore (#232B3B). Era #848D97 (4.21:1 ali) e, antes, #6E7681. */
+  --text-muted: __RX_t0076__;
+  --text-inverse: __RX_t0077__;
+
+  /* ── Accent ────────────────────────────────────────────────────────────── */
+  --accent-primary: __RX_t0078__;
+  --accent-primary-hover: __RX_t0079__;
+  --accent-primary-muted: __RX_t0080__;
+  --accent-secondary: __RX_t0081__;
+  /* The accent as TEXT, not as fill. Same value here because teal reads at
+     10.38:1 on #0B0E14 — but a brand whose accent is dark (Electia purple:
+     2.55:1) must override this separately from --accent-primary.
+     See brands/<marca>/tokens/ds-bridge.css. */
+  --accent-primary-text: __RX_t0082__;
+
+  /* ── Semantic ──────────────────────────────────────────────────────────── */
+  --color-success: __RX_t0083__;
+  --color-success-bg: __RX_t0084__;
+  --color-warning: __RX_t0085__;
+  --color-warning-bg: __RX_t0086__;
+  --color-error: __RX_t0087__;
+  --color-error-bg: __RX_t0088__;
+  --color-info: __RX_t0089__;
+  --color-info-bg: __RX_t0090__;
+
+  /* ── Theory Colors (Assessment-Specific) ───────────────────────────────── */
+  --theory-mbti: __RX_t0091__;
+  --theory-mbti-bg: __RX_t0092__;
+  --theory-enneagram: __RX_t0093__;
+  --theory-enneagram-bg: __RX_t0094__;
+  --theory-bigfive: __RX_t0095__;
+  --theory-bigfive-bg: __RX_t0096__;
+  --theory-disc: __RX_t0097__;
+  --theory-disc-bg: __RX_t0098__;
+  --theory-lesenne: __RX_t0099__;
+  --theory-lesenne-bg: __RX_t0100__;
+  --theory-jung: __RX_t0101__;
+  --theory-jung-bg: __RX_t0102__;
+
+  /* ── DISC Dimensions ───────────────────────────────────────────────────── */
+  --disc-d: __RX_t0103__;
+  --disc-i: __RX_t0104__;
+  --disc-s: __RX_t0105__;
+  --disc-c: __RX_t0106__;
+
+  /* ── DISC Positioning Wheel (8 octants — Conductor → Organizer, -90° start)
+     Fixed perceptual palette, theme-agnostic. Used by .dl-pwheel-disc. */
+  --disc-wheel-conductor: __RX_t0107__;
+  --disc-wheel-motivator: __RX_t0108__;
+  --disc-wheel-promoter: __RX_t0109__;
+  --disc-wheel-facilitator: __RX_t0110__;
+  --disc-wheel-supporter: __RX_t0111__;
+  --disc-wheel-coordinator: __RX_t0112__;
+  --disc-wheel-analyzer: __RX_t0113__;
+  --disc-wheel-organizer: __RX_t0114__;
+
+  /* ── MBTI Axes ─────────────────────────────────────────────────────────── */
+  --mbti-ei: __RX_t0115__;
+  --mbti-sn: __RX_t0116__;
+  --mbti-tf: __RX_t0117__;
+  --mbti-jp: __RX_t0118__;
+
+  /* ── Big Five Dimensions ───────────────────────────────────────────────── */
+  --bigfive-o: __RX_t0119__;
+  --bigfive-c: __RX_t0120__;
+  --bigfive-e: __RX_t0121__;
+  --bigfive-a: __RX_t0122__;
+  --bigfive-n: __RX_t0123__;
+
+  /* ── Shadows ───────────────────────────────────────────────────────────── */
+  --shadow-sm: __RX_t0124__;
+  --shadow-md: __RX_t0125__;
+  --shadow-lg: __RX_t0126__;
+  --shadow-glow: __RX_t0127__;
+  --shadow-glow-lg: __RX_t0128__;
+
+  /* ── Glassmorphism ─────────────────────────────────────────────────────── */
+  --glass-subtle-bg: __RX_t0129__;
+  --glass-subtle-blur: __RX_t0130__;
+  --glass-subtle-border: __RX_t0131__;
+
+  --glass-standard-bg: __RX_t0132__;
+  --glass-standard-blur: __RX_t0133__;
+  --glass-standard-border: __RX_t0134__;
+
+  --glass-strong-bg: __RX_t0135__;
+  --glass-strong-blur: __RX_t0136__;
+  --glass-strong-border: __RX_t0137__;
+
+  /* ── Elevation (dark: stronger shadows for contrast) ────────────────── */
+  --elevation-1: __RX_t0138__;
+  --elevation-2: __RX_t0139__;
+  --elevation-3: __RX_t0140__;
+  --elevation-4: __RX_t0141__;
+
+  /* ── Chart ─────────────────────────────────────────────────────────────── */
+  --chart-gradient-start: __RX_t0142__;
+  --chart-gradient-end: __RX_t0143__;
+  --chart-line: __RX_t0144__;
+  --chart-grid: __RX_t0145__;
+
+  /* ── Accessibility ─────────────────────────────────────────────────────── */
+  /* Composto sobre as superficies escuras: 3.17:1 (surface-3) a 3.33:1. */
+  --focus-ring-color: __RX_t0146__;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LIGHT THEME
+   Applied when: data-theme="light" OR no data-theme + system prefers light
+   ══════════════════════════════════════════════════════════════════════════ */
+[data-theme="light"] {
+  /* ── Backgrounds ───────────────────────────────────────────────────────── */
+  --bg-base: __RX_t0147__;
+  --bg-surface-1: __RX_t0148__;
+  --bg-surface-2: __RX_t0149__;
+  --bg-surface-3: __RX_t0150__;
+  --bg-overlay: __RX_t0151__;
+
+  /* ── Sidebar (stays dark for contrast) ─────────────────────────────────── */
+  --sidebar-bg: __RX_t0152__;
+  --sidebar-bg-hover: __RX_t0153__;
+  --sidebar-active-bg: __RX_t0154__;
+  --sidebar-text: __RX_t0155__;
+  --sidebar-text-label: __RX_t0156__;
+  --sidebar-text-active: __RX_t0157__;
+  --sidebar-divider: __RX_t0158__;
+  --sidebar-text-bright: __RX_t0159__;
+  --sidebar-badge-bg: __RX_t0160__;
+  --sidebar-badge-active-bg: __RX_t0161__;
+  /* Azul claro, o par do accent claro que se lê sobre o navy: 6,84 sobre o
+     fundo da sidebar e 6,18 sobre o hover. */
+  --sidebar-focus-ring: __RX_t0162__;
+
+  /* ── Borders ───────────────────────────────────────────────────────────── */
+  --border-subtle: __RX_t0163__;
+  --border-default: __RX_t0164__;
+  --border-strong: __RX_t0165__;
+  --border-accent: __RX_t0166__;
+
+  /* ── Text (contrast-corrected for WCAG AA on all surfaces) ──────────── */
+  --text-primary: __RX_t0167__;
+  --text-secondary: __RX_t0168__;
+  /* 4.87:1 sobre surface-3, 5.78:1 sobre o fundo (era #6B7280: 4.07 / 4.83) */
+  --text-muted: __RX_t0169__;
+  --text-inverse: __RX_t0170__;
+
+  /* ── Accent ────────────────────────────────────────────────────────────── */
+  --accent-primary: __RX_t0171__;
+  --accent-primary-hover: __RX_t0172__;
+  --accent-primary-muted: __RX_t0173__;
+  --accent-secondary: __RX_t0174__;
+  /* 6.70:1 on #FFF — safe as text, so it mirrors --accent-primary here. */
+  --accent-primary-text: __RX_t0175__;
+
+  /* ── Semantic ──────────────────────────────────────────────────────────── */
+  --color-success: __RX_t0176__;
+  --color-success-bg: __RX_t0177__;
+  --color-warning: __RX_t0178__;
+  --color-warning-bg: __RX_t0179__;
+  --color-error: __RX_t0180__;
+  --color-error-bg: __RX_t0181__;
+  --color-info: __RX_t0182__;
+  --color-info-bg: __RX_t0183__;
+
+  /* ── Theory Colors (600-700 shades for light bg contrast) ──────────────── */
+  --theory-mbti: __RX_t0184__;
+  --theory-mbti-bg: __RX_t0185__;
+  --theory-enneagram: __RX_t0186__;
+  --theory-enneagram-bg: __RX_t0187__;
+  --theory-bigfive: __RX_t0188__;
+  --theory-bigfive-bg: __RX_t0189__;
+  --theory-disc: __RX_t0190__;
+  --theory-disc-bg: __RX_t0191__;
+  --theory-lesenne: __RX_t0192__;
+  --theory-lesenne-bg: __RX_t0193__;
+  --theory-jung: __RX_t0194__;
+  --theory-jung-bg: __RX_t0195__;
+
+  /* ── DISC Dimensions ───────────────────────────────────────────────────── */
+  --disc-d: __RX_t0196__;
+  --disc-i: __RX_t0197__;
+  --disc-s: __RX_t0198__;
+  --disc-c: __RX_t0199__;
+
+  /* ── DISC Positioning Wheel (8 octants — Conductor → Organizer, -90° start)
+     Fixed perceptual palette, theme-agnostic. Mirror of dark scope for parity. */
+  --disc-wheel-conductor: __RX_t0200__;
+  --disc-wheel-motivator: __RX_t0201__;
+  --disc-wheel-promoter: __RX_t0202__;
+  --disc-wheel-facilitator: __RX_t0203__;
+  --disc-wheel-supporter: __RX_t0204__;
+  --disc-wheel-coordinator: __RX_t0205__;
+  --disc-wheel-analyzer: __RX_t0206__;
+  --disc-wheel-organizer: __RX_t0207__;
+
+  /* ── MBTI Axes ─────────────────────────────────────────────────────────── */
+  --mbti-ei: __RX_t0208__;
+  --mbti-sn: __RX_t0209__;
+  --mbti-tf: __RX_t0210__;
+  --mbti-jp: __RX_t0211__;
+
+  /* ── Big Five Dimensions ───────────────────────────────────────────────── */
+  --bigfive-o: __RX_t0212__;
+  --bigfive-c: __RX_t0213__;
+  --bigfive-e: __RX_t0214__;
+  --bigfive-a: __RX_t0215__;
+  --bigfive-n: __RX_t0216__;
+
+  /* ── Shadows (lighter opacity for white backgrounds) ───────────────────── */
+  --shadow-sm: __RX_t0217__;
+  --shadow-md: __RX_t0218__;
+  --shadow-lg: __RX_t0219__;
+  --shadow-glow: __RX_t0220__;
+  --shadow-glow-lg: __RX_t0221__;
+
+  /* ── Glassmorphism (inverted for light: white glass) ───────────────────── */
+  --glass-subtle-bg: __RX_t0222__;
+  --glass-subtle-blur: __RX_t0223__;
+  --glass-subtle-border: __RX_t0224__;
+
+  --glass-standard-bg: __RX_t0225__;
+  --glass-standard-blur: __RX_t0226__;
+  --glass-standard-border: __RX_t0227__;
+
+  --glass-strong-bg: __RX_t0228__;
+  --glass-strong-blur: __RX_t0229__;
+  --glass-strong-border: __RX_t0230__;
+
+  /* ── Elevation (light: softer shadows) ──────────────────────────────── */
+  --elevation-1: __RX_t0231__;
+  --elevation-2: __RX_t0232__;
+  --elevation-3: __RX_t0233__;
+  --elevation-4: __RX_t0234__;
+
+  /* ── Chart ─────────────────────────────────────────────────────────────── */
+  --chart-gradient-start: __RX_t0235__;
+  --chart-gradient-end: __RX_t0236__;
+  --chart-line: __RX_t0237__;
+  --chart-grid: __RX_t0238__;
+
+  /* ── Accessibility ─────────────────────────────────────────────────────── */
+  /* Solido: a 50% o azul composto dava 2.24-2.36:1 (WCAG 1.4.11 pede 3:1).
+     Agora 5.64:1 sobre surface-3, 6.7:1 sobre o fundo. */
+  --focus-ring-color: __RX_t0239__;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   AUTO-DETECT: prefers-color-scheme fallback
+   When no data-theme is set, respect system preference.
+   Dark is the default when system has no preference.
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg-base: __RX_t0240__; --bg-surface-1: __RX_t0241__; --bg-surface-2: __RX_t0242__;
+    --bg-surface-3: __RX_t0243__; --bg-overlay: __RX_t0244__;
+    --sidebar-bg: __RX_t0245__; --sidebar-bg-hover: __RX_t0246__;
+    --sidebar-active-bg: __RX_t0247__;
+    --sidebar-text: __RX_t0248__; --sidebar-text-label: __RX_t0249__; --sidebar-text-active: __RX_t0250__;
+    --sidebar-divider: __RX_t0251__; --sidebar-text-bright: __RX_t0252__;
+    --sidebar-badge-bg: __RX_t0253__; --sidebar-badge-active-bg: __RX_t0254__;
+    --sidebar-focus-ring: __RX_t0255__;
+    --border-subtle: __RX_t0256__; --border-default: __RX_t0257__;
+    --border-strong: __RX_t0258__; --border-accent: __RX_t0259__;
+    --text-primary: __RX_t0260__; --text-secondary: __RX_t0261__;
+    --text-muted: __RX_t0262__; --text-inverse: __RX_t0263__;
+    --accent-primary: __RX_t0264__; --accent-primary-hover: __RX_t0265__;
+    --accent-primary-muted: __RX_t0266__; --accent-secondary: __RX_t0267__;
+    --accent-primary-text: __RX_t0268__;
+    --color-success: __RX_t0269__; --color-success-bg: __RX_t0270__;
+    --color-warning: __RX_t0271__; --color-warning-bg: __RX_t0272__;
+    --color-error: __RX_t0273__; --color-error-bg: __RX_t0274__;
+    --color-info: __RX_t0275__; --color-info-bg: __RX_t0276__;
+    --theory-mbti: __RX_t0277__; --theory-mbti-bg: __RX_t0278__;
+    --theory-enneagram: __RX_t0279__; --theory-enneagram-bg: __RX_t0280__;
+    --theory-bigfive: __RX_t0281__; --theory-bigfive-bg: __RX_t0282__;
+    --theory-disc: __RX_t0283__; --theory-disc-bg: __RX_t0284__;
+    --theory-lesenne: __RX_t0285__; --theory-lesenne-bg: __RX_t0286__;
+    --theory-jung: __RX_t0287__; --theory-jung-bg: __RX_t0288__;
+    --disc-d: __RX_t0289__; --disc-i: __RX_t0290__; --disc-s: __RX_t0291__; --disc-c: __RX_t0292__;
+    --disc-wheel-conductor: __RX_t0293__; --disc-wheel-motivator: __RX_t0294__;
+    --disc-wheel-promoter: __RX_t0295__; --disc-wheel-facilitator: __RX_t0296__;
+    --disc-wheel-supporter: __RX_t0297__; --disc-wheel-coordinator: __RX_t0298__;
+    --disc-wheel-analyzer: __RX_t0299__; --disc-wheel-organizer: __RX_t0300__;
+    --mbti-ei: __RX_t0301__; --mbti-sn: __RX_t0302__; --mbti-tf: __RX_t0303__; --mbti-jp: __RX_t0304__;
+    --bigfive-o: __RX_t0305__; --bigfive-c: __RX_t0306__; --bigfive-e: __RX_t0307__;
+    --bigfive-a: __RX_t0308__; --bigfive-n: __RX_t0309__;
+    --shadow-sm: __RX_t0310__;
+    --shadow-md: __RX_t0311__;
+    --shadow-lg: __RX_t0312__;
+    --shadow-glow: __RX_t0313__;
+    --shadow-glow-lg: __RX_t0314__;
+    --elevation-1: __RX_t0315__;
+    --elevation-2: __RX_t0316__;
+    --elevation-3: __RX_t0317__;
+    --elevation-4: __RX_t0318__;
+    --glass-subtle-bg: __RX_t0319__; --glass-subtle-blur: __RX_t0320__;
+    --glass-subtle-border: __RX_t0321__;
+    --glass-standard-bg: __RX_t0322__; --glass-standard-blur: __RX_t0323__;
+    --glass-standard-border: __RX_t0324__;
+    --glass-strong-bg: __RX_t0325__; --glass-strong-blur: __RX_t0326__;
+    --glass-strong-border: __RX_t0327__;
+    --chart-gradient-start: __RX_t0328__;
+    --chart-gradient-end: __RX_t0329__;
+    --chart-line: __RX_t0330__; --chart-grid: __RX_t0331__;
+    --focus-ring-color: __RX_t0332__;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --bg-base: __RX_t0333__; --bg-surface-1: __RX_t0334__; --bg-surface-2: __RX_t0335__;
+    --bg-surface-3: __RX_t0336__; --bg-overlay: __RX_t0337__;
+    --sidebar-bg: __RX_t0338__; --sidebar-bg-hover: __RX_t0339__;
+    --sidebar-active-bg: __RX_t0340__;
+    --sidebar-text: __RX_t0341__; --sidebar-text-label: __RX_t0342__; --sidebar-text-active: __RX_t0343__;
+    --sidebar-divider: __RX_t0344__; --sidebar-text-bright: __RX_t0345__;
+    --sidebar-badge-bg: __RX_t0346__; --sidebar-badge-active-bg: __RX_t0347__;
+    --sidebar-focus-ring: __RX_t0348__;
+    --border-subtle: __RX_t0349__; --border-default: __RX_t0350__;
+    --border-strong: __RX_t0351__; --border-accent: __RX_t0352__;
+    --text-primary: __RX_t0353__; --text-secondary: __RX_t0354__;
+    --text-muted: __RX_t0355__; --text-inverse: __RX_t0356__;
+    --accent-primary: __RX_t0357__; --accent-primary-hover: __RX_t0358__;
+    --accent-primary-muted: __RX_t0359__; --accent-secondary: __RX_t0360__;
+    --accent-primary-text: __RX_t0361__;
+    --color-success: __RX_t0362__; --color-success-bg: __RX_t0363__;
+    --color-warning: __RX_t0364__; --color-warning-bg: __RX_t0365__;
+    --color-error: __RX_t0366__; --color-error-bg: __RX_t0367__;
+    --color-info: __RX_t0368__; --color-info-bg: __RX_t0369__;
+    --theory-mbti: __RX_t0370__; --theory-mbti-bg: __RX_t0371__;
+    --theory-enneagram: __RX_t0372__; --theory-enneagram-bg: __RX_t0373__;
+    --theory-bigfive: __RX_t0374__; --theory-bigfive-bg: __RX_t0375__;
+    --theory-disc: __RX_t0376__; --theory-disc-bg: __RX_t0377__;
+    --theory-lesenne: __RX_t0378__; --theory-lesenne-bg: __RX_t0379__;
+    --theory-jung: __RX_t0380__; --theory-jung-bg: __RX_t0381__;
+    --disc-d: __RX_t0382__; --disc-i: __RX_t0383__; --disc-s: __RX_t0384__; --disc-c: __RX_t0385__;
+    --disc-wheel-conductor: __RX_t0386__; --disc-wheel-motivator: __RX_t0387__;
+    --disc-wheel-promoter: __RX_t0388__; --disc-wheel-facilitator: __RX_t0389__;
+    --disc-wheel-supporter: __RX_t0390__; --disc-wheel-coordinator: __RX_t0391__;
+    --disc-wheel-analyzer: __RX_t0392__; --disc-wheel-organizer: __RX_t0393__;
+    --mbti-ei: __RX_t0394__; --mbti-sn: __RX_t0395__; --mbti-tf: __RX_t0396__; --mbti-jp: __RX_t0397__;
+    --bigfive-o: __RX_t0398__; --bigfive-c: __RX_t0399__; --bigfive-e: __RX_t0400__;
+    --bigfive-a: __RX_t0401__; --bigfive-n: __RX_t0402__;
+    --shadow-sm: __RX_t0403__;
+    --shadow-md: __RX_t0404__;
+    --shadow-lg: __RX_t0405__;
+    --shadow-glow: __RX_t0406__;
+    --shadow-glow-lg: __RX_t0407__;
+    --elevation-1: __RX_t0408__;
+    --elevation-2: __RX_t0409__;
+    --elevation-3: __RX_t0410__;
+    --elevation-4: __RX_t0411__;
+    --glass-subtle-bg: __RX_t0412__; --glass-subtle-blur: __RX_t0413__;
+    --glass-subtle-border: __RX_t0414__;
+    --glass-standard-bg: __RX_t0415__; --glass-standard-blur: __RX_t0416__;
+    --glass-standard-border: __RX_t0417__;
+    --glass-strong-bg: __RX_t0418__; --glass-strong-blur: __RX_t0419__;
+    --glass-strong-border: __RX_t0420__;
+    --chart-gradient-start: __RX_t0421__;
+    --chart-gradient-end: __RX_t0422__;
+    --chart-line: __RX_t0423__; --chart-grid: __RX_t0424__;
+    --focus-ring-color: __RX_t0425__;
+  }
+}
+
+/* ==========================================================================
+   Utility Classes — Glassmorphism
+   ========================================================================== */
+
+.glass-subtle {
+  background: var(--glass-subtle-bg);
+  backdrop-filter: blur(var(--glass-subtle-blur));
+  -webkit-backdrop-filter: blur(var(--glass-subtle-blur));
+  border: __RX_v1__;
+}
+
+.glass-standard {
+  background: var(--glass-standard-bg);
+  backdrop-filter: blur(var(--glass-standard-blur));
+  -webkit-backdrop-filter: blur(var(--glass-standard-blur));
+  border: __RX_v2__;
+}
+
+.glass-strong {
+  background: var(--glass-strong-bg);
+  backdrop-filter: blur(var(--glass-strong-blur));
+  -webkit-backdrop-filter: blur(var(--glass-strong-blur));
+  border: __RX_v3__;
+}
+
+/* ==========================================================================
+   Keyframe Animations
+   ========================================================================== */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: __RX_v4__; }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: __RX_v5__; }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: __RX_v8__; }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: __RX_v6__; }
+  50% { box-shadow: __RX_v7__; }
+}
+
+@keyframes progress-fill {
+  from { width: 0%; }
+  to { width: var(--progress-value, 0%); }
+}
