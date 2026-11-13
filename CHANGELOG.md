@@ -5,6 +5,38 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Fixed — 17 combinações de botão abaixo de WCAG AA
+
+As 18 entradas da catraca de contraste dos botões saem da dívida, que fica vazia: 17 pares
+efetivamente abaixo de AA (temas dark, light, premium-light, sober-dark e vibrant-dark;
+variantes primary, success e danger, normal e hover) passam a ≥ 4,5:1, e
+`premium-light/secondary:hover` era falso positivo do modelo antigo (o navegador já media
+13,60:1). Só regras de botão em `components/components.css`; nenhum token global, marca ou
+`eds-root.css` muda.
+
+**Mudança visual:** `.btn-danger` nos temas claros deixa de ser "tinta" (texto vermelho sobre
+fundo rosado) e vira botão cheio (branco sobre vermelho); success e danger nos temas escuros
+sober-dark e vibrant-dark passam a texto escuro. **Antes de cortar a versão** que leva esta
+mudança, capturar e revisar na tela real os três usos de `btn-danger` do FinanceX
+(`premium-light`, normal e hover, no contexto) — parecer do Revisor na #115.
+
+**Cobertura e limites:** o teste do CI (`tests/visual/button-contrast.spec.js`) compara o
+cálculo com os estilos computados no navegador para normal e hover, nos 5 temas e no
+dark/light automático, sobre `--bg-base`. Não mede focus, active, disabled, outras superfícies
+nem composições de marca. `:focus-visible` e `:active` não mudam a cor do par; `disabled`
+usa `opacity: .5` e pode ficar abaixo de 4,5:1 — controle realmente inativo é exceção da
+WCAG 1.4.3, mas `aria-disabled` que continua operável não é. O modelo em
+`tests/lib/button-contrast.js` resolve a cascata por seletor exato; regras mais específicas,
+temas aninhados ou superfícies diferentes podem divergir dele.
+
+### Removed — baselines visuais do macOS (interno)
+
+As quatro capturas `*-chromium-darwin.png` saem; só as baselines Linux do CI valem.
+
+### Added — `PAPEIS.md` versionado (interno)
+
+Papéis do repositório (Supervisor, Executor, Revisor) sem caminho local.
+
 ## [2.10.0] - 2026-11-13
 
 Versão MINOR com **uma mudança visual declarada** (botão success no tema dark) — decisão D10,
