@@ -27,10 +27,14 @@ defeitos escolhidos são rejeitados (não toda variação possível). **Conformi
 (`RESULTX_ADAPTER_URL`). Fichas geradas a partir dos contratos ficam em `generated/component-cards`
 (consulta no repositório, fora do pacote).
 
-**Pendência visual:** duas capturas da vitrine do adaptador estão desativadas e sem baseline.
-Não há cobertura visual do piloto declarada até a baseline ser gerada no workflow Visual Linux e
-aprovada pelo Revisor, com o workflow adaptado para aceitar as novas capturas (responsável:
-Supervisor, próxima PR).
+**Cobertura visual do piloto:** dez baselines Linux de `examples/pilot.html`, nos temas claro e
+escuro: vitrine inteira, campo em foco por teclado, e diálogo nos estados normal, carregando e
+erro. Todas foram geradas no workflow Visual Linux e aprovadas pelo Revisor. A vitrine carrega
+as faces locais da Inter 4.1 (400, 600 e 700) e confere cada face antes de capturar. A captura
+de foco é um recorte da página real, sem mover elementos nem alterar CSS, e o teste falha se o
+recorte cortar o anel. O workflow exige as catorze baselines e falha se alguma faltar.
+**Limite:** compara apenas estes estados, em uma viewport de desktop. Outras larguras e o
+hover não têm captura.
 
 ### Changed — tokens com fonte única (E1, ADR-0003)
 
