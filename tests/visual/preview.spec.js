@@ -4,6 +4,9 @@ const path = require('path');
 
 const PREVIEW_PATH = path.resolve(__dirname, '..', '..', 'tokens', 'themes', 'preview.html');
 const PREVIEW_URL = `file://${PREVIEW_PATH}`;
+// Estas sete faces cobrem apenas as declarações do preview atual. Inter 700,
+// usada em components/data-cards.css:713 fora do preview, deve ser adicionada
+// se esse componente passar a ser capturado.
 const FONTS = [
   ['Inter', 400], ['Inter', 500], ['Inter', 600],
   ['Sora', 600], ['Sora', 700],
