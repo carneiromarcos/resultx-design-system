@@ -193,3 +193,24 @@ test('exports existentes permanecem idênticos e só o export opt-in é novo', (
   for (const [name, destination] of Object.entries(reference.exports)) expect(current[name]).toBe(destination);
   expect(Object.keys(current).filter((name) => !(name in reference.exports))).toEqual([NEW_OPT_IN_ALIASES.export]);
 });
+
+test('build completo verifica EDS congelado antes de escrever qualquer artefato', () => {
+  const os = require('os');
+  const path = require('path');
+  const { spawnSync } = require('child_process');
+  const output = fs.mkdtempSync(path.join(os.tmpdir(), 'resultx-eds-preflight-'));
+  try {
+    const source = JSON.parse(fs.readFileSync('tokens/tokens.json', 'utf8'));
+    source.primitives.eds.base['eds-radius-chip'].$value.value += 1;
+    const mutated = path.join(output, 'mutated.json');
+    fs.writeFileSync(mutated, JSON.stringify(source));
+    const files = [...CSS_FILES, 'dist/tokens.ts', 'dist/components.min.css', 'dist/icons.min.css', 'brands/emprega-mais/tokens/eds-root.css', 'brands/emprega-mais/tokens/eds-root.sha256'];
+    const before = files.map((file) => fs.statSync(file, { bigint: true }).mtimeNs);
+    const result = spawnSync('npm', ['run', 'build'], {
+      env: { ...process.env, RESULTX_EDS_SOURCE: mutated }, encoding: 'utf8',
+    });
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain('EDS congelado');
+    expect(files.map((file) => fs.statSync(file, { bigint: true }).mtimeNs)).toEqual(before);
+  } finally { fs.rmSync(output, { recursive: true, force: true }); }
+});

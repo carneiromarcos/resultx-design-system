@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import postcss from 'postcss';
 import StyleDictionary from 'style-dictionary';
+import { renderLayoutValues } from './lib/layout-values.mjs';
 
 const source = process.env.RESULTX_BRANDS_SOURCE || 'tokens/tokens.json';
 const data = JSON.parse(fs.readFileSync(source, 'utf8'));
@@ -55,6 +56,7 @@ StyleDictionary.registerFormat({
     const occurrences = data.$extensions['org.resultx.css'].brandOccurrences[brand];
     const layout = `tokens/dtcg/layouts/brand-${brand}.css.tmpl`;
     const root = postcss.parse(fs.readFileSync(layout, 'utf8'));
+    renderLayoutValues(root, dictionary, data, `brand-${brand}`);
     const used = new Set();
     root.walkDecls((decl) => {
       const match = /^__RX_(b\d+)__$/.exec(decl.value);

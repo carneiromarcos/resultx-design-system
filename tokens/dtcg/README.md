@@ -30,3 +30,5 @@ A lista de propriedades da transição interativa é uma extensão específica d
 CSS. Os breakpoints seguem comentados na folha base: o gerador antigo os lê
 mesmo assim e os expõe em `dist`; o formato preserva essa compatibilidade até
 uma correção específica do parser e da API.
+
+Os modelos não contêm literais de cor, dimensão ou tempo fora de `var()`: a varredura automatizada cobre declarações e parâmetros de at-rules. Valores estruturais mantidos: 0 e 1 de opacidade e transformação, 0% do progresso e percentuais de keyframes, multiplicadores de ordem (1–3), uma iteração e `transparent` para recorte de texto com `background-clip`. As medidas e sombras visuais são tokens tipados em `component.layout`.

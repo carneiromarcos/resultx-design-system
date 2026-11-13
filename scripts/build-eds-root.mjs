@@ -5,6 +5,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import postcss from 'postcss';
 import StyleDictionary from 'style-dictionary';
+import { renderLayoutValues } from './lib/layout-values.mjs';
 
 const source = process.env.RESULTX_EDS_SOURCE || 'tokens/tokens.json';
 const data = JSON.parse(fs.readFileSync(source, 'utf8'));
@@ -46,6 +47,7 @@ StyleDictionary.registerFormat({
     const tokens = new Map(dictionary.allTokens.map((token) => [token.path.join('.'), token]));
     const occurrences = data.$extensions['org.resultx.css'].edsOccurrences;
     const root = postcss.parse(fs.readFileSync('tokens/dtcg/layouts/eds-root.css.tmpl', 'utf8'));
+    renderLayoutValues(root, dictionary, data, 'eds-root');
     const used = new Set();
     root.walkDecls((decl) => {
       const match = /^__RX_(e\d+)__$/.exec(decl.value);
@@ -80,6 +82,7 @@ const digest = crypto.createHash('sha256').update(generated).digest('hex');
 const recorded = fs.readFileSync('brands/emprega-mais/tokens/eds-root.sha256', 'utf8');
 const current = crypto.createHash('sha256').update(fs.readFileSync('brands/emprega-mais/tokens/eds-root.css')).digest('hex');
 if (digest !== frozen || current !== frozen || recorded !== `${frozen}\n`) throw new Error(`EDS congelado: SHA gerado ${digest}, esperado ${frozen}; nenhum arquivo foi escrito.`);
+if (process.argv.includes('--check')) process.exit(0);
 const outputDir = process.env.RESULTX_EDS_OUTPUT || 'brands/emprega-mais/tokens';
 fs.mkdirSync(outputDir, { recursive: true });
 fs.writeFileSync(path.join(outputDir, 'eds-root.css'), generated);

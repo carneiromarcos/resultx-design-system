@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import postcss from 'postcss';
 import StyleDictionary from 'style-dictionary';
+import { renderLayoutValues } from './lib/layout-values.mjs';
 
 const source = process.env.RESULTX_CORE_SOURCE || 'tokens/tokens.json';
 const layout = process.env.RESULTX_CORE_LAYOUT || 'tokens/dtcg/layouts/core.css.tmpl';
@@ -37,6 +38,7 @@ StyleDictionary.registerFormat({
     const tokens = new Map(dictionary.allTokens.map((token) => [token.path.join('.'), token]));
     const occurrences = data.$extensions['org.resultx.css'].coreOccurrences;
     const root = postcss.parse(fs.readFileSync(layout, 'utf8'));
+    renderLayoutValues(root, dictionary, data, 'core');
     const used = new Set();
     root.walkDecls((decl) => {
       const marker = /^__RX_(t\d+)__$/.exec(decl.value);

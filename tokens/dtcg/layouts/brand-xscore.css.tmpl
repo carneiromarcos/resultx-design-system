@@ -243,14 +243,14 @@
 .numeric {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.01em;
+  letter-spacing: __RX_v1__;
 }
 
 /* Foco visível global (WCAG 2.2 SC 2.4.11). O offset garante que o anel não
    seja engolido por fundos adjacentes. */
 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
-  outline: 2px solid var(--border-focus);
-  outline-offset: 2px;
+  outline: __RX_v2__;
+  outline-offset: __RX_v3__;
   border-radius: inherit;
 }
 
@@ -258,8 +258,8 @@
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: __RX_v4__ !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: __RX_v5__ !important;
   }
 }
