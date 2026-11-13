@@ -40,6 +40,9 @@ jobs:
         run: npm run test:visual -- --update-snapshots
       - name: Preparar capturas e metadados
         id: artifact
+        env:
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           set -eu
           snapshots=tests/visual/preview.spec.js-snapshots
@@ -59,6 +62,8 @@ jobs:
           echo "name=resultx-ds-visual-linux-$short_sha-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
           {
             printf 'SHA: %s\n' "$GITHUB_SHA"
+            printf 'PR head SHA: %s\n' "${PR_HEAD_SHA:-n/a}"
+            printf 'PR base SHA: %s\n' "${PR_BASE_SHA:-n/a}"
             printf 'Run: %s (tentativa %s)\n' "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT"
             printf 'Playwright: %s\n' "$(node -p "require('@playwright/test/package.json').version")"
             printf 'Container: %s\n' 'mcr.microsoft.com/playwright@sha256:ee15712262f017b8157421b212b12099146645f44b1bc5c0514cbbe6a229b1d0'
