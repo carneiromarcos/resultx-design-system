@@ -46,13 +46,13 @@ StyleDictionary.registerFormat({
       else throw new Error(`Tipo sem formato CSS: ${token.$type}`);
       return `  --${info.name}: ${value};`;
     });
-    return `/* Gerado por scripts/build-themes.mjs a partir de tokens/dtcg/themes.tokens.json. Não editar. */\n[data-theme="${theme}"] {\n${lines.join('\n')}\n}\n`;
+    return `/* Gerado por scripts/build-themes.mjs a partir de tokens/dtcg/tokens.json. Não editar. */\n[data-theme="${theme}"] {\n${lines.join('\n')}\n}\n`;
   },
 });
 const themes = ['premium-light', 'sober-dark', 'vibrant-dark'];
 const sd = new StyleDictionary({
   usesDtcg: true,
-  source: [process.env.RESULTX_THEMES_SOURCE || 'tokens/dtcg/themes.tokens.json'],
+  source: [process.env.RESULTX_THEMES_SOURCE || 'tokens/dtcg/tokens.json'],
   platforms: {
     css: {
       transforms: [],

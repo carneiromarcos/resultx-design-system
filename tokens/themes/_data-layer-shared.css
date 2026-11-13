@@ -1,4 +1,4 @@
-/* Gerado por scripts/build-data-layer.mjs a partir de tokens/dtcg/data-layer.tokens.json. Não editar. */
+/* Gerado por scripts/build-data-layer.mjs a partir de tokens/dtcg/tokens.json. Não editar. */
 :root {
   --gradient-cyan: linear-gradient(135deg, #18C4FF 0%, #4A6CF7 100%);
   --gradient-magenta: linear-gradient(135deg, #FF4789 0%, #E91E63 100%);

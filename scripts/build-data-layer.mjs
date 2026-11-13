@@ -18,7 +18,7 @@ StyleDictionary.registerFormat({
   name: 'resultx/data-layer',
   format: ({ dictionary }) => {
     const tokens = dictionary.allTokens
-      .filter((token) => token.path[0] === 'legacy')
+      .filter((token) => token.path[0] === 'legacy' && token.path[1] !== 'theme')
       .sort((a, b) => a.$extensions['org.resultx.css'].index - b.$extensions['org.resultx.css'].index);
     const lines = tokens.map((token) => {
       const info = token.$extensions['org.resultx.css'];
@@ -31,13 +31,13 @@ StyleDictionary.registerFormat({
       } else throw new Error(`Tipo sem formato CSS: ${token.$type}`);
       return `  --${info.name}: ${value};`;
     });
-    return `/* Gerado por scripts/build-data-layer.mjs a partir de tokens/dtcg/data-layer.tokens.json. Não editar. */\n:root {\n${lines.join('\n')}\n}\n`;
+    return `/* Gerado por scripts/build-data-layer.mjs a partir de tokens/dtcg/tokens.json. Não editar. */\n:root {\n${lines.join('\n')}\n}\n`;
   },
 });
 
 const sd = new StyleDictionary({
   usesDtcg: true,
-  source: [process.env.RESULTX_DATA_LAYER_SOURCE || 'tokens/dtcg/data-layer.tokens.json'],
+  source: [process.env.RESULTX_DATA_LAYER_SOURCE || 'tokens/dtcg/tokens.json'],
   platforms: {
     css: {
       transforms: [],
