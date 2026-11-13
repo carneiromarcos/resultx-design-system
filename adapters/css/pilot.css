@@ -1,0 +1,67 @@
+/* Adaptador opt-in do lote piloto; depende dos tokens semânticos do ResultX DS. */
+@layer components {
+  .rx-button,
+  .rx-field__control,
+  .rx-card,
+  .rx-stat-card,
+  .rx-table,
+  .rx-dialog,
+  .rx-badge,
+  .rx-state {
+    color: var(--text-primary);
+    background: var(--bg-surface-1);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+  }
+
+  .rx-button,
+  .rx-field__control {
+    border: var(--focus-ring-width) solid var(--text-secondary);
+    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .rx-button { cursor: pointer; }
+  .rx-button:hover:where(:not(:disabled)) { background: var(--bg-surface-3); }
+  .rx-button:active:where(:not(:disabled)) { background: var(--bg-surface-2); }
+  .rx-button:disabled { cursor: not-allowed; }
+  .rx-button--primary { font-weight: var(--font-bold); }
+  .rx-button--secondary { font-weight: var(--font-regular); }
+  .rx-button--danger,
+  .rx-button--danger:hover:where(:not(:disabled)),
+  .rx-button--danger:active:where(:not(:disabled)) { color: var(--color-error); background: var(--bg-surface-1); border-color: var(--color-error); }
+
+  .rx-stat-card a { color: var(--accent-primary-text); }
+
+  .rx-button:focus-visible,
+  .rx-field__control:focus-visible,
+  .rx-table button:focus-visible,
+  .rx-stat-card a:focus-visible,
+  .rx-dialog button:focus-visible,
+  .rx-state button:focus-visible {
+    outline: var(--focus-ring-width) solid var(--accent-primary-text);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .rx-field { display: grid; gap: var(--space-2); color: var(--text-primary); }
+  .rx-field__label { font-weight: var(--font-semibold); }
+  .rx-field__message { color: var(--text-primary); }
+  .rx-field__control[aria-invalid='true'] { border-color: var(--color-error); }
+  .rx-card,
+  .rx-stat-card,
+  .rx-state,
+  .rx-dialog { padding: var(--space-4); border-radius: var(--radius-md); }
+  .rx-card--sm { padding: var(--space-2); }
+  .rx-card--md { padding: var(--space-4); }
+  .rx-card--lg { padding: var(--space-6); }
+  .rx-stat-card__value { font-variant-numeric: tabular-nums; font-weight: var(--font-bold); }
+  .rx-table { border-collapse: collapse; }
+  .rx-table th,
+  .rx-table td { padding: var(--space-3); text-align: left; }
+  .rx-table th { border-bottom: var(--focus-ring-width) solid var(--text-secondary); }
+  .rx-dialog { border: var(--focus-ring-width) solid var(--text-secondary); }
+  .rx-badge { display: inline-block; border: var(--focus-ring-width) solid var(--text-secondary); border-radius: var(--radius-md); padding: var(--space-2); }
+  .rx-badge--success { color: var(--text-on-success); background: var(--color-success); border-color: var(--text-secondary); }
+  .rx-badge--error { color: var(--color-error); border-color: var(--color-error); }
+  .rx-state { display: grid; gap: var(--space-2); }
+}

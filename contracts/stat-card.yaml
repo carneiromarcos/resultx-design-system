@@ -1,0 +1,58 @@
+versao: 1
+componente: StatCard
+anatomia:
+  - rótulo
+  - valor
+  - ação opcional
+variantes:
+  - default
+  - link
+estados:
+  normal: Valor disponível.
+  carregando: aria-busy verdadeiro.
+  vazio: Valor ausente exibido como travessão.
+  erro: Mensagem de erro e ação quando recuperável.
+  desabilitado: Não aplicável ao contêiner.
+  foco: Link interno recebe foco visível.
+tokens:
+  - '--bg-surface-1'
+  - '--text-primary'
+  - '--font-body'
+  - '--text-base'
+  - '--focus-ring-width'
+  - '--focus-ring-offset'
+  - '--accent-primary-text'
+  - '--space-4'
+  - '--radius-md'
+  - '--font-bold'
+teclado:
+  - Tab e Enter operam o link.
+aria:
+  - Rótulo e valor acessíveis.
+  - Carregamento usa aria-busy.
+criterios_aceite:
+  - Valor usa tabular-nums.
+  - Texto ≥ 4,5:1.
+casos_teste:
+  - id: stat-value
+    descricao: Valor usa algarismos tabulares.
+  - id: stat-empty
+    descricao: Ausência de valor mostra travessão.
+  - id: stat-loading
+    descricao: Carregamento expõe aria-busy.
+  - id: stat-contrast
+    descricao: Texto mantém contraste na superfície.
+  - id: stat-error
+    descricao: Erro do indicador informa o problema e oferece repetição.
+  - id: stat-link
+    descricao: Link do indicador é operável por teclado.
+conformidade: >-
+  Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro
+  adaptador não comprovam conformidade.
+cobertura_estados:
+  normal: stat-value
+  carregando: stat-loading
+  vazio: stat-empty
+  erro: stat-error
+  desabilitado: null
+  foco: stat-link

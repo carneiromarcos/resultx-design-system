@@ -1,0 +1,55 @@
+versao: 1
+componente: EmptyState/ErrorState
+anatomia:
+  - título
+  - descrição do próximo passo
+  - ação quando possível
+variantes:
+  - empty
+  - error
+estados:
+  normal: 'Não aplicável: componente apresenta vazio ou erro.'
+  carregando: aria-busy enquanto atualiza.
+  vazio: O quê, próximo passo e ação quando possível.
+  erro: Mensagem clara e ação para tentar novamente.
+  desabilitado: Ação indisponível usa disabled.
+  foco: Ação recebe foco visível.
+tokens:
+  - '--bg-surface-1'
+  - '--text-primary'
+  - '--font-body'
+  - '--text-base'
+  - '--focus-ring-width'
+  - '--focus-ring-offset'
+  - '--accent-primary-text'
+  - '--space-2'
+  - '--space-4'
+  - '--radius-md'
+teclado:
+  - Tab alcança ação; Enter e Espaço a acionam.
+aria:
+  - Erro dinâmico usa role alert; vazio usa texto semântico.
+criterios_aceite:
+  - Toda variante comunica conteúdo e próximo passo.
+  - Texto ≥ 4,5:1; foco ≥ 3:1.
+casos_teste:
+  - id: empty-content
+    descricao: Estado vazio mostra o quê, próximo passo e ação.
+  - id: error-content
+    descricao: Erro tem alerta e ação de tentar novamente.
+  - id: empty-keyboard
+    descricao: Ação é alcançável e foco é visível.
+  - id: empty-contrast
+    descricao: Textos dos estados vazio e erro mantêm contraste.
+  - id: empty-loading
+    descricao: Carregamento impede a ação indisponível.
+conformidade: >-
+  Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro
+  adaptador não comprovam conformidade.
+cobertura_estados:
+  normal: null
+  carregando: empty-loading
+  vazio: empty-content
+  erro: error-content
+  desabilitado: empty-loading
+  foco: empty-keyboard

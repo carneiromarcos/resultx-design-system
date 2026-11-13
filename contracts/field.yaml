@@ -1,0 +1,64 @@
+versao: 1
+componente: Field
+anatomia:
+  - label associado
+  - input
+  - mensagem de ajuda ou erro associada
+variantes:
+  - text
+  - search
+estados:
+  normal: Controle editável.
+  carregando: aria-busy no grupo enquanto processa.
+  vazio: Valor vazio permitido quando não obrigatório.
+  erro: aria-invalid e aria-describedby apontam para erro.
+  desabilitado: disabled nativo.
+  foco: Anel visível.
+tokens:
+  - '--bg-surface-1'
+  - '--text-primary'
+  - '--font-body'
+  - '--text-base'
+  - '--focus-ring-width'
+  - '--focus-ring-offset'
+  - '--accent-primary-text'
+  - '--text-secondary'
+  - '--space-2'
+  - '--space-4'
+  - '--radius-md'
+  - '--font-semibold'
+  - '--color-error'
+teclado:
+  - Tab foca o controle.
+  - Digitação altera o valor.
+aria:
+  - label programático obrigatório.
+  - Erro associado por aria-describedby e aria-invalid.
+criterios_aceite:
+  - Texto ≥ 4,5:1; borda e foco ≥ 3:1.
+  - Erro é identificável sem depender de cor.
+casos_teste:
+  - id: field-label
+    descricao: O controle tem rótulo associado.
+  - id: field-error
+    descricao: Erro usa aria-invalid e descrição associada.
+  - id: field-disabled
+    descricao: Campo desabilitado não aceita interação.
+  - id: field-keyboard
+    descricao: Tab foca e digitação altera o valor.
+  - id: field-contrast
+    descricao: Texto e bordas do campo mantêm contraste.
+  - id: field-loading
+    descricao: Grupo em carregamento indica aria-busy e desabilita controle.
+  - id: field-empty
+    descricao: Controle vazio opcional aceita valor vazio.
+conformidade: >-
+  Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro
+  adaptador não comprovam conformidade.
+cobertura_estados:
+  normal: field-label
+  carregando: field-loading
+  vazio: field-empty
+  erro: field-error
+  desabilitado: field-disabled
+  foco: field-keyboard

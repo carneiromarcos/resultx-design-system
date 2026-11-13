@@ -27,7 +27,8 @@
     "./cta-dock": "./dist/cta-dock.js",
     "./tokens/source": "./tokens/tokens.css",
     "./components/source": "./components/components.css",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./adapters/css/pilot": "./adapters/css/pilot.css"
   },
   "files": [
     "dist/",
@@ -61,7 +62,9 @@
     "docs/",
     "DESIGN-SYSTEM.md",
     "CONTRIBUTING.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "adapters/css/pilot.css",
+    "contracts/"
   ],
   "repository": {
     "type": "git",
@@ -91,7 +94,7 @@
     "build:bridges": "node scripts/build-eds-root.mjs --check && node scripts/build-core.mjs && node scripts/build-brand-tokens.mjs && node scripts/build-eds-root.mjs && node scripts/build-brand-bridges.js",
     "build:all": "node scripts/build-eds-root.mjs --check && npm run build:tokens && npm run build:components && npm run build:icons && npm run build:bridges",
     "build": "npm run build:all",
-    "lint": "stylelint 'components/**/*.css'",
+    "lint": "stylelint 'components/**/*.css' 'adapters/**/*.css'",
     "lint:fix": "stylelint 'components/**/*.css' --fix",
     "lint:tokens": "stylelint 'tokens/**/*.css'",
     "analyze": "node scripts/bundle-analysis.js",
@@ -99,7 +102,8 @@
     "test:visual": "playwright test",
     "test:visual:update": "playwright test -u",
     "prepare": "husky",
-    "check:eds-root": "node scripts/check-eds-root-copies.js"
+    "check:eds-root": "node scripts/check-eds-root-copies.js",
+    "contracts:cards": "node scripts/contracts/generate-cards.js"
   },
   "jest": {
     "testPathIgnorePatterns": [
@@ -122,8 +126,10 @@
     "cssnano": "^9.8.0",
     "husky": "^9.1.7",
     "jest": "^30.5.2",
+    "js-yaml": "4.3.2",
     "lint-staged": "^17.6.0",
     "playwright": "^1.63.0",
+    "pngjs": "7.0.0",
     "postcss": "^8.5.28",
     "postcss-cli": "^12.0.0",
     "postcss-import": "^17.0.1",

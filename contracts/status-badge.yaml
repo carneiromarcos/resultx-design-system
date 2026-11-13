@@ -1,0 +1,55 @@
+versao: 1
+componente: StatusBadge
+anatomia:
+  - texto de status
+  - ícone opcional decorativo
+variantes:
+  - neutral
+  - success
+  - error
+estados:
+  normal: Status textual visível.
+  carregando: Texto informa atualização e aria-busy.
+  vazio: Texto informa ausência de status.
+  erro: Texto identifica erro sem depender de cor.
+  desabilitado: Não aplicável a texto informativo.
+  foco: Não recebe foco quando não interativo.
+tokens:
+  - '--bg-surface-1'
+  - '--text-primary'
+  - '--font-body'
+  - '--text-base'
+  - '--text-secondary'
+  - '--focus-ring-width'
+  - '--radius-md'
+  - '--space-2'
+  - '--text-on-success'
+  - '--color-success'
+  - '--color-error'
+teclado:
+  - Não inclui parada de Tab quando informativo.
+aria:
+  - Texto comunica estado; ícone decorativo usa aria-hidden.
+criterios_aceite:
+  - Cada variante tem contraste de texto ≥ 4,5:1.
+casos_teste:
+  - id: badge-semantics
+    descricao: Status textual é visível e não interativo.
+  - id: badge-variants
+    descricao: Cada variante apresenta seu status em texto.
+  - id: badge-contrast
+    descricao: Cada variante mantém contraste de texto.
+  - id: badge-loading
+    descricao: Status em atualização expõe aria-busy e texto.
+  - id: badge-empty
+    descricao: Status ausente é informado em texto.
+conformidade: >-
+  Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro
+  adaptador não comprovam conformidade.
+cobertura_estados:
+  normal: badge-semantics
+  carregando: badge-loading
+  vazio: badge-empty
+  erro: badge-variants
+  desabilitado: null
+  foco: badge-semantics

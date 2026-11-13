@@ -1,0 +1,68 @@
+versao: 1
+componente: Button
+anatomia:
+  - botão nativo com nome acessível
+  - ícone opcional decorativo com aria-hidden
+variantes:
+  - primary
+  - secondary
+  - danger
+estados:
+  normal: Ação disponível.
+  hover: Ação sob ponteiro.
+  ativo: Ação pressionada.
+  carregando: aria-busy verdadeiro e ativação impedida.
+  vazio: 'Não aplicável: o nome acessível é obrigatório.'
+  erro: 'Não aplicável: falha da ação é comunicada externamente.'
+  desabilitado: disabled nativo impede ativação.
+  foco: Foco visível por teclado.
+tokens:
+  - '--bg-surface-1'
+  - '--text-primary'
+  - '--font-body'
+  - '--text-base'
+  - '--focus-ring-width'
+  - '--focus-ring-offset'
+  - '--accent-primary-text'
+  - '--text-secondary'
+  - '--space-2'
+  - '--space-4'
+  - '--radius-md'
+  - '--bg-surface-2'
+  - '--bg-surface-3'
+  - '--font-bold'
+  - '--font-regular'
+  - '--color-error'
+teclado:
+  - Tab move o foco.
+  - Enter e Espaço acionam uma vez.
+aria:
+  - Nome acessível obrigatório.
+  - Ícone decorativo usa aria-hidden.
+  - Carregando usa aria-busy e disabled.
+criterios_aceite:
+  - Texto ≥ 4,5:1; borda e foco ≥ 3:1 no fundo adjacente.
+  - disabled impede clique e foco.
+casos_teste:
+  - id: button-accessible
+    descricao: O botão tem nome acessível e fica visível.
+  - id: button-disabled
+    descricao: O botão desabilitado impede a ativação.
+  - id: button-loading
+    descricao: Carregamento informa aria-busy e impede ativação.
+  - id: button-keyboard
+    descricao: Tab mostra foco; Enter e Espaço acionam uma vez.
+  - id: button-contrast
+    descricao: Texto, borda e foco mantêm contraste nos estados.
+conformidade: >-
+  Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro
+  adaptador não comprovam conformidade.
+cobertura_estados:
+  normal: button-accessible
+  hover: button-contrast
+  ativo: button-contrast
+  carregando: button-loading
+  vazio: null
+  erro: null
+  desabilitado: button-disabled
+  foco: button-keyboard
