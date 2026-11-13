@@ -26,3 +26,22 @@ test('eds-root permanece byte a byte na versão de referência', () => {
   expect(crypto.createHash('sha256').update(css).digest('hex')).toBe(reference.edsRootSha256);
   expect(fs.readFileSync('brands/emprega-mais/tokens/eds-root.sha256', 'utf8').trim()).toBe(reference.edsRootSha256);
 });
+
+
+test('fonte DTCG gera a camada compartilhada equivalente em diretório isolado', () => {
+  const os = require('os');
+  const path = require('path');
+  const { execFileSync } = require('child_process');
+  const output = fs.mkdtempSync(path.join(os.tmpdir(), 'resultx-dtcg-'));
+  try {
+    execFileSync(process.execPath, ['scripts/build-data-layer.mjs'], {
+      env: { ...process.env, RESULTX_DATA_LAYER_OUTPUT: output },
+      stdio: 'pipe',
+    });
+    const file = 'tokens/themes/_data-layer-shared.css';
+    expect(normalizeCss(fs.readFileSync(path.join(output, '_data-layer-shared.css'), 'utf8'), file))
+      .toEqual(reference.css[file]);
+  } finally {
+    fs.rmSync(output, { recursive: true, force: true });
+  }
+});
