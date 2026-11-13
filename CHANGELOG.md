@@ -5,6 +5,71 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+## [2.10.0] - 2026-11-13
+
+Versão MINOR com **uma mudança visual declarada** (botão success no tema dark) — decisão D10,
+emenda da ADR-0003. Inventário completo `v2.9.0 → v2.10.0` abaixo; o que não é distribuído no
+pacote está marcado como interno.
+
+### Impacto por consumidor
+
+"Nenhum" é inferência por leitura estática do código de cada `main` na data indicada, não
+prova renderizada.
+
+| Consumidor | Importa | Efeito visual esperado | Base da conferência |
+|---|---|---|---|
+| Electia | tokens, bridge, `components/data-cards` | nenhum (não importa `components`) | auditoria 13/11, §2.6 |
+| Xscore | só `brands/xscore/tokens` | nenhum | auditoria 13/11, §2.6 |
+| FinanceX | tokens, `components`, `components/data-cards`; tema `premium-light` | nenhum: não usa `.btn-success`, `.brand-orb` nem `.toast-*` | leitura do `main` em 13/11 |
+| ResultX Site | tokens, `brands/resultx/tokens` e `bridge`, `components`, `icons`; tema dark | nenhum: não usa `.btn-success`, `.brand-orb` nem `.toast-*` | leitura do `main` em 13/11 |
+| IMO / EditalHub | não instalam o pacote (ponte `eds-root.css` própria) | nenhum | auditoria 13/11 |
+
+Quem usar `.btn-success` no tema dark verá o texto do botão trocar de `--text-primary` claro
+para `--text-on-success` (contraste 1,93:1 → 8,48:1).
+
+### Changed — `dist/components.min.css` recompilado com cssnano 9.8.0
+
+O bump de dev-deps (#105) trocou cssnano 9.3.1 → 9.8.0. Além da regra nova do botão success,
+a recompilação reorganizou duas regras sem mudar o valor final: o `animation: none` do
+`.brand-orb` sob `prefers-reduced-motion: reduce` foi fundido a outro bloco da mesma media
+query mais adiante (continua dentro dela e só ganha precedência para quem pede menos
+movimento), e o `color: var(--text-primary)` dos quatro `.toast-*` passou a um seletor
+agrupado. O Revisor confirmou pelo parser PostCSS que declarações, seletores e condição se
+conservam; a regra do orb mudou de posição (170 → 200). **Sem diferença esperada no contexto
+examinado**, mas a mudança de ordem pode alterar precedência frente a regras externas
+concorrentes, então não é prova de equivalência em toda cascata. Achado na conferência de
+impacto de 13/11; não estava no inventário da auditoria.
+
+### Removed — workflow de publicação no npm (interno)
+
+Sai `.github/workflows/npm-publish.yml` (decisão D4, ADR-0005). O DS continua distribuído só
+por tag do git.
+
+### Added — documentação distribuída (vai no pacote, via `docs/`)
+
+ADR-0001 aceita; ADR-0003 (fonte única de tokens, emendada por D10), ADR-0004 (contratos,
+adaptadores e piloto) e ADR-0005 (decisões D4–D10); auditoria, provas da E0 e desenho de
+governança em `docs/audits/2026-11-13-ds-auditoria/`.
+
+### Changed — documentação distribuída
+
+`docs/adr/0002` com o status da decisão 3 revisto (EditalHub em `main`, trava de SHA nos três
+repos). `docs/components/buttons.md` registra o texto do `.btn-success` no dark.
+
+### Changed — metadados do `package.json`
+
+`files` exclui `tokens/themes/preview.html`; dev-deps atualizadas (`@playwright/test` 1.64.1,
+`cssnano` 9.8.0, `postcss-import` 17.0.1); `overrides` força `js-yaml` 4 no
+`@istanbuljs/load-nyc-config` (#106). Nenhuma dependência de runtime mudou.
+
+### Added — governança e testes (interno, fora do pacote)
+
+CODEOWNERS; commitlint e lint-staged via husky; catraca de contraste dos botões
+(`tests/button-contrast.test.js`, 18 pares abaixo de AA registrados como dívida); teste visual
+em Linux no CI com fontes locais em `assets/fonts/` (OFL, não empacotadas) e quatro baselines
+aprovadas, agora rodando em toda PR e obrigatório na `main` (D8). O Brand Book da Electia
+(§16.9) deixou de mandar republicar no npm; ele não entra no pacote.
+
 ### Changed — pacote sem preview de desenvolvimento
 
 O preview de temas deixa o pacote distribuído; os arquivos CSS dos temas permanecem.
