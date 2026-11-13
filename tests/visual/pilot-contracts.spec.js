@@ -77,23 +77,38 @@ for (const theme of ['light', 'dark']) {
 
   test(`baseline foco ${theme}`, async ({ page }) => {
     await openPilotCapture(page, theme);
-    // Agrupa apenas ações e campo; a margem inclui o anel e seu deslocamento.
-    await page.evaluate(() => {
-      const actions = document.querySelector('[aria-labelledby="actions-heading"]');
-      const field = document.querySelector('#field');
-      const region = document.createElement('div');
-      region.setAttribute('data-visual-focus-region', '');
-      region.style.padding = 'calc(var(--focus-ring-width) + var(--focus-ring-offset) + var(--space-2))';
-      actions.before(region);
-      region.append(actions, field);
-    });
     await page.locator('#primary').focus();
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
     const field = page.locator('#search');
+    const actions = page.locator('[aria-labelledby="actions-heading"]');
+    const fieldSection = page.locator('#field');
+    await actions.scrollIntoViewIfNeeded();
+    await fieldSection.scrollIntoViewIfNeeded();
     await expect(field).toBeFocused();
     expect(await field.evaluate((el) => el.matches(':focus-visible'))).toBe(true);
-    await expect(page.locator('[data-visual-focus-region]')).toHaveScreenshot(`pilot-focus-${theme}.png`);
+    const ring = await field.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return [parseFloat(style.getPropertyValue('--focus-ring-width')), parseFloat(style.getPropertyValue('--focus-ring-offset'))];
+    });
+    expect(ring.every(Number.isFinite)).toBe(true);
+    const margin = ring[0] + ring[1] + 4;
+    const actionsBox = await actions.boundingBox();
+    const fieldBox = await fieldSection.boundingBox();
+    const inputBox = await field.boundingBox();
+    const viewport = page.viewportSize();
+    expect(actionsBox && fieldBox && inputBox && viewport).toBeTruthy();
+    const x = Math.max(0, Math.floor(Math.min(actionsBox.x, fieldBox.x) - margin));
+    const y = Math.max(0, Math.floor(Math.min(actionsBox.y, fieldBox.y) - margin));
+    const right = Math.min(viewport.width, Math.ceil(Math.max(actionsBox.x + actionsBox.width, fieldBox.x + fieldBox.width) + margin));
+    const bottom = Math.min(viewport.height, Math.ceil(Math.max(actionsBox.y + actionsBox.height, fieldBox.y + fieldBox.height) + margin));
+    const clip = { x, y, width: right - x, height: bottom - y };
+    // Um corte no limite da viewport não pode esconder parte do anel.
+    expect(inputBox.x - ring[0] - ring[1]).toBeGreaterThanOrEqual(x);
+    expect(inputBox.y - ring[0] - ring[1]).toBeGreaterThanOrEqual(y);
+    expect(inputBox.x + inputBox.width + ring[0] + ring[1]).toBeLessThanOrEqual(right);
+    expect(inputBox.y + inputBox.height + ring[0] + ring[1]).toBeLessThanOrEqual(bottom);
+    await expect(page).toHaveScreenshot(`pilot-focus-${theme}.png`, { clip });
   });
 
   test(`baseline diálogo ${theme}`, async ({ page }) => {
