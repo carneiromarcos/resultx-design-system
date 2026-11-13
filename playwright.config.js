@@ -4,9 +4,8 @@ const { defineConfig, devices } = require('@playwright/test');
 /**
  * ResultX DS — Visual Regression Configuration
  *
- * Tests live in tests/visual/. Snapshots are committed to the repo so that
- * any unintended visual change in tokens/components/themes shows up as a
- * failing test in CI.
+ * Tests live in tests/visual/. The committed snapshots are for macOS;
+ * visual tests are not yet run in CI and need verified Linux baselines.
  *
  * Run locally:
  *   npm run test:visual              # compare against baseline

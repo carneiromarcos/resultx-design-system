@@ -39,7 +39,7 @@ The foundation class that provides shared layout, typography, and transition pro
 | `.btn-secondary` | `var(--bg-base)` | `var(--text-primary)` | `1px solid var(--border-default)` | border and text become `var(--accent-primary)` |
 | `.btn-ghost` | `transparent` | `var(--text-secondary)` | none | `var(--bg-surface-2)` bg + `var(--text-primary)` text |
 | `.btn-danger` | `var(--color-error-bg)` | `var(--color-error)` | `1px solid rgba(220,38,38,0.2)` | bg becomes `var(--color-error)`, text becomes `var(--text-primary)` |
-| `.btn-success` | `var(--color-success)` | `var(--text-primary)` | none | `brightness(1.1)` + `translateY(-1px)` |
+| `.btn-success` | `var(--color-success)` | `var(--text-primary)` (`var(--text-on-success)` no dark) | none | `brightness(1.1)` + `translateY(-1px)` |
 | `.btn-social` | `var(--bg-base)` | `var(--text-primary)` | `1px solid var(--border-default)` | border becomes `var(--accent-primary)`, bg becomes `var(--bg-surface-1)` |
 
 ## Size Modifiers
