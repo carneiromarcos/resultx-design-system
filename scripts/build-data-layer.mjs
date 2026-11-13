@@ -18,7 +18,7 @@ StyleDictionary.registerFormat({
   name: 'resultx/data-layer',
   format: ({ dictionary }) => {
     const tokens = dictionary.allTokens
-      .filter((token) => token.path[0] === 'legacy' && token.path[1] !== 'theme')
+      .filter((token) => token.path[0] === 'legacy' && token.path.length === 2)
       .sort((a, b) => a.$extensions['org.resultx.css'].index - b.$extensions['org.resultx.css'].index);
     const lines = tokens.map((token) => {
       const info = token.$extensions['org.resultx.css'];

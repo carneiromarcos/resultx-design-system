@@ -64,3 +64,20 @@ test('fontes DTCG geram os três temas opt-in equivalentes em diretório isolado
     fs.rmSync(output, { recursive: true, force: true });
   }
 });
+
+
+test('fonte DTCG gera a base equivalente com suas camadas em diretório isolado', () => {
+  const os = require('os');
+  const path = require('path');
+  const { execFileSync } = require('child_process');
+  const output = fs.mkdtempSync(path.join(os.tmpdir(), 'resultx-base-'));
+  try {
+    execFileSync(process.execPath, ['scripts/build-base.mjs'], {
+      env: { ...process.env, RESULTX_BASE_OUTPUT: output }, stdio: 'pipe',
+    });
+    const file = 'tokens/base/tokens-base.css';
+    expect(normalizeCss(fs.readFileSync(path.join(output, 'tokens-base.css'), 'utf8'), file)).toEqual(reference.css[file]);
+  } finally {
+    fs.rmSync(output, { recursive: true, force: true });
+  }
+});
