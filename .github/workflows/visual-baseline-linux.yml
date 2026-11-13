@@ -32,13 +32,13 @@ jobs:
             test -f "$file" || { echo "Baseline ausente: $file"; exit 1; }
           done
           snapshots=tests/visual/pilot-contracts.spec.js-snapshots
-          for name in pilot-light pilot-dark; do
+          for name in pilot-light pilot-dark pilot-focus-light pilot-focus-dark pilot-dialog-light pilot-dialog-dark pilot-dialog-loading-light pilot-dialog-loading-dark pilot-dialog-error-light pilot-dialog-error-dark; do
             file="$snapshots/$name-chromium-linux.png"
             test -f "$file" || { echo "Baseline ausente: $file"; exit 1; }
           done
           count=$(find tests/visual -type f -name '*-chromium-linux.png' | wc -l)
-          if [ "$count" -ne 6 ]; then
-            echo "Esperadas exatamente 6 baselines Linux, encontradas $count."
+          if [ "$count" -ne 14 ]; then
+            echo "Esperadas exatamente 14 baselines Linux, encontradas $count."
             exit 1
           fi
       - name: Comparar capturas com baselines Linux
