@@ -1,20 +1,7 @@
 name: Visual Linux
 
 on:
-  # Não tornar este check obrigatório enquanto houver filtro de paths.
   pull_request:
-    paths:
-      - 'tests/visual/**'
-      - 'assets/fonts/**'
-      - '**/preview.html'
-      - 'components/**'
-      - 'tokens/**'
-      - 'brands/**'
-      - 'dist/**'
-      - 'playwright.config.js'
-      - 'package.json'
-      - 'package-lock.json'
-      - '.github/workflows/visual-baseline-linux.yml'
   workflow_dispatch:
 
 permissions:
