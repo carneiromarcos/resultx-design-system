@@ -2,7 +2,7 @@
 
 > Multi-product, multi-brand, multi-theme design system do ecossistema **ResultX**.
 > Atende: ResultX (consultoria), Emprega+ (empregabilidade), Electia (B2B SaaS), Xscore (ResultX Labs), PdV (personal-brand Marcos).
-> Versao atual: **v2.9.0**. Atualizado em 2026-10-11.
+> Versao atual: **v2.10.0**. Atualizado em 2026-11-13.
 
 ---
 

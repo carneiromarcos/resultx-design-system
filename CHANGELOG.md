@@ -5,6 +5,49 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+## [2.10.0] - 2026-11-13
+
+Versão MINOR com **uma mudança visual declarada** (botão success no tema dark) — decisão D10,
+emenda da ADR-0003. Inventário completo `v2.9.0 → v2.10.0` abaixo; o que não é distribuído no
+pacote está marcado como interno.
+
+### Impacto por consumidor
+
+| Consumidor | Importa | Efeito visual esperado | Base da conferência |
+|---|---|---|---|
+| Electia | tokens, bridge, `components/data-cards` | nenhum (não importa `components`) | auditoria 13/11, §2.6 |
+| Xscore | só `brands/xscore/tokens` | nenhum | auditoria 13/11, §2.6 |
+| FinanceX | tokens, `components`, `components/data-cards`; tema `premium-light` | nenhum: não usa `.btn-success`, `.brand-orb` nem `.toast-*` | leitura do `main` em 13/11 |
+| ResultX Site | tokens, `brands/resultx/tokens` e `bridge`, `components`, `icons`; tema dark | nenhum: não usa `.btn-success`, `.brand-orb` nem `.toast-*` | leitura do `main` em 13/11 |
+| IMO / EditalHub | não instalam o pacote (ponte `eds-root.css` própria) | nenhum | auditoria 13/11 |
+
+Quem usar `.btn-success` no tema dark verá o texto do botão trocar de `--text-primary` claro
+para `--text-on-success` (contraste 1,93:1 → 8,48:1).
+
+### Changed — `dist/components.min.css` recompilado com cssnano 9.8.0
+
+O bump de dev-deps (#105) trocou cssnano 9.3.1 → 9.8.0. Além da regra nova do botão success,
+a recompilação reorganizou duas regras sem mudar o valor final: o `animation: none` do
+`.brand-orb` sob `prefers-reduced-motion: reduce` foi fundido a outro bloco da mesma media
+query mais adiante (continua dentro dela e só ganha precedência para quem pede menos
+movimento), e o `color: var(--text-primary)` dos quatro `.toast-*` passou a um seletor
+agrupado. Achado na conferência de impacto de 13/11; não estava no inventário da auditoria.
+
+### Removed — workflow de publicação no npm (interno)
+
+Sai `.github/workflows/npm-publish.yml` (decisão D4, ADR-0005). O DS continua distribuído só
+por tag do git.
+
+### Added — governança e testes (interno, fora do pacote)
+
+ADR-0001 aceita; ADR-0003 (fonte única de tokens, emendada por D10), ADR-0004 (contratos,
+adaptadores e piloto) e ADR-0005 (decisões D4–D10); auditoria e desenho de governança em
+`docs/audits/2026-11-13-ds-auditoria/`; CODEOWNERS; commitlint e lint-staged via husky;
+catraca de contraste dos botões (`tests/button-contrast.test.js`, 18 pares abaixo de AA
+registrados como dívida); teste visual em Linux no CI com fontes locais em `assets/fonts/`
+(OFL, não empacotadas) e quatro baselines aprovadas, agora rodando em toda PR e obrigatório
+na `main` (D8).
+
 ### Changed — pacote sem preview de desenvolvimento
 
 O preview de temas deixa o pacote distribuído; os arquivos CSS dos temas permanecem.
