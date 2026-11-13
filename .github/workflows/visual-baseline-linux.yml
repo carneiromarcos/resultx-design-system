@@ -1,6 +1,7 @@
 name: Visual Linux
 
 on:
+  # Não tornar este check obrigatório enquanto houver filtro de paths.
   pull_request:
     paths:
       - 'tests/visual/**'
@@ -20,31 +21,52 @@ permissions:
 
 jobs:
   visual-linux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     container:
-      # Mantenha a versão alinhada ao @playwright/test do package-lock.json.
-      image: mcr.microsoft.com/playwright:v1.64.1-noble
+      # v1.64.1-noble, manifesto linux/amd64; manter alinhado ao lockfile.
+      image: mcr.microsoft.com/playwright@sha256:ee15712262f017b8157421b212b12099146645f44b1bc5c0514cbbe6a229b1d0
     steps:
       - uses: actions/checkout@v7
       - name: Verificar versão da imagem
         run: |
           node -e "const v = require('./package-lock.json').packages['node_modules/@playwright/test'].version; if (v !== '1.64.1') { console.error('Atualize a imagem Playwright para a versão do lockfile: ' + v); process.exit(1); }"
       - run: npm ci
-      # Fase A: gera as quatro imagens para revisão, sem exigir baseline Linux.
-      # Fase B: após revisão e versionamento das imagens, remova --update-snapshots
-      # para que o mesmo teste compare as capturas e falhe em diferenças.
+      # Fase A: remove qualquer baseline Linux vinda do checkout antes de gerar.
+      # Fase B: preservar as baselines do checkout, trocar a trava de nomes para
+      # validá-las como entradas e remover --update-snapshots para comparar.
+      - name: Limpar capturas Linux do checkout
+        run: find tests/visual -type f -name '*-chromium-linux.png' -delete
       - name: Gerar capturas Linux para revisão
         run: npm run test:visual -- --update-snapshots
-      - name: Conferir quantidade de capturas
+      - name: Preparar capturas e metadados
+        id: artifact
         run: |
+          set -eu
+          snapshots=tests/visual/preview.spec.js-snapshots
+          output_dir="$RUNNER_TEMP/resultx-ds-visual-linux"
+          mkdir -p "$output_dir"
+          for name in premium-light-frame preview-themes sober-dark-frame vibrant-dark-frame; do
+            file="$snapshots/$name-chromium-linux.png"
+            test -f "$file" || { echo "Captura ausente: $file"; exit 1; }
+            cp "$file" "$output_dir/"
+          done
           count=$(find tests/visual -type f -name '*-chromium-linux.png' | wc -l)
           if [ "$count" -ne 4 ]; then
-            echo "Esperadas 4 capturas Linux, encontradas $count."
+            echo "Esperadas exatamente 4 capturas Linux, encontradas $count."
             exit 1
           fi
+          short_sha=$(printf '%.12s' "$GITHUB_SHA")
+          echo "name=resultx-ds-visual-linux-$short_sha-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
+          {
+            printf 'SHA: %s\n' "$GITHUB_SHA"
+            printf 'Run: %s (tentativa %s)\n' "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT"
+            printf 'Playwright: %s\n' "$(node -p "require('@playwright/test/package.json').version")"
+            printf 'Container: %s\n' 'mcr.microsoft.com/playwright@sha256:ee15712262f017b8157421b212b12099146645f44b1bc5c0514cbbe6a229b1d0'
+            printf 'Runner: ubuntu-24.04; ImageOS=%s; ImageVersion=%s\n' "${ImageOS:-indisponivel}" "${ImageVersion:-indisponivel}"
+          } > "$output_dir/metadados.txt"
       - name: Publicar capturas para revisão
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.2
         with:
-          name: resultx-ds-visual-linux
-          path: tests/visual/**/*-chromium-linux.png
+          name: ${{ steps.artifact.outputs.name }}
+          path: ${{ runner.temp }}/resultx-ds-visual-linux/
           if-no-files-found: error
