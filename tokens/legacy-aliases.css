@@ -1,0 +1,8 @@
+/* Compatibilidade opt-in, gerada de tokens/tokens.json. Aliases obsoletos. */
+:root, [data-theme] {
+  --bg-card: var(--bg-surface-2);
+  --accent-teal: var(--accent-primary);
+  --accent-teal-hover: var(--accent-primary-hover);
+  --accent-teal-muted: var(--accent-primary-muted);
+  --accent-on-dark: var(--accent-primary-text);
+}

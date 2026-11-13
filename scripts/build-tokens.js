@@ -2,13 +2,13 @@
 /**
  * ResultX Design System — Token build pipeline
  *
- * Reads the CSS token sources (tokens-base.css + tokens.css) and emits
+ * Reads generated CSS token files (from tokens/tokens.json) and emits
  * consumer-specific outputs:
  *   - dist/tokens.theme.css  → Tailwind v4 @theme inline + runtime themes
  *   - dist/tokens.ts         → TypeScript const exports
  *
- * tokens.css remains the authoritative source. This script NEVER writes back
- * to tokens.css — edit tokens.css by hand and re-run `npm run build:tokens`.
+ * The authoritative source is tokens/tokens.json. Run `npm run build:tokens`
+ * to regenerate the CSS inputs before this script runs.
  */
 
 const fs = require('fs');

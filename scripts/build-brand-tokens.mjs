@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import postcss from 'postcss';
 import StyleDictionary from 'style-dictionary';
 
-const source = process.env.RESULTX_BRANDS_SOURCE || 'tokens/dtcg/tokens.json';
+const source = process.env.RESULTX_BRANDS_SOURCE || 'tokens/tokens.json';
 const data = JSON.parse(fs.readFileSync(source, 'utf8'));
 const brands = ['electia', 'emprega-mais', 'pdv', 'resultx', 'xscore'];
 function color(value, format) {

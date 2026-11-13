@@ -1,6 +1,6 @@
-# Fonte DTCG — migração em andamento
+# Fonte DTCG dos tokens
 
-`tokens.json` é a fonte da base tipográfica e escalas, gerada por
+`tokens/tokens.json` é a fonte da base tipográfica e escalas, gerada por
 `scripts/build-base.mjs`, e da camada compartilhada de dados: cores
 primitivas, papéis semânticos para gráficos, dimensões de componente e aliases
 para os nomes CSS existentes. `npm run build:tokens` gera
@@ -18,9 +18,13 @@ estruturais `layouts/brand-*.css.tmpl`, antes do cálculo de contraste das ponte
 Valores CSS sem tipo DTCG padronizado, como `clamp()`, usam extensões específicas
 na própria fonte.
 
-A migração ainda não abrange eds-root. Esses arquivos
-continuam manuais nesta etapa; `tokens/tokens.json` ainda é o legado. Não considere
-a E1 concluída até que os demais artefatos sejam migrados e verificados.
+`eds-root.css` e seu SHA são gerados com trava de igualdade byte a byte;
+a saída não é escrita se o hash congelado divergir. Os JSONs históricos em
+`brands/*/tokens/` não são fonte do build e ainda precisam ser reconciliados.
+
+`tokens/legacy-aliases.css` é uma saída opt-in: os cinco aliases e o export
+adicional `./tokens/legacy` estão listados no teste de equivalência; o CSS
+padrão não recebe os novos nomes.
 
 A lista de propriedades da transição interativa é uma extensão específica de
 CSS. Os breakpoints seguem comentados na folha base: o gerador antigo os lê

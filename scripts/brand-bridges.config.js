@@ -3,9 +3,8 @@
 /**
  * Which brand token plays which DS role.
  *
- * This file declares NAMES, never values. Every value is resolved from
- * `brands/<id>/tokens/tokens.css` at build time, so the brand file stays the
- * single source of truth and the bridge cannot silently drift from it.
+ * This file declares role mappings. Values come from generated brand CSS and
+ * generated core CSS; tokens/tokens.json is the source of both.
  * `tests/brand-bridge.test.js` asserts that it hasn't.
  *
  * Roles
@@ -26,18 +25,21 @@
  */
 
 /** Ink candidates, measured against each brand's accent. Highest ratio wins. */
-const INK_CANDIDATES = ['#0B0E14', '#FFFFFF'];
+const { opaqueHex, selector } = require('./lib/core-token-values');
+const INK_CANDIDATES = [opaqueHex(':root', '--text-on-accent'), opaqueHex(':root', '--text-on-error')];
 
 /**
- * Surfaces used to verify the text roles. Mirrors tokens/tokens.css.
+ * Surfaces used to verify the text roles, read from generated tokens/tokens.css.
  * `all` is --bg-base plus --bg-surface-1..3 — the focus ring must clear 3:1
  * against every one of them (WCAG 1.4.11). tests/contrast-tokens.test.js reads
  * the same surfaces straight from tokens.css, so a drift here fails there.
  */
-const SURFACES = {
-  dark: { base: '#0B0E14', surface: '#161B26', all: ['#0B0E14', '#111620', '#161B26', '#1C2333'] },
-  light: { base: '#FFFFFF', surface: '#F8FAFB', all: ['#FFFFFF', '#F8FAFB', '#F0F3F5', '#E8ECF0'] },
-};
+const SURFACES = Object.fromEntries(['dark', 'light'].map((theme) => {
+  const scope = selector(theme);
+  const read = (name) => opaqueHex(scope, name);
+  const all = ['--bg-base', '--bg-surface-1', '--bg-surface-2', '--bg-surface-3'].map(read);
+  return [theme, { base: all[0], surface: theme === 'dark' ? all[2] : all[1], all }];
+}));
 
 const BRANDS = [
   {

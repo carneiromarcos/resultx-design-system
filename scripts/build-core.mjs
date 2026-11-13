@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import postcss from 'postcss';
 import StyleDictionary from 'style-dictionary';
 
-const source = process.env.RESULTX_CORE_SOURCE || 'tokens/dtcg/tokens.json';
+const source = process.env.RESULTX_CORE_SOURCE || 'tokens/tokens.json';
 const layout = process.env.RESULTX_CORE_LAYOUT || 'tokens/dtcg/layouts/core.css.tmpl';
 const data = JSON.parse(fs.readFileSync(source, 'utf8'));
 function color(value, format) {

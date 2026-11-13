@@ -1,6 +1,28 @@
 {
   "source": "52d6b4e",
   "edsRootSha256": "c2366a517a96da9e8f31f5a466e82fc8bc37de66ed769a190b0c22b67931ce86",
+  "exports": {
+    "./tokens": "./dist/tokens.min.css",
+    "./tokens/theme": "./dist/tokens.theme.css",
+    "./tokens/ts": "./dist/tokens.ts",
+    "./components": "./dist/components.min.css",
+    "./components/data-cards": "./components/data-cards.css",
+    "./brands/*/bridge": "./brands/*/tokens/ds-bridge.css",
+    "./brands/*/tokens": "./brands/*/tokens/tokens.css",
+    "./icons": "./dist/icons.min.css",
+    "./theme": "./dist/theme-toggle.js",
+    "./disclosure": "./dist/disclosure.js",
+    "./split-pane": "./dist/split-pane.js",
+    "./audio-player": "./dist/audio-player.js",
+    "./composer": "./dist/composer.js",
+    "./sidebar-overlay": "./dist/sidebar-overlay.js",
+    "./header-float": "./dist/header-float.js",
+    "./menu-drawer": "./dist/menu-drawer.js",
+    "./cta-dock": "./dist/cta-dock.js",
+    "./tokens/source": "./tokens/tokens.css",
+    "./components/source": "./components/components.css",
+    "./package.json": "./package.json"
+  },
   "css": {
     "tokens/base/tokens-base.css": [
       ["decl",[["selector",":root"]],"--font-heading","'Sora', sans-serif",false],

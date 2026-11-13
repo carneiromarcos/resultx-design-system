@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import StyleDictionary from 'style-dictionary';
 
-const source = process.env.RESULTX_BASE_SOURCE || 'tokens/dtcg/tokens.json';
+const source = process.env.RESULTX_BASE_SOURCE || 'tokens/tokens.json';
 const data = JSON.parse(fs.readFileSync(source, 'utf8'));
 StyleDictionary.registerFormat({
   name: 'resultx/base',
@@ -35,7 +35,7 @@ StyleDictionary.registerFormat({
     }
     entries.sort((a, b) => a.index - b.index);
     const structural = `@layer emprega-base {\n  h1, h2, h3, h4, h5, h6 {\n    font-family: var(--font-heading);\n    font-weight: var(--weight-semibold);\n    letter-spacing: var(--tracking-tight);\n    line-height: var(--leading-snug);\n  }\n  body {\n    font-family: var(--font-body);\n    font-weight: var(--weight-regular);\n    line-height: var(--leading-normal);\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n  }\n  code, kbd, pre, samp {\n    font-family: var(--font-mono);\n  }\n}`;
-    return `/* Gerado por scripts/build-base.mjs a partir de tokens/dtcg/tokens.json. Não editar. */\n:root {\n${entries.map((entry) => entry.declaration).join('\n')}\n}\n\n${structural}\n`;
+    return `/* Gerado por scripts/build-base.mjs a partir de tokens/tokens.json. Não editar. */\n:root {\n${entries.map((entry) => entry.declaration).join('\n')}\n}\n\n${structural}\n`;
   },
 });
 const sd = new StyleDictionary({

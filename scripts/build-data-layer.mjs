@@ -31,13 +31,13 @@ StyleDictionary.registerFormat({
       } else throw new Error(`Tipo sem formato CSS: ${token.$type}`);
       return `  --${info.name}: ${value};`;
     });
-    return `/* Gerado por scripts/build-data-layer.mjs a partir de tokens/dtcg/tokens.json. Não editar. */\n:root {\n${lines.join('\n')}\n}\n`;
+    return `/* Gerado por scripts/build-data-layer.mjs a partir de tokens/tokens.json. Não editar. */\n:root {\n${lines.join('\n')}\n}\n`;
   },
 });
 
 const sd = new StyleDictionary({
   usesDtcg: true,
-  source: [process.env.RESULTX_DATA_LAYER_SOURCE || 'tokens/dtcg/tokens.json'],
+  source: [process.env.RESULTX_DATA_LAYER_SOURCE || 'tokens/tokens.json'],
   platforms: {
     css: {
       transforms: [],

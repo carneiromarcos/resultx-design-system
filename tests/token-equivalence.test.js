@@ -117,3 +117,79 @@ test('fonte DTCG gera os CSS das marcas com escopos equivalentes', () => {
     fs.rmSync(output, { recursive: true, force: true });
   }
 });
+
+
+// Tokens novos explicitamente listados: não entram no CSS padrão da v2.10.0.
+const NEW_OPT_IN_ALIASES = {
+  file: 'tokens/legacy-aliases.css',
+  export: './tokens/legacy',
+  tokens: {
+    'bg-card': 'bg-surface-2',
+    'accent-teal': 'accent-primary',
+    'accent-teal-hover': 'accent-primary-hover',
+    'accent-teal-muted': 'accent-primary-muted',
+    'accent-on-dark': 'accent-primary-text',
+  },
+};
+test('aliases legados opt-in gerados são os únicos tokens novos listados', () => {
+  const os = require('os');
+  const path = require('path');
+  const { execFileSync } = require('child_process');
+  const output = fs.mkdtempSync(path.join(os.tmpdir(), 'resultx-aliases-'));
+  try {
+    execFileSync(process.execPath, ['scripts/build-aliases.mjs'], {
+      env: { ...process.env, RESULTX_ALIASES_OUTPUT: output }, stdio: 'pipe',
+    });
+    const expected = Object.entries(NEW_OPT_IN_ALIASES.tokens).map(([name, target]) =>
+      ['decl', [['selector', ':root, [data-theme]']], `--${name}`, `var(--${target})`, false]);
+    const fresh = normalizeCss(fs.readFileSync(path.join(output, 'legacy-aliases.css'), 'utf8'), NEW_OPT_IN_ALIASES.file);
+    expect(fresh).toEqual(expected);
+    expect(normalizeCss(fs.readFileSync(NEW_OPT_IN_ALIASES.file, 'utf8'), NEW_OPT_IN_ALIASES.file)).toEqual(expected);
+    expect(require('../package.json').exports[NEW_OPT_IN_ALIASES.export]).toBe(`./${NEW_OPT_IN_ALIASES.file}`);
+  } finally {
+    fs.rmSync(output, { recursive: true, force: true });
+  }
+});
+
+
+test('fonte DTCG gera eds-root e SHA congelados byte a byte', () => {
+  const os = require('os');
+  const path = require('path');
+  const { execFileSync } = require('child_process');
+  const output = fs.mkdtempSync(path.join(os.tmpdir(), 'resultx-eds-'));
+  try {
+    execFileSync(process.execPath, ['scripts/build-eds-root.mjs'], {
+      env: { ...process.env, RESULTX_EDS_OUTPUT: output }, stdio: 'pipe',
+    });
+    expect(fs.readFileSync(path.join(output, 'eds-root.css'))).toEqual(fs.readFileSync('brands/emprega-mais/tokens/eds-root.css'));
+    expect(fs.readFileSync(path.join(output, 'eds-root.sha256'))).toEqual(fs.readFileSync('brands/emprega-mais/tokens/eds-root.sha256'));
+  } finally { fs.rmSync(output, { recursive: true, force: true }); }
+});
+
+test.each(['dimensão EDS', 'cor vinculada da marca'])('trava EDS rejeita mudança na %s antes de escrever', (kind) => {
+  const os = require('os');
+  const path = require('path');
+  const { spawnSync } = require('child_process');
+  const output = fs.mkdtempSync(path.join(os.tmpdir(), 'resultx-eds-locked-'));
+  try {
+    const source = JSON.parse(fs.readFileSync('tokens/tokens.json', 'utf8'));
+    if (kind === 'dimensão EDS') source.primitives.eds.base['eds-radius-chip'].$value.value += 1;
+    else source.primitives.brand['emprega-mais'].base['emp-indigo-dark'].$value = '{primitives.brand.emprega-mais.color.rgb-99-102-241-alpha-1}';
+    const sourceFile = path.join(output, 'mutated.json');
+    fs.writeFileSync(sourceFile, JSON.stringify(source));
+    const result = spawnSync(process.execPath, ['scripts/build-eds-root.mjs'], {
+      env: { ...process.env, RESULTX_EDS_SOURCE: sourceFile, RESULTX_EDS_OUTPUT: output }, encoding: 'utf8',
+    });
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain('EDS congelado');
+    expect(fs.existsSync(path.join(output, 'eds-root.css'))).toBe(false);
+    expect(fs.existsSync(path.join(output, 'eds-root.sha256'))).toBe(false);
+  } finally { fs.rmSync(output, { recursive: true, force: true }); }
+});
+
+
+test('exports existentes permanecem idênticos e só o export opt-in é novo', () => {
+  const current = require('../package.json').exports;
+  for (const [name, destination] of Object.entries(reference.exports)) expect(current[name]).toBe(destination);
+  expect(Object.keys(current).filter((name) => !(name in reference.exports))).toEqual([NEW_OPT_IN_ALIASES.export]);
+});

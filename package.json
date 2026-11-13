@@ -10,6 +10,7 @@
     "./tokens": "./dist/tokens.min.css",
     "./tokens/theme": "./dist/tokens.theme.css",
     "./tokens/ts": "./dist/tokens.ts",
+    "./tokens/legacy": "./tokens/legacy-aliases.css",
     "./components": "./dist/components.min.css",
     "./components/data-cards": "./components/data-cards.css",
     "./brands/*/bridge": "./brands/*/tokens/ds-bridge.css",
@@ -31,6 +32,7 @@
   "files": [
     "dist/",
     "tokens/tokens.css",
+    "tokens/legacy-aliases.css",
     "tokens/base/tokens-base.css",
     "tokens/themes/",
     "!tokens/themes/preview.html",
@@ -83,10 +85,10 @@
     "resultx"
   ],
   "scripts": {
-    "build:tokens": "node scripts/build-base.mjs && node scripts/build-data-layer.mjs && node scripts/build-themes.mjs && node scripts/build-core.mjs && node scripts/build-tokens.js && postcss tokens/tokens.css -o dist/tokens.min.css",
+    "build:tokens": "node scripts/build-base.mjs && node scripts/build-data-layer.mjs && node scripts/build-themes.mjs && node scripts/build-core.mjs && node scripts/build-aliases.mjs && node scripts/build-tokens.js && postcss tokens/tokens.css -o dist/tokens.min.css",
     "build:components": "postcss components/components.css -o dist/components.min.css",
     "build:icons": "postcss components/icons.css -o dist/icons.min.css",
-    "build:bridges": "node scripts/build-brand-tokens.mjs && node scripts/build-brand-bridges.js",
+    "build:bridges": "node scripts/build-core.mjs && node scripts/build-brand-tokens.mjs && node scripts/build-eds-root.mjs && node scripts/build-brand-bridges.js",
     "build:all": "npm run build:tokens && npm run build:components && npm run build:icons && npm run build:bridges",
     "build": "npm run build:all",
     "lint": "stylelint 'components/**/*.css'",

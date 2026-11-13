@@ -13,7 +13,7 @@
 | Entender a hierarquia de marcas | [`brands/README.md`](brands/README.md) |
 | Filosofia + tokens + componentes do DS | [`DESIGN-SYSTEM.md`](DESIGN-SYSTEM.md) (14 secoes, v2.1.1) |
 | Brand book de uma marca especifica | `brands/{marca}/docs/BRAND-BOOK.md` |
-| Tokens W3C de uma marca | `brands/{marca}/tokens/tokens.json` |
+| Fonte DTCG dos tokens e marcas | `tokens/tokens.json` |
 | Logos canonicos | `brands/{marca}/assets/logo/` |
 | Templates de redes sociais (PNGs prontos) | [`templates/social-media/`](templates/social-media/) |
 | Renderer Playwright (HTML→PNG) | [`render-templates.mjs`](render-templates.mjs) |
@@ -77,7 +77,7 @@ design-system/
 ├── CHANGELOG.md               ← mudancas estruturais do hub
 │
 ├── tokens/                    ← tokens base + 5 themes opt-in
-│   ├── tokens.json            ← W3C Design Tokens Community Format
+│   ├── tokens.json            ← fonte DTCG de base, temas e marcas
 │   ├── tokens.css             ← CSS custom properties
 │   ├── base/tokens-base.css
 │   └── themes/                ← dark, light, premium-light, sober-dark, vibrant-dark
@@ -120,7 +120,7 @@ Padrao canonico estabelecido em **Electia** (referencia) e **PdV** (segunda refe
 ```
 {marca}/
 ├── tokens/
-│   ├── tokens.json            ← W3C DTCG (source-of-truth dos valores)
+│   ├── tokens.json            ← JSON histórico da marca (não é fonte do build)
 │   └── tokens.css             ← CSS vars com prefixo da marca
 ├── docs/
 │   ├── BRAND-BOOK.md          ← essencia, voz, paleta, tipografia, aplicacoes
@@ -163,8 +163,8 @@ ResultX e simultaneamente (a) **entidade legal** que opera tudo e (b) uma das **
 
 Hoje a heranca acontece via:
 1. **Themes opt-in no hub** (`tokens/themes/`) — qualquer marca pode usar `data-theme="premium-light"` etc.
-2. **Tokens compartilhados no hub** (`tokens/tokens.json`) — naming `emprega-app.*` (legado — refatorar pra `base.*` ou `resultx.*` no futuro).
-3. **Brand-specific overrides** em `brands/{marca}/tokens/tokens.json` — cada marca define seus proprios values com prefixo proprio (`--emp-*`, `--pdv-*`, etc).
+2. **Tokens compartilhados no hub** (`tokens/tokens.json`) — fonte DTCG de primitivos, papéis e componentes; os CSS são gerados.
+3. **Brand-specific overrides** na seção `brand` da fonte DTCG — os CSS das marcas e pontes são gerados. Os JSONs históricos em `brands/*/tokens/` não são fonte do build. `eds-root.css` é gerado byte a byte com SHA travado pela ADR-0002.
 
 Co-branding e regras detalhadas: [`brands/README.md`](brands/README.md) secao "Co-branding rules".
 
