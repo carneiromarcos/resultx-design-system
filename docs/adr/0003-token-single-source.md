@@ -1,6 +1,6 @@
 # ADR-0003 — Tokens têm uma fonte única estruturada, e todo artefato é gerado
 
-- **Status:** Accepted — 2026-11-13, decisão D2 do Marcos
+- **Status:** Accepted — 2026-11-13, decisão D2 do Marcos · **Emendada** em 2026-11-13 (decisão D10, ver "Emenda")
 - **Date:** 2026-11-13
 - **Related:** [ADR-0001](0001-role-named-tokens.md) — a gramática que esta fonte carrega · [ADR-0002](0002-emprega-brand-convergence.md) — `eds-root.css` e a trava de SHA · auditoria `docs/audits/2026-11-13-ds-auditoria/`
 
@@ -29,7 +29,7 @@ Medido em `origin/main` `6083ce3` (13/11/2026):
 
 ## O que não muda
 
-- Os consumidores continuam importando os mesmos caminhos. Cada um permanece na tag que usa hoje até atualizar por conta própria, de forma gradual; a tag nova (v2.10.0) entrega a mesma saída semântica, então atualizar não muda nada visível.
+- Os consumidores continuam importando os mesmos caminhos. Cada um permanece na tag que usa hoje até atualizar por conta própria, de forma gradual; a tag da E1 (v2.11.0, ver "Emenda") entrega a mesma saída semântica da tag anterior, então atualizar não muda nada visível.
 - `eds-root.css` continua copiado por SHA para IMO e EditalHub (ADR-0002). Alteração de **valor** nele segue a janela do EditalHub (nada antes do fim do recurso de 10/12).
 - Decisão de distribuição de 11/10 (tag git, não npm) mantida.
 
@@ -44,4 +44,15 @@ Medido em `origin/main` `6083ce3` (13/11/2026):
 - Teste de equivalência verde para todos os artefatos do item 2.
 - `README.md` e `CONTRIBUTING.md` corrigidos para apontar a fonte única.
 - `tokens/tokens.json` legado removido ou substituído pela nova fonte.
-- Tag nova (v2.10.0) sem mudança de valor para nenhum consumidor.
+- Tag nova (**v2.11.0**, ver "Emenda") sem mudança de valor para nenhum consumidor em relação à v2.10.0.
+
+## Emenda — 2026-11-13 (decisão D10 do Marcos)
+
+**Por quê.** Esta ADR foi escrita contra a v2.9.0 e previa a E1 como v2.10.0 "sem mudança de valor". Depois do aceite, a `main` recebeu mudanças distribuídas que alteram a tela para quem importa `components`: a correção de contraste do `.btn-success` no tema escuro (E0, #111) e a saída de `tokens/themes/preview.html` do pacote (#112). Uma v2.10.0 cortada da `main` atual não cumpre o critério original.
+
+**O que muda.**
+1. **v2.10.0** = a `main` **no momento de cortar a tag** (não um SHA fixo de hoje), com mudança visual **declarada** no CHANGELOG e inventário completo `v2.9.0 →` SHA da tag, revisado de novo pelo Revisor nesse momento. O inventário de 13/11 (auditoria `docs/audits/2026-11-13-ds-auditoria/governanca-propagacao-conformidade.md` §2.6) é o ponto de partida, não a versão final.
+2. A **E1** (fonte única com saída equivalente) passa a ser **v2.11.0**, e a equivalência é medida contra a v2.10.0.
+3. A v2.10.0 só é cortada depois que o impacto em **todos** os consumidores conhecidos estiver preenchido. Consumidor com uso **desconhecido** (hoje FinanceX e ResultX Site) trava a tag, salvo ordem expressa do Marcos.
+
+**O que não muda.** Fonte única em DTCG, gerador, equivalência normalizada (com ordem e escopo da cascata), adoção gradual por tag e a trava do `eds-root.css` até o fim do recurso de 10/12 do EditalHub.
