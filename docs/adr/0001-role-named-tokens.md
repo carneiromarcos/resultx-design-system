@@ -1,6 +1,6 @@
 # ADR-0001 — Tokens are named by role, never by appearance
 
-- **Status:** Proposed
+- **Status:** Accepted — 2026-11-13, decisão D1 do Marcos (ver "Aceite" no fim). Proposto em 2026-08-07.
 - **Date:** 2026-08-07
 - **Related:** [brand-bridge.md](../brand-bridge.md) — the mechanism this grammar governs
 
@@ -138,3 +138,18 @@ Every number here was measured on 2026-08-07, not estimated:
 - Hue verification — HSV conversion of every hex whose name states a colour family
 - Production values — `getComputedStyle` in the logged-in dashboard at `electia.empregamais.me`
 - Occurrence counts — `grep -r` over `electia/src`
+
+## Aceite — 2026-11-13
+
+> Escrito em pt-BR, como o ADR-0002.
+
+O Marcos aceitou esta decisão em 13/11/2026 (D1 da auditoria `docs/audits/2026-11-13-ds-auditoria/diagnostico-resultx-ds.md`).
+
+**Por que agora.** A auditoria de 13/11 mediu, nos `origin/main` atuais, que o defeito descrito aqui piorou: `--accent-teal` passou de 296 ocorrências em 97 arquivos (07/08) para **436 em 153** na Electia, e o IMO repete o padrão com `--eds-indigo` carregando a cor de cada cliente. Também há quatro vocabulários para o mesmo papel (fundo de card: `--bg-surface-2` no núcleo, `--bg-card` na Electia, `--surface-1` nas marcas Electia/Xscore, `--eds-surface` no IMO).
+
+**O que o aceite acrescenta ao texto original:**
+
+1. **Um vocabulário semântico único para todos os produtos.** O núcleo do DS é a referência; marcas e produtos sobrescrevem valores, não nomes.
+2. **Nomes legados viram aliases gerados**, nunca renomeação manual em massa. O gerador da [ADR-0003](0003-token-single-source.md) emite `--bg-card: var(<papel>)` etc. com marca de *deprecated*; cada produto tira o alias aos poucos, com a contagem medida por catraca.
+3. **As duas perguntas em aberto acima ficam assim:** `--accent-on-dark` é tratado como alias de `--accent-primary-text` na lista de aliases; a falha de build por alias de aparência só entra depois que a catraca do produto chegar a zero (até lá, aviso).
+4. **Adoção por produto continua faseada** (roteiro E0–E7 do relatório). Nenhuma mudança de pixel em produção decorre do aceite em si.
