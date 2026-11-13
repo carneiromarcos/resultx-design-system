@@ -21,6 +21,9 @@ jobs:
       - run: npm ci
       # Fase B: as baselines aprovadas vêm do checkout; diferenças falham o job.
       - name: Verificar baselines Linux do checkout
+        id: baselines
+        # Continua para o Playwright produzir o diagnóstico antes de falhar.
+        continue-on-error: true
         run: |
           set -eu
           snapshots=tests/visual/preview.spec.js-snapshots
@@ -28,13 +31,21 @@ jobs:
             file="$snapshots/$name-chromium-linux.png"
             test -f "$file" || { echo "Baseline ausente: $file"; exit 1; }
           done
+          snapshots=tests/visual/pilot-contracts.spec.js-snapshots
+          for name in pilot-light pilot-dark; do
+            file="$snapshots/$name-chromium-linux.png"
+            test -f "$file" || { echo "Baseline ausente: $file"; exit 1; }
+          done
           count=$(find tests/visual -type f -name '*-chromium-linux.png' | wc -l)
-          if [ "$count" -ne 4 ]; then
-            echo "Esperadas exatamente 4 baselines Linux, encontradas $count."
+          if [ "$count" -ne 6 ]; then
+            echo "Esperadas exatamente 6 baselines Linux, encontradas $count."
             exit 1
           fi
       - name: Comparar capturas com baselines Linux
         run: npm run test:visual
+      - name: Exigir baselines Linux do checkout
+        if: ${{ !cancelled() && steps.baselines.outcome == 'failure' }}
+        run: exit 1
       - name: Publicar diagnóstico visual em caso de falha
         if: failure()
         uses: actions/upload-artifact@v7.0.2

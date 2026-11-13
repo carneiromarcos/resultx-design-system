@@ -22,9 +22,9 @@ for (const theme of ['light', 'dark']) {
   }
 }
 
-// Capturas aguardam geração no workflow Visual Linux e aprovação do Revisor.
+// Baselines Linux devem ser geradas no CI e aprovadas pelo Revisor.
 for (const theme of ['light', 'dark']) {
-  test.skip(`baseline pendente: piloto ${theme}`, async ({ page }) => {
+  test(`baseline piloto ${theme}`, async ({ page }) => {
     await page.goto(themedUrl(theme));
     await expect(page).toHaveScreenshot(`pilot-${theme}.png`, { fullPage: true });
   });
