@@ -81,7 +81,7 @@ test.describe('baselines da vitrine DS', () => {
 for (const theme of ['light', 'dark']) {
   test(`baseline piloto ${theme}`, async ({ page }) => {
     await openPilotCapture(page, theme);
-    await expect(page).toHaveScreenshot(`pilot-${theme}.png`, { fullPage: true });
+    await expect(page).toHaveScreenshot(`pilot-${theme}.png`, { fullPage: true, maxDiffPixelRatio: 0 });
   });
 
   test(`baseline ações ${theme}`, async ({ page }) => {
