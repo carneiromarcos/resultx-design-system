@@ -31,6 +31,9 @@
 - --focus-ring-width
 - --focus-ring-offset
 - --accent-primary-text
+- --accent-primary
+- --accent-primary-hover
+- --text-inverse
 - --text-secondary
 - --space-2
 - --space-4
@@ -56,6 +59,7 @@
 
 - Texto ≥ 4,5:1; borda e foco ≥ 3:1 no fundo adjacente.
 - disabled impede clique e foco.
+- Primary se distingue por preenchimento de ação, não só por peso de fonte.
 
 ## Casos de teste
 
@@ -64,6 +68,7 @@
 - button-loading: Carregamento informa aria-busy e impede ativação.
 - button-keyboard: Tab mostra foco; Enter e Espaço acionam uma vez.
 - button-contrast: Texto, borda e foco mantêm contraste nos estados.
+- button-variant-hierarchy: Primary tem preenchimento distinto, contrastante com o entorno e com o texto.
 
 ## Cobertura de estados
 

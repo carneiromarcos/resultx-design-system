@@ -14,6 +14,21 @@ const pixel = (png, x, y) => {
   return [...png.data.subarray(i, i + 3)];
 };
 
+// Compara o preenchimento pintado com o fundo adjacente, sem gerar baseline.
+async function paintedFill(page, selector) {
+  const target = page.locator(selector).first();
+  await target.scrollIntoViewIfNeeded();
+  const m = await target.evaluate((el) => {
+    const r = el.getBoundingClientRect(), s = getComputedStyle(el);
+    return { x: r.x, y: r.y, width: r.width, border: parseFloat(s.borderTopWidth) };
+  });
+  const png = PNG.sync.read(await page.screenshot({ animations: 'disabled' }));
+  const x = m.x + m.width / 2;
+  const fill = pixel(png, x, m.y + m.border + 2);
+  const adjacent = pixel(png, x, Math.floor(m.y) - 1);
+  expect(ratio(fill, adjacent), `${selector} preenchimento: ${fill} x ${adjacent}`).toBeGreaterThanOrEqual(3);
+}
+
 // Pixels de traço e fundo efetivamente pintados; não produz arquivo ou baseline.
 async function paintedEdge(page, selector, kind) {
   const target = page.locator(selector).first();
@@ -76,4 +91,4 @@ async function descendantTextContrast(page, selector) {
   }
   expect(count, `${selector}: texto visível não encontrado`).toBeGreaterThan(0);
 }
-module.exports = { paintedEdge, textContrast, descendantTextContrast };
+module.exports = { paintedEdge, paintedFill, textContrast, descendantTextContrast };
