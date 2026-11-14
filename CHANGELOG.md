@@ -92,8 +92,8 @@ capturas de referência da vitrine do DS puladas.
   texto sobre preenchimento.
 - **Sem mudança de valor:** nenhum token existente muda, e `eds-root.css` e o SHA dele ficam
   iguais.
-- **Varredura:** 36 marcas e uma grade de 12 matizes × 3 luminosidades, nos dois temas e nos
-  estados do botão (288 medições em `reports/pilot-primary-limites.csv`). Todas ficam acima de
+- **Varredura:** 36 marcas e uma grade de 12 matizes × 3 luminosidades, nos dois temas, em repouso e hover
+  (288 medições em `reports/pilot-primary-limites.csv`). Todas ficam acima de
   3:1 no limite, com mínimo de 5,89:1. A varredura mede só o limite, não o texto. É uma amostra
   na vitrine do DS com cores injetadas, não garantia para qualquer cor ou superfície do produto.
 
