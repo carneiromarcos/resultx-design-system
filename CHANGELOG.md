@@ -74,18 +74,28 @@ capturas de referência da vitrine do DS puladas.
   peso da fonte, e a ação principal perdia o destaque. É um defeito do contrato do Button (E2),
   não uma escolha de desenho.
 - **Agora:** o primário é preenchido com `--accent-primary`, com texto em `--text-inverse` e
-  hover em `--accent-primary-hover`. A variante escopada e o `.sha256` dela foram regenerados.
-- **Contrato:** o caso novo `button-variant-hierarchy` exige três coisas nos dois temas: fundo do
-  primário diferente do secundário, preenchimento com pelo menos 3:1 contra o fundo vizinho e
-  texto com pelo menos 4,5:1 sobre o preenchimento. O caso falhou antes da correção.
+  hover em `--accent-primary-hover`. A borda continua a neutra da regra base (`--text-secondary`)
+  em todos os estados. Assim, o contorno do botão contrasta com o fundo qualquer que seja a cor da
+  marca. A variante escopada e o `.sha256` dela foram regenerados.
+- **Contrato:**
+  - O critério de limite passa a ser: o pixel pintado mais externo do controle (a borda, se
+    houver; senão, o preenchimento) tem pelo menos 3:1 contra o fundo vizinho em todos os estados
+    ativos (WCAG 1.4.11).
+  - O caso `button-variant-hierarchy` exige, nos dois temas: primário diferente do secundário e
+    texto com pelo menos 4,5:1 sobre o preenchimento.
+  - A sonda nova mede um ponto no meio de cada um dos quatro lados do botão, em repouso, hover e
+    active. Ela não certifica o perímetro inteiro. Um autoteste prova que ela rejeita borda ou
+    preenchimento de baixo contraste.
+  - Todo botão ativo (primário, secundário e perigo) continua exigindo texto com pelo menos 4,5:1.
 - **Marca Emprega+:** `pilot-aliases.css` ganha três nomes que apontam para a pintura de marca
   calculada pelo produto, com fallback no índigo e na tinta de marca. O build confere o par de
   texto sobre preenchimento.
 - **Sem mudança de valor:** nenhum token existente muda, e `eds-root.css` e o SHA dele ficam
   iguais.
-- **Limite conhecido:** na varredura de 36 cores de marca, 11 combinações no tema claro ficam
-  abaixo de 3:1 entre o preenchimento e o fundo vizinho (mínimo de 1,69:1; amarelo puro dá
-  1,72:1). O texto sobre o preenchimento passou em todas.
+- **Varredura:** 36 marcas e uma grade de 12 matizes × 3 luminosidades, nos dois temas e nos
+  estados do botão (288 medições em `reports/pilot-primary-limites.csv`). Todas ficam acima de
+  3:1 no limite, com mínimo de 5,89:1. A varredura mede só o limite, não o texto. É uma amostra
+  na vitrine do DS com cores injetadas, não garantia para qualquer cor ou superfície do produto.
 
 ### Changed — tokens com fonte única (E1, ADR-0003)
 
