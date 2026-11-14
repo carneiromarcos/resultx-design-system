@@ -1,0 +1,60 @@
+/* Adaptador opt-in do lote piloto; depende dos tokens semânticos do ResultX DS. */
+:is(.rx-pilot, #rx-pilot-floor) .rx-button,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-field__control,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-card,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-stat-card,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-table,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-dialog,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-badge,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-state {
+    color: var(--text-primary);
+    background: var(--bg-surface-1);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+  }
+:is(.rx-pilot, #rx-pilot-floor) .rx-button,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-field__control {
+    border: var(--focus-ring-width) solid var(--text-secondary);
+    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-4);
+  }
+:is(.rx-pilot, #rx-pilot-floor) .rx-button { cursor: pointer; }
+:is(.rx-pilot, #rx-pilot-floor) .rx-button:hover:where(:not(:disabled)) { background: var(--bg-surface-3); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-button:active:where(:not(:disabled)) { background: var(--bg-surface-2); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-button:disabled { cursor: not-allowed; }
+:is(.rx-pilot, #rx-pilot-floor) .rx-button--primary { font-weight: var(--font-bold); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-button--secondary { font-weight: var(--font-regular); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-button--danger,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-button--danger:hover:where(:not(:disabled)),
+  :is(.rx-pilot, #rx-pilot-floor) .rx-button--danger:active:where(:not(:disabled)) { color: var(--color-error); background: var(--bg-surface-1); border-color: var(--color-error); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-stat-card a { color: var(--accent-primary-text); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-button:focus-visible,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-field__control:focus-visible,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-table button:focus-visible,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-stat-card a:focus-visible,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-dialog button:focus-visible,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-state button:focus-visible {
+    outline: var(--focus-ring-width) solid var(--accent-primary-text);
+    outline-offset: var(--focus-ring-offset);
+  }
+:is(.rx-pilot, #rx-pilot-floor) .rx-field { display: grid; gap: var(--space-2); color: var(--text-primary); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-field__label { font-weight: var(--font-semibold); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-field__message { color: var(--text-primary); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-field__control[aria-invalid='true'] { border-color: var(--color-error); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-card,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-stat-card,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-state,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-dialog { padding: var(--space-4); border-radius: var(--radius-md); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-card--sm { padding: var(--space-2); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-card--md { padding: var(--space-4); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-card--lg { padding: var(--space-6); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-stat-card__value { font-variant-numeric: tabular-nums; font-weight: var(--font-bold); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-table { border-collapse: collapse; }
+:is(.rx-pilot, #rx-pilot-floor) .rx-table th,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-table td { padding: var(--space-3); text-align: left; }
+:is(.rx-pilot, #rx-pilot-floor) .rx-table th { border-bottom: var(--focus-ring-width) solid var(--text-secondary); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-dialog { border: var(--focus-ring-width) solid var(--text-secondary); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-badge { display: inline-block; border: var(--focus-ring-width) solid var(--text-secondary); border-radius: var(--radius-md); padding: var(--space-2); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-badge--success { color: var(--text-on-success); background: var(--color-success); border-color: var(--text-secondary); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-badge--error { color: var(--color-error); border-color: var(--color-error); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-state { display: grid; gap: var(--space-2); }

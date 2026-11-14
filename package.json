@@ -28,7 +28,8 @@
     "./tokens/source": "./tokens/tokens.css",
     "./components/source": "./components/components.css",
     "./package.json": "./package.json",
-    "./adapters/css/pilot": "./adapters/css/pilot.css"
+    "./adapters/css/pilot": "./adapters/css/pilot.css",
+    "./adapters/css/pilot/scoped": "./adapters/css/pilot.scoped.css"
   },
   "files": [
     "dist/",
@@ -64,6 +65,10 @@
     "CONTRIBUTING.md",
     "CHANGELOG.md",
     "adapters/css/pilot.css",
+    "adapters/css/pilot.scoped.css",
+    "adapters/css/pilot.scoped.css.sha256",
+    "brands/emprega-mais/tokens/pilot-aliases.css",
+    "brands/emprega-mais/tokens/pilot-aliases.css.sha256",
     "contracts/"
   ],
   "repository": {
@@ -92,7 +97,7 @@
     "build:components": "postcss components/components.css -o dist/components.min.css",
     "build:icons": "postcss components/icons.css -o dist/icons.min.css",
     "build:bridges": "node scripts/build-eds-root.mjs --check && node scripts/build-core.mjs && node scripts/build-brand-tokens.mjs && node scripts/build-eds-root.mjs && node scripts/build-brand-bridges.js",
-    "build:all": "node scripts/build-eds-root.mjs --check && npm run build:tokens && npm run build:components && npm run build:icons && npm run build:bridges",
+    "build:all": "node scripts/build-eds-root.mjs --check && npm run build:tokens && npm run build:components && npm run build:icons && npm run build:bridges && node scripts/build-pilot-scoped.mjs && node scripts/check-pilot-contrast.cjs",
     "build": "npm run build:all",
     "lint": "stylelint 'components/**/*.css' 'adapters/**/*.css'",
     "lint:fix": "stylelint 'components/**/*.css' --fix",

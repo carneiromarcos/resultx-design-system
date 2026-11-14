@@ -4,7 +4,14 @@ const path = require('path');
 const { pathToFileURL } = require('url');
 const yaml = require('js-yaml');
 // Outro adaptador só é conforme após executar todos os casos contra sua própria vitrine.
-// RESULTX_ADAPTER_URL aceita URL http(s) ou file; use os mesmos IDs e estados do fixture.
+// RESULTX_ADAPTER_URL aceita URL http(s) ou file e recebe ?theme=light|dark.
+// A vitrine implementa os IDs, rótulos, estados e ordem de foco de examples/pilot.html:
+// #primary, #secondary, #disabled, #loading-button, #search, #invalid, #invalid-message,
+// #field-loading, #loading-field, #disabled-field, #card{,-sm,-md,-lg,-empty,-error,-disabled,-loading},
+// #stat{,-empty,-loading,-error,-link}, #table{,-loading,-empty,-error,-disabled}, #sort,
+// #confirm, #open-dialog, #confirm-action, #dialog-loading, #dialog-error,
+// #badge-{neutral,success,error,loading,empty}, #empty, #empty-loading e #error.
+// A confirmação fica carregando 500 ms antes do erro; os testes controlam esse timer.
 const url = process.env.RESULTX_ADAPTER_URL || pathToFileURL(path.resolve('examples/pilot.html')).href;
 const themedUrl = (theme) => { const u = new URL(url); u.searchParams.set('theme', theme); return u.href; };
 const files = fs.readdirSync('contracts').filter((f) => f.endsWith('.yaml')).sort();
@@ -69,6 +76,8 @@ async function startPendingConfirmation(page) {
 }
 
 // Baselines Linux devem ser geradas no CI e aprovadas pelo Revisor.
+test.describe('baselines da vitrine DS', () => {
+  test.skip(Boolean(process.env.RESULTX_ADAPTER_URL), 'Baselines pertencem somente à vitrine do DS.');
 for (const theme of ['light', 'dark']) {
   test(`baseline piloto ${theme}`, async ({ page }) => {
     await openPilotCapture(page, theme);
@@ -146,3 +155,5 @@ for (const theme of ['light', 'dark']) {
     await expect(page).toHaveScreenshot(`pilot-dialog-error-${theme}.png`);
   });
 }
+
+});
