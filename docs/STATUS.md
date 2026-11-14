@@ -13,9 +13,9 @@
   - [governança](audits/2026-11-13-ds-auditoria/governanca-propagacao-conformidade.md).
 - **Fase:** depois do piloto (E3) e antes da **v2.11.0**, que sai a partir de 27/11 (regra D7).
 - **Estado geral:** das 28 atividades do quadro abaixo:
-  - 15 CONCLUÍDO;
+  - 16 CONCLUÍDO;
   - 3 EM ANDAMENTO;
-  - 1 AGUARDANDO VALIDAÇÃO;
+  - 0 AGUARDANDO VALIDAÇÃO;
   - 3 BLOQUEADO;
   - 6 PENDENTE.
 - **Pelo roteiro do diagnóstico:**
@@ -37,7 +37,7 @@
 
 | Indicador | Valor | Como foi medido |
 |---|---|---|
-| Atividades | 15 concluídas / 28; 3 em andamento; 1 aguardando validação; 3 bloqueadas; 6 pendentes | quadro B |
+| Atividades | 16 concluídas / 28; 3 em andamento; 0 aguardando validação; 3 bloqueadas; 6 pendentes | quadro B |
 | Etapas do roteiro | 4 de 10 pelo critério; a E3 em produção com desvios não é contada | diagnóstico §10 |
 | Matriz Electia × IMO no piloto | 8 de 25 **trabalhadas** (1, 5, 7, 8, 10, 11, 14, 20). **Critério satisfeito comprovado em 0.** 3 comprovadamente não atendem (1, 5, 14); 5 sem verificação (7, 8, 10, 11, 20) | diagnóstico §5 e §10 |
 | Camadas da arquitetura | 2 completas (Tokens; Contratos do lote piloto), 2 parciais (Temas, Adaptadores), 2 sem entrega nesta missão (Foundation, Padrões de produto) | completa = artefato versionado + teste no CI + consumido por produto ou pela vitrine |
@@ -68,7 +68,7 @@
 | DS-17 | IMO recebe a v2.11.0 | PENDENTE | recópia por SHA; `RxPilotVendoredCopyTest` atualizado; CTA "Ver planos" decidido | — | DS-14; merge do Marcos | PR no IMO depois da tag |
 | DS-18 | E4 — escalas no `eds-root` | BLOQUEADO | SHA igual nas 3 cópias | — | 10/12 (recurso do EditalHub) | planejar depois de 10/12 |
 | DS-19 | Contraste do white-label (linha 1) | BLOQUEADO | ≥4,5:1 para qualquer cor na grade | IMO `docs/qa/2026-11-13-ds-e3-varredura-white-label.md`: 49 pares abaixo, em 29 de 36 cores | mudança de valor → 10/12 | entra na E4 |
-| DS-20 | Foco volta ao fechar os diálogos do piloto (linha 14) — correção do piloto (E3), **antes** da E5 | CONCLUÍDO | foco retorna ao gatilho nos diálogos "Encerrar vaga" e "Perfil" | IMO #909 (`02182668`), deploy 43633112245; teste Livewire falha sem a correção e passa com ela; Revisor APROVA COM RESSALVA; o Marcos aceitou a exceção das 2 falhas de concorrência que já existiam na base | — | consertar as 2 falhas de concorrência do IMO (fora do DS) |
+| DS-20 | Foco volta ao fechar os diálogos do piloto (linha 14) — correção do piloto (E3), **antes** da E5 | CONCLUÍDO | foco retorna ao gatilho nos diálogos "Encerrar vaga" e "Perfil" | IMO #909 (`02182668`), deploy 43633112245; teste Livewire falha sem a correção e passa com ela; Revisor APROVA COM RESSALVA; smoke MySQL completo com 2 falhas de concorrência (porta 2 e "workers não iniciaram"), com intermitência da porta 2 vista na base e no ramo em rodadas alternadas; o Marcos aceitou a exceção ao gate | — | investigar e consertar as falhas intermitentes de concorrência do IMO (fora do DS) |
 | DS-21 | E5 — ampliação do IMO | BLOQUEADO | catraca do IMO cai a cada lote | — | DS-10 | — |
 | DS-22 | E6 — Electia convergindo (inclui adaptador React) | PENDENTE | capturas antes/depois sem diferença não intencional | — | E1/E2 (prontas) | planejar |
 | DS-23 | E7 — Xscore | PENDENTE | travas do Xscore verdes; capturas iguais | — | E1 (pronta) | planejar |
@@ -76,7 +76,7 @@
 | DS-25 | Conformidade G0 (manifesto `.ds/` no IMO e na Electia) | PENDENTE | 2 relatórios coerentes com o desenho §5.5 | desenho §7.1 | — | criar o manifesto |
 | DS-26 | D5 — GitHub App da automação | PENDENTE (adiada por decisão) | aceite de risco expresso do Marcos | ADR-0005 | DS-24 | voltar a perguntar depois da P1 |
 | DS-27 | Hierarquia do botão de perigo no FinanceX | CONCLUÍDO | decisão registrada antes de o FinanceX subir de versão (ex.: Desativar por linha em variante neutra) | decisão do Marcos em 14/11; FinanceX #45 (`71df56a7`): Desativar neutro, confirmação em Excluir regra e Cancelar plano, ponte provisória do `btn-danger`; CI verde; Revisor APROVA | — | tirar a ponte quando o FinanceX subir para a v2.11.0 |
-| DS-28 | Protocolo de status adotado no IMO | AGUARDANDO VALIDAÇÃO | painel versionado no IMO; Revisor; merge do Marcos | IMO #903 mesclada (`c5d2f2bc`); parecer do Revisor sobre a #903 não localizado no registro | confirmação do Revisor | registrar o parecer; o painel do IMO segue com IMO-06 e IMO-26 antigos, atualizar na próxima PR material do IMO |
+| DS-28 | Protocolo de status adotado no IMO | CONCLUÍDO | painel versionado no IMO; Revisor; merge do Marcos | IMO #903 mesclada (`c5d2f2bc`) com o merge do Marcos; Revisor APROVA no head `1ba0674a` (revisão conjunta DS #126 / IMO #903) | — | o painel do IMO segue com IMO-06 e IMO-26 antigos, atualizar na próxima PR material do IMO |
 
 ## C. Registro de progresso
 
@@ -134,13 +134,13 @@
 
 **Decisões aguardando o Marcos**
 
-1. **Atualização dos produtos para a versão mais recente do DS**, uma PR por produto, sem efeito visual. Recomendação: fazer junto com a próxima atualização de cada produto. O merge de cada uma é do Marcos.
+1. **Atualização dos produtos para a versão mais recente do DS**, uma PR por produto. O impacto é por consumidor e exige avaliação antes de cada PR: o FinanceX muda no `btn-danger` (ponte provisória da #45) e o IMO recebe o primário preenchido. Ver o impacto por consumidor no CHANGELOG. Recomendação: fazer junto com a próxima atualização de cada produto. O merge de cada uma é do Marcos.
 
 D5 só volta a ser pergunta depois da P1 (DS-24).
 
 ## E. Continuidade
 
-- **Próxima ação executável:** DS-16 nesta PR: Visual Linux oficial com as 16 baselines, Revisor no SHA final, merge e fechamento de #108 e #110. Registrar o parecer do Revisor na IMO #903 (DS-28).
+- **Próxima ação executável:** DS-16 nesta PR: Visual Linux oficial com as 16 baselines, Revisor no SHA final, merge e fechamento de #108 e #110.
 - **Depois:**
   1. DS-10, verificar as linhas da matriz ainda sem prova;
   2. DS-14, a partir de 27/11, com o inventário refeito até o SHA da tag;
