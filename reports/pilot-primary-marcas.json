@@ -1,0 +1,326 @@
+[
+  {
+    "matiz": 0,
+    "luminosidade": "escura",
+    "marca": "#800000",
+    "claro": "#660000",
+    "claroHover": "#751a1a",
+    "escuro": "#c68c8c",
+    "escuroHover": "#cc9898"
+  },
+  {
+    "matiz": 0,
+    "luminosidade": "media",
+    "marca": "#ff0000",
+    "claro": "#cc0000",
+    "claroHover": "#b80000",
+    "escuro": "#ff8c8c",
+    "escuroHover": "#e67e7e"
+  },
+  {
+    "matiz": 0,
+    "luminosidade": "clara",
+    "marca": "#ff8080",
+    "claro": "#cc6666",
+    "claroHover": "#b85c5c",
+    "escuro": "#ffc6c6",
+    "escuroHover": "#e6b2b2"
+  },
+  {
+    "matiz": 30,
+    "luminosidade": "escura",
+    "marca": "#804000",
+    "claro": "#663300",
+    "claroHover": "#5c2e00",
+    "escuro": "#c6a98c",
+    "escuroHover": "#b2987e"
+  },
+  {
+    "matiz": 30,
+    "luminosidade": "media",
+    "marca": "#ff8000",
+    "claro": "#cc6600",
+    "claroHover": "#b85c00",
+    "escuro": "#ffc68c",
+    "escuroHover": "#e6b27e"
+  },
+  {
+    "matiz": 30,
+    "luminosidade": "clara",
+    "marca": "#ffbf80",
+    "claro": "#cc9966",
+    "claroHover": "#b88a5c",
+    "escuro": "#ffe2c6",
+    "escuroHover": "#e6cbb2"
+  },
+  {
+    "matiz": 60,
+    "luminosidade": "escura",
+    "marca": "#7f8000",
+    "claro": "#666600",
+    "claroHover": "#5c5c00",
+    "escuro": "#c5c68c",
+    "escuroHover": "#b1b27e"
+  },
+  {
+    "matiz": 60,
+    "luminosidade": "media",
+    "marca": "#ffff00",
+    "claro": "#cccc00",
+    "claroHover": "#b8b800",
+    "escuro": "#ffff8c",
+    "escuroHover": "#e6e67e"
+  },
+  {
+    "matiz": 60,
+    "luminosidade": "clara",
+    "marca": "#ffff80",
+    "claro": "#cccc66",
+    "claroHover": "#b8b85c",
+    "escuro": "#ffffc6",
+    "escuroHover": "#e6e6b2"
+  },
+  {
+    "matiz": 90,
+    "luminosidade": "escura",
+    "marca": "#408000",
+    "claro": "#336600",
+    "claroHover": "#2e5c00",
+    "escuro": "#a9c68c",
+    "escuroHover": "#98b27e"
+  },
+  {
+    "matiz": 90,
+    "luminosidade": "media",
+    "marca": "#80ff00",
+    "claro": "#66cc00",
+    "claroHover": "#5cb800",
+    "escuro": "#c6ff8c",
+    "escuroHover": "#b2e67e"
+  },
+  {
+    "matiz": 90,
+    "luminosidade": "clara",
+    "marca": "#bfff80",
+    "claro": "#99cc66",
+    "claroHover": "#8ab85c",
+    "escuro": "#e2ffc6",
+    "escuroHover": "#cbe6b2"
+  },
+  {
+    "matiz": 120,
+    "luminosidade": "escura",
+    "marca": "#008000",
+    "claro": "#006600",
+    "claroHover": "#005c00",
+    "escuro": "#8cc68c",
+    "escuroHover": "#7eb27e"
+  },
+  {
+    "matiz": 120,
+    "luminosidade": "media",
+    "marca": "#00ff00",
+    "claro": "#00cc00",
+    "claroHover": "#00b800",
+    "escuro": "#8cff8c",
+    "escuroHover": "#7ee67e"
+  },
+  {
+    "matiz": 120,
+    "luminosidade": "clara",
+    "marca": "#80ff80",
+    "claro": "#66cc66",
+    "claroHover": "#5cb85c",
+    "escuro": "#c6ffc6",
+    "escuroHover": "#b2e6b2"
+  },
+  {
+    "matiz": 150,
+    "luminosidade": "escura",
+    "marca": "#008040",
+    "claro": "#006633",
+    "claroHover": "#005c2e",
+    "escuro": "#8cc6a9",
+    "escuroHover": "#7eb298"
+  },
+  {
+    "matiz": 150,
+    "luminosidade": "media",
+    "marca": "#00ff80",
+    "claro": "#00cc66",
+    "claroHover": "#00b85c",
+    "escuro": "#8cffc6",
+    "escuroHover": "#7ee6b2"
+  },
+  {
+    "matiz": 150,
+    "luminosidade": "clara",
+    "marca": "#80ffbf",
+    "claro": "#66cc99",
+    "claroHover": "#5cb88a",
+    "escuro": "#c6ffe2",
+    "escuroHover": "#b2e6cb"
+  },
+  {
+    "matiz": 180,
+    "luminosidade": "escura",
+    "marca": "#007f80",
+    "claro": "#006666",
+    "claroHover": "#005c5c",
+    "escuro": "#8cc5c6",
+    "escuroHover": "#7eb1b2"
+  },
+  {
+    "matiz": 180,
+    "luminosidade": "media",
+    "marca": "#00ffff",
+    "claro": "#00cccc",
+    "claroHover": "#00b8b8",
+    "escuro": "#8cffff",
+    "escuroHover": "#7ee6e6"
+  },
+  {
+    "matiz": 180,
+    "luminosidade": "clara",
+    "marca": "#80ffff",
+    "claro": "#66cccc",
+    "claroHover": "#5cb8b8",
+    "escuro": "#c6ffff",
+    "escuroHover": "#b2e6e6"
+  },
+  {
+    "matiz": 210,
+    "luminosidade": "escura",
+    "marca": "#004080",
+    "claro": "#003366",
+    "claroHover": "#1a4775",
+    "escuro": "#8ca9c6",
+    "escuroHover": "#98b2cc"
+  },
+  {
+    "matiz": 210,
+    "luminosidade": "media",
+    "marca": "#007fff",
+    "claro": "#0066cc",
+    "claroHover": "#005cb8",
+    "escuro": "#8cc5ff",
+    "escuroHover": "#7eb1e6"
+  },
+  {
+    "matiz": 210,
+    "luminosidade": "clara",
+    "marca": "#80bfff",
+    "claro": "#6699cc",
+    "claroHover": "#5c8ab8",
+    "escuro": "#c6e2ff",
+    "escuroHover": "#b2cbe6"
+  },
+  {
+    "matiz": 240,
+    "luminosidade": "escura",
+    "marca": "#000080",
+    "claro": "#000066",
+    "claroHover": "#1a1a75",
+    "escuro": "#8c8cc6",
+    "escuroHover": "#9898cc"
+  },
+  {
+    "matiz": 240,
+    "luminosidade": "media",
+    "marca": "#0000ff",
+    "claro": "#0000cc",
+    "claroHover": "#0000b8",
+    "escuro": "#8c8cff",
+    "escuroHover": "#9898ff"
+  },
+  {
+    "matiz": 240,
+    "luminosidade": "clara",
+    "marca": "#8080ff",
+    "claro": "#6666cc",
+    "claroHover": "#5c5cb8",
+    "escuro": "#c6c6ff",
+    "escuroHover": "#b2b2e6"
+  },
+  {
+    "matiz": 270,
+    "luminosidade": "escura",
+    "marca": "#400080",
+    "claro": "#330066",
+    "claroHover": "#471a75",
+    "escuro": "#a98cc6",
+    "escuroHover": "#b298cc"
+  },
+  {
+    "matiz": 270,
+    "luminosidade": "media",
+    "marca": "#7f00ff",
+    "claro": "#6600cc",
+    "claroHover": "#5c00b8",
+    "escuro": "#c58cff",
+    "escuroHover": "#cb98ff"
+  },
+  {
+    "matiz": 270,
+    "luminosidade": "clara",
+    "marca": "#bf80ff",
+    "claro": "#9966cc",
+    "claroHover": "#a375d1",
+    "escuro": "#e2c6ff",
+    "escuroHover": "#cbb2e6"
+  },
+  {
+    "matiz": 300,
+    "luminosidade": "escura",
+    "marca": "#80007f",
+    "claro": "#660066",
+    "claroHover": "#751a75",
+    "escuro": "#c68cc5",
+    "escuroHover": "#cc98cb"
+  },
+  {
+    "matiz": 300,
+    "luminosidade": "media",
+    "marca": "#ff00ff",
+    "claro": "#cc00cc",
+    "claroHover": "#b800b8",
+    "escuro": "#ff8cff",
+    "escuroHover": "#e67ee6"
+  },
+  {
+    "matiz": 300,
+    "luminosidade": "clara",
+    "marca": "#ff80ff",
+    "claro": "#cc66cc",
+    "claroHover": "#b85cb8",
+    "escuro": "#ffc6ff",
+    "escuroHover": "#e6b2e6"
+  },
+  {
+    "matiz": 330,
+    "luminosidade": "escura",
+    "marca": "#800040",
+    "claro": "#660033",
+    "claroHover": "#751a47",
+    "escuro": "#c68ca9",
+    "escuroHover": "#cc98b2"
+  },
+  {
+    "matiz": 330,
+    "luminosidade": "media",
+    "marca": "#ff0080",
+    "claro": "#cc0066",
+    "claroHover": "#b8005c",
+    "escuro": "#ff8cc6",
+    "escuroHover": "#e67eb2"
+  },
+  {
+    "matiz": 330,
+    "luminosidade": "clara",
+    "marca": "#ff80bf",
+    "claro": "#cc6699",
+    "claroHover": "#b85c8a",
+    "escuro": "#ffc6e2",
+    "escuroHover": "#e6b2cb"
+  }
+]
