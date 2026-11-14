@@ -16,8 +16,8 @@
   - 10 CONCLUÍDO;
   - 1 EM ANDAMENTO;
   - 2 AGUARDANDO VALIDAÇÃO;
-  - 4 BLOQUEADO;
-  - 9 PENDENTE.
+  - 5 BLOQUEADO;
+  - 8 PENDENTE.
 - **Pelo roteiro do diagnóstico:**
   - etapas concluídas pelo critério: 4 de 10 (E0, E1, E2, F3);
   - a E3 está em produção com desvios;
@@ -36,7 +36,7 @@
 
 | Indicador | Valor | Como foi medido |
 |---|---|---|
-| Atividades | 10 concluídas / 26; 2 aguardando validação; 4 bloqueadas | quadro B |
+| Atividades | 10 concluídas / 26; 2 aguardando validação; 5 bloqueadas; 8 pendentes | quadro B |
 | Etapas do roteiro | 4 de 10 pelo critério; a E3 em produção com desvios não é contada | diagnóstico §10 |
 | Matriz Electia × IMO no piloto | 8 de 25 **trabalhadas** (1, 5, 7, 8, 10, 11, 14, 20). **Critério satisfeito comprovado em 0.** 3 comprovadamente não atendem (1, 5, 14); 5 sem verificação (7, 8, 10, 11, 20) | diagnóstico §5 e §10 |
 | Camadas da arquitetura | 2 completas (Tokens; Contratos do lote piloto), 2 parciais (Temas, Adaptadores), 2 sem entrega nesta missão (Foundation, Padrões de produto) | completa = artefato versionado + teste no CI + consumido por produto ou pela vitrine |
@@ -54,7 +54,7 @@
 | DS-04 | Matriz Electia × IMO (documento) | CONCLUÍDO | 25 linhas com critério | diagnóstico §5 | — | — |
 | DS-05 | Desenho de governança, propagação e conformidade | CONCLUÍDO | 8 entregáveis revisados | desenho + anexo D; #113 | — | — |
 | DS-06 | E0 — fundação de governança | CONCLUÍDO | regra no AGENTS.md de 4 repos; CI do DS falha com defeito e passa com correção | #111, #112, #113, #115; Electia #1009; IMO #900; `audits/.../e0-provas.md` | — | — |
-| DS-07 | E1 — tokens com fonte única | CONCLUÍDO | diff zero nos artefatos; v2.10.0 por tag | #116; tag `v2.10.0` = `52d6b4e` (#114) | — | — |
+| DS-07 | E1 — tokens com fonte única (mesclada; ainda não publicada em versão) | CONCLUÍDO | artefatos gerados equivalentes aos da `v2.10.0`, que é a referência da comparação: `eds-root` idêntico byte a byte, demais artefatos pertinentes equivalentes após normalização | #116 (`c7aaeec`), mesclada depois da tag `v2.10.0` (`52d6b4e`) | — | publicação prevista na v2.11.0 (DS-14) |
 | DS-08 | E2 — 8 contratos e adaptador CSS | CONCLUÍDO | contrato com casos de teste e capturas nos 2 temas | #117, #118, #119, #120 | — | — |
 | DS-09 | F3 — marca do portal IMO no Bootstrap | CONCLUÍDO | gate MySQL + merge do Marcos | IMO #901 (`3e59ad8f`), deploy | — | — |
 | DS-10 | E3 — piloto IMO (vagas e candidaturas do empregador) | EM ANDAMENTO | linhas 1, 5, 7, 8, 10, 11, 14, 20 da matriz atendidas; capturas; teclado; testes verdes | em produção: IMO #902 (`cfeae3b1`), deploy 43591765046 | DS-17, DS-19, DS-20 | botões das telas em `<x-rx-button>`; verificar 7, 8, 10, 11, 20 |
@@ -63,11 +63,11 @@
 | DS-13 | Painel de status e protocolo de continuidade | AGUARDANDO VALIDAÇÃO | painel no formato do protocolo; AGENTS.md aponta o protocolo | #122, #124 e a PR deste protocolo | Revisor | mesclar |
 | DS-14 | Versão v2.11.0 | PENDENTE | inventário até o SHA da tag, impacto por produto, CI verde, Revisor | — | 27/11 (D7), DS-15, DS-16 | preparar CHANGELOG e inventário |
 | DS-15 | Revisão visual dos 3 `btn-danger` do FinanceX | PENDENTE | captura real aprovada pelo Revisor | ressalva da #115 | — | captura no FinanceX |
-| DS-16 | Dependabot #108 e #110 | PENDENTE | rebase sobre a `main`, 3 checks verdes, Revisor | #110 com visual-linux vermelho; #108 sem visual-linux | rebase (o comentário do agente foi bloqueado pela permissão) | `@dependabot rebase` pelo Marcos ou liberar o comentário |
+| DS-16 | Dependabot #108 e #110 | BLOQUEADO | rebase sobre a `main`, 3 checks verdes, Revisor | #110 com visual-linux vermelho; #108 sem visual-linux | rebase (o comentário do agente foi bloqueado pela permissão) | `@dependabot rebase` pelo Marcos ou liberar o comentário |
 | DS-17 | IMO recebe a v2.11.0 | PENDENTE | recópia por SHA; `RxPilotVendoredCopyTest` atualizado; CTA "Ver planos" decidido | — | DS-14; merge do Marcos | PR no IMO depois da tag |
 | DS-18 | E4 — escalas no `eds-root` | BLOQUEADO | SHA igual nas 3 cópias | — | 10/12 (recurso do EditalHub) | planejar depois de 10/12 |
 | DS-19 | Contraste do white-label (linha 1) | BLOQUEADO | ≥4,5:1 para qualquer cor na grade | IMO `docs/qa/2026-11-13-ds-e3-varredura-white-label.md`: 49 pares abaixo, em 29 de 36 cores | mudança de valor → 10/12 | entra na E4 |
-| DS-20 | Foco volta ao fechar os diálogos do piloto (linha 14) | BLOQUEADO | foco retorna ao gatilho nos diálogos "Encerrar vaga" e "Perfil" | avaliação do piloto | decisão do Marcos (liberar JS) | Marcos decide |
+| DS-20 | Foco volta ao fechar os diálogos do piloto (linha 14) — correção do piloto (E3), **antes** da E5 | BLOQUEADO | foco retorna ao gatilho nos diálogos "Encerrar vaga" e "Perfil" | avaliação do piloto | decisão do Marcos (liberar JS mínimo no piloto) | Marcos decide; com o sim, PR no IMO dentro da E3 |
 | DS-21 | E5 — ampliação do IMO | BLOQUEADO | catraca do IMO cai a cada lote | — | DS-10, DS-11 | — |
 | DS-22 | E6 — Electia convergindo (inclui adaptador React) | PENDENTE | capturas antes/depois sem diferença não intencional | — | E1/E2 (prontas) | planejar |
 | DS-23 | E7 — Xscore | PENDENTE | travas do Xscore verdes; capturas iguais | — | E1 (pronta) | planejar |
@@ -127,7 +127,7 @@
 **Decisões aguardando o Marcos**
 
 1. **Aceite visual do piloto** (DS-11). Recomendação: olhar as duas telas no claro e no escuro.
-2. **Liberar JavaScript mínimo** para devolver o foco nos diálogos (DS-20). Recomendação: liberar, como primeira fatia da E5.
+2. **Liberar JavaScript mínimo no piloto** para devolver o foco nos diálogos (DS-20). Recomendação: liberar, como correção do piloto (E3). A E5 só começa com a E3 fechada.
 3. **Merge das PRs de atualização de versão nos produtos**, quando forem abertas.
 
 D5 só volta a ser pergunta depois da P1 (DS-24).
@@ -136,7 +136,7 @@ D5 só volta a ser pergunta depois da P1 (DS-24).
 
 - **Próxima ação executável (Supervisor):** DS-15, a revisão visual do `btn-danger` no FinanceX. Ela não depende de ninguém e destrava a DS-14.
 - **Depois:**
-  1. DS-16, assim que houver rebase;
+  1. DS-16, assim que o bloqueio de rebase for resolvido;
   2. DS-14, a partir de 27/11;
   3. DS-17, a PR no IMO.
 - **Para retomar, ler nesta ordem:**
