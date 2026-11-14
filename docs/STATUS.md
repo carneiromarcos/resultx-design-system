@@ -99,7 +99,10 @@ Status: **Concluído**, **Em andamento**, **Pendente**, **Bloqueado** ou **Não 
   - F3 (#901): cores do portal aplicadas ao Bootstrap e aos plugins.
   - E3 (#902): 43 arquivos — views, CSS, componentes Blade, testes e 4 relatórios em `docs/qa/` —, sem regra de negócio, nas telas **Minhas vagas** e **Candidaturas da vaga** do empregador. Em produção desde 14/11. As telas usam classes `rx-*` direto; os componentes Blade ficaram só na vitrine de teste.
   - O botão primário do piloto em produção ainda usa a cópia de `bd1457a`: a correção #121 chega ao IMO depois da v2.11.0, por recópia com SHA.
-- **Electia — sem mudança visual ou de código.** Só documentação de regra para agentes (#1009). Continua em `#v2.9.0`.
+- **Electia — sem mudança visual relacionada ao DS.** Desde 12/11 entraram duas PRs:
+  - #1009: só documentação da regra de interface para agentes;
+  - #1008: mudou código de leads e de e-mail (`src/app/api/leads/route.ts`, `src/lib/email/*.ts` e testes), sem tocar em interface nem no DS.
+  - Continua em `#v2.9.0`.
 - **Xscore — sem mudança.** Nenhum commit na pasta do Xscore depois do commit de referência da auditoria (`35921bf5`, 13/11). A regra de interface já existia. Continua em `#v2.9.0`.
 
 ## 7. Validação
