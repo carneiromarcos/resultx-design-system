@@ -22,13 +22,13 @@ jobs:
       - run: npm test
       # After tests on purpose: 6/9 tests read dist/, so a degenerate minifier
       # output must fail the suite first (true diagnosis) instead of this gate
-      # telling you to commit bad artifacts. Include dist/, brands/ and tokens/
+      # telling you to commit bad artifacts. Include dist/, brands/, tokens/ and adapters/
       # so future generated token sources and eds-root cannot drift. git status --porcelain catches untracked;
       # git diff --exit-code alone would miss them.
       - name: Assert build outputs match committed artifacts
         run: |
-          if [ -n "$(git status --porcelain -- dist/ brands/ tokens/)" ]; then
-            echo "::error::npm run build produced output that differs from what is committed (or created new untracked files under dist/, brands/ or tokens/)."
+          if [ -n "$(git status --porcelain -- dist/ brands/ tokens/ adapters/)" ]; then
+            echo "::error::npm run build produced output that differs from what is committed (or created new untracked files under dist/, brands/, tokens/ or adapters/)."
             echo ""
             echo "At stake: dist/ is imported in production by electia, financex, and resultx-site — a divergent dist ships the defect into those products."
             echo ""
@@ -36,12 +36,12 @@ jobs:
             echo "Then: run \`npm run build\`, REVIEW the diff, and only commit if the output is correct (dist/, tokens/ and brands/*/tokens/*.css)."
             echo "Do not commit blindly — if the build output is degenerate, committing it is the wrong fix."
             echo ""
-            echo "=== git status --porcelain -- dist/ brands/ tokens/ ==="
-            git status --porcelain -- dist/ brands/ tokens/
+            echo "=== git status --porcelain -- dist/ brands/ tokens/ adapters/ ==="
+            git status --porcelain -- dist/ brands/ tokens/ adapters/
             echo ""
-            echo "=== git diff --stat -- dist/ brands/ tokens/ ==="
-            git diff --stat -- dist/ brands/ tokens/
-            untracked="$(git ls-files --others --exclude-standard -- dist/ brands/ tokens/)"
+            echo "=== git diff --stat -- dist/ brands/ tokens/ adapters/ ==="
+            git diff --stat -- dist/ brands/ tokens/ adapters/
+            untracked="$(git ls-files --others --exclude-standard -- dist/ brands/ tokens/ adapters/)"
             if [ -n "$untracked" ]; then
               echo ""
               echo "=== untracked files (git diff --exit-code would miss these) ==="

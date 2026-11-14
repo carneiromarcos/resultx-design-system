@@ -36,6 +36,26 @@ recorte cortar o anel. O workflow exige as catorze baselines e falha se alguma f
 **Limite:** compara apenas estes estados, em uma viewport de desktop. Outras larguras e o
 hover não têm captura.
 
+### Added — adaptador escopado e aliases da marca para stacks sem `@layer` (adendo à ADR-0004)
+
+Esta entrada atende o IMO, cujo CSS não usa camadas. O pacote passa a gerar e publicar:
+
+- `adapters/css/pilot.scoped.css`, com o export novo `./adapters/css/pilot/scoped`. É o mesmo
+  adaptador, sem `@layer`, com cada seletor prefixado por `:is(.rx-pilot, #rx-pilot-floor)`.
+  Esse prefixo tem especificidade (1,0,0), o que basta para vencer o CSS de template sem camada,
+  e só pinta dentro do escopo. Um teste prova que as declarações são idênticas às de `pilot.css`
+  e que só o seletor muda.
+- `brands/emprega-mais/tokens/pilot-aliases.css`, que liga os 21 tokens semânticos do adaptador
+  aos `--eds-*` da marca, ou a valores da base quando a marca não tem o token. Os aliases valem
+  só dentro do escopo, e o build mede o contraste dos pares do contrato nos dois temas.
+
+As duas peças são publicadas com o seu `.sha256`, para o produto copiá-las fixadas por SHA. O
+`eds-root.css` e o SHA dele não mudam; nenhum valor de cor muda. O CI passa a exigir que
+`adapters/` gerado esteja versionado. Quando `RESULTX_ADAPTER_URL` aponta para outro adaptador,
+a spec dos contratos pula as capturas de referência da vitrine do DS e mantém todos os casos.
+**Limite:** o contraste foi medido com a cor de marca padrão. Cores de cliente muito claras
+(white-label) ainda dependem da varredura prevista no aceite do piloto.
+
 ### Changed — tokens com fonte única (E1, ADR-0003)
 
 Todos os valores de token (cor, sombra, dimensão, tempo) passam a viver numa fonte única DTCG

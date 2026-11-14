@@ -1,0 +1,24 @@
+/* Gerado de tokens/tokens.json e dos tokens Emprega+; não editar. */
+:is(.rx-pilot, #rx-pilot-floor) {
+  --accent-primary-text: var(--eds-brand-ink);
+  --bg-surface-1: var(--eds-surface);
+  --bg-surface-2: var(--eds-surface-tonal);
+  --bg-surface-3: var(--eds-surface-tonal-dark);
+  --color-error: var(--eds-danger-ink);
+  --color-success: var(--eds-success-ink);
+  --focus-ring-offset: 2px;
+  --focus-ring-width: 3px;
+  --font-body: var(--eds-font-body);
+  --font-bold: 700;
+  --font-regular: 400;
+  --font-semibold: 600;
+  --radius-md: var(--eds-radius-btn);
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --text-base: 0.9375rem;
+  --text-on-success: var(--eds-surface);
+  --text-primary: var(--eds-ink-strong);
+  --text-secondary: var(--eds-ink-medium);
+}
