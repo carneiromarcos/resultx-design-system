@@ -11,13 +11,13 @@ jobs:
   visual-linux:
     runs-on: ubuntu-24.04
     container:
-      # v1.64.1-noble, manifesto linux/amd64; manter alinhado ao lockfile.
-      image: mcr.microsoft.com/playwright@sha256:ee15712262f017b8157421b212b12099146645f44b1bc5c0514cbbe6a229b1d0
+      # v1.65.0-noble, manifesto linux/amd64; manter alinhado ao lockfile.
+      image: mcr.microsoft.com/playwright@sha256:f6fe3cf9a493670b9a20f33597a807262abb25c40c31839ba4ac1dbc51fe7366
     steps:
       - uses: actions/checkout@v7
       - name: Verificar versão da imagem
         run: |
-          node -e "const v = require('./package-lock.json').packages['node_modules/@playwright/test'].version; if (v !== '1.64.1') { console.error('Atualize a imagem Playwright para a versão do lockfile: ' + v); process.exit(1); }"
+          node -e "const v = require('./package-lock.json').packages['node_modules/@playwright/test'].version; if (v !== '1.65.0') { console.error('Atualize a imagem Playwright para a versão do lockfile: ' + v); process.exit(1); }"
       - run: npm ci
       # Fase B: as baselines aprovadas vêm do checkout; diferenças falham o job.
       - name: Verificar baselines Linux do checkout
