@@ -1,6 +1,6 @@
 # ResultX Design System — Painel de status
 
-> **Última atualização:** 14/11/2026, referência `main` = `16cdea4` (PR #121).
+> **Última atualização:** 14/11/2026, referência `main` = `c71e9b4` (PR #123).
 > **Quem mantém:** Supervisor DS. Atualizar a cada mudança material de estado (ver §11).
 > **Regra de leitura:** "Concluído" exige evidência (PR mesclada, CI verde, parecer do Revisor). Documento escrito **não** conta como implementação.
 
@@ -78,6 +78,7 @@ Status: **Concluído**, **Em andamento**, **Pendente**, **Bloqueado** ou **Não 
 
 | Data | PR | O que mudou |
 |---|---|---|
+| 14/11 | DS #123 | Captura recortada da área de ações do piloto (o botão primário sem preenchimento dá 7,6% de diferença e reprova) e baselines de página inteira atualizadas pelo CI oficial; 16 baselines Linux |
 | 14/11 | DS #121 | Botão primário do adaptador volta a ter preenchimento de marca, com borda neutra; contrato exige limite ≥3:1 e texto ≥4,5:1; varredura de 288 medições, todas ≥5,89:1 |
 | 14/11 | IMO #902 | Piloto E3 em produção, nas telas de vagas e candidaturas do empregador. Folhas: 2 copiadas do DS e conferidas por SHA (`rx-pilot.css`, `rx-pilot-aliases.css`) e 3 locais do IMO (`rx-pilot-bridge.css`, `-dialogs.css`, `-tables.css`). Os 8 componentes Blade foram criados e testados na vitrine, mas não são usados nas telas reais |
 | 13/11 | DS #120 | Legenda da tabela e sonda que lê `color(srgb)` |
@@ -109,9 +110,9 @@ Status: **Concluído**, **Em andamento**, **Pendente**, **Bloqueado** ou **Não 
 
 | Verificação | Resultado | Evidência |
 |---|---|---|
-| CI do DS (lint, build, contraste, sonda) | Passou | `main` `16cdea4`, run 43594117301 |
-| Visual Linux do DS (obrigatório) | Passou | run 43594124917 |
-| Site de documentação (Pages) | Passou | run 43594116982 |
+| CI do DS (lint, build, contraste, sonda) | Passou | `main` `c71e9b4`, run 43597747823 |
+| Visual Linux do DS (obrigatório, 16 baselines) | Passou | `main` `c71e9b4`, run 43597748955 |
+| Site de documentação (Pages) | Passou | run 43597747849 |
 | Revisor independente | Aprovou cada PR do DS desta missão; várias passaram por reprovação e correção | pareceres registrados nas PRs |
 | Testes do IMO para o piloto (MySQL, smoke, cópia por SHA) | Passaram no CI | IMO #902, head `55fb9d65` |
 | Smoke em produção do IMO | Passou: folhas `rx-pilot*` respondem 200; SHA de `rx-pilot.css` igual ao da `bd1457a` | deploy 43591765046 |
@@ -125,8 +126,6 @@ Status: **Concluído**, **Em andamento**, **Pendente**, **Bloqueado** ou **Não 
 | Lacuna | Por que falta | Depende de | Risco de seguir sem resolver | Próxima ação |
 |---|---|---|---|---|
 | E3 sem critério atendido: botões das telas reais não passam por `<x-rx-button>` (linha 5), contraste do white-label falha (linha 1) e foco não volta ao fechar diálogos (linha 14) | o piloto priorizou classes nas views, sem JS e sem mudança de valor | trocar views por componentes (técnica); JS e valor dependem do Marcos e de 10/12 | ampliar (E5) sobre um piloto que não cumpre o próprio critério | fechar a linha 5 e verificar 7, 8, 10, 11 e 20 antes da E5 |
-| Baselines de página inteira `pilot-light`/`pilot-dark` desatualizadas | a tolerância 0,005 esconde a mudança do botão | Supervisor (PR própria) | o teste visual não pega uma regressão pequena no botão | calibrar ou recortar a área de ações; regenerar pelo workflow; antes da v2.11.0 |
-| CHANGELOG diz "nos estados do botão" | redação genérica; a varredura cobre só repouso e hover | mesma PR acima | leitor supor cobertura de `active` | corrigir a frase |
 | Revisão visual dos 3 `btn-danger` do FinanceX | ressalva do Revisor na #115 | captura real no FinanceX | botão de perigo mudar sem ninguém ver | fazer antes de cortar a v2.11.0 |
 | White-label do IMO: 49 pares abaixo do mínimo | correção exige mudança de valor de token | 10/12 (E4) | empresas com cor clara (ex.: amarelo) com link/CTA ilegível | plano na E4 |
 | Diálogos "Encerrar vaga" e "Perfil" não devolvem o foco | precisa de JavaScript; o piloto foi feito sem JS | decisão do Marcos | usuário de teclado perde a posição | decidir se libera JS mínimo |
@@ -147,8 +146,8 @@ D5 (credencial da automação) só volta a ser pergunta depois da prova P1.
 ## 10. Próximas cinco ações (em ordem)
 
 1. **Marcos:** aceite visual do piloto do IMO.
-2. **Supervisor:** PR das baselines de página inteira + frase do CHANGELOG.
-3. **Supervisor + Executor:** revisão visual do `btn-danger` no FinanceX e inventário de impacto nos produtos.
+2. **Supervisor + Executor:** revisão visual do `btn-danger` no FinanceX e inventário de impacto nos produtos.
+3. **Supervisor:** tratar as PRs do Dependabot #108 e #110 no ciclo da v2.11.0.
 4. **Supervisor:** cortar a **v2.11.0** (a partir de 27/11), com CI verde e Revisor.
 5. **Executor (PR no IMO, merge do Marcos):** recopiar `rx-pilot.css` da v2.11.0 por SHA, passar os botões das telas do piloto para `<x-rx-button>` (linha 5 da matriz) e verificar as linhas 7, 8, 10, 11 e 20 pelo critério.
 
