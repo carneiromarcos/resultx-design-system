@@ -84,6 +84,29 @@ for (const theme of ['light', 'dark']) {
     await expect(page).toHaveScreenshot(`pilot-${theme}.png`, { fullPage: true });
   });
 
+  test(`baseline ações ${theme}`, async ({ page }) => {
+    await openPilotCapture(page, theme);
+    const section = page.locator('[aria-labelledby="actions-heading"]');
+    await section.scrollIntoViewIfNeeded();
+    const heading = await page.locator('#actions-heading').boundingBox();
+    const buttons = await section.locator('button').all();
+    const boxes = await Promise.all(buttons.map((button) => button.boundingBox()));
+    const viewport = page.viewportSize();
+    expect(heading && viewport && boxes.length && boxes.every(Boolean)).toBeTruthy();
+    const margin = 4;
+    const x = Math.max(0, Math.floor(Math.min(heading.x, ...boxes.map((box) => box.x)) - margin));
+    const y = Math.max(0, Math.floor(heading.y));
+    const right = Math.min(viewport.width, Math.ceil(Math.max(...boxes.map((box) => box.x + box.width)) + margin));
+    const bottom = Math.min(viewport.height, Math.ceil(Math.max(...boxes.map((box) => box.y + box.height)) + margin));
+    for (const box of boxes) {
+      expect(box.x).toBeGreaterThanOrEqual(x);
+      expect(box.y).toBeGreaterThanOrEqual(y);
+      expect(box.x + box.width).toBeLessThanOrEqual(right);
+      expect(box.y + box.height).toBeLessThanOrEqual(bottom);
+    }
+    await expect(page).toHaveScreenshot(`pilot-actions-${theme}.png`, { clip: { x, y, width: right - x, height: bottom - y } });
+  });
+
   test(`baseline foco ${theme}`, async ({ page }) => {
     await openPilotCapture(page, theme);
     await page.locator('#primary').focus();
