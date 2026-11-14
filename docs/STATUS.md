@@ -8,13 +8,17 @@
 
 ## 1. Resumo executivo
 
-- **Estado geral:** a missão está na metade do roteiro. Das 10 etapas do roteiro (E0–E7, mais F3 e a avaliação do piloto), **5 estão concluídas** (E0, E1, E2, F3, E3), **1 aguarda o Marcos** (avaliação do piloto) e **4 não começaram** (E4–E7).
+- **Estado geral:** das 10 etapas do roteiro (E0–E7, mais F3 e a avaliação do piloto):
+  - **4 estão concluídas pelo critério do diagnóstico** (E0, E1, E2, F3);
+  - **a E3 foi entregue em produção, mas com desvios:** o critério de aceite não está atendido (ver §4);
+  - **1 aguarda o Marcos** (avaliação do piloto);
+  - **4 não começaram** (E4–E7).
 - **Entregue:**
   - auditoria completa;
   - governança dos agentes;
   - tokens com fonte única;
   - 8 contratos de componente com adaptador CSS;
-  - piloto **em produção no IMO**, nas telas de vagas e candidaturas do empregador (#902).
+  - piloto **em produção no IMO**, nas telas de vagas e candidaturas do empregador (#902), com desvios do critério ainda abertos.
 - **Ainda não pronto:**
   - a sincronização automática DS → produtos (só desenhada);
   - o adaptador React (Electia/Xscore);
@@ -39,13 +43,14 @@
 
 | Indicador | Valor | Como foi medido |
 |---|---|---|
-| Etapas do roteiro concluídas | 5 de 10 (50%) | roteiro do diagnóstico §10; concluída = PR mesclada com CI verde e Revisor |
+| Etapas do roteiro concluídas | 4 de 10 (40%); a E3 entrou em produção com desvios e não é contada | roteiro do diagnóstico §10; concluída = critério de aceite da etapa atendido, com PR mesclada, CI verde e Revisor |
 | Entregáveis da missão original documentados | 10 de 10 | diagnóstico §1–§10, versionado em #111 |
 | Entregáveis da governança documentados | 8 de 8 | desenho de governança, versionado em #113 |
 | Decisões de governança aplicadas | 4 de 7 (D4, D7, D8, D10) | D5 e D6 adiadas; D9 só vale quando a conformidade entrar em modo aviso |
 | Contratos de componente | 8 de 8 do lote piloto | `contracts/*.yaml` (#117) |
-| Linhas da matriz Electia × IMO cobertas pelo piloto | 8 de 25 (linhas 1, 5, 7, 8, 10, 11, 14, 20) | diagnóstico §5 e §10 (critério da E3) |
-| Produtos na versão mais recente do DS | 0 de 3 | Electia e Xscore travados em `#v2.9.0`; o IMO copia arquivos por SHA |
+| Linhas da matriz Electia × IMO no piloto | 8 de 25 **trabalhadas** (1, 5, 7, 8, 10, 11, 14, 20). **Critério satisfeito comprovado em 0.** 3 comprovadamente não atendem (1, 5, 14); 5 sem verificação por critério (7, 8, 10, 11, 20) | diagnóstico §5 (critério de cada linha) e §10 (critério da E3) |
+| Camadas da arquitetura | 2 completas (Tokens; Contratos do lote piloto), 2 parciais (Temas, Adaptadores), 2 sem entrega nesta missão (Foundation, Padrões de produto) | completa = artefato versionado + teste no CI + consumido por produto ou pela vitrine; parcial = parte disso |
+| Produtos na versão mais recente do DS | 0 de 3 | Electia e Xscore travados em `#v2.9.0`; o IMO copia 2 arquivos do DS por SHA |
 | Versão publicada mais recente | `v2.10.0` (`52d6b4e`, 13/11) | tags do GitHub |
 
 ## 4. Quadro de entregáveis
@@ -59,14 +64,14 @@ Status: **Concluído**, **Em andamento**, **Pendente**, **Bloqueado** ou **Não 
 | Auditoria IMO | Concluído (documento) | 1/1 | diagnóstico §3 + anexo C; #111 | — |
 | Inventário de tokens | Concluído | documento §4.1 + fonte única implementada (E1) | #116 (`c7aaeec`): `tokens/tokens.json` gera `eds-root` idêntico | `brands/*/tokens/tokens.json` ainda são manuais |
 | Inventário de componentes | Concluído (documento) | 1/1 | diagnóstico §4.2 | atualizar quando a E5 começar |
-| Matriz Electia × IMO | Concluído (documento); aplicação Em andamento | matriz 25/25 escrita; 8/25 aplicadas, só nas telas do piloto | diagnóstico §5; IMO #902 | ampliar na E5 |
-| Arquitetura compartilhada | Em andamento | 3 de 6 camadas implementadas (Tokens, Contratos, Adaptadores); Foundation, Temas e Padrões de produto só documentados | [ADR-0001](adr/0001-role-named-tokens.md), [0003](adr/0003-token-single-source.md), [0004](adr/0004-contracts-adapters-pilot.md); #116, #117, #119 | camada de padrões de produto na E5 |
+| Matriz Electia × IMO | Concluído (documento); aplicação Em andamento | matriz 25/25 escrita; 8/25 trabalhadas no piloto; 0 com critério comprovadamente satisfeito (ver §3) | diagnóstico §5; IMO #902 | fechar as linhas 1, 5 e 14 e verificar as outras 5 antes da E5 |
+| Arquitetura compartilhada | Em andamento | 2 camadas completas, 2 parciais e 2 sem entrega (critério em §3) | [ADR-0001](adr/0001-role-named-tokens.md), [0003](adr/0003-token-single-source.md), [0004](adr/0004-contracts-adapters-pilot.md); #116, #117, #119 | camada de padrões de produto na E5 |
 | Temas por marca | Em andamento | temas gerados da fonte única; white-label do IMO com 49 pares abaixo do mínimo, em 29 de 36 cores | `tokens/dtcg/layouts/brand-*.css.tmpl` (#116); IMO `docs/qa/2026-11-13-ds-e3-varredura-white-label.md` | correção do white-label exige mudança de valor → depois de 10/12 |
-| Adaptadores por stack | Em andamento | 2 de 3 stacks: CSS (`pilot.css` em `@layer` + `pilot.scoped.css`) e Blade (8 `<x-rx-*>` no IMO); React não começou | #117, #119, #120, #121; IMO #902 | React na E6 (Electia) / E7 (Xscore) |
+| Adaptadores por stack | Em andamento | CSS completo (`pilot.css` em `@layer` + `pilot.scoped.css`). Blade parcial: 8 `<x-rx-*>` criados no IMO e exercitados só na vitrine de teste; as telas reais usam classes `rx-*` direto. React não começou | #117, #119, #120, #121; IMO #902 | levar as telas do piloto para os componentes Blade; React na E6 (Electia) / E7 (Xscore) |
 | Governança dos agentes | Concluído (escopo E0) | regra de interface no AGENTS.md dos 4 repos; CODEOWNERS; proteção da `main` do DS com 3 checks obrigatórios; PAPEIS.md | #111, #113, #115; Electia #1009; IMO #900; Xscore já tinha | manter |
 | Sincronização DS → produtos | Pendente (só desenho) | 0 de 3 peças: prova P1 da automação, `consumers.yaml` e manifesto `.ds/` em cada produto | desenho §1, §5 e §6; D5 adiada | prova descartável P1 depois da v2.11.0 |
 | Testes e conformidade | Em andamento | DS: lint/build, contraste, visual Linux obrigatório e sonda com autoteste. Produtos: testes do IMO para o piloto. Fases G0–G3 não começaram | runs na `main` `16cdea4`: CI 43594117301, Pages 43594116982, Visual 43594124917 (verdes) | G0: criar manifesto no IMO e na Electia |
-| Plano de migração IMO | Em andamento | F1, F3 e E3 em produção; E4 bloqueada até 10/12; E5 aguarda aceite do piloto | IMO #891 (F1, 12/11), #901 (F3), #902 (E3); deploy 43591765046 | aceite visual do Marcos no piloto |
+| Plano de migração IMO | Em andamento | F1 e F3 em produção; E3 em produção com desvios (linhas 1, 5 e 14 da matriz); E4 bloqueada até 10/12; E5 aguarda aceite do piloto | IMO #891 (F1, 12/11), #901 (F3), #902 (E3); deploy 43591765046 | aceite visual do Marcos no piloto |
 | Avaliação do piloto | Não verificado | aceite visual do Marcos não registrado; Revisor aprovou com ressalvas | IMO `docs/qa/2026-11-13-ds-e3-piloto-avaliacao.md` | Marcos olha as duas telas em produção |
 
 ## 5. Últimas alterações verificadas (13–14/11)
@@ -74,7 +79,7 @@ Status: **Concluído**, **Em andamento**, **Pendente**, **Bloqueado** ou **Não 
 | Data | PR | O que mudou |
 |---|---|---|
 | 14/11 | DS #121 | Botão primário do adaptador volta a ter preenchimento de marca, com borda neutra; contrato exige limite ≥3:1 e texto ≥4,5:1; varredura de 288 medições, todas ≥5,89:1 |
-| 14/11 | IMO #902 | Piloto E3 em produção: 8 componentes Blade e 5 folhas `rx-pilot*` copiadas por SHA, nas telas de vagas e candidaturas do empregador |
+| 14/11 | IMO #902 | Piloto E3 em produção, nas telas de vagas e candidaturas do empregador. Folhas: 2 copiadas do DS e conferidas por SHA (`rx-pilot.css`, `rx-pilot-aliases.css`) e 3 locais do IMO (`rx-pilot-bridge.css`, `-dialogs.css`, `-tables.css`). Os 8 componentes Blade foram criados e testados na vitrine, mas não são usados nas telas reais |
 | 13/11 | DS #120 | Legenda da tabela e sonda que lê `color(srgb)` |
 | 13/11 | DS #119 | Variante escopada do adaptador e aliases Emprega+ para stacks sem `@layer` |
 | 13/11 | DS #118 | 10 baselines Linux da vitrine do adaptador |
@@ -92,10 +97,10 @@ Status: **Concluído**, **Em andamento**, **Pendente**, **Bloqueado** ou **Não 
 
 - **IMO — mudou.**
   - F3 (#901): cores do portal aplicadas ao Bootstrap e aos plugins.
-  - E3 (#902): 43 arquivos, só views, CSS, componentes Blade e testes, sem regra de negócio, nas telas **Minhas vagas** e **Candidaturas da vaga** do empregador. Em produção desde 14/11.
+  - E3 (#902): 43 arquivos — views, CSS, componentes Blade, testes e 4 relatórios em `docs/qa/` —, sem regra de negócio, nas telas **Minhas vagas** e **Candidaturas da vaga** do empregador. Em produção desde 14/11. As telas usam classes `rx-*` direto; os componentes Blade ficaram só na vitrine de teste.
   - O botão primário do piloto em produção ainda usa a cópia de `bd1457a`: a correção #121 chega ao IMO depois da v2.11.0, por recópia com SHA.
 - **Electia — sem mudança visual ou de código.** Só documentação de regra para agentes (#1009). Continua em `#v2.9.0`.
-- **Xscore — sem mudança.** Nenhum commit desde 12/11. A regra de interface já existia. Continua em `#v2.9.0`.
+- **Xscore — sem mudança.** Nenhum commit na pasta do Xscore depois do commit de referência da auditoria (`35921bf5`, 13/11). A regra de interface já existia. Continua em `#v2.9.0`.
 
 ## 7. Validação
 
@@ -116,6 +121,7 @@ Status: **Concluído**, **Em andamento**, **Pendente**, **Bloqueado** ou **Não 
 
 | Lacuna | Por que falta | Depende de | Risco de seguir sem resolver | Próxima ação |
 |---|---|---|---|---|
+| E3 sem critério atendido: botões das telas reais não passam por `<x-rx-button>` (linha 5), contraste do white-label falha (linha 1) e foco não volta ao fechar diálogos (linha 14) | o piloto priorizou classes nas views, sem JS e sem mudança de valor | trocar views por componentes (técnica); JS e valor dependem do Marcos e de 10/12 | ampliar (E5) sobre um piloto que não cumpre o próprio critério | fechar a linha 5 e verificar 7, 8, 10, 11 e 20 antes da E5 |
 | Baselines de página inteira `pilot-light`/`pilot-dark` desatualizadas | a tolerância 0,005 esconde a mudança do botão | Supervisor (PR própria) | o teste visual não pega uma regressão pequena no botão | calibrar ou recortar a área de ações; regenerar pelo workflow; antes da v2.11.0 |
 | CHANGELOG diz "nos estados do botão" | redação genérica; a varredura cobre só repouso e hover | mesma PR acima | leitor supor cobertura de `active` | corrigir a frase |
 | Revisão visual dos 3 `btn-danger` do FinanceX | ressalva do Revisor na #115 | captura real no FinanceX | botão de perigo mudar sem ninguém ver | fazer antes de cortar a v2.11.0 |
@@ -141,7 +147,7 @@ D5 (credencial da automação) só volta a ser pergunta depois da prova P1.
 2. **Supervisor:** PR das baselines de página inteira + frase do CHANGELOG.
 3. **Supervisor + Executor:** revisão visual do `btn-danger` no FinanceX e inventário de impacto nos produtos.
 4. **Supervisor:** cortar a **v2.11.0** (a partir de 27/11), com CI verde e Revisor.
-5. **Executor (PR no IMO, merge do Marcos):** recopiar `rx-pilot.css` da v2.11.0 por SHA e decidir se o CTA "Ver planos" usa `rx-button--primary`.
+5. **Executor (PR no IMO, merge do Marcos):** recopiar `rx-pilot.css` da v2.11.0 por SHA, passar os botões das telas do piloto para `<x-rx-button>` (linha 5 da matriz) e verificar as linhas 7, 8, 10, 11 e 20 pelo critério.
 
 ## 11. Como manter este painel
 
