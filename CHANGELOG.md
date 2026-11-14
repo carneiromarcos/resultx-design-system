@@ -68,6 +68,25 @@ a spec dos contratos pula as capturas de referência da vitrine do DS e mantém 
 Com isso, o adaptador do IMO passa nos 99 casos de contrato pela `RESULTX_ADAPTER_URL`, com as
 capturas de referência da vitrine do DS puladas.
 
+### Fixed — botão primário do adaptador sem preenchimento
+
+- **Antes:** `.rx-button--primary` usava a mesma superfície do secundário. A diferença era só o
+  peso da fonte, e a ação principal perdia o destaque. É um defeito do contrato do Button (E2),
+  não uma escolha de desenho.
+- **Agora:** o primário é preenchido com `--accent-primary`, com texto em `--text-inverse` e
+  hover em `--accent-primary-hover`. A variante escopada e o `.sha256` dela foram regenerados.
+- **Contrato:** o caso novo `button-variant-hierarchy` exige três coisas nos dois temas: fundo do
+  primário diferente do secundário, preenchimento com pelo menos 3:1 contra o fundo vizinho e
+  texto com pelo menos 4,5:1 sobre o preenchimento. O caso falhou antes da correção.
+- **Marca Emprega+:** `pilot-aliases.css` ganha três nomes que apontam para a pintura de marca
+  calculada pelo produto, com fallback no índigo e na tinta de marca. O build confere o par de
+  texto sobre preenchimento.
+- **Sem mudança de valor:** nenhum token existente muda, e `eds-root.css` e o SHA dele ficam
+  iguais.
+- **Limite conhecido:** na varredura de 36 cores de marca, 11 combinações no tema claro ficam
+  abaixo de 3:1 entre o preenchimento e o fundo vizinho (mínimo de 1,69:1; amarelo puro dá
+  1,72:1). O texto sobre o preenchimento passou em todas.
+
 ### Changed — tokens com fonte única (E1, ADR-0003)
 
 Todos os valores de token (cor, sombra, dimensão, tempo) passam a viver numa fonte única DTCG
