@@ -50,6 +50,7 @@
 :is(.rx-pilot, #rx-pilot-floor) .rx-card--lg { padding: var(--space-6); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-stat-card__value { font-variant-numeric: tabular-nums; font-weight: var(--font-bold); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-table { border-collapse: collapse; }
+:is(.rx-pilot, #rx-pilot-floor) .rx-table caption { color: var(--text-primary); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-table th,
   :is(.rx-pilot, #rx-pilot-floor) .rx-table td { padding: var(--space-3); text-align: left; }
 :is(.rx-pilot, #rx-pilot-floor) .rx-table th { border-bottom: var(--focus-ring-width) solid var(--text-secondary); }

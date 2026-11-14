@@ -56,6 +56,18 @@ a spec dos contratos pula as capturas de referência da vitrine do DS e mantém 
 **Limite:** o contraste foi medido com a cor de marca padrão. Cores de cliente muito claras
 (white-label) ainda dependem da varredura prevista no aceite do piloto.
 
+### Fixed — legenda da tabela do adaptador e sonda de cor dos contratos
+
+- **Legenda:** o adaptador pinta `.rx-table caption` com `--text-primary`. Antes, a legenda
+  ficava com a cor do reset do framework do produto. No IMO, no tema escuro, isso dava 3,87:1,
+  abaixo do mínimo de 4,5:1. O caso de contraste da tabela agora mede a legenda e falhou antes
+  da correção. A variante escopada foi regenerada, com novo `.sha256`.
+- **Sonda dos contratos:** passa a interpretar cores no formato `color(srgb …)`, que é como o
+  navegador entrega cores calculadas com `color-mix()`. Os limites e os casos não mudaram.
+
+Com isso, o adaptador do IMO passa nos 99 casos de contrato pela `RESULTX_ADAPTER_URL`, com as
+capturas de referência da vitrine do DS puladas.
+
 ### Changed — tokens com fonte única (E1, ADR-0003)
 
 Todos os valores de token (cor, sombra, dimensão, tempo) passam a viver numa fonte única DTCG
