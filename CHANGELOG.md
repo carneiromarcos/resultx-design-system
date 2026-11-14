@@ -5,6 +5,34 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+> **Rascunho da v2.11.0** (D7: corte não antes de 27/11). O inventário abaixo vale para
+> `v2.10.0..5b18b15`; antes da tag ele é refeito até o SHA da tag.
+
+### Impacto por consumidor (rascunho)
+
+Leitura estática do `main` de cada produto em 14/11. "Nenhum" é inferência, não prova
+renderizada. Quem hoje está em `#v2.9.0` recebe também as mudanças da v2.10.0 ao subir.
+Base: `package.json` e busca de classes no `main` de FinanceX, ResultX Site, Electia, Xscore
+(`apps/web`) e IMO front React; imports do Xscore e do EditalHub conforme a auditoria de 13/11.
+
+| Consumidor | Versão hoje | Importa | Efeito visual esperado |
+|---|---|---|---|
+| FinanceX | `#v2.9.0` | tokens, `components`, `components/data-cards`; tema `premium-light` | **sim**: `.btn-danger` vira botão cheio (branco sobre vermelho) em todos os temas. No FinanceX são 5 usos (Desativar em cadastros, Excluir regra, Cancelar plano, Excluir dívida e Sim, excluir); contraste sobe de 3,10–4,14:1 para 4,83:1 em repouso, hover e foco. A regra nova de hover do `.btn-secondary` no `premium-light` não mudou as cores medidas no Editar (13,60:1 antes e depois). Ressalva de produto: o vermelho repetido por linha compete com a ação principal; a hierarquia é decidida no FinanceX antes de ele subir de versão (DS-15) |
+| ResultX Site | `#v2.9.0` | tokens, `brands/resultx/tokens` e `bridge`, `components`, `icons`; tema `dark` | nenhum: usa só `.btn-primary` e `.btn-secondary`, e as regras novas desses dois valem em `sober-dark`, `vibrant-dark` e `premium-light` |
+| Electia | `#v2.9.0` | tokens, bridge, `components/data-cards` | nenhum: não importa `components` |
+| Xscore | `#v2.9.0` | só `brands/xscore/tokens` | nenhum |
+| IMO (Laravel) | não instala o pacote; copia por SHA `adapters/css/pilot.scoped.css` (como `rx-pilot.css`, SHA-256 `c74a5cd2…`, da `bd1457a`) e `brands/emprega-mais/tokens/pilot-aliases.css` (como `rx-pilot-aliases.css`) | cópias vendorizadas, presas pelo `RxPilotVendoredCopyTest` | nenhum até recopiar; a recópia da `pilot.scoped.css` traz o botão primário com preenchimento (#121, SHA-256 `a0a84af9…` na `main`) e exige atualizar o teste da cópia — DS-17 |
+| IMO front React | `#v2.1.1` | só tokens | nenhum: `dist/tokens.min.css` não muda nesta versão |
+| EditalHub | não instala o pacote | ponte `eds-root.css` própria | nenhum; `eds-root.css` idêntico byte a byte (E1) |
+
+**Superfície distribuída — mudança de valor ou de export:**
+- `components/components.css` e `dist/components.min.css`: botões (#115);
+- arquivos novos desde a v2.10.0: `adapters/css/pilot.css` (#117, depois #120 e #121) e `adapters/css/pilot.scoped.css` (#119, depois #120 e #121);
+- exports novos `./tokens/legacy`, `./adapters/css/pilot` e `./adapters/css/pilot/scoped`;
+- arquivos novos no pacote: `tokens/legacy-aliases.css`, `brands/emprega-mais/tokens/pilot-aliases.css`, os dois `.sha256` e `contracts/`.
+
+**Mudança só física (conteúdo gerado, valores equivalentes após normalização, E1):** `tokens/tokens.css`, `tokens/base/tokens-base.css`, `tokens/themes/*` e `brands/*/tokens/tokens.css`. `dist/tokens.min.css` e `tokens/eds-root.css` não mudam. Esta lista resume o diff `v2.10.0..5b18b15` nos caminhos distribuídos; não substitui o inventário completo, refeito no corte.
+
 ### Added — contratos do lote piloto e adaptador CSS opt-in (E2, ADR-0004)
 
 Oito contratos em `contracts/*.yaml` (entram no pacote): Button, Field, Card, StatCard,
