@@ -1,5 +1,5 @@
 const { expect } = require('@playwright/test');
-const { paintedEdge, textContrast, descendantTextContrast } = require('./contract-probes');
+const { paintedEdge, paintedFill, controlBoundary, textContrast, descendantTextContrast } = require('./contract-probes');
 async function contrast(page, selector, property = 'color') {
   if (property === 'outlineColor') return paintedEdge(page, selector, 'outline');
   if (property === 'borderTopColor') return paintedEdge(page, selector, 'border');
@@ -11,7 +11,42 @@ const checks = {
   'button-disabled': async (p) => { const b = p.locator('#disabled'); await expect(b).toBeDisabled(); expect(await b.evaluate((el) => { let count = 0; el.addEventListener('click', () => count++); el.click(); return count; })).toBe(0); },
   'button-loading': async (p) => { await expect(p.locator('#loading-button')).toBeDisabled(); await expect(p.locator('#loading-button')).toHaveAttribute('aria-busy', 'true'); },
   'button-keyboard': async (p) => { const el = p.locator('#primary'); await el.focus(); await p.keyboard.press('Tab'); await expect(p.locator('#secondary')).toBeFocused(); await p.keyboard.press('Shift+Tab'); await expect(el).toBeFocused(); await contrast(p, '#primary', 'outlineColor', 3); let count = 0; await el.evaluate((e) => e.addEventListener('click', () => { e.dataset.clicks = String(Number(e.dataset.clicks || 0) + 1); })); await p.keyboard.press('Enter'); await p.keyboard.press('Space'); count = await el.evaluate((e) => Number(e.dataset.clicks)); expect(count).toBe(2); },
-  'button-contrast': async (p) => { for (const s of ['#primary', '#secondary', '#disabled', '#loading-button']) { await contrast(p, s); await contrast(p, s, 'borderTopColor', 3); } for (const s of ['#primary', '#secondary']) { const el = p.locator(s), before = await el.evaluate((e) => getComputedStyle(e).backgroundColor); await el.hover(); const hover = await el.evaluate((e) => getComputedStyle(e).backgroundColor); expect(hover).not.toBe(before); await contrast(p, s); await p.mouse.down(); const active = await el.evaluate((e) => getComputedStyle(e).backgroundColor); expect(active).not.toBe(hover); await contrast(p, s); await p.mouse.up(); } },
+  'button-contrast': async (p) => {
+    for (const selector of ['#primary', '#secondary', '#confirm-action']) {
+      if (selector === '#confirm-action') await p.locator('#open-dialog').click();
+      const el = p.locator(selector);
+      await p.mouse.move(0, 0);
+      for (const state of ['normal', 'hover', 'active']) {
+        if (state !== 'normal') await el.hover();
+        if (state === 'active') await p.mouse.down();
+        try {
+          await controlBoundary(p, selector);
+          await textContrast(p, selector);
+          {
+            const primary = await p.locator('#primary').evaluate((e) => getComputedStyle(e).backgroundColor);
+            const secondary = await p.locator('#secondary').evaluate((e) => getComputedStyle(e).backgroundColor);
+            expect(primary, `primary diferente de secondary em ${state}`).not.toBe(secondary);
+          }
+        }
+        finally { if (state === 'active') await p.mouse.up(); }
+      }
+      if (selector === '#confirm-action') await p.keyboard.press('Escape');
+    }
+    await p.locator('#primary').focus();
+    await paintedEdge(p, '#primary', 'outline');
+    await controlBoundary(p, '#primary');
+    const neutral = await p.locator('#primary').evaluate((e) => ({ border: getComputedStyle(e).borderTopColor, color: getComputedStyle(e).getPropertyValue('--text-secondary').trim() }));
+    const expected = await p.locator('#primary').evaluate((e) => { const t = document.createElement('span'); t.style.color = 'var(--text-secondary)'; e.appendChild(t); const c = getComputedStyle(t).color; t.remove(); return c; });
+    expect(neutral.border).toBe(expected);
+  },
+  'button-variant-hierarchy': async (p) => {
+    const primary = await p.locator('#primary').evaluate((e) => ({ background: getComputedStyle(e).backgroundColor, parent: getComputedStyle(e.parentElement).backgroundColor }));
+    const secondary = await p.locator('#secondary').evaluate((e) => getComputedStyle(e).backgroundColor);
+    expect(primary.background, 'Primary deve ter preenchimento diferente de secondary').not.toBe(secondary);
+    expect(primary.background, 'Primary deve ter preenchimento diferente do entorno').not.toBe(primary.parent);
+    await paintedFill(p, '#primary');
+    await textContrast(p, '#primary');
+  },
   'field-label': async (p) => expect(p.getByLabel('Buscar candidato')).toBeVisible(),
   'field-error': async (p) => { await expect(p.locator('#invalid')).toHaveAttribute('aria-invalid', 'true'); await expect(p.locator('#invalid')).toHaveAttribute('aria-describedby', 'invalid-message'); await expect(p.locator('#invalid-message')).toBeVisible(); await expect(p.locator('#invalid-message')).toContainText('válido'); },
   'field-empty': async (p) => { await expect(p.locator('#search')).toHaveValue(''); expect(await p.locator('#search').evaluate((e) => e.validity.valid)).toBe(true); },

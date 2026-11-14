@@ -1,5 +1,7 @@
 /* Gerado de tokens/tokens.json e dos tokens Emprega+; não editar. */
 :is(.rx-pilot, #rx-pilot-floor) {
+  --accent-primary: var(--eds-pintura, var(--eds-indigo-dark));
+  --accent-primary-hover: var(--eds-pintura-hover, var(--eds-indigo-dark));
   --accent-primary-text: var(--eds-brand-ink);
   --bg-surface-1: var(--eds-surface);
   --bg-surface-2: var(--eds-surface-tonal);
@@ -18,6 +20,7 @@
   --space-4: 1rem;
   --space-6: 1.5rem;
   --text-base: 0.9375rem;
+  --text-inverse: var(--eds-on-pintura, var(--eds-on-brand));
   --text-on-success: var(--eds-surface);
   --text-primary: var(--eds-ink-strong);
   --text-secondary: var(--eds-ink-medium);

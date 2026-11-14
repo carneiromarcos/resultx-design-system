@@ -43,12 +43,19 @@ test('aliases cobrem exatamente os tokens consumidos, referenciam EDS existente 
   const css = fs.readFileSync(path, 'utf8');
   const aliases = postcss.parse(css);
   const declared = new Set();
+  const dynamic = { '--accent-primary': ['--eds-pintura', '--eds-indigo-dark'], '--accent-primary-hover': ['--eds-pintura-hover', '--eds-indigo-dark'], '--text-inverse': ['--eds-on-pintura', '--eds-on-brand'] };
   aliases.walkRules((r) => {
     expect(r.selector).toBe(prefix);
     r.walkDecls((d) => {
       expect(declared.has(d.prop)).toBe(false);
       declared.add(d.prop);
-      parser(d.value).walk((n) => { if (n.type === 'function' && n.value === 'var') expect(eds.has(n.nodes[0].value)).toBe(true); });
+      if (dynamic[d.prop]) {
+        const [custom, fallback] = dynamic[d.prop];
+        expect(d.value).toBe(`var(${custom}, var(${fallback}))`);
+        expect(eds.has(fallback)).toBe(true);
+      } else {
+        parser(d.value).walk((n) => { if (n.type === 'function' && n.value === 'var') expect(eds.has(n.nodes[0].value)).toBe(true); });
+      }
     });
   });
   expect([...declared].sort()).toEqual([...consumed].sort());
@@ -79,6 +86,8 @@ test('gerador preserva media e keyframes e aceita outro prefixo', () => {
 test('contraste dos pares do adaptador passa nos dois temas da marca padrão', () => {
   const { execFileSync } = require('child_process');
   const output = execFileSync(process.execPath, ['scripts/check-pilot-contrast.cjs'], { encoding: 'utf8' });
+  expect(output).toContain('light | primário');
+  expect(output).toContain('dark | primário');
   expect(output).toContain('light | sucesso');
   expect(output).toContain('dark | foco');
 });
