@@ -26,7 +26,28 @@ async function paintedFill(page, selector) {
   const x = m.x + m.width / 2;
   const fill = pixel(png, x, m.y + m.border + 2);
   const adjacent = pixel(png, x, Math.floor(m.y) - 1);
-  expect(ratio(fill, adjacent), `${selector} preenchimento: ${fill} x ${adjacent}`).toBeGreaterThanOrEqual(3);
+  expect(fill, `${selector} preenchimento igual ao entorno: ${fill}`).not.toEqual(adjacent);
+}
+
+// Menor contraste do limite externo efetivamente pintado nos quatro lados.
+async function controlBoundary(page, selector) {
+  const target = page.locator(selector).first();
+  await target.scrollIntoViewIfNeeded();
+  const m = await target.evaluate((el) => {
+    const r = el.getBoundingClientRect(), s = getComputedStyle(el);
+    return { x: r.x, y: r.y, width: r.width, height: r.height,
+      widths: ['Top', 'Bottom', 'Left', 'Right'].map((side) => parseFloat(s[`border${side}Width`])),
+      styles: ['Top', 'Bottom', 'Left', 'Right'].map((side) => s[`border${side}Style`]) };
+  });
+  const x = m.x + m.width / 2, y = m.y + m.height / 2;
+  const d = m.widths.map((w, i) => w >= 1 && !['none', 'hidden'].includes(m.styles[i]) ? 0.5 : 2);
+  const inside = [[x, m.y + d[0]], [x, m.y + m.height - d[1] - 1], [m.x + d[2], y], [m.x + m.width - d[3] - 1, y]];
+  const outside = [[x, Math.floor(m.y) - 1], [x, Math.ceil(m.y + m.height) + 1], [Math.floor(m.x) - 1, y], [Math.ceil(m.x + m.width) + 1, y]];
+  const png = PNG.sync.read(await page.screenshot({ animations: 'disabled' }));
+  const measurements = inside.map((point, i) => ratio(pixel(png, ...point), pixel(png, ...outside[i])));
+  const minimum = Math.min(...measurements);
+  expect(minimum, `${selector} limite: ${measurements.map((n) => n.toFixed(2)).join(', ')}`).toBeGreaterThanOrEqual(3);
+  return minimum;
 }
 
 // Pixels de traço e fundo efetivamente pintados; não produz arquivo ou baseline.
@@ -91,4 +112,4 @@ async function descendantTextContrast(page, selector) {
   }
   expect(count, `${selector}: texto visível não encontrado`).toBeGreaterThan(0);
 }
-module.exports = { paintedEdge, paintedFill, textContrast, descendantTextContrast };
+module.exports = { paintedEdge, paintedFill, controlBoundary, textContrast, descendantTextContrast };

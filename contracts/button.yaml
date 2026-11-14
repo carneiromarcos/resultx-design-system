@@ -44,9 +44,9 @@ aria:
   - Ícone decorativo usa aria-hidden.
   - Carregando usa aria-busy e disabled.
 criterios_aceite:
-  - Texto ≥ 4,5:1; borda e foco ≥ 3:1 no fundo adjacente.
+  - Limite do controle ≥ 3:1 contra fundo adjacente em todos os estados ativos; limite é o pixel pintado mais externo da borda, se houver, ou do preenchimento. Foco ≥ 3:1.
   - disabled impede clique e foco.
-  - Primary se distingue por preenchimento de ação, não só por peso de fonte.
+  - Primary se distingue por preenchimento de ação, com fundo calculado diferente do secondary e do entorno; texto sobre o preenchimento ≥ 4,5:1.
 casos_teste:
   - id: button-accessible
     descricao: O botão tem nome acessível e fica visível.
@@ -59,7 +59,7 @@ casos_teste:
   - id: button-contrast
     descricao: Texto, borda e foco mantêm contraste nos estados.
   - id: button-variant-hierarchy
-    descricao: Primary tem preenchimento distinto, contrastante com o entorno e com o texto.
+    descricao: Primary tem preenchimento diferente do secondary e do entorno, com texto contrastante.
 conformidade: >-
   Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro
   adaptador não comprovam conformidade.

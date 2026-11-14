@@ -40,7 +40,7 @@ const pairs = [
   ['erro', '--color-error', '--bg-surface-1', 4.5],
   ['sucesso', '--text-on-success', '--color-success', 4.5],
   ['link', '--accent-primary-text', '--bg-surface-1', 4.5],
-  ['borda', '--text-secondary', '--bg-surface-1', 3],
+  ['limite botão', '--text-secondary', '--bg-surface-1', 3],
   ['borda sobre superfície 2', '--text-secondary', '--bg-surface-2', 3],
   ['borda sobre superfície 3', '--text-secondary', '--bg-surface-3', 3],
   ['foco', '--accent-primary-text', '--bg-surface-1', 3],

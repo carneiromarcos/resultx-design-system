@@ -25,7 +25,7 @@
   .rx-button:hover:where(:not(:disabled)) { background: var(--bg-surface-3); }
   .rx-button:active:where(:not(:disabled)) { background: var(--bg-surface-2); }
   .rx-button:disabled { cursor: not-allowed; }
-  .rx-button--primary { font-weight: var(--font-bold); color: var(--text-inverse); background: var(--accent-primary); border-color: var(--accent-primary); }
+  .rx-button--primary { font-weight: var(--font-bold); color: var(--text-inverse); background: var(--accent-primary); }
   .rx-button--primary:hover:where(:not(:disabled)) { background: var(--accent-primary-hover); }
   .rx-button--primary:active:where(:not(:disabled)) { background: var(--accent-primary); }
   .rx-button--secondary { font-weight: var(--font-regular); }

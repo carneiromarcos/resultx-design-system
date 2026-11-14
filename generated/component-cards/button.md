@@ -57,9 +57,9 @@
 
 ## Critérios de aceite
 
-- Texto ≥ 4,5:1; borda e foco ≥ 3:1 no fundo adjacente.
+- Limite do controle ≥ 3:1 contra fundo adjacente em todos os estados ativos; limite é o pixel pintado mais externo da borda, se houver, ou do preenchimento. Foco ≥ 3:1.
 - disabled impede clique e foco.
-- Primary se distingue por preenchimento de ação, não só por peso de fonte.
+- Primary se distingue por preenchimento de ação, com fundo calculado diferente do secondary e do entorno; texto sobre o preenchimento ≥ 4,5:1.
 
 ## Casos de teste
 
@@ -68,7 +68,7 @@
 - button-loading: Carregamento informa aria-busy e impede ativação.
 - button-keyboard: Tab mostra foco; Enter e Espaço acionam uma vez.
 - button-contrast: Texto, borda e foco mantêm contraste nos estados.
-- button-variant-hierarchy: Primary tem preenchimento distinto, contrastante com o entorno e com o texto.
+- button-variant-hierarchy: Primary tem preenchimento diferente do secondary e do entorno, com texto contrastante.
 
 ## Cobertura de estados
 
