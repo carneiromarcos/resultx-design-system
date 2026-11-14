@@ -86,6 +86,8 @@ test('gerador preserva media e keyframes e aceita outro prefixo', () => {
 test('contraste dos pares do adaptador passa nos dois temas da marca padrão', () => {
   const { execFileSync } = require('child_process');
   const output = execFileSync(process.execPath, ['scripts/check-pilot-contrast.cjs'], { encoding: 'utf8' });
+  expect(output).toContain('light | primário');
+  expect(output).toContain('dark | primário');
   expect(output).toContain('light | sucesso');
   expect(output).toContain('dark | foco');
 });
