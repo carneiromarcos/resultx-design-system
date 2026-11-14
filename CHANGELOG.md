@@ -12,6 +12,8 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 Leitura estática do `main` de cada produto em 14/11. "Nenhum" é inferência, não prova
 renderizada. Quem hoje está em `#v2.9.0` recebe também as mudanças da v2.10.0 ao subir.
+Base: `package.json` e busca de classes no `main` de FinanceX, ResultX Site, Electia, Xscore
+(`apps/web`) e IMO front React; imports do Xscore e do EditalHub conforme a auditoria de 13/11.
 
 | Consumidor | Versão hoje | Importa | Efeito visual esperado |
 |---|---|---|---|
@@ -19,14 +21,17 @@ renderizada. Quem hoje está em `#v2.9.0` recebe também as mudanças da v2.10.0
 | ResultX Site | `#v2.9.0` | tokens, `brands/resultx/tokens` e `bridge`, `components`, `icons`; tema `dark` | nenhum: usa só `.btn-primary` e `.btn-secondary`, e as regras novas desses dois valem em `sober-dark`, `vibrant-dark` e `premium-light` |
 | Electia | `#v2.9.0` | tokens, bridge, `components/data-cards` | nenhum: não importa `components` |
 | Xscore | `#v2.9.0` | só `brands/xscore/tokens` | nenhum |
-| IMO (Laravel) | não instala o pacote; copia `adapters/css/pilot.css` por SHA (`bd1457a`) | cópia vendorizada | nenhum até recopiar; a recópia traz o botão primário com preenchimento (#121) — DS-17 |
+| IMO (Laravel) | não instala o pacote; copia por SHA `adapters/css/pilot.scoped.css` (como `rx-pilot.css`, SHA-256 `c74a5cd2…`, da `bd1457a`) e `brands/emprega-mais/tokens/pilot-aliases.css` (como `rx-pilot-aliases.css`) | cópias vendorizadas, presas pelo `RxPilotVendoredCopyTest` | nenhum até recopiar; a recópia da `pilot.scoped.css` traz o botão primário com preenchimento (#121, SHA-256 `a0a84af9…` na `main`) e exige atualizar o teste da cópia — DS-17 |
 | IMO front React | `#v2.1.1` | só tokens | nenhum: `dist/tokens.min.css` não muda nesta versão |
 | EditalHub | não instala o pacote | ponte `eds-root.css` própria | nenhum; `eds-root.css` idêntico byte a byte (E1) |
 
-**Superfície pública que muda:** `components/components.css` e `dist/components.min.css`
-(botões, #115 e #121); exports novos `./tokens/legacy`, `./adapters/css/pilot` e
-`./adapters/css/pilot/scoped`; `contracts/` passa a ir no pacote. `dist/tokens.min.css` e
-`tokens/eds-root.css` não mudam de valor.
+**Superfície distribuída — mudança de valor ou de export:**
+- `components/components.css` e `dist/components.min.css`: botões (#115);
+- arquivos novos desde a v2.10.0: `adapters/css/pilot.css` (#117, depois #120 e #121) e `adapters/css/pilot.scoped.css` (#119, depois #120 e #121);
+- exports novos `./tokens/legacy`, `./adapters/css/pilot` e `./adapters/css/pilot/scoped`;
+- arquivos novos no pacote: `tokens/legacy-aliases.css`, `brands/emprega-mais/tokens/pilot-aliases.css`, os dois `.sha256` e `contracts/`.
+
+**Mudança só física (conteúdo gerado, valores equivalentes após normalização, E1):** `tokens/tokens.css`, `tokens/base/tokens-base.css`, `tokens/themes/*` e `brands/*/tokens/tokens.css`. `dist/tokens.min.css` e `tokens/eds-root.css` não mudam. Esta lista resume o diff `v2.10.0..5b18b15` nos caminhos distribuídos; não substitui o inventário completo, refeito no corte.
 
 ### Added — contratos do lote piloto e adaptador CSS opt-in (E2, ADR-0004)
 
