@@ -1,5 +1,6 @@
 const { expect } = require('@playwright/test');
 const { PNG } = require('pngjs');
+const { parseCssColor } = require('./css-color');
 
 const ratio = (a, b) => {
   const luminance = (rgb) => rgb.slice(0, 3).map((n) => { const v = n / 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }).reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
@@ -50,12 +51,17 @@ async function paintedEdge(page, selector, kind) {
 async function textContrast(page, selector) {
   const target = typeof selector === 'string' ? page.locator(selector).first() : selector;
   const result = await target.evaluate((el) => {
-    const rgba = (s) => { if (!/^rgba?\(/i.test(s)) throw new Error(`Cor não suportada: ${s}`); const m = s.match(/[\d.]+/g); return m.map(Number); };
-    const blend = (f, b) => f.slice(0, 3).map((v, i) => v * (f[3] ?? 1) + b[i] * (1 - (f[3] ?? 1)));
-    const background = (node) => { if (!node) return [255, 255, 255]; const style = getComputedStyle(node); if (style.backgroundImage !== 'none') throw new Error('Contraste com imagem de fundo não é suportado pela sonda'); return blend(rgba(style.backgroundColor), background(node.parentElement)); };
-    const bg = background(el), fg = blend(rgba(getComputedStyle(el).color), bg);
-    return { fg, bg, text: el.textContent.trim().slice(0, 80) };
+    const backgrounds = [];
+    for (let node = el; node; node = node.parentElement) {
+      const style = getComputedStyle(node);
+      if (style.backgroundImage !== 'none') throw new Error('Contraste com imagem de fundo não é suportado pela sonda');
+      backgrounds.push(style.backgroundColor);
+    }
+    return { color: getComputedStyle(el).color, backgrounds, text: el.textContent.trim().slice(0, 80) };
   });
+  const blend = (f, b) => f.slice(0, 3).map((v, i) => v * (f[3] ?? 1) + b[i] * (1 - (f[3] ?? 1)));
+  result.bg = result.backgrounds.map(parseCssColor).reverse().reduce((bg, color) => blend(color, bg), [255, 255, 255]);
+  result.fg = blend(parseCssColor(result.color), result.bg);
   expect(ratio(result.fg, result.bg), `Texto ${result.text}: ${result.fg} x ${result.bg}`).toBeGreaterThanOrEqual(4.5);
 }
 async function descendantTextContrast(page, selector) {
