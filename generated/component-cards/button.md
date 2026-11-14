@@ -57,6 +57,7 @@
 
 ## Critérios de aceite
 
+- Todo botão ativo (primary, secondary e danger) tem texto ≥ 4,5:1 em repouso, hover e active.
 - Limite do controle ≥ 3:1 contra fundo adjacente em todos os estados ativos; limite é o pixel pintado mais externo da borda, se houver, ou do preenchimento. Foco ≥ 3:1.
 - disabled impede clique e foco.
 - Primary se distingue por preenchimento de ação, com fundo calculado diferente do secondary e do entorno; texto sobre o preenchimento ≥ 4,5:1.
