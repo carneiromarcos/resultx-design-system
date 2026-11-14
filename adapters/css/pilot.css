@@ -56,6 +56,7 @@
   .rx-card--lg { padding: var(--space-6); }
   .rx-stat-card__value { font-variant-numeric: tabular-nums; font-weight: var(--font-bold); }
   .rx-table { border-collapse: collapse; }
+  .rx-table caption { color: var(--text-primary); }
   .rx-table th,
   .rx-table td { padding: var(--space-3); text-align: left; }
   .rx-table th { border-bottom: var(--focus-ring-width) solid var(--text-secondary); }
