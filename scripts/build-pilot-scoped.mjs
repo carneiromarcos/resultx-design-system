@@ -21,6 +21,11 @@ const map = {
   '--accent-primary-text': '--eds-brand-ink', '--font-body': '--eds-font-body',
   '--radius-md': '--eds-radius-btn',
 };
+const dynamic = {
+  '--accent-primary': ['--eds-pintura', '--eds-indigo-dark'],
+  '--accent-primary-hover': ['--eds-pintura-hover', '--eds-indigo-dark'],
+  '--text-inverse': ['--eds-on-pintura', '--eds-on-brand'],
+};
 const fallback = {
   '--space-2': 'semantic.foundation.space-2', '--space-3': 'semantic.foundation.space-3',
   '--space-4': 'semantic.foundation.space-4', '--space-6': 'semantic.foundation.space-6',
@@ -56,6 +61,11 @@ root.walkAtRules('layer', (layer) => {
   layer.replaceWith(...layer.nodes);
 });
 const lines = [...consumed].sort().map((name) => {
+  if (dynamic[name]) {
+    const [custom, defaultToken] = dynamic[name];
+    if (!eds.has(defaultToken)) throw new Error(`Token alternativo da marca ausente: ${defaultToken}`);
+    return `  ${name}: var(${custom}, var(${defaultToken}));`;
+  }
   if (map[name]) {
     if (!eds.has(map[name])) throw new Error(`Token da marca ausente: ${map[name]}`);
     return `  ${name}: var(${map[name]});`;

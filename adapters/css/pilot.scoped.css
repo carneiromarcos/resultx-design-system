@@ -22,7 +22,9 @@
 :is(.rx-pilot, #rx-pilot-floor) .rx-button:hover:where(:not(:disabled)) { background: var(--bg-surface-3); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-button:active:where(:not(:disabled)) { background: var(--bg-surface-2); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-button:disabled { cursor: not-allowed; }
-:is(.rx-pilot, #rx-pilot-floor) .rx-button--primary { font-weight: var(--font-bold); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-button--primary { font-weight: var(--font-bold); color: var(--text-inverse); background: var(--accent-primary); border-color: var(--accent-primary); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-button--primary:hover:where(:not(:disabled)) { background: var(--accent-primary-hover); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-button--primary:active:where(:not(:disabled)) { background: var(--accent-primary); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-button--secondary { font-weight: var(--font-regular); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-button--danger,
   :is(.rx-pilot, #rx-pilot-floor) .rx-button--danger:hover:where(:not(:disabled)),
