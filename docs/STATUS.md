@@ -1,160 +1,150 @@
 # ResultX Design System — Painel de status
 
-> **Última atualização:** 14/11/2026, referência `main` = `c71e9b4` (PR #123).
-> **Quem mantém:** Supervisor DS. Atualizar a cada mudança material de estado (ver §11).
-> **Regra de leitura:** "Concluído" exige evidência (PR mesclada, CI verde, parecer do Revisor). Documento escrito **não** conta como implementação.
+> **Última atualização verificada:** 14/11/2026, `main` = `7f58e77` (PR #124).
+> **Quem mantém:** Supervisor DS, conforme o [protocolo de status e continuidade](governance/status-protocol.md).
+> **Regra de leitura:** CONCLUÍDO exige critério atendido e evidência (PR mesclada, CI verde, parecer do Revisor). Documento escrito **não** conta como implementação.
 
 ---
 
-## 1. Resumo executivo
+## A. Visão executiva
 
-- **Estado geral:** das 10 etapas do roteiro (E0–E7, mais F3 e a avaliação do piloto):
-  - **4 estão concluídas pelo critério do diagnóstico** (E0, E1, E2, F3);
-  - **a E3 foi entregue em produção, mas com desvios:** o critério de aceite não está atendido (ver §4);
-  - **1 aguarda o Marcos** (avaliação do piloto);
-  - **4 não começaram** (E4–E7).
-- **Entregue:**
+- **Objetivo atual:** consolidar o ResultX DS. A Electia é a referência de experiência, o Emprega+ IMO é a prioridade de alinhamento e o Xscore é a expansão futura. Fontes:
+  - [diagnóstico](audits/2026-11-13-ds-auditoria/diagnostico-resultx-ds.md);
+  - [governança](audits/2026-11-13-ds-auditoria/governanca-propagacao-conformidade.md).
+- **Fase:** depois do piloto (E3) e antes da **v2.11.0**, que sai a partir de 27/11 (regra D7).
+- **Estado geral:** das 26 atividades do quadro abaixo:
+  - 10 CONCLUÍDO;
+  - 1 EM ANDAMENTO;
+  - 2 AGUARDANDO VALIDAÇÃO;
+  - 5 BLOQUEADO;
+  - 8 PENDENTE.
+- **Pelo roteiro do diagnóstico:**
+  - etapas concluídas pelo critério: 4 de 10 (E0, E1, E2, F3);
+  - a E3 está em produção com desvios;
+  - a avaliação do piloto aguarda o Marcos;
+  - E4–E7 não começaram.
+- **Principais resultados:**
   - auditoria completa;
   - governança dos agentes;
   - tokens com fonte única;
   - 8 contratos de componente com adaptador CSS;
-  - piloto **em produção no IMO**, nas telas de vagas e candidaturas do empregador (#902), com desvios do critério ainda abertos.
-- **Ainda não pronto:**
-  - a sincronização automática DS → produtos (só desenhada);
-  - o adaptador React (Electia/Xscore);
-  - o manifesto de conformidade por produto;
-  - a ampliação do IMO além do piloto.
-- **Bloqueios:**
-  - escalas no `eds-root` (E4) só depois de **10/12** (janela de recurso do EditalHub);
-  - a ampliação do IMO (E5) depende do **aceite visual do Marcos** no piloto.
-- **Próximo marco:** versão **v2.11.0**, não antes de **27/11** (regra D7: no máximo uma versão a cada 2 semanas).
+  - botão primário com preenchimento e teste visual que detecta regressão;
+  - piloto **em produção no IMO** (#902), com desvios do critério abertos.
+- **Próximo marco:** v2.11.0, a partir de 27/11.
 
-## 2. Objetivo e escopo
-
-- **Missão original (13/11):** auditar e consolidar o ResultX DS. A Electia é a referência de experiência, o Emprega+ IMO é a prioridade de alinhamento e o Xscore é a expansão futura. São 10 entregáveis, em [`audits/2026-11-13-ds-auditoria/diagnostico-resultx-ds.md`](audits/2026-11-13-ds-auditoria/diagnostico-resultx-ds.md).
-- **Missão complementar (13/11):** governança, propagação de mudanças e conformidade. São 8 entregáveis, em [`audits/2026-11-13-ds-auditoria/governanca-propagacao-conformidade.md`](audits/2026-11-13-ds-auditoria/governanca-propagacao-conformidade.md).
-- **Decisões do Marcos que valem:**
-  - D1, D2 e D3: vocabulário único, fonte única de tokens e tela piloto;
-  - D4, D7, D8 e D10 ([ADR-0005](adr/0005-governance-propagation-decisions.md));
-  - D5 e D6 foram adiadas por decisão.
-- **Fora do escopo agora:** EditalHub (congelado até 10/12), FinanceX e ResultX Site. Esses dois só passam por conferência de impacto antes de cada versão.
-
-## 3. Estado geral
+### Indicadores
 
 | Indicador | Valor | Como foi medido |
 |---|---|---|
-| Etapas do roteiro concluídas | 4 de 10 (40%); a E3 entrou em produção com desvios e não é contada | roteiro do diagnóstico §10; concluída = critério de aceite da etapa atendido, com PR mesclada, CI verde e Revisor |
-| Entregáveis da missão original documentados | 10 de 10 | diagnóstico §1–§10, versionado em #111 |
-| Entregáveis da governança documentados | 8 de 8 | desenho de governança, versionado em #113 |
-| Decisões de governança aplicadas | 4 de 7 (D4, D7, D8, D10) | D5 e D6 adiadas; D9 só vale quando a conformidade entrar em modo aviso |
-| Contratos de componente | 8 de 8 do lote piloto | `contracts/*.yaml` (#117) |
-| Linhas da matriz Electia × IMO no piloto | 8 de 25 **trabalhadas** (1, 5, 7, 8, 10, 11, 14, 20). **Critério satisfeito comprovado em 0.** 3 comprovadamente não atendem (1, 5, 14); 5 sem verificação por critério (7, 8, 10, 11, 20) | diagnóstico §5 (critério de cada linha) e §10 (critério da E3) |
-| Camadas da arquitetura | 2 completas (Tokens; Contratos do lote piloto), 2 parciais (Temas, Adaptadores), 2 sem entrega nesta missão (Foundation, Padrões de produto) | completa = artefato versionado + teste no CI + consumido por produto ou pela vitrine; parcial = parte disso |
+| Atividades | 10 concluídas / 26; 2 aguardando validação; 5 bloqueadas; 8 pendentes | quadro B |
+| Etapas do roteiro | 4 de 10 pelo critério; a E3 em produção com desvios não é contada | diagnóstico §10 |
+| Matriz Electia × IMO no piloto | 8 de 25 **trabalhadas** (1, 5, 7, 8, 10, 11, 14, 20). **Critério satisfeito comprovado em 0.** 3 comprovadamente não atendem (1, 5, 14); 5 sem verificação (7, 8, 10, 11, 20) | diagnóstico §5 e §10 |
+| Camadas da arquitetura | 2 completas (Tokens; Contratos do lote piloto), 2 parciais (Temas, Adaptadores), 2 sem entrega nesta missão (Foundation, Padrões de produto) | completa = artefato versionado + teste no CI + consumido por produto ou pela vitrine |
+| Decisões de governança aplicadas | 4 de 7 (D4, D7, D8, D10) | D5 e D6 adiadas; D9 só vale quando a conformidade entrar em modo aviso ([ADR-0005](adr/0005-governance-propagation-decisions.md)) |
 | Produtos na versão mais recente do DS | 0 de 3 | Electia e Xscore travados em `#v2.9.0`; o IMO copia 2 arquivos do DS por SHA |
-| Versão publicada mais recente | `v2.10.0` (`52d6b4e`, 13/11) | tags do GitHub |
+| Testes da `main` `7f58e77` | 3 de 3 verdes | CI, Pages, Visual Linux (16 baselines) |
 
-## 4. Quadro de entregáveis
+## B. Quadro de atividades
 
-Status: **Concluído**, **Em andamento**, **Pendente**, **Bloqueado** ou **Não verificado**.
+| ID | Atividade | Estado | Critério de conclusão | Evidência | Depende de | Próxima ação |
+|---|---|---|---|---|---|---|
+| DS-01 | Auditorias Electia, DS e IMO | CONCLUÍDO | 3 relatórios com parecer do Revisor | diagnóstico §1–§3, anexos A–C; #111 | — | revisitar na E6 |
+| DS-02 | Inventário de tokens | CONCLUÍDO | documento + fonte única com saída igual | diagnóstico §4.1; #116 | — | `brands/*/tokens/tokens.json` ainda são manuais |
+| DS-03 | Inventário de componentes | CONCLUÍDO | documento revisado | diagnóstico §4.2 | — | atualizar na E5 |
+| DS-04 | Matriz Electia × IMO (documento) | CONCLUÍDO | 25 linhas com critério | diagnóstico §5 | — | — |
+| DS-05 | Desenho de governança, propagação e conformidade | CONCLUÍDO | 8 entregáveis revisados | desenho + anexo D; #113 | — | — |
+| DS-06 | E0 — fundação de governança | CONCLUÍDO | regra no AGENTS.md de 4 repos; CI do DS falha com defeito e passa com correção | #111, #112, #113, #115; Electia #1009; IMO #900; `audits/.../e0-provas.md` | — | — |
+| DS-07 | E1 — tokens com fonte única (mesclada; ainda não publicada em versão) | CONCLUÍDO | artefatos gerados equivalentes aos da `v2.10.0`, que é a referência da comparação: `eds-root` idêntico byte a byte, demais artefatos pertinentes equivalentes após normalização | #116 (`c7aaeec`), mesclada depois da tag `v2.10.0` (`52d6b4e`) | — | publicação prevista na v2.11.0 (DS-14) |
+| DS-08 | E2 — 8 contratos e adaptador CSS | CONCLUÍDO | contrato com casos de teste e capturas nos 2 temas | #117, #118, #119, #120 | — | — |
+| DS-09 | F3 — marca do portal IMO no Bootstrap | CONCLUÍDO | gate MySQL + merge do Marcos | IMO #901 (`3e59ad8f`), deploy | — | — |
+| DS-10 | E3 — piloto IMO (vagas e candidaturas do empregador) | EM ANDAMENTO | linhas 1, 5, 7, 8, 10, 11, 14, 20 da matriz atendidas; capturas; teclado; testes verdes | em produção: IMO #902 (`cfeae3b1`), deploy 43591765046 | DS-17, DS-19, DS-20 | botões das telas em `<x-rx-button>`; verificar 7, 8, 10, 11, 20 |
+| DS-11 | Avaliação do piloto | AGUARDANDO VALIDAÇÃO | aceite visual do Marcos | IMO `docs/qa/2026-11-13-ds-e3-piloto-avaliacao.md` | Marcos | Marcos olha as 2 telas, claro e escuro |
+| DS-12 | Botão primário com preenchimento e teste visual que o protege | CONCLUÍDO | contrato ≥3:1 no limite e ≥4,5:1 no texto; captura que reprova sem preenchimento | #121 (`16cdea4`), #123 (`c71e9b4`) | — | chega ao IMO na DS-17 |
+| DS-13 | Painel de status e protocolo de continuidade | AGUARDANDO VALIDAÇÃO | painel no formato do protocolo; AGENTS.md aponta o protocolo | #122, #124 e a PR deste protocolo | Revisor | mesclar |
+| DS-14 | Versão v2.11.0 | PENDENTE | inventário até o SHA da tag, impacto por produto, CI verde, Revisor | — | 27/11 (D7), DS-15, DS-16 | preparar CHANGELOG e inventário |
+| DS-15 | Revisão visual dos 3 `btn-danger` do FinanceX | PENDENTE | captura real aprovada pelo Revisor | ressalva da #115 | — | captura no FinanceX |
+| DS-16 | Dependabot #108 e #110 | BLOQUEADO | rebase sobre a `main`, 3 checks verdes, Revisor | #110 com visual-linux vermelho; #108 sem visual-linux | rebase (o comentário do agente foi bloqueado pela permissão) | `@dependabot rebase` pelo Marcos ou liberar o comentário |
+| DS-17 | IMO recebe a v2.11.0 | PENDENTE | recópia por SHA; `RxPilotVendoredCopyTest` atualizado; CTA "Ver planos" decidido | — | DS-14; merge do Marcos | PR no IMO depois da tag |
+| DS-18 | E4 — escalas no `eds-root` | BLOQUEADO | SHA igual nas 3 cópias | — | 10/12 (recurso do EditalHub) | planejar depois de 10/12 |
+| DS-19 | Contraste do white-label (linha 1) | BLOQUEADO | ≥4,5:1 para qualquer cor na grade | IMO `docs/qa/2026-11-13-ds-e3-varredura-white-label.md`: 49 pares abaixo, em 29 de 36 cores | mudança de valor → 10/12 | entra na E4 |
+| DS-20 | Foco volta ao fechar os diálogos do piloto (linha 14) — correção do piloto (E3), **antes** da E5 | BLOQUEADO | foco retorna ao gatilho nos diálogos "Encerrar vaga" e "Perfil" | avaliação do piloto | decisão do Marcos (liberar JS mínimo no piloto) | Marcos decide; com o sim, PR no IMO dentro da E3 |
+| DS-21 | E5 — ampliação do IMO | BLOQUEADO | catraca do IMO cai a cada lote | — | DS-10, DS-11 | — |
+| DS-22 | E6 — Electia convergindo (inclui adaptador React) | PENDENTE | capturas antes/depois sem diferença não intencional | — | E1/E2 (prontas) | planejar |
+| DS-23 | E7 — Xscore | PENDENTE | travas do Xscore verdes; capturas iguais | — | E1 (pronta) | planejar |
+| DS-24 | Prova descartável P1 da propagação | PENDENTE | P1 passa sem escrita em produto | desenho §6.5 | DS-14 | depois da v2.11.0 |
+| DS-25 | Conformidade G0 (manifesto `.ds/` no IMO e na Electia) | PENDENTE | 2 relatórios coerentes com o desenho §5.5 | desenho §7.1 | — | criar o manifesto |
+| DS-26 | D5 — GitHub App da automação | PENDENTE (adiada por decisão) | aceite de risco expresso do Marcos | ADR-0005 | DS-24 | voltar a perguntar depois da P1 |
 
-| Etapa | Status | Progresso (critério) | Evidência | Próxima ação |
-|---|---|---|---|---|
-| Auditoria Electia | Concluído (documento) | 1/1 relatório, com parecer do Revisor | diagnóstico §1 + anexo B; #111 (`c86f1e6`) | revisitar só na E6 |
-| Auditoria ResultX DS | Concluído (documento) | 1/1 | diagnóstico §2 + anexo A; #111 | — |
-| Auditoria IMO | Concluído (documento) | 1/1 | diagnóstico §3 + anexo C; #111 | — |
-| Inventário de tokens | Concluído | documento §4.1 + fonte única implementada (E1) | #116 (`c7aaeec`): `tokens/tokens.json` gera `eds-root` idêntico | `brands/*/tokens/tokens.json` ainda são manuais |
-| Inventário de componentes | Concluído (documento) | 1/1 | diagnóstico §4.2 | atualizar quando a E5 começar |
-| Matriz Electia × IMO | Concluído (documento); aplicação Em andamento | matriz 25/25 escrita; 8/25 trabalhadas no piloto; 0 com critério comprovadamente satisfeito (ver §3) | diagnóstico §5; IMO #902 | fechar as linhas 1, 5 e 14 e verificar as outras 5 antes da E5 |
-| Arquitetura compartilhada | Em andamento | 2 camadas completas, 2 parciais e 2 sem entrega (critério em §3) | [ADR-0001](adr/0001-role-named-tokens.md), [0003](adr/0003-token-single-source.md), [0004](adr/0004-contracts-adapters-pilot.md); #116, #117, #119 | camada de padrões de produto na E5 |
-| Temas por marca | Em andamento | temas gerados da fonte única; white-label do IMO com 49 pares abaixo do mínimo, em 29 de 36 cores | `tokens/dtcg/layouts/brand-*.css.tmpl` (#116); IMO `docs/qa/2026-11-13-ds-e3-varredura-white-label.md` | correção do white-label exige mudança de valor → depois de 10/12 |
-| Adaptadores por stack | Em andamento | CSS completo (`pilot.css` em `@layer` + `pilot.scoped.css`). Blade parcial: 8 `<x-rx-*>` criados no IMO e exercitados só na vitrine de teste; as telas reais usam classes `rx-*` direto. React não começou | #117, #119, #120, #121; IMO #902 | levar as telas do piloto para os componentes Blade; React na E6 (Electia) / E7 (Xscore) |
-| Governança dos agentes | Concluído (escopo E0) | regra de interface no AGENTS.md dos 4 repos; CODEOWNERS; proteção da `main` do DS com 3 checks obrigatórios; PAPEIS.md | #111, #113, #115; Electia #1009; IMO #900; Xscore já tinha | manter |
-| Sincronização DS → produtos | Pendente (só desenho) | 0 de 3 peças: prova P1 da automação, `consumers.yaml` e manifesto `.ds/` em cada produto | desenho §1, §5 e §6; D5 adiada | prova descartável P1 depois da v2.11.0 |
-| Testes e conformidade | Em andamento | DS: lint/build, contraste, visual Linux obrigatório e sonda com autoteste. Produtos: testes do IMO para o piloto. Fases G0–G3 não começaram | runs na `main` `16cdea4`: CI 43594117301, Pages 43594116982, Visual 43594124917 (verdes) | G0: criar manifesto no IMO e na Electia |
-| Plano de migração IMO | Em andamento | F1 e F3 em produção; E3 em produção com desvios (linhas 1, 5 e 14 da matriz); E4 bloqueada até 10/12; E5 aguarda aceite do piloto | IMO #891 (F1, 12/11), #901 (F3), #902 (E3); deploy 43591765046 | aceite visual do Marcos no piloto |
-| Avaliação do piloto | Não verificado | aceite visual do Marcos não registrado; Revisor aprovou com ressalvas | IMO `docs/qa/2026-11-13-ds-e3-piloto-avaliacao.md` | Marcos olha as duas telas em produção |
+## C. Registro de progresso
 
-## 5. Últimas alterações verificadas (13–14/11)
-
-| Data | PR | O que mudou |
+| Data | Referência | O que mudou |
 |---|---|---|
-| 14/11 | DS #123 | Captura recortada da área de ações do piloto (o botão primário sem preenchimento dá 7,6% de diferença e reprova) e baselines de página inteira atualizadas pelo CI oficial; 16 baselines Linux |
-| 14/11 | DS #121 | Botão primário do adaptador volta a ter preenchimento de marca, com borda neutra; contrato exige limite ≥3:1 e texto ≥4,5:1; varredura de 288 medições, todas ≥5,89:1 |
-| 14/11 | IMO #902 | Piloto E3 em produção, nas telas de vagas e candidaturas do empregador. Folhas: 2 copiadas do DS e conferidas por SHA (`rx-pilot.css`, `rx-pilot-aliases.css`) e 3 locais do IMO (`rx-pilot-bridge.css`, `-dialogs.css`, `-tables.css`). Os 8 componentes Blade foram criados e testados na vitrine, mas não são usados nas telas reais |
-| 13/11 | DS #120 | Legenda da tabela e sonda que lê `color(srgb)` |
-| 13/11 | DS #119 | Variante escopada do adaptador e aliases Emprega+ para stacks sem `@layer` |
-| 13/11 | DS #118 | 10 baselines Linux da vitrine do adaptador |
-| 13/11 | DS #117 | E2: 8 contratos YAML e adaptador CSS opcional |
-| 13/11 | DS #116 | E1: fonte única DTCG com saída igual à da v2.10.0 |
-| 13/11 | DS #115 | 17 combinações de botão abaixo de AA corrigidas; PAPEIS.md versionado |
-| 13/11 | DS #114 | Versão v2.10.0 |
-| 13/11 | DS #113 | Decisões D4–D10, ADR-0005; visual Linux em toda PR |
-| 13/11 | DS #112 | Teste visual Linux no CI |
-| 13/11 | DS #111 | E0: governança, ADRs 0001/0003/0004, auditoria versionada |
-| 13/11 | IMO #901 | F3: marca do portal no Bootstrap e plugins |
-| 13/11 | IMO #900 / Electia #1009 | Regra de interface do DS no AGENTS.md |
+| 14/11 | DS #124 | Painel atualizado depois da #123 |
+| 14/11 | DS #123 | Captura recortada da área de ações (o botão primário sem preenchimento dá 7,6% de diferença e reprova); baselines de página inteira atualizadas pelo CI; 16 baselines Linux |
+| 14/11 | DS #122 | Painel de status criado; o Revisor reprovou 2 versões antes de aprovar |
+| 14/11 | DS #121 | Botão primário com preenchimento de marca e borda neutra; varredura de 288 medições (repouso e hover), todas ≥5,89:1 |
+| 14/11 | IMO #902 | Piloto E3 em produção. 2 folhas copiadas do DS por SHA (`rx-pilot.css`, `rx-pilot-aliases.css`) e 3 locais (`rx-pilot-bridge.css`, `-dialogs.css`, `-tables.css`). Os 8 componentes Blade ficaram só na vitrine de teste |
+| 13/11 | DS #120 / #119 / #118 / #117 | Legenda da tabela e sonda `color(srgb)`; variante escopada e aliases Emprega+; 10 baselines da vitrine; 8 contratos e adaptador CSS |
+| 13/11 | DS #116 / #115 / #114 | E1 fonte única; 17 combinações de botão corrigidas e PAPEIS.md; versão v2.10.0 |
+| 13/11 | DS #113 / #112 / #111 | Decisões D4–D10 e ADR-0005; visual Linux no CI; E0 e auditoria versionada |
+| 13/11 | IMO #901 / #900; Electia #1009 | F3 em produção; regra de interface do DS no AGENTS.md |
 
-## 6. O que mudou em cada produto
+### O que mudou nos produtos
 
-- **IMO — mudou.**
-  - F3 (#901): cores do portal aplicadas ao Bootstrap e aos plugins.
-  - E3 (#902): 43 arquivos — views, CSS, componentes Blade, testes e 4 relatórios em `docs/qa/` —, sem regra de negócio, nas telas **Minhas vagas** e **Candidaturas da vaga** do empregador. Em produção desde 14/11. As telas usam classes `rx-*` direto; os componentes Blade ficaram só na vitrine de teste.
-  - O botão primário do piloto em produção ainda usa a cópia de `bd1457a`: a correção #121 chega ao IMO depois da v2.11.0, por recópia com SHA.
+- **IMO — mudou:** F3 (#901) e piloto E3 (#902), em produção. São 43 arquivos: views, CSS, componentes Blade, testes e 4 relatórios em `docs/qa/`, sem regra de negócio. A correção do primário (#121) chega ao IMO depois da v2.11.0.
 - **Electia — sem mudança visual relacionada ao DS.** Desde 12/11 entraram duas PRs:
-  - #1009: só documentação da regra de interface para agentes;
-  - #1008: mudou código de leads e de e-mail (`src/app/api/leads/route.ts`, `src/lib/email/*.ts` e testes), sem tocar em interface nem no DS.
+  - #1009: só documentação;
+  - #1008: código de leads e e-mail, sem interface nem DS.
   - Continua em `#v2.9.0`.
-- **Xscore — sem mudança.** Nenhum commit na pasta do Xscore depois do commit de referência da auditoria (`35921bf5`, 13/11). A regra de interface já existia. Continua em `#v2.9.0`.
+- **Xscore — sem mudança.** Nenhum commit na pasta depois do commit de referência da auditoria (`35921bf5`, 13/11). Continua em `#v2.9.0`.
 
-## 7. Validação
+### Validação
 
 | Verificação | Resultado | Evidência |
 |---|---|---|
-| CI do DS (lint, build, contraste, sonda) | Passou | `main` `c71e9b4`, run 43597747823 |
-| Visual Linux do DS (obrigatório, 16 baselines) | Passou | `main` `c71e9b4`, run 43597748955 |
-| Site de documentação (Pages) | Passou | run 43597747849 |
-| Revisor independente | Aprovou cada PR do DS desta missão; várias passaram por reprovação e correção | pareceres registrados nas PRs |
-| Testes do IMO para o piloto (MySQL, smoke, cópia por SHA) | Passaram no CI | IMO #902, head `55fb9d65` |
-| Smoke em produção do IMO | Passou: folhas `rx-pilot*` respondem 200; SHA de `rx-pilot.css` igual ao da `bd1457a` | deploy 43591765046 |
-| Capturas 320/768/1024/1440 nos produtos | Feitas localmente pelo Executor durante a E3; **não versionadas nem automáticas** | IMO `docs/qa/` |
-| Navegadores além do Chromium (Firefox, Safari) | **Não realizado** | — |
+| CI do DS (lint, build, contraste, sonda) | Passou | `main` `7f58e77` |
+| Visual Linux do DS (obrigatório, 16 baselines) | Passou | `main` `7f58e77`, run 43598259655 |
+| Site de documentação (Pages) | Passou | `main` `7f58e77` |
+| Revisor independente | Aprovou cada PR do DS desta missão, várias depois de reprovar e corrigir | pareceres nas PRs |
+| Testes do IMO para o piloto | Passaram no CI | IMO #902, head `55fb9d65` |
+| Smoke em produção do IMO | Passou; SHA de `rx-pilot.css` igual ao da `bd1457a` | deploy 43591765046 |
+| Capturas 320/768/1024/1440 nos produtos | Feitas localmente na E3; **não versionadas nem automáticas** | IMO `docs/qa/` |
+| Firefox e Safari | **Não realizado** | — |
 | Lighthouse / desempenho | **Não realizado** | — |
-| Aceite visual humano do piloto | **Não registrado** | — |
+| Aceite visual humano do piloto | **Não registrado** | DS-11 |
 
-## 8. Pendências e bloqueios
+## D. Bloqueios e decisões
 
-| Lacuna | Por que falta | Depende de | Risco de seguir sem resolver | Próxima ação |
-|---|---|---|---|---|
-| E3 sem critério atendido: botões das telas reais não passam por `<x-rx-button>` (linha 5), contraste do white-label falha (linha 1) e foco não volta ao fechar diálogos (linha 14) | o piloto priorizou classes nas views, sem JS e sem mudança de valor | trocar views por componentes (técnica); JS e valor dependem do Marcos e de 10/12 | ampliar (E5) sobre um piloto que não cumpre o próprio critério | fechar a linha 5 e verificar 7, 8, 10, 11 e 20 antes da E5 |
-| Revisão visual dos 3 `btn-danger` do FinanceX | ressalva do Revisor na #115 | captura real no FinanceX | botão de perigo mudar sem ninguém ver | fazer antes de cortar a v2.11.0 |
-| White-label do IMO: 49 pares abaixo do mínimo | correção exige mudança de valor de token | 10/12 (E4) | empresas com cor clara (ex.: amarelo) com link/CTA ilegível | plano na E4 |
-| Diálogos "Encerrar vaga" e "Perfil" não devolvem o foco | precisa de JavaScript; o piloto foi feito sem JS | decisão do Marcos | usuário de teclado perde a posição | decidir se libera JS mínimo |
-| Vermelho do SweetAlert (exclusão) a 3,94:1 | preexistente, fora do piloto | F4 do IMO | texto de confirmação abaixo de AA | F4 |
-| Sincronização automática | só desenho; D5 adiada de propósito | prova P1 + aceite de risco do Marcos | cópias manuais divergirem entre produtos | prova P1 depois da v2.11.0 |
-| Adaptador React | etapa E6/E7 ainda não começou | E1/E2 (prontas) | Electia e Xscore seguem fora dos contratos | planejar a E6 |
-| Manifesto `.ds/` e fases G0–G3 | ainda não começou | nenhuma técnica | conformidade continua manual | G0 no IMO e na Electia |
-| PRs do Dependabot #108 e #110 abertas | não tratadas | Supervisor | dependências de desenvolvimento desatualizadas | revisar no ciclo da v2.11.0 |
+**Bloqueios**
 
-## 9. Decisões aguardando o Marcos
+| Bloqueio | Atividades | Por que | O que destrava |
+|---|---|---|---|
+| Janela de recurso do EditalHub | DS-18, DS-19 | mudança de valor no `eds-root` proibida até 10/12 | a data |
+| Aceite visual do piloto | DS-21 | a E5 só começa com o piloto aprovado | Marcos (DS-11) |
+| JavaScript no piloto | DS-20 | o piloto foi feito sem JS; devolver o foco exige JS | decisão do Marcos |
+| Rebase do Dependabot | DS-16 | o agente não tem permissão para comentar `@dependabot rebase` | o Marcos comenta, ou libera o comentário |
 
-1. **Aceite visual do piloto em produção.** Sem ele, a E5 não começa. Recomendação: olhar as duas telas no claro e no escuro.
-2. **JavaScript mínimo para devolver o foco nos diálogos do piloto.** Recomendação: liberar, como primeira fatia da E5.
-3. **Merge das PRs de atualização de versão nos produtos**, quando forem abertas (uma por produto, sem efeito visual na v2.10.0).
+**Decisões aguardando o Marcos**
 
-D5 (credencial da automação) só volta a ser pergunta depois da prova P1.
+1. **Aceite visual do piloto** (DS-11). Recomendação: olhar as duas telas no claro e no escuro.
+2. **Liberar JavaScript mínimo no piloto** para devolver o foco nos diálogos (DS-20). Recomendação: liberar, como correção do piloto (E3). A E5 só começa com a E3 fechada.
+3. **Merge das PRs de atualização de versão nos produtos**, quando forem abertas.
 
-## 10. Próximas cinco ações (em ordem)
+D5 só volta a ser pergunta depois da P1 (DS-24).
 
-1. **Marcos:** aceite visual do piloto do IMO.
-2. **Supervisor + Executor:** revisão visual do `btn-danger` no FinanceX e inventário de impacto nos produtos.
-3. **Supervisor:** tratar as PRs do Dependabot #108 e #110 no ciclo da v2.11.0.
-4. **Supervisor:** cortar a **v2.11.0** (a partir de 27/11), com CI verde e Revisor.
-5. **Executor (PR no IMO, merge do Marcos):** recopiar `rx-pilot.css` da v2.11.0 por SHA, passar os botões das telas do piloto para `<x-rx-button>` (linha 5 da matriz) e verificar as linhas 7, 8, 10, 11 e 20 pelo critério.
+## E. Continuidade
 
-## 11. Como manter este painel
-
-- Ao **iniciar** uma sessão de trabalho no DS, ler este arquivo antes de continuar.
-- Atualizar quando o estado mudar de forma material: PR mesclada, etapa concluída ou travada, versão publicada ou decisão do Marcos.
-- Em cada atualização, registrar: o que foi feito, a evidência (PR/SHA/run), os testes rodados, as pendências e a próxima etapa.
-- Não marcar como concluído só porque o código foi escrito. Valem o critério de aceite e a validação.
-- O checklist operacional continua em `tarefas.md` (quando existir) e na nota do Maestri. Este painel é a visão gerencial.
+- **Próxima ação executável (Supervisor):** DS-15, a revisão visual do `btn-danger` no FinanceX. Ela não depende de ninguém e destrava a DS-14.
+- **Depois:**
+  1. DS-16, assim que o bloqueio de rebase for resolvido;
+  2. DS-14, a partir de 27/11;
+  3. DS-17, a PR no IMO.
+- **Para retomar, ler nesta ordem:**
+  1. `AGENTS.md` e `PAPEIS.md`;
+  2. este painel;
+  3. o [protocolo](governance/status-protocol.md);
+  4. as ADRs [0001](adr/0001-role-named-tokens.md), [0003](adr/0003-token-single-source.md), [0004](adr/0004-contracts-adapters-pilot.md) e [0005](adr/0005-governance-propagation-decisions.md);
+  5. `CHANGELOG.md` (seção Unreleased).
+- **Estado do repositório no fechamento:**
+  - nenhuma PR do DS aberta além da deste protocolo e das #108/#110;
+  - nenhuma pasta de trabalho pendente do DS.

@@ -3,7 +3,7 @@
 Instruções para agentes de IA (Claude Code, Codex, Cursor e afins) neste repositório.
 
 ## Execução de tarefas
-- **Painel de status:** ao iniciar uma sessão no DS, leia `docs/STATUS.md`. Ao mudar o estado de forma material (PR mesclada, etapa concluída ou travada, versão, decisão do Marcos), o Supervisor DS atualiza o painel com evidência, testes, pendências e próxima etapa.
+- **Status e continuidade (obrigatório):** siga o [protocolo de status](docs/governance/status-protocol.md). Ao iniciar ou retomar, leia `docs/STATUS.md`, confira o estado real do repositório (git, PRs, CI) e continue da próxima ação registrada. Ao concluir atividade, encontrar bloqueio, decidir arquitetura ou parar num ponto seguro, o Supervisor DS atualiza o painel com estado padronizado, evidência, testes, pendências e próxima ação. Nada é CONCLUÍDO sem critério atendido e evidência; distinga local, commitado, enviado e mesclado.
 - **Tarefas longas (3+ etapas ou várias sessões):** crie `tarefas.md` na raiz com um checklist (`- [ ]`) antes de começar, marque cada item ao concluir e só encerre com todos marcados ou com o motivo de cada pendência registrado no próprio arquivo. Ao retomar, leia `tarefas.md` primeiro.
 - **Espelho no Maestri:** o `tarefas.md` tem uma nota própria no Maestri, chamada `tarefas — resultx-design-system`.
   - Ao criar o `tarefas.md`, rode `maestri list`. Se a nota não existir, crie com `maestri note create "$(cat tarefas.md)" --name "tarefas — resultx-design-system"`. O `--name` impede que ela mude de nome.
