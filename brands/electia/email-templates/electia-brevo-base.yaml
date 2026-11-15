@@ -692,7 +692,7 @@ body:
                       text-valign: top
                       valign: top
                       width: 100%
-                  content: '<p><span style="color:#505058; font-family:arial,helvetica,sans-serif; font-size:11px;"><strong style="color:#8A8A96;">eletia | emprega+</strong> &mdash; Emprega+</span></p>'
+                  content: '<p><span style="color:#505058; font-family:arial,helvetica,sans-serif; font-size:11px;"><strong style="color:#8A8A96;">eletia | emprega+</strong></span></p>'
                 # Address
                 -
                   id: footer-address

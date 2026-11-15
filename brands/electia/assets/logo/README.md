@@ -14,9 +14,9 @@ eletia by emprega+
 |--------|-------|------|-------|
 | `eletia` | **JetBrains Mono** | 600 (Semibold) | Tudo minúsculo. Letter-spacing: -0.04em |
 | `by` | Sora | 400 (Regular) | ~30% do tamanho do `eletia` |
-| `emprega+` | **Sora** | 800 (ExtraBold) | ~50% do tamanho do `eletia`. Fonte oficial Emprega+ |
+| `emprega+` | **Sora** | 800 (ExtraBold) | ~50% do tamanho do `eletia`. Fonte oficial emprega+ |
 
-**Grafia oficial:** `eletia` tudo minúsculo (decisão 2026-05-11). Vide BRAND-BOOK §2 (Regras de grafia) e §3 (Wordmark).
+**Grafia oficial:** `eletia`, tudo minúsculo (nome trocado em 15/11/2026; regra de minúsculas herdada da decisão de 11/05/2026). Vide BRAND-BOOK §2 (Regras de grafia) e §3 (Wordmark).
 
 ## Arquivos disponíveis (v1)
 

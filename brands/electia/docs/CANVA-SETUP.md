@@ -16,7 +16,7 @@
 - **Convenção:** TODOS os designs eletia (templates, peças sociais, posts) vivem nesta pasta. Designs novos criados no Canva devem ser movidos pra cá imediatamente.
 
 ### Designs eletia em outras pastas (mover pra cá quando puder):
-- `DAHFDuSkSXE` — master logos Emprega+ + eletia (6 variantes). **Atenção:** tem Emprega+ também — decisão se move pra eletia ou cria pasta cross-brand.
+- `DAHFDuSkSXE` — master logos emprega+ + eletia (6 variantes). **Atenção:** tem emprega+ também — decisão se move pra eletia ou cria pasta cross-brand.
 
 ---
 
@@ -313,5 +313,5 @@ Tudo isso **eu faço via MCP**, programaticamente, sem você precisar redesenhar
 
 - **Cor não bate?** Compare com `brands/electia/docs/BRAND-BOOK.md` §4 — fonte canônica
 - **Fonte não aparece?** Canva tem Sora/Inter/JetBrains Mono nativamente (Google Fonts)
-- **Logo errado?** Veja `brands/electia/assets/logo/README.md` ou Canva master `DAHFDuSkSXE` (template kit Emprega+ + eletia 6 variantes)
+- **Logo errado?** Veja `brands/electia/assets/logo/README.md` ou Canva master `DAHFDuSkSXE` (template kit emprega+ + eletia 6 variantes)
 - **Brand Kit ID Canva (depois de criado):** anote aqui pra eu referenciar via MCP: `kAXXX...`

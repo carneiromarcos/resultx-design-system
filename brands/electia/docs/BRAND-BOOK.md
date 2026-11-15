@@ -52,7 +52,7 @@ O eletia mostra quem cada colaborador realmente e — e onde deveria estar.
 ### Hierarquia
 
 ```
-Emprega+  (marca-mae — ecossistema de empregabilidade)
+emprega+  (marca-mae — ecossistema de empregabilidade)
 └── eletia | emprega+  (produto SaaS B2B — assessments comportamentais)
     ├── Mentor AI  (feature — assistente de gestão de pessoas)
     ├── Testes Situacionais  (feature — cenários sob pressao)
@@ -94,11 +94,11 @@ eletia by emprega+
 |--------|-------|------|--------|-------|
 | `eletia` | **JetBrains Mono** | 600 (Semibold) | Normal | Tudo minúsculo. Letter-spacing: `-0.04em`. Cor: branco `#E6EDF3` ou accent roxo `#6f32b1` em destaque |
 | `by` | Sora | 400 (Regular) | Normal | Tamanho ~30% do `eletia`. Cor: `rgba(230,237,243,0.55)` |
-| `emprega+` | **Sora ExtraBold** | 800 | Normal | Mesma fonte oficial da marca-mae Emprega+. Tamanho ~50% do `eletia`. Cor: `rgba(230,237,243,0.85)` |
+| `emprega+` | **Sora ExtraBold** | 800 | Normal | Mesma fonte oficial da marca-mae emprega+. Tamanho ~50% do `eletia`. Cor: `rgba(230,237,243,0.85)` |
 
 **Por que JetBrains Mono em `eletia`?** Decisão tipográfica T2 (mono tech). Sinaliza ferramenta científica/IA, diferencia de competidores que usam sans-serif puro (Sólides, Buk, Pulses). Aprovado em 2026-05-11.
 
-**Por que Sora ExtraBold em `emprega+`?** E a fonte oficial da marca Emprega+ (logo original tem o "ga+" desenhado custom no Canva, mas para o endorsement do eletia usamos Sora reto sem o custom).
+**Por que Sora ExtraBold em `emprega+`?** E a fonte oficial da marca emprega+ (logo original tem o "ga+" desenhado custom no Canva, mas para o endorsement do eletia usamos Sora reto sem o custom).
 
 ### Variantes do wordmark
 
@@ -152,7 +152,7 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 - Não colocar sobre fundos que comprometam legibilidade
 - Não rotacionar
 - Não adicionar sombras, brilhos ou efeitos (exceto o glow purple oficial)
-- Não escrever `Eletia` com E maiúsculo, nem em wordmark nem em início de frase (so minúsculo)
+- Não escrever `Eletia` com E maiúsculo, nem em wordmark nem em início de frase (só minúsculo)
 - Não usar `eletia by ResultX` em materiais públicos
 - Não trocar a fonte do `eletia` (so JetBrains Mono Semibold 600)
 - Não trocar a fonte do `emprega+` (so Sora ExtraBold 800)
@@ -373,7 +373,7 @@ Valores canônicos em **OKLCH** (token-driven), alinhados ao DS/preview — usad
 | Termo | Grafia Correta | Nunca usar |
 |-------|----------------|------------|
 | Nome do produto | eletia | Eletia, ELETIA, electia (nome antigo), Eléctia |
-| Com endosso | eletia \| emprega+ | eletia by ResultX, eletia/Emprega+, electia by Emprega+ (antigo) |
+| Com endosso | eletia \| emprega+ | eletia by ResultX, eletia/emprega+, electia by Emprega+ (antigo) |
 | Feature IA | Mentor AI | Mentor IA, mentor ai, Consultor IA |
 | Subtitulo Mentor | Assistente de Gestão de Pessoas | Consultor de RH, Chatbot |
 | Testes | Testes Situacionais | Testes de pegadinha, SJT |
@@ -387,17 +387,17 @@ Valores canônicos em **OKLCH** (token-driven), alinhados ao DS/preview — usad
 
 ---
 
-## 10. Coexistência com Emprega+
+## 10. Coexistência com emprega+
 
 ### O que compartilham
 
 - Fontes: Sora (headings) + Inter (body)
 - Filosofia: empregabilidade, pessoa certa no lugar certo
-- Dominio: electia.empregamais.me (subdominio da Emprega+)
+- Dominio: electia.empregamais.me (subdominio da emprega+)
 
 ### O que difere
 
-| Aspecto | Emprega+ | eletia |
+| Aspecto | emprega+ | eletia |
 |---------|----------|---------|
 | Público | Candidatos, editais, vagas | Gestores, RH, diretoria |
 | Modelo | B2C (gratuito) | B2B SaaS (assinatura) |
@@ -405,23 +405,23 @@ Valores canônicos em **OKLCH** (token-driven), alinhados ao DS/preview — usad
 | Paleta | Gold + grafite light (institucional) | Purple + grafite dark (identidade própria) |
 | Complexidade | Simples, acessível | Profundo, dados, IA |
 
-O eletia herda a credibilidade da Emprega+ mas se posiciona como produto premium para decisores corporativos.
+O eletia herda a credibilidade da emprega+ mas se posiciona como produto premium para decisores corporativos.
 
 ### Hierarquia legal e canais
 
 ```
 ResultX (CNPJ único, Marcos Carneiro CEO)
-└── Emprega+ (marca-mae, plataforma empregabilidade)
-    ├── Emprega+ direto    canais: empregamais.me + @empregamais (Insta + LinkedIn)
-    ├── IMO                via Emprega+ (sem canais próprios)
-    ├── eletia            via Emprega+ (sem canais próprios)
-    └── Editais            via Emprega+ (parado, reformulacao prevista)
+└── emprega+ (marca-mae, plataforma empregabilidade)
+    ├── emprega+ direto    canais: empregamais.me + @empregamais (Insta + LinkedIn)
+    ├── IMO                via emprega+ (sem canais próprios)
+    ├── eletia            via emprega+ (sem canais próprios)
+    └── Editais            via emprega+ (parado, reformulacao prevista)
 ```
 
 **O que isso significa para a comúnicação do eletia:**
 
 1. **eletia NAO tem rede social própria.** Toda comúnicação social (posts, anuncios, lives) passa por `@empregamais` (Instagram + LinkedIn empresa).
-2. **Domain:** `electia.empregamais.me` — subdominio da Emprega+, nunca dominio próprio.
+2. **Domain:** `electia.empregamais.me` — subdominio da emprega+, nunca dominio próprio.
 3. **Endorsement obrigatório:** "eletia | emprega+" em todo material público (site, anuncios, social, PDF).
 4. **Entidade legal nas comúnicações:** "ResultX" aparece apenas em Termos, Privacidade, NF — nunca em marketing.
 5. **Marcos Carneiro NAO e o canal do eletia.** Marcos representa PdV (personal-brand). eletia se comúnica como empresa, não como pessoa.
@@ -453,7 +453,7 @@ Marcos Carneiro traz para o eletia uma combinacao rara:
 | Origem | Contribuicao para o produto |
 |--------|----------------------------|
 | **Engenheiro** (formação) | Rigor metodológico, base científica não-negociavel |
-| **Empreendedor** (CRONIC Jeans, ResultX, Emprega+) | Foco em produto B2B real, não academico |
+| **Empreendedor** (CRONIC Jeans, ResultX, emprega+) | Foco em produto B2B real, não academico |
 | **Consultor 12+ anos** | Conhecimento profundo da dor do gestor brasileiro |
 | **Católico aplicado** (implícito) | Ética não-negociavel: LGPD, CFP, saúde mental |
 
@@ -508,7 +508,7 @@ O que essas frases revelam: **autoimagem não bate com comportamento real**. Fal
 4. **NR-1 compliant** — módulo Saúde Mental gerido por psicologo (CRP) com acesso compartimentado
 5. **LGPD by design** — consent gate, soft-delete 30d, cron mensal de cleanup, DPO designado
 6. **Cobertura Brasil-real** — pt-BR nativo, mapeamento de cargos brasileiros, integracao com folha/ERP daqui
-7. **Heranca Emprega+** — credibilidade de plataforma B2C já consolidada (milhões de candidatos)
+7. **Heranca emprega+** — credibilidade de plataforma B2C já consolidada (milhões de candidatos)
 
 ### Por que agora
 
