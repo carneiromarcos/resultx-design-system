@@ -1,20 +1,22 @@
-# electia — Wordmark Assets
+# eletia — Wordmark Assets
 
-> **electia não tem logo gráfico.** O wordmark tipográfico **e** a marca. Sem simbolo isolado, sem ícone próprio. Esta pasta hospeda as variantes do wordmark + um helper "e" para favicon/avatar (espaços onde o wordmark não cabe).
+> **Desde 15/11/2026 a marca se chama eletia (antes electia).** Caminhos e tokens técnicos mantêm 'electia' por compatibilidade.
+
+> **eletia não tem logo gráfico.** O wordmark tipográfico **e** a marca. Sem simbolo isolado, sem ícone próprio. Esta pasta hospeda as variantes do wordmark + um helper "e" para favicon/avatar (espaços onde o wordmark não cabe).
 
 ## Spec oficial do wordmark
 
 ```
-electia by emprega+
+eletia by emprega+
 ```
 
 | Trecho | Fonte | Peso | Notas |
 |--------|-------|------|-------|
-| `electia` | **JetBrains Mono** | 600 (Semibold) | Tudo minúsculo. Letter-spacing: -0.04em |
-| `by` | Sora | 400 (Regular) | ~30% do tamanho do `electia` |
-| `emprega+` | **Sora** | 800 (ExtraBold) | ~50% do tamanho do `electia`. Fonte oficial Emprega+ |
+| `eletia` | **JetBrains Mono** | 600 (Semibold) | Tudo minúsculo. Letter-spacing: -0.04em |
+| `by` | Sora | 400 (Regular) | ~30% do tamanho do `eletia` |
+| `emprega+` | **Sora** | 800 (ExtraBold) | ~50% do tamanho do `eletia`. Fonte oficial emprega+ |
 
-**Grafia oficial:** `electia` tudo minúsculo (decisão 2026-05-11). Vide BRAND-BOOK §2 (Regras de grafia) e §3 (Wordmark).
+**Grafia oficial:** `eletia`, tudo minúsculo (nome trocado em 15/11/2026; regra de minúsculas herdada da decisão de 11/05/2026). Vide BRAND-BOOK §2 (Regras de grafia) e §3 (Wordmark).
 
 ## Arquivos disponíveis (v1)
 
@@ -23,10 +25,10 @@ electia by emprega+
 | Arquivo | Conteudo | Status |
 |---------|----------|--------|
 | `electia-wordmark.svg` | Wordmark completo dark (texto branco em fundo dark) | ✅ Gerado |
-| `electia-wordmark-accent.svg` | Wordmark com `electia` em teal accent (#2DD4BF) | ✅ Gerado |
+| `electia-wordmark-accent.svg` | Wordmark com `eletia` em teal accent (#2DD4BF) | ✅ Gerado |
 | `electia-wordmark-light.svg` | Wordmark para fundo claro (texto dark em fundo branco) | ✅ Gerado |
-| `electia-short.svg` | Wordmark curto: apenas `electia` (sem endorsement) | ✅ Gerado |
-| `electia-lockup-vertical.svg` | Lockup vertical: `electia` em cima, `by emprega+` embaixo | ✅ Gerado |
+| `electia-short.svg` | Wordmark curto: apenas `eletia` (sem endorsement) | ✅ Gerado |
+| `electia-lockup-vertical.svg` | Lockup vertical: `eletia` em cima, `by emprega+` embaixo | ✅ Gerado |
 
 ### Favicon helper "e" — NAO E LOGO
 

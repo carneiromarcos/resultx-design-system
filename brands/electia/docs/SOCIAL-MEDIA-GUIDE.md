@@ -1,4 +1,6 @@
-# Guia de Social Media — Electia by Emprega+ (Electia)
+# Guia de Social Media — eletia | emprega+ (eletia)
+
+> **Desde 15/11/2026 a marca se chama eletia (antes electia).** Caminhos e tokens técnicos mantêm 'electia' por compatibilidade.
 
 > Documento dedicado a templates, tipos de conteudo e diretrizes de produção visual para redes sociais.
 > Complementa o Brand Book (BRAND-BOOK.md) — todas as regras visuais do BB se aplicam aqui.
@@ -172,7 +174,7 @@ SCN-1b Planner → SCN-NEW Script → Gravacao → SCN-UPLOAD Metadata → SCN-C
 Templates HTML renderizaveis via Playwright: `social-media-templates.html`
 Renderer: `render-templates.mjs`
 
-*Nota: templates visuais seguem a paleta grafite+teal do Electia (material de comúnicação/brand), não o App DS (teal/dark do produto SaaS).*
+*Nota: templates visuais seguem a paleta grafite+teal do eletia (material de comúnicação/brand), não o App DS (teal/dark do produto SaaS).*
 
 ---
 
@@ -195,6 +197,6 @@ Antes de publicar qualquer peca:
 
 ---
 
-*Social Media Guide v1.0 — Electia by Emprega+ por Emprega+*
+*Social Media Guide v1.0 — eletia | emprega+*
 *Complemento ao Brand Book v2.4*
 *Criado em 2026-03-27.*

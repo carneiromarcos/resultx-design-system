@@ -1,15 +1,15 @@
-# Electia 4T — Especificação do Instrumento Psicométrico
+# eletia 4T — Especificação do Instrumento Psicométrico
 
 > **Status:** v0.1 — proposta para validação interna (2026-05-09)
-> **Autor:** Equipe Electia (Orion + Marcos)
+> **Autor:** Equipe eletia (Orion + Marcos)
 > **Referência conceitual:** Italo Marsili — "Os 4 Temperamentos" (4 humores hipocráticos modernizados)
 > **Origem:** Pivot Le Senne → Marsili documentado em `electia-temperamentos-pivot-marsili.md`
 
 ## 1. Resumo executivo
 
-Instrumento psicométrico próprio da Electia para classificar colaboradores em 4 temperamentos (Colérico, Sanguíneo, Fleumático, Melancólico) associados aos 4 elementos da natureza (Fogo, Ar, Água, Terra), com identificação de temperamento secundário (mistura) — totalizando 4 perfis puros + 12 misturas = 16 padrões distintos.
+Instrumento psicométrico próprio da eletia para classificar colaboradores em 4 temperamentos (Colérico, Sanguíneo, Fleumático, Melancólico) associados aos 4 elementos da natureza (Fogo, Ar, Água, Terra), com identificação de temperamento secundário (mistura) — totalizando 4 perfis puros + 12 misturas = 16 padrões distintos.
 
-**Por que próprio:** o instrumento oficial Marsili (225 itens) é longo demais pra SaaS B2B e tem direitos autorais. O Electia 4T é construído com vocabulário corporativo brasileiro, mais curto (40 itens, 5-7 minutos), sem dependência externa.
+**Por que próprio:** o instrumento oficial Marsili (225 itens) é longo demais pra SaaS B2B e tem direitos autorais. O eletia 4T é construído com vocabulário corporativo brasileiro, mais curto (40 itens, 5-7 minutos), sem dependência externa.
 
 ## 2. Estrutura geral
 
@@ -164,11 +164,11 @@ Pós-aplicação, o usuário é levado pro card Temperamentos com:
 
 | Etapa | Quando | Critério de sucesso |
 |-------|--------|---------------------|
-| **Soft launch** | Sprint 1 | Aplicar em N=50 voluntários (colaboradores Electia, beta testers) |
+| **Soft launch** | Sprint 1 | Aplicar em N=50 voluntários (colaboradores eletia, beta testers) |
 | **Análise de consistência interna** | Sprint 2 | α de Cronbach por escala > 0.70 |
 | **Análise fatorial confirmatória** | Sprint 2-3 | Itens carregam ≥ 0.40 na escala correta + < 0.30 nas outras |
 | **Calibragem de pontos de corte** | Sprint 3 | N=300+ usuários · ajustar critérios da seção 4.4 |
-| **Versão 1.0** | Sprint 4 | Documentação técnica + manual interpretativo + selo "instrumento próprio Electia, validado internamente" |
+| **Versão 1.0** | Sprint 4 | Documentação técnica + manual interpretativo + selo "instrumento próprio eletia, validado internamente" |
 
 ### 6.2 Itens reserva
 

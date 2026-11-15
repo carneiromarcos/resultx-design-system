@@ -33,6 +33,10 @@ Base: `package.json` e busca de classes no `main` de FinanceX, ResultX Site, Ele
 
 **Mudança só física (conteúdo gerado, valores equivalentes após normalização, E1):** `tokens/tokens.css`, `tokens/base/tokens-base.css`, `tokens/themes/*` e `brands/*/tokens/tokens.css`. `dist/tokens.min.css` e `tokens/eds-root.css` não mudam. Esta lista resume o diff `v2.10.0..5b18b15` nos caminhos distribuídos; não substitui o inventário completo, refeito no corte.
 
+### Changed — marca electia passa a se chamar eletia (15/11/2026, ADR-133 do produto)
+
+Só o nome visível em `brands/electia/` (docs, e-mails, previews, mockups, wireframes, texto dos SVG do wordmark) vira `eletia`, sempre minúsculo; caminhos, arquivos, exports, tokens, variáveis e classes mantêm `electia`, e cores e tipografia não mudam.
+
 ### Added — contratos do lote piloto e adaptador CSS opt-in (E2, ADR-0004)
 
 Oito contratos em `contracts/*.yaml` (entram no pacote): Button, Field, Card, StatCard,
