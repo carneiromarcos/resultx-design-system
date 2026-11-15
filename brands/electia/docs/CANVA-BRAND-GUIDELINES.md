@@ -1,4 +1,6 @@
-# Electia — Brand Guidelines no Canva
+# eletia — Brand Guidelines no Canva
+
+> **Desde 15/11/2026 a marca se chama eletia (antes electia).** Caminhos e tokens técnicos mantêm 'electia' por compatibilidade.
 
 **Versão:** v1.0 · **Data:** 2026-05-25 · **Uso:** referência operacional no Canva (cole/imprima/abra ao lado da peça que tá criando)
 
@@ -67,7 +69,7 @@ INTER          → body, UI, parágrafos
   Subtítulo: 20px
   Small: 13px
 
-JETBRAINS MONO → wordmark "electia", code, dados
+JETBRAINS MONO → wordmark "eletia", code, dados
   pesos: 400, 500, 600
   ❌ NÃO usar em copy de marketing
 ```
@@ -130,7 +132,7 @@ Margem ao redor = altura da letra "e" do wordmark. Nada invade.
 
 | ✅ Faça | ❌ Não faça |
 |---|---|
-| Usar SVG canonical sempre | Digitar "electia" à mão |
+| Usar SVG canonical sempre | Digitar "eletia" à mão |
 | Cor roxa/branca canonical | Mudar cor do logo |
 | Respeitar área de proteção | Texto/elemento colado no logo |
 | Logo no canto (regra default) | Logo centralizado (a menos lockup proposital) |

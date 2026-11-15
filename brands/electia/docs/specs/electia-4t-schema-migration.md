@@ -1,11 +1,11 @@
-# Electia 4T — Schema Migration (Le Senne → Marsili)
+# eletia 4T — Schema Migration (Le Senne → Marsili)
 
 > **Status:** v0.1 — proposta para validação interna (2026-05-09)
 > **Conteúdo:** Schema atual vs novo, DDL changes, backfill, rollback, deploy
 > **Origem:** Pivot Le Senne → 4 temperamentos clássicos hipocráticos
 > **Uso:** spec técnico pro time backend executar quando OPS-SEC liberar
 
-> ⚠️ **Disclaimer:** este doc assume o schema atual com base em padrões comuns de SaaS psicométrico. O time backend deve **validar contra o codebase real** antes de aplicar e ajustar nomes de tabelas/colunas conforme convenção Electia.
+> ⚠️ **Disclaimer:** este doc assume o schema atual com base em padrões comuns de SaaS psicométrico. O time backend deve **validar contra o codebase real** antes de aplicar e ajustar nomes de tabelas/colunas conforme convenção eletia.
 
 ## 1. Visão geral
 

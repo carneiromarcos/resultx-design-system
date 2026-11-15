@@ -1,5 +1,5 @@
 /*
-  Protótipo Electia — Assessments, Testes personalizados e Ranking (06/10/2026).
+  Protótipo eletia — Assessments, Testes personalizados e Ranking (06/10/2026).
   Comportamento da página electia-assessments-2026-10-06.html. Dados fictícios.
   Ficha: docs/research/electia-assessments-2026-10-06.md
 */
@@ -454,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
       t.classList.toggle('active', sim);
       $(`#${t.getAttribute('aria-controls')}`).hidden = !sim;
     });
-    document.title = `${nome === 'ad' ? 'Por desempenho' : 'Por fit ao cargo'} · Ranking · electia`;
+    document.title = `${nome === 'ad' ? 'Por desempenho' : 'Por fit ao cargo'} · Ranking · eletia`;
   }
   function ativarPeloUsuario(tab) {
     selecionarAba(tab.dataset.aba);
@@ -487,7 +487,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (sim) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
     $('[data-top-title]').textContent = TITULOS[atual];
-    document.title = `${TITULOS[atual]} · electia`;
+    document.title = `${TITULOS[atual]} · eletia`;
     if (atual === 'personalizados') { filtrosDaUrl(query); renderRuns(); }
     if (atual === 'ranking') selecionarAba(sub === 'desempenho' ? 'ad' : 'fit');
     return `#${atual}-titulo`;

@@ -1,15 +1,17 @@
-# Electia Design System — v2.0
+# eletia Design System — v2.0
+
+> **Desde 15/11/2026 a marca se chama eletia (antes electia).** Caminhos e tokens técnicos mantêm 'electia' por compatibilidade.
 
 **Versão:** 2.0 (purple refactor) | **Data:** 2026-05-27 | **Status:** Canônico
 
-**Escopo:** Sistema de visualização e UI do produto Electia (assessments comportamentais). Foco em cards de teoria, anatomia de relatórios e tokens de produto.
+**Escopo:** Sistema de visualização e UI do produto eletia (assessments comportamentais). Foco em cards de teoria, anatomia de relatórios e tokens de produto.
 
 **Audiência:** equipe de produto + agente que implementa.
 
 **Cross-references:**
 - **Tokens canônicos:** `../tokens/tokens.css` e `../tokens/tokens.json` — paleta purple + escalas de fundo, bordas, texto, motion. Sempre que houver conflito entre este doc e os tokens, **os tokens prevalecem** (eles são a source of truth executável).
 - **Brand Book:** `BRAND-BOOK.md` (v2.0) — voz, posicionamento, arquétipo, regras de uso visual.
-- **DS root (multi-brand):** `../../../DESIGN-SYSTEM.md` (ResultX DS v2.1.1) — fundação compartilhada entre PdV, Electia, IMO. Electia herda tokens base e adiciona overrides de marca.
+- **DS root (multi-brand):** `../../../DESIGN-SYSTEM.md` (ResultX DS v2.1.1) — fundação compartilhada entre PdV, eletia, IMO. eletia herda tokens base e adiciona overrides de marca.
 
 ---
 
@@ -30,7 +32,7 @@ Principais grupos:
 **Como usar no app:**
 ```css
 @import 'resultx-design-system/tokens';
-@import './tokens/tokens.css'; /* override Electia em cima do DS base */
+@import './tokens/tokens.css'; /* override eletia em cima do DS base */
 ```
 
 ```tsx
@@ -130,7 +132,7 @@ Acompanhado SEMPRE de copy psicológicamente segura ("merece atenção", não "v
 **Regras:**
 
 - `font-feature-settings: "tnum" 1` em todo número comparativo (alinha colunas)
-- Fonte: Inter (já no Electia) — não trocar
+- Fonte: Inter (já no eletia) — não trocar
 - Negative space: nunca menos de 16px ao redor do hero number
 - Display de números nunca em italic, nunca decorativo
 
@@ -187,7 +189,7 @@ Acompanhado SEMPRE de copy psicológicamente segura ("merece atenção", não "v
 
 | Estado | UX |
 |---|---|
-| **Loading** | Skeleton shimmer (já no Electia) — placeholder do shape do viz, não spinner genérico |
+| **Loading** | Skeleton shimmer (já no eletia) — placeholder do shape do viz, não spinner genérico |
 | **Empty** (n=0 aplicações) | Ícone outline neutro + "Aguardando aplicação do teste" + CTA "Aplicar agora" |
 | **Insufficient data** (n<mín teórico) | Banner discreto topo: "Resultado parcial — recomenda-se reaplicar" — viz aparece com `opacity: 0.6` |
 | **Error** | Card branco + ícone alerta + "Não foi possível calcular" + "Reportar problema" — não exibir SVG quebrado |
@@ -195,7 +197,7 @@ Acompanhado SEMPRE de copy psicológicamente segura ("merece atenção", não "v
 
 ---
 
-## 7. Acessibilidade (não-negociável — Electia é WCAG AA)
+## 7. Acessibilidade (não-negociável — eletia é WCAG AA)
 
 ```html
 <svg role="img" aria-labelledby="disc-title-{id} disc-desc-{id}">
@@ -231,7 +233,7 @@ Acompanhado SEMPRE de copy psicológicamente segura ("merece atenção", não "v
 
 ---
 
-## 9. Tokens novos a adicionar ao DS Electia
+## 9. Tokens novos a adicionar ao DS eletia
 
 ```css
 :root {

@@ -6,7 +6,7 @@ fieldsHistory: []
 firstLoadSocialIcons: false
 fonts: []
 id: 6addb043-c026-4e9f-a50e-4424f440e1a9
-name: "Electia — Template Base"
+name: "eletia — Template Base"
 subject: "{{params.SUBJECT}}"
 ui:
   showDeleteOption: false
@@ -132,7 +132,7 @@ body:
                   padding-right: 0px
                   valign: top
               content:
-                # Logo Electia horizontal
+                # Logo eletia horizontal
                 -
                   id: ead5ba05-4608-4b56-9242-2aaed91eb569
                   label: Replace
@@ -559,7 +559,7 @@ body:
                       text-valign: top
                       valign: top
                       width: 100%
-                  content: '<p><strong><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px;">Marcos Carneiro</span></strong></p><p><span style="color: #8A8A96; font-family: arial,helvetica,sans-serif; font-size: 13px;">Fundador, Electia by Emprega+</span></p><p><em><span style="color: #2DD4BF; font-family: arial,helvetica,sans-serif; font-size: 13px;">[Tagline Electia a definir].</span></em></p>'
+                  content: '<p><strong><span style="color: #FFFFFF; font-family: arial,helvetica,sans-serif; font-size: 16px;">Marcos Carneiro</span></strong></p><p><span style="color: #8A8A96; font-family: arial,helvetica,sans-serif; font-size: 13px;">Fundador, eletia | emprega+</span></p><p><em><span style="color: #2DD4BF; font-family: arial,helvetica,sans-serif; font-size: 13px;">[Tagline eletia a definir].</span></em></p>'
 
         # ═══════════════════════════════════════════
         # ROW 10 — Divider
@@ -692,7 +692,7 @@ body:
                       text-valign: top
                       valign: top
                       width: 100%
-                  content: '<p><span style="color:#505058; font-family:arial,helvetica,sans-serif; font-size:11px;"><strong style="color:#8A8A96;">Electia by Emprega+</strong> &mdash; Emprega+</span></p>'
+                  content: '<p><span style="color:#505058; font-family:arial,helvetica,sans-serif; font-size:11px;"><strong style="color:#8A8A96;">eletia | emprega+</strong> &mdash; Emprega+</span></p>'
                 # Address
                 -
                   id: footer-address

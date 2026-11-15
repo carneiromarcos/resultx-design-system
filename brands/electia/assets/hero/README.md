@@ -1,10 +1,10 @@
-# electia — Hero Assets
+# eletia — Hero Assets
 
-> **Status: ✅ v1 em produção** — validado por Marcos em 2026-05-10 (modo Electia Subtle).
+> **Status: ✅ v1 em produção** — validado por Marcos em 2026-05-10 (modo eletia Subtle).
 
 ## Asset principal: `aurora-hero-v1`
 
-Vídeo abstract energy flow em loop, base do hero das LPs e materiais Electia.
+Vídeo abstract energy flow em loop, base do hero das LPs e materiais eletia.
 
 | Arquivo | Formato | Dimensoes | Peso | Notas |
 |---------|---------|-----------|------|-------|
@@ -33,7 +33,7 @@ Chrome/Firefox/Edge pegam WebM (menor); Safari pega MP4.
 
 ## Filter oficial "electia-subtle"
 
-O vídeo e aplicado com filter CSS pra escurecer e adequar a paleta Electia:
+O vídeo e aplicado com filter CSS pra escurecer e adequar a paleta eletia:
 
 ```css
 .aurora-hero-frame vídeo {
@@ -44,7 +44,7 @@ O vídeo e aplicado com filter CSS pra escurecer e adequar a paleta Electia:
 Este filter:
 - **brightness(0.38)** — escurece para o orb ficar discreto, não dominante
 - **saturate(0.55)** — dessatura para sair do cyan vibrante
-- **hue-rotate(-12deg)** — desloca cyan -> teal (alinhando a paleta Electia)
+- **hue-rotate(-12deg)** — desloca cyan -> teal (alinhando a paleta eletia)
 - **contrast(1.10)** — leve aumento de contraste para manter punch
 
 Modos alternativos disponíveis (no preview):

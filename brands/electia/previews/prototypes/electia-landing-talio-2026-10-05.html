@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Protótipo de landing do Electia — 05/10/2026.
+  Protótipo de landing do eletia — 05/10/2026.
   Evolui talio-electia-home-prototype-2026-10.html (01/10) e validou os
   componentes extraídos da referência Talio (docs/research/
   talio-componentes-2026-10-05.md). Desde o lote P eles moram no DS, e esta
@@ -20,8 +20,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
-  <meta name="description" content="Protótipo de landing do electia: navbar flutuante, orb de IA, CTA de contraste e barra de CTA no móvel.">
-  <title>electia — Sua equipe não é ruim. Está desencaixada.</title>
+  <meta name="description" content="Protótipo de landing do eletia: navbar flutuante, orb de IA, CTA de contraste e barra de CTA no móvel.">
+  <title>eletia — Sua equipe não é ruim. Está desencaixada.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@
   <link rel="stylesheet" href="../../../../dist/components.min.css">
   <style>
     /* ── Escala da página ──────────────────────────────────────────────────
-       O anel de foco vem da ponte Electia (sólido, desde a #82); não há
+       O anel de foco vem da ponte eletia (sólido, desde a #82); não há
        override de tema nesta página. */
     :root {
       --landing-page: 1180px;
@@ -43,7 +43,7 @@
     }
 
     /* ── Componentes do DS: só o que é desta marca ─────────────────────── */
-    .header-float-brand strong { font: 600 1.3rem/1 var(--font-mono); letter-spacing: -0.06em; } /* wordmark electia */
+    .header-float-brand strong { font: 600 1.3rem/1 var(--font-mono); letter-spacing: -0.06em; } /* wordmark eletia */
     .menu-drawer-label { letter-spacing: 0.12em; }
 
     /* ════════════════════════════════════════════════════════════════════
@@ -128,9 +128,9 @@
 
   <header class="header-float" data-header-float>
     <div class="header-float-bar">
-      <a class="header-float-brand" href="#inicio" aria-label="electia by emprega+, início">
+      <a class="header-float-brand" href="#inicio" aria-label="eletia by emprega+, início">
         <span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span>
-        <strong>electia</strong><span class="header-float-brand-tag">by emprega+</span>
+        <strong>eletia</strong><span class="header-float-brand-tag">by emprega+</span>
       </a>
       <nav class="header-float-links" aria-label="Navegação principal">
         <a href="#plataforma">Plataforma</a>
@@ -142,7 +142,7 @@
         <button class="header-float-icon" type="button" data-theme-toggle aria-label="Ativar tema escuro"><span aria-hidden="true">☾</span></button>
         <a class="btn btn-ghost btn-sm" href="#login">Login</a>
         <a class="btn btn-secondary btn-sm" href="#cta-final">Agendar demonstração</a>
-        <a class="btn btn-primary btn-sm btn-sheen" href="#cta-final">Conheça o electia</a>
+        <a class="btn btn-primary btn-sm btn-sheen" href="#cta-final">Conheça o eletia</a>
         <a class="header-float-icon header-float-menu" id="menu-abrir" href="#menu-gaveta" data-menu-drawer-toggle="menu-gaveta" aria-label="Abrir menu"><span aria-hidden="true">☰</span></a>
       </div>
     </div>
@@ -164,7 +164,7 @@
         <span class="menu-drawer-label">Conta</span>
         <a class="btn btn-ghost" href="#login">Login</a>
         <a class="btn btn-secondary" href="#cta-final">Agendar demonstração</a>
-        <a class="btn btn-primary" href="#cta-final">Conheça o electia</a>
+        <a class="btn btn-primary" href="#cta-final">Conheça o eletia</a>
       </div>
     </div>
   </section>
@@ -176,12 +176,12 @@
         <div>
           <span class="eyebrow">Gestão comportamental com contexto</span>
           <h1 id="hero-title">Sua equipe não é ruim. Está <em>desencaixada.</em></h1>
-          <p class="hero-copy">Entenda como cada pessoa trabalha, se comunica e toma decisões. O electia conecta comportamento e contexto para ajudar líderes a fazer escolhas melhores sobre pessoas.</p>
+          <p class="hero-copy">Entenda como cada pessoa trabalha, se comunica e toma decisões. O eletia conecta comportamento e contexto para ajudar líderes a fazer escolhas melhores sobre pessoas.</p>
           <div class="hero-actions" data-hero-cta>
             <a class="btn btn-primary btn-sheen" href="#cta-final">Agendar demonstração</a>
             <a class="btn btn-secondary" href="#plataforma">Explore a plataforma</a>
           </div>
-          <p class="hero-note"><span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span>Com o Nexus, a IA do electia, ao lado de quem lidera.</p>
+          <p class="hero-note"><span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span>Com o Nexus, a IA do eletia, ao lado de quem lidera.</p>
         </div>
 
         <article class="copilot" id="nexus" aria-labelledby="nexus-title">
@@ -244,12 +244,12 @@
         <div class="cta-panel" data-theme="dark" data-cta-final>
           <span class="brand-orb brand-orb-electia brand-orb-lg" aria-hidden="true"></span>
           <h2 class="cta-panel-title" id="cta-title">O problema pode não ser a pessoa. <span class="cta-panel-title-tone">Pode ser o lugar onde ela está.</span></h2>
-          <p class="cta-panel-lead">Veja, com a sua equipe em mente, como o electia e o Nexus transformam leituras comportamentais em conversas melhores.</p>
+          <p class="cta-panel-lead">Veja, com a sua equipe em mente, como o eletia e o Nexus transformam leituras comportamentais em conversas melhores.</p>
           <div class="cta-panel-actions">
             <a class="btn btn-primary btn-sheen" href="#agendar">Agendar demonstração</a>
             <a class="btn btn-secondary btn-sheen" href="#plataforma">Explore a plataforma</a>
           </div>
-          <ul class="cta-panel-proof" aria-label="Princípios do electia">
+          <ul class="cta-panel-proof" aria-label="Princípios do eletia">
             <li>6 perspectivas comportamentais</li>
             <li>Leitura conectada ao contexto</li>
             <li>Não substitui o olhar de quem lidera</li>
@@ -262,8 +262,8 @@
       <div class="wrap">
         <header class="section-head"><span class="eyebrow">Dúvidas comuns</span><h2 id="duvidas-title">Antes de começar</h2></header>
         <div class="faq">
-          <details><summary>O electia é um teste de personalidade?</summary><p>O electia reúne diferentes perspectivas comportamentais para apoiar a compreensão de pessoas no contexto de trabalho. Uma leitura não define alguém por completo.</p></details>
-          <details><summary>O que é o Nexus?</summary><p>É a IA do electia. Ela ajuda a interpretar leituras e a preparar conversas, sempre como apoio a quem lidera.</p></details>
+          <details><summary>O eletia é um teste de personalidade?</summary><p>O eletia reúne diferentes perspectivas comportamentais para apoiar a compreensão de pessoas no contexto de trabalho. Uma leitura não define alguém por completo.</p></details>
+          <details><summary>O que é o Nexus?</summary><p>É a IA do eletia. Ela ajuda a interpretar leituras e a preparar conversas, sempre como apoio a quem lidera.</p></details>
           <details><summary>Os resultados substituem a avaliação de uma liderança?</summary><p>Não. Os resultados são insumos para conversas e decisões contextualizadas; não substituem o conhecimento da equipe nem o julgamento responsável de quem lidera.</p></details>
         </div>
       </div>
@@ -272,13 +272,13 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <a class="header-float-brand" href="#inicio" aria-label="electia by emprega+, voltar ao início"><span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span><strong>electia</strong><span class="header-float-brand-tag">by emprega+</span></a>
+      <a class="header-float-brand" href="#inicio" aria-label="eletia by emprega+, voltar ao início"><span class="brand-orb brand-orb-electia brand-orb-sm" aria-hidden="true"></span><strong>eletia</strong><span class="header-float-brand-tag">by emprega+</span></a>
       <span>Gestão comportamental com contexto.</span>
     </div>
   </footer>
 
   <aside class="cta-dock" aria-label="Atalho para demonstração" data-cta-dock data-cta-dock-after="[data-hero-cta]" data-cta-dock-until="[data-cta-final]">
-    <span class="cta-dock-text">Veja o electia com a sua equipe</span>
+    <span class="cta-dock-text">Veja o eletia com a sua equipe</span>
     <a class="btn btn-primary" href="#cta-final">Agendar demonstração</a>
   </aside>
 

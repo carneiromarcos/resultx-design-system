@@ -1,20 +1,22 @@
-# Canva Setup — Electia by Emprega+
+# Canva Setup — eletia | emprega+
 
-**Data:** 2026-05-25 | **Status:** 🟡 Pasta Electia existe — falta Brand Kit + templates
+> **Desde 15/11/2026 a marca se chama eletia (antes electia).** Caminhos e tokens técnicos mantêm 'electia' por compatibilidade.
 
-> Guia operacional pra Marcos criar Brand Kit Electia no Canva + configurar paleta, fontes, logos e templates editáveis.
+**Data:** 2026-05-25 | **Status:** 🟡 Pasta eletia existe — falta Brand Kit + templates
+
+> Guia operacional pra Marcos criar Brand Kit eletia no Canva + configurar paleta, fontes, logos e templates editáveis.
 > Tempo estimado: 30-45min seguindo passo-a-passo.
 
 ---
 
-## 📂 Pasta Canva Electia
+## 📂 Pasta Canva eletia
 
-- **Pasta:** [`FAHKrfRufXE`](https://www.canva.com/folder/FAHKrfRufXE) — Electia
+- **Pasta:** [`FAHKrfRufXE`](https://www.canva.com/folder/FAHKrfRufXE) — eletia
 - **Conteúdo atual:** 1 design (`DAHKrTrl7uo` movido pra cá 2026-05-25)
-- **Convenção:** TODOS os designs Electia (templates, peças sociais, posts) vivem nesta pasta. Designs novos criados no Canva devem ser movidos pra cá imediatamente.
+- **Convenção:** TODOS os designs eletia (templates, peças sociais, posts) vivem nesta pasta. Designs novos criados no Canva devem ser movidos pra cá imediatamente.
 
-### Designs Electia em outras pastas (mover pra cá quando puder):
-- `DAHFDuSkSXE` — master logos Emprega+ + Electia (6 variantes). **Atenção:** tem Emprega+ também — decisão se move pra Electia ou cria pasta cross-brand.
+### Designs eletia em outras pastas (mover pra cá quando puder):
+- `DAHFDuSkSXE` — master logos Emprega+ + eletia (6 variantes). **Atenção:** tem Emprega+ também — decisão se move pra eletia ou cria pasta cross-brand.
 
 ---
 
@@ -25,18 +27,18 @@
 
 ---
 
-## Passo 1 — Criar Brand Kit "Electia"
+## Passo 1 — Criar Brand Kit "eletia"
 
 1. Abre Canva → menu lateral → **Brand Hub** (ou "Brand Kit")
 2. Clica **+ Criar novo Brand Kit**
-3. Nome: `Electia by Emprega+`
+3. Nome: `eletia | emprega+`
 4. Descrição (opcional): "B2B SaaS — Sistema operacional de pessoas com IA"
 
 ---
 
 ## Passo 2 — Paleta (cole/configure cada cor)
 
-> Extraída do BRAND-BOOK Electia v2.5 (`brands/electia/docs/BRAND-BOOK.md` §4) e `tokens/tokens.css` v2.5.
+> Extraída do BRAND-BOOK eletia v2.5 (`brands/electia/docs/BRAND-BOOK.md` §4) e `tokens/tokens.css` v2.5.
 
 ### 🟣 Cores principais (roxo canonical)
 
@@ -101,7 +103,7 @@ Canva aceita Google Fonts diretamente. Adicione os 3:
 | **JetBrains Mono** | 400, 500 | Code, valores técnicos, dados |
 
 **Como adicionar:**
-1. Brand Hub → Brand Kit Electia → **Fontes**
+1. Brand Hub → Brand Kit eletia → **Fontes**
 2. Buscar "Sora" → adicionar
 3. Buscar "Inter" → adicionar
 4. Buscar "JetBrains Mono" → adicionar
@@ -123,7 +125,7 @@ Faça upload dos 7 SVGs de `~/meus-projetos/resultx/design-system/brands/electia
 | `electia-lockup-vertical.svg` | Lockup vertical com "by emprega+" |
 
 **Como uploadar:**
-1. Brand Hub → Brand Kit Electia → **Logotipos**
+1. Brand Hub → Brand Kit eletia → **Logotipos**
 2. Arrastar os 7 SVGs (ou upload em batch)
 3. Marcar `electia-wordmark.svg` como **Logo principal**
 
@@ -136,23 +138,23 @@ Faça upload dos 7 SVGs de `~/meus-projetos/resultx/design-system/brands/electia
 Crie estes 5 templates como **Brand Templates** (Canva Pro permite marcar como template).
 
 ### Template 1 — Instagram Post (1080×1080)
-- **Nome:** `Electia · IG Post · Quote Navy`
+- **Nome:** `eletia · IG Post · Quote Navy`
 - **Layout:** Grafite base + headline branca (Sora 700) + tagline gold/purple (Sora 600) + logo electia-wordmark canto inferior direito + glow purple sutil
 
 ### Template 2 — Instagram Story (1080×1920)
-- **Nome:** `Electia · IG Story · Conceito`
+- **Nome:** `eletia · IG Story · Conceito`
 - **Layout:** Grafite base + headline branca + ícone Lucide centralizado + CTA "saiba mais →" branco + logo canto superior
 
 ### Template 3 — LinkedIn Post (1200×627)
-- **Nome:** `Electia · LinkedIn Post · B2B`
+- **Nome:** `eletia · LinkedIn Post · B2B`
 - **Layout:** Grafite + headline executiva (Sora 700) + subtítulo (Inter 500) + ícone roxo + logo electia-wordmark + faixa "by emprega+" sutil
 
 ### Template 4 — LinkedIn Banner Empresa (1584×396)
-- **Nome:** `Electia · LinkedIn Banner Empresa`
+- **Nome:** `eletia · LinkedIn Banner Empresa`
 - **Layout:** Grafite gradient (Grafite base → Surface 1) + logo electia-wordmark-light alinhado à esquerda + headline "Sistema operacional de pessoas com IA" à direita + accent roxo
 
 ### Template 5 — Email Header (440×120)
-- **Nome:** `Electia · Email Header`
+- **Nome:** `eletia · Email Header`
 - **Layout:** Grafite base + electia-wordmark centralizado + linha roxa sutil abaixo + spacing equilibrado
 
 ### Naming convention pros templates:
@@ -160,10 +162,10 @@ Crie estes 5 templates como **Brand Templates** (Canva Pro permite marcar como t
 {Marca} · {Plataforma} · {Tipo} · {Variante}
 
 Ex:
-Electia · IG Post · Quote Navy
-Electia · IG Story · CTA Roxo
-Electia · LinkedIn · Anúncio Vaga
-Electia · Email · Newsletter Mensal
+eletia · IG Post · Quote Navy
+eletia · IG Story · CTA Roxo
+eletia · LinkedIn · Anúncio Vaga
+eletia · Email · Newsletter Mensal
 ```
 
 ---
@@ -171,7 +173,7 @@ Electia · Email · Newsletter Mensal
 ## Passo 6 — Workflow operacional (dia-a-dia)
 
 ### Pra criar peça nova:
-1. Canva → Brand Templates → escolhe template Electia
+1. Canva → Brand Templates → escolhe template eletia
 2. Clica **Usar este template** → cria cópia editável
 3. Edita texto/imagem (mantém paleta + fontes do Brand Kit automaticamente)
 4. Exporta: **Compartilhar** → **Baixar** → PNG (qualidade alta)
@@ -185,7 +187,7 @@ Electia · Email · Newsletter Mensal
 
 ## ✅ Checklist final
 
-- [ ] Brand Kit "Electia by Emprega+" criado
+- [ ] Brand Kit "eletia | emprega+" criado
 - [ ] 4 cores principais adicionadas (Purple + Grafite + variantes)
 - [ ] 4 surfaces grafite adicionadas
 - [ ] Brand gradients B + C criados (se Canva suportar gradient salvo)
@@ -211,7 +213,7 @@ Electia · Email · Newsletter Mensal
 
 ## 🧬 Master Anatômico — passo-a-passo (PRIORIDADE)
 
-> **Por que isso é importante:** o master atual `DAHFDuSkSXE` tem "electia" e fingerprint como **imagens fundidas** (bitmap), não elementos editáveis. O MCP do Canva pode SUBSTITUIR uma imagem inteira, mas **não consegue trocar a cor dentro de um bitmap**. Pra eu replicar/editar peças programaticamente via MCP, preciso de um master onde cada elemento é uma **camada separada e editável**.
+> **Por que isso é importante:** o master atual `DAHFDuSkSXE` tem "eletia" e fingerprint como **imagens fundidas** (bitmap), não elementos editáveis. O MCP do Canva pode SUBSTITUIR uma imagem inteira, mas **não consegue trocar a cor dentro de um bitmap**. Pra eu replicar/editar peças programaticamente via MCP, preciso de um master onde cada elemento é uma **camada separada e editável**.
 
 > **Resultado:** depois de 30min seu fazendo isso, eu gero infinitas variações via MCP (paleta diferente, texto diferente, gradient diferente) sem precisar redesenhar nada.
 
@@ -219,8 +221,8 @@ Electia · Email · Newsletter Mensal
 
 #### 1. Criar novo design
 - Canva → Criar design → Personalizado → **1080 × 1080 px**
-- Salvar dentro da pasta `FAHKrfRufXE` (Electia)
-- Nome: `Electia · MASTER ANATÔMICO · IG Post 1080`
+- Salvar dentro da pasta `FAHKrfRufXE` (eletia)
+- Nome: `eletia · MASTER ANATÔMICO · IG Post 1080`
 
 #### 2. Background (1 camada)
 - Inserir → Elementos → Retângulo
@@ -228,9 +230,9 @@ Electia · Email · Newsletter Mensal
 - Cor de preenchimento: **`#0B0E14`** (grafite canonical)
 - **NÃO** fundir com outra camada (mantém separado pra MCP poder trocar cor depois)
 
-#### 3. Wordmark "electia" (1 camada de TEXTO, não imagem)
+#### 3. Wordmark "eletia" (1 camada de TEXTO, não imagem)
 - Inserir → **Texto** (não "Logotipo"!)
-- Digitar: `electia`
+- Digitar: `eletia`
 - Fonte: **JetBrains Mono** (peso Semibold/600)
 - Tamanho: ~140pt
 - Cor: **`#6f32b1`** (roxo canonical) — ou metade roxo metade branco se quiser bicolor
@@ -246,7 +248,7 @@ Electia · Email · Newsletter Mensal
   - "emprega+" em Sora ExtraBold 800
 - Tamanho: ~20pt
 - Cor: branco `#FFFFFF` com opacidade 70% (`#FFFFFF` alpha 0.7)
-- Posição: abaixo do wordmark electia
+- Posição: abaixo do wordmark eletia
 
 #### 5. Fingerprint decorativo (1 camada de ELEMENTO/IMAGEM separada)
 - Inserir → Elementos → Buscar "fingerprint" ou usar PNG/SVG da pasta atual
@@ -261,7 +263,7 @@ Canva → menu lateral → **Camadas** (ou Layers). Deve aparecer:
 ```
 [topo]
 ├── Texto: "by emprega+"   ← editável
-├── Texto: "electia"        ← editável
+├── Texto: "eletia"        ← editável
 ├── Imagem/SVG: fingerprint ← editável
 └── Retângulo: background   ← editável (cor)
 [fundo]
@@ -294,14 +296,14 @@ A partir do seu master anatômico, vou gerar variações como:
 
 | Variação | Mudança automática (eu faço via MCP) |
 |---|---|
-| `Electia · IG Post · Hero Statement` | cor texto → gradient B (roxo→azul) |
-| `Electia · IG Post · Quote Roxa Solid` | texto roxo sólido `#6f32b1` |
-| `Electia · IG Post · Dados Light` | bg invertido → branco, texto grafite |
-| `Electia · IG Post · Premium` | gradient C (roxo→ouro) em accent |
-| `Electia · Story 1080×1920` | resize + reposicionamento |
-| `Electia · LinkedIn 1200×627` | resize + crop |
-| `Electia · LinkedIn Banner 1584×396` | resize + reposicionar logo à esquerda |
-| `Electia · Email Header 440×120` | resize + simplificar |
+| `eletia · IG Post · Hero Statement` | cor texto → gradient B (roxo→azul) |
+| `eletia · IG Post · Quote Roxa Solid` | texto roxo sólido `#6f32b1` |
+| `eletia · IG Post · Dados Light` | bg invertido → branco, texto grafite |
+| `eletia · IG Post · Premium` | gradient C (roxo→ouro) em accent |
+| `eletia · Story 1080×1920` | resize + reposicionamento |
+| `eletia · LinkedIn 1200×627` | resize + crop |
+| `eletia · LinkedIn Banner 1584×396` | resize + reposicionar logo à esquerda |
+| `eletia · Email Header 440×120` | resize + simplificar |
 
 Tudo isso **eu faço via MCP**, programaticamente, sem você precisar redesenhar cada uma.
 
@@ -311,5 +313,5 @@ Tudo isso **eu faço via MCP**, programaticamente, sem você precisar redesenhar
 
 - **Cor não bate?** Compare com `brands/electia/docs/BRAND-BOOK.md` §4 — fonte canônica
 - **Fonte não aparece?** Canva tem Sora/Inter/JetBrains Mono nativamente (Google Fonts)
-- **Logo errado?** Veja `brands/electia/assets/logo/README.md` ou Canva master `DAHFDuSkSXE` (template kit Emprega+ + Electia 6 variantes)
+- **Logo errado?** Veja `brands/electia/assets/logo/README.md` ou Canva master `DAHFDuSkSXE` (template kit Emprega+ + eletia 6 variantes)
 - **Brand Kit ID Canva (depois de criado):** anote aqui pra eu referenciar via MCP: `kAXXX...`

@@ -1,4 +1,4 @@
-# Electia 4T — Narrativas dos 16 perfis
+# eletia 4T — Narrativas dos 16 perfis
 
 > **Status:** v0.1 — proposta para validação interna (2026-05-09)
 > **Conteúdo:** 4 narrativas dos perfis puros + 12 narrativas das misturas dominante-secundário
@@ -7,7 +7,7 @@
 
 ## 1. Visão geral
 
-A teoria dos 4 temperamentos vem de **Hipócrates** (séc. V a.C.) e foi sistematizada por **Galeno** (séc. II d.C.). Cada temperamento associa-se a um dos 4 elementos da natureza descritos por **Empédocles**: Fogo, Ar, Água e Terra. A combinação de Velocidade da reação (rápida × lenta) com Duração da reação (duradoura × passageira) gera 4 padrões puros e 12 misturas (1 dominante + 1 secundário), totalizando **16 perfis** que o Electia 4T identifica.
+A teoria dos 4 temperamentos vem de **Hipócrates** (séc. V a.C.) e foi sistematizada por **Galeno** (séc. II d.C.). Cada temperamento associa-se a um dos 4 elementos da natureza descritos por **Empédocles**: Fogo, Ar, Água e Terra. A combinação de Velocidade da reação (rápida × lenta) com Duração da reação (duradoura × passageira) gera 4 padrões puros e 12 misturas (1 dominante + 1 secundário), totalizando **16 perfis** que o eletia 4T identifica.
 
 Cada narrativa é estruturada em 6 blocos:
 - **Essência** — 1 frase que captura o eixo do perfil
@@ -313,7 +313,7 @@ factual sobre seu perfil. Adapte tom e linguagem ao perfil.
 
 ### 4.3 Onde mais aparecem
 
-- **Theory page do Electia** — usuário curioso lê narrativa do próprio perfil + dos outros 3 puros pra contexto
+- **Theory page do eletia** — usuário curioso lê narrativa do próprio perfil + dos outros 3 puros pra contexto
 - **Relatório PDF do colaborador** — narrativa do perfil dele aparece formatada no relatório
 - **Link público compartilhado** — narrativa visível pra terceiros (recrutador externo, etc.)
 - **Briefing de 1:1 do gestor** — narrativa do colaborador serve de contexto pra preparação da conversa

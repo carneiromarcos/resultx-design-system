@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 120" role="img" aria-label="electia by emprega+">
-  <title>electia by emprega+ — accent teal</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 120" role="img" aria-label="eletia by emprega+">
+  <title>eletia by emprega+ — accent teal</title>
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&amp;family=Sora:wght@400;800&amp;display=swap');
@@ -10,8 +10,8 @@
   </defs>
   <rect width="560" height="120" fill="#0B0E14"/>
   <g transform="translate(32, 80)">
-    <text class="electia" x="0" y="0">electia</text>
-    <text class="by" x="290" y="0">by</text>
-    <text class="empregamais" x="324" y="0">emprega+</text>
+    <text class="electia" x="0" y="0">eletia</text>
+    <text class="by" x="254" y="0">by</text>
+    <text class="empregamais" x="288" y="0">emprega+</text>
   </g>
 </svg>

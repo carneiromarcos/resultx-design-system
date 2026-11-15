@@ -1,9 +1,9 @@
-# Electia 4T — Theory Page (conteúdo educativo público)
+# eletia 4T — Theory Page (conteúdo educativo público)
 
 > **Status:** v0.1 — proposta para validação interna (2026-05-09)
 > **Conteúdo:** Texto público da página `/dashboard/theories/temperamentos` + FAQ + glossário
 > **Origem:** Pivot Le Senne → 4 temperamentos clássicos hipocráticos
-> **Uso:** alimenta CMS do Electia — visível pra colaboradores, gestores, RH e visitantes
+> **Uso:** alimenta CMS do eletia — visível pra colaboradores, gestores, RH e visitantes
 
 > **Diretriz de tom:** corporativo brasileiro, acessível, profissional. Sem jargão psicométrico desnecessário. Cita referências clássicas (Hipócrates, Galeno, Empédocles) — todas em domínio público pré-moderno.
 
@@ -88,7 +88,7 @@ Cada temperamento tem **forças únicas** que o mundo precisa. Um time formado s
 A pergunta certa **não é** "qual o melhor temperamento?".
 A pergunta certa é: **"qual o ajuste entre o seu temperamento e o que você faz?"**
 
-É isso que o Electia mede.
+É isso que o eletia mede.
 
 ---
 
@@ -126,7 +126,7 @@ Depois de fazer o teste, você tem acesso a:
 R: Hipócrates é antigo, mas a ideia de que pessoas têm padrões estáveis de reação atravessou os séculos porque é observável. Modelos modernos (Big Five, MBTI, DISC) nascem em parte da mesma raiz. O que mudou foi o vocabulário e o rigor de medição — o eixo conceitual permanece.
 
 **P: Existe base científica?**
-R: A teoria dos 4 temperamentos não tem o mesmo status psicométrico que o Big Five (que foi extensamente validado), mas é amplamente usada em educação, treinamento corporativo e desenvolvimento pessoal por sua **utilidade prática**. O Electia 4T usa o framework conceitual com instrumento próprio validado internamente.
+R: A teoria dos 4 temperamentos não tem o mesmo status psicométrico que o Big Five (que foi extensamente validado), mas é amplamente usada em educação, treinamento corporativo e desenvolvimento pessoal por sua **utilidade prática**. O eletia 4T usa o framework conceitual com instrumento próprio validado internamente.
 
 **P: Por que os 4 elementos da natureza?**
 R: Foi **Empédocles** (séc. V a.C.) quem associou cada temperamento a um elemento: Fogo, Ar, Água, Terra. A metáfora é didática — ajuda a internalizar a essência de cada padrão. Não é literal nem mística; é mnemônica.
@@ -189,8 +189,8 @@ R: O resultado vem com:
 
 A leitura direta com o gestor numa conversa 1:1 costuma ser o melhor uso prático.
 
-**P: O Mentor IA do Electia conhece o meu perfil?**
-R: Sim. Quando você conversa com o Mentor IA dentro do Electia, ele tem como contexto o seu perfil de temperamento + os outros testes que você fez. As respostas são adaptadas ao seu perfil — Colérico recebe respostas mais diretas, Melancólico recebe respostas mais detalhadas, etc.
+**P: O Mentor IA do eletia conhece o meu perfil?**
+R: Sim. Quando você conversa com o Mentor IA dentro do eletia, ele tem como contexto o seu perfil de temperamento + os outros testes que você fez. As respostas são adaptadas ao seu perfil — Colérico recebe respostas mais diretas, Melancólico recebe respostas mais detalhadas, etc.
 
 ---
 
@@ -230,7 +230,7 @@ R: Sim. Quando você conversa com o Mentor IA dentro do Electia, ele tem como co
 ## 5. SEO / Metadata
 
 ```yaml
-title: "Os 4 Temperamentos · Hipócrates, Galeno e a tradição clássica · Electia"
+title: "Os 4 Temperamentos · Hipócrates, Galeno e a tradição clássica · eletia"
 description: "Conheça a teoria dos 4 temperamentos (Colérico, Sanguíneo, Fleumático, Melancólico) associados aos 4 elementos da natureza. Descubra seu padrão de reação e o ajuste com seu cargo."
 keywords: ["4 temperamentos", "colérico", "sanguíneo", "fleumático", "melancólico", "Hipócrates", "Galeno", "elementos da natureza", "perfil comportamental", "psicometria"]
 og_image: "/images/theory-temperamentos-hero.png"
@@ -248,7 +248,7 @@ canonical: "https://electia.app/dashboard/theories/temperamentos"
 | TP3 | Adicionar referências a livros/autores modernos | Não — manter independência |
 | TP4 | Versão para gestores/RH (foco em time) vs versão pra colaborador (foco em si) | Versão única, neutra (atual) |
 | TP5 | Tradução pra inglês/espanhol no roadmap | v0.2 |
-| TP6 | Adicionar seção "Outras teorias relacionadas" linkando pros outros 6 testes do Electia | Sim, em v0.2 |
+| TP6 | Adicionar seção "Outras teorias relacionadas" linkando pros outros 6 testes do eletia | Sim, em v0.2 |
 | TP7 | Embed do card visual `temperamentos-card.html` v0.5 como demo interativa | Sim, em v0.2 |
 
 ## 7. Histórico de versões

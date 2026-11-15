@@ -1,4 +1,6 @@
-# Brand Book — Electia by Emprega+
+# Brand Book — eletia | emprega+
+
+> **Desde 15/11/2026 a marca se chama eletia (antes electia).** Caminhos e tokens técnicos mantêm 'electia' por compatibilidade.
 
 **Versão BB (conteúdo editorial §1-17):** 2.2 · **Data:** 2026-06-27 · **Classificação:** Interno
 **Versão Brand Kit (este diretório):** 1.7.1 · **Data:** 2026-05-12 · ver [CHANGELOG.md](./CHANGELOG.md)
@@ -17,7 +19,7 @@
 
 ### Propósito
 
-Electia vem do grego *electio* — o eleito, o escolhido. Acreditamos que trabalho e vocação deveriam ser a mesma coisa. Que quando uma pessoa encontra o lugar certo, tudo muda — a produtividade, a satisfação, a saúde mental.
+eletia vem do grego *electio* — o eleito, o escolhido. Acreditamos que trabalho e vocação deveriam ser a mesma coisa. Que quando uma pessoa encontra o lugar certo, tudo muda — a produtividade, a satisfação, a saúde mental.
 
 ### Missão
 
@@ -31,7 +33,7 @@ Ser a plataforma de referência em gestão comportamental de pessoas no Brasil �
 
 > "Sua equipe não e ruim. Esta desencaixada."
 
-O Electia mostra quem cada colaborador realmente e — e onde deveria estar.
+O eletia mostra quem cada colaborador realmente e — e onde deveria estar.
 
 ### Valores da Marca
 
@@ -51,7 +53,7 @@ O Electia mostra quem cada colaborador realmente e — e onde deveria estar.
 
 ```
 Emprega+  (marca-mae — ecossistema de empregabilidade)
-└── Electia by Emprega+  (produto SaaS B2B — assessments comportamentais)
+└── eletia | emprega+  (produto SaaS B2B — assessments comportamentais)
     ├── Mentor AI  (feature — assistente de gestão de pessoas)
     ├── Testes Situacionais  (feature — cenários sob pressao)
     └── [Recrutamento e Selecao]  (futuro — em breve)
@@ -61,16 +63,16 @@ Emprega+  (marca-mae — ecossistema de empregabilidade)
 
 | Uso | Formato |
 |-----|---------|
-| **Primário** | Electia |
-| **Com endosso** | Electia by Emprega+ |
+| **Primário** | eletia |
+| **Com endosso** | eletia \| emprega+ |
 | **Feature** | Mentor AI — Assistente de Gestão de Pessoas |
 | **URL** | electia.empregamais.me |
 
 ### Regras de grafia (oficial — atualizada 2026-05-11)
 
-- **O nome da marca e sempre "electia" — tudo minúsculo, sem acento.** Aplicável a: wordmark, copy de site, posts, emails, app, materiais impressos. Exceção única: início de frase em texto editorial (ai vira "Electia" pela regra ortográfica padrão).
+- **O nome da marca e sempre "eletia" — tudo minúsculo, sem acento.** Aplicável a: wordmark, copy de site, posts, emails, app, materiais impressos. **Sem exceção:** também em início de frase e de título (decisão de 15/11/2026, ADR-133 do produto). Não aplicar `text-transform: uppercase` ou `capitalize` sobre o nome.
 - **"by emprega+"** (também minúsculo) e o endosso obrigatório em materiais públicos
-- **Nunca usar "electia by ResultX"** em materiais públicos (ResultX e consultoria, não marca de produto)
+- **Nunca usar "eletia by ResultX"** em materiais públicos (ResultX e consultoria, não marca de produto)
 - **O "Mentor AI"** e sempre grafado com M e A maiúsculos, nunca "mentor ai" ou "MENTOR AI"
 - **URL/dominio mantem o padrão:** `electia.empregamais.me` (ja era lowercase)
 
@@ -78,40 +80,40 @@ Emprega+  (marca-mae — ecossistema de empregabilidade)
 
 ## 3. Wordmark (oficial — atualizado 2026-05-11)
 
-> **electia não tem logo gráfico.** O wordmark tipográfico **e** a marca. Sem simbolo isolado, sem ícone próprio, sem marca registrada visual alem da palavra "electia".
+> **eletia não tem logo gráfico.** O wordmark tipográfico **e** a marca. Sem simbolo isolado, sem ícone próprio, sem marca registrada visual alem da palavra "eletia".
 
 ### Wordmark canônico
 
 ```
-electia by emprega+
+eletia by emprega+
 ```
 
 **Composição tipográfica:**
 
 | Trecho | Fonte | Peso | Estilo | Notas |
 |--------|-------|------|--------|-------|
-| `electia` | **JetBrains Mono** | 600 (Semibold) | Normal | Tudo minúsculo. Letter-spacing: `-0.04em`. Cor: branco `#E6EDF3` ou accent roxo `#6f32b1` em destaque |
-| `by` | Sora | 400 (Regular) | Normal | Tamanho ~30% do `electia`. Cor: `rgba(230,237,243,0.55)` |
-| `emprega+` | **Sora ExtraBold** | 800 | Normal | Mesma fonte oficial da marca-mae Emprega+. Tamanho ~50% do `electia`. Cor: `rgba(230,237,243,0.85)` |
+| `eletia` | **JetBrains Mono** | 600 (Semibold) | Normal | Tudo minúsculo. Letter-spacing: `-0.04em`. Cor: branco `#E6EDF3` ou accent roxo `#6f32b1` em destaque |
+| `by` | Sora | 400 (Regular) | Normal | Tamanho ~30% do `eletia`. Cor: `rgba(230,237,243,0.55)` |
+| `emprega+` | **Sora ExtraBold** | 800 | Normal | Mesma fonte oficial da marca-mae Emprega+. Tamanho ~50% do `eletia`. Cor: `rgba(230,237,243,0.85)` |
 
-**Por que JetBrains Mono em `electia`?** Decisão tipográfica T2 (mono tech). Sinaliza ferramenta científica/IA, diferencia de competidores que usam sans-serif puro (Sólides, Buk, Pulses). Aprovado em 2026-05-11.
+**Por que JetBrains Mono em `eletia`?** Decisão tipográfica T2 (mono tech). Sinaliza ferramenta científica/IA, diferencia de competidores que usam sans-serif puro (Sólides, Buk, Pulses). Aprovado em 2026-05-11.
 
-**Por que Sora ExtraBold em `emprega+`?** E a fonte oficial da marca Emprega+ (logo original tem o "ga+" desenhado custom no Canva, mas para o endorsement do Electia usamos Sora reto sem o custom).
+**Por que Sora ExtraBold em `emprega+`?** E a fonte oficial da marca Emprega+ (logo original tem o "ga+" desenhado custom no Canva, mas para o endorsement do eletia usamos Sora reto sem o custom).
 
 ### Variantes do wordmark
 
 | Variante | Uso |
 |----------|-----|
-| **Completo** | Site, LP, materiais oficiais, header. Composição: `electia by emprega+` |
-| **Curto** | Espacos com pouca largura, segundo uso na mesma pagina. Composição: `electia` (sozinho, sem endosso) |
-| **Lockup vertical** | Social média quadrado, papelaria. `electia` em cima, `by emprega+` embaixo centralizado |
+| **Completo** | Site, LP, materiais oficiais, header. Composição: `eletia by emprega+` |
+| **Curto** | Espacos com pouca largura, segundo uso na mesma pagina. Composição: `eletia` (sozinho, sem endosso) |
+| **Lockup vertical** | Social média quadrado, papelaria. `eletia` em cima, `by emprega+` embaixo centralizado |
 | **Monocromatico** | Fundos complexos, impressao. Versão single-color (branco ou roxo) |
 
 ### Favicon e avatar — helper "e"
 
-Quando o espaço e tao pequeno que não cabe nem `electia` (16-48px), usa-se um **helper visual**: a letra `e` (minuscula, JetBrains Mono 600) dentro de um container quadrado arredondado.
+Quando o espaço e tao pequeno que não cabe nem `eletia` (16-48px), usa-se um **helper visual**: a letra `e` (minuscula, JetBrains Mono 600) dentro de um container quadrado arredondado.
 
-> **Importante:** o helper "e" **NAO e o logo**. Ele e apenas uma forma de manter a presença visual da marca em contextos de tamanho insuficiente para o wordmark (favicon do browser, app icon iOS/Android, avatar de mensagem, marca d'agua minuscula). Em qualquer espaço onde `electia` cabe legivel, sempre prefira o wordmark.
+> **Importante:** o helper "e" **NAO e o logo**. Ele e apenas uma forma de manter a presença visual da marca em contextos de tamanho insuficiente para o wordmark (favicon do browser, app icon iOS/Android, avatar de mensagem, marca d'agua minuscula). Em qualquer espaço onde `eletia` cabe legivel, sempre prefira o wordmark.
 
 **Container:**
 - Forma: quadrado arredondado, `border-radius: 24%` (proporcional ao tamanho)
@@ -121,7 +123,7 @@ Quando o espaço e tao pequeno que não cabe nem `electia` (16-48px), usa-se um 
 
 ### Tamanhos e proporcoes do wordmark
 
-| Contexto | `electia` size | `emprega+` size |
+| Contexto | `eletia` size | `emprega+` size |
 |----------|---------------|-----------------|
 | Hero LP (display) | 64-88px | 24-32px |
 | Section / card | 32-44px | 12-16px |
@@ -132,7 +134,7 @@ Quando o espaço e tao pequeno que não cabe nem `electia` (16-48px), usa-se um 
 
 ### Cores do wordmark
 
-| Variante | `electia` | `by` | `emprega+` | Fundo |
+| Variante | `eletia` | `by` | `emprega+` | Fundo |
 |----------|-----------|------|------------|-------|
 | **Padrão dark** | `#E6EDF3` (branco) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#0B0E14` |
 | **Accent dark** | `#6f32b1` (roxo) | `rgba(230,237,243,0.55)` | `rgba(230,237,243,0.85)` | `#0B0E14` |
@@ -150,12 +152,12 @@ Manter espaço mínimo equivalente a **altura do "e" minúsculo** ao redor do wo
 - Não colocar sobre fundos que comprometam legibilidade
 - Não rotacionar
 - Não adicionar sombras, brilhos ou efeitos (exceto o glow purple oficial)
-- Não escrever `Electia` com E maiúsculo em wordmark (so minúsculo)
-- Não usar `electia by ResultX` em materiais públicos
-- Não trocar a fonte do `electia` (so JetBrains Mono Semibold 600)
+- Não escrever `Eletia` com E maiúsculo, nem em wordmark nem em início de frase (so minúsculo)
+- Não usar `eletia by ResultX` em materiais públicos
+- Não trocar a fonte do `eletia` (so JetBrains Mono Semibold 600)
 - Não trocar a fonte do `emprega+` (so Sora ExtraBold 800)
 - Não tratar o helper "e" do favicon como logo — wordmark sempre que o espaço permitir
-- Não desenhar um ícone/simbolo/grafismo próprio para Electia (a marca **e** o wordmark)
+- Não desenhar um ícone/simbolo/grafismo próprio para eletia (a marca **e** o wordmark)
 
 ---
 
@@ -348,7 +350,7 @@ Valores canônicos em **OKLCH** (token-driven), alinhados ao DS/preview — usad
 - Fundo: #0B0E14 (grafite, consistente com app)
 - Texto: #E6EDF3 (primary)
 - CTA: botao purple (#6f32b1) com texto branco
-- Logo: Electia by Emprega+ no header
+- Logo: eletia | emprega+ no header
 
 ### Redes Sociais
 
@@ -362,7 +364,7 @@ Valores canônicos em **OKLCH** (token-driven), alinhados ao DS/preview — usad
 - Header: logo + nome da empresa + data
 - Tipografia: Inter (corpo) + Sora (titulos de seção)
 - Cores de teoria nos gráficos
-- Footer: "Gerado por Electia by Emprega+ — electia.empregamais.me"
+- Footer: "Gerado por eletia | emprega+ — electia.empregamais.me"
 
 ---
 
@@ -370,8 +372,8 @@ Valores canônicos em **OKLCH** (token-driven), alinhados ao DS/preview — usad
 
 | Termo | Grafia Correta | Nunca usar |
 |-------|----------------|------------|
-| Nome do produto | Electia | electia, ELECTIA, Eléctia |
-| Com endosso | Electia by Emprega+ | Electia by ResultX, Electia/Emprega+ |
+| Nome do produto | eletia | Eletia, ELETIA, electia (nome antigo), Eléctia |
+| Com endosso | eletia \| emprega+ | eletia by ResultX, eletia/Emprega+, electia by Emprega+ (antigo) |
 | Feature IA | Mentor AI | Mentor IA, mentor ai, Consultor IA |
 | Subtitulo Mentor | Assistente de Gestão de Pessoas | Consultor de RH, Chatbot |
 | Testes | Testes Situacionais | Testes de pegadinha, SJT |
@@ -395,7 +397,7 @@ Valores canônicos em **OKLCH** (token-driven), alinhados ao DS/preview — usad
 
 ### O que difere
 
-| Aspecto | Emprega+ | Electia |
+| Aspecto | Emprega+ | eletia |
 |---------|----------|---------|
 | Público | Candidatos, editais, vagas | Gestores, RH, diretoria |
 | Modelo | B2C (gratuito) | B2B SaaS (assinatura) |
@@ -403,7 +405,7 @@ Valores canônicos em **OKLCH** (token-driven), alinhados ao DS/preview — usad
 | Paleta | Gold + grafite light (institucional) | Purple + grafite dark (identidade própria) |
 | Complexidade | Simples, acessível | Profundo, dados, IA |
 
-O Electia herda a credibilidade da Emprega+ mas se posiciona como produto premium para decisores corporativos.
+O eletia herda a credibilidade da Emprega+ mas se posiciona como produto premium para decisores corporativos.
 
 ### Hierarquia legal e canais
 
@@ -412,17 +414,17 @@ ResultX (CNPJ único, Marcos Carneiro CEO)
 └── Emprega+ (marca-mae, plataforma empregabilidade)
     ├── Emprega+ direto    canais: empregamais.me + @empregamais (Insta + LinkedIn)
     ├── IMO                via Emprega+ (sem canais próprios)
-    ├── Electia            via Emprega+ (sem canais próprios)
+    ├── eletia            via Emprega+ (sem canais próprios)
     └── Editais            via Emprega+ (parado, reformulacao prevista)
 ```
 
-**O que isso significa para a comúnicação do Electia:**
+**O que isso significa para a comúnicação do eletia:**
 
-1. **Electia NAO tem rede social própria.** Toda comúnicação social (posts, anuncios, lives) passa por `@empregamais` (Instagram + LinkedIn empresa).
+1. **eletia NAO tem rede social própria.** Toda comúnicação social (posts, anuncios, lives) passa por `@empregamais` (Instagram + LinkedIn empresa).
 2. **Domain:** `electia.empregamais.me` — subdominio da Emprega+, nunca dominio próprio.
-3. **Endorsement obrigatório:** "Electia by Emprega+" em todo material público (site, anuncios, social, PDF).
+3. **Endorsement obrigatório:** "eletia | emprega+" em todo material público (site, anuncios, social, PDF).
 4. **Entidade legal nas comúnicações:** "ResultX" aparece apenas em Termos, Privacidade, NF — nunca em marketing.
-5. **Marcos Carneiro NAO e o canal do Electia.** Marcos representa PdV (personal-brand). Electia se comúnica como empresa, não como pessoa.
+5. **Marcos Carneiro NAO e o canal do eletia.** Marcos representa PdV (personal-brand). eletia se comúnica como empresa, não como pessoa.
 
 > Mapa completo da arquitetura de marcas: `../../README.md`
 
@@ -430,23 +432,23 @@ ResultX (CNPJ único, Marcos Carneiro CEO)
 
 ## 11. Origem da Marca
 
-### A história por tras do Electia
+### A história por tras do eletia
 
-Electia não nasceu de pesquisa de mercado. Nasceu de 12 anos de consultoria observando o mesmo padrão em empresas brasileiras: **o problema raramente eram as pessoas — eram pessoas desencaixadas**.
+eletia não nasceu de pesquisa de mercado. Nasceu de 12 anos de consultoria observando o mesmo padrão em empresas brasileiras: **o problema raramente eram as pessoas — eram pessoas desencaixadas**.
 
 A ResultX (consultoria fundada por Marcos Carneiro) atendia PMEs e grandes operações brasileiras desde 2012. Em cada projeto de turnover alto, baixo engajamento ou conflito de equipe, o diagnóstico se repetia: gestores não sabiam quem tinham na equipe. O RH usava ferramentas rasas (DISC isolado, MBTI não-validado), faziam o teste uma vez na contratação e esqueciam.
 
 A IA generativa de 2024-2026 tornou possivel o que era inviável antes: cruzar 6 teorias psicometricas de forma narrativa, interpretar contextos situacionais e gerar planos de desenvolvimento personalizados. Onde antes era preciso um psicologo para 8 horas de leitura, hoje a IA entrega em 30 segundos — sem substituir o psicologo, mas dando escala.
 
-O nome **Electia** vem do grego *electio* — "o eleito, o escolhido". Reforca a promessa central:
+O nome **eletia** vem do grego *electio* — "o eleito, o escolhido". Reforca a promessa central:
 
 > "Sua equipe não e ruim. Esta desencaixada."
 
-Cada colaborador e o eleito de algum lugar — o trabalho do Electia e mostrar qual.
+Cada colaborador e o eleito de algum lugar — o trabalho do eletia e mostrar qual.
 
 ### O fundador — visão de produto
 
-Marcos Carneiro traz para o Electia uma combinacao rara:
+Marcos Carneiro traz para o eletia uma combinacao rara:
 
 | Origem | Contribuicao para o produto |
 |--------|----------------------------|
@@ -455,7 +457,7 @@ Marcos Carneiro traz para o Electia uma combinacao rara:
 | **Consultor 12+ anos** | Conhecimento profundo da dor do gestor brasileiro |
 | **Católico aplicado** (implícito) | Ética não-negociavel: LGPD, CFP, saúde mental |
 
-**O que isso significa para a voz do Electia:** científico mas pratico, sofisticado mas direto, ousado em provocar mas blindado em etica.
+**O que isso significa para a voz do eletia:** científico mas pratico, sofisticado mas direto, ousado em provocar mas blindado em etica.
 
 ---
 
@@ -463,7 +465,7 @@ Marcos Carneiro traz para o Electia uma combinacao rara:
 
 ### Declaracao de posicionamento
 
-> Para diretores de RH, gestores de pessoas e CEOs de empresas brasileiras que precisam tomar decisões melhores sobre quem contratar, promover, desenvolver ou onde realocar — Electia by Emprega+ e uma plataforma SaaS de assessments comportamentais que, diferente de testes DISC rasos, MBTI não-validado ou consultorias caras de people analytics, cruza 6 teorias científicas (DISC + Tipologia Cognitiva + Eneagrama + Big Five + Le Senne + Motivadores) com IA aplicada e cenários situacionais — para que líderes entendam suas equipes com profundidade real e tomem decisões baseadas em comportamento, não em achismo.
+> Para diretores de RH, gestores de pessoas e CEOs de empresas brasileiras que precisam tomar decisões melhores sobre quem contratar, promover, desenvolver ou onde realocar — eletia | emprega+ e uma plataforma SaaS de assessments comportamentais que, diferente de testes DISC rasos, MBTI não-validado ou consultorias caras de people analytics, cruza 6 teorias científicas (DISC + Tipologia Cognitiva + Eneagrama + Big Five + Le Senne + Motivadores) com IA aplicada e cenários situacionais — para que líderes entendam suas equipes com profundidade real e tomem decisões baseadas em comportamento, não em achismo.
 
 ### Perfil do cliente ideal (ICP)
 
@@ -489,7 +491,7 @@ O que essas frases revelam: **autoimagem não bate com comportamento real**. Fal
 
 ### Alternativas competitivas
 
-| Alternativa | Por que não funciona | O Electia e diferente porque... |
+| Alternativa | Por que não funciona | O eletia e diferente porque... |
 |-------------|----------------------|--------------------------------|
 | **DISC isolado** (Sólides, Etalent) | 1 teoria só. Reduz pessoa a 4 cores. Resultado raso | Cruza 6 teorias — DISC + 5 outras complementares |
 | **MBTI tradicional** | Nao-científicamente validado, 16 caixas rigidas | Migrou para Tipologia Cognitiva (validação + 8 funções) |
@@ -498,7 +500,7 @@ O que essas frases revelam: **autoimagem não bate com comportamento real**. Fal
 | **Mereo, Lattice** (OKRs/desempenho) | Foco em metas, não em pessoas | Foco em pessoas (assessment) — complementar |
 | **Consultoria caso-a-caso** | Lenta (semanas), não escala, depende de individuo | 30 segundos para relatório cruzado, escala infinito |
 
-### Atributos únicos do Electia
+### Atributos únicos do eletia
 
 1. **6 teorias cruzadas** — DISC + Tipologia Cognitiva + Eneagrama + Big Five + Le Senne + Motivadores. Nenhum competidor brasileiro cruza tantas teorias com narrativa única
 2. **IA aplicada com etica blindada** — IA interpreta, narra, recomenda. Mas nunca substitui psicologo (CRP) em decisão clinica
@@ -510,7 +512,7 @@ O que essas frases revelam: **autoimagem não bate com comportamento real**. Fal
 
 ### Por que agora
 
-- **NR-1 (Saúde Mental no Trabalho)** — Norma regulamentadora que obriga empresas a mapear saúde mental. 89% das PMEs não estao prontas. Electia entrega protocolo CFP-compliant pronto
+- **NR-1 (Saúde Mental no Trabalho)** — Norma regulamentadora que obriga empresas a mapear saúde mental. 89% das PMEs não estao prontas. eletia entrega protocolo CFP-compliant pronto
 - **Gestores sobrecarregados** — pos-pandemia, gestor brasileiro lidera 8-12 pessoas com zero ferramenta. Mentor AI vira "consultor 24/7"
 - **IA passou do POC para produção** — GPT-4o e equivalentes tornaram custo de interpretação narrativa <R$0.01/relatório. Era inviável até 2024
 - **Brasil tem 2.5M empresas com 50+ colab** — TAM R$18-30M/ano (apenas o módulo basico, sem upsell)
@@ -527,11 +529,11 @@ Não e ATS. Não e LMS. Não e ERP de RH. E o **instrumento que conecta dados de
 
 ### Triade arquetipica: Sábio + Mago + Cuidador
 
-O Electia opera com três arquétipos em equilibrio. Diferente do PdV (Heroi-Rebelde-Sabio, motor de coragem), o Electia e motor de **profundidade, transformação e cuidado**.
+O eletia opera com três arquétipos em equilibrio. Diferente do PdV (Heroi-Rebelde-Sabio, motor de coragem), o eletia e motor de **profundidade, transformação e cuidado**.
 
 #### O Sábio (dominante) — Profundidade científica
 
-| Aspecto | Expressao no Electia |
+| Aspecto | Expressao no eletia |
 |---------|---------------------|
 | **Motivacao** | Mostrar a verdade comportamental por tras da fachada |
 | **Promessa** | "Você vai entender sua equipe como nunca entendeu" |
@@ -540,7 +542,7 @@ O Electia opera com três arquétipos em equilibrio. Diferente do PdV (Heroi-Reb
 
 #### O Mago — Transformação por dados/IA
 
-| Aspecto | Expressao no Electia |
+| Aspecto | Expressao no eletia |
 |---------|---------------------|
 | **Motivacao** | Transformar dados em decisão acionavel |
 | **Promessa** | "30 segundos para o que antes levava 8 horas de psicologo" |
@@ -549,14 +551,14 @@ O Electia opera com três arquétipos em equilibrio. Diferente do PdV (Heroi-Reb
 
 #### O Cuidador — Ética blindada
 
-| Aspecto | Expressao no Electia |
+| Aspecto | Expressao no eletia |
 |---------|---------------------|
 | **Motivacao** | Proteger o colaborador. Saúde mental não e dado de RH |
 | **Compromisso** | CFP, LGPD, soft-delete, consent gate, psicologo no circuito |
 | **Tom** | Sereno, responsável, sem urgencia falsa |
 | **Simbolo** | O escudo — protecao individual contra o coletivo |
 
-### O que o Electia NAO e
+### O que o eletia NAO e
 
 | Anti-arquétipo | Por que não |
 |----------------|-------------|
@@ -583,15 +585,15 @@ A marca trabalha 4 valores não-negociaveis que aparecem em decisões de produto
 ### Asset hero canônico: `aurora-hero-v1`
 
 **Arquivos:** `assets/hero/aurora-hero-v1.{mp4, webm, poster.jpg}`
-**Status:** ✅ v1 em produção desde 2026-05-10 (modo Electia Subtle validado por Marcos)
+**Status:** ✅ v1 em produção desde 2026-05-10 (modo eletia Subtle validado por Marcos)
 **Origem:** Pexels (Colin Jones / @larchmedia) — Pexels License (uso comercial OK)
 **Dimensoes:** 1920x1080 @ 24fps · 12s loop perfeito · 4.6 MB MP4 + 4.8 MB WebM + 71 KB poster JPG
 
-Este e o asset visual primário da marca Electia. Aparece no hero de LPs, materiais institucionais e capas. Detalhes técnicos completos em `assets/hero/README.md`. Demo funcional com 3 modos toggle em `previews/aurora-hero-demo.html`.
+Este e o asset visual primário da marca eletia. Aparece no hero de LPs, materiais institucionais e capas. Detalhes técnicos completos em `assets/hero/README.md`. Demo funcional com 3 modos toggle em `previews/aurora-hero-demo.html`.
 
 ### Filosofia visual
 
-Electia não usa fotografia tradicional de RH (sorrisos corporativos, salas reluzentes, equipes em ilhotas). A estética visual e **abstrata, tech, científica** — refletindo o produto: dados em movimento. O aurora-hero-v1 (acima) e a materializacao dessa filosofia.
+eletia não usa fotografia tradicional de RH (sorrisos corporativos, salas reluzentes, equipes em ilhotas). A estética visual e **abstrata, tech, científica** — refletindo o produto: dados em movimento. O aurora-hero-v1 (acima) e a materializacao dessa filosofia.
 
 ### Estilo visual
 
@@ -655,7 +657,7 @@ Antes de publicar qualquer material visual:
 
 - [ ] Fundo escuro (não branco)?
 - [ ] Fonte correta (Sora titulos, Inter corpo)?
-- [ ] Cores dentro da paleta Electia (roxo #6f32b1, grafite #0B0E14, branco)?
+- [ ] Cores dentro da paleta eletia (roxo #6f32b1, grafite #0B0E14, branco)?
 - [ ] ZERO gold/amber como destaque primário (ouro só em gradient C premium, ex: badge "Recomendado")?
 - [ ] Roxo como UNICA cor de destaque primária?
 - [ ] Logo presente com área de protecao respeitada?
@@ -666,7 +668,7 @@ Antes de publicar qualquer material visual:
 - [ ] Contraste acessível (WCAG AA — 4.5:1 para texto)?
 - [ ] Sem caixa alta em titulos ou parágrafos?
 - [ ] Animacao com `prefers-reduced-motion` respeitado?
-- [ ] Nomenclatura correta ("Electia", "Mentor AI", "Tipologia Cognitiva" — vide seção 9)?
+- [ ] Nomenclatura correta ("eletia", "Mentor AI", "Tipologia Cognitiva" — vide seção 9)?
 - [ ] Se mencionar saúde mental: gate de psicologo (CRP) explícitado?
 - [ ] Se coleta dados: consent gate LGPD presente?
 - [ ] Sem promessas de "diagnóstico" ou "tratamento" clinico (não somos terapia)?
@@ -722,7 +724,7 @@ O DS multi-brand vive em `resultx-design-system` (NPM). Ordem de import:
 /* 1. Tokens base do DS root (cores genéricas, escalas) */
 @import 'resultx-design-system/tokens';
 
-/* 2. Override Electia (paleta purple + tokens específicos) */
+/* 2. Override eletia (paleta purple + tokens específicos) */
 @import 'resultx-design-system/brands/electia/tokens/tokens.css';
 ```
 
@@ -759,7 +761,7 @@ export function Header() {
     <header>
       <Image
         src="/brand/electia-wordmark.svg"
-        alt="electia by emprega+"
+        alt="eletia by emprega+"
         width={200}
         height={40}
         priority
@@ -814,7 +816,7 @@ export function AuroraHero({ children }) {
 }
 ```
 
-CSS aplicado (modo Electia Subtle oficial):
+CSS aplicado (modo eletia Subtle oficial):
 
 ```css
 .aurora-hero-frame {
@@ -870,18 +872,18 @@ Os 4 templates em `brands/electia/templates/email/` (electia-email-base, newslet
 
 ### 16.7 Checklist por surface
 
-**Antes de subir uma nova pagina/LP do Electia, verificar:**
+**Antes de subir uma nova pagina/LP do eletia, verificar:**
 
 - [ ] Fontes Google carregadas (JetBrains Mono + Sora + Inter)
 - [ ] Tokens importados (`@import` ou via Next/Tailwind config)
-- [ ] Wordmark `electia by emprega+` no header (SVG do `public/brand/`)
+- [ ] Wordmark `eletia by emprega+` no header (SVG do `public/brand/`)
 - [ ] Favicon helper "e" no `<link rel="icon">`
 - [ ] Hero usa `<AuroraHero>` ou equivalente com filter electia-subtle
 - [ ] Cores apenas via `var(--*)` (zero hardcoded)
 - [ ] Texto principal em `var(--text-primary)`, secundário em `var(--text-secondary)`
 - [ ] Background dark (`var(--bg)` ou `var(--surface-1)`)
 - [ ] `prefers-reduced-motion` respeitado em vídeos/animacoes
-- [ ] Grafia "electia" minuscula em todo copy
+- [ ] Grafia "eletia" minuscula em todo copy
 - [ ] Endorsement "by emprega+" presente onde aplicável
 - [ ] CTA usa cor `var(--purple)` ou gradient B (roxo→royal blue)
 - [ ] WCAG AA: contraste 4.5:1 mínimo testado
@@ -915,13 +917,13 @@ Sempre que este Brand Book virar v2.1, v2.2, etc:
 2. Bump versão no `package.json` do DS root
 3. Criar a tag nova do DS (o DS não é publicado no npm; ver ADR-0005 D4)
 4. Na LP/plataforma, atualizar imports + copiar novos assets
-5. Documentar mudanças no CHANGELOG.md do Electia + da LP/plataforma
+5. Documentar mudanças no CHANGELOG.md do eletia + da LP/plataforma
 
 ---
 
 ## 17. Diretrizes de Aplicação Visual
 
-> Adicionado 2026-05-25. Regras de uso prático pra peças, materiais e qualquer criação visual Electia.
+> Adicionado 2026-05-25. Regras de uso prático pra peças, materiais e qualquer criação visual eletia.
 
 ### 17.1 Cores — quando usar cada uma
 
@@ -932,7 +934,7 @@ Sempre que este Brand Book virar v2.1, v2.2, etc:
 - ✅ Links inline em texto corrido
 - ✅ Eyebrows (rótulos uppercase pequenos acima de títulos)
 - ✅ Bordas/ícones de destaque
-- ✅ Wordmark "electia" sobre fundo grafite
+- ✅ Wordmark "eletia" sobre fundo grafite
 - ✅ Glow effect (`box-shadow: 0 0 30px rgba(111,50,177,0.35)`)
 
 **NÃO USE EM:**
@@ -1022,7 +1024,7 @@ Sempre que este Brand Book virar v2.1, v2.2, etc:
 
 #### JetBrains Mono (Mono)
 **USE EM:**
-- ✅ Wordmark "electia" (peso 600/Semibold) — caso especial canônico
+- ✅ Wordmark "eletia" (peso 600/Semibold) — caso especial canônico
 - ✅ Dados técnicos: hex codes, scores numéricos, IDs
 - ✅ Swatches de cor
 - ✅ Code blocks
@@ -1044,7 +1046,7 @@ Sempre que este Brand Book virar v2.1, v2.2, etc:
 
 #### Área de proteção (clear space)
 
-Margem mínima ao redor do wordmark = **altura da letra "e"** do "electia". Nada (texto, imagem, borda) pode invadir esse espaço.
+Margem mínima ao redor do wordmark = **altura da letra "e"** do "eletia". Nada (texto, imagem, borda) pode invadir esse espaço.
 
 #### Tamanho mínimo
 
@@ -1235,4 +1237,4 @@ Antes de exportar/postar qualquer peça:
 
 ---
 
-*Electia by Emprega+ — A pessoa certa no lugar certo.*
+*eletia | emprega+ — A pessoa certa no lugar certo.*

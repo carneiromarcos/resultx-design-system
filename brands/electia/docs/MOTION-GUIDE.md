@@ -1,4 +1,6 @@
-# Motion & Animation Guide — Electia by Emprega+
+# Motion & Animation Guide — eletia | emprega+
+
+> **Desde 15/11/2026 a marca se chama eletia (antes electia).** Caminhos e tokens técnicos mantêm 'electia' por compatibilidade.
 
 > Movimento e vida. Mas vida controlada — como a chama da forja, nunca como fogos de artificio.
 >
@@ -10,7 +12,7 @@
 
 ### Filosofia
 
-O Electia não e um site estatico, mas também não e um parque de diversões. O motion deve:
+O eletia não e um site estatico, mas também não e um parque de diversões. O motion deve:
 
 - **Guiar o olhar** — direcionar a atencao para o que importa
 - **Criar profundidade** — reforcar o mundo dark/caverna da marca
@@ -530,5 +532,5 @@ function Reveal({ children, className, delay = 0 }) {
 
 ---
 
-*Motion Guide v1.0 — Electia by Emprega+*
+*Motion Guide v1.0 — eletia | emprega+*
 *Movimento e vida. Vida controlada.*

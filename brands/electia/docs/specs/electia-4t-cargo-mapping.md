@@ -1,4 +1,4 @@
-# Electia 4T — Mapping cargo × temperamento ideal
+# eletia 4T — Mapping cargo × temperamento ideal
 
 > **Status:** v0.1 — proposta para validação interna (2026-05-09)
 > **Conteúdo:** Lógica de matching cargo×colaborador + tabela mestre de cargos comuns
@@ -7,7 +7,7 @@
 
 ## 1. Visão geral
 
-O Electia mostra um **score de match** entre cargo e colaborador (ex: "92% alinhado ao cargo Comercial Sr."). Esse score depende de **dois inputs:**
+O eletia mostra um **score de match** entre cargo e colaborador (ex: "92% alinhado ao cargo Comercial Sr."). Esse score depende de **dois inputs:**
 
 1. **Perfil do colaborador** — vem do teste 4T (dominante + secundário ou null)
 2. **Perfil ideal do cargo** — definido pelo cliente OU sugerido pelo sistema com base nesta tabela mestre

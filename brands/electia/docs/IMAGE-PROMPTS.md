@@ -1,9 +1,11 @@
-# Prompts de Imagem & Vídeo — Electia by Emprega+
+# Prompts de Imagem & Vídeo — eletia | emprega+
+
+> **Desde 15/11/2026 a marca se chama eletia (antes electia).** Caminhos e tokens técnicos mantêm 'electia' por compatibilidade.
 
 > Guia de prompts para geracao de imagens com IA (Midjourney, DALL-E, Ideogram, Runway, Kling).
 > Todas as imagens devem refletir a estética dark premium da marca.
 
-> ⚠️ **TO-DO (2026-05-10) — Rewrite editorial pendente.** Este arquivo foi clonado do PdV (estética mountain + golden hour + warm gold accents) e ainda descreve imagens com paleta dourada/amber. Para Electia a estética visual e **diferente**: cyan/teal, energy core, tech moderna, fios fluidos (vide aurora-hero-v1 aprovado em sessao de 2026-05-10). **Reescrever os prompts** das seções 1 a 4 com vocabulario coerente:
+> ⚠️ **TO-DO (2026-05-10) — Rewrite editorial pendente.** Este arquivo foi clonado do PdV (estética mountain + golden hour + warm gold accents) e ainda descreve imagens com paleta dourada/amber. Para eletia a estética visual e **diferente**: cyan/teal, energy core, tech moderna, fios fluidos (vide aurora-hero-v1 aprovado em sessao de 2026-05-10). **Reescrever os prompts** das seções 1 a 4 com vocabulario coerente:
 > - "warm golden tones" -> "cool teal/cyan tones, dark graphite backgrounds"
 > - "mountain peak / golden hour" -> "energy field / data visualization / abstract tech"
 > - "fog rolling below" -> "particle systems / circuit-like flows"
@@ -631,7 +633,7 @@ Esquerda:
   Badge: produto (Workshop, MAPA, Mentoria) ou eixo
 Direita: foto com overlay left-blending
   Teal glow sútil na borda entre texto e foto
-Logo + "[Tagline Electia a definir].": inferior esquerdo
+Logo + "[Tagline eletia a definir].": inferior esquerdo
 ```
 
 **Prompt de foto recomendado:** Workshop ao vivo (2.4) ou Tela com IA (2.4)
@@ -661,5 +663,5 @@ Margem: 56px
 
 ---
 
-*Image Prompts Guide v2.0 — Electia by Emprega+*
+*Image Prompts Guide v2.0 — eletia | emprega+*
 *A beleza revela o transcendente.*

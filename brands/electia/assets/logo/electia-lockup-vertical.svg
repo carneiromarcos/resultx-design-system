@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 180" role="img" aria-label="electia by emprega+">
-  <title>electia by emprega+ — lockup vertical</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 180" role="img" aria-label="eletia by emprega+">
+  <title>eletia by emprega+ — lockup vertical</title>
   <defs>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&amp;family=Sora:wght@400;800&amp;display=swap');
@@ -9,7 +9,7 @@
     </style>
   </defs>
   <rect width="360" height="180" fill="#0B0E14"/>
-  <text class="electia" x="180" y="84" text-anchor="middle">electia</text>
+  <text class="electia" x="180" y="84" text-anchor="middle">eletia</text>
   <g transform="translate(110, 130)">
     <text class="by" x="0" y="0">by</text>
     <text class="empregamais" x="34" y="0">emprega+</text>

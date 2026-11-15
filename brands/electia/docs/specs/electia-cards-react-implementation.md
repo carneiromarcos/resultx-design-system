@@ -1,4 +1,4 @@
-# Spec — Implementação dos 7 Cards Electia em React/Next.js
+# Spec — Implementação dos 7 Cards eletia em React/Next.js
 
 **Versão:** 1.1 — 2026-05-12
 **Status:** 🟢 spec aprovada por Marcos (6/6 decisões D1-D6 confirmadas com defaults em 2026-05-12)
@@ -9,7 +9,7 @@
 
 ## 1. Escopo
 
-Transformar os 7 mockups HTML standalone (`brands/electia/mockups/*.html`) e o wireframe `colaborador-page.html` v0.5 em componentes React/Next.js reutilizáveis no codebase de produção do Electia.
+Transformar os 7 mockups HTML standalone (`brands/electia/mockups/*.html`) e o wireframe `colaborador-page.html` v0.5 em componentes React/Next.js reutilizáveis no codebase de produção do eletia.
 
 **Inclui:**
 - 1 página principal `/employees/[id]/report` (já existe stub)
@@ -17,7 +17,7 @@ Transformar os 7 mockups HTML standalone (`brands/electia/mockups/*.html`) e o w
 - 4-5 components primitivos compartilhados
 - Tokens CSS migrados pra Tailwind v4 + custom properties
 - Loader de dados via Supabase parallel queries
-- A11y WCAG AA (não-negociável — Electia já é AA em produção)
+- A11y WCAG AA (não-negociável — eletia já é AA em produção)
 
 **NÃO inclui (escopo separado):**
 - PDF export (já tem `components/print/` separado)
@@ -84,7 +84,7 @@ Marcos confirmou 6/6 com os defaults recomendados:
 - 1 component por card de teoria (`<DiscCard>`, `<MbtiWheel>`, etc.)
 - Props recebem o `*Result` tipado já existente em `lib/scoring/types.ts` + `roleTarget` opcional pro ideal × realizado
 - Cards são RSC puros — sem `"use client"` exceto onde estritamente necessário
-- Tokens vêm do `tokens.css` ResultX DS v2.1.1 + override Electia em `globals.css`
+- Tokens vêm do `tokens.css` ResultX DS v2.1.1 + override eletia em `globals.css`
 
 ---
 

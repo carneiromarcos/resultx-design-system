@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Protótipo do dashboard do app Electia — 05/10/2026.
+  Protótipo do dashboard do app eletia — 05/10/2026.
   Mesma regra da landing (#80): tudo o que é componente vem do DS; o CSS e o JS
   abaixo só compõem a página. Ficha: docs/research/electia-dashboard-2026-10-05.md
 
@@ -27,8 +27,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
-  <meta name="description" content="Protótipo navegável do dashboard do electia: abas Gestão de pessoas (padrão) e Recrutamento e seleção, Nexus, Bem-Estar agregado e a vaga aberta em kanban.">
-  <title>Gestão de pessoas · Dashboard · electia</title>
+  <meta name="description" content="Protótipo navegável do dashboard do eletia: abas Gestão de pessoas (padrão) e Recrutamento e seleção, Nexus, Bem-Estar agregado e a vaga aberta em kanban.">
+  <title>Gestão de pessoas · Dashboard · eletia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
@@ -60,7 +60,7 @@
     /* ── DS, só o que é desta página ─────────────────────────────────────── */
 
     /* CANDIDATO 1 — .sidebar-overlay como PAINEL no desktop. O DS só tem
-       rail + overlay (ícones no desktop); o Electia usa o painel de 240 px com
+       rail + overlay (ícones no desktop); o eletia usa o painel de 240 px com
        rótulos. Acima do corte do DS (1025 px) o overlay para de flutuar. */
     @media (min-width: 1025px) {
       .app-nav.sidebar-overlay { visibility: visible; transform: none; transition: none; z-index: var(--z-sidebar); }
@@ -300,8 +300,8 @@
     <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12 20 4l-4 16-4-6zM12 14l8-10"/></symbol>
   </svg>
 
-  <aside class="sidebar sidebar-overlay app-nav" id="app-nav" aria-label="Navegação do electia" data-sidebar-overlay data-sidebar-media="(max-width: 1024px)">
-    <a class="app-brand" href="#inicio"><strong>electia</strong><span>by emprega+</span></a>
+  <aside class="sidebar sidebar-overlay app-nav" id="app-nav" aria-label="Navegação do eletia" data-sidebar-overlay data-sidebar-media="(max-width: 1024px)">
+    <a class="app-brand" href="#inicio"><strong>eletia</strong><span>by emprega+</span></a>
     <p class="app-company"><b>Clínica Horizonte</b>Empresa ativa</p>
     <nav aria-label="Módulos">
       <a class="sidebar-item" href="#inicio" data-nav="gestao"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-home"/></svg><span class="sidebar-label">Início</span></a>
@@ -671,7 +671,7 @@
       $$('[data-acoes]').forEach((g) => { g.hidden = g.dataset.acoes !== nome; });
       /* "Início" é a tela principal (Gestão); a aba R&S acende o módulo R&S. */
       marcarNav(nome);
-      document.title = `${ABAS[nome].titulo} · Dashboard · electia`;
+      document.title = `${ABAS[nome].titulo} · Dashboard · eletia`;
     }
     function ativarPeloUsuario(tab) {
       selecionarAba(tab.dataset.aba);
@@ -712,7 +712,7 @@
         if (vagaAtual !== id) renderKanban(id);
         marcarNav('recrutamento');
         $('[data-top-title]').textContent = 'Recrutamento & Seleção';
-        document.title = `${VAGAS[id].titulo} · electia`;
+        document.title = `${VAGAS[id].titulo} · eletia`;
         return '#vaga-titulo';
       }
       const rs = (tela === 'inicio' && id === 'recrutamento') || tela === 'vagas';
