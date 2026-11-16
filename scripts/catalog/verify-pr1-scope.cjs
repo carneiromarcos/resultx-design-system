@@ -3,8 +3,9 @@
 const fs = require('fs');
 const cp = require('child_process');
 const path = require('path');
-function guard(root = path.resolve(__dirname, '../..')) {
-  const ref = 'e80d611';
+// Verificação pontual do escopo da PR 1. Não executar na suíte permanente.
+function guard(root, ref) {
+  if (!ref) throw Error('Informe explicitamente a base desta revisão');
   const original = JSON.parse(cp.execFileSync('git', ['show', ref + ':package.json'], {
     cwd: root,
     encoding: 'utf8'
@@ -24,18 +25,18 @@ function guard(root = path.resolve(__dirname, '../..')) {
   });
   return 'Guarda: package.json restrito e pastas protegidas intactas';
 }
-if (require.main === module) console.log(guard());
 module.exports = {
   guard
 };
 
 // A lista publicada também é verificada contra um archive descartável da base.
-function checkPack(root = path.resolve(__dirname, '../..')) {
+function checkPack(root, ref) {
+  if (!ref) throw Error('Informe explicitamente a base desta revisão');
   const os = require('os');
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'catalog-pack-'));
   try {
     const archive = path.join(tmp, 'base.tar');
-    cp.execFileSync('git', ['archive', '--output', archive, 'e80d611'], {
+    cp.execFileSync('git', ['archive', '--output', archive, ref], {
       cwd: root
     });
     const extraction = cp.spawnSync('tar', ['-xf', archive, '-C', tmp]);
@@ -67,3 +68,15 @@ function checkPack(root = path.resolve(__dirname, '../..')) {
   }
 }
 module.exports.checkPack = checkPack;
+
+if (require.main === module) {
+  const [option, ref] = process.argv.slice(2);
+  if (option !== '--base' || !ref || process.argv.length !== 4) {
+    console.error('Uso pontual, fora do CI: node scripts/catalog/verify-pr1-scope.cjs --base <SHA>');
+    process.exitCode = 2;
+  } else {
+    const root = path.resolve(__dirname, '../..');
+    console.log(guard(root, ref));
+    console.log(checkPack(root, ref));
+  }
+}

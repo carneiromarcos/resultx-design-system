@@ -9,7 +9,7 @@ npm run build
 npm run build:catalog
 npm run lint
 npm test -- --runInBand
-node scripts/catalog/guard.cjs
+node scripts/catalog/verify-pr1-scope.cjs --base e80d611
 npx playwright test tests/visual/catalog-foundations.spec.js --workers=1
 ```
 
@@ -44,13 +44,16 @@ O manifesto registra os 8 contratos, as 30 fichas e os 16 imports com exclusão
 motivada nesta etapa de fundações. O teste recebe uma raiz de fixture e rejeita
 novos arquivos sem entrada, referências ausentes, receitas com estilos ou scripts,
 nomes de origem inexistentes e ciclos de variáveis. Os imports precisam existir.
-Geração dupla verifica hashes iguais. O teste de pacote extrai `git archive e80d611`
-numa pasta temporária e compara os caminhos de `npm pack --dry-run --ignore-scripts`.
-O fetch completo do CI permite ler a referência fixa; build e build:all não mudam.
+Geração dupla verifica hashes iguais. A verificação **pontual da PR 1**, fora da suíte e do CI, extrai `git archive`
+da base fornecida explicitamente e compara os caminhos de
+`npm pack --dry-run --ignore-scripts`. Executar somente durante a revisão desta
+entrega; não é gate para mudanças posteriores. Build e build:all não mudam.
+O CI não precisa de histórico completo para os testes permanentes do catálogo.
 
-A pesquisa da etapa 0 é excluída do pacote por `docs/research/.npmignore`: a inclusão
-pré-existente de `docs/` acrescentaria esse relatório à lista publicada. Essa é a
-única finalidade do arquivo; nenhum documento já publicado é removido.
+O levantamento da etapa 0 não integra esta PR de implementação: fica preservado
+fora da árvore de entrega, junto às evidências. O arquivo docs/research/.npmignore
+foi removido, pois existia apenas para impedir que esse novo relatório entrasse
+no pacote. Nenhuma regra especial de publicação foi mantida para esse documento.
 
 ## Provas locais (16/11)
 
@@ -91,3 +94,23 @@ publicação, URLs antigas e componentes das PRs 3–6.
 O lint das folhas novas (`npx --no -- stylelint 'catalog/*.css'`) também roda
 no CI; o script lint original do pacote foi preservado. A única alteração no
 package.json é o comando build:catalog aprovado pela arquitetura.
+
+## Correção após REPROVA do Revisor em 287852f
+
+O gate de escopo e a comparação de pacote foram retirados da suíte Jest permanente.
+Continuam disponíveis somente no comando pontual `verify-pr1-scope.cjs --base <SHA>`.
+Também foi retirado o fetch completo do CI, que só existia para esse gate.
+Nenhum teste permanente congela package.json, lista de pacote ou pastas do DS na
+base desta PR. Permanecem cobertura do manifesto, referências, receitas, valores
+resolvidos, ciclos, hashes de fontes, determinismo e as provas de navegador.
+As 761 aprovações acima registram a rodada anterior; os dois gates pontuais não fazem mais parte da suíte atual. Foram acrescentadas
+provas de escrita restrita ao estado atual e de evolução de contrato registrado.
+
+A verificação permanente de escrita calcula os hashes atuais das pastas protegidas
+antes e depois do gerador. Assim detecta alterações causadas pelo catálogo sem
+impedir evoluções legítimas anteriores de tokens, contratos ou artefatos do DS.
+
+Também saiu a contagem fixa de 54 itens do teste de cobertura: o inventário é lido
+do código atual. Uma fixture com contrato novo e exclusão motivada passa, enquanto
+um contrato sem registro continua falhando. A quantidade histórica permanece
+somente como evidência desta entrega na documentação.
