@@ -163,5 +163,5 @@ D5 só volta a ser pergunta depois da P1 (DS-24).
   4. as ADRs [0001](adr/0001-role-named-tokens.md), [0003](adr/0003-token-single-source.md), [0004](adr/0004-contracts-adapters-pilot.md) e [0005](adr/0005-governance-propagation-decisions.md);
   5. `CHANGELOG.md` (seção Unreleased).
 - **Estado do repositório no fechamento:**
-  - PRs do DS abertas: só esta (DS-30, PR 1 do catálogo);
+  - PRs do DS abertas: esta (#134, DS-30, PR 1 do catálogo) e 4 do Dependabot (#130–#133), ainda não avaliadas;
   - pasta de trabalho do DS: só a desta PR, removida depois do merge.
