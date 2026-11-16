@@ -54,7 +54,7 @@ function build(options = {}) {
     manifest
   } = coverage(ROOT);
   const foundation = manifest.pages.find(page => page.id === 'fundacoes');
-  if (!foundation || manifest.pages.some(page => page.js.length && !['confirm-dialog','data-table'].includes(page.id))) throw Error('JavaScript permitido somente em diálogo e tabela');
+  if (!foundation) throw Error('Catálogo sem página de fundações');
   fs.rmSync(OUT, {
     recursive: true,
     force: true

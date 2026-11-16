@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
 const postcss = require('postcss');
+const {allowedScripts} = require('../../catalog/script-policy.cjs');
 function coverage(root) {
   const m = yaml.load(fs.readFileSync(path.join(root, 'catalog/manifest.yaml'), 'utf8'));
   const expected = ['contracts', 'docs/components'].flatMap(d => fs.readdirSync(path.join(root, d)).filter(f => /\.(yaml|md)$/.test(f)).map(f => `${d}/${f}`));
@@ -21,7 +22,7 @@ function coverage(root) {
   for (const f of expected) if (!covered.has(f)) throw Error('Sem entrada no manifesto: ' + f);
   for (const f of [...covered, ...blocks.flatMap(e => [e.recipe, ...(e.css || []), ...(e.js || [])])].filter(Boolean)) if (!fs.existsSync(path.join(root, f))) throw Error('Referência ausente: ' + f);
   for (const e of blocks) {
-    const allowed = ['confirm-dialog','data-table'].includes(e.id) ? [`catalog/behaviors/${e.id}.js`] : [];
+    const allowed = allowedScripts(e.id);
     if (JSON.stringify(e.js || []) !== JSON.stringify(allowed)) throw Error('JavaScript fora da autorização do catálogo: ' + e.id);
     const html = fs.readFileSync(path.join(root, e.recipe), 'utf8');
     if (/\bstyle\s*=|<style\b|<script\b|#[\da-f]{3,8}\b|\d+(?:px|rem|ms)\b/i.test(html)) throw Error('Literal ou código na receita: ' + e.recipe);
