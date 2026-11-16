@@ -163,7 +163,9 @@ continua redirecionando para o viewer, preservando a entrada anterior.
 
 O montador prepara uma árvore temporária e só substitui `_site` depois de copiar
 as entradas: `catalog/`, `assets/fonts/` e todos os caminhos anteriores. Falta de
-catálogo ou erro de cópia não apaga a publicação anterior. Não há dependência de
+catálogo ou falha na cópia para a área temporária preserva a publicação anterior.
+Após começar a substituição de `_site`, não há garantia de recuperação caso a
+cópia final falhe; essa operação não é uma troca atômica. Não há dependência de
 Git no montador. A marca e o tema continuam isolados e a navegação usa somente
 links. Todas as páginas novas trazem o aviso do que já existe, do que falta e do
 próximo passo, além de CSP `default-src 'self'`.
