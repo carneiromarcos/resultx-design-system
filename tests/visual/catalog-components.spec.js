@@ -202,16 +202,19 @@ for (const b of brands) for (const theme of ['light', 'dark']) for (const d of d
     await page.mouse.move(0, 0);
     // Os ensaios de active acima clicam links reais; começar o ensaio de teclado sem hash.
     await frame.evaluate(() => history.replaceState(null, '', location.pathname));
+    await expect.poll(() => new URL(frame.url()).hash).toBe('');
     const link = frame.locator('[data-contract-state=normal] a').first();
     await link.focus();
     await page.keyboard.press('Tab');
     await page.keyboard.press('Shift+Tab');
     await expect(link).toBeFocused();
     await page.keyboard.press('Space');
-    expect(new URL(frame.url()).hash).toBe('');
+    await expect.poll(() => new URL(frame.url()).hash).toBe('');
     await page.keyboard.press('Enter');
-    expect(new URL(frame.url()).hash).toBe('#destination');
+    // O retorno de press não garante que Frame.url já recebeu a navegação da âncora.
+    await expect.poll(() => new URL(frame.url()).hash).toBe('#destination');
     await frame.evaluate(() => history.replaceState(null, '', location.pathname));
+    await expect.poll(() => new URL(frame.url()).hash).toBe('');
     for (const state of ['desabilitado', 'carregando']) for (const a of await frame.locator(`[data-contract-state=${state}] a`).all()) {
       await expect(a).not.toHaveAttribute('href');
       await expect(a).toHaveAttribute('tabindex', '-1');

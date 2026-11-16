@@ -105,13 +105,13 @@ async function moduleCase(page, id) {
     await tabTo(page, h);
     const initial = Number(await h.getAttribute('aria-valuenow'));
     await page.keyboard.press('ArrowLeft');
-    expect(Number(await h.getAttribute('aria-valuenow'))).toBe(initial - 16);
+    await expect(h).toHaveAttribute('aria-valuenow', String(initial - 16));
     await page.keyboard.press('Home');
-    expect(await h.getAttribute('aria-valuenow')).toBe(await h.getAttribute('aria-valuemin'));
+    await expect(h).toHaveAttribute('aria-valuenow', await h.getAttribute('aria-valuemin'));
     await page.keyboard.press('End');
-    expect(await h.getAttribute('aria-valuenow')).toBe(await h.getAttribute('aria-valuemax'));
+    await expect(h).toHaveAttribute('aria-valuenow', await h.getAttribute('aria-valuemax'));
     await page.keyboard.press('Enter');
-    expect(Number(await h.getAttribute('aria-valuenow'))).toBe(initial);
+    await expect(h).toHaveAttribute('aria-valuenow', String(initial));
     await expect(h).toBeFocused();
     await expect(h).toHaveJSProperty('tabIndex', 0);
   } else if (id === 'disclosure') {
