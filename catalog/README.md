@@ -1,7 +1,7 @@
 # Catálogo de marcas
 
-Fundações locais das cinco marcas, em claro e escuro, sem JavaScript no navegador.
-As fundações são publicadas pelo workflow Pages após o build e a montagem compartilhada. O site permanece em construção; a API e os valores do DS não mudam.
+Fundações e oito componentes das cinco marcas, em claro e escuro. JavaScript local somente nos exemplos de confirmação e tabela.
+O catálogo é publicado pelo workflow Pages após o build e a montagem compartilhada. O site permanece em construção; a API e os valores do DS não mudam.
 
 ```sh
 npm ci
@@ -40,8 +40,8 @@ Não se declara que o arquivo SVG original foi corrigido nesta PR.
 
 ## Travas
 
-O manifesto registra os 8 contratos, as 30 fichas e os 16 imports com exclusão
-motivada nesta etapa de fundações. O teste recebe uma raiz de fixture e rejeita
+O manifesto liga os oito contratos e suas fichas geradas às páginas. As fichas e
+os imports legados mantêm exclusão motivada até as próximas etapas. O teste recebe uma raiz de fixture e rejeita
 novos arquivos sem entrada, referências ausentes, receitas com estilos ou scripts,
 nomes de origem inexistentes e ciclos de variáveis. Os imports precisam existir.
 Geração dupla verifica hashes iguais. A verificação **pontual da PR 1**, fora da suíte e do CI, extrai `git archive`
@@ -201,3 +201,54 @@ nem fontes); o GREEN usa a mesma função chamada pelo workflow. Capturas de
 referência, inspeção humana, execução do CI e conferência do site depois da
 publicação continuam sob os respectivos gates. Componentes das etapas seguintes
 não são apresentados como concluídos.
+
+
+## PR 3 — os oito contratos
+
+Cada componente tem uma página em cada marca e aparência, agrupada por tarefa.
+A moldura continua neutra, em Inter; o exemplo abre num documento isolado e
+carrega uma folha de marca. A navegação usa links e mantém marca, tema e página.
+O menu de componentes usa details nativo. Não há script na moldura.
+
+O gerador lê contratos e extrai elementos por ID de `examples/pilot.html`.
+As amostras estáticas de mouse, pressionado e foco são derivadas com PostCSS
+sobre as declarações do adaptador atual, em vez de copiar cores ou espaçamentos.
+A camada de apresentação organiza a grade; não redefine a aparência rx-*.
+Os estados não aplicáveis estão identificados. Os detalhes reúnem critérios,
+casos obrigatórios, papéis consumidos e HTML dos exemplos.
+
+Com autorização do Marcos em 16/11, o comportamento inline do piloto foi
+extraído para `behaviors/confirm-dialog.js` e `behaviors/data-table.js`, usados
+tanto no piloto quanto no catálogo. A seleção de tema do piloto ficou em
+`examples/pilot-theme.js`. Os corpos extraídos preservam o comportamento.
+Os dois primeiros arquivos só carregam nas respectivas páginas de componente;
+o terceiro não entra no catálogo. Nenhum entra no pacote npm nem em dist.
+A CSP continua default-src self, sem unsafe-inline, biblioteca ou CDN.
+
+As páginas calculam os pares a partir das regras reais do adaptador e das
+ligações da marca. O Playwright compara as cores com getComputedStyle e
+recalcula as razões WCAG. Esse ensaio não é prova por pixel nem de leitor de
+tela. Não há aprovação geral de acessibilidade ou de todos os produtos.
+
+A pendência atual é o PdV escuro: texto de perigo sobre a primeira superfície
+(3,77:1) e texto indisponível sobre a segunda (3,80:1). O aviso e os números
+ficam nas páginas afetadas; nenhum valor é corrigido pelo catálogo. A borda
+tracejada indisponível segue a exceção expressa do contrato Button.
+
+Veja o [relatório desta etapa](research/2026-11-16-catalogo-contratos.md).
+As capturas externas são evidências locais, não baselines de referência.
+Publicação, CI Linux final, parecer independente e aprovação humana continuam
+separados da verificação local.
+
+```sh
+npm run build:catalog
+npm test -- --runInBand
+npx playwright test tests/visual/catalog-components.spec.js tests/visual/catalog-foundations.spec.js tests/visual/catalog-publication.spec.js --workers=1 --retries=0
+npx playwright test tests/visual/pilot-contracts.spec.js --grep-invert baseline --workers=1 --retries=0
+```
+
+O último comando seleciona os 111 casos de contrato do piloto sem executar as
+capturas que dependem das baselines Linux. Não as gera nem as atualiza.
+`CATALOG_EVIDENCE_DIR` grava 80 imagens de componente em 1440 e mais 20 em 390
+(botão e tabela, nas dez combinações), totalizando 100 novas imagens. Todos os
+80 documentos são verificados em ambas as larguras, mesmo sem imagem adicional.

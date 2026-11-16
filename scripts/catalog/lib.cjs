@@ -20,6 +20,8 @@ function coverage(root) {
   for (const f of expected) if (!covered.has(f)) throw Error('Sem entrada no manifesto: ' + f);
   for (const f of [...covered, ...entries.flatMap(e => [e.recipe, ...(e.css || []), ...(e.js || [])])].filter(Boolean)) if (!fs.existsSync(path.join(root, f))) throw Error('Referência ausente: ' + f);
   for (const e of entries) {
+    const allowed = ['confirm-dialog','data-table'].includes(e.id) ? [`catalog/behaviors/${e.id}.js`] : [];
+    if (JSON.stringify(e.js || []) !== JSON.stringify(allowed)) throw Error('JavaScript fora da autorização do catálogo: ' + e.id);
     const html = fs.readFileSync(path.join(root, e.recipe), 'utf8');
     if (/\bstyle\s*=|<style\b|<script\b|#[\da-f]{3,8}\b|\d+(?:px|rem|ms)\b/i.test(html)) throw Error('Literal ou código na receita: ' + e.recipe);
   }

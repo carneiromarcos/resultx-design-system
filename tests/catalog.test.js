@@ -1,4 +1,5 @@
 const fs = require('fs');
+const yaml = require('js-yaml');
 const path = require('path');
 const os = require('os');
 const crypto = require('crypto');
@@ -15,7 +16,7 @@ const root = path.resolve(__dirname, '..');
 test('d — trava rejeita contrato sem entrada em uma raiz de fixture', () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'catalog-coverage-'));
   try {
-    for (const dir of ['catalog', 'contracts', 'docs/components', 'components']) fs.cpSync(path.join(root, dir), path.join(tmp, dir), {
+    for (const dir of ['catalog', 'contracts', 'docs/components', 'components', 'adapters', 'examples', 'generated']) fs.cpSync(path.join(root, dir), path.join(tmp, dir), {
       recursive: true
     });
     fs.writeFileSync(path.join(tmp, 'contracts/novo.yaml'), 'componente: Novo');
@@ -82,14 +83,15 @@ test('fundações têm vinte documentos e a saída tem CSP sem scripts', () => {
   for (const file of html) {
     const text = fs.readFileSync(file, 'utf8');
     expect(text).toContain('content="default-src \'self\'"');
-    expect(text).not.toMatch(/<script\b|\bstyle=|text-transform|MBTI|\b[EI][NS][TF][JP]\b/i);
+    expect(text).not.toMatch(/\bstyle=|text-transform|MBTI|\b[EI][NS][TF][JP]\b/i);
+    if (!/[\\/](confirm-dialog|data-table)[\\/]example\.html$/.test(file)) expect(text).not.toMatch(/<script\b/i);
   }
 });
 
 test.each(['docs/components/novo.md', 'components/novo.css'])('trava rejeita nova cobertura de %s', file => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(),'catalog-new-'));
   try {
-    for (const dir of ['catalog','contracts','docs/components','components']) fs.cpSync(path.join(root,dir),path.join(tmp,dir),{recursive:true});
+    for (const dir of ['catalog','contracts','docs/components','components','adapters','examples','generated']) fs.cpSync(path.join(root,dir),path.join(tmp,dir),{recursive:true});
     fs.writeFileSync(path.join(tmp,file),'Novo');
     if (file.endsWith('.css')) fs.appendFileSync(path.join(tmp,'components/components.css'),'\n@import "./novo.css";');
     expect(() => coverage(tmp)).toThrow('Sem entrada no manifesto: '+file);
@@ -115,7 +117,7 @@ test('geração não escreve nas pastas protegidas do estado atual', () => {
 test('novo contrato registrado não fica preso à contagem histórica', () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'catalog-growth-'));
   try {
-    for (const dir of ['catalog','contracts','docs/components','components']) fs.cpSync(path.join(root,dir),path.join(tmp,dir),{recursive:true});
+    for (const dir of ['catalog','contracts','docs/components','components','adapters','examples','generated']) fs.cpSync(path.join(root,dir),path.join(tmp,dir),{recursive:true});
     fs.writeFileSync(path.join(tmp,'contracts/novo.yaml'),'componente: Novo');
     fs.appendFileSync(path.join(tmp,'catalog/manifest.yaml'),'\n  - file: contracts/novo.yaml\n    reason: "Cobertura declarada pela evolução da fixture."\n');
     expect(coverage(tmp).expected).toContain('contracts/novo.yaml');
@@ -130,4 +132,53 @@ test('build funciona sem executável git e refaz uma saída parcial', () => {
   cp.execFileSync(process.execPath,['scripts/catalog/build.cjs'],{cwd:root,env:{...process.env,PATH:'',GITHUB_SHA:''}});
   expect(fs.existsSync(path.join(out,'incompleto'))).toBe(false);
   expect(fs.readFileSync(path.join(out,'xscore/dark/fundacoes/example.html'),'utf8')).toContain('geração local');
+});
+
+const ids = ['button', 'card', 'confirm-dialog', 'data-table', 'empty-state', 'field', 'stat-card', 'status-badge'];
+test('catálogo registra os oito contratos como páginas nas dez combinações', () => {
+  const manifest = yaml.load(fs.readFileSync(path.join(root, 'catalog/manifest.yaml'), 'utf8'));
+  for (const id of ids) {
+    const entry = manifest.pages.find(page => page.id === id);
+    expect(entry).toBeDefined();
+    expect(entry.contract).toBe(`contracts/${id}.yaml`);
+    expect(entry.js).toEqual(['confirm-dialog','data-table'].includes(id) ? [`catalog/behaviors/${id}.js`] : []);
+    for (const brand of ['eletia', 'emprega', 'xscore', 'pdv', 'resultx']) for (const theme of ['light', 'dark']) {
+      const dir = path.join(root, '_site/catalog', brand, theme, id);
+      expect(fs.existsSync(path.join(dir, 'index.html'))).toBe(true);
+      const html = fs.readFileSync(path.join(dir, 'example.html'), 'utf8');
+      expect(html).not.toMatch(/\bon\w+=|style=/i);
+      expect((html.match(/<script\b/g)||[]).length).toBe(['confirm-dialog','data-table'].includes(id) ? 1 : 0);
+      const contract = yaml.load(fs.readFileSync(path.join(root, entry.contract), 'utf8'));
+      for (const state of Object.keys(contract.estados)) expect(html).toContain(`data-contract-state="${state}"`);
+      for (const item of contract.casos_teste) expect(html).toContain(item.id);
+    }
+  }
+});
+
+
+test('JavaScript só é autorizado nas duas páginas de comportamento', () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'catalog-js-'));
+  try {
+    for (const dir of ['catalog','contracts','docs/components','components','adapters','examples','generated']) fs.cpSync(path.join(root,dir),path.join(tmp,dir),{recursive:true});
+    const file=path.join(tmp,'catalog/manifest.yaml');
+    const manifest=yaml.load(fs.readFileSync(file,'utf8'));
+    manifest.pages.find(p=>p.id==='button').js=['catalog/behaviors/data-table.js'];
+    fs.writeFileSync(file,yaml.dump(manifest));
+    expect(()=>coverage(tmp)).toThrow('JavaScript fora da autorização do catálogo: button');
+  } finally { fs.rmSync(tmp,{recursive:true,force:true}); }
+});
+test('estilos de mouse e foco são derivados das declarações atuais do adaptador', () => {
+  const {demoStyles,elementById} = require('../scripts/catalog/components.cjs');
+  const css=fs.readFileSync(path.join(root,'adapters/css/pilot.css'),'utf8');
+  const tree=require('postcss').parse(demoStyles(css));
+  tree.walkRules(rule=>{
+    const selectors=require('postcss').list.comma(rule.selector);
+    for(const selector of selectors) {
+      const original=selector.replace(/\[data-catalog-state="hover"\]/g,':hover').replace(/\[data-catalog-state="ativo"\]/g,':active').replace(/\[data-catalog-state="foco"\]/g,':focus-visible');
+      const matches=[];require('postcss').parse(css).walkRules(r=>{if(require('postcss').list.comma(r.selector).includes(original))matches.push(r);});
+      expect(matches.some(r=>JSON.stringify(r.nodes.map(n=>[n.prop,n.value]))===JSON.stringify(rule.nodes.map(n=>[n.prop,n.value])))).toBe(true);
+    }
+  });
+  expect(elementById('<section id="a"><section>Dentro</section>Fora</section>','a')).toBe('<section id="a"><section>Dentro</section>Fora</section>');
+  expect(()=>elementById('', 'sumiu')).toThrow('Exemplo do piloto ausente');
 });
