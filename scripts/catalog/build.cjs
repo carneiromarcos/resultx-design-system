@@ -2,7 +2,9 @@
 
 const fs = require('fs');
 const path = require('path');
-const {revisionInfo} = require('./revision.cjs');
+const {
+  revisionInfo
+} = require('./revision.cjs');
 const {
   coverage,
   bindings,
@@ -12,6 +14,10 @@ const {
 const {
   brands
 } = require('../../catalog/bindings.config.js');
+const {
+  notice,
+  descriptions
+} = require('../../catalog/copy.config');
 const ROOT = path.resolve(__dirname, '../..');
 const OUT = path.join(ROOT, '_site/catalog');
 const esc = x => String(x).replace(/[&<>"']/g, c => ({
@@ -37,10 +43,13 @@ function copy(file, dest = file) {
     recursive: true
   });
 }
+const banner = `<aside class="catalog-notice" data-catalog-notice aria-label="Sobre este catálogo">${esc(notice)}</aside>`;
 const head = (title, theme, extra = '') => `<!doctype html><html lang="pt-BR" data-theme="${theme}"${extra}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'self'"><title>${esc(title)}</title>`;
 function build(options = {}) {
   const revision = revisionInfo(options);
-  const {manifest} = coverage(ROOT);
+  const {
+    manifest
+  } = coverage(ROOT);
   const foundation = manifest.pages.find(page => page.id === 'fundacoes');
   if (!foundation || manifest.pages.length !== 1 || foundation.js.length) throw Error('PR 1 permite somente fundações sem JavaScript');
   fs.rmSync(OUT, {
@@ -128,19 +137,24 @@ function build(options = {}) {
         TECH: tech
       };
       const content = recipe.replace(/\{\{(\w+)\}\}/g, (_, k) => replacements[k]);
-      write(`${b.id}/${theme}/fundacoes/example.html`, head(b.label, theme, ' data-rx-catalog') + order + `<link rel="stylesheet" href="${base}brands/${b.dir}/tokens/ds-bridge.css"><link rel="stylesheet" href="${base}bindings/${b.id}.css"><link rel="stylesheet" href="${base}fonts.css"><link rel="stylesheet" href="${base}foundations.css"></head><body>${content}</body></html>`);
+      write(`${b.id}/${theme}/fundacoes/example.html`, head(b.label, theme, ' data-rx-catalog') + order + `<link rel="stylesheet" href="${base}brands/${b.dir}/tokens/ds-bridge.css"><link rel="stylesheet" href="${base}bindings/${b.id}.css"><link rel="stylesheet" href="${base}fonts.css"><link rel="stylesheet" href="${base}foundations.css"></head><body>${banner}${content}</body></html>`);
       const nav = brands.map(x => `<a href="../../../${x.id}/${theme}/fundacoes/"${x.id === b.id ? ' aria-current="page"' : ''}>${esc(x.label)}</a>`).join('');
       const themes = ['light', 'dark'].map(t => `<a href="../../${t}/fundacoes/"${t === theme ? ' aria-current="page"' : ''}>${t === 'light' ? 'Claro' : 'Escuro'}</a>`).join('');
-      write(`${b.id}/${theme}/fundacoes/index.html`, head('Visão da marca · ' + b.label, theme) + core + `<link rel="stylesheet" href="${base}fonts.css"><link rel="stylesheet" href="${base}frame.css"></head><body><header><h1>Visão da marca</h1><nav aria-label="Marca">${nav}</nav><nav aria-label="Aparência">${themes}</nav><p>Em construção: componentes serão acrescentados nas próximas etapas.</p></header><iframe src="example.html" title="Fundações de ${esc(b.label)}" loading="lazy"></iframe></body></html>`);
+      write(`${b.id}/${theme}/fundacoes/index.html`, head('Visão da marca · ' + b.label, theme) + core + `<link rel="stylesheet" href="${base}fonts.css"><link rel="stylesheet" href="${base}frame.css"></head><body><header><h1>Visão da marca</h1><nav aria-label="Marca">${nav}</nav><nav aria-label="Aparência">${themes}</nav>${banner}</header><iframe src="example.html" title="Fundações de ${esc(b.label)}" loading="lazy"></iframe></body></html>`);
     }
     write(`assets/bindings/${b.id}.css`, css);
   }
+  const cards = brands.map(b => `<section><img class="brand-logo" src="assets/brands/${b.dir}/assets/logo/${b.logo.light}" alt="${esc(b.label)}"><h2>${esc(b.label)}</h2><p>${esc(descriptions[b.id])}</p><a data-brand-entry="${b.id}" href="${b.id}/light/fundacoes/">Ver ${esc(b.label)}</a></section>`).join('');
+  const rows = brands.map(b => `<tr><th scope="row">${esc(b.label)}</th><td>Disponíveis no claro e no escuro</td><td>Em preparação</td></tr>`).join('');
+  write('index.html', head('Catálogo de marcas', 'light') + '<link rel="stylesheet" href="assets/tokens/tokens.css"><link rel="stylesheet" href="assets/fonts.css"><link rel="stylesheet" href="assets/frame.css"></head><body><header><h1>Catálogo de marcas</h1>' + banner + '</header><main class="catalog-index"><p>Escolha uma marca para conhecer suas cores, letras e formas.</p>' + cards + '<section><h2>O que existe em cada marca</h2><table><thead><tr><th scope="col">Marca</th><th scope="col">Bases visuais</th><th scope="col">Componentes</th></tr></thead><tbody>' + rows + '</tbody></table></section></main></body></html>');
   console.log('Catálogo: 10 documentos isolados de fundações + 10 molduras, sem JavaScript.');
 }
 if (require.main === module) {
   const args = process.argv.slice(2);
   if (args.length && (args.length !== 2 || args[0] !== '--revision')) throw Error('Uso: build.cjs [--revision <SHA completo>]');
-  build({revision: args[1]});
+  build({
+    revision: args[1]
+  });
 }
 module.exports = {
   build
