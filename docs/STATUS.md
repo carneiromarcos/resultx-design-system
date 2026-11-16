@@ -1,6 +1,6 @@
 # ResultX Design System — Painel de status
 
-> **Última atualização verificada:** 16/11/2026, `main` = `764866b` (PR #135).
+> **Última atualização verificada:** 16/11/2026, `main` = `997e2a9` (PR #136).
 > **Quem mantém:** Supervisor DS, conforme o [protocolo de status e continuidade](governance/status-protocol.md).
 > **Regra de leitura:** CONCLUÍDO exige critério atendido e evidência (PR mesclada, CI verde, parecer do Revisor). Documento escrito **não** conta como implementação.
 
@@ -79,13 +79,14 @@
 | DS-27 | Hierarquia do botão de perigo no FinanceX | CONCLUÍDO | decisão registrada antes de o FinanceX subir de versão (ex.: Desativar por linha em variante neutra) | decisão do Marcos em 14/11; FinanceX #45 (`71df56a7`): Desativar neutro, confirmação em Excluir regra e Cancelar plano, ponte provisória do `btn-danger`; CI verde; Revisor APROVA | — | tirar a ponte quando o FinanceX subir para a v2.11.0 |
 | DS-28 | Protocolo de status adotado no IMO | CONCLUÍDO | painel versionado no IMO; Revisor; merge do Marcos | IMO #903 mesclada (`c5d2f2bc`) com o merge do Marcos; Revisor APROVA no head `1ba0674a` (revisão conjunta DS #126 / IMO #903) | — | o painel do IMO segue com IMO-06 e IMO-26 antigos, atualizar na próxima PR material do IMO |
 | DS-29 | Contrato de link com aparência de botão (pré-requisito da IMO-30b) | CONCLUÍDO | contrato com anatomia `<a href>`, só Enter aciona, indisponível com `aria-disabled` e sem `href`; casos de teste executados na vitrine do adaptador CSS; teste que falha sem a mudança; Visual Linux; Revisor; antes da tag v2.11.0 | decisão do @architect em 16/11 (`contracts/button.yaml` cobre só botão nativo); GO do Marcos em 16/11; #129 (`e80d611`) mesclada com Revisor APROVA | — | chega ao IMO na IMO-30b, depois da v2.11.0 |
-| DS-30 | Catálogo de todas as marcas (eletia, emprega+ com IMO e EditalHub, Xscore, PdV, ResultX), gerado do código do DS | EM ANDAMENTO | cada marca × componentes × claro/escuro, em documento isolado; toda ligação de marca é `var()` para nome existente; nenhuma cor nova antes de 10/12; nada gravado em `dist`, `brands`, `tokens`, `adapters`, `contracts`, `generated`; publicado no Pages; Visual Linux; Revisor; aceite visual do Marcos | pedido e escolhas do Marcos em 16/11 (site de catálogo; 5 marcas; Catholic Hub e Saúde fora); levantamento `catalog/research/2026-11-16-levantamento-marcas.md` (fora do pacote npm); decisões @architect e @ux em 16/11 (6 PRs; publicação na 2ª), guardadas em `catalog/research/2026-11-16-decisao-arquitetura.md` e `catalog/research/2026-11-16-decisao-ux.md`; PR 1 mesclada (#134, `efa9f9f`; Revisor APROVA; visual Linux 178 aprovados); PR 2 mesclada (#135, `764866b`; Revisor APROVA; `/catalog/` no ar, 120 endereços sem erro); PR 3 (8 contratos; JS só em ConfirmDialog e DataTable, autorizado pelo Marcos em 16/11) com Revisor APROVA COM RESSALVA em `e32c854`; PdV escuro com 2 pares abaixo de 4,5:1 (ver D) | — | aceite visual do Marcos; PRs 4 e 5 (legado, navegação, compostos, dados, domínio) |
+| DS-30 | Catálogo de todas as marcas (eletia, emprega+ com IMO e EditalHub, Xscore, PdV, ResultX), gerado do código do DS | EM ANDAMENTO | cada marca × componentes × claro/escuro, em documento isolado; toda ligação de marca é `var()` para nome existente; nenhuma cor nova antes de 10/12; nada gravado em `dist`, `brands`, `tokens`, `adapters`, `contracts`, `generated`; publicado no Pages; Visual Linux; Revisor; aceite visual do Marcos | pedido e escolhas do Marcos em 16/11 (site de catálogo; 5 marcas; Catholic Hub e Saúde fora); levantamento `catalog/research/2026-11-16-levantamento-marcas.md` (fora do pacote npm); decisões @architect e @ux em 16/11 (6 PRs; publicação na 2ª), guardadas em `catalog/research/2026-11-16-decisao-arquitetura.md` e `catalog/research/2026-11-16-decisao-ux.md`; PR 1 mesclada (#134, `efa9f9f`; Revisor APROVA; visual Linux 178 aprovados); PR 2 mesclada (#135, `764866b`; Revisor APROVA; `/catalog/` no ar, 120 endereços sem erro); PR 3 mesclada (#136, `997e2a9`; JS só em ConfirmDialog e DataTable, autorizado pelo Marcos em 16/11; 1.890 endereços publicados sem erro); PdV escuro com 2 pares abaixo de 4,5:1 (ver D); PR 4a (legado recolhido + navegação, layout, segmented, list-item) com Revisor APROVA COM RESSALVA em `bd52e6b`: 135 de 370 pares do legado abaixo do piso (ver D) | — | aceite visual do Marcos; decisão de JS dos componentes interativos; PR 4b; PR 5 |
 
 ## C. Registro de progresso
 
 | Data | Referência | O que mudou |
 |---|---|---|
-| 16/11 | esta PR | DS-30, PR 3 do catálogo: os 8 contratos nas 10 combinações; JS local só nas páginas de ConfirmDialog e DataTable, extraído do piloto; contraste medido por página |
+| 16/11 | esta PR | DS-30, PR 4a do catálogo: famílias anteriores recolhidas no fim do sucessor; Navigation, Layout, Segmented e ListItem; contraste do legado medido e publicado como pendência |
+| 16/11 | #136 | DS-30, PR 3 do catálogo: os 8 contratos nas 10 combinações; JS local só nas páginas de ConfirmDialog e DataTable, extraído do piloto; contraste medido por página |
 | 16/11 | #135 | DS-30, PR 2 do catálogo: publicação de `/catalog/` no Pages com faixa "em construção"; fontes locais publicadas; decisões dos especialistas guardadas em `catalog/research/` |
 | 16/11 | #134 | DS-30, PR 1 do catálogo: ligação de marca, manifesto, trava e fundações das 5 marcas; fontes Plus Jakarta Sans e Geist Mono (OFL); painel após #129 e IMO #931 |
 | 16/11 | IMO #931 | Erros da janela de Perfil ligados aos campos nas telas do piloto (IMO-31) |
@@ -144,6 +145,7 @@
 |---|---|---|---|
 | Janela de recurso do EditalHub | DS-18, DS-19 | mudança de valor no `eds-root` proibida até 10/12 | a data |
 | Contraste do PdV escuro no catálogo | DS-30 | texto de perigo sobre superfície 3,77:1 e texto indisponível sobre segunda superfície 3,80:1 (mínimo 4,5:1), em Button, Card, DataTable, StatusBadge e ConfirmDialog; corrigir exige mudar valor; as páginas mostram a pendência e não há declaração de conformidade integral | 10/12 e decisão do Marcos sobre a paleta do PdV; responsável: Supervisor DS |
+| Contraste das famílias anteriores (legado) | DS-30 | 135 de 370 pares em repouso abaixo do piso (30 de texto, menor 2,69:1; 105 de limite/borda, parte intencional como ghost); lista em `catalog/research/2026-11-16-catalogo-legado-4a-contraste.csv`; produtos ainda usam essas famílias | avaliar correções com tokens existentes em tarefa separada; mudança de valor só depois de 10/12 com decisão do Marcos; responsável: Supervisor DS, com UX para exceções |
 | E3 com desvios da matriz | DS-21 | a E5 só começa com a E3 fechada | verificar as linhas 7, 8, 10, 11 e 20 e fechar a DS-10 |
 
 **Decisões aguardando o Marcos**
@@ -154,7 +156,7 @@ D5 só volta a ser pergunta depois da P1 (DS-24).
 
 ## E. Continuidade
 
-- **Próxima ação executável:** DS-30 nesta PR (PR 3, os 8 contratos): CI no SHA final, Revisor, merge sob a autorização "A" e conferência do site publicado; depois o aceite visual do Marcos e as PRs 4 e 5.
+- **Próxima ação executável:** DS-30 nesta PR (PR 4a, legado e navegação): CI no SHA final, Revisor, merge sob a autorização "A" e conferência do site publicado; depois a decisão de JS dos componentes interativos, a PR 4b, o aceite visual do Marcos e a PR 5.
 - **Depois:**
   1. DS-10, verificar as linhas da matriz ainda sem prova; IMO-30b depois da DS-17;
   2. DS-14, a partir de 27/11, com o inventário refeito até o SHA da tag;
@@ -166,5 +168,5 @@ D5 só volta a ser pergunta depois da P1 (DS-24).
   4. as ADRs [0001](adr/0001-role-named-tokens.md), [0003](adr/0003-token-single-source.md), [0004](adr/0004-contracts-adapters-pilot.md) e [0005](adr/0005-governance-propagation-decisions.md);
   5. `CHANGELOG.md` (seção Unreleased).
 - **Estado do repositório no fechamento:**
-  - PRs do DS abertas: esta (DS-30, PR 3 do catálogo) e 4 do Dependabot (#130–#133), ainda não avaliadas;
+  - PRs do DS abertas: esta (DS-30, PR 4a do catálogo) e 4 do Dependabot (#130–#133), ainda não avaliadas;
   - pasta de trabalho do DS: só a desta PR, removida depois do merge.

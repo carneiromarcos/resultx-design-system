@@ -22,3 +22,6 @@ details { margin-block: var(--space-4); }
 a:not(.rx-button) { color: var(--accent-primary-text); }
 /* A moldura de apresentação não aplica foco aos controles rx: ele vem do adaptador. */
 summary:focus-visible { outline: var(--focus-ring-width) solid var(--accent-primary-text); outline-offset: var(--focus-ring-offset); }
+
+.catalog-legacy-frame { display: block; width: 100%; height: 100vh; border: 0; }
+[data-legacy] { padding: var(--space-6); }

@@ -19,6 +19,8 @@ const {
   descriptions
 } = require('../../catalog/copy.config');
 const {definitions, renderComponent, demoStyles} = require('./components.cjs');
+const {definitions: legacyDefinitions, renderLegacy} = require('./legacy.cjs');
+const allDefinitions = [...definitions, ...legacyDefinitions.filter(d => !d.successor)];
 const ROOT = path.resolve(__dirname, '../..');
 const OUT = path.join(ROOT, '_site/catalog');
 const esc = x => String(x).replace(/[&<>"']/g, c => ({
@@ -69,8 +71,9 @@ function build(options = {}) {
     }
   }
   copyStyles('tokens');
+  copyStyles('components');
   copy('assets/fonts', 'fonts');
-  for (const file of new Set(manifest.pages.flatMap(page => page.css))) copy(file, file.startsWith('catalog/') ? path.basename(file) : file);
+  for (const file of new Set(manifest.pages.flatMap(page => [...page.css,...(page.legacy?.css||[])]))) copy(file, file.startsWith('catalog/') ? path.basename(file) : file);
   write('assets/states.css', demoStyles(fs.readFileSync(path.join(ROOT, 'adapters/css/pilot.css'), 'utf8')));
   for (const file of new Set(manifest.pages.flatMap(page => page.js))) copy(file, 'behaviors/' + path.basename(file));
   copy('catalog/frame.css', 'frame.css');
@@ -144,14 +147,25 @@ function build(options = {}) {
       const nav = brands.map(x => `<a href="../../../${x.id}/${theme}/fundacoes/"${x.id === b.id ? ' aria-current="page"' : ''}>${esc(x.label)}</a>`).join('');
       const themes = ['light', 'dark'].map(t => `<a href="../../${t}/fundacoes/"${t === theme ? ' aria-current="page"' : ''}>${t === 'light' ? 'Claro' : 'Escuro'}</a>`).join('');
       write(`${b.id}/${theme}/fundacoes/index.html`, head('Visão da marca · ' + b.label, theme) + core + `<link rel="stylesheet" href="${base}fonts.css"><link rel="stylesheet" href="${base}frame.css"></head><body><header><h1>Visão da marca</h1><nav aria-label="Marca">${nav}</nav><nav aria-label="Aparência">${themes}</nav>${banner}</header><iframe src="example.html" title="Fundações de ${esc(b.label)}" loading="lazy"></iframe></body></html>`);
-      const pagesNav = manifest.pages.map(p => `<a href="../${p.id}/">${esc(p.title || 'Visão da marca')}</a>`).join('');
+      const pagesNav = manifest.pages.filter(p=>{const d=allDefinitions.find(x=>x.id===p.id);return !d?.applies||d.applies.includes(b.id);}).map(p => `<a href="../${p.id}/">${esc(p.title || 'Visão da marca')}</a>`).join('');
       const foundationPath = `${b.id}/${theme}/fundacoes/index.html`;
       const foundationHTML = fs.readFileSync(path.join(OUT, foundationPath), 'utf8');
       write(foundationPath, foundationHTML.replace('</header>', `<details><summary>Escolher componente</summary><nav aria-label="Componentes">${pagesNav}</nav></details></header>`));
-      for (const definition of definitions) {
+      for (const definition of allDefinitions.filter(d=>!d.applies||d.applies.includes(b.id))) {
         const entry = manifest.pages.find(p => p.id === definition.id);
-        if (!entry || entry.contract !== `contracts/${definition.id}.yaml`) throw Error('Página de contrato sem entrada: ' + definition.id);
-        const rendered = renderComponent(ROOT, definition, values, revision);
+        if (!entry || (definitions.includes(definition) && entry.contract !== `contracts/${definition.id}.yaml`)) throw Error('Página de contrato sem entrada: ' + definition.id);
+        const rendered = entry.contract ? renderComponent(ROOT, definition, values, revision) : renderLegacy(ROOT, definition, values, revision);
+        let legacyDetails = '';
+        if(entry.legacy){
+          const legacy = legacyDefinitions.find(d=>d.id===definition.id);
+          const result = renderLegacy(ROOT,legacy,values,revision);
+          const legacyParts = {...result.replacements, NOTICE:notice};
+          const template = fs.readFileSync(path.join(ROOT,'catalog/recipes/familia.html'),'utf8');
+          const legacyContent = template.replace(/\{\{(\w+)\}\}/g,(_,key)=>legacyParts[key]);
+          write(`${b.id}/${theme}/${definition.id}/legacy.html`,head(legacy.title+' · '+b.label,theme,' data-rx-catalog')+order+`<link rel="stylesheet" href="${base}brands/${b.dir}/tokens/ds-bridge.css"><link rel="stylesheet" href="${base}bindings/${b.id}.css"><link rel="stylesheet" href="${base}fonts.css"><link rel="stylesheet" href="${base}components/components.css"><link rel="stylesheet" href="${base}legacy.css"></head><body>${banner}${legacyContent}</body></html>`);
+          write(`${b.id}/${theme}/${definition.id}/legacy-contraste.json`,JSON.stringify(result.pairs,null,2)+'\n');
+          legacyDetails=`<details data-legacy><summary>Versão anterior, ainda usada em produtos</summary><p>Para telas novas, use o ${esc(legacy.successor)} acima.</p><iframe class="catalog-legacy-frame" src="legacy.html" title="${esc(legacy.title)}" loading="lazy"></iframe></details>`;
+        }
         for (const token of rendered.contract.tokens) resolve(values, token);
         const parts = {...rendered.replacements, NOTICE: notice};
         const template = fs.readFileSync(path.join(ROOT, entry.recipe), 'utf8');
@@ -162,10 +176,10 @@ function build(options = {}) {
         const links = `<link rel="stylesheet" href="${base}brands/${b.dir}/tokens/ds-bridge.css"><link rel="stylesheet" href="${base}bindings/${b.id}.css"><link rel="stylesheet" href="${base}fonts.css">`;
         // O adaptador continua em @layer components. A folha de apresentação não redefine rx-*.
         const styles = entry.css.map(file => `<link rel="stylesheet" href="${base}${file.startsWith('catalog/') ? path.basename(file) : file}">`).join('');
-        write(`${b.id}/${theme}/${definition.id}/example.html`, head(definition.title + ' · ' + b.label, theme, ' data-rx-catalog') + order + links + styles + `<link rel="stylesheet" href="${base}states.css"></head><body>${banner}${sample}${entry.js.map(file => `<script src="${base}behaviors/${path.basename(file)}"></script>`).join('')}</body></html>`);
+        write(`${b.id}/${theme}/${definition.id}/example.html`, head(definition.title + ' · ' + b.label, theme, ' data-rx-catalog') + order + links + styles + `<link rel="stylesheet" href="${base}states.css"></head><body>${banner}${sample}${legacyDetails}${entry.js.map(file => `<script src="${base}behaviors/${path.basename(file)}"></script>`).join('')}</body></html>`);
         const brandNav = brands.map(x => `<a href="../../../${x.id}/${theme}/${definition.id}/"${x.id === b.id ? ' aria-current="page"' : ''}>${esc(x.label)}</a>`).join('');
         const themeNav = ['light','dark'].map(t => `<a href="../../${t}/${definition.id}/"${t === theme ? ' aria-current="page"' : ''}>${t === 'light' ? 'Claro' : 'Escuro'}</a>`).join('');
-        const groups = [...new Set(definitions.map(d => d.group))].map(group => `<div><span>${esc(group)}: </span>${definitions.filter(d => d.group === group).map(d => `<a href="../${d.id}/"${d.id === definition.id ? ' aria-current="page"' : ''}>${esc(d.title)}</a>`).join('')}</div>`).join('');
+        const groups = [...new Set(allDefinitions.map(d => d.group))].map(group => `<div><span>${esc(group)}: </span>${allDefinitions.filter(d => d.group === group && (!d.applies || d.applies.includes(b.id))).map(d => `<a href="../${d.id}/"${d.id === definition.id ? ' aria-current="page"' : ''}>${esc(d.title)}</a>`).join('')}</div>`).join('');
         write(`${b.id}/${theme}/${definition.id}/index.html`, head(definition.title + ' · ' + b.label, theme) + core + `<link rel="stylesheet" href="${base}fonts.css"><link rel="stylesheet" href="${base}frame.css"></head><body><header><h1>${esc(definition.title)}</h1><nav aria-label="Marca">${brandNav}</nav><nav aria-label="Aparência">${themeNav}</nav><details><summary>Escolher componente</summary><nav aria-label="Componentes"><a href="../fundacoes/">Visão da marca</a>${groups}</nav></details>${banner}</header><iframe src="example.html" title="${esc(definition.title)} de ${esc(b.label)}" loading="lazy"></iframe></body></html>`);
         write(`${b.id}/${theme}/${definition.id}/contraste.json`, JSON.stringify(rendered.pairs, null, 2) + '\n');
       }
@@ -173,9 +187,9 @@ function build(options = {}) {
     write(`assets/bindings/${b.id}.css`, css);
   }
   const cards = brands.map(b => `<section><img class="brand-logo" src="assets/brands/${b.dir}/assets/logo/${b.logo.light}" alt="${esc(b.label)}"><h2>${esc(b.label)}</h2><p>${esc(descriptions[b.id])}</p><a data-brand-entry="${b.id}" href="${b.id}/light/fundacoes/">Ver ${esc(b.label)}</a></section>`).join('');
-  const rows = brands.map(b => `<tr><th scope="row">${esc(b.label)}</th><td>Disponíveis no claro e no escuro</td><td>Oito componentes; combinações de cores pendentes</td></tr>`).join('');
+  const rows = brands.map(b => `<tr><th scope="row">${esc(b.label)}</th><td>Disponíveis no claro e no escuro</td><td>Componentes oficiais e famílias documentadas; pendências escritas</td></tr>`).join('');
   write('index.html', head('Catálogo de marcas', 'light') + '<link rel="stylesheet" href="assets/tokens/tokens.css"><link rel="stylesheet" href="assets/fonts.css"><link rel="stylesheet" href="assets/frame.css"></head><body><header><h1>Catálogo de marcas</h1>' + banner + '</header><main class="catalog-index"><p>Escolha uma marca para conhecer suas cores, letras e formas.</p>' + cards + '<section><h2>O que existe em cada marca</h2><table><thead><tr><th scope="col">Marca</th><th scope="col">Bases visuais</th><th scope="col">Componentes</th></tr></thead><tbody>' + rows + '</tbody></table></section></main></body></html>');
-  console.log('Catálogo: fundações e oito páginas de contrato nas dez combinações; JavaScript local somente no diálogo e na tabela.');
+  console.log('Catálogo: fundações, contratos e famílias documentadas nas dez combinações; JavaScript local somente no diálogo e na tabela.');
 }
 if (require.main === module) {
   const args = process.argv.slice(2);

@@ -1,0 +1,571 @@
+{
+  "buttons": [
+    {
+      "heading": "Component Anatomy",
+      "families": [
+        "variants"
+      ]
+    },
+    {
+      "heading": "Base Class",
+      "families": [
+        "variants"
+      ]
+    },
+    {
+      "heading": "Variants",
+      "families": [
+        "variants"
+      ]
+    },
+    {
+      "heading": "Size Modifiers",
+      "families": [
+        "sizes"
+      ]
+    },
+    {
+      "heading": "Layout Modifiers",
+      "families": [
+        "width"
+      ]
+    },
+    {
+      "heading": "`.btn-social`",
+      "families": [
+        "social"
+      ]
+    },
+    {
+      "heading": "HTML Usage",
+      "families": [
+        "variants",
+        "sizes",
+        "width",
+        "social"
+      ]
+    },
+    {
+      "heading": "Tokens Used",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "Reflexo `.btn-sheen`",
+      "families": [
+        "sheen"
+      ]
+    },
+    {
+      "heading": "Do / Don't",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "Links de ação do adaptador piloto",
+      "families": [],
+      "reason": "O contrato oficial já é o exemplo principal da página."
+    }
+  ],
+  "cards": [
+    {
+      "heading": "Component Anatomy",
+      "families": [
+        "base"
+      ]
+    },
+    {
+      "heading": "Base Class",
+      "families": [
+        "base"
+      ]
+    },
+    {
+      "heading": "Variants",
+      "families": [
+        "accent"
+      ]
+    },
+    {
+      "heading": "Sub-components",
+      "families": [
+        "content"
+      ]
+    },
+    {
+      "heading": "HTML Usage",
+      "families": [
+        "base",
+        "accent",
+        "content",
+        "grid"
+      ]
+    },
+    {
+      "heading": "Tokens Used",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "Do / Don't",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    }
+  ],
+  "forms": [
+    {
+      "heading": "Component Anatomy",
+      "families": [
+        "input"
+      ]
+    },
+    {
+      "heading": "Components",
+      "families": [
+        "input",
+        "select",
+        "checkbox",
+        "divider"
+      ]
+    },
+    {
+      "heading": "Toggle",
+      "families": [
+        "toggle"
+      ]
+    },
+    {
+      "heading": "HTML Usage",
+      "families": [
+        "input",
+        "checkbox",
+        "divider",
+        "toggle",
+        "login"
+      ]
+    },
+    {
+      "heading": "Textarea",
+      "families": [
+        "textarea"
+      ]
+    },
+    {
+      "heading": "Keyboard Shortcut",
+      "families": [
+        "keyboard"
+      ]
+    },
+    {
+      "heading": "Tokens Used",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "Do / Don't",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    }
+  ],
+  "badges": [
+    {
+      "heading": "Component Anatomy",
+      "families": [
+        "status",
+        "icons",
+        "tags"
+      ]
+    },
+    {
+      "heading": "Badge Base",
+      "families": [
+        "status"
+      ]
+    },
+    {
+      "heading": "Theory Badge Variants",
+      "families": [],
+      "reason": "Domínio da eletia, previsto na PR 5; não é uma família global."
+    },
+    {
+      "heading": "Status Badge Variants",
+      "families": [
+        "status"
+      ]
+    },
+    {
+      "heading": "Badge Size Variants",
+      "families": [
+        "compact"
+      ]
+    },
+    {
+      "heading": "Icon Badges",
+      "families": [
+        "icons"
+      ]
+    },
+    {
+      "heading": "Tags",
+      "families": [
+        "tags",
+        "dot"
+      ]
+    },
+    {
+      "heading": "HTML Usage",
+      "families": [
+        "status",
+        "compact",
+        "icons",
+        "tags",
+        "dot"
+      ]
+    },
+    {
+      "heading": "Tokens Used",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "Do / Don't",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    }
+  ],
+  "empty-state": [
+    {
+      "heading": "Two variants, two jobs",
+      "families": [
+        "page",
+        "inline"
+      ]
+    },
+    {
+      "heading": "Component Anatomy",
+      "families": [
+        "page"
+      ]
+    },
+    {
+      "heading": "Markup",
+      "families": [
+        "page",
+        "inline"
+      ]
+    },
+    {
+      "heading": "Classes",
+      "families": [
+        "page",
+        "inline"
+      ]
+    },
+    {
+      "heading": "Writing the copy",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "Accessibility",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "Tokens",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "See also",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    }
+  ],
+  "modals": [
+    {
+      "heading": "Component Anatomy",
+      "families": [
+        "default"
+      ]
+    },
+    {
+      "heading": "Components",
+      "families": [
+        "default",
+        "large"
+      ]
+    },
+    {
+      "heading": "Size Variants",
+      "families": [
+        "default",
+        "small",
+        "large"
+      ]
+    },
+    {
+      "heading": "Animations",
+      "families": [],
+      "reason": "Apresentação estática; o comportamento da janela anterior depende de autorização."
+    },
+    {
+      "heading": "HTML Usage",
+      "families": [
+        "default",
+        "small",
+        "large"
+      ]
+    },
+    {
+      "heading": "Tokens Used",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "Do / Don't",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    }
+  ],
+  "navigation": [
+    {
+      "heading": "Sidebar",
+      "families": [
+        "sidebar",
+        "rail",
+        "overlay",
+        "panel"
+      ]
+    },
+    {
+      "heading": "Header",
+      "families": [
+        "header"
+      ]
+    },
+    {
+      "heading": "Tabs",
+      "families": [
+        "tabs"
+      ]
+    },
+    {
+      "heading": "Breadcrumb",
+      "families": [
+        "breadcrumb"
+      ]
+    },
+    {
+      "heading": "Dropdown",
+      "families": [
+        "dropdown"
+      ]
+    },
+    {
+      "heading": "HTML Usage",
+      "families": [
+        "sidebar",
+        "tabs",
+        "breadcrumb",
+        "dropdown"
+      ]
+    },
+    {
+      "heading": "Tokens Used",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "Do / Don't",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    }
+  ],
+  "layout": [
+    {
+      "heading": "Layout Templates Overview",
+      "families": [
+        "list-detail",
+        "centered",
+        "auth",
+        "fullwidth"
+      ]
+    },
+    {
+      "heading": "Split Content Layout (List + Detail)",
+      "families": [
+        "list-detail"
+      ]
+    },
+    {
+      "heading": "Centered Layout",
+      "families": [
+        "centered"
+      ]
+    },
+    {
+      "heading": "Split Layout (Auth with Hero)",
+      "families": [
+        "auth"
+      ]
+    },
+    {
+      "heading": "Fullwidth Layout",
+      "families": [
+        "fullwidth"
+      ]
+    },
+    {
+      "heading": "Dropdown (Positioning)",
+      "families": [
+        "positioning"
+      ]
+    },
+    {
+      "heading": "HTML Usage",
+      "families": [
+        "centered",
+        "auth",
+        "list-detail"
+      ]
+    },
+    {
+      "heading": "Tokens Used",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "Do / Don't",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    }
+  ],
+  "segmented": [
+    {
+      "heading": "Not tabs, and not a toggle",
+      "families": [
+        "base"
+      ]
+    },
+    {
+      "heading": "No JavaScript",
+      "families": [
+        "base"
+      ]
+    },
+    {
+      "heading": "Component Anatomy",
+      "families": [
+        "base"
+      ]
+    },
+    {
+      "heading": "Markup",
+      "families": [
+        "base",
+        "stacked"
+      ]
+    },
+    {
+      "heading": "Classes",
+      "families": [
+        "base",
+        "stacked",
+        "small",
+        "large",
+        "block",
+        "chips"
+      ]
+    },
+    {
+      "heading": "How the state is read",
+      "families": [
+        "base"
+      ]
+    },
+    {
+      "heading": "Tokens",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "Accessibility",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "See also",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    }
+  ],
+  "list-item": [
+    {
+      "heading": "`.layout-list-item` is now a deprecated alias of this component",
+      "families": [
+        "alias"
+      ]
+    },
+    {
+      "heading": "Not the same as `.search-result-item`",
+      "families": [],
+      "reason": "Busca compacta é parte de compostos, prevista na PR 4b."
+    },
+    {
+      "heading": "Component Anatomy",
+      "families": [
+        "default"
+      ]
+    },
+    {
+      "heading": "Markup",
+      "families": [
+        "default"
+      ]
+    },
+    {
+      "heading": "Classes",
+      "families": [
+        "default",
+        "unread",
+        "compact"
+      ]
+    },
+    {
+      "heading": "Two decisions worth knowing",
+      "families": [
+        "current",
+        "default"
+      ]
+    },
+    {
+      "heading": "States",
+      "families": [
+        "default",
+        "current",
+        "unread"
+      ]
+    },
+    {
+      "heading": "Tokens",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "Measured",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "Accessibility",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    },
+    {
+      "heading": "See also",
+      "families": [],
+      "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
+    }
+  ]
+}

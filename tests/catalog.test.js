@@ -182,3 +182,13 @@ test('estilos de mouse e foco são derivados das declarações atuais do adaptad
   expect(elementById('<section id="a"><section>Dentro</section>Fora</section>','a')).toBe('<section id="a"><section>Dentro</section>Fora</section>');
   expect(()=>elementById('', 'sumiu')).toThrow('Exemplo do piloto ausente');
 });
+test('legado recolhido não carrega CSS nem JS dentro do exemplo oficial',()=>{
+ for(const d of require('../catalog/legacy.config.cjs').filter(d=>d.successor))for(const b of brands)for(const theme of ['light','dark']){
+  const dir=path.join(root,'_site/catalog',b.id,theme,d.id);
+  const official=fs.readFileSync(path.join(dir,'example.html'),'utf8');
+  expect(official).toContain('<details data-legacy>');
+  expect(official).not.toMatch(/<details data-legacy open/);
+  expect(official).not.toContain('href="../../../assets/components/components.css"');
+  const legacy=fs.readFileSync(path.join(dir,'legacy.html'),'utf8');expect(legacy).not.toMatch(/<script\b/);expect(legacy).toContain('data-brand="'+b.id+'"');
+ }
+});
