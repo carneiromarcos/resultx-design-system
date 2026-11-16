@@ -17,6 +17,7 @@ jobs:
           cache: npm
       - run: npm install
       - run: npm run lint
+      - run: npx --no -- stylelint 'catalog/*.css'
       - run: npm run lint:tokens
       - run: npm run build
       - run: npm test

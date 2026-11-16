@@ -1,0 +1,115 @@
+version: 1
+pages:
+  - id: fundacoes
+    recipe: catalog/recipes/fundacoes.html
+    css: [catalog/foundations.css]
+    js: []
+excluded:
+  - file: components/audio-player.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/brand-orb.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/btn-sheen.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/composer.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/cta-dock.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/cta-panel.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/disclosure.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/header-float.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/list-item.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/menu-drawer.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/message.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/segmented.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/split-pane.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/stage-chip.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/test-mark.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: components/zone-distribution.css
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: contracts/button.yaml
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: contracts/card.yaml
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: contracts/confirm-dialog.yaml
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: contracts/data-table.yaml
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: contracts/empty-state.yaml
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: contracts/field.yaml
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: contracts/stat-card.yaml
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: contracts/status-badge.yaml
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/badges.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/brand-orb.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/buttons.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/cards.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/composite.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/conversation.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/cta-dock.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/cta-panel.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/data-cards.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/disclosure.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/empty-state.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/forms.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/header-float.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/icons.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/layout.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/list-item.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/menu-drawer.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/modals.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/navigation.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/progress.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/segmented.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/split-pane.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/stage-chip.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/stats.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/tables.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/test-mark.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/theory.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/toast.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/tooltip.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
+  - file: docs/components/zone-distribution.md
+    reason: "Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações."
