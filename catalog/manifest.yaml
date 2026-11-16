@@ -185,6 +185,140 @@ pages:
       - docs/components/list-item.md
       - catalog/recipes/legacy/list-item.html
       - components/list-item.css
+  - id: sidebar-overlay
+    title: Navegação sobre a página
+    recipe: catalog/recipes/extended.html
+    css:
+      - components/components.css
+      - catalog/extended.css
+    js:
+      - dist/sidebar-overlay.js
+    sources:
+      - docs/components/navigation.md
+      - catalog/recipes/extended/sidebar-overlay.html
+  - id: menu-drawer
+    title: Menu que desliza
+    recipe: catalog/recipes/extended.html
+    css:
+      - components/components.css
+      - catalog/extended.css
+    js:
+      - dist/menu-drawer.js
+    sources:
+      - docs/components/menu-drawer.md
+      - catalog/recipes/extended/menu-drawer.html
+      - components/menu-drawer.css
+  - id: split-pane
+    title: Conteúdo e painel
+    recipe: catalog/recipes/extended.html
+    css:
+      - components/components.css
+      - catalog/extended.css
+    js:
+      - dist/split-pane.js
+    sources:
+      - docs/components/split-pane.md
+      - catalog/recipes/extended/split-pane.html
+      - components/split-pane.css
+  - id: header-float
+    title: Cabeçalho flutuante
+    recipe: catalog/recipes/extended.html
+    css:
+      - components/components.css
+      - catalog/extended.css
+    js:
+      - dist/header-float.js
+    sources:
+      - docs/components/header-float.md
+      - catalog/recipes/extended/header-float.html
+      - components/header-float.css
+  - id: disclosure
+    title: Abrir mais informações
+    recipe: catalog/recipes/extended.html
+    css:
+      - components/components.css
+      - catalog/extended.css
+    js:
+      - dist/disclosure.js
+    sources:
+      - docs/components/disclosure.md
+      - catalog/recipes/extended/disclosure.html
+      - components/disclosure.css
+  - id: cta-dock
+    title: Ação no rodapé do celular
+    recipe: catalog/recipes/extended.html
+    css:
+      - components/components.css
+      - catalog/extended.css
+    js:
+      - dist/cta-dock.js
+    sources:
+      - docs/components/cta-dock.md
+      - catalog/recipes/extended/cta-dock.html
+      - components/cta-dock.css
+  - id: tooltip
+    title: Dica complementar
+    recipe: catalog/recipes/extended.html
+    css:
+      - components/components.css
+      - catalog/extended.css
+    js: []
+    sources:
+      - docs/components/tooltip.md
+      - catalog/recipes/extended/tooltip.html
+  - id: toast
+    title: Mensagem breve
+    recipe: catalog/recipes/extended.html
+    css:
+      - components/components.css
+      - catalog/extended.css
+    js: []
+    sources:
+      - docs/components/toast.md
+      - catalog/recipes/extended/toast.html
+  - id: progress
+    title: Andamento
+    recipe: catalog/recipes/extended.html
+    css:
+      - components/components.css
+      - catalog/extended.css
+    js: []
+    sources:
+      - docs/components/progress.md
+      - catalog/recipes/extended/progress.html
+  - id: icons
+    title: Ícones
+    recipe: catalog/recipes/extended.html
+    css:
+      - components/components.css
+      - components/icons.css
+      - catalog/extended.css
+    js: []
+    sources:
+      - docs/components/icons.md
+      - catalog/recipes/extended/icons.html
+      - components/icons.css
+  - id: cta-panel
+    title: Convite de encerramento
+    recipe: catalog/recipes/extended.html
+    css:
+      - components/components.css
+      - catalog/extended.css
+    js: []
+    sources:
+      - docs/components/cta-panel.md
+      - catalog/recipes/extended/cta-panel.html
+      - components/cta-panel.css
+  - id: composite
+    title: Padrões compostos
+    recipe: catalog/recipes/extended.html
+    css:
+      - components/components.css
+      - catalog/extended.css
+    js: []
+    sources:
+      - docs/components/composite.md
+      - catalog/recipes/extended/composite.html
 excluded:
   - file: components/audio-player.css
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
@@ -194,19 +328,7 @@ excluded:
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: components/composer.css
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: components/cta-dock.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: components/cta-panel.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: components/disclosure.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: components/header-float.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: components/menu-drawer.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: components/message.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: components/split-pane.css
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: components/stage-chip.css
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
@@ -218,23 +340,7 @@ excluded:
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: docs/components/conversation.md
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/cta-dock.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/cta-panel.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: docs/components/data-cards.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/disclosure.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/header-float.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/icons.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/menu-drawer.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/progress.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/split-pane.md
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: docs/components/stage-chip.md
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
@@ -242,15 +348,9 @@ excluded:
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: docs/components/theory.md
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/toast.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/tooltip.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: docs/components/zone-distribution.md
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: docs/components/stats.md
     reason: O contrato rx-* está coberto nesta PR; a ficha legada e suas demais famílias ficam para as PRs 4 e 5.
   - file: docs/components/tables.md
-    reason: O contrato rx-* está coberto nesta PR; a ficha legada e suas demais famílias ficam para as PRs 4 e 5.
-  - file: docs/components/composite.md
     reason: O contrato rx-* está coberto nesta PR; a ficha legada e suas demais famílias ficam para as PRs 4 e 5.

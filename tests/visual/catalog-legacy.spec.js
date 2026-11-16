@@ -200,7 +200,7 @@ for (const b of brands) for (const theme of ['light', 'dark']) for (const d of d
     await page.keyboard.press('Space');
     await expect(radios.nth(1)).toBeChecked();
     await page.keyboard.press('Tab');
-    expect(await radios.nth(1).evaluate(e => e === document.activeElement)).toBe(false);
+    await expect(radios.nth(1)).not.toBeFocused();
   }
   if (d.id === 'navigation' || d.id === 'layout') await expect(page.locator('.catalog-pending')).toContainText('Próximo passo');
   const keyboardTarget = page.locator(d.id === 'segmented' ? '[data-family=base] input:checked' : 'main a[href],main button:not(:disabled),main input:not(:disabled),main select:not(:disabled),main textarea:not(:disabled)').first();

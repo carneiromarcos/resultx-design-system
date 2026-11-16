@@ -51,7 +51,7 @@ module.exports = [{
   title: 'Navegação',
   group: 'Navegação e layout',
   families: ['sidebar', 'rail', 'overlay', 'panel', 'header', 'tabs', 'breadcrumb', 'dropdown'],
-  pending: 'Abas, menu suspenso e menu lateral sobre a página são amostras visuais. Próximo passo: autorizar os comportamentos de troca de conteúdo, abrir e fechar, teclado e retorno do foco antes de usá-los como referência funcional.'
+  pending: 'Abas e menu suspenso são amostras visuais: troca de conteúdo e teclado ainda estão pendentes de autorização. O menu lateral sobre a página tem uma demonstração funcional própria, indicada abaixo.'
 }, {
   id: 'layout',
   doc: 'layout',

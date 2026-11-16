@@ -1,0 +1,19 @@
+body { display: block; }
+/* Organização das demonstrações; a aparência dos componentes vem do DS. */
+.catalog-extended { max-width: var(--content-max-width); padding: var(--space-5); margin-inline: auto; min-width: 0; }
+.catalog-extended > section { margin-block: var(--space-8); min-width: 0; }
+.catalog-extended h2 { margin-block: var(--space-4); }
+.catalog-extended p { margin-block: var(--space-3); }
+.catalog-extended pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+.catalog-extended details:not(.disclosure) { margin-block: var(--space-4); }
+.catalog-scroll-story { min-block-size: 200vh; padding-block: var(--space-8); display: grid; align-content: space-around; gap: var(--space-6); }
+.catalog-flex { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+.catalog-tooltip-grid { display: grid; gap: var(--space-12); padding: var(--space-8); justify-items: center; }
+.catalog-extended .toast-container { display: grid; gap: var(--space-3); }
+.catalog-extended .toast { flex-wrap: wrap; }
+.catalog-progress-complete { width: 100%; background: var(--accent-primary); }
+.catalog-extended .progress-item { flex-wrap: wrap; }
+.catalog-extended .progress-track { min-inline-size: var(--space-12); }
+.catalog-static-results { position: relative; display: block; }
+.catalog-extended .stepper { flex-wrap: wrap; }
+.catalog-extended .split-pane { min-block-size: var(--space-20); }
