@@ -1,0 +1,24 @@
+/* A apresentação não substitui as regras do adaptador. */
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg-base); color: var(--text-primary); font-family: var(--font-body); line-height: var(--leading-relaxed); }
+main { max-width: var(--content-max-width); margin: auto; padding: var(--space-6); }
+h1,h2,h3 { font-family: var(--font-heading); overflow-wrap: anywhere; }
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-lg); }
+p,li,code,summary { overflow-wrap: anywhere; }
+section { margin-block: var(--space-6); }
+.catalog-grid { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+.catalog-sample { flex: 1 1 var(--card-min-width); min-width: 0; padding: var(--space-4); background: var(--bg-base); border-radius: var(--radius-md); }
+.catalog-sample > :not(h3) { max-width: 100%; }
+.catalog-sample .rx-field__control { min-width: 0; width: 100%; }
+.catalog-sample .rx-button { max-width: 100%; overflow-wrap: anywhere; }
+.catalog-table-scroll { max-width: 100%; overflow: auto; padding: var(--space-2); }
+.catalog-table-scroll .rx-table { width: 100%; }
+.catalog-pending,.catalog-notice { padding: var(--space-4); background: var(--bg-surface-2); color: var(--text-primary); border-radius: var(--radius-md); }
+.catalog-sample pre { white-space: pre-wrap; }
+summary { cursor: pointer; }
+details { margin-block: var(--space-4); }
+a:not(.rx-button) { color: var(--accent-primary-text); }
+/* A moldura de apresentação não aplica foco aos controles rx: ele vem do adaptador. */
+summary:focus-visible { outline: var(--focus-ring-width) solid var(--accent-primary-text); outline-offset: var(--focus-ring-offset); }
