@@ -16,7 +16,8 @@ test.use({
 });
 test.describe.configure({mode: 'serial'});
 test.beforeAll(async () => {
-  if (!fs.existsSync(path.resolve(__dirname, '../../_site/catalog'))) require('../../scripts/catalog/build.cjs').build();
+  // Sempre reconstruir: a pasta pode ser sobra de uma geração que falhou.
+  require('../../scripts/catalog/build.cjs').build();
   const root = path.resolve(__dirname, '../../_site');
   server = http.createServer((req, res) => {
     let file = path.join(root, decodeURIComponent(req.url.split('?')[0]));
@@ -43,11 +44,12 @@ test.beforeAll(async () => {
   base = `http://127.0.0.1:${server.address().port}`;
 });
 test.afterAll(async () => {
-  server.closeAllConnections();
-  await new Promise(r => server.close(r));
+  await require('../../scripts/catalog/test-server.cjs').closeServer(server);
+  server = undefined;
 });
 async function doc(page, brand, theme) {
-  await page.goto(`${base}/catalog/${brand}/${theme}/fundacoes/example.html`);
+  const response = await page.goto(`${base}/catalog/${brand}/${theme}/fundacoes/example.html`);
+  expect(response.status()).toBe(200);
 }
 test('a — ligação resolve dimensões, fonte e superfície da marca', async ({
   page
@@ -57,6 +59,8 @@ test('a — ligação resolve dimensões, fonte e superfície da marca', async (
     const s = getComputedStyle(document.documentElement);
     return ['--radius-md', '--emp-radius-md', '--font-body', '--emp-font-sans'].map(x => s.getPropertyValue(x).trim());
   });
+  expect(r[0]).not.toBe('');
+  expect(r[1]).not.toBe('');
   expect(r[0]).toBe(r[1]);
   expect(r[2]).toBe(r[3]);
   await doc(page, 'resultx', 'light');
@@ -64,6 +68,8 @@ test('a — ligação resolve dimensões, fonte e superfície da marca', async (
     const s = getComputedStyle(document.documentElement);
     return ['--bg-surface-1', '--rx-surface-1'].map(x => s.getPropertyValue(x).trim());
   });
+  expect(r[0]).not.toBe('');
+  expect(r[1]).not.toBe('');
   expect(r[0]).toBe(r[1]);
 });
 test('b — fontes reais do Xscore carregam sem substituição silenciosa', async ({

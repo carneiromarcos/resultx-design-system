@@ -114,3 +114,40 @@ Também saiu a contagem fixa de 54 itens do teste de cobertura: o inventário é
 do código atual. Uma fixture com contrato novo e exclusão motivada passa, enquanto
 um contrato sem registro continua falhando. A quantidade histórica permanece
 somente como evidência desta entrega na documentação.
+
+## Correção da execução em container (PR #134)
+
+O build não chama Git. A revisão pode ser fornecida por
+`node scripts/catalog/build.cjs --revision <SHA completo>`; sem argumento, usa
+`GITHUB_SHA` quando presente. Sem ambos, mostra “geração local” com uma assinatura
+determinística das entradas, sem fingir conhecer um commit. Nesse caso o link do
+guia aponta explicitamente para a main, não para um SHA inventado. Revisões
+inválidas são recusadas antes de remover a saída anterior.
+
+Os testes reconstruem o catálogo no beforeAll, mesmo que `_site/catalog` já exista:
+uma pasta pode ser sobra de geração abortada. O teste exige HTTP 200 e valores
+não vazios. O encerramento também é seguro se o build falhar antes de abrir o
+servidor. A checagem de fontes permanece exigindo tanto `document.fonts.check`
+quanto uma FontFace real carregada; não foi substituída por tolerância ou timeout.
+
+No run 43926480710, o git recusou o proprietário do checkout. O build interrompido
+já havia criado a pasta, mas ainda não havia escrito os documentos. Na repetição,
+a fixture confundia essa pasta com build válido: o caso a comparava valores vazios;
+o caso b abria uma resposta sem faces, com check=true e loaded=false. Essa é uma
+falha de inicialização/saída parcial, não evidência de incompatibilidade dos WOFF2.
+Os ensaios no container oficial são reportados separadamente da prova local.
+
+Provas da correção: 766 testes Jest aprovados (também com o paralelismo padrão),
+23 testes do catálogo no Chrome local sem retries, zero falhas/pulados/flaky.
+Os cinco novos testes cobrem revisão por ambiente/argumento, validação/fallback,
+build sem Git e com saída parcial e encerramento sem servidor ou já encerrado.
+
+Tentativa equivalente Linux: imagem oficial v1.65.0-noble por digest do workflow,
+linux/amd64 em host arm64, um worker e zero retries. As duas tentativas encerraram
+o worker com SIGKILL: uma falha de infraestrutura, 22 casos não executados; não
+contam como aprovação Linux. Foram usados somente containers próprios, com limite
+de 768 MiB, sem mudar configurações da VM ou containers de outros projetos.
+Não há prova suficiente para atribuir o SIGKILL a um defeito funcional do catálogo
+nem confirmação de OOM; a validação completa no runner Linux nativo está pendente.
+O teste de fontes conserva as duas exigências e não troca carregamento real por
+um simples check de família. Nenhuma fonte ou workflow foi alterado.

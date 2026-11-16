@@ -121,3 +121,13 @@ test('novo contrato registrado não fica preso à contagem histórica', () => {
     expect(coverage(tmp).expected).toContain('contracts/novo.yaml');
   } finally { fs.rmSync(tmp,{recursive:true,force:true}); }
 });
+
+// As provas que geram a mesma saída ficam na mesma suíte para não concorrer.
+test('build funciona sem executável git e refaz uma saída parcial', () => {
+  const out = path.join(root, '_site/catalog');
+  fs.rmSync(out,{recursive:true,force:true}); fs.mkdirSync(out,{recursive:true});
+  fs.writeFileSync(path.join(out,'incompleto'),'geração abortada');
+  cp.execFileSync(process.execPath,['scripts/catalog/build.cjs'],{cwd:root,env:{...process.env,PATH:'',GITHUB_SHA:''}});
+  expect(fs.existsSync(path.join(out,'incompleto'))).toBe(false);
+  expect(fs.readFileSync(path.join(out,'xscore/dark/fundacoes/example.html'),'utf8')).toContain('geração local');
+});

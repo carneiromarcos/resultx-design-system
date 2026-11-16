@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const cp = require('child_process');
+const {revisionInfo} = require('./revision.cjs');
 const {
   coverage,
   bindings,
@@ -38,7 +38,8 @@ function copy(file, dest = file) {
   });
 }
 const head = (title, theme, extra = '') => `<!doctype html><html lang="pt-BR" data-theme="${theme}"${extra}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'self'"><title>${esc(title)}</title>`;
-function build() {
+function build(options = {}) {
+  const revision = revisionInfo(options);
   const {manifest} = coverage(ROOT);
   const foundation = manifest.pages.find(page => page.id === 'fundacoes');
   if (!foundation || manifest.pages.length !== 1 || foundation.js.length) throw Error('PR 1 permite somente fundações sem JavaScript');
@@ -64,10 +65,6 @@ function build() {
   let fonts = '';
   for (const [family, folder, files] of [['Inter', 'inter', [['Inter-Regular.woff2', 400], ['Inter-SemiBold.woff2', 600], ['Inter-Bold.woff2', 700]]], ['Sora', 'sora', [['Sora-SemiBold.woff2', 600], ['Sora-Bold.woff2', 700]]], ['JetBrains Mono', 'jetbrains-mono', [['JetBrainsMono-Regular.woff2', 400]]], ['Plus Jakarta Sans', 'plus-jakarta-sans', [['PlusJakartaSans.woff2', '200 800']]], ['Geist Mono', 'geist-mono', [['GeistMono.woff2', '100 900']]]]) for (const [file, weight] of files) fonts += `@font-face { font-family: '${family}'; src: url('fonts/${folder}/${file}') format('woff2'); font-weight: ${weight}; font-style: normal; }\n`;
   write('assets/fonts.css', fonts);
-  const revision = cp.execFileSync('git', ['rev-parse', 'HEAD'], {
-    cwd: ROOT,
-    encoding: 'utf8'
-  }).trim();
   const recipe = fs.readFileSync(path.join(ROOT, foundation.recipe), 'utf8');
   for (const b of brands) {
     copy(`brands/${b.dir}/tokens`);
@@ -125,9 +122,9 @@ function build() {
         NOTICE: notice,
         STATES: states.join(''),
         FAMILIES: familyNames.map((v, i) => ['Título: ', 'Texto: ', 'Dados: '][i] + esc(v.split(',')[0].replaceAll("'", ''))).join(' · '),
-        VOICE: voice ? `<p>${esc(voice)}</p><a href="https://github.com/carneiromarcos/resultx-design-system/blob/${revision}/${b.voiceSource}">Ler o guia de voz</a>` : '<p>A voz do Xscore ainda não está documentada. Próximo passo: definir os exemplos de linguagem e aprovar o guia da marca.</p>',
+        VOICE: voice ? `<p>${esc(voice)}</p><a href="https://github.com/carneiromarcos/resultx-design-system/blob/${revision.ref}/${b.voiceSource}">Ler o guia de voz</a>` : '<p>A voz do Xscore ainda não está documentada. Próximo passo: definir os exemplos de linguagem e aprovar o guia da marca.</p>',
         SOURCE: esc(`tokens/tokens.json → brands/${b.dir}/tokens/tokens.css`),
-        REVISION: revision,
+        REVISION: revision.label,
         TECH: tech
       };
       const content = recipe.replace(/\{\{(\w+)\}\}/g, (_, k) => replacements[k]);
@@ -140,7 +137,11 @@ function build() {
   }
   console.log('Catálogo: 10 documentos isolados de fundações + 10 molduras, sem JavaScript.');
 }
-if (require.main === module) build();
+if (require.main === module) {
+  const args = process.argv.slice(2);
+  if (args.length && (args.length !== 2 || args[0] !== '--revision')) throw Error('Uso: build.cjs [--revision <SHA completo>]');
+  build({revision: args[1]});
+}
 module.exports = {
   build
 };
