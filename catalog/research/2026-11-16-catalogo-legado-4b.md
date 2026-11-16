@@ -128,7 +128,7 @@ As dívidas da 4a e do PdV escuro nos contratos não foram apagadas ou corrigida
   GREEN, com retries zero. Após corrigir a classificação do par de ícone
   para elemento não textual (mínimo 3:1), os dez casos de ícone foram reexecutados
   e aprovados. Execuções RED não são gates aprovados.
-- npm pack: 288 caminhos idênticos à base 1930719. A comparação é prova desta PR,
+- npm pack: 288 caminhos idênticos à base d2c6973 (mesma lista de 1930719). A comparação é prova desta PR,
   não uma trava histórica permanente no CI. Nenhum arquivo do catálogo no pacote.
 - Diff vazio em dist, brands, tokens, adapters, contracts, generated, package/lock,
   workflows e STATUS. eds-root e pilot-aliases conservam os SHA-256 originais.
@@ -149,3 +149,40 @@ adicionais de sidebar em 390. O dock é capturado em 390 por ser mobile; os dema
 exemplos principais em 1440. Todas as 120 combinações têm JSON e verificação em
 ambas as larguras. As estáticas no escuro têm teste de estilo, não PNG adicional.
 CI Linux final e aprovação humana continuam pendentes.
+
+## Confronto solicitado após o merge da 4a
+
+A branch foi rebaseada sobre d2c6973, retirando o commit antigo da 4a que entrou
+pelo squash. Não houve conflito; o conteúdo anterior da 4a é idêntico à base.
+
+O contraste baixo não é criado pelo fundo da vitrine. Uma página mínima local,
+com o HTML real de header-float/cta-dock e sem extended.css nem outros estilos
+do catálogo, repete o resultado. Foram aguardadas as transições CSS antes de
+ler as propriedades e compor o alfa, evitando medir a transição desde transparente.
+
+| Folhas carregadas na página mínima clara | Vidro resolvido | Fundo do body | Marca / texto do dock |
+|---|---|---|---:|
+| Núcleo + ponte eletia + componentes | rgba(255,255,255,0.92) | rgb(248,250,251) | 17,81:1 / 17,81:1 |
+| Núcleo + tokens completos eletia + ponte + componentes | rgba(22,27,38,0.85) | rgb(248,250,251) | 1,63:1 / 1,63:1 |
+| Mesmas folhas completas + ligações do catálogo, sem folha da vitrine | rgba(22,27,38,0.85) | rgb(248,250,251) | 1,63:1 / 1,63:1 |
+
+O texto é rgb(15,23,41) em todos os casos. A origem é
+brands/electia/tokens/tokens.css:168: glass-strong-bg escuro no :root. O bloco
+claro em :198–233 troca texto e superfícies, mas não o vidro. Os componentes
+header-float-bar e cta-dock usam esse mesmo nome sem redefini-lo. A ligação do
+catálogo não contém esse papel e sua folha de apresentação não muda esse fundo.
+
+Os protótipos electia-landing-2026-10-06.html:34–36 e
+electia-landing-talio-2026-10-05.html:28–30 carregam apenas tokens.min.css, a ponte
+e components.min.css: não carregam os tokens completos de marca. Isso explica
+por que a primeira linha pode parecer correta nesse caminho de consumo.
+É uma incompatibilidade real da composição DS + arquivo completo da marca,
+não um defeito universal do cabeçalho/dock ou uma conclusão sobre a produção.
+O produto eletia não foi acessado nesta tarefa restrita ao repositório do DS.
+
+Prova: /tmp/ds-catalogo-pr4b/provas/diagnostico-vidro.json e .log; roteiro local
+em /tmp/ds-catalogo-pr4b/diagnostico-vidro.cjs. A página de controle contém apenas
+os dois componentes e os links de CSS listados na tabela, sem scripts de página.
+As propriedades são lidas por Playwright. É medição de estilo calculado e
+composição, não de pixels. Não houve mudança de valor ou correção do componente.
+A pendência escrita continua sob responsabilidade do Supervisor/UX.
