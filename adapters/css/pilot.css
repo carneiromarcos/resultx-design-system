@@ -22,12 +22,14 @@
   }
 
   .rx-button { cursor: pointer; }
-  .rx-button:hover:where(:not(:disabled)) { background: var(--bg-surface-3); }
-  .rx-button:active:where(:not(:disabled)) { background: var(--bg-surface-2); }
-  .rx-button:disabled { cursor: not-allowed; }
+  .rx-button:is(a) { display: inline-block; box-sizing: border-box; line-height: normal; text-decoration: none; }
+  .rx-button:hover:where(:not(:disabled, [aria-disabled='true'])) { background: var(--bg-surface-3); }
+  .rx-button:active:where(:not(:disabled, [aria-disabled='true'])) { background: var(--bg-surface-2); }
+  .rx-button:disabled,
+  .rx-button[aria-disabled='true'] { cursor: not-allowed; }
   .rx-button--primary { font-weight: var(--font-bold); color: var(--text-inverse); background: var(--accent-primary); }
-  .rx-button--primary:hover:where(:not(:disabled)) { background: var(--accent-primary-hover); }
-  .rx-button--primary:active:where(:not(:disabled)) { background: var(--accent-primary); }
+  .rx-button--primary:hover:where(:not(:disabled, [aria-disabled='true'])) { background: var(--accent-primary-hover); }
+  .rx-button--primary:active:where(:not(:disabled, [aria-disabled='true'])) { background: var(--accent-primary); }
   .rx-button--secondary { font-weight: var(--font-regular); }
   .rx-button--danger,
   .rx-button--danger:hover:where(:not(:disabled)),

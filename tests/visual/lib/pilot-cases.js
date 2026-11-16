@@ -7,6 +7,79 @@ async function contrast(page, selector, property = 'color') {
 }
 const { modalSemantics, tableHeaders, dialogKeyboard, tableSorting } = require('./behavior-probes');
 const checks = {
+  'button-link-keyboard': async (p) => {
+    for (const [variant, name, previous] of [
+      ['primary', 'Abrir vaga', '#link-secondary'],
+      ['secondary', 'Ver filtros', '#link-primary'],
+      ['danger', 'Ver exclusão', '#link-secondary'],
+    ]) {
+      const link = p.locator(`#link-${variant}`);
+      await expect(link).toHaveAttribute('href', '#link-destination');
+      await expect(link).toHaveAccessibleName(name);
+      expect(await link.locator('a, button, input, select, textarea, [tabindex]').count()).toBe(0);
+      expect(await link.evaluate((e) => Boolean(e.parentElement.closest('a, button, input, select, textarea, [tabindex]')))).toBe(false);
+      await p.locator(previous).focus();
+      await p.keyboard.press(variant === 'primary' ? 'Shift+Tab' : 'Tab');
+      await expect(link).toBeFocused();
+      await p.keyboard.press('Space');
+      expect(new URL(p.url()).hash).toBe('');
+      await p.keyboard.press('Enter');
+      await expect.poll(() => new URL(p.url()).hash).toBe('#link-destination');
+      await p.evaluate(() => history.replaceState(null, '', location.pathname + location.search));
+    }
+  },
+  'button-link-unavailable': async (p) => {
+    for (const variant of ['primary', 'secondary', 'danger']) {
+      const link = p.locator(`#link-unavailable-${variant}`);
+      await expect(link).toHaveAttribute('aria-disabled', 'true');
+      await expect(link).not.toHaveAttribute('href');
+      await expect(link).toHaveAttribute('tabindex', '-1');
+      await expect(link).toHaveAccessibleName(/indisponível/i);
+      const before = await link.evaluate((e) => getComputedStyle(e).backgroundColor);
+      await link.hover();
+      expect(await link.evaluate((e) => getComputedStyle(e).backgroundColor)).toBe(before);
+      await p.mouse.down();
+      try { expect(await link.evaluate((e) => getComputedStyle(e).backgroundColor)).toBe(before); }
+      finally { await p.mouse.up(); }
+    }
+    await p.locator('#link-danger').focus();
+    await p.keyboard.press('Tab');
+    for (const variant of ['primary', 'secondary', 'danger']) await expect(p.locator(`#link-unavailable-${variant}`)).not.toBeFocused();
+    const loading = p.locator('#link-loading');
+    await expect(loading).toHaveAttribute('aria-busy', 'true');
+    await expect(loading).toHaveAttribute('aria-disabled', 'true');
+    await expect(loading).not.toHaveAttribute('href');
+    await expect(loading).toHaveAttribute('tabindex', '-1');
+    await expect(loading).not.toBeFocused();
+  },
+  'button-link-contrast': async (p) => {
+    for (const selector of ['#link-primary', '#link-secondary', '#link-danger']) {
+      const el = p.locator(selector);
+      const native = p.locator({ '#link-primary': '#primary', '#link-secondary': '#secondary', '#link-danger': '#confirm-action' }[selector]);
+      const properties = ['display', 'boxSizing', 'lineHeight', 'paddingTop', 'paddingRight', 'borderTopWidth', 'alignItems'];
+      const styles = (node, props) => props.map((property) => getComputedStyle(node)[property]);
+      expect(await el.evaluate(styles, properties)).toEqual(await native.evaluate(styles, properties));
+      await el.scrollIntoViewIfNeeded();
+      await expect(el).toHaveCSS('text-decoration-line', 'none');
+      await expect(el).toHaveCSS('display', 'inline-block');
+      await p.mouse.move(0, 0);
+      for (const state of ['normal', 'hover', 'active']) {
+        if (state !== 'normal') await el.hover();
+        if (state === 'active') await p.mouse.down();
+        try { await controlBoundary(p, selector); await textContrast(p, selector); }
+        finally { if (state === 'active') await p.mouse.up(); }
+      }
+      await el.focus();
+      await p.keyboard.press('Tab');
+      await p.keyboard.press('Shift+Tab');
+      await expect(el).toBeFocused();
+      await paintedEdge(p, selector, 'outline');
+    }
+    const primary = await p.locator('#link-primary').evaluate((e) => getComputedStyle(e).backgroundColor);
+    const secondary = await p.locator('#link-secondary').evaluate((e) => getComputedStyle(e).backgroundColor);
+    expect(primary).not.toBe(secondary);
+    await paintedFill(p, '#link-primary');
+  },
   'button-accessible': async (p) => expect(p.getByRole('button', { name: 'Publicar vaga' }).first()).toBeVisible(),
   'button-disabled': async (p) => { const b = p.locator('#disabled'); await expect(b).toBeDisabled(); expect(await b.evaluate((el) => { let count = 0; el.addEventListener('click', () => count++); el.click(); return count; })).toBe(0); },
   'button-loading': async (p) => { await expect(p.locator('#loading-button')).toBeDisabled(); await expect(p.locator('#loading-button')).toHaveAttribute('aria-busy', 'true'); },

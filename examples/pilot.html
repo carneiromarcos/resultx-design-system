@@ -68,6 +68,17 @@
     <p id="dialog-error" role="alert" hidden>Não foi possível confirmar. Tente novamente.</p>
     <button class="rx-button" id="cancel">Cancelar</button><button class="rx-button rx-button--danger" id="confirm-action">Excluir</button>
   </dialog>
+  <section aria-labelledby="link-heading">
+    <h2 id="link-heading">Links de ação</h2>
+    <a class="rx-button rx-button--primary" id="link-primary" href="#link-destination">Abrir vaga</a>
+    <a class="rx-button rx-button--secondary" id="link-secondary" href="#link-destination">Ver filtros</a>
+    <a class="rx-button rx-button--danger" id="link-danger" href="#link-destination">Ver exclusão</a>
+    <a class="rx-button rx-button--primary" id="link-unavailable-primary" role="link" aria-disabled="true" tabindex="-1">Primário indisponível</a>
+    <a class="rx-button rx-button--secondary" id="link-unavailable-secondary" role="link" aria-disabled="true" tabindex="-1">Secundário indisponível</a>
+    <a class="rx-button rx-button--danger" id="link-unavailable-danger" role="link" aria-disabled="true" tabindex="-1">Perigo indisponível</a>
+    <a class="rx-button rx-button--primary" id="link-loading" role="link" aria-busy="true" aria-disabled="true" tabindex="-1">Carregando destino</a>
+    <span id="link-destination">Destino</span>
+  </section>
   <script>
     const theme = new URLSearchParams(location.search).get('theme');
     if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;

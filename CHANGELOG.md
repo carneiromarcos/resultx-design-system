@@ -5,6 +5,10 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Added — links de ação no contrato Button
+
+O adaptador piloto admite links de navegação com as variantes de botão, foco e estados acessíveis.
+
 > **Rascunho da v2.11.0** (D7: corte não antes de 27/11). O inventário abaixo vale para
 > `v2.10.0..5b18b15`; antes da tag ele é refeito até o SHA da tag.
 
