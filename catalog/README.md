@@ -1,7 +1,7 @@
-# Catálogo de marcas — PR 1
+# Catálogo de marcas
 
 Fundações locais das cinco marcas, em claro e escuro, sem JavaScript no navegador.
-Esta etapa não publica o site. Não muda a API ou os valores do DS.
+As fundações são publicadas pelo workflow Pages após o build e a montagem compartilhada. O site permanece em construção; a API e os valores do DS não mudam.
 
 ```sh
 npm ci
@@ -151,3 +151,53 @@ Não há prova suficiente para atribuir o SIGKILL a um defeito funcional do cat�
 nem confirmação de OOM; a validação completa no runner Linux nativo está pendente.
 O teste de fontes conserva as duas exigências e não troca carregamento real por
 um simples check de família. Nenhuma fonte ou workflow foi alterado.
+
+## PR 2 — publicação do catálogo
+
+O workflow executa `npm run build`, `npm run build:catalog` e
+`node scripts/prepare-pages.cjs`, nessa ordem. O último comando e os testes usam
+uma única lista de arquivos, sem manter uma segunda lista de cópias no YAML.
+O gerador cria também `/catalog/index.html`, com as cinco marcas e a cobertura
+escrita em palavras. O viewer antigo ganhou o link “Catálogo de marcas”. A raiz
+continua redirecionando para o viewer, preservando a entrada anterior.
+
+O montador prepara uma árvore temporária e só substitui `_site` depois de copiar
+as entradas: `catalog/`, `assets/fonts/` e todos os caminhos anteriores. Falta de
+catálogo ou falha na cópia para a área temporária preserva a publicação anterior.
+Após começar a substituição de `_site`, não há garantia de recuperação caso a
+cópia final falhe; essa operação não é uma troca atômica. Não há dependência de
+Git no montador. A marca e o tema continuam isolados e a navegação usa somente
+links. Todas as páginas novas trazem o aviso do que já existe, do que falta e do
+próximo passo, além de CSP `default-src 'self'`.
+
+### Provas locais
+
+- RED: montando a árvore anterior, o teste encontrou HTTP 404 para
+  `/catalog/eletia/light/fundacoes/` e `/assets/fonts/inter/Inter-Regular.woff2`.
+- GREEN: 14 casos de publicação, mais 23 das fundações: 37 aprovados, zero falhas,
+  pulados e flaky, sem retries.
+- Os testes montam a publicação real em pasta temporária e servem sob
+  `/resultx-design-system/`, como no GitHub Pages. Verificam as dez combinações,
+  os quadros internos e o índice, com zero 404/requisição externa e carregamento
+  real de Inter, Sora, JetBrains Mono e, no Xscore, Plus Jakarta Sans e Geist Mono.
+- URLs anteriores: root, viewer, todos os 15 HTMLs de demos, preview e vitrine
+  ResultX continuam HTTP 200. O preview é aberto no navegador e suas três famílias
+  locais são carregadas. As páginas legadas mantêm seu código; suas dependências
+  externas anteriores não foram reescritas nesta PR. A prova de zero rede externa
+  é do catálogo novo, não uma certificação de todos os demos antigos.
+- Jest: 35 suítes, 770 testes aprovados; lint principal e das folhas do catálogo
+  aprovados. Nenhum valor novo, JavaScript de navegador ou baseline foi criado.
+
+```sh
+npm run build
+npm run build:catalog
+node scripts/prepare-pages.cjs
+npm test -- --runInBand
+npx playwright test tests/visual/catalog-publication.spec.js tests/visual/catalog-foundations.spec.js --workers=1 --retries=0
+```
+
+Logs: `/tmp/ds-catalogo-pr2/`. O RED usa a lista antiga de publicação (sem catálogo
+nem fontes); o GREEN usa a mesma função chamada pelo workflow. Capturas de
+referência, inspeção humana, execução do CI e conferência do site depois da
+publicação continuam sob os respectivos gates. Componentes das etapas seguintes
+não são apresentados como concluídos.
