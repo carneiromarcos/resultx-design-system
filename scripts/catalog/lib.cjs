@@ -15,11 +15,12 @@ function coverage(root) {
   });
   const excluded = m.excluded || [];
   const entries = m.pages || [];
+  const blocks = entries.flatMap(e=>e.legacy ? [e,e.legacy] : [e]);
   for (const e of excluded) if (!e.reason?.trim()) throw Error('Exclusão sem motivo: ' + e.file);
-  const covered = new Set([...excluded.map(e => e.file), ...entries.flatMap(e => [e.contract, ...(e.sources || [])])]);
+  const covered = new Set([...excluded.map(e => e.file), ...blocks.flatMap(e => [e.contract, ...(e.sources || [])])]);
   for (const f of expected) if (!covered.has(f)) throw Error('Sem entrada no manifesto: ' + f);
-  for (const f of [...covered, ...entries.flatMap(e => [e.recipe, ...(e.css || []), ...(e.js || [])])].filter(Boolean)) if (!fs.existsSync(path.join(root, f))) throw Error('Referência ausente: ' + f);
-  for (const e of entries) {
+  for (const f of [...covered, ...blocks.flatMap(e => [e.recipe, ...(e.css || []), ...(e.js || [])])].filter(Boolean)) if (!fs.existsSync(path.join(root, f))) throw Error('Referência ausente: ' + f);
+  for (const e of blocks) {
     const allowed = ['confirm-dialog','data-table'].includes(e.id) ? [`catalog/behaviors/${e.id}.js`] : [];
     if (JSON.stringify(e.js || []) !== JSON.stringify(allowed)) throw Error('JavaScript fora da autorização do catálogo: ' + e.id);
     const html = fs.readFileSync(path.join(root, e.recipe), 'utf8');

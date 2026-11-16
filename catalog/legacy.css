@@ -1,0 +1,29 @@
+/* Só organização da vitrine. Cores, raios, fontes e estados vêm do componente. */
+body { display: block; }
+.catalog-family { max-width: var(--content-max-width); margin: auto; padding: var(--space-6); }
+.catalog-family > section { margin-block: var(--space-8); min-width: 0; }
+.catalog-family > h1 { font-size: var(--text-3xl); font-family: var(--font-heading); }
+.catalog-family > section > h2 { font-size: var(--text-xl); margin-bottom: var(--space-4); }
+.catalog-family p { overflow-wrap: anywhere; }
+.catalog-family > p,.catalog-family > section > p { margin-block: var(--space-3); }
+.catalog-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.catalog-pending,.catalog-notice { padding: var(--space-4); background: var(--bg-surface-2); color: var(--text-primary); border-radius: var(--radius-md); }
+.catalog-form { display: grid; gap: var(--space-3); }
+.catalog-overlay-scene { position: relative; isolation: isolate; overflow: hidden; border-radius: var(--radius-md); }
+.catalog-overlay-scene .sidebar { position: relative; inset: auto; height: auto; max-width: 100%; }
+.catalog-overlay-scene .sidebar-scrim { position: absolute; inset: 0; }
+.catalog-family [data-family] > .sidebar { position: relative; top: auto; left: auto; height: auto; min-height: 0; max-width: 100%; }
+.catalog-family .header { position: relative; inset: auto; margin: 0; width: auto; }
+.catalog-family .modal-overlay { position: relative; inset: auto; }
+.catalog-family .dropdown-menu { position: relative; inset: auto; max-width: 100%; }
+.catalog-family .layout-centered,.catalog-family .layout-split,.catalog-family .layout-fullwidth { min-height: 0; height: auto; }
+.catalog-family .layout-split-content { min-height: 0; height: auto; max-width: 100%; }
+.catalog-family .layout-list,.catalog-family .layout-detail,.catalog-family .layout-split-left,.catalog-family .layout-split-right { min-width: 0; }
+.catalog-family .layout-fullwidth { margin: 0; width: auto; }
+.catalog-family pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+.catalog-family details { margin-block: var(--space-4); }
+.catalog-family summary { cursor: pointer; }
+.catalog-family summary:focus-visible { outline: var(--focus-ring-width) solid var(--accent-primary-text); outline-offset: var(--focus-ring-offset); }
+
+.catalog-overflow { max-width: 100%; overflow: auto; padding: var(--space-2); }
+.catalog-overflow:focus-visible { outline: var(--focus-ring-width) solid var(--accent-primary-text); outline-offset: calc(var(--focus-ring-offset) * -1); }

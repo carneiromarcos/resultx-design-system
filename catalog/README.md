@@ -1,6 +1,6 @@
 # Catálogo de marcas
 
-Fundações e oito componentes das cinco marcas, em claro e escuro. JavaScript local somente nos exemplos de confirmação e tabela.
+Fundações, oito componentes oficiais e famílias documentadas das cinco marcas, em claro e escuro. JavaScript local somente nos exemplos de confirmação e tabela.
 O catálogo é publicado pelo workflow Pages após o build e a montagem compartilhada. O site permanece em construção; a API e os valores do DS não mudam.
 
 ```sh
@@ -40,8 +40,8 @@ Não se declara que o arquivo SVG original foi corrigido nesta PR.
 
 ## Travas
 
-O manifesto liga os oito contratos e suas fichas geradas às páginas. As fichas e
-os imports legados mantêm exclusão motivada até as próximas etapas. O teste recebe uma raiz de fixture e rejeita
+O manifesto liga os oito contratos e suas fichas geradas às páginas. As famílias ainda não mostradas
+mantêm exclusão motivada até as próximas etapas. O teste recebe uma raiz de fixture e rejeita
 novos arquivos sem entrada, referências ausentes, receitas com estilos ou scripts,
 nomes de origem inexistentes e ciclos de variáveis. Os imports precisam existir.
 Geração dupla verifica hashes iguais. A verificação **pontual da PR 1**, fora da suíte e do CI, extrai `git archive`
@@ -252,3 +252,29 @@ capturas que dependem das baselines Linux. Não as gera nem as atualiza.
 `CATALOG_EVIDENCE_DIR` grava 80 imagens de componente em 1440 e mais 20 em 390
 (botão e tabela, nas dez combinações), totalizando 100 novas imagens. Todos os
 80 documentos são verificados em ambas as larguras, mesmo sem imagem adicional.
+
+## PR 4a — legado e navegação
+
+Seis sucessores têm “Versão anterior, ainda usada em produtos” no fim da página,
+recolhida por padrão. O CSS anterior fica em outro documento, sem entrar na
+cascata rx-*. Há páginas de navegação, organização da página, escolha entre
+opções e itens de lista. Receitas e índice de subfamílias estão no catálogo;
+a aparência vem do CSS original copiado no build. Nenhum JS novo é carregado.
+
+O rádio do segmented já funciona nativamente. Tabs, menus e janela antiga ficam
+com pendência de comportamento. Não confundir uma amostra aberta com modal ou
+menu funcional. Tooltip em CSS e details nativo não precisam de JS para o básico.
+
+Os pares de repouso calculados são confrontados com o DOM; as páginas mostram
+os que ficam abaixo do piso. Isso não certifica todos os estados, produtos ou
+acessibilidade integral. O [relatório 4a](research/2026-11-16-catalogo-legado-4a.md)
+contém inventário, limitações, CSV e a lista de comportamentos para decisão de JS.
+
+```sh
+npm run build:catalog
+npx playwright test tests/visual/catalog-legacy.spec.js --workers=1 --retries=0
+```
+
+`CATALOG_LEGACY_EVIDENCE_DIR` habilita as 100 evidências locais (dez famílias,
+cinco marcas e dois temas). Todas as páginas também são verificadas em 390.
+A PR 4b fica separada: demais componentes de navegação, retorno e compostos.

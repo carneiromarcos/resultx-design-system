@@ -16,6 +16,14 @@ pages:
       - adapters/css/pilot.css
       - catalog/components.css
     js: []
+    legacy:
+      recipe: catalog/recipes/legacy/buttons.html
+      css:
+        - components/components.css
+        - catalog/legacy.css
+      js: []
+      sources:
+        - docs/components/buttons.md
   - id: field
     title: Campos
     contract: contracts/field.yaml
@@ -27,6 +35,14 @@ pages:
       - adapters/css/pilot.css
       - catalog/components.css
     js: []
+    legacy:
+      recipe: catalog/recipes/legacy/forms.html
+      css:
+        - components/components.css
+        - catalog/legacy.css
+      js: []
+      sources:
+        - docs/components/forms.md
   - id: card
     title: Cartões
     contract: contracts/card.yaml
@@ -38,6 +54,14 @@ pages:
       - adapters/css/pilot.css
       - catalog/components.css
     js: []
+    legacy:
+      recipe: catalog/recipes/legacy/cards.html
+      css:
+        - components/components.css
+        - catalog/legacy.css
+      js: []
+      sources:
+        - docs/components/cards.md
   - id: stat-card
     title: Indicadores
     contract: contracts/stat-card.yaml
@@ -72,6 +96,14 @@ pages:
       - adapters/css/pilot.css
       - catalog/components.css
     js: []
+    legacy:
+      recipe: catalog/recipes/legacy/badges.html
+      css:
+        - components/components.css
+        - catalog/legacy.css
+      js: []
+      sources:
+        - docs/components/badges.md
   - id: empty-state
     title: Vazio e erro
     contract: contracts/empty-state.yaml
@@ -83,6 +115,14 @@ pages:
       - adapters/css/pilot.css
       - catalog/components.css
     js: []
+    legacy:
+      recipe: catalog/recipes/legacy/empty-state.html
+      css:
+        - components/components.css
+        - catalog/legacy.css
+      js: []
+      sources:
+        - docs/components/empty-state.md
   - id: confirm-dialog
     title: Confirmação
     contract: contracts/confirm-dialog.yaml
@@ -95,6 +135,56 @@ pages:
       - catalog/components.css
     js:
       - catalog/behaviors/confirm-dialog.js
+    legacy:
+      recipe: catalog/recipes/legacy/modals.html
+      css:
+        - components/components.css
+        - catalog/legacy.css
+      js: []
+      sources:
+        - docs/components/modals.md
+  - id: navigation
+    title: Navegação
+    recipe: catalog/recipes/familia.html
+    css:
+      - components/components.css
+      - catalog/legacy.css
+    js: []
+    sources:
+      - docs/components/navigation.md
+      - catalog/recipes/legacy/navigation.html
+  - id: layout
+    title: Organização da página
+    recipe: catalog/recipes/familia.html
+    css:
+      - components/components.css
+      - catalog/legacy.css
+    js: []
+    sources:
+      - docs/components/layout.md
+      - catalog/recipes/legacy/layout.html
+  - id: segmented
+    title: Escolha entre opções
+    recipe: catalog/recipes/familia.html
+    css:
+      - components/components.css
+      - catalog/legacy.css
+    js: []
+    sources:
+      - docs/components/segmented.md
+      - catalog/recipes/legacy/segmented.html
+      - components/segmented.css
+  - id: list-item
+    title: Itens de lista
+    recipe: catalog/recipes/familia.html
+    css:
+      - components/components.css
+      - catalog/legacy.css
+    js: []
+    sources:
+      - docs/components/list-item.md
+      - catalog/recipes/legacy/list-item.html
+      - components/list-item.css
 excluded:
   - file: components/audio-player.css
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
@@ -112,13 +202,9 @@ excluded:
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: components/header-float.css
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: components/list-item.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: components/menu-drawer.css
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: components/message.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: components/segmented.css
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: components/split-pane.css
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
@@ -144,19 +230,9 @@ excluded:
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: docs/components/icons.md
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/layout.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/list-item.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: docs/components/menu-drawer.md
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/modals.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/navigation.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: docs/components/progress.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/segmented.md
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: docs/components/split-pane.md
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
@@ -172,19 +248,9 @@ excluded:
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
   - file: docs/components/zone-distribution.md
     reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/buttons.md
-    reason: O contrato rx-* está coberto nesta PR; a ficha legada e suas demais famílias ficam para as PRs 4 e 5.
-  - file: docs/components/forms.md
-    reason: O contrato rx-* está coberto nesta PR; a ficha legada e suas demais famílias ficam para as PRs 4 e 5.
-  - file: docs/components/cards.md
-    reason: O contrato rx-* está coberto nesta PR; a ficha legada e suas demais famílias ficam para as PRs 4 e 5.
   - file: docs/components/stats.md
     reason: O contrato rx-* está coberto nesta PR; a ficha legada e suas demais famílias ficam para as PRs 4 e 5.
   - file: docs/components/tables.md
-    reason: O contrato rx-* está coberto nesta PR; a ficha legada e suas demais famílias ficam para as PRs 4 e 5.
-  - file: docs/components/badges.md
-    reason: O contrato rx-* está coberto nesta PR; a ficha legada e suas demais famílias ficam para as PRs 4 e 5.
-  - file: docs/components/empty-state.md
     reason: O contrato rx-* está coberto nesta PR; a ficha legada e suas demais famílias ficam para as PRs 4 e 5.
   - file: docs/components/composite.md
     reason: O contrato rx-* está coberto nesta PR; a ficha legada e suas demais famílias ficam para as PRs 4 e 5.
