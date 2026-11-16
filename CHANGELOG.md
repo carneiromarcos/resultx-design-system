@@ -5,6 +5,12 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Changed — estados de Button no adaptador piloto
+
+Botões nativos e links indisponíveis passam a usar aparência neutra com borda tracejada;
+em carregamento, usam borda sólida de destaque e texto no gerúndio. A mudança visual
+atinge consumidores do adaptador, incluindo o IMO ao atualizar sua cópia na DS-17.
+
 ### Added — links de ação no contrato Button
 
 O adaptador piloto admite links de navegação com as variantes de botão, foco e estados acessíveis.

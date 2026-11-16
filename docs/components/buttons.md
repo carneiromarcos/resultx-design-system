@@ -190,3 +190,17 @@ Enter navega pelo `href`; Espaço não ativa o link. Não aninhe controles e nã
 substitua a navegação nativa por JavaScript. Quando indisponível, remova `href`
 e use `role="link" aria-disabled="true" tabindex="-1"`; o controle fica fora
 da sequência de Tab. Para ações, continue usando `<button>` nativo.
+
+### Indisponível e carregando
+
+Prefira ocultar uma ação indisponível. Se puder ficar disponível depois, mostre
+junto o motivo e o próximo passo. O rótulo continua dizendo a ação. O estado
+indisponível é neutro, com fundo `--bg-surface-2`, texto `--text-muted` e borda
+tracejada `--border-default`; essa borda não é usada para identificar um controle
+ativo. O texto mantém contraste de pelo menos 4,5:1.
+
+Em carregamento, use `aria-busy="true"`, impeça a ativação e mostre texto no
+gerúndio. O fundo é `--bg-surface-2`, o texto `--text-primary` e a borda sólida
+usa `--accent-primary-text`, com contraste mínimo de 3:1 contra o entorno.
+Link em carregamento também fica sem `href`, com `aria-disabled="true"` e
+`tabindex="-1"`. Não há spinner ou animação neste estado.

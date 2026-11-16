@@ -15,6 +15,7 @@ const eds = new Set();
 edsRoot.walkDecls((d) => { if (d.prop.startsWith('--eds-')) eds.add(d.prop); });
 const map = {
   '--text-primary': '--eds-ink-strong', '--text-secondary': '--eds-ink-medium',
+  '--text-muted': '--eds-ink-medium', '--border-default': '--eds-border',
   '--bg-surface-1': '--eds-surface', '--bg-surface-2': '--eds-surface-tonal',
   '--bg-surface-3': '--eds-surface-tonal-dark', '--color-error': '--eds-danger-ink',
   '--color-success': '--eds-success-ink', '--text-on-success': '--eds-surface',

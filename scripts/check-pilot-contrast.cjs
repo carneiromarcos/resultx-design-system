@@ -37,6 +37,7 @@ const pairs = [
   ['texto', '--text-primary', '--bg-surface-1', 4.5],
   ['texto hover', '--text-primary', '--bg-surface-3', 4.5],
   ['texto ativo', '--text-primary', '--bg-surface-2', 4.5],
+  ['texto indisponível', '--text-muted', '--bg-surface-2', 4.5],
   ['erro', '--color-error', '--bg-surface-1', 4.5],
   ['sucesso', '--text-on-success', '--color-success', 4.5],
   ['link', '--accent-primary-text', '--bg-surface-1', 4.5],

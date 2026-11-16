@@ -6,7 +6,42 @@ async function contrast(page, selector, property = 'color') {
   return textContrast(page, selector);
 }
 const { modalSemantics, tableHeaders, dialogKeyboard, tableSorting } = require('./behavior-probes');
+const visualProperties = ['backgroundColor', 'color', 'borderTopColor', 'borderTopStyle', 'fontWeight'];
+async function compareVisualStates(page, state) {
+  const styles = (el, props) => Object.fromEntries(props.map((prop) => [prop, getComputedStyle(el)[prop]]));
+  const reference = await page.locator('#button-unavailable-primary').evaluate(styles, visualProperties);
+  for (const tag of ['button', 'link']) for (const variant of ['primary', 'secondary', 'danger']) {
+    const available = tag === 'button' ? { primary: '#primary', secondary: '#secondary', danger: '#state-available-danger' }[variant] : `#link-${variant}`;
+    const unavailable = `#${tag}-unavailable-${variant}`;
+    const loading = tag === 'link' && variant === 'primary' ? '#link-loading' : `#${tag}-loading-${variant}`;
+    const target = state === 'loading' ? loading : unavailable;
+    if (tag === 'button') await expect(page.locator(target)).toBeDisabled();
+    else {
+      await expect(page.locator(target)).toHaveAttribute('aria-disabled', 'true');
+      await expect(page.locator(target)).not.toHaveAttribute('href');
+      await expect(page.locator(target)).toHaveAttribute('tabindex', '-1');
+    }
+    const current = await page.locator(target).evaluate(styles, visualProperties);
+    const normal = await page.locator(available).evaluate(styles, visualProperties);
+    expect(visualProperties.slice(0, 4).filter((prop) => current[prop] !== normal[prop]).length, `${target} deve diferir em duas propriedades`).toBeGreaterThanOrEqual(2);
+    await textContrast(page, target);
+    if (state === 'loading') {
+      expect(current.borderTopStyle).toBe('solid');
+      expect(await page.locator(target).evaluate((el) => getComputedStyle(el).cursor)).toBe('progress');
+      await controlBoundary(page, target);
+      await expect(page.locator(target)).toHaveAttribute('aria-busy', 'true');
+      expect((await page.locator(target).textContent()).trim()).toMatch(/(?:ando|endo|indo)(?:\s|…|$)/i);
+      const disabled = await page.locator(unavailable).evaluate(styles, visualProperties);
+      expect(current).not.toEqual(disabled);
+    } else {
+      expect(current.borderTopStyle).toBe('dashed');
+      expect(current, `${target}: aparência neutra comum`).toEqual(reference);
+    }
+  }
+}
 const checks = {
+  'button-unavailable-visual': async (p) => compareVisualStates(p, 'unavailable'),
+  'button-loading-visual': async (p) => compareVisualStates(p, 'loading'),
   'button-link-keyboard': async (p) => {
     for (const [variant, name, previous] of [
       ['primary', 'Abrir vaga', '#link-secondary'],
@@ -34,7 +69,7 @@ const checks = {
       await expect(link).toHaveAttribute('aria-disabled', 'true');
       await expect(link).not.toHaveAttribute('href');
       await expect(link).toHaveAttribute('tabindex', '-1');
-      await expect(link).toHaveAccessibleName(/indisponível/i);
+      await expect(link).toHaveAccessibleName(/Abrir vaga|Ver filtros|Ver exclusão/);
       const before = await link.evaluate((e) => getComputedStyle(e).backgroundColor);
       await link.hover();
       expect(await link.evaluate((e) => getComputedStyle(e).backgroundColor)).toBe(before);
