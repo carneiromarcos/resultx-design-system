@@ -15,3 +15,6 @@ test-results/
 playwright-report/
 ds-bundle/
 .design-sync/.cache/
+
+# Catálogo gerado (fora da API do pacote)
+_site/

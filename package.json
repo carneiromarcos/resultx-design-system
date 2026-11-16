@@ -108,7 +108,8 @@
     "test:visual:update": "playwright test -u",
     "prepare": "husky",
     "check:eds-root": "node scripts/check-eds-root-copies.js",
-    "contracts:cards": "node scripts/contracts/generate-cards.js"
+    "contracts:cards": "node scripts/contracts/generate-cards.js",
+    "build:catalog": "node scripts/catalog/build.cjs"
   },
   "jest": {
     "testPathIgnorePatterns": [
