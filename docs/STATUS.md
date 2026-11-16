@@ -107,7 +107,7 @@
 
 ### O que mudou nos produtos
 
-- **IMO — mudou:** F3 (#901), piloto E3 (#902), retorno de foco (#909), fechamento do piloto (#911), aviso de falha (#917), foco e anúncio (#919) e botões secundários (#926), em produção. São 43 arquivos: views, CSS, componentes Blade, testes e 4 relatórios em `docs/qa/`, sem regra de negócio. A correção do primário (#121) chega ao IMO depois da v2.11.0.
+- **IMO — mudou:** F3 (#901), piloto E3 (#902), retorno de foco (#909), fechamento do piloto (#911), aviso de falha (#917), foco e anúncio (#919) e botões secundários (#926), em produção. Só a #902 mudou 43 arquivos (views, CSS, componentes Blade, testes e relatórios em `docs/qa/`, sem regra de negócio; contagem do GitHub); as demais PRs não foram somadas nesta contagem. A correção do primário (#121) chega ao IMO depois da v2.11.0.
 - **Electia — sem mudança visual relacionada ao DS.** Desde 12/11 entraram duas PRs:
   - #1009: só documentação;
   - #1008: código de leads e e-mail, sem interface nem DS.
