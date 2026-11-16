@@ -1,0 +1,14 @@
+'use strict';
+
+const brands = ['eletia', 'emprega', 'xscore', 'pdv', 'resultx'];
+const rows = [['sidebar-overlay', 'navigation', 'Navegação sobre a página', 'Navegação e layout', ['overlay'], 'Enter ou Espaço abre. Tab e Shift+Tab ficam no painel. Esc ou Fechar devolve o foco a quem abriu.'], ['menu-drawer', 'menu-drawer', 'Menu que desliza', 'Navegação e layout', ['drawer'], 'Enter ou Espaço abre. Tab e Shift+Tab ficam no menu. Esc ou Fechar devolve o foco. Seguir um link usa o destino nativo.'], ['split-pane', 'split-pane', 'Conteúdo e painel', 'Navegação e layout', ['resizable', 'start'], 'No divisor, setas ajustam a largura; Shift aumenta o passo. Home e End vão aos limites. Enter ou Espaço restaura. No celular os blocos ficam empilhados.'], ['header-float', 'header-float', 'Cabeçalho flutuante', 'Navegação e layout', ['sticky'], 'Tab percorre os links. Enter segue o destino. PageDown e Home permitem observar a sombra ao rolar, sem mover o foco.'], ['disclosure', 'disclosure', 'Abrir mais informações', 'Conteúdo e dados', ['default', 'flush'], 'Enter ou Espaço abre e fecha. Tab entra nos links do conteúdo aberto. O foco permanece no título ao abrir ou fechar. A escolha é lembrada neste navegador.'], ['cta-dock', 'cta-dock', 'Ação no rodapé do celular', 'Ações', ['mobile'], 'Role com PageDown para revelar a ação. Tab alcança o link visível; Enter segue o destino. Esta barra não existe no desktop e não move o foco por conta própria.'], ['tooltip', 'tooltip', 'Dica complementar', 'Avisos e retorno', ['positions'], 'Tab mostra a dica junto ao controle. A informação essencial também está escrita no próprio controle. Não há conteúdo interativo na dica.'], ['toast', 'toast', 'Mensagem breve', 'Avisos e retorno', ['semantic', 'hidden'], 'Os botões são alcançáveis por Tab, mas dispensar e desfazer não estão conectados nesta amostra estática.'], ['progress', 'progress', 'Andamento', 'Avisos e retorno', ['list', 'stat'], 'Os indicadores não recebem foco: o nome e o valor estão no conteúdo e no elemento de progresso.'], ['icons', 'icons', 'Ícones', 'Conteúdo e dados', ['sizes', 'wrappers', 'buttons', 'colors', 'wrapper-sizes', 'meaning'], 'Tab chega aos botões de ícone. Cada ação tem nome acessível; os desenhos decorativos não são lidos.'], ['cta-panel', 'cta-panel', 'Convite de encerramento', 'Ações', ['closing'], 'Tab percorre os dois links. Enter segue o destino. O painel usa a aparência escura mesmo quando a página está clara.'], ['composite', 'composite', 'Padrões compostos', 'Conteúdo e dados', ['view-toggle', 'filters', 'stepper', 'search', 'date-range'], 'Tab percorre os controles nativos. A troca de visualização, remoção de filtros, passos e sugestões não alteram dados nesta amostra.']];
+module.exports = rows.map(([id, doc, title, group, families, keyboard]) => ({
+  id,
+  doc,
+  title,
+  group,
+  families,
+  keyboard,
+  applies: brands,
+  recipe: `catalog/recipes/extended/${id}.html`
+}));
