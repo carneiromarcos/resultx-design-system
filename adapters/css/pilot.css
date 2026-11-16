@@ -22,16 +22,20 @@
   }
 
   .rx-button { cursor: pointer; }
-  .rx-button:hover:where(:not(:disabled)) { background: var(--bg-surface-3); }
-  .rx-button:active:where(:not(:disabled)) { background: var(--bg-surface-2); }
-  .rx-button:disabled { cursor: not-allowed; }
+  .rx-button:is(a) { display: inline-block; box-sizing: border-box; line-height: normal; text-decoration: none; }
+  .rx-button:hover:where(:not(:disabled, [aria-disabled='true'])) { background: var(--bg-surface-3); }
+  .rx-button:active:where(:not(:disabled, [aria-disabled='true'])) { background: var(--bg-surface-2); }
   .rx-button--primary { font-weight: var(--font-bold); color: var(--text-inverse); background: var(--accent-primary); }
-  .rx-button--primary:hover:where(:not(:disabled)) { background: var(--accent-primary-hover); }
-  .rx-button--primary:active:where(:not(:disabled)) { background: var(--accent-primary); }
+  .rx-button--primary:hover:where(:not(:disabled, [aria-disabled='true'])) { background: var(--accent-primary-hover); }
+  .rx-button--primary:active:where(:not(:disabled, [aria-disabled='true'])) { background: var(--accent-primary); }
   .rx-button--secondary { font-weight: var(--font-regular); }
   .rx-button--danger,
-  .rx-button--danger:hover:where(:not(:disabled)),
-  .rx-button--danger:active:where(:not(:disabled)) { color: var(--color-error); background: var(--bg-surface-1); border-color: var(--color-error); }
+  .rx-button--danger:hover:where(:not(:disabled, [aria-disabled='true'])),
+  .rx-button--danger:active:where(:not(:disabled, [aria-disabled='true'])) { color: var(--color-error); background: var(--bg-surface-1); border-color: var(--color-error); }
+
+  .rx-button:disabled,
+  .rx-button[aria-disabled='true'] { background: var(--bg-surface-2); color: var(--text-muted); border-color: var(--border-default); border-style: dashed; font-weight: var(--font-regular); cursor: not-allowed; }
+  .rx-button[aria-busy='true'] { background: var(--bg-surface-2); color: var(--text-primary); border-color: var(--accent-primary-text); border-style: solid; cursor: progress; }
 
   .rx-stat-card a { color: var(--accent-primary-text); }
 

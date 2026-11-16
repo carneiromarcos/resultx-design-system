@@ -7,6 +7,9 @@ const yaml = require('js-yaml');
 // RESULTX_ADAPTER_URL aceita URL http(s) ou file e recebe ?theme=light|dark.
 // A vitrine implementa os IDs, rótulos, estados e ordem de foco de examples/pilot.html:
 // #primary, #secondary, #disabled, #loading-button, #search, #invalid, #invalid-message,
+// #link-primary, #link-secondary, #link-danger, #link-unavailable-{primary,secondary,danger},
+// #link-loading, #link-loading-{secondary,danger}, #state-available-danger,
+// #button-{unavailable,loading}-{primary,secondary,danger},
 // #field-loading, #loading-field, #disabled-field, #card{,-sm,-md,-lg,-empty,-error,-disabled,-loading},
 // #stat{,-empty,-loading,-error,-link}, #table{,-loading,-empty,-error,-disabled}, #sort,
 // #confirm, #open-dialog, #confirm-action, #dialog-loading, #dialog-error,

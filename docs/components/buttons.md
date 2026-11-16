@@ -178,3 +178,29 @@ Use em CTAs de landing (hero, `.cta-panel`, `.header-float`). Não use em botõe
 | Use `.btn-sm` inside tables or compact areas | Don't nest buttons inside other buttons |
 | Use `.btn-danger` for destructive actions (delete, remove) | Don't use `.btn-primary` for destructive actions |
 | Use `.btn-ghost` for tertiary/cancel actions | Don't use `.btn-ghost` as a primary action -- it lacks visual prominence |
+
+## Links de ação do adaptador piloto
+
+O contrato Button reúne botão e link como anatomias alternativas, para que
+todos os adaptadores executem os mesmos casos de conformidade.
+
+Use `<a href="..." class="rx-button rx-button--primary">` para navegação;
+`secondary` e `danger` seguem as mesmas regras de caixa, contraste e foco.
+Enter navega pelo `href`; Espaço não ativa o link. Não aninhe controles e não
+substitua a navegação nativa por JavaScript. Quando indisponível, remova `href`
+e use `role="link" aria-disabled="true" tabindex="-1"`; o controle fica fora
+da sequência de Tab. Para ações, continue usando `<button>` nativo.
+
+### Indisponível e carregando
+
+Prefira ocultar uma ação indisponível. Se puder ficar disponível depois, mostre
+junto o motivo e o próximo passo. O rótulo continua dizendo a ação. O estado
+indisponível é neutro, com fundo `--bg-surface-2`, texto `--text-muted` e borda
+tracejada `--border-default`; essa borda não é usada para identificar um controle
+ativo. O texto mantém contraste de pelo menos 4,5:1.
+
+Em carregamento, use `aria-busy="true"`, impeça a ativação e mostre texto no
+gerúndio. O fundo é `--bg-surface-2`, o texto `--text-primary` e a borda sólida
+usa `--accent-primary-text`, com contraste mínimo de 3:1 contra o entorno.
+Link em carregamento também fica sem `href`, com `aria-disabled="true"` e
+`tabindex="-1"`. Não há spinner ou animação neste estado.

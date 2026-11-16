@@ -19,8 +19,8 @@
     <h2 id="actions-heading">Ações</h2>
     <button class="rx-button rx-button--primary" id="primary">Publicar vaga</button>
     <button class="rx-button rx-button--secondary" id="secondary">Filtrar</button>
-    <button class="rx-button" id="disabled" disabled>Indisponível</button>
-    <button class="rx-button" id="loading-button" aria-busy="true" disabled>Salvando</button>
+    <button class="rx-button" id="disabled" disabled>Publicar vaga</button><span>Conclua o cadastro para publicar.</span>
+    <button class="rx-button" id="loading-button" aria-busy="true" disabled>Salvando…</button>
   </section>
   <div class="rx-field" id="field">
     <label class="rx-field__label" for="search">Buscar candidato</label>
@@ -34,7 +34,7 @@
   </div>
   <div class="rx-field" id="field-loading" aria-busy="true"><label for="loading-field">Verificando</label><input class="rx-field__control" id="loading-field" disabled><span>Verificando campo</span></div>
   <label class="rx-field">Campo indisponível <input class="rx-field__control" id="disabled-field" disabled></label>
-  <article class="rx-card" id="card"><h2>Vagas recentes</h2><p>Veja as inscrições recebidas.</p><button class="rx-button">Ver vagas</button><button class="rx-button" id="card-disabled" disabled>Ação indisponível</button></article>
+  <article class="rx-card" id="card"><h2>Vagas recentes</h2><p>Veja as inscrições recebidas.</p><button class="rx-button">Ver vagas</button><button class="rx-button" id="card-disabled" disabled>Ver detalhes</button><span>Publique uma vaga para ver os detalhes.</span></article>
   <article class="rx-card rx-card--sm" id="card-sm"><h2>Cartão pequeno</h2></article>
   <article class="rx-card rx-card--md" id="card-md"><h2>Cartão médio</h2></article>
   <article class="rx-card rx-card--lg" id="card-lg"><h2>Cartão grande</h2></article>
@@ -53,14 +53,14 @@
   </table>
   <section class="rx-state" id="table-empty"><h2>Sem candidatos</h2><p>Publique uma vaga para receber candidatos.</p><button class="rx-button">Publicar</button></section>
   <section class="rx-state" id="table-error" role="alert"><h2>Falha ao carregar candidatos</h2><p>Tente novamente.</p><button class="rx-button">Repetir</button></section>
-  <button class="rx-button" id="table-disabled" disabled>Ação indisponível</button>
+  <button class="rx-button" id="table-disabled" disabled>Exportar candidatos</button><span>Adicione candidatos para exportar.</span>
   <table class="rx-table" id="table-loading" aria-busy="true"><caption>Atualizando candidatos</caption><thead><tr><th scope="col">Nome</th></tr></thead><tbody><tr><td>Carregando</td></tr></tbody></table>
   <span class="rx-badge" id="badge-loading" aria-busy="true">Atualizando status</span>
   <span class="rx-badge" id="badge-empty">Sem status</span>
   <p><span class="rx-badge rx-badge--neutral" id="badge-neutral">Pendente</span> <span class="rx-badge rx-badge--success" id="badge-success">Aprovado</span> <span class="rx-badge rx-badge--error" id="badge-error">Recusado</span></p>
   <section class="rx-state" id="empty"><h2>Nenhuma candidatura</h2><p>Publique uma vaga para receber candidatos.</p><button class="rx-button">Publicar vaga</button></section>
   <section class="rx-state" id="error" role="alert"><h2>Não foi possível carregar</h2><p>Tente novamente para ver os candidatos.</p><button class="rx-button">Tentar novamente</button></section>
-  <section class="rx-state" id="empty-loading" aria-busy="true"><h2>Atualizando lista</h2><button class="rx-button" disabled>Aguarde</button></section>
+  <section class="rx-state" id="empty-loading" aria-busy="true"><h2>Atualizando lista</h2><button class="rx-button" aria-busy="true" disabled>Atualizando…</button></section>
   <button class="rx-button" id="open-dialog">Excluir vaga</button>
   <dialog class="rx-dialog rx-dialog--danger" id="confirm" aria-labelledby="confirm-title" aria-describedby="confirm-description">
     <h2 id="confirm-title">Excluir vaga?</h2><p id="confirm-description">A vaga deixará de receber candidaturas.</p>
@@ -68,6 +68,29 @@
     <p id="dialog-error" role="alert" hidden>Não foi possível confirmar. Tente novamente.</p>
     <button class="rx-button" id="cancel">Cancelar</button><button class="rx-button rx-button--danger" id="confirm-action">Excluir</button>
   </dialog>
+  <section aria-labelledby="link-heading">
+    <h2 id="link-heading">Links de ação</h2>
+    <a class="rx-button rx-button--primary" id="link-primary" href="#link-destination">Abrir vaga</a>
+    <a class="rx-button rx-button--secondary" id="link-secondary" href="#link-destination">Ver filtros</a>
+    <a class="rx-button rx-button--danger" id="link-danger" href="#link-destination">Ver exclusão</a>
+    <a class="rx-button rx-button--primary" id="link-unavailable-primary" role="link" aria-disabled="true" tabindex="-1">Abrir vaga</a><span>Conclua o cadastro para abrir.</span>
+    <a class="rx-button rx-button--secondary" id="link-unavailable-secondary" role="link" aria-disabled="true" tabindex="-1">Ver filtros</a><span>Selecione uma vaga para filtrar.</span>
+    <a class="rx-button rx-button--danger" id="link-unavailable-danger" role="link" aria-disabled="true" tabindex="-1">Ver exclusão</a><span>Selecione uma vaga para excluir.</span>
+    <a class="rx-button rx-button--primary" id="link-loading" role="link" aria-busy="true" aria-disabled="true" tabindex="-1">Abrindo vaga…</a>
+    <a class="rx-button rx-button--secondary" id="link-loading-secondary" role="link" aria-busy="true" aria-disabled="true" tabindex="-1">Carregando filtros…</a>
+    <a class="rx-button rx-button--danger" id="link-loading-danger" role="link" aria-busy="true" aria-disabled="true" tabindex="-1">Carregando exclusão…</a>
+    <span id="link-destination">Destino</span>
+  </section>
+  <section aria-labelledby="button-state-heading">
+    <h2 id="button-state-heading">Estados de ações</h2>
+    <button class="rx-button rx-button--danger" id="state-available-danger">Excluir vaga</button>
+    <button class="rx-button rx-button--primary" id="button-unavailable-primary" disabled>Publicar vaga</button><span>Conclua o cadastro para publicar.</span>
+    <button class="rx-button rx-button--secondary" id="button-unavailable-secondary" disabled>Filtrar</button><span>Selecione uma vaga para filtrar.</span>
+    <button class="rx-button rx-button--danger" id="button-unavailable-danger" disabled>Excluir vaga</button><span>Selecione uma vaga para excluir.</span>
+    <button class="rx-button rx-button--primary" id="button-loading-primary" aria-busy="true" disabled>Publicando…</button>
+    <button class="rx-button rx-button--secondary" id="button-loading-secondary" aria-busy="true" disabled>Filtrando…</button>
+    <button class="rx-button rx-button--danger" id="button-loading-danger" aria-busy="true" disabled>Excluindo…</button>
+  </section>
   <script>
     const theme = new URLSearchParams(location.search).get('theme');
     if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
