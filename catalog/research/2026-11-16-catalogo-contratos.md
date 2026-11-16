@@ -82,8 +82,8 @@ Combinações abaixo do mínimo, somente PdV escuro:
 
 | Par | Texto | Fundo | Contraste | Páginas afetadas |
 |---|---|---|---:|---|
-| Perigo/erro sobre superfície | --color-error, #EF4444 | --bg-surface-1, #1c2a4a | 3,77:1 | Button, DataTable, StatusBadge, ConfirmDialog |
-| Ação indisponível | --text-muted, #8A939D | --bg-surface-2, #243661 | 3,80:1 | Button, Card, ConfirmDialog |
+| Perigo/erro sobre superfície | --color-error, #EF4444 | --bg-surface-1, #1c2a4a | 3,77:1 | Button, StatusBadge, ConfirmDialog |
+| Ação indisponível | --text-muted, #8A939D | --bg-surface-2, #243661 | 3,80:1 | Button, Card, DataTable, ConfirmDialog |
 
 Os dois pares aparecem em 25 medições de texto, contando os clones de estado.
 A borda de perigo 3,77:1 passa o mínimo não textual de 3:1. As páginas afetadas
