@@ -8,7 +8,9 @@
   --bg-surface-3: var(--eds-surface-tonal-dark);
   --border-default: var(--eds-border);
   --color-error: var(--eds-danger-ink);
+  --color-info: var(--eds-info-ink);
   --color-success: var(--eds-success-ink);
+  --color-warning: var(--eds-warning-ink);
   --focus-ring-offset: 2px;
   --focus-ring-width: 3px;
   --font-body: var(--eds-font-body);

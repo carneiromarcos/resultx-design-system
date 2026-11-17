@@ -190,10 +190,10 @@ const checks = {
   'dialog-keyboard': dialogKeyboard,
   'dialog-contrast': async (p) => { await p.locator('#open-dialog').click(); await contrast(p, '#confirm'); await contrast(p, '#confirm-action'); await contrast(p, '#confirm-action', 'borderTopColor', 3); await p.locator('#confirm-action').hover(); await contrast(p, '#confirm-action'); },
   'badge-semantics': async (p) => { await expect(p.locator('#badge-neutral')).toBeVisible(); expect(await p.locator('#badge-neutral').evaluate((e) => e.tabIndex)).toBe(-1); },
-  'badge-variants': async (p) => { for (const name of ['Pendente', 'Aprovado', 'Recusado']) await expect(p.getByText(name, { exact: true }).first()).toBeVisible(); },
+  'badge-variants': async (p) => { const d=await require('./contract-capabilities').declarations(p); const names=['Pendente','Aprovado','Recusado'];if(d.has('status-badge-warning-info'))names.push('Arquivo não recebido','Atualização recebida');for(const name of names)await expect(p.getByText(name,{exact:true}).first()).toBeVisible(); },
   'badge-loading': async (p) => { await expect(p.locator('#badge-loading')).toHaveAttribute('aria-busy', 'true'); await expect(p.locator('#badge-loading')).toContainText('Atualizando'); },
   'badge-empty': async (p) => expect(p.locator('#badge-empty')).toHaveText('Sem status'),
-  'badge-contrast': async (p) => { for (const s of ['#badge-neutral', '#badge-success', '#badge-error']) { await contrast(p, s); await contrast(p, s, 'borderTopColor', 3); } },
+  'badge-contrast': async (p) => { for (const s of ['#badge-neutral', '#badge-success', '#badge-error', ...((await require('./contract-capabilities').declarations(p)).has('status-badge-warning-info') ? ['#badge-warning','#badge-info'] : [])]) { await contrast(p, s); await contrast(p, s, 'borderTopColor', 3); } },
   'empty-content': async (p) => { await expect(p.locator('#empty h2')).toContainText('Nenhuma'); await expect(p.locator('#empty p')).toContainText('Publique'); await expect(p.locator('#empty button')).toBeVisible(); },
   'error-content': async (p) => { await expect(p.locator('#error')).toHaveAttribute('role', 'alert'); await expect(p.locator('#error button')).toHaveText('Tentar novamente'); },
   'empty-keyboard': async (p) => { await p.locator('#empty button').focus(); await p.keyboard.press('Tab'); await expect(p.locator('#error button')).toBeFocused(); await contrast(p, '#error button', 'outlineColor', 3); const b = p.locator('#error button'); await b.evaluate((e) => e.addEventListener('click', () => { e.dataset.clicks = String(Number(e.dataset.clicks || 0) + 1); })); await p.keyboard.press('Enter'); await p.keyboard.press('Space'); await expect.poll(() => b.evaluate((e) => Number(e.dataset.clicks))).toBe(2); },
@@ -202,4 +202,5 @@ const checks = {
 };
 
 
+Object.assign(checks, require('./notice-cases').checks);
 module.exports = { checks };

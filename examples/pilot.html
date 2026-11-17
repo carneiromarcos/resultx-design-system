@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR" data-theme="light">
+<html lang="pt-BR" data-theme="light" data-rx-contracts="notice status-badge-warning-info">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +11,7 @@
     @font-face { font-family: 'Inter'; src: url('../assets/fonts/inter/Inter-SemiBold.woff2') format('woff2'); font-style: normal; font-weight: 600; }
     @font-face { font-family: 'Inter'; src: url('../assets/fonts/inter/Inter-Bold.woff2') format('woff2'); font-style: normal; font-weight: 700; }
     .rx-button, .rx-badge { margin: var(--space-2); }
+    .rx-notice { margin-block: var(--space-4); }
   </style>
 </head>
 <body class="rx-card">
@@ -58,6 +59,30 @@
   <span class="rx-badge" id="badge-loading" aria-busy="true">Atualizando status</span>
   <span class="rx-badge" id="badge-empty">Sem status</span>
   <p><span class="rx-badge rx-badge--neutral" id="badge-neutral">Pendente</span> <span class="rx-badge rx-badge--success" id="badge-success">Aprovado</span> <span class="rx-badge rx-badge--error" id="badge-error">Recusado</span></p>
+  <div><span class="rx-badge rx-badge--warning" id="badge-warning" aria-describedby="badge-warning-next">Arquivo não recebido</span><p id="badge-warning-next">Peça o arquivo a quem faz o envio.</p></div>
+  <span class="rx-badge rx-badge--info" id="badge-info">Atualização recebida</span>
+  <div class="rx-notice rx-notice--warning" id="notice-warning-action" data-rx-step-location="here" data-rx-action-permitted="true">
+    <h3 class="rx-notice__title">Nome não informado</h3>
+    <p class="rx-notice__text">Precisamos dele para continuar.</p>
+    <p class="rx-notice__next-step">Preencha seu nome no campo abaixo.</p>
+    <a class="rx-button rx-button--secondary" href="#notice-destination">Preencher nome</a>
+  </div>
+  <div class="rx-notice rx-notice--warning" id="notice-warning-external" data-rx-step-location="elsewhere" data-rx-action-permitted="false">
+    <h3 class="rx-notice__title">Arquivo não recebido</h3>
+    <p class="rx-notice__text">Não é possível atualizar a lista.</p>
+    <p class="rx-notice__next-step">Peça o arquivo a quem faz o envio.</p>
+    <details><summary>Ver orientações</summary><p>Confirme com a pessoa responsável quando o arquivo pode ser enviado.</p></details>
+  </div>
+  <div class="rx-notice rx-notice--info" id="notice-info" data-rx-step-location="elsewhere" data-rx-action-permitted="false">
+    <h3 class="rx-notice__title">Atualização recebida</h3>
+    <p class="rx-notice__next-step">Confira o conteúdo com a pessoa responsável.</p>
+  </div>
+  <div class="rx-notice rx-notice--info" id="notice-loading" aria-busy="true" data-rx-step-location="elsewhere" data-rx-action-permitted="false">
+    <h3 class="rx-notice__title">Atualizando informações</h3>
+    <p class="rx-notice__next-step">Acompanhe a atualização antes de continuar.</p>
+    <p class="rx-notice__text" id="notice-live" role="status" aria-atomic="true"></p>
+  </div>
+  <label for="notice-destination">Nome do exemplo</label><input class="rx-field__control" id="notice-destination" type="text">
   <section class="rx-state" id="empty"><h2>Nenhuma candidatura</h2><p>Publique uma vaga para receber candidatos.</p><button class="rx-button">Publicar vaga</button></section>
   <section class="rx-state" id="error" role="alert"><h2>Não foi possível carregar</h2><p>Tente novamente para ver os candidatos.</p><button class="rx-button">Tentar novamente</button></section>
   <section class="rx-state" id="empty-loading" aria-busy="true"><h2>Atualizando lista</h2><button class="rx-button" aria-busy="true" disabled>Atualizando…</button></section>

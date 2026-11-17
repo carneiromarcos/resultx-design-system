@@ -30,6 +30,11 @@ module.exports = [{
   "group": "Conteúdo e dados",
   "intro": "Informe uma situação em palavras; a cor nunca substitui o texto."
 }, {
+  "id": "notice",
+  "title": "Aviso com próximo passo",
+  "group": "Avisos e retorno",
+  "intro": "Explique a pendência e o que fazer. Mostre a ação quando a pessoa puder continuar nesta tela."
+}, {
   "id": "empty-state",
   "title": "Vazio e erro",
   "group": "Avisos e retorno",

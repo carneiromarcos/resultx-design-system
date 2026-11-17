@@ -10,6 +10,8 @@
 - neutral
 - success
 - error
+- warning
+- info
 
 ## Estados
 
@@ -33,6 +35,8 @@
 - --text-on-success
 - --color-success
 - --color-error
+- --color-warning
+- --color-info
 
 ## Teclado
 
@@ -45,6 +49,9 @@
 ## Critérios de aceite
 
 - Cada variante tem contraste de texto ≥ 4,5:1.
+- Warning e info têm rótulo específico que identifica o estado sem cor; Atenção e Info genéricos não bastam.
+- Warning que comunica pendência acompanha Aviso ou texto adjacente com o próximo passo.
+- StatusBadge permanece passivo, sem ação ou parada de Tab.
 
 ## Casos de teste
 
@@ -53,6 +60,8 @@
 - badge-contrast: Cada variante mantém contraste de texto.
 - badge-loading: Status em atualização expõe aria-busy e texto.
 - badge-empty: Status ausente é informado em texto.
+- badge-warning-info: As duas variantes têm rótulo específico, permanecem passivas e são compreensíveis em escala de cinza.
+- badge-next-step: Warning de pendência acompanha próximo passo visível em Aviso ou texto adjacente.
 
 ## Cobertura de estados
 
@@ -65,4 +74,4 @@
 
 ## Conformidade
 
-- Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro adaptador não comprovam conformidade.
+- Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro adaptador não comprovam conformidade. Warning/info são obrigação nova; adaptador sem declaração status-badge-warning-info mantém exceção explícita, sem certificar as cinco variantes.

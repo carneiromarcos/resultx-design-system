@@ -3,7 +3,7 @@ const path = require('path');
 const yaml = require('js-yaml');
 const source = require('../tokens/tokens.json');
 
-const expected = ['button', 'field', 'card', 'stat-card', 'data-table', 'confirm-dialog', 'status-badge', 'empty-state'];
+const expected = ['button', 'field', 'card', 'stat-card', 'data-table', 'confirm-dialog', 'status-badge', 'empty-state', 'notice'];
 const states = ['normal', 'carregando', 'vazio', 'erro', 'desabilitado', 'foco'];
 const semantic = new Set();
 function visit(node) {
@@ -16,7 +16,7 @@ function visit(node) {
 visit(source.semantic);
 const read = (name) => yaml.load(fs.readFileSync(path.join('contracts', `${name}.yaml`), 'utf8'), { schema: yaml.JSON_SCHEMA });
 
-test('lote piloto contém exatamente oito contratos', () => {
+test('lote piloto contém exatamente nove contratos', () => {
   expect(fs.readdirSync('contracts').filter((f) => f.endsWith('.yaml')).sort()).toEqual(expected.map((n) => `${n}.yaml`).sort());
 });
 test.each(expected)('%s declara anatomia, estados, acessibilidade, aceite e testes', (name) => {

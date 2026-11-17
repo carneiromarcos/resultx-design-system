@@ -85,7 +85,7 @@ function style(css, selectors) {
   return result;
 }
 function rolesForStyle(css, kind, variant, state) {
-  const control = kind === 'field' ? '.rx-field__control' : kind === 'badge' ? '.rx-badge' : kind === 'stat' ? '.rx-stat-card' : kind === 'card' ? '.rx-card' : kind === 'table' ? '.rx-table' : kind === 'empty' ? '.rx-state' : kind === 'dialog' ? '.rx-dialog' : '.rx-button';
+  const control = kind === 'notice' ? '.rx-notice' : kind === 'field' ? '.rx-field__control' : kind === 'badge' ? '.rx-badge' : kind === 'stat' ? '.rx-stat-card' : kind === 'card' ? '.rx-card' : kind === 'table' ? '.rx-table' : kind === 'empty' ? '.rx-state' : kind === 'dialog' ? '.rx-dialog' : '.rx-button';
   const selectors = [control];
   const suffix = ':where(:not(:disabled, [aria-disabled=\'true\']))';
   if (control === '.rx-button') {
@@ -95,7 +95,7 @@ function rolesForStyle(css, kind, variant, state) {
     if (state === 'desabilitado' || state === 'carregando') selectors.push(control + ':disabled');
     if (state === 'carregando') selectors.push(control + "[aria-busy='true']");
   }
-  if (control === '.rx-badge' && variant) selectors.push(control + '--' + variant);
+  if (['.rx-badge', '.rx-notice'].includes(control) && variant) selectors.push(control + '--' + variant);
   if (control === '.rx-field__control' && state === 'erro') selectors.push(control + "[aria-invalid='true']");
   if (state === 'foco') selectors.push(control + ':focus-visible');
   return style(css, selectors);
@@ -140,6 +140,8 @@ function renderComponent(root, definition, values, revision) {
   function sample(sourceId, state, label, options = {}) {
     const key = 'sample-' + ++serial;
     let html = renameIds(elementById(source, sourceId), key);
+    if (definition.id === 'notice') html = html.replaceAll('href="#notice-destination"', 'href="#destination"').replace(/<h3 /g, '<h4 ').replace(/<\/h3>/g, '</h4>');
+    if (sourceId === 'badge-warning') html = html.replace('aria-describedby="badge-warning-next"', `aria-describedby="${key}-badge-warning-next"`) + renameIds(elementById(source, 'badge-warning-next'), key);
     if (sourceId === 'table' && state === 'normal') html = elementById(source, sourceId);
     if (sourceId === 'confirm' && state === 'normal') html = elementById(source, sourceId);
     if (sourceId === 'confirm' && state !== 'normal') {
@@ -183,7 +185,7 @@ function renderComponent(root, definition, values, revision) {
         kind,
         variant,
         state: busy ? 'carregando' : unavailable ? 'desabilitado' : state === 'foco' && tag.includes('data-catalog-state') ? 'foco' : 'normal',
-        adjacent: ['card', 'stat-card', 'empty-state', 'confirm-dialog', 'data-table'].includes(definition.id) ? '--bg-surface-1' : '--bg-base'
+        adjacent: ['notice', 'card', 'stat-card', 'empty-state', 'confirm-dialog', 'data-table'].includes(definition.id) ? '--bg-surface-1' : '--bg-base'
       }));
       return existing ? tag : tag.replace('>', ` id="${childId}">`);
     });
@@ -197,6 +199,7 @@ function renderComponent(root, definition, values, revision) {
     return `<article class="catalog-sample" data-sample="${key}"><h3>${escape(label)}</h3>${wrapped}${reason}</article>`;
   }
   const byState = {
+    notice: { normal: ['notice-warning-action', 'notice-warning-external', 'notice-info'], carregando: ['notice-loading'], foco: ['notice-warning-action'] },
     card: {
       normal: ['card', 'card-sm', 'card-md', 'card-lg'],
       carregando: ['card-loading'],
@@ -229,7 +232,7 @@ function renderComponent(root, definition, values, revision) {
       foco: []
     },
     'status-badge': {
-      normal: ['badge-neutral', 'badge-success', 'badge-error'],
+      normal: ['badge-neutral', 'badge-success', 'badge-error', 'badge-warning', 'badge-info'],
       carregando: ['badge-loading'],
       vazio: ['badge-empty'],
       erro: ['badge-error']
@@ -262,7 +265,7 @@ function renderComponent(root, definition, values, revision) {
       }
     } else if (applicable) {
       for (const sourceId of byState[definition.id]?.[state] || []) content += sample(sourceId, state, labels[state] + (sourceId === 'stat-link' ? ' · Com link' : ''), {
-        variant: sourceId === 'badge-success' ? 'success' : sourceId === 'badge-error' ? 'error' : 'neutral',
+        variant: definition.id === 'notice' ? sourceId.includes('warning') ? 'warning' : 'info' : contract.variantes.includes(sourceId.replace('badge-', '')) ? sourceId.replace('badge-', '') : 'neutral',
         link: sourceId === 'stat-link',
         demo: state === 'foco' ? 'foco' : null
       });
@@ -276,12 +279,14 @@ function renderComponent(root, definition, values, revision) {
   return {
     contract,
     pairs,
+    bodyHead: ['notice', 'status-badge'].includes(definition.id) ? `<div data-rx-contracts="${definition.id === 'notice' ? 'notice' : 'status-badge-warning-info'}">` : '',
+    bodyTail: ['notice', 'status-badge'].includes(definition.id) ? '</div>' : '',
     replacements: {
       TITLE: escape(definition.title),
       INTRO: escape(definition.intro),
       PENDING: definition.pending ? `<aside class="catalog-pending">${escape(definition.pending)}</aside>` : '',
-      GUIDANCE: definition.id === 'button' ? '<p>Prefira esconder uma ação indisponível. Mostre-a desativada somente quando puder ser liberada, com o motivo e o próximo passo ao lado. Links navegam com Enter; Espaço não os aciona.</p>' : '',
-      SAMPLES: samples.join('') + '<p id="destination">Destino de demonstração, sem envio de dados.</p>',
+      GUIDANCE: definition.id === 'notice' ? '<p>O próximo passo fica visível. Se a pessoa puder fazê-lo nesta tela, a ação é obrigatória; se não puder ou não tiver permissão, explique a orientação humana sem mostrar a ação.</p>' : definition.id === 'status-badge' ? '<p>Warning e info são variantes novas do DS; a adoção no produto é uma etapa separada. Quando o status indicar uma pendência, explique o próximo passo ao lado ou em um Aviso.</p>' : definition.id === 'button' ? '<p>Prefira esconder uma ação indisponível. Mostre-a desativada somente quando puder ser liberada, com o motivo e o próximo passo ao lado. Links navegam com Enter; Espaço não os aciona.</p>' : '',
+      SAMPLES: samples.join('') + (definition.id === 'notice' ? '<label for="destination">Nome do exemplo</label><input class="rx-field__control" id="destination" type="text">' : '<p id="destination">Destino de demonstração, sem envio de dados.</p>'),
       KEYBOARD: '<ul>' + contract.teclado.map(s => `<li>${escape(s)}</li>`).join('') + '</ul>' + (definition.pending ? '<p>As instruções acima são o que o componente deve oferecer. O comportamento pendente não está implementado nesta página.</p>' : ''),
       CONTRAST: `<p data-contrast-summary>${summary}</p><details><summary>Ver detalhes</summary><p>Cálculo a partir das declarações do adaptador e das cores resolvidas da marca. Texto: 4,5:1; borda e foco: 3:1. Borda desativada é exceção prevista no contrato. A validação de pixels e anúncio por leitor de tela não está incluída nesta frase.</p><ul>${pairHTML}</ul></details>`,
       TECH: `<p>Origem: <code>contracts/${definition.id}.yaml</code>, <code>examples/pilot.html</code> e <code>adapters/css/pilot.css</code>. Revisão: ${escape(revision.label)}.</p><h2>Estados do contrato</h2><ul>${Object.entries(contract.estados).map(([k, v]) => `<li>${escape(labels[k] || k)}: ${escape(v)}</li>`).join('')}</ul><details><summary>HTML dos exemplos</summary><pre><code>${escape(samples.join(''))}</code></pre></details><h2>Critérios</h2><ul>${contract.criterios_aceite.map(s => `<li>${escape(s)}</li>`).join('')}</ul><h2>Casos exigidos por adaptador</h2><ul>${contract.casos_teste.map(s => `<li><code>${s.id}</code>: ${escape(s.descricao)}</li>`).join('')}</ul><h2>Papéis consumidos</h2><ul>${contract.tokens.map(s => `<li><code>${escape(s)}</code></li>`).join('')}</ul>`

@@ -1,0 +1,58 @@
+{
+  "status": "PENDENTE — PR de cores separada",
+  "changesToTokenValues": false,
+  "items": [
+    {
+      "id": "DS-NOTICE-COLOR-01",
+      "brand": "electia",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-2-adjacent",
+      "foreground": "rgb(217, 119, 6)",
+      "background": "#F0F3F5",
+      "minimum": 3,
+      "ratio": 2.8587156950458463,
+      "pass": false
+    },
+    {
+      "id": "DS-NOTICE-COLOR-02",
+      "brand": "xscore",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-2-adjacent",
+      "foreground": "rgb(217, 119, 6)",
+      "background": "#F0F3F5",
+      "minimum": 3,
+      "ratio": 2.8587156950458463,
+      "pass": false
+    },
+    {
+      "id": "DS-NOTICE-COLOR-03",
+      "brand": "pdv",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-2-adjacent",
+      "foreground": "rgb(217, 119, 6)",
+      "background": "#F0F3F5",
+      "minimum": 3,
+      "ratio": 2.8587156950458463,
+      "pass": false
+    },
+    {
+      "id": "DS-NOTICE-COLOR-04",
+      "brand": "resultx",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-2-adjacent",
+      "foreground": "rgb(217, 119, 6)",
+      "background": "#F0F3F5",
+      "minimum": 3,
+      "ratio": 2.8587156950458463,
+      "pass": false
+    }
+  ]
+}

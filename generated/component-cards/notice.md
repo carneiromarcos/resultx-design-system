@@ -1,0 +1,94 @@
+# Notice/Aviso
+
+## Anatomia
+
+- título curto e factual em heading de nível definido pelo consumidor
+- consequência opcional em uma frase clara
+- próximo passo obrigatório e visível
+- ação obrigatória quando o próximo passo pode ser feito nesta tela e é permitido
+- detalhe opcional recolhido, em linguagem humana; não é log
+- ícone opcional decorativo
+
+## Variantes
+
+- info
+- warning
+
+## Estados
+
+- normal: O que aconteceu, por que importa e o que fazer permanecem visíveis.
+- carregando: A atualização mantém o contexto anterior e anuncia atividade quando real; sem prometer execução inexistente.
+- vazio: Não aplicável: ausência de conteúdo é EmptyState; pendência de dados é conteúdo factual do aviso.
+- erro: Não aplicável: falha bloqueante é ErrorState; pendência não bloqueante pode usar warning sem inferir severidade técnica.
+- desabilitado: Não aplicável ao aviso: ação indevida ou indisponível não é renderizada; processamento de ação válida segue Button.
+- foco: Ação disponível e summary nativo recebem foco visível; o contêiner não cria parada de Tab.
+
+## Tokens
+
+- --bg-surface-1
+- --text-primary
+- --color-warning
+- --color-info
+- --font-body
+- --text-base
+- --font-semibold
+- --focus-ring-width
+- --focus-ring-offset
+- --accent-primary-text
+- --space-2
+- --space-4
+- --radius-md
+
+## Teclado
+
+- Texto estático não cria parada de Tab; não altera a ordem de leitura.
+- Link disponível usa Enter; botão disponível usa Enter e Espaço; não aninhar controles.
+- Detalhe opcional usa details e summary nativos, operáveis por teclado sem JavaScript novo.
+- Aparição ou atualização do aviso não move foco; remoção de ação acionada preserva retorno a um alvo lógico existente.
+
+## ARIA
+
+- Contêiner comum com heading de nível definido pelo consumidor; não criar section nomeada nem region por padrão.
+- Uma região status vazia preexiste no DOM antes de o texto dinâmico entrar; anunciar sem mover o foco.
+- Atualização não urgente usa status ou aria-live polite; evitar regiões vivas duplicadas.
+- Alert somente para informação dinâmica urgente explicitamente definida pelo consumidor; warning não determina assertividade.
+- Ação tem nome acessível específico; ícone decorativo usa aria-hidden.
+- Não usar alertdialog nem capturar foco; região só quando uma necessidade de navegação for justificada.
+- aria-busy só descreve atividade real e termina ao concluir a atualização.
+
+## Critérios de aceite
+
+- O título informa o fato ou pendência em uma linha, sem corte; próximo passo visível informa o que fazer.
+- Consequência opcional cabe em uma frase; título e texto não usam código, identificador ou jargão técnico.
+- A ação é obrigatória quando o próximo passo pode ser feito nesta tela pelo usuário e é permitido.
+- A ação indevida não aparece no DOM; se a tarefa exige outra pessoa ou não é permitida, orientar o próximo passo humano.
+- Não deduzir operação realizada, autorização ou disponibilidade a partir de cor, rótulo ou elegibilidade.
+- Detalhe recolhido conserva informação humana útil; não recebe log, código ou sequência de identificadores.
+- Texto ≥ 4,5:1; borda semântica e foco quando aplicáveis ≥ 3:1; informação não depende de cor.
+- Composição preserva leitura e próximo passo em 390 e 1440 nos dois temas.
+- Não usar para origem/categoria, status compacto, indicador, validação de campo, notificação transitória, confirmação modal ou substituição de conteúdo vazio/bloqueado.
+- Exemplos usam dados fictícios e ações nativas com destino válido, sem regra de negócio no Core.
+
+## Casos de teste
+
+- notice-content: As duas variantes mostram fato, consequência e próximo passo em texto visível.
+- notice-action-policy: Próximo passo local permitido exige ação; a ação indevida fica ausente e a orientação humana permanece.
+- notice-semantics: Contêiner comum tem heading no nível definido pelo consumidor, sem região ou alerta por padrão.
+- notice-announcement: Região status vazia preexiste antes da atualização de texto, sem substituir o nó nem mover foco.
+- notice-loading: Atividade real mantém contexto, expõe aria-busy e termina sem prometer operação inexistente.
+- notice-keyboard: Somente controles válidos recebem Tab; ação e details operam por teclado com foco visível.
+- notice-contrast: Textos, borda e foco mantêm contraste nos cinco brands e dois temas.
+- notice-responsive: Conteúdo e próximo passo permanecem visíveis em 390 e 1440 sem corte ou overflow causado pelo aviso.
+
+## Cobertura de estados
+
+- normal: notice-content
+- carregando: notice-loading
+- vazio: não aplicável
+- erro: não aplicável
+- desabilitado: não aplicável
+- foco: notice-keyboard
+
+## Conformidade
+
+- Cada adaptador deve executar todos estes casos contra sua própria vitrine; exemplos de outro adaptador não comprovam conformidade. Veracidade do fato, consequência, autorização e próximo passo depende também de revisão do consumidor; teste estrutural não prova regra de negócio. A vitrine declara notice em data-rx-contracts para executar os casos novos; ausência é exceção de adoção, não prova de conformidade atual.

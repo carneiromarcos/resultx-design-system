@@ -21,6 +21,7 @@ const files = fs.readdirSync('contracts').filter((f) => f.endsWith('.yaml')).sor
 const cases = files.flatMap((f) => yaml.load(fs.readFileSync(path.join('contracts', f), 'utf8')).casos_teste.map((c) => c.id));
 
 const { checks } = require('./lib/pilot-cases');
+const { declarations, enabled, requiredDeclaration } = require('./lib/contract-capabilities');
 
 test('cada caso dos contratos tem implementação executável', () => {
   expect([...cases].sort()).toEqual(Object.keys(checks).sort());
@@ -28,7 +29,7 @@ test('cada caso dos contratos tem implementação executável', () => {
 });
 for (const theme of ['light', 'dark']) {
   for (const id of cases) {
-    test(`${theme}: ${id}`, async ({ page }) => { await page.goto(themedUrl(theme)); await checks[id](page); });
+    test(`${theme}: ${id}`, async ({ page },testInfo) => { await page.goto(themedUrl(theme)); const declared=await declarations(page);test.skip(!enabled(id,declared), `Obrigação nova não verificada: vitrine não declara ${requiredDeclaration(id)}.`); const evidence=await checks[id](page);if(Buffer.isBuffer(evidence))await testInfo.attach(`${id}-${theme}`,{body:evidence,contentType:'image/png'}); });
   }
 }
 

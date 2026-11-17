@@ -90,4 +90,6 @@ test('contraste dos pares do adaptador passa nos dois temas da marca padrão', (
   expect(output).toContain('dark | primário');
   expect(output).toContain('light | sucesso');
   expect(output).toContain('dark | foco');
+  expect(output).toContain('light | aviso warning');
+  expect(output).toContain('dark | aviso info');
 });

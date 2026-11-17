@@ -1,0 +1,9 @@
+{
+  "sourceSha": "64a26656170ae506f3bb4c05647c5f3c63c43177",
+  "previousShowcase": true,
+  "currentRunner": true,
+  "passed": 110,
+  "failed": 0,
+  "skippedNewObligations": 20,
+  "latestConformity": false
+}

@@ -150,12 +150,19 @@ for (const b of brands) for (const theme of ['light', 'dark']) for (const d of d
     expect(await context.locator('script:not([src]), [style]').count()).toBe(0);
   }
   expect(await page.locator('script').count()).toBe(0);
+  await expect(frame.locator('[data-catalog-notice]')).not.toContainText('oito componentes');
   expect(await frame.evaluate(() => {
     const ids = [...document.querySelectorAll('[id]')].map(e => e.id);
     return ids.filter((id, i) => ids.indexOf(id) !== i);
   })).toEqual([]);
   expect(await frame.evaluate(() => [...document.querySelectorAll('label[for], [aria-describedby]')].every(e => (e.hasAttribute('for') ? [e.htmlFor] : e.getAttribute('aria-describedby').split(/\s+/)).every(id => document.getElementById(id))))).toBe(true);
   expect(await frame.locator('script').count()).toBe(['confirm-dialog', 'data-table'].includes(d.id) ? 1 : 0);
+  if (d.id === 'notice') {
+    await expect(frame.locator('main')).toContainText('Componente novo do DS');
+    await expect(frame.locator('main')).not.toContainText('Usado em');
+    await expect(frame.locator('[data-contract-state=foco] .rx-notice a')).toBeVisible();
+  }
+  if (d.id === 'status-badge') await expect(frame.locator('[data-contract-state=normal] .rx-badge')).toHaveCount(5);
   const pairResults = await measurements(frame);
   expect(pairResults.length).toBeGreaterThan(0);
   for (const pair of pairResults) {
@@ -227,6 +234,7 @@ for (const b of brands) for (const theme of ['light', 'dark']) for (const d of d
     });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect(await frame.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    if (d.id === 'notice') expect(await frame.locator('.rx-notice__title').evaluateAll(nodes => nodes.every(el => {const range=document.createRange();range.selectNodeContents(el);return range.getClientRects().length===1;}))).toBe(true);
   }
   if (process.env.CATALOG_EVIDENCE_DIR) {
     const folder = process.env.CATALOG_EVIDENCE_DIR;
@@ -234,8 +242,8 @@ for (const b of brands) for (const theme of ['light', 'dark']) for (const d of d
       recursive: true
     });
     fs.writeFileSync(path.join(folder, `${b.id}-${theme}-${d.id}.json`), JSON.stringify(pairResults, null, 2));
-    // 80 páginas em desktop + 20 recortes responsivos (botão/tabela): teto 100.
-    for (const width of ['button', 'data-table'].includes(d.id) ? [1440, 390] : [1440]) {
+    // Nove contratos: 90 páginas desktop e 40 recortes responsivos das quatro famílias interativas.
+    for (const width of ['button', 'data-table', 'notice', 'status-badge'].includes(d.id) ? [1440, 390] : [1440]) {
       await page.setViewportSize({
         width,
         height: 1000

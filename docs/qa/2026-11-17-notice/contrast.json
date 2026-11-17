@@ -1,0 +1,1708 @@
+{
+  "method": "Computed browser colors from generated catalog; WCAG luminance, unrounded comparisons; no token value changes",
+  "sources": {
+    "adapters/css/pilot.css": "2ce2c26b24f523f4a180fc0dd941f7e67e2a43d761f99fbeab565b8a6d5b2f6f",
+    "contracts/notice.yaml": "500d15ffa255edc2db15c0c14c38198547b29306ffcbef85408ff5d1da5bf17f",
+    "contracts/status-badge.yaml": "2d7434907a4d5effdc9d22bea6b3a47dd7605f1a9a795e7ad199ef9a115c68bc",
+    "catalog/bindings.config.js": "16b220cfe944542333abf97610bebb1bb5f3aa48243e342968b783e9f991cc44"
+  },
+  "basePairs": 40,
+  "baseFailures": 0,
+  "geometryFailures": 0,
+  "geometry": [
+    {
+      "brand": "electia",
+      "theme": "light",
+      "width": 390,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "light",
+      "width": 1440,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "dark",
+      "width": 390,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "dark",
+      "width": 1440,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "light",
+      "width": 390,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "light",
+      "width": 1440,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "dark",
+      "width": 390,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "dark",
+      "width": 1440,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "light",
+      "width": 390,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "light",
+      "width": 1440,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "dark",
+      "width": 390,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "dark",
+      "width": 1440,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "light",
+      "width": 390,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "light",
+      "width": 1440,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "dark",
+      "width": 390,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "dark",
+      "width": 1440,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "light",
+      "width": 390,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "light",
+      "width": 1440,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "dark",
+      "width": 390,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "dark",
+      "width": 1440,
+      "boxes": [
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        },
+        {
+          "lines": 1,
+          "fits": true
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "additionalFailures": 4,
+  "failedRequests": [],
+  "rows": [
+    {
+      "brand": "electia",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(217, 119, 6)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 3.0429984615645393,
+      "borderOutside": 3.1858232404059073,
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-2-adjacent",
+      "foreground": "rgb(217, 119, 6)",
+      "background": "#F0F3F5",
+      "minimum": 3,
+      "ratio": 2.8587156950458463,
+      "pass": false
+    },
+    {
+      "brand": "electia",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "rx-table-row",
+      "foreground": "rgb(217, 119, 6)",
+      "background": "rgb(248, 250, 251)",
+      "minimum": 3,
+      "ratio": 3.0429984615645393,
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(37, 99, 235)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 4.936842200842128,
+      "borderOutside": 5.168555560022562,
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "light",
+      "kind": "notice",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(217, 119, 6)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 3.0429984615645393,
+      "borderOutside": 3.1858232404059073,
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "light",
+      "kind": "notice",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(37, 99, 235)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 4.936842200842128,
+      "borderOutside": 5.168555560022562,
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "light",
+      "kind": "action",
+      "context": "focus",
+      "foreground": "rgb(111, 50, 177)",
+      "background": "rgb(248, 250, 251)",
+      "style": "solid",
+      "width": 3,
+      "minimum": 3,
+      "ratio": 7.249182754257136,
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(22, 27, 38)",
+        "border": "rgb(245, 158, 11)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(11, 14, 20)"
+      },
+      "textRatio": 14.581046395190679,
+      "borderInside": 8.022204356136577,
+      "borderOutside": 8.99425793370501,
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-2-adjacent",
+      "foreground": "rgb(245, 158, 11)",
+      "background": "#1C2333",
+      "minimum": 3,
+      "ratio": 7.3102091411450285,
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "rx-table-row",
+      "foreground": "rgb(245, 158, 11)",
+      "background": "rgb(22, 27, 38)",
+      "minimum": 3,
+      "ratio": 8.022204356136577,
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(22, 27, 38)",
+        "border": "rgb(59, 130, 246)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(11, 14, 20)"
+      },
+      "textRatio": 14.581046395190679,
+      "borderInside": 4.6844622193407774,
+      "borderOutside": 5.252080302494086,
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "dark",
+      "kind": "notice",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(22, 27, 38)",
+        "border": "rgb(245, 158, 11)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(11, 14, 20)"
+      },
+      "textRatio": 14.581046395190679,
+      "borderInside": 8.022204356136577,
+      "borderOutside": 8.99425793370501,
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "dark",
+      "kind": "notice",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(22, 27, 38)",
+        "border": "rgb(59, 130, 246)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(11, 14, 20)"
+      },
+      "textRatio": 14.581046395190679,
+      "borderInside": 4.6844622193407774,
+      "borderOutside": 5.252080302494086,
+      "pass": true
+    },
+    {
+      "brand": "electia",
+      "theme": "dark",
+      "kind": "action",
+      "context": "focus",
+      "foreground": "rgb(192, 132, 252)",
+      "background": "rgb(22, 27, 38)",
+      "style": "solid",
+      "width": 3,
+      "minimum": 3,
+      "ratio": 6.520314307051874,
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(30, 36, 51)",
+        "background": "rgb(255, 255, 255)",
+        "border": "rgb(217, 119, 6)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 15.494065309299767,
+      "borderInside": 3.1858232404059073,
+      "borderOutside": 3.1858232404059073,
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-2-adjacent",
+      "foreground": "rgb(217, 119, 6)",
+      "background": "#fafbfe",
+      "minimum": 3,
+      "ratio": 3.0788436321931196,
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "rx-table-row",
+      "foreground": "rgb(217, 119, 6)",
+      "background": "rgb(255, 255, 255)",
+      "minimum": 3,
+      "ratio": 3.1858232404059073,
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(30, 36, 51)",
+        "background": "rgb(255, 255, 255)",
+        "border": "rgb(37, 99, 235)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 15.494065309299767,
+      "borderInside": 5.168555560022562,
+      "borderOutside": 5.168555560022562,
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "light",
+      "kind": "notice",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(30, 36, 51)",
+        "background": "rgb(255, 255, 255)",
+        "border": "rgb(217, 119, 6)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 15.494065309299767,
+      "borderInside": 3.1858232404059073,
+      "borderOutside": 3.1858232404059073,
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "light",
+      "kind": "notice",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(30, 36, 51)",
+        "background": "rgb(255, 255, 255)",
+        "border": "rgb(37, 99, 235)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 15.494065309299767,
+      "borderInside": 5.168555560022562,
+      "borderOutside": 5.168555560022562,
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "light",
+      "kind": "action",
+      "context": "focus",
+      "foreground": "rgb(54, 56, 133)",
+      "background": "rgb(255, 255, 255)",
+      "style": "solid",
+      "width": 3,
+      "minimum": 3,
+      "ratio": 10.18816901392529,
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(232, 234, 242)",
+        "background": "rgb(23, 27, 43)",
+        "border": "rgb(245, 158, 11)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(23, 27, 43)"
+      },
+      "textRatio": 14.235496671144226,
+      "borderInside": 7.962025529620173,
+      "borderOutside": 7.962025529620173,
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-2-adjacent",
+      "foreground": "rgb(245, 158, 11)",
+      "background": "#1e2335",
+      "minimum": 3,
+      "ratio": 7.259013642473788,
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "rx-table-row",
+      "foreground": "rgb(245, 158, 11)",
+      "background": "rgb(23, 27, 43)",
+      "minimum": 3,
+      "ratio": 7.962025529620173,
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(232, 234, 242)",
+        "background": "rgb(23, 27, 43)",
+        "border": "rgb(59, 130, 246)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(23, 27, 43)"
+      },
+      "textRatio": 14.235496671144226,
+      "borderInside": 4.649321573864113,
+      "borderOutside": 4.649321573864113,
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "dark",
+      "kind": "notice",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(232, 234, 242)",
+        "background": "rgb(23, 27, 43)",
+        "border": "rgb(245, 158, 11)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(23, 27, 43)"
+      },
+      "textRatio": 14.235496671144226,
+      "borderInside": 7.962025529620173,
+      "borderOutside": 7.962025529620173,
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "dark",
+      "kind": "notice",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(232, 234, 242)",
+        "background": "rgb(23, 27, 43)",
+        "border": "rgb(59, 130, 246)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(23, 27, 43)"
+      },
+      "textRatio": 14.235496671144226,
+      "borderInside": 4.649321573864113,
+      "borderOutside": 4.649321573864113,
+      "pass": true
+    },
+    {
+      "brand": "emprega-mais",
+      "theme": "dark",
+      "kind": "action",
+      "context": "focus",
+      "foreground": "rgb(185, 186, 249)",
+      "background": "rgb(23, 27, 43)",
+      "style": "solid",
+      "width": 3,
+      "minimum": 3,
+      "ratio": 9.326958638357192,
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(217, 119, 6)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 3.0429984615645393,
+      "borderOutside": 3.1858232404059073,
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-2-adjacent",
+      "foreground": "rgb(217, 119, 6)",
+      "background": "#F0F3F5",
+      "minimum": 3,
+      "ratio": 2.8587156950458463,
+      "pass": false
+    },
+    {
+      "brand": "xscore",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "rx-table-row",
+      "foreground": "rgb(217, 119, 6)",
+      "background": "rgb(248, 250, 251)",
+      "minimum": 3,
+      "ratio": 3.0429984615645393,
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(37, 99, 235)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 4.936842200842128,
+      "borderOutside": 5.168555560022562,
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "light",
+      "kind": "notice",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(217, 119, 6)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 3.0429984615645393,
+      "borderOutside": 3.1858232404059073,
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "light",
+      "kind": "notice",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(37, 99, 235)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 4.936842200842128,
+      "borderOutside": 5.168555560022562,
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "light",
+      "kind": "action",
+      "context": "focus",
+      "foreground": "rgb(134, 100, 37)",
+      "background": "rgb(248, 250, 251)",
+      "style": "solid",
+      "width": 2,
+      "minimum": 3,
+      "ratio": 5.192142550837521,
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(22, 27, 38)",
+        "border": "rgb(245, 158, 11)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(11, 14, 20)"
+      },
+      "textRatio": 14.581046395190679,
+      "borderInside": 8.022204356136577,
+      "borderOutside": 8.99425793370501,
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-2-adjacent",
+      "foreground": "rgb(245, 158, 11)",
+      "background": "#1C2333",
+      "minimum": 3,
+      "ratio": 7.3102091411450285,
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "rx-table-row",
+      "foreground": "rgb(245, 158, 11)",
+      "background": "rgb(22, 27, 38)",
+      "minimum": 3,
+      "ratio": 8.022204356136577,
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(22, 27, 38)",
+        "border": "rgb(59, 130, 246)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(11, 14, 20)"
+      },
+      "textRatio": 14.581046395190679,
+      "borderInside": 4.6844622193407774,
+      "borderOutside": 5.252080302494086,
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "dark",
+      "kind": "notice",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(22, 27, 38)",
+        "border": "rgb(245, 158, 11)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(11, 14, 20)"
+      },
+      "textRatio": 14.581046395190679,
+      "borderInside": 8.022204356136577,
+      "borderOutside": 8.99425793370501,
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "dark",
+      "kind": "notice",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(22, 27, 38)",
+        "border": "rgb(59, 130, 246)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(11, 14, 20)"
+      },
+      "textRatio": 14.581046395190679,
+      "borderInside": 4.6844622193407774,
+      "borderOutside": 5.252080302494086,
+      "pass": true
+    },
+    {
+      "brand": "xscore",
+      "theme": "dark",
+      "kind": "action",
+      "context": "focus",
+      "foreground": "rgb(196, 153, 59)",
+      "background": "rgb(22, 27, 38)",
+      "style": "solid",
+      "width": 2,
+      "minimum": 3,
+      "ratio": 6.536185329987999,
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(217, 119, 6)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 3.0429984615645393,
+      "borderOutside": 3.1858232404059073,
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-2-adjacent",
+      "foreground": "rgb(217, 119, 6)",
+      "background": "#F0F3F5",
+      "minimum": 3,
+      "ratio": 2.8587156950458463,
+      "pass": false
+    },
+    {
+      "brand": "pdv",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "rx-table-row",
+      "foreground": "rgb(217, 119, 6)",
+      "background": "rgb(248, 250, 251)",
+      "minimum": 3,
+      "ratio": 3.0429984615645393,
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(37, 99, 235)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 4.936842200842128,
+      "borderOutside": 5.168555560022562,
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "light",
+      "kind": "notice",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(217, 119, 6)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 3.0429984615645393,
+      "borderOutside": 3.1858232404059073,
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "light",
+      "kind": "notice",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(37, 99, 235)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 4.936842200842128,
+      "borderOutside": 5.168555560022562,
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "light",
+      "kind": "action",
+      "context": "focus",
+      "foreground": "rgb(134, 100, 37)",
+      "background": "rgb(248, 250, 251)",
+      "style": "solid",
+      "width": 3,
+      "minimum": 3,
+      "ratio": 5.192142550837521,
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(28, 42, 74)",
+        "border": "rgb(245, 158, 11)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(27, 42, 74)"
+      },
+      "textRatio": 12.012953904161769,
+      "borderInside": 6.609290480813547,
+      "borderOutside": 6.62170165191341,
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-2-adjacent",
+      "foreground": "rgb(245, 158, 11)",
+      "background": "#243661",
+      "minimum": 3,
+      "ratio": 5.507861242135153,
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "rx-table-row",
+      "foreground": "rgb(245, 158, 11)",
+      "background": "rgb(28, 42, 74)",
+      "minimum": 3,
+      "ratio": 6.609290480813547,
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(28, 42, 74)",
+        "border": "rgb(59, 130, 246)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(27, 42, 74)"
+      },
+      "textRatio": 12.012953904161769,
+      "borderInside": 3.859409481427152,
+      "borderOutside": 3.866656823869957,
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "dark",
+      "kind": "notice",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(28, 42, 74)",
+        "border": "rgb(245, 158, 11)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(27, 42, 74)"
+      },
+      "textRatio": 12.012953904161769,
+      "borderInside": 6.609290480813547,
+      "borderOutside": 6.62170165191341,
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "dark",
+      "kind": "notice",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(28, 42, 74)",
+        "border": "rgb(59, 130, 246)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(27, 42, 74)"
+      },
+      "textRatio": 12.012953904161769,
+      "borderInside": 3.859409481427152,
+      "borderOutside": 3.866656823869957,
+      "pass": true
+    },
+    {
+      "brand": "pdv",
+      "theme": "dark",
+      "kind": "action",
+      "context": "focus",
+      "foreground": "rgb(196, 153, 59)",
+      "background": "rgb(28, 42, 74)",
+      "style": "solid",
+      "width": 3,
+      "minimum": 3,
+      "ratio": 5.3849971360150395,
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(217, 119, 6)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 3.0429984615645393,
+      "borderOutside": 3.1858232404059073,
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-2-adjacent",
+      "foreground": "rgb(217, 119, 6)",
+      "background": "#F0F3F5",
+      "minimum": 3,
+      "ratio": 2.8587156950458463,
+      "pass": false
+    },
+    {
+      "brand": "resultx",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "rx-table-row",
+      "foreground": "rgb(217, 119, 6)",
+      "background": "rgb(248, 250, 251)",
+      "minimum": 3,
+      "ratio": 3.0429984615645393,
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "light",
+      "kind": "badge",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(37, 99, 235)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 4.936842200842128,
+      "borderOutside": 5.168555560022562,
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "light",
+      "kind": "notice",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(217, 119, 6)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 3.0429984615645393,
+      "borderOutside": 3.1858232404059073,
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "light",
+      "kind": "notice",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(15, 23, 41)",
+        "background": "rgb(248, 250, 251)",
+        "border": "rgb(37, 99, 235)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(255, 255, 255)"
+      },
+      "textRatio": 17.072709585897158,
+      "borderInside": 4.936842200842128,
+      "borderOutside": 5.168555560022562,
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "light",
+      "kind": "action",
+      "context": "focus",
+      "foreground": "rgb(134, 100, 37)",
+      "background": "rgb(248, 250, 251)",
+      "style": "solid",
+      "width": 3,
+      "minimum": 3,
+      "ratio": 5.192142550837521,
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(17, 22, 32)",
+        "border": "rgb(245, 158, 11)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(11, 14, 20)"
+      },
+      "textRatio": 15.328313513438731,
+      "borderInside": 8.433335997085502,
+      "borderOutside": 8.99425793370501,
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "surface-2-adjacent",
+      "foreground": "rgb(245, 158, 11)",
+      "background": "#161B26",
+      "minimum": 3,
+      "ratio": 8.022204356136577,
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "warning",
+      "context": "rx-table-row",
+      "foreground": "rgb(245, 158, 11)",
+      "background": "rgb(17, 22, 32)",
+      "minimum": 3,
+      "ratio": 8.433335997085502,
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "dark",
+      "kind": "badge",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(17, 22, 32)",
+        "border": "rgb(59, 130, 246)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(11, 14, 20)"
+      },
+      "textRatio": 15.328313513438731,
+      "borderInside": 4.924537210415716,
+      "borderOutside": 5.252080302494086,
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "dark",
+      "kind": "notice",
+      "variant": "warning",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(17, 22, 32)",
+        "border": "rgb(245, 158, 11)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(11, 14, 20)"
+      },
+      "textRatio": 15.328313513438731,
+      "borderInside": 8.433335997085502,
+      "borderOutside": 8.99425793370501,
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "dark",
+      "kind": "notice",
+      "variant": "info",
+      "context": "surface-1",
+      "colors": {
+        "text": "rgb(230, 237, 243)",
+        "background": "rgb(17, 22, 32)",
+        "border": "rgb(59, 130, 246)",
+        "borderStyle": "solid",
+        "borderWidth": 3,
+        "adjacent": "rgb(11, 14, 20)"
+      },
+      "textRatio": 15.328313513438731,
+      "borderInside": 4.924537210415716,
+      "borderOutside": 5.252080302494086,
+      "pass": true
+    },
+    {
+      "brand": "resultx",
+      "theme": "dark",
+      "kind": "action",
+      "context": "focus",
+      "foreground": "rgb(196, 153, 59)",
+      "background": "rgb(17, 22, 32)",
+      "style": "solid",
+      "width": 3,
+      "minimum": 3,
+      "ratio": 6.8711596688314955,
+      "pass": true
+    }
+  ]
+}
