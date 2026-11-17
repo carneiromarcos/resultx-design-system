@@ -85,7 +85,7 @@
 
 | Data | Referência | O que mudou |
 |---|---|---|
-| 17/11 | esta PR | Painel da implantação nos produtos (seção F, metas M1–M9) e evidências de partida em `docs/governance/implantacao/` |
+| 17/11 | esta PR | Painel da implantação nos produtos (seção F, metas M1–M9) e evidências de partida em `catalog/research/implantacao/` |
 | 17/11 | #139 | DS-30, PR 5a do catálogo: famílias de dados; 8 ligações por var a papéis existentes decididas pelo UX; soft-cyan, soft-magenta e soft-purple pendentes de papel próprio |
 | 16/11 | #138 | DS-30, PR 4b do catálogo: famílias interativas e compostas; scripts já publicados do DS carregados só na página do seu componente; tabs, dropdown, toast e compostos só visuais |
 | 16/11 | #137 | DS-30, PR 4a do catálogo: famílias anteriores recolhidas no fim do sucessor; Navigation, Layout, Segmented e ListItem; contraste do legado medido e publicado como pendência |
@@ -168,11 +168,11 @@ D5 só volta a ser pergunta depois da P1 (DS-24).
 
 > Mandato do Marcos em 17/11: implantar o DS no Emprega+ IMO e no XScore até o fim, com Brand System de cada produto na mesma maturidade estrutural do Brand System da Electia (`brands/electia/previews/brand-system/`), sem exigir a mesma cara. Executores: **Codex** (só IMO) e **executor-xscore** (só XScore); Revisor: **Codex #2**; Supervisor DS coordena, faz push, PR e este painel. Produtos: PR com "merge N" do Marcos, em lote; deploy do XScore só com "go deploy". Escopo de escrita: cada Executor só no seu produto e na sua pasta `brands/` do DS; o núcleo compartilhado muda só por decisão consolidada do Supervisor, com um único Executor designado.
 >
-> Evidência de partida (17/11): `docs/governance/implantacao/` — diagnóstico do IMO (219 telas, 2 no piloto do DS), diagnóstico do XScore (35 telas, só tokens), decisão de arquitetura do roteiro único e proposta de cores (139 pares em 3 causas).
+> Evidência de partida (17/11): `catalog/research/implantacao/` — diagnóstico do IMO (219 telas, 2 no piloto do DS), diagnóstico do XScore (35 telas, só tokens), decisão de arquitetura do roteiro único e proposta de cores (139 pares em 3 causas).
 
 | Meta | IMO | XScore | Evidência | Bloqueio |
 |---|---|---|---|---|
-| M1 — Descoberta | EM ANDAMENTO | EM ANDAMENTO | inventário dos dois produtos em `docs/governance/implantacao/`; falta o inventário da referência Electia | — |
+| M1 — Descoberta | EM ANDAMENTO | EM ANDAMENTO | inventário dos dois produtos em `catalog/research/implantacao/`; falta o inventário da referência Electia | — |
 | M2 — Paridade | PENDENTE | PENDENTE | matriz produto × Electia ainda não existe | M1 |
 | M3 — Estrutura | PENDENTE | PENDENTE | `brands/emprega-mais/previews/` tem só `brand-guidelines.html`; `brands/xscore/previews/` não existe | M2 |
 | M4 — Identidade | NÃO VERIFICADO | NÃO VERIFICADO | tokens existem em `brands/emprega-mais` e `brands/xscore`; paridade com a Electia não medida | M2 |
