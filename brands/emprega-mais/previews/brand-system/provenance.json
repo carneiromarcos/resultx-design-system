@@ -1,0 +1,255 @@
+{
+  "schema": 1,
+  "brand": "emprega+",
+  "components": [
+    "button",
+    "card",
+    "confirm-dialog",
+    "data-table",
+    "empty-state",
+    "field",
+    "stat-card",
+    "status-badge"
+  ],
+  "inputs": [
+    {
+      "file": "assets/fonts/inter/Inter-Medium.woff2",
+      "sha256": "0ff3e94614e1493eb556314fd247ae6c4a85a7783b4cc86be539940cf83f2a48"
+    },
+    {
+      "file": "assets/fonts/inter/Inter-Regular.woff2",
+      "sha256": "e06f6b1bc553aaea4e4668023ed0ab0a147129c3107f511bc7d03d361b0ae085"
+    },
+    {
+      "file": "assets/fonts/inter/Inter-SemiBold.woff2",
+      "sha256": "5cb7103e4e605989afebc03d989c79201e54b21b5183db33981f70db9178a301"
+    },
+    {
+      "file": "assets/fonts/jetbrains-mono/JetBrainsMono-Regular.woff2",
+      "sha256": "a9cb1cd82332b23a47e3a1239d25d13c86d16c4220695e34b243effa999f45f2"
+    },
+    {
+      "file": "assets/fonts/jetbrains-mono/JetBrainsMono-SemiBold.woff2",
+      "sha256": "918edad542a1da608fd2ba8daebaff9ac802309103fe760eed465b8b4e47faf1"
+    },
+    {
+      "file": "assets/fonts/sora/Sora-Bold.woff2",
+      "sha256": "25d586d75edbc326eda83e67179559a0adb06c7da5f033a6d9a4f9c2b32b4971"
+    },
+    {
+      "file": "assets/fonts/sora/Sora-SemiBold.woff2",
+      "sha256": "5d8300ee6ae3b68c8fd63ee4d082385dc1826b7dab3cd2d681422e12cb522783"
+    },
+    {
+      "file": "brands/emprega-mais/assets/logo/emprega-plus-navy.png",
+      "sha256": "ecc58d60c46efef5662048f4a054aa545c1014f0bad00133d6c47602450f840d"
+    },
+    {
+      "file": "brands/emprega-mais/assets/logo/emprega-plus-white.png",
+      "sha256": "a9449346ede08c165b3af20f34c27c082d75692bf0bd82763b4948cb514697da"
+    },
+    {
+      "file": "brands/emprega-mais/docs/BRAND-BOOK.md",
+      "sha256": "7b318f1bd8fc22f433cf18bc8e72949a7b2efaa65b26076b3ae0853ea37c979f"
+    },
+    {
+      "file": "brands/emprega-mais/docs/DESIGN-SYSTEM.md",
+      "sha256": "f8fa38806330a60a23d2707d06493c748bcfa5780bef9ce6bceb9094106f6ae1"
+    },
+    {
+      "file": "brands/emprega-mais/docs/IMAGE-PROMPTS.md",
+      "sha256": "2d182806c02f0dbaff4ff5242d98a11f5cae2f06c2fa629da72f3515edf43a20"
+    },
+    {
+      "file": "brands/emprega-mais/docs/SOCIAL-MEDIA-GUIDE.md",
+      "sha256": "cfe91400b2d65474cfeede5c991b9517a5d2d338cbc6d9176f5b83d2408800c5"
+    },
+    {
+      "file": "brands/emprega-mais/previews/brand-system/build.cjs",
+      "sha256": "318c5a80e259ac6f06eef9de6e57502443a7b7f2708f8e1f13ae5989d1aab6e3"
+    },
+    {
+      "file": "brands/emprega-mais/previews/brand-system/style.css",
+      "sha256": "dd4fcda1e6f48a337219e3b3b997217276a5695b641348d00f07697f7517da27"
+    },
+    {
+      "file": "brands/emprega-mais/tokens/ds-bridge.css",
+      "sha256": "29314289661080ba374800a0a37841127316192c7f3301472397de218ab02b2f"
+    },
+    {
+      "file": "brands/emprega-mais/tokens/eds-root.css",
+      "sha256": "c2366a517a96da9e8f31f5a466e82fc8bc37de66ed769a190b0c22b67931ce86"
+    },
+    {
+      "file": "brands/emprega-mais/tokens/pilot-aliases.css",
+      "sha256": "b14a16766119c257a1bec0f6ba37d7d71bad1aaa31042cf0301667056a8f06de"
+    },
+    {
+      "file": "brands/emprega-mais/tokens/tokens.css",
+      "sha256": "ec4f13cfc78bc5a0a58e6f606ac540d8b434014eca8baf5a6afd79aadb26f216"
+    },
+    {
+      "file": "contracts/button.yaml",
+      "sha256": "9bd0dcd247c26bfb4731365431094e2da55eb46d846f2575e6d354ff1817bb7c"
+    },
+    {
+      "file": "contracts/card.yaml",
+      "sha256": "703592f094c8a54a04c028cd8fadab6dbbadb6294985998c659b335ca8c05063"
+    },
+    {
+      "file": "contracts/confirm-dialog.yaml",
+      "sha256": "9a64f6b93fc6fe26e083ade27dc491c9ff2b473584814a4f8d137791ebcc2acf"
+    },
+    {
+      "file": "contracts/data-table.yaml",
+      "sha256": "624a9404b3bfbf6233918ef850bfab2e1ab2740cfc3eacb8b3c74f966b50e9a4"
+    },
+    {
+      "file": "contracts/empty-state.yaml",
+      "sha256": "55cfa1fd85c217f2e076a4ea902b6ad9c6b52c09a337d11517336093822214f4"
+    },
+    {
+      "file": "contracts/field.yaml",
+      "sha256": "40960f8c18ee2201a074155775542eb2438cc0f2e2e4642a0eeedbd0ea180e9c"
+    },
+    {
+      "file": "contracts/stat-card.yaml",
+      "sha256": "a568337660c35b9411bda4523e26168d0a1632fd4fbc688485231cb6bbe1d3f2"
+    },
+    {
+      "file": "contracts/status-badge.yaml",
+      "sha256": "2b2fb180cd37495fb4ae8e766e7e1e980974f488152859bf758edd9e564454f3"
+    },
+    {
+      "file": "generated/component-cards/button.md",
+      "sha256": "9b091e62c1826f3aad9445fd58a8bc2caea15bce7ed02b8bbfcaca23521ea9f4"
+    },
+    {
+      "file": "generated/component-cards/card.md",
+      "sha256": "9f277bffa39875934f0dee0776a6010aa83e6c24cd38b62e7eafb51f017e9118"
+    },
+    {
+      "file": "generated/component-cards/confirm-dialog.md",
+      "sha256": "40fa544eb5070066522c45c65cf3749d5d5a819d123d66f4ffe0fd4f8bb656a4"
+    },
+    {
+      "file": "generated/component-cards/data-table.md",
+      "sha256": "860095b15c3c022d5b323c50e23af60a531a0dc8ce555537560334bfcaa6f0a4"
+    },
+    {
+      "file": "generated/component-cards/empty-state.md",
+      "sha256": "86d081a0518f9a1e7d669d9bbf64a72f6c322d00b36147f9ede0519689f9b6a1"
+    },
+    {
+      "file": "generated/component-cards/field.md",
+      "sha256": "d45d8e0e3d5c67c4129b4bb96ab5806d3ce8239ae65816e4f9d3566618a8eab9"
+    },
+    {
+      "file": "generated/component-cards/stat-card.md",
+      "sha256": "cd13f16c95e1675241a6f2abb61f85f9beced12b577983cd12f245963c14e9a5"
+    },
+    {
+      "file": "generated/component-cards/status-badge.md",
+      "sha256": "0baf392a1b817c38370284c649dc2ccf363147165cbf8274de03d544c36ea4e2"
+    },
+    {
+      "file": "tokens/base/tokens-base.css",
+      "sha256": "bb16f06fa41f4157b6848fae4a3efa65da489f22a2d70d05bfa57a84b978a3bd"
+    },
+    {
+      "file": "tokens/themes/_data-layer-shared.css",
+      "sha256": "4367353c4bfe3e3c64e039226ae51dfc742e5ef58bf13b9f967de2e7425d2311"
+    },
+    {
+      "file": "tokens/themes/premium-light.css",
+      "sha256": "850da62e37813ce3c7c55962caca2fcf526dcd246d4c32d1adc89d5094572e7d"
+    },
+    {
+      "file": "tokens/themes/preview.html",
+      "sha256": "cde19e5ab1331be7d5a377c557e1499dcc816f612c2f7975c45389c181aa3181"
+    },
+    {
+      "file": "tokens/themes/sober-dark.css",
+      "sha256": "a8e249d8b03febbbb47bec2425193ba74a61901a278816cc1630e9d80d492a8f"
+    },
+    {
+      "file": "tokens/themes/vibrant-dark.css",
+      "sha256": "5eebbd0734ceeeae5e245da93554fdfad05dcc2e8054765fba121b9bc5343416"
+    },
+    {
+      "file": "tokens/tokens.css",
+      "sha256": "297500aca30c3f49a43c6900da3b2c7b5e1f9c621b66f342d1d1fe17d8aeabfc"
+    },
+    {
+      "file": "tokens/tokens.json",
+      "sha256": "ff417cf849ce54336d2244f48930a41894df7ae2a6d4f9eb424b373111415309"
+    }
+  ],
+  "contentId": "d8861d20554ee6aa66b6f7f13d39f19e0d72183f22854f6a20932b3f3d6ee2db",
+  "contrasts": {
+    "light": [
+      {
+        "label": "Texto principal",
+        "foreground": "--emp-text",
+        "background": "--emp-bg",
+        "ratio": 15.494065309299767
+      },
+      {
+        "label": "Texto de apoio",
+        "foreground": "--emp-text-secondary",
+        "background": "--emp-surface-tonal",
+        "ratio": 4.672148414674037
+      },
+      {
+        "label": "Texto discreto",
+        "foreground": "--emp-text-muted",
+        "background": "--emp-surface-tonal",
+        "ratio": 2.4510295957813586
+      },
+      {
+        "label": "Texto de ação",
+        "foreground": "--accent-primary-text",
+        "background": "--emp-bg",
+        "ratio": 10.18816901392529
+      },
+      {
+        "label": "Texto sobre ação",
+        "foreground": "--text-inverse",
+        "background": "--accent-primary",
+        "ratio": 6.287528596095884
+      }
+    ],
+    "dark": [
+      {
+        "label": "Texto principal",
+        "foreground": "--emp-text",
+        "background": "--emp-bg",
+        "ratio": 14.235496671144226
+      },
+      {
+        "label": "Texto de apoio",
+        "foreground": "--emp-text-secondary",
+        "background": "--emp-surface-tonal",
+        "ratio": 6.814703127012313
+      },
+      {
+        "label": "Texto discreto",
+        "foreground": "--emp-text-muted",
+        "background": "--emp-surface-tonal",
+        "ratio": 3.5300265292015935
+      },
+      {
+        "label": "Texto de ação",
+        "foreground": "--accent-primary-text",
+        "background": "--emp-bg",
+        "ratio": 9.326958638357192
+      },
+      {
+        "label": "Texto sobre ação",
+        "foreground": "--text-inverse",
+        "background": "--accent-primary",
+        "ratio": 6.287528596095884
+      }
+    ]
+  }
+}
