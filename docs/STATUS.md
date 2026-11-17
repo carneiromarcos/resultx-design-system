@@ -1,6 +1,6 @@
 # ResultX Design System — Painel de status
 
-> **Última atualização verificada:** 17/11/2026, `main` = `0827c21` (PR #138).
+> **Última atualização verificada:** 17/11/2026, `main` = `48fe3ce` (PR #139).
 > **Quem mantém:** Supervisor DS, conforme o [protocolo de status e continuidade](governance/status-protocol.md).
 > **Regra de leitura:** CONCLUÍDO exige critério atendido e evidência (PR mesclada, CI verde, parecer do Revisor). Documento escrito **não** conta como implementação.
 
@@ -79,13 +79,14 @@
 | DS-27 | Hierarquia do botão de perigo no FinanceX | CONCLUÍDO | decisão registrada antes de o FinanceX subir de versão (ex.: Desativar por linha em variante neutra) | decisão do Marcos em 14/11; FinanceX #45 (`71df56a7`): Desativar neutro, confirmação em Excluir regra e Cancelar plano, ponte provisória do `btn-danger`; CI verde; Revisor APROVA | — | tirar a ponte quando o FinanceX subir para a v2.11.0 |
 | DS-28 | Protocolo de status adotado no IMO | CONCLUÍDO | painel versionado no IMO; Revisor; merge do Marcos | IMO #903 mesclada (`c5d2f2bc`) com o merge do Marcos; Revisor APROVA no head `1ba0674a` (revisão conjunta DS #126 / IMO #903) | — | o painel do IMO segue com IMO-06 e IMO-26 antigos, atualizar na próxima PR material do IMO |
 | DS-29 | Contrato de link com aparência de botão (pré-requisito da IMO-30b) | CONCLUÍDO | contrato com anatomia `<a href>`, só Enter aciona, indisponível com `aria-disabled` e sem `href`; casos de teste executados na vitrine do adaptador CSS; teste que falha sem a mudança; Visual Linux; Revisor; antes da tag v2.11.0 | decisão do @architect em 16/11 (`contracts/button.yaml` cobre só botão nativo); GO do Marcos em 16/11; #129 (`e80d611`) mesclada com Revisor APROVA | — | chega ao IMO na IMO-30b, depois da v2.11.0 |
-| DS-30 | Catálogo de todas as marcas (eletia, emprega+ com IMO e EditalHub, Xscore, PdV, ResultX), gerado do código do DS | EM ANDAMENTO | cada marca × componentes × claro/escuro, em documento isolado; toda ligação de marca é `var()` para nome existente; as PRs do catálogo não criam nem mudam valor de cor (correções de cor vão em PRs de cores próprias, ver D); nada gravado em `dist`, `brands`, `tokens`, `adapters`, `contracts`, `generated`; publicado no Pages; Visual Linux; Revisor; aceite visual do Marcos | pedido e escolhas do Marcos em 16/11 (site de catálogo; 5 marcas; Catholic Hub e Saúde fora); levantamento `catalog/research/2026-11-16-levantamento-marcas.md` (fora do pacote npm); decisões @architect e @ux em 16/11 (6 PRs; publicação na 2ª), guardadas em `catalog/research/2026-11-16-decisao-arquitetura.md` e `catalog/research/2026-11-16-decisao-ux.md`; PR 1 mesclada (#134, `efa9f9f`; Revisor APROVA; visual Linux 178 aprovados); PR 2 mesclada (#135, `764866b`; Revisor APROVA; `/catalog/` no ar, 120 endereços sem erro); PR 3 mesclada (#136, `997e2a9`; JS só em ConfirmDialog e DataTable, autorizado pelo Marcos em 16/11; 1.890 endereços publicados sem erro); PdV escuro com 2 pares abaixo de 4,5:1 (ver D); PR 4a mesclada (#137, `d2c6973`; 135 de 370 pares do legado abaixo do piso, ver D; 3.250 endereços publicados sem erro); PR 4b mesclada (#138, `0827c21`; só os 6 scripts já publicados em `dist`, cada um na página do seu componente, decisão do Marcos em 16/11; 9.620 endereços publicados sem erro); eletia claro com 2 pares em 1,63:1 (ver D); PR 5a (famílias de dados, 270 páginas) com Revisor APROVA COM RESSALVA em `4480f28`: 23 de 340 pares abaixo de 4,5:1 e 3 amostras decorativas sem papel (ver D) | — | aceite visual do Marcos; PR 5b (conversa e domínio); PR 6 (URLs antigas e crawler); PRs de cores (cor nova liberada pelo Marcos em 17/11) |
+| DS-30 | Catálogo de todas as marcas (eletia, emprega+ com IMO e EditalHub, Xscore, PdV, ResultX), gerado do código do DS | EM ANDAMENTO | cada marca × componentes × claro/escuro, em documento isolado; toda ligação de marca é `var()` para nome existente; as PRs do catálogo não criam nem mudam valor de cor (correções de cor vão em PRs de cores próprias, ver D); nada gravado em `dist`, `brands`, `tokens`, `adapters`, `contracts`, `generated`; publicado no Pages; Visual Linux; Revisor; aceite visual do Marcos | pedido e escolhas do Marcos em 16/11 (site de catálogo; 5 marcas; Catholic Hub e Saúde fora); levantamento `catalog/research/2026-11-16-levantamento-marcas.md` (fora do pacote npm); decisões @architect e @ux em 16/11 (6 PRs; publicação na 2ª), guardadas em `catalog/research/2026-11-16-decisao-arquitetura.md` e `catalog/research/2026-11-16-decisao-ux.md`; PR 1 mesclada (#134, `efa9f9f`; Revisor APROVA; visual Linux 178 aprovados); PR 2 mesclada (#135, `764866b`; Revisor APROVA; `/catalog/` no ar, 120 endereços sem erro); PR 3 mesclada (#136, `997e2a9`; JS só em ConfirmDialog e DataTable, autorizado pelo Marcos em 16/11; 1.890 endereços publicados sem erro); PdV escuro com 2 pares abaixo de 4,5:1 (ver D); PR 4a mesclada (#137, `d2c6973`; 135 de 370 pares do legado abaixo do piso, ver D; 3.250 endereços publicados sem erro); PR 4b mesclada (#138, `0827c21`; só os 6 scripts já publicados em `dist`, cada um na página do seu componente, decisão do Marcos em 16/11; 9.620 endereços publicados sem erro); eletia claro com 2 pares em 1,63:1 (ver D); PR 5a mesclada (#139, `48fe3ce`; famílias de dados, 270 páginas): 23 de 340 pares abaixo de 4,5:1 e 3 amostras decorativas sem papel (ver D) | — | aceite visual do Marcos; PR 5b (conversa e domínio); PR 6 (URLs antigas e crawler); PRs de cores (cor nova liberada pelo Marcos em 17/11) |
 
 ## C. Registro de progresso
 
 | Data | Referência | O que mudou |
 |---|---|---|
-| 17/11 | esta PR | DS-30, PR 5a do catálogo: famílias de dados; 8 ligações por var a papéis existentes decididas pelo UX; soft-cyan, soft-magenta e soft-purple pendentes de papel próprio |
+| 17/11 | esta PR | Painel da implantação nos produtos (seção F, metas M1–M9) e evidências de partida em `docs/governance/implantacao/` |
+| 17/11 | #139 | DS-30, PR 5a do catálogo: famílias de dados; 8 ligações por var a papéis existentes decididas pelo UX; soft-cyan, soft-magenta e soft-purple pendentes de papel próprio |
 | 16/11 | #138 | DS-30, PR 4b do catálogo: famílias interativas e compostas; scripts já publicados do DS carregados só na página do seu componente; tabs, dropdown, toast e compostos só visuais |
 | 16/11 | #137 | DS-30, PR 4a do catálogo: famílias anteriores recolhidas no fim do sucessor; Navigation, Layout, Segmented e ListItem; contraste do legado medido e publicado como pendência |
 | 16/11 | #136 | DS-30, PR 3 do catálogo: os 8 contratos nas 10 combinações; JS local só nas páginas de ConfirmDialog e DataTable, extraído do piloto; contraste medido por página |
@@ -163,9 +164,31 @@
 
 D5 só volta a ser pergunta depois da P1 (DS-24).
 
+## F. Implantação nos produtos — IMO e XScore (M1–M9)
+
+> Mandato do Marcos em 17/11: implantar o DS no Emprega+ IMO e no XScore até o fim, com Brand System de cada produto na mesma maturidade estrutural do Brand System da Electia (`brands/electia/previews/brand-system/`), sem exigir a mesma cara. Executores: **Codex** (só IMO) e **executor-xscore** (só XScore); Revisor: **Codex #2**; Supervisor DS coordena, faz push, PR e este painel. Produtos: PR com "merge N" do Marcos, em lote; deploy do XScore só com "go deploy". Escopo de escrita: cada Executor só no seu produto e na sua pasta `brands/` do DS; o núcleo compartilhado muda só por decisão consolidada do Supervisor, com um único Executor designado.
+>
+> Evidência de partida (17/11): `docs/governance/implantacao/` — diagnóstico do IMO (219 telas, 2 no piloto do DS), diagnóstico do XScore (35 telas, só tokens), decisão de arquitetura do roteiro único e proposta de cores (139 pares em 3 causas).
+
+| Meta | IMO | XScore | Evidência | Bloqueio |
+|---|---|---|---|---|
+| M1 — Descoberta | EM ANDAMENTO | EM ANDAMENTO | inventário dos dois produtos em `docs/governance/implantacao/`; falta o inventário da referência Electia | — |
+| M2 — Paridade | PENDENTE | PENDENTE | matriz produto × Electia ainda não existe | M1 |
+| M3 — Estrutura | PENDENTE | PENDENTE | `brands/emprega-mais/previews/` tem só `brand-guidelines.html`; `brands/xscore/previews/` não existe | M2 |
+| M4 — Identidade | NÃO VERIFICADO | NÃO VERIFICADO | tokens existem em `brands/emprega-mais` e `brands/xscore`; paridade com a Electia não medida | M2 |
+| M5 — Componentes | EM ANDAMENTO | EM ANDAMENTO | catálogo DS-30 (#134–#139) mostra os contratos nas duas marcas; faltam contratos (seleção, marcação, texto longo, janela de formulário, arquivo, abas, aviso) | contratos novos no DS |
+| M6 — Integração | EM ANDAMENTO | PENDENTE | IMO: piloto em 2 telas (IMO-31, #931); Onda 0 em execução local. XScore: só `@import` de tokens, nenhum componente | IMO: DS-10; XScore: O1 |
+| M7 — Qualidade | EM ANDAMENTO | PENDENTE | IMO: script de captura e comparação da Onda 0 em execução local | — |
+| M8 — Governança | EM ANDAMENTO | EM ANDAMENTO | IMO consome cópia por SHA (`RxPilotVendoredCopyTest`); XScore consome a tag v2.9.0; registro do mandato na governança do XScore pendente | emenda da D7 sem resposta do Marcos |
+| M9 — Conclusão | PENDENTE | PENDENTE | — | M1–M8 |
+
+Estados permitidos: PENDENTE, EM ANDAMENTO, AGUARDANDO VALIDAÇÃO, CONCLUÍDO, BLOQUEADO, NÃO VERIFICADO. CONCLUÍDO só com PR mesclada, CI verde e parecer do Revisor. Sem percentuais.
+
+---
+
 ## E. Continuidade
 
-- **Próxima ação executável:** DS-30 nesta PR (PR 5a, famílias de dados): CI no SHA final, Revisor, merge sob a autorização "A" e conferência do site publicado; depois o aceite visual do Marcos e a PR 5.
+- **Próxima ação executável:** esta PR (painel da implantação, só documentação): CI, Revisor e merge sob a autorização "A". Em paralelo: Executor IMO fecha a Onda 0 + provas da DS-10 e depois o M1/M2 do Brand System IMO; Executor XScore faz o M1/M2 do Brand System XScore e a onda O1. Catálogo PR 5b fica depois.
 - **Depois:**
   1. DS-10, verificar as linhas da matriz ainda sem prova; IMO-30b depois da DS-17;
   2. DS-14, a partir de 27/11, com o inventário refeito até o SHA da tag;
@@ -177,5 +200,5 @@ D5 só volta a ser pergunta depois da P1 (DS-24).
   4. as ADRs [0001](adr/0001-role-named-tokens.md), [0003](adr/0003-token-single-source.md), [0004](adr/0004-contracts-adapters-pilot.md) e [0005](adr/0005-governance-propagation-decisions.md);
   5. `CHANGELOG.md` (seção Unreleased).
 - **Estado do repositório no fechamento:**
-  - PRs do DS abertas: esta (DS-30, PR 5a do catálogo) e 4 do Dependabot (#130–#133), ainda não avaliadas;
+  - PRs do DS abertas: esta (painel da implantação) e 4 do Dependabot (#130–#133), ainda não avaliadas;
   - pasta de trabalho do DS: só a desta PR, removida depois do merge.
