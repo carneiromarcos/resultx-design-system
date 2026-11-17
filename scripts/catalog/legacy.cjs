@@ -71,6 +71,8 @@ const models = {
   'status-badge': [['#legacy-badge-success', ['.badge', '.badge-success']], ['#legacy-badge-warning', ['.badge', '.badge-warning']], ['#legacy-badge-error', ['.badge', '.badge-error']]],
   'empty-state': [['#legacy-empty-text', ['.empty-state-text']]],
   'confirm-dialog': [['.modal-title', ['.modal-title'], '.modal']],
+  'stat-card': [['[data-family=standard] .stat-label', ['.stat-label'], '.stat-card'], ['.stat-variation.up', ['.stat-variation', '.stat-variation.up'], '.stat-card'], ['.stat-variation.down', ['.stat-variation', '.stat-variation.down'], '.stat-card'], ['.stat-card-mini-label', ['.stat-card-mini-label'], '.stat-card']],
+  'data-table': [['[data-family=basic] th', ['th'], '.table-card'], ['[data-family=basic] .td-name', ['td', '.td-name'], '.table-card'], ['[data-family=basic] .td-score', ['td', '.td-score'], '.table-card']],
   navigation: [['[data-family=sidebar] .sidebar-item:not([aria-current])', ['.sidebar-item'], '.sidebar'], ['[data-family=tabs] .tab.active', ['.tab', '.tab.active']], ['[data-family=breadcrumb] .breadcrumb-item:not([aria-current])', ['.breadcrumb-item']]],
   layout: [['.layout-centered-subtitle', ['.layout-centered-subtitle'], '.layout-centered-card']],
   segmented: [['[data-family=base] .segmented-option:not(:has(:checked))', ['.segmented-option'], '.segmented'], ['[data-family=base] .segmented-option:has(:checked)', ['.segmented-option', '.segmented-option:has(input[type="radio"]:checked)'], '.segmented']],
@@ -157,7 +159,7 @@ function renderLegacy(root, definition, values, revision) {
   let samples = fs.readFileSync(path.join(root, definition.recipe), 'utf8').replace('{{RADIOS}}', radios());
   const pairs = pairsFor(root, definition, values),
     failed = pairs.filter(p => p.ratio < p.minimum);
-  const summary = failed.length ? 'Há pares abaixo do mínimo nesta marca e aparência. O texto ou o limite pode ser difícil de perceber. Próximo passo: avaliar os pares com os valores já existentes; se precisar mudar a paleta, aguardar 10/12 e a decisão de Marcos.' : 'Os pares calculados abaixo atendem aos mínimos. Isso não certifica as demais variantes ou todo o produto.';
+  const summary = failed.length ? 'Há pares abaixo do mínimo nesta marca e aparência. O texto ou o limite pode ser difícil de perceber. Próximo passo: avaliar os pares com os valores já existentes; se precisar mudar a paleta, levar à PR própria de cores com UX.' : 'Os pares calculados abaixo atendem aos mínimos. Isso não certifica as demais variantes ou todo o produto.';
   return {
     contract: {
       tokens: []
@@ -168,7 +170,7 @@ function renderLegacy(root, definition, values, revision) {
       PENDING: `<aside class="catalog-pending"><p>${esc(definition.pending || 'Esta é uma demonstração de apresentação. As ações não enviam dados.')}</p><p>Falta conferir todas as variantes, estados, bordas e foco antes de aprovar esta família. Próximo passo: concluir a medição e revisar as combinações da marca.</p></aside>`,
       SAMPLES: samples,
       KEYBOARD: esc(definition.keyboard || 'Tab chega aos links, botões e campos nativos. Enter segue o link; Enter e Espaço acionam o botão. Os comportamentos de aplicativo que estão pendentes não são simulados.'),
-      CONTRAST: `<p data-legacy-contrast>${summary}</p><details><summary>Ver detalhes</summary><p>Pares calculados das declarações atuais e conferidos no navegador. Mínimos: 4,5:1 no texto, 3:1 no contorno. Não é inspeção por pixel nem prova de leitor de tela.</p><ul>${pairs.map(p => `<li data-legacy-pair data-target="${esc(p.target)}" data-kind="${p.kind}" data-ratio="${p.ratio}" data-minimum="${p.minimum}"${p.ratio < p.minimum ? ' data-pending="true"' : ''}>${p.kind}: ${p.ratio.toFixed(2)}:1; mínimo ${p.minimum}:1. ${esc(p.foregroundSource)} / ${esc(p.backgroundSource)}${p.ratio < p.minimum ? '. Pendente: avaliar valores existentes; mudança de paleta só após 10/12 e decisão de Marcos.' : ''}</li>`).join('')}</ul></details>`,
+      CONTRAST: `<p data-legacy-contrast>${summary}</p><details><summary>Ver detalhes</summary><p>Pares calculados das declarações atuais e conferidos no navegador. Mínimos: 4,5:1 no texto, 3:1 no contorno. Não é inspeção por pixel nem prova de leitor de tela.</p><ul>${pairs.map(p => `<li data-legacy-pair data-target="${esc(p.target)}" data-kind="${p.kind}" data-ratio="${p.ratio}" data-minimum="${p.minimum}"${p.ratio < p.minimum ? ' data-pending="true"' : ''}>${p.kind}: ${p.ratio.toFixed(2)}:1; mínimo ${p.minimum}:1. ${esc(p.foregroundSource)} / ${esc(p.backgroundSource)}${p.ratio < p.minimum ? '. Pendente: avaliar valores existentes; mudança de paleta na PR própria de cores com UX.' : ''}</li>`).join('')}</ul></details>`,
       TECH: `<p>Origem: <code>docs/components/${definition.doc}.md</code>, <code>${definition.recipe}</code> e <code>components/components.css</code>. Revisão: ${esc(revision.label)}.</p><p>Somente a organização da amostra tem geometria adaptada: menus e janelas ficam no fluxo, sem cobrir o catálogo. Cores, fontes, raios e estados continuam sendo os CSS do DS.</p><pre><code>${esc(samples)}</code></pre>`
     }
   };

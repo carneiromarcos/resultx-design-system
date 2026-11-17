@@ -16,7 +16,7 @@ const root = path.resolve(__dirname, '..');
 test('d — trava rejeita contrato sem entrada em uma raiz de fixture', () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'catalog-coverage-'));
   try {
-    for (const dir of ['catalog', 'contracts', 'docs/components', 'components', 'adapters', 'examples', 'generated', 'dist']) fs.cpSync(path.join(root, dir), path.join(tmp, dir), {
+    for (const dir of ['catalog', 'contracts', 'docs/components', 'components', 'adapters', 'examples', 'generated', 'dist', 'tokens']) fs.cpSync(path.join(root, dir), path.join(tmp, dir), {
       recursive: true
     });
     fs.writeFileSync(path.join(tmp, 'contracts/novo.yaml'), 'componente: Novo');
@@ -94,7 +94,7 @@ test('fundações têm vinte documentos e a saída tem CSP sem scripts', () => {
 test.each(['docs/components/novo.md', 'components/novo.css'])('trava rejeita nova cobertura de %s', file => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(),'catalog-new-'));
   try {
-    for (const dir of ['catalog','contracts','docs/components','components','adapters','examples','generated', 'dist']) fs.cpSync(path.join(root,dir),path.join(tmp,dir),{recursive:true});
+    for (const dir of ['catalog','contracts','docs/components','components','adapters','examples','generated', 'dist', 'tokens']) fs.cpSync(path.join(root,dir),path.join(tmp,dir),{recursive:true});
     fs.writeFileSync(path.join(tmp,file),'Novo');
     if (file.endsWith('.css')) fs.appendFileSync(path.join(tmp,'components/components.css'),'\n@import "./novo.css";');
     expect(() => coverage(tmp)).toThrow('Sem entrada no manifesto: '+file);
@@ -120,7 +120,7 @@ test('geração não escreve nas pastas protegidas do estado atual', () => {
 test('novo contrato registrado não fica preso à contagem histórica', () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'catalog-growth-'));
   try {
-    for (const dir of ['catalog','contracts','docs/components','components','adapters','examples','generated', 'dist']) fs.cpSync(path.join(root,dir),path.join(tmp,dir),{recursive:true});
+    for (const dir of ['catalog','contracts','docs/components','components','adapters','examples','generated', 'dist', 'tokens']) fs.cpSync(path.join(root,dir),path.join(tmp,dir),{recursive:true});
     fs.writeFileSync(path.join(tmp,'contracts/novo.yaml'),'componente: Novo');
     fs.appendFileSync(path.join(tmp,'catalog/manifest.yaml'),'\n  - file: contracts/novo.yaml\n    reason: "Cobertura declarada pela evolução da fixture."\n');
     expect(coverage(tmp).expected).toContain('contracts/novo.yaml');
@@ -162,7 +162,7 @@ test('catálogo registra os oito contratos como páginas nas dez combinações',
 test('JavaScript continua proibido nas páginas sem comportamento autorizado', () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'catalog-js-'));
   try {
-    for (const dir of ['catalog','contracts','docs/components','components','adapters','examples','generated', 'dist']) fs.cpSync(path.join(root,dir),path.join(tmp,dir),{recursive:true});
+    for (const dir of ['catalog','contracts','docs/components','components','adapters','examples','generated', 'dist', 'tokens']) fs.cpSync(path.join(root,dir),path.join(tmp,dir),{recursive:true});
     const file=path.join(tmp,'catalog/manifest.yaml');
     const manifest=yaml.load(fs.readFileSync(file,'utf8'));
     manifest.pages.find(p=>p.id==='button').js=['catalog/behaviors/data-table.js'];

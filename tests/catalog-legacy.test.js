@@ -73,7 +73,7 @@ test('um script inserido no legado também é recusado pela guarda permanente', 
     } = require('../scripts/catalog/lib.cjs'),
     tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'catalog-legacy-js-'));
   try {
-    for (const dir of ['catalog', 'contracts', 'docs/components', 'components', 'adapters', 'examples', 'generated', 'dist']) fs.cpSync(dir, path.join(tmp, dir), {
+    for (const dir of ['catalog', 'contracts', 'docs/components', 'components', 'adapters', 'examples', 'generated', 'dist', 'tokens']) fs.cpSync(dir, path.join(tmp, dir), {
       recursive: true
     });
     const file = path.join(tmp, 'catalog/manifest.yaml'),

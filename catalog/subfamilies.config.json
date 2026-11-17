@@ -567,5 +567,96 @@
       "families": [],
       "reason": "Referência técnica, orientação ou medição histórica; não representa uma subfamília visual nova."
     }
+  ],
+  "stats": [
+    {
+      "heading": "Component Anatomy",
+      "families": [
+        "standard",
+        "mini",
+        "progress"
+      ]
+    },
+    {
+      "heading": "Components",
+      "families": [
+        "standard",
+        "mini",
+        "progress"
+      ]
+    },
+    {
+      "heading": "Mini Stat Card",
+      "families": [
+        "standard",
+        "mini",
+        "progress"
+      ]
+    },
+    {
+      "heading": "HTML Usage",
+      "families": [
+        "standard",
+        "mini",
+        "progress"
+      ]
+    },
+    {
+      "heading": "Tokens Used",
+      "families": [],
+      "reason": "Referência técnica; não é uma nova subfamília visual."
+    },
+    {
+      "heading": "Do / Don't",
+      "families": [],
+      "reason": "Referência técnica; não é uma nova subfamília visual."
+    }
+  ],
+  "tables": [
+    {
+      "heading": "Component Anatomy",
+      "families": [
+        "basic",
+        "dense"
+      ]
+    },
+    {
+      "heading": "A wide table must scroll, not be clipped",
+      "families": [
+        "basic",
+        "dense"
+      ]
+    },
+    {
+      "heading": "Components",
+      "families": [
+        "basic",
+        "dense"
+      ]
+    },
+    {
+      "heading": "Cell Variants",
+      "families": [
+        "basic",
+        "dense"
+      ]
+    },
+    {
+      "heading": "HTML Usage",
+      "families": [
+        "basic",
+        "dense"
+      ]
+    },
+    {
+      "heading": "Tokens Used",
+      "families": [],
+      "reason": "Referência técnica; não é uma nova subfamília visual."
+    },
+    {
+      "heading": "Do / Don't",
+      "families": [],
+      "reason": "Referência técnica; não é uma nova subfamília visual."
+    }
   ]
 }

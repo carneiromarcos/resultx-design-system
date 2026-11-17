@@ -57,7 +57,7 @@ const checks = {
       await p.keyboard.press(variant === 'primary' ? 'Shift+Tab' : 'Tab');
       await expect(link).toBeFocused();
       await p.keyboard.press('Space');
-      expect(new URL(p.url()).hash).toBe('');
+      await expect.poll(() => new URL(p.url()).hash).toBe('');
       await p.keyboard.press('Enter');
       await expect.poll(() => new URL(p.url()).hash).toBe('#link-destination');
       await p.evaluate(() => history.replaceState(null, '', location.pathname + location.search));
@@ -118,7 +118,7 @@ const checks = {
   'button-accessible': async (p) => expect(p.getByRole('button', { name: 'Publicar vaga' }).first()).toBeVisible(),
   'button-disabled': async (p) => { const b = p.locator('#disabled'); await expect(b).toBeDisabled(); expect(await b.evaluate((el) => { let count = 0; el.addEventListener('click', () => count++); el.click(); return count; })).toBe(0); },
   'button-loading': async (p) => { await expect(p.locator('#loading-button')).toBeDisabled(); await expect(p.locator('#loading-button')).toHaveAttribute('aria-busy', 'true'); },
-  'button-keyboard': async (p) => { const el = p.locator('#primary'); await el.focus(); await p.keyboard.press('Tab'); await expect(p.locator('#secondary')).toBeFocused(); await p.keyboard.press('Shift+Tab'); await expect(el).toBeFocused(); await contrast(p, '#primary', 'outlineColor', 3); let count = 0; await el.evaluate((e) => e.addEventListener('click', () => { e.dataset.clicks = String(Number(e.dataset.clicks || 0) + 1); })); await p.keyboard.press('Enter'); await p.keyboard.press('Space'); count = await el.evaluate((e) => Number(e.dataset.clicks)); expect(count).toBe(2); },
+  'button-keyboard': async (p) => { const el = p.locator('#primary'); await el.focus(); await p.keyboard.press('Tab'); await expect(p.locator('#secondary')).toBeFocused(); await p.keyboard.press('Shift+Tab'); await expect(el).toBeFocused(); await contrast(p, '#primary', 'outlineColor', 3); await el.evaluate((e) => e.addEventListener('click', () => { e.dataset.clicks = String(Number(e.dataset.clicks || 0) + 1); })); await p.keyboard.press('Enter'); await p.keyboard.press('Space'); await expect.poll(() => el.evaluate((e) => Number(e.dataset.clicks))).toBe(2); },
   'button-contrast': async (p) => {
     for (const selector of ['#primary', '#secondary', '#confirm-action']) {
       if (selector === '#confirm-action') await p.locator('#open-dialog').click();
@@ -174,7 +174,7 @@ const checks = {
   'stat-empty': async (p) => expect(p.locator('#stat-empty [data-part=value]')).toHaveText('—'),
   'stat-loading': async (p) => expect(p.locator('#stat-loading')).toHaveAttribute('aria-busy', 'true'),
   'stat-error': async (p) => { await expect(p.locator('#stat-error p')).toContainText('Não foi possível'); await expect(p.locator('#stat-error button')).toBeVisible(); await expect(p.locator('#stat-error button')).toHaveText('Tentar novamente'); },
-  'stat-link': async (p) => { const a = p.locator('#stat-link a'); await a.focus(); await expect(a).toBeFocused(); await paintedEdge(p, '#stat-link a', 'outline'); await p.keyboard.press('Enter'); expect(new URL(p.url()).hash).toBe('#table'); },
+  'stat-link': async (p) => { const a = p.locator('#stat-link a'); await a.focus(); await expect(a).toBeFocused(); await paintedEdge(p, '#stat-link a', 'outline'); await p.keyboard.press('Enter'); await expect.poll(() => new URL(p.url()).hash).toBe('#table'); },
   'stat-contrast': async (p) => { for (const s of ['#stat', '#stat-empty', '#stat-loading', '#stat-error', '#stat-link']) await descendantTextContrast(p, s); },
   'table-semantics': async (p) => { await expect(p.getByRole('table', { name: 'Candidatos à vaga' })).toBeVisible(); await tableHeaders(p); },
   'table-sorting': tableSorting,
@@ -196,7 +196,7 @@ const checks = {
   'badge-contrast': async (p) => { for (const s of ['#badge-neutral', '#badge-success', '#badge-error']) { await contrast(p, s); await contrast(p, s, 'borderTopColor', 3); } },
   'empty-content': async (p) => { await expect(p.locator('#empty h2')).toContainText('Nenhuma'); await expect(p.locator('#empty p')).toContainText('Publique'); await expect(p.locator('#empty button')).toBeVisible(); },
   'error-content': async (p) => { await expect(p.locator('#error')).toHaveAttribute('role', 'alert'); await expect(p.locator('#error button')).toHaveText('Tentar novamente'); },
-  'empty-keyboard': async (p) => { await p.locator('#empty button').focus(); await p.keyboard.press('Tab'); await expect(p.locator('#error button')).toBeFocused(); await contrast(p, '#error button', 'outlineColor', 3); const b = p.locator('#error button'); await b.evaluate((e) => e.addEventListener('click', () => { e.dataset.clicks = String(Number(e.dataset.clicks || 0) + 1); })); await p.keyboard.press('Enter'); await p.keyboard.press('Space'); expect(await b.evaluate((e) => Number(e.dataset.clicks))).toBe(2); },
+  'empty-keyboard': async (p) => { await p.locator('#empty button').focus(); await p.keyboard.press('Tab'); await expect(p.locator('#error button')).toBeFocused(); await contrast(p, '#error button', 'outlineColor', 3); const b = p.locator('#error button'); await b.evaluate((e) => e.addEventListener('click', () => { e.dataset.clicks = String(Number(e.dataset.clicks || 0) + 1); })); await p.keyboard.press('Enter'); await p.keyboard.press('Space'); await expect.poll(() => b.evaluate((e) => Number(e.dataset.clicks))).toBe(2); },
   'empty-loading': async (p) => { await expect(p.locator('#empty-loading')).toHaveAttribute('aria-busy', 'true'); await expect(p.locator('#empty-loading button')).toBeDisabled(); },
   'empty-contrast': async (p) => { await contrast(p, '#empty'); await contrast(p, '#error'); },
 };

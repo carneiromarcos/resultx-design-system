@@ -5,6 +5,7 @@ const path = require('path');
 const yaml = require('js-yaml');
 const postcss = require('postcss');
 const {allowedScripts} = require('../../catalog/script-policy.cjs');
+const {dataRoles} = require('../../catalog/bindings.config.js');
 function coverage(root) {
   const m = yaml.load(fs.readFileSync(path.join(root, 'catalog/manifest.yaml'), 'utf8'));
   const expected = ['contracts', 'docs/components'].flatMap(d => fs.readdirSync(path.join(root, d)).filter(f => /\.(yaml|md)$/.test(f)).map(f => `${d}/${f}`));
@@ -68,6 +69,7 @@ function bindings(root, brand, theme) {
     ...bridge
   };
   const aliases = {
+    ...dataRoles,
     ...brand.common,
     ...brand[theme]
   };

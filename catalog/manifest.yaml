@@ -24,6 +24,7 @@ pages:
       js: []
       sources:
         - docs/components/buttons.md
+        - components/btn-sheen.css
   - id: field
     title: Campos
     contract: contracts/field.yaml
@@ -73,6 +74,14 @@ pages:
       - adapters/css/pilot.css
       - catalog/components.css
     js: []
+    legacy:
+      recipe: catalog/recipes/legacy/stats.html
+      css:
+        - components/components.css
+        - catalog/legacy.css
+      js: []
+      sources:
+        - docs/components/stats.md
   - id: data-table
     title: Tabelas
     contract: contracts/data-table.yaml
@@ -85,6 +94,14 @@ pages:
       - catalog/components.css
     js:
       - catalog/behaviors/data-table.js
+    legacy:
+      recipe: catalog/recipes/legacy/tables.html
+      css:
+        - components/components.css
+        - catalog/legacy.css
+      js: []
+      sources:
+        - docs/components/tables.md
   - id: status-badge
     title: Status
     contract: contracts/status-badge.yaml
@@ -319,38 +336,85 @@ pages:
     sources:
       - docs/components/composite.md
       - catalog/recipes/extended/composite.html
+  - id: data-cards
+    title: Dados visuais
+    recipe: catalog/recipes/data.html
+    css:
+      - components/components.css
+      - tokens/themes/_data-layer-shared.css
+      - components/data-cards.css
+      - catalog/data.css
+    js: []
+    sources:
+      - docs/components/data-cards.md
+      - catalog/recipes/data/data-cards.html
+      - components/data-cards.css
+      - catalog/data-samples.json
+  - id: data-patterns
+    title: Composições de dados
+    recipe: catalog/recipes/data.html
+    css:
+      - components/components.css
+      - tokens/themes/_data-layer-shared.css
+      - components/data-cards.css
+      - catalog/data.css
+    js: []
+    sources:
+      - docs/components/composite.md
+      - catalog/recipes/data/data-patterns.html
+      - components/data-cards.css
+      - catalog/data-samples.json
+      - docs/components/progress.md
 excluded:
   - file: components/audio-player.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
+    reason: >-
+      Conversa ou domínio: PR 5b separada, restrita às marcas previstas nas decisões de UX. Não é cobertura desta PR de
+      dados.
   - file: components/brand-orb.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: components/btn-sheen.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
+    reason: >-
+      Conversa ou domínio: PR 5b separada, restrita às marcas previstas nas decisões de UX. Não é cobertura desta PR de
+      dados.
   - file: components/composer.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
+    reason: >-
+      Conversa ou domínio: PR 5b separada, restrita às marcas previstas nas decisões de UX. Não é cobertura desta PR de
+      dados.
   - file: components/message.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
+    reason: >-
+      Conversa ou domínio: PR 5b separada, restrita às marcas previstas nas decisões de UX. Não é cobertura desta PR de
+      dados.
   - file: components/stage-chip.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
+    reason: >-
+      Conversa ou domínio: PR 5b separada, restrita às marcas previstas nas decisões de UX. Não é cobertura desta PR de
+      dados.
   - file: components/test-mark.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
+    reason: >-
+      Conversa ou domínio: PR 5b separada, restrita às marcas previstas nas decisões de UX. Não é cobertura desta PR de
+      dados.
   - file: components/zone-distribution.css
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
+    reason: >-
+      Conversa ou domínio: PR 5b separada, restrita às marcas previstas nas decisões de UX. Não é cobertura desta PR de
+      dados.
   - file: docs/components/brand-orb.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
+    reason: >-
+      Conversa ou domínio: PR 5b separada, restrita às marcas previstas nas decisões de UX. Não é cobertura desta PR de
+      dados.
   - file: docs/components/conversation.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/data-cards.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
+    reason: >-
+      Conversa ou domínio: PR 5b separada, restrita às marcas previstas nas decisões de UX. Não é cobertura desta PR de
+      dados.
   - file: docs/components/stage-chip.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
+    reason: >-
+      Conversa ou domínio: PR 5b separada, restrita às marcas previstas nas decisões de UX. Não é cobertura desta PR de
+      dados.
   - file: docs/components/test-mark.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
+    reason: >-
+      Conversa ou domínio: PR 5b separada, restrita às marcas previstas nas decisões de UX. Não é cobertura desta PR de
+      dados.
   - file: docs/components/theory.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
+    reason: >-
+      Conversa ou domínio: PR 5b separada, restrita às marcas previstas nas decisões de UX. Não é cobertura desta PR de
+      dados.
   - file: docs/components/zone-distribution.md
-    reason: Cobertura de componentes prevista nas PRs 3 a 5; esta PR mostra somente fundações.
-  - file: docs/components/stats.md
-    reason: O contrato rx-* está coberto nesta PR; a ficha legada e suas demais famílias ficam para as PRs 4 e 5.
-  - file: docs/components/tables.md
-    reason: O contrato rx-* está coberto nesta PR; a ficha legada e suas demais famílias ficam para as PRs 4 e 5.
+    reason: >-
+      Conversa ou domínio: PR 5b separada, restrita às marcas previstas nas decisões de UX. Não é cobertura desta PR de
+      dados.

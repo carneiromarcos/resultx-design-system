@@ -31,7 +31,12 @@ const {
   definitions: extendedDefinitions,
   renderExtended
 } = require('./extended.cjs');
-const allDefinitions = [...definitions, ...legacyDefinitions.filter(d => !d.successor), ...extendedDefinitions];
+const {
+  definitions: dataDefinitions,
+  renderData,
+  sampleStyles
+} = require('./data.cjs');
+const allDefinitions = [...definitions, ...legacyDefinitions.filter(d => !d.successor), ...extendedDefinitions, ...dataDefinitions];
 const ROOT = path.resolve(__dirname, '../..');
 const OUT = path.join(ROOT, '_site/catalog');
 const esc = x => String(x).replace(/[&<>"']/g, c => ({
@@ -85,6 +90,7 @@ function build(options = {}) {
   copyStyles('components');
   copy('assets/fonts', 'fonts');
   for (const file of new Set(manifest.pages.flatMap(page => [...page.css, ...(page.legacy?.css || [])]))) copy(file, file.startsWith('catalog/') ? path.basename(file) : file);
+  write('assets/data-samples.css', sampleStyles(ROOT));
   write('assets/states.css', demoStyles(fs.readFileSync(path.join(ROOT, 'adapters/css/pilot.css'), 'utf8')));
   for (const file of new Set(manifest.pages.flatMap(page => page.js))) copy(file, 'behaviors/' + path.basename(file));
   copy('catalog/frame.css', 'frame.css');
@@ -116,7 +122,7 @@ function build(options = {}) {
           n: ratio(resolve(values, k), bg)
         })).sort((x, y) => y.n - x.n)[0];
         aliases['--catalog-' + state + '-ink'] = ink.k;
-        states.push(`<article class="state-${state}"><h3>${label}</h3><p>${ink.n >= 4.5 ? 'Leitura: aprovada no par medido.' : 'Leitura abaixo do mínimo. Próximo passo: revisar a combinação após 10/12.'}</p><details><summary>Ver detalhes</summary><p>Contraste ${ink.n.toFixed(2)}:1; mínimo 4,5:1. ${esc(bg)} / ${esc(resolve(values, ink.k))}.</p></details></article>`);
+        states.push(`<article class="state-${state}"><h3>${label}</h3><p>${ink.n >= 4.5 ? 'Leitura: aprovada no par medido.' : 'Leitura abaixo do mínimo. Próximo passo: revisar a combinação na PR própria de cores com UX.'}</p><details><summary>Ver detalhes</summary><p>Contraste ${ink.n.toFixed(2)}:1; mínimo 4,5:1. ${esc(bg)} / ${esc(resolve(values, ink.k))}.</p></details></article>`);
       }
       css += `:root[data-rx-catalog][data-theme="${theme}"] {\n` + Object.entries(aliases).map(([k, v]) => `  ${k}: var(${v});`).join('\n') + '\n}\n';
       const base = '../../../assets/';
@@ -139,7 +145,7 @@ function build(options = {}) {
           return line.replace(/^\*\*O que isso significa:\*\* /, '').replace(/^> /, '').replace(/^\| \*\*Realista\*\* \| /, '').replace(/\*\*/g, '').replace(/ \|$/, '').replace(/^- /, '');
         }).join(' ');
       }
-      const notice = b.id === 'pdv' && theme === 'light' ? '<p>Tema claro do PdV montado com as superfícies claras comuns do DS; a marca ainda não aprovou. Próximo passo: Marcos aprova ou pede superfícies próprias (só depois de 10/12).</p>' : b.id === 'emprega' ? '<p>Usado em IMO e EditalHub.</p>' : '';
+      const notice = b.id === 'pdv' && theme === 'light' ? '<p>Tema claro do PdV montado com as superfícies claras comuns do DS; a marca ainda não aprovou. Próximo passo: Marcos aprova esta composição ou pede superfícies próprias na PR de cores com UX.</p>' : b.id === 'emprega' ? '<p>Usado em IMO e EditalHub.</p>' : '';
       const familyNames = [resolve(values, '--font-heading'), resolve(values, '--font-body'), resolve(values, '--font-mono')];
       const tech = Object.entries(aliases).map(([k, v]) => `<p><code>${esc(k)}: var(${esc(v)})</code></p>`).join('');
       const replacements = {
@@ -168,7 +174,7 @@ function build(options = {}) {
       for (const definition of allDefinitions.filter(d => !d.applies || d.applies.includes(b.id))) {
         const entry = manifest.pages.find(p => p.id === definition.id);
         if (!entry || definitions.includes(definition) && entry.contract !== `contracts/${definition.id}.yaml`) throw Error('Página de contrato sem entrada: ' + definition.id);
-        const rendered = entry.contract ? renderComponent(ROOT, definition, values, revision) : extendedDefinitions.includes(definition) ? renderExtended(ROOT, definition, values, revision, b, theme) : renderLegacy(ROOT, definition, values, revision);
+        const rendered = entry.contract ? renderComponent(ROOT, definition, values, revision) : dataDefinitions.includes(definition) ? renderData(ROOT, definition, values, revision) : extendedDefinitions.includes(definition) ? renderExtended(ROOT, definition, values, revision, b, theme) : renderLegacy(ROOT, definition, values, revision);
         let legacyDetails = '';
         if (entry.legacy) {
           const legacy = legacyDefinitions.find(d => d.id === definition.id);
@@ -195,9 +201,10 @@ function build(options = {}) {
         });
         const links = `<link rel="stylesheet" href="${base}brands/${b.dir}/tokens/ds-bridge.css"><link rel="stylesheet" href="${base}bindings/${b.id}.css"><link rel="stylesheet" href="${base}fonts.css">`;
         // O adaptador continua em @layer components. A folha de apresentação não redefine rx-*.
-        const favicon = extendedDefinitions.includes(definition) ? `<link rel="icon" href="${base}brands/${b.dir}/assets/logo/${b.logo[theme]}">` : '';
+        const favicon = extendedDefinitions.includes(definition) || dataDefinitions.includes(definition) ? `<link rel="icon" href="${base}brands/${b.dir}/assets/logo/${b.logo[theme]}">` : '';
+        const dataSamples = dataDefinitions.includes(definition) ? `<link rel="stylesheet" href="${base}data-samples.css">` : '';
         const styles = entry.css.map(file => `<link rel="stylesheet" href="${base}${file.startsWith('catalog/') ? path.basename(file) : file}">`).join('');
-        write(`${b.id}/${theme}/${definition.id}/example.html`, head(definition.title + ' · ' + b.label, theme, ' data-rx-catalog') + favicon + order + links + styles + `<link rel="stylesheet" href="${base}states.css"></head><body>${banner}${rendered.bodyHead || ''}${sample}${legacyDetails}${rendered.bodyTail || ''}${entry.js.map(file => `<script src="${base}behaviors/${path.basename(file)}"></script>`).join('')}</body></html>`);
+        write(`${b.id}/${theme}/${definition.id}/example.html`, head(definition.title + ' · ' + b.label, theme, ' data-rx-catalog') + favicon + order + links + styles + dataSamples + `<link rel="stylesheet" href="${base}states.css"></head><body>${banner}${rendered.bodyHead || ''}${sample}${legacyDetails}${rendered.bodyTail || ''}${entry.js.map(file => `<script src="${base}behaviors/${path.basename(file)}"></script>`).join('')}</body></html>`);
         const brandNav = brands.map(x => `<a href="../../../${x.id}/${theme}/${definition.id}/"${x.id === b.id ? ' aria-current="page"' : ''}>${esc(x.label)}</a>`).join('');
         const themeNav = ['light', 'dark'].map(t => `<a href="../../${t}/${definition.id}/"${t === theme ? ' aria-current="page"' : ''}>${t === 'light' ? 'Claro' : 'Escuro'}</a>`).join('');
         const groups = [...new Set(allDefinitions.map(d => d.group))].map(group => `<div><span>${esc(group)}: </span>${allDefinitions.filter(d => d.group === group && (!d.applies || d.applies.includes(b.id))).map(d => `<a href="../${d.id}/"${d.id === definition.id ? ' aria-current="page"' : ''}>${esc(d.title)}</a>`).join('')}</div>`).join('');

@@ -1,0 +1,10 @@
+{
+  "series": [30, 60, 45, 80, 95],
+  "statuses": {
+    "in-progress": "Em andamento",
+    "done": "Concluído",
+    "need-review": "Em revisão",
+    "pending": "Pendente",
+    "blocked": "Bloqueado"
+  }
+}

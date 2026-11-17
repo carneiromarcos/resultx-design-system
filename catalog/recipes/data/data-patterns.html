@@ -1,0 +1,67 @@
+<section data-family="enhanced-table">
+<h2>Tabela com estados de seleção e ordenação</h2>
+<p>A seta é um estado visual fixo. Esta tabela não ordena nem seleciona linhas.</p>
+<div class="table-card">
+<div class="table-wrap" tabindex="0" role="region" aria-label="Tabela de estados visuais com rolagem">
+<table>
+<caption>Resultados fictícios, ordenação estática</caption>
+<thead>
+<tr>
+<th scope="col">Seleção</th>
+<th scope="col" class="th-sortable asc" aria-sort="ascending">Item</th>
+<th scope="col">Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="tr-selected">
+<td class="td-checkbox">
+<input type="checkbox" checked disabled aria-label="Exemplo Alfa selecionado, estado ilustrativo">
+</td>
+<td class="td-name">Exemplo Alfa</td>
+<td class="td-success">92</td>
+</tr>
+<tr>
+<td class="td-checkbox">
+<input type="checkbox" disabled aria-label="Exemplo Beta, estado ilustrativo">
+</td>
+<td class="td-name">Exemplo Beta</td>
+<td class="td-warning">75</td>
+</tr>
+<tr>
+<td class="td-checkbox">
+<input type="checkbox" disabled aria-label="Exemplo Gama, estado ilustrativo">
+</td>
+<td class="td-name">Exemplo Gama</td>
+<td class="td-error">45</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section data-family="bulk-toolbar">
+<h2>Ações em lote</h2>
+<p>Os botões estão indisponíveis porque esta amostra não altera dados.</p>
+<div class="bulk-toolbar catalog-static-toolbar">
+<span class="bulk-toolbar-count">1 item selecionado</span>
+<button class="btn btn-secondary btn-sm" type="button" disabled>Mover</button>
+<button class="btn btn-danger btn-sm" type="button" disabled>Remover</button>
+</div>
+</section>
+<section data-family="chart-card">
+<h2>Gráfico com escolha de período</h2>
+<figure class="chart-card">
+<header class="chart-header">
+<h3 class="chart-title">Períodos fictícios</h3>
+<div class="chart-period" role="group" aria-label="Período ilustrativo">
+<button class="chart-period-btn" type="button" aria-pressed="false">7 dias</button>
+<button class="chart-period-btn active" type="button" aria-pressed="true">30 dias</button>
+<button class="chart-period-btn" type="button" aria-pressed="false">90 dias</button>
+</div>
+</header>{{LEGACY_CHART_SVG}}<figcaption>{{SERIES_TEXT}}</figcaption>
+<p>Os botões não trocam o gráfico nesta amostra.</p>
+</figure>
+</section>
+<section data-family="sparkline-svg">
+<h2>Tendência em linha</h2>{{SPARKLINE_SVG}}<p>{{SERIES_TEXT}}</p>
+</section>
