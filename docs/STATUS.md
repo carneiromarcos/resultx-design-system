@@ -1,6 +1,6 @@
 # ResultX Design System — Painel de status
 
-> **Última atualização verificada:** 17/11/2026, `main` = `48fe3ce` (PR #139).
+> **Última atualização verificada:** 17/11/2026, `main` = `547a37a` (PR #145).
 > **Quem mantém:** Supervisor DS, conforme o [protocolo de status e continuidade](governance/status-protocol.md).
 > **Regra de leitura:** CONCLUÍDO exige critério atendido e evidência (PR mesclada, CI verde, parecer do Revisor). Documento escrito **não** conta como implementação.
 
@@ -85,7 +85,10 @@
 
 | Data | Referência | O que mudou |
 |---|---|---|
-| 17/11 | esta PR | Painel da implantação nos produtos (seção F, metas M1–M9) |
+| 17/11 | esta PR | Painel da implantação atualizado: M1 e M2 concluídos nas duas marcas; M3 do XScore aguardando validação |
+| 17/11 | #145, IMO #932, IMO #933 | IMO: inventário e paridade do brand system; Onda 0 em produção (nenhuma tela mudou); inventário privado |
+| 17/11 | #142, #144, marcos-workspace #334 e #335 | XScore: inventário, paridade e brand system navegável; O1 (base verificável); vitrines fora da produção no código |
+| 17/11 | #141 | Painel da implantação nos produtos (seção F, metas M1–M9) |
 | 17/11 | #139 | DS-30, PR 5a do catálogo: famílias de dados; 8 ligações por var a papéis existentes decididas pelo UX; soft-cyan, soft-magenta e soft-purple pendentes de papel próprio |
 | 16/11 | #138 | DS-30, PR 4b do catálogo: famílias interativas e compostas; scripts já publicados do DS carregados só na página do seu componente; tabs, dropdown, toast e compostos só visuais |
 | 16/11 | #137 | DS-30, PR 4a do catálogo: famílias anteriores recolhidas no fim do sucessor; Navigation, Layout, Segmented e ListItem; contraste do legado medido e publicado como pendência |
@@ -172,14 +175,14 @@ D5 só volta a ser pergunta depois da P1 (DS-24).
 
 | Meta | IMO | XScore | Evidência | Bloqueio |
 |---|---|---|---|---|
-| M1 — Descoberta | EM ANDAMENTO | EM ANDAMENTO | inventário dos dois produtos feito (guardado em local privado); falta o inventário da referência Electia | — |
-| M2 — Paridade | PENDENTE | PENDENTE | matriz produto × Electia ainda não existe | M1 |
-| M3 — Estrutura | PENDENTE | PENDENTE | `brands/emprega-mais/previews/` tem só `brand-guidelines.html`; `brands/xscore/previews/` não existe | M2 |
-| M4 — Identidade | NÃO VERIFICADO | NÃO VERIFICADO | tokens existem em `brands/emprega-mais` e `brands/xscore`; paridade com a Electia não medida | M2 |
-| M5 — Componentes | EM ANDAMENTO | EM ANDAMENTO | catálogo DS-30 (#134–#139) mostra os contratos nas duas marcas; faltam contratos (seleção, marcação, texto longo, janela de formulário, arquivo, abas, aviso) | contratos novos no DS |
-| M6 — Integração | EM ANDAMENTO | PENDENTE | IMO: piloto em 2 telas (IMO-31, #931); Onda 0 em execução local. XScore: só `@import` de tokens, nenhum componente | IMO: DS-10; XScore: O1 |
-| M7 — Qualidade | EM ANDAMENTO | PENDENTE | IMO: script de captura e comparação da Onda 0 em execução local | — |
-| M8 — Governança | EM ANDAMENTO | EM ANDAMENTO | IMO consome cópia fixada por SHA, conferida por teste; XScore consome a tag v2.9.0; registro do mandato na governança do XScore pendente | emenda da D7 sem resposta do Marcos |
+| M1 — Descoberta | CONCLUÍDO | CONCLUÍDO | inventário da referência Electia nas duas marcas: XScore #142, IMO #145 (Revisor + CI); inventário privado do IMO no repo do produto (IMO #933); o do XScore nas evidências da O1 (marcos-workspace #334) | — |
+| M2 — Paridade | CONCLUÍDO | CONCLUÍDO | matriz de paridade em `brands/xscore/docs/` (#142) e `brands/emprega-mais/docs/` (#145); IMO: 30 elementos (2 existem, 20 adaptações, 3 implementações, 2 só da eletia, 3 do núcleo) | — |
+| M3 — Estrutura | EM ANDAMENTO | AGUARDANDO VALIDAÇÃO | XScore: brand system navegável em `brands/xscore/previews/brand-system/` (#144), ainda fora do Pages; IMO: em execução local | publicação conjunta das duas marcas (lista do Pages, núcleo) e aceite visual do Marcos |
+| M4 — Identidade | EM ANDAMENTO | EM ANDAMENTO | XScore: fundamentos lidos dos tokens existentes (#144), sem valor novo; IMO: em execução local; diferenças de cor viram itens da PR de cores | PR de cores (C-cor) |
+| M5 — Componentes | EM ANDAMENTO | EM ANDAMENTO | catálogo DS-30 (#134–#139) mostra os contratos nas duas marcas; o brand system do XScore aponta para os 8 contratos públicos (#144); faltam contratos (seleção, marcação, texto longo, janela de formulário, arquivo, abas, aviso) | contratos novos no DS |
+| M6 — Integração | EM ANDAMENTO | EM ANDAMENTO | IMO: Onda 0 em produção (IMO #932, nenhuma tela mudou; 9 views migradas no manifesto); XScore: O1 mesclada (marcos-workspace #334) e O2 (5 dívidas dos componentes corrigidas) aprovada pelo Revisor, aguarda PR | IMO: DS-10 parcial (linhas 7, 8, 11, 20) antes da Onda 1a |
+| M7 — Qualidade | EM ANDAMENTO | EM ANDAMENTO | IMO: capturas (28 pares, 0 px) e catraca por view migrada no CI (IMO #932); XScore: 12 capturas e auditoria dos 8 contratos (55 casos: 17 parciais, 5 falhas, 33 não verificados) na O1 | — |
+| M8 — Governança | EM ANDAMENTO | EM ANDAMENTO | IMO consome cópia fixada por SHA, conferida por teste; XScore consome a tag v2.9.0 e registrou o mandato na governança (#334); vitrines de demonstração do XScore fora da produção no código (marcos-workspace #335), ainda não implantado; regra: DS público só recebe síntese, detalhe dos produtos fica nos repos privados | emenda da D7 sem resposta do Marcos |
 | M9 — Conclusão | PENDENTE | PENDENTE | — | M1–M8 |
 
 Estados permitidos: PENDENTE, EM ANDAMENTO, AGUARDANDO VALIDAÇÃO, CONCLUÍDO, BLOQUEADO, NÃO VERIFICADO. CONCLUÍDO só com PR mesclada, CI verde e parecer do Revisor. Sem percentuais.
@@ -188,7 +191,7 @@ Estados permitidos: PENDENTE, EM ANDAMENTO, AGUARDANDO VALIDAÇÃO, CONCLUÍDO, 
 
 ## E. Continuidade
 
-- **Próxima ação executável:** esta PR (painel da implantação, só documentação): CI, Revisor e merge sob a autorização "A". Em paralelo: Executor IMO fecha a Onda 0 + provas da DS-10 e depois o M1/M2 do Brand System IMO; Executor XScore faz o M1/M2 do Brand System XScore e a onda O1. Catálogo PR 5b fica depois.
+- **Próxima ação executável:** esta PR (painel, só documentação): CI, Revisor e merge sob a autorização "A". Em paralelo: PR da O2 do XScore (aprovada, rebaseada); O3 do XScore em execução; M3/M4 do brand system do IMO em execução; DS-10 do IMO parcial antes da Onda 1a; publicação conjunta dos brand systems depois do M3 do IMO. Catálogo PR 5b fica depois.
 - **Depois:**
   1. DS-10, verificar as linhas da matriz ainda sem prova; IMO-30b depois da DS-17;
   2. DS-14, a partir de 27/11, com o inventário refeito até o SHA da tag;
@@ -200,5 +203,5 @@ Estados permitidos: PENDENTE, EM ANDAMENTO, AGUARDANDO VALIDAÇÃO, CONCLUÍDO, 
   4. as ADRs [0001](adr/0001-role-named-tokens.md), [0003](adr/0003-token-single-source.md), [0004](adr/0004-contracts-adapters-pilot.md) e [0005](adr/0005-governance-propagation-decisions.md);
   5. `CHANGELOG.md` (seção Unreleased).
 - **Estado do repositório no fechamento:**
-  - PRs do DS abertas: esta (painel da implantação) e 4 do Dependabot (#130–#133), ainda não avaliadas;
+  - PRs do DS abertas: esta (painel) e 4 do Dependabot (#130–#133), ainda não avaliadas;
   - pasta de trabalho do DS: só a desta PR, removida depois do merge.
