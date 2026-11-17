@@ -97,6 +97,11 @@ A [lista das vinte obrigações não verificadas](compatibility-obligations.md) 
 os dez nomes em claro e escuro e o plano por consumidor. O complemento do processo
 aguarda close para ler stdout completo, com RED de JSON truncado e GREEN executados.
 
+O teste de stdout foi corrigido após falha do checkout raso no CI: leitura anterior
+e processo filho são sintéticos no teste, sem dependência de histórico ou browser.
+RED e GREEN no mesmo clone raso estão no relatório; isso não certifica compatibilidade
+real do consumidor. Workflow/fetch-depth e script manual permaneceram iguais.
+
 ## Pendências e revisão
 
 - Duas baselines Linux aprovadas pelo Revisor e copiadas byte a byte no commit

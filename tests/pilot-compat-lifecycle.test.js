@@ -2,11 +2,16 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const { EventEmitter } = require('node:events');
-const childProcess = require('node:child_process');
 
 test('compatibilidade aguarda stdout tardio até close antes de interpretar JSON', async () => {
   const output = [], errors = [], executionProcess = { execPath: process.execPath, env: process.env, exitCode: 0 };
-  let closed = false;
+  let closed = false, previousReads = 0;
+  const readPrevious = (command, args) => {
+    expect(command).toBe('git');
+    expect(args).toEqual(['show', '64a26656170ae506f3bb4c05647c5f3c63c43177:examples/pilot.html']);
+    previousReads++;
+    return Buffer.from('<!doctype html><html lang="pt-BR"><body>Vitrine anterior sintética</body></html>');
+  };
   const spawn = () => {
     const child = new EventEmitter();
     child.stdout = new EventEmitter();
@@ -28,11 +33,12 @@ test('compatibilidade aguarda stdout tardio até close antes de interpretar JSON
   const filename = path.resolve('scripts/check-pilot-compat.cjs');
   await vm.runInNewContext(fs.readFileSync(filename, 'utf8'), {
     __dirname: path.dirname(filename),
-    require: Object.assign(name => name === 'node:child_process' ? { ...childProcess, spawn } : require(name), { resolve: require.resolve }),
+    require: Object.assign(name => name === 'node:child_process' ? { execFileSync: readPrevious, spawn } : require(name), { resolve: require.resolve }),
     process: executionProcess,
     console: { log: value => output.push(value), error: value => errors.push(value) },
     URL,
   }, { filename: 'check-pilot-compat.cjs' });
+  expect(previousReads).toBe(1);
   expect(errors).toEqual([]);
   expect(executionProcess.exitCode).toBe(0);
   expect(closed).toBe(true);

@@ -846,3 +846,113 @@ Remover só os acréscimos recupera HTML/CSS antigos byte a byte. Diagnóstico l
 68 IDs antigos por tema: HTML/estilos/x/dimensões iguais, y=0 ou+997; não substitui Linux.
 
 Não houve alteração de fonte visual, seletor ou tolerância. CI final continua pendente.
+
+## CI raso — correção hermética do teste de stdout
+
+O CI do head be2eee2 passou visual-linux e PR shape, mas lint-and-build falhou no
+run 44151598079: 847/848 passaram. O unitário de ciclo de vida dependia indevidamente
+do histórico Git local porque o script real lê a vitrine anterior ao carregar.
+O script manual não mudou; somente seu contexto no teste recebe uma leitura sintética.
+O mock confere o comando exato solicitado e deve ser usado uma vez. Nenhum Git ou
+browser é lançado por esse teste; spawn também permanece simulado.
+
+Reprodução: clone isolado --depth 1 --no-local do ramo publicado no head be2eee2.
+Dependências Node do mesmo lockfile foram reutilizadas por symlink; fonte e cwd
+vieram do clone raso. O mesmo clone foi usado para RED e GREEN, sem fetch entre eles.
+Os comandos abaixo foram executados na raiz desse clone temporário.
+
+```sh
+git rev-parse --is-shallow-repository
+git rev-parse HEAD
+git cat-file -e 64a26656170ae506f3bb4c05647c5f3c63c43177:examples/pilot.html
+base_result=$?
+echo "base_lookup_exit=$base_result"
+npx jest tests/pilot-compat-lifecycle.test.js --runInBand --watchman=false > /tmp/ds-aviso-shallow-red.txt 2>&1
+red_result=$?
+echo "red_exit=$red_result"
+cat /tmp/ds-aviso-shallow-red.txt
+```
+
+Saída (RED:1; commit-base ausente:128):
+
+```text
+true
+be2eee213aa2ab405e65312d41fc356c45be214c
+fatal: path 'examples/pilot.html' exists on disk, but not in '64a26656170ae506f3bb4c05647c5f3c63c43177'
+base_lookup_exit=128
+red_exit=1
+fatal: path 'examples/pilot.html' exists on disk, but not in '64a26656170ae506f3bb4c05647c5f3c63c43177'
+FAIL tests/pilot-compat-lifecycle.test.js
+  ● compatibilidade aguarda stdout tardio até close antes de interpretar JSON
+
+    node:child_process:955
+        throw err;
+        ^
+
+    Error: Command failed: git show 64a26656170ae506f3bb4c05647c5f3c63c43177:examples/pilot.html
+    fatal: path 'examples/pilot.html' exists on disk, but not in '64a26656170ae506f3bb4c05647c5f3c63c43177'
+
+      at check-pilot-compat.cjs:8:16
+      at Object.runInNewContext (tests/pilot-compat-lifecycle.test.js:29:12)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        0.397 s
+Ran all test suites matching tests/pilot-compat-lifecycle.test.js.
+```
+
+Aplicado somente o arquivo de teste corrigido, no mesmo clone:
+
+```sh
+git rev-parse --is-shallow-repository
+git cat-file -e 64a26656170ae506f3bb4c05647c5f3c63c43177:examples/pilot.html
+base_result=$?
+echo "base_lookup_exit=$base_result"
+npx jest tests/pilot-compat-lifecycle.test.js --runInBand --watchman=false > /tmp/ds-aviso-shallow-green.txt 2>&1
+green_result=$?
+echo "green_exit=$green_result"
+cat /tmp/ds-aviso-shallow-green.txt
+exit "$green_result"
+```
+
+Retorno:0. Saída:
+
+```text
+true
+fatal: path 'examples/pilot.html' exists on disk, but not in '64a26656170ae506f3bb4c05647c5f3c63c43177'
+base_lookup_exit=128
+green_exit=0
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        0.331 s, estimated 1 s
+Ran all test suites matching tests/pilot-compat-lifecycle.test.js.
+```
+
+O JSON do filho também é sintético nesse teste de fronteira: ele verifica a espera de
+close e a leitura completa, não a conformidade real de 110 casos. A prova manual de
+compatibilidade anterior registrada separadamente continua exigindo a fonte fixada.
+Não foram alterados workflow, fetch-depth, medidor ou fonte visual. CI novo necessário.
+
+Suíte completa executada no MESMO clone raso, depois da correção:
+
+```sh
+npm test -- --runInBand --watchman=false > /tmp/ds-aviso-shallow-full.txt 2>&1
+full_result=$?
+echo "test_exit=$full_result"
+tail -6 /tmp/ds-aviso-shallow-full.txt
+exit "$full_result"
+```
+
+Retorno:0. Saída:
+
+```text
+test_exit=0
+
+Test Suites: 43 passed, 43 total
+Tests:       848 passed, 848 total
+Snapshots:   0 total
+Time:        28.977 s
+Ran all test suites.
+```
