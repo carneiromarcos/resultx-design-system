@@ -16,9 +16,11 @@ const server = http.createServer((req, res) => {
 });
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 const origin = `http://127.0.0.1:${server.address().port}`;
-const browser = await chromium.launch();
-const report = { method: 'Local static documents; native links/details; no browser script in artifacts', chromium: browser.version(), scenarios: [] };
+let browser;
+const report = { method: 'Local static documents; native links/details; no browser script in artifacts', chromium: null, scenarios: [] };
 try {
+  browser = await chromium.launch();
+  report.chromium = browser.version();
   for (const width of [390, 1440]) for (const [file, theme] of [['index.html', 'dark'], ['light.html', 'light']]) {
     const context = await browser.newContext({ viewport: { width, height: 1000 }, reducedMotion: 'reduce' });
     const page = await context.newPage();
@@ -39,6 +41,8 @@ try {
     assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Pular para o conteúdo');
     await page.keyboard.press('Enter');
     await page.locator('.theme-link').focus();
+    const ring = await page.locator('.theme-link').evaluate(el => ({ style: getComputedStyle(el).outlineStyle, width: parseFloat(getComputedStyle(el).outlineWidth) }));
+    assert.equal(ring.style, 'solid'); assert.ok(ring.width >= 2, 'Focus indicator missing');
     await page.keyboard.press('Enter');
     assert.equal(await page.locator('html').getAttribute('data-theme'), theme === 'dark' ? 'light' : 'dark');
     await page.goBack({ waitUntil: 'networkidle' });
@@ -69,7 +73,7 @@ try {
     await context.close();
   }
 } finally {
-  await browser.close(); await new Promise(resolve => server.close(resolve));
+  await browser?.close(); await new Promise(resolve => server.close(resolve));
   fs.writeFileSync(path.join(evidence, 'brand-system-browser.json'), JSON.stringify(report, null, 2) + '\n');
 }
 console.log(JSON.stringify(report));
