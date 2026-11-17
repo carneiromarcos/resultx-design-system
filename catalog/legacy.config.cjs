@@ -46,6 +46,22 @@ module.exports = [{
   families: ['default', 'small', 'large'],
   pending: 'A janela anterior é apenas visual: abrir, fechar, conter o foco e devolver o foco não estão implementados aqui. Próximo passo: usar a confirmação acima para testar o comportamento; só reativar o mecanismo antigo após autorização.'
 }, {
+  id: 'stat-card',
+  doc: 'stats',
+  successor: 'Indicador',
+  title: 'Indicadores anteriores',
+  group: 'Conteúdo e dados',
+  families: ['standard', 'mini', 'progress'],
+  pending: 'As métricas são fictícias. Esta versão anterior fica para consulta; use o indicador oficial acima nas telas novas.'
+}, {
+  id: 'data-table',
+  doc: 'tables',
+  successor: 'Tabela',
+  title: 'Tabelas anteriores',
+  group: 'Conteúdo e dados',
+  families: ['basic', 'dense'],
+  pending: 'A tabela anterior mostra dados fixos. Não há exportação, ordenação ou seleção conectada. Use a tabela oficial acima para testar o comportamento de ordenação.'
+}, {
   id: 'navigation',
   doc: 'navigation',
   title: 'Navegação',

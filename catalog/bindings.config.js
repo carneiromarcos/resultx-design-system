@@ -129,6 +129,20 @@ const brands = [{
     info: '--rx-info'
   }
 }];
-module.exports = {
-  brands
-};
+// GO UX 17/11: somente reservas semânticas existentes; não é tema opt-in.
+const dataRoles = Object.freeze({
+  '--delta-positive-fg': '--color-success',
+  '--delta-positive-bg': '--color-success-bg',
+  '--delta-negative-fg': '--color-warning',
+  '--delta-negative-bg': '--color-warning-bg',
+  '--delta-neutral-fg': '--text-secondary',
+  '--delta-neutral-bg': '--bg-surface-2',
+  '--surface-accent-green': '--color-success-bg',
+  '--surface-accent-amber': '--color-warning-bg'
+});
+const pendingDataRoles = Object.freeze({
+  '--surface-accent-cyan': 'Ciano suave',
+  '--surface-accent-magenta': 'Magenta suave',
+  '--surface-accent-purple': 'Roxo suave'
+});
+module.exports = { brands, dataRoles, pendingDataRoles };

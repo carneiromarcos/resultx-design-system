@@ -27,3 +27,6 @@ body { display: block; }
 
 .catalog-overflow { max-width: 100%; overflow: auto; padding: var(--space-2); }
 .catalog-overflow:focus-visible { outline: var(--focus-ring-width) solid var(--accent-primary-text); outline-offset: calc(var(--focus-ring-offset) * -1); }
+
+/* Dados fictícios do indicador anterior, pelo gancho público de progresso. */
+.catalog-progress-complete { width: 100%; background: var(--accent-primary); }
