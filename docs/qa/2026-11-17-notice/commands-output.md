@@ -534,3 +534,37 @@ npx --no -- stylelint 'catalog/*.css'
 ```
 
 Retorno: 0. Saída vazia.
+
+## Reexecução após o commit funcional 8708e3f
+
+```sh
+npm run build > /tmp/ds-aviso-postcommit-build.txt 2>&1
+build_result=$?
+echo "build_exit=$build_result"
+if [ "$build_result" -ne 0 ]; then cat /tmp/ds-aviso-postcommit-build.txt; exit "$build_result"; fi
+npm test -- --runInBand --watchman=false > /tmp/ds-aviso-postcommit-test.txt 2>&1
+test_result=$?
+echo "test_exit=$test_result"
+tail -6 /tmp/ds-aviso-postcommit-test.txt
+if [ "$test_result" -ne 0 ]; then exit "$test_result"; fi
+git status --porcelain -- dist/ brands/ tokens/ adapters/
+if [ -n "$(git status --porcelain -- dist/ brands/ tokens/ adapters/)" ]; then exit 1; fi
+echo 'generated_artifacts_gate=PASS (empty git status)'
+```
+
+Retorno: 0. Saída:
+
+```text
+build_exit=0
+test_exit=0
+
+Test Suites: 42 passed, 42 total
+Tests:       846 passed, 846 total
+Snapshots:   0 total
+Time:        28.054 s, estimated 29 s
+Ran all test suites.
+generated_artifacts_gate=PASS (empty git status)
+```
+
+O status vazio cobre gerados depois de build e testes, incluindo os três gerados da
+marca. A prova de conteúdo isolada foi reexecutada e conservou os hashes registrados.

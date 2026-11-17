@@ -82,7 +82,9 @@ confirmam: os dois HTML ficam byte-idênticos ao remover o artigo do Notice e no
 somente o identificador curto de conteúdo. No JSON entram o registro do Notice e suas
 duas fontes; somente os hashes de aliases, contrato/ficha StatusBadge e contentId mudam.
 Os demais campos são iguais. Gerador, teste, CSS, fontes e logos da marca não mudaram.
-A confirmação do gate de gerados após o commit continua separada dos testes verdes.
+O gate de gerados foi reexecutado depois do commit funcional 8708e3f: build e
+846 testes retornaram 0, com status vazio nas árvores de artefatos verificadas.
+O CI no SHA final continua sendo um gate separado.
 
 A varredura dirigida dos acréscimos e dos arquivos novos encontrou zero ocorrências
 de caminho pessoal, fonte privada, rota privada, e-mail ou cliente conhecido.
