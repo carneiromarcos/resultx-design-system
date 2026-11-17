@@ -568,3 +568,110 @@ generated_artifacts_gate=PASS (empty git status)
 
 O status vazio cobre gerados depois de build e testes, incluindo os três gerados da
 marca. A prova de conteúdo isolada foi reexecutada e conservou os hashes registrados.
+
+## Complemento do ciclo de vida do processo
+
+Com o script publicado em 6c69edad e o teste novo, antes da correção:
+
+```sh
+npx jest tests/pilot-compat-lifecycle.test.js --runInBand --watchman=false > /tmp/ds-aviso-close-red.txt 2>&1
+red_result=$?
+echo "red_exit=$red_result"
+cat /tmp/ds-aviso-close-red.txt
+```
+
+Saída (retorno do ensaio: 1):
+
+```text
+red_exit=1
+FAIL tests/pilot-compat-lifecycle.test.js
+  ● compatibilidade aguarda stdout tardio até close antes de interpretar JSON
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "Unterminated string in JSON at position 27 (line 1 column 28)",
+    + ]
+
+      34 |     URL,
+      35 |   }, { filename: 'check-pilot-compat.cjs' });
+    > 36 |   expect(errors).toEqual([]);
+         |                  ^
+      37 |   expect(executionProcess.exitCode).toBe(0);
+      38 |   expect(closed).toBe(true);
+      39 |   expect(JSON.parse(output.join(''))).toEqual(expect.objectContaining({ passed: 110, failed: 0, skippedNewObligations: 20, latestConformity: false }));
+
+      at Object.toEqual (tests/pilot-compat-lifecycle.test.js:36:18)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        0.4 s
+Ran all test suites matching tests/pilot-compat-lifecycle.test.js.
+```
+
+Depois de mudar somente a espera de exit para close:
+
+```sh
+npx jest tests/pilot-compat-lifecycle.test.js --runInBand --watchman=false > /tmp/ds-aviso-close-green.txt 2>&1
+green_result=$?
+echo "green_exit=$green_result"
+cat /tmp/ds-aviso-close-green.txt
+if [ "$green_result" -ne 0 ]; then exit "$green_result"; fi
+node scripts/check-pilot-compat.cjs > /tmp/ds-aviso-close-compat.txt 2>&1
+compat_result=$?
+echo "compat_exit=$compat_result"
+cat /tmp/ds-aviso-close-compat.txt
+exit "$compat_result"
+```
+
+Retorno: 0. Saída:
+
+```text
+green_exit=0
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        0.235 s, estimated 1 s
+Ran all test suites matching tests/pilot-compat-lifecycle.test.js.
+compat_exit=0
+{
+  "sourceSha": "64a26656170ae506f3bb4c05647c5f3c63c43177",
+  "previousShowcase": true,
+  "currentRunner": true,
+  "passed": 110,
+  "failed": 0,
+  "skippedNewObligations": 20,
+  "latestConformity": false
+}
+```
+
+O negativo executa o script real com processo filho controlado: stdout chega em duas
+partes, exit entre elas e close depois da última. O erro de JSON truncado aparece antes
+da correção; depois o relatório completo preserva 110 pass/20 não verificados.
+
+## Suíte completa depois do complemento
+
+```sh
+npm test -- --runInBand --watchman=false > /tmp/ds-aviso-close-full.txt 2>&1
+full_result=$?
+echo "test_exit=$full_result"
+tail -6 /tmp/ds-aviso-close-full.txt
+exit "$full_result"
+```
+
+Retorno: 0. Saída:
+
+```text
+test_exit=0
+
+Test Suites: 43 passed, 43 total
+Tests:       847 passed, 847 total
+Snapshots:   0 total
+Time:        35.536 s
+Ran all test suites.
+```

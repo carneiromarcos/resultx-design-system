@@ -31,7 +31,7 @@ sem adoção automática; a próxima cópia por SHA confere usos de color-warnin
 | Prova | Resultado | Falhas / pulos |
 |---|---:|---:|
 | RED inicial dos novos critérios | 1/6 | 5 / 0 |
-| Unitários completos | 846/846 | 0 / 0 |
+| Unitários completos, com o complemento de stdout | 847/847 | 0 / 0 |
 | Contratos, cobertura e sete negativos de DOM | 138/138 | 0 / 0 |
 | Catálogo na árvore publicada, componentes alterados | 20/20 | 0 / 0 |
 | Vitrine pública anterior com runner atual | 110 pass | 0 / **20 novos não verificados** |
@@ -88,6 +88,10 @@ O CI no SHA final continua sendo um gate separado.
 
 A varredura dirigida dos acréscimos e dos arquivos novos encontrou zero ocorrências
 de caminho pessoal, fonte privada, rota privada, e-mail ou cliente conhecido.
+
+A [lista das vinte obrigações não verificadas](compatibility-obligations.md) explicita
+os dez nomes em claro e escuro e o plano por consumidor. O complemento do processo
+aguarda close para ler stdout completo, com RED de JSON truncado e GREEN executados.
 
 ## Pendências e revisão
 

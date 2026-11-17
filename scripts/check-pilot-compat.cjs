@@ -20,7 +20,7 @@ const server=http.createServer((req,res)=>{
  const url=`http://127.0.0.1:${server.address().port}/examples/legacy-pilot.html`;
  const child=spawn(process.execPath,[require.resolve('@playwright/test/cli'),'test','tests/visual/pilot-contracts.spec.js','--grep','(light|dark):','--workers=2','--reporter=json','--output',output],{cwd:root,env:{...process.env,RESULTX_ADAPTER_URL:url},stdio:['ignore','pipe','pipe']});
  let stdout='',stderr='';child.stdout.on('data',c=>stdout+=c);child.stderr.on('data',c=>stderr+=c);
- const [exit]=await once(child,'exit');assert.equal(exit,0,stderr||stdout);
+ const [exit]=await once(child,'close');assert.equal(exit,0,stderr||stdout);
  const report=JSON.parse(stdout);assert.equal(report.stats.unexpected,0);assert.equal(report.stats.skipped,newer*2);assert.equal(report.stats.expected,(cases.length-newer)*2);
  console.log(JSON.stringify({sourceSha,previousShowcase:true,currentRunner:true,passed:report.stats.expected,failed:report.stats.unexpected,skippedNewObligations:report.stats.skipped,latestConformity:false},null,2));
  }finally{server.closeAllConnections();if(server.listening)await new Promise(resolve=>server.close(resolve));fs.rmSync(output,{recursive:true,force:true});}})().catch(error=>{console.error(error.message);process.exitCode=1;});
