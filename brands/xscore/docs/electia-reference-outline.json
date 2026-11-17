@@ -1,0 +1,523 @@
+{
+  "dsSha": "48fe3ce1e9f081a1ad01584c9cf60263fcfb5085",
+  "htmlSha256": "9be771d7a7abddd3c06678169c1e32718b53b2b3fafb135ea33ca45869277d34",
+  "liveEqualsSource": true,
+  "bookHeadings": [
+    [
+      "##",
+      "1. Essência da Marca"
+    ],
+    [
+      "###",
+      "Propósito"
+    ],
+    [
+      "###",
+      "Missão"
+    ],
+    [
+      "###",
+      "Visão"
+    ],
+    [
+      "###",
+      "Promessa de Marca"
+    ],
+    [
+      "###",
+      "Valores da Marca"
+    ],
+    [
+      "##",
+      "2. Arquitetura de Marca"
+    ],
+    [
+      "###",
+      "Hierarquia"
+    ],
+    [
+      "###",
+      "Assinaturas"
+    ],
+    [
+      "###",
+      "Regras de grafia (oficial — atualizada 2026-05-11)"
+    ],
+    [
+      "##",
+      "3. Wordmark (oficial — atualizado 2026-05-11)"
+    ],
+    [
+      "###",
+      "Wordmark canônico"
+    ],
+    [
+      "###",
+      "Variantes do wordmark"
+    ],
+    [
+      "###",
+      "Favicon e avatar — helper \"e\""
+    ],
+    [
+      "###",
+      "Tamanhos e proporcoes do wordmark"
+    ],
+    [
+      "###",
+      "Cores do wordmark"
+    ],
+    [
+      "###",
+      "Área de protecao"
+    ],
+    [
+      "###",
+      "Usos proibidos"
+    ],
+    [
+      "##",
+      "4. Paleta de Cores"
+    ],
+    [
+      "###",
+      "Cores Primárias"
+    ],
+    [
+      "###",
+      "Cores de Fundo (Dark Theme)"
+    ],
+    [
+      "###",
+      "Cores de Texto"
+    ],
+    [
+      "###",
+      "Cores de Borda"
+    ],
+    [
+      "###",
+      "Cores Semanticas"
+    ],
+    [
+      "###",
+      "Cores por Teoria Comportamental"
+    ],
+    [
+      "###",
+      "Cores por Macro-Dimensão (Testes Situacionais)"
+    ],
+    [
+      "##",
+      "5. Tipografia"
+    ],
+    [
+      "###",
+      "Fontes"
+    ],
+    [
+      "###",
+      "Hierarquia"
+    ],
+    [
+      "###",
+      "Regras tipográficas"
+    ],
+    [
+      "##",
+      "6. Tom e Voz"
+    ],
+    [
+      "###",
+      "Personalidade"
+    ],
+    [
+      "###",
+      "Exemplos de Tom"
+    ],
+    [
+      "###",
+      "Regras de escrita"
+    ],
+    [
+      "##",
+      "7. Iconografia e Elementos Visuais"
+    ],
+    [
+      "###",
+      "Icones"
+    ],
+    [
+      "###",
+      "Containers de ícone"
+    ],
+    [
+      "###",
+      "Cards"
+    ],
+    [
+      "###",
+      "Botoes"
+    ],
+    [
+      "##",
+      "8. Aplicações"
+    ],
+    [
+      "###",
+      "Landing Page"
+    ],
+    [
+      "###",
+      "App (Dashboard)"
+    ],
+    [
+      "###",
+      "Email (Brevo)"
+    ],
+    [
+      "###",
+      "Redes Sociais"
+    ],
+    [
+      "###",
+      "PDF / Relatórios"
+    ],
+    [
+      "##",
+      "9. Nomenclatura de Produto"
+    ],
+    [
+      "##",
+      "10. Coexistência com emprega+"
+    ],
+    [
+      "###",
+      "O que compartilham"
+    ],
+    [
+      "###",
+      "O que difere"
+    ],
+    [
+      "###",
+      "Hierarquia legal e canais"
+    ],
+    [
+      "##",
+      "11. Origem da Marca"
+    ],
+    [
+      "###",
+      "A história por tras do eletia"
+    ],
+    [
+      "###",
+      "O fundador — visão de produto"
+    ],
+    [
+      "##",
+      "12. Posicionamento Estratégico"
+    ],
+    [
+      "###",
+      "Declaracao de posicionamento"
+    ],
+    [
+      "###",
+      "Perfil do cliente ideal (ICP)"
+    ],
+    [
+      "###",
+      "A dor — nas palavras deles"
+    ],
+    [
+      "###",
+      "Alternativas competitivas"
+    ],
+    [
+      "###",
+      "Atributos únicos do eletia"
+    ],
+    [
+      "###",
+      "Por que agora"
+    ],
+    [
+      "###",
+      "Categoria de mercado"
+    ],
+    [
+      "##",
+      "13. Arquétipo de Marca"
+    ],
+    [
+      "###",
+      "Triade arquetipica: Sábio + Mago + Cuidador"
+    ],
+    [
+      "####",
+      "O Sábio (dominante) — Profundidade científica"
+    ],
+    [
+      "####",
+      "O Mago — Transformação por dados/IA"
+    ],
+    [
+      "####",
+      "O Cuidador — Ética blindada"
+    ],
+    [
+      "###",
+      "O que o eletia NAO e"
+    ],
+    [
+      "###",
+      "Framework etico (implícito, nunca explícito)"
+    ],
+    [
+      "##",
+      "14. Fotografia e Imagens"
+    ],
+    [
+      "###",
+      "Asset hero canônico: `aurora-hero-v1`"
+    ],
+    [
+      "###",
+      "Filosofia visual"
+    ],
+    [
+      "###",
+      "Estilo visual"
+    ],
+    [
+      "###",
+      "Categorias de imagem"
+    ],
+    [
+      "###",
+      "Tratamento de imagem"
+    ],
+    [
+      "####",
+      "Overlay padrão"
+    ],
+    [
+      "####",
+      "Filter padrão (sobre vídeos hero — ver aurora-hero-v1)"
+    ],
+    [
+      "####",
+      "Color grade fotográfico"
+    ],
+    [
+      "###",
+      "Imagens proibidas"
+    ],
+    [
+      "##",
+      "15. Checklist de Validação"
+    ],
+    [
+      "##",
+      "16. Aplicação na LP e Plataforma"
+    ],
+    [
+      "###",
+      "16.1 Quem consome o Brand Book"
+    ],
+    [
+      "###",
+      "16.2 Importar fontes (Google Fonts)"
+    ],
+    [
+      "###",
+      "16.3 Importar tokens (CSS variables)"
+    ],
+    [
+      "###",
+      "16.4 Aplicar o wordmark"
+    ],
+    [
+      "###",
+      "16.5 Aplicar o aurora-hero"
+    ],
+    [
+      "###",
+      "16.6 Email Brevo"
+    ],
+    [
+      "###",
+      "16.7 Checklist por surface"
+    ],
+    [
+      "###",
+      "16.8 Mapa de onde cada arquivo vive"
+    ],
+    [
+      "###",
+      "16.9 Atualizar quando o Brand muda"
+    ],
+    [
+      "##",
+      "17. Diretrizes de Aplicação Visual"
+    ],
+    [
+      "###",
+      "17.1 Cores — quando usar cada uma"
+    ],
+    [
+      "####",
+      "Roxo `#6f32b1` (Purple canonical)"
+    ],
+    [
+      "####",
+      "Roxo Light `#a55eea`"
+    ],
+    [
+      "####",
+      "Grafite Base `#0B0E14`"
+    ],
+    [
+      "####",
+      "White `#FFFFFF`"
+    ],
+    [
+      "####",
+      "Semantic (Success/Error/Warning)"
+    ],
+    [
+      "###",
+      "17.2 Gradients — uso seletivo"
+    ],
+    [
+      "####",
+      "B — Default (`#6f32b1 → #2040a0` Royal Blue)"
+    ],
+    [
+      "####",
+      "C — Premium (`#6f32b1 → #b29442` Ouro)"
+    ],
+    [
+      "####",
+      "Regra de ouro sobre gradients"
+    ],
+    [
+      "###",
+      "17.3 Fontes — hierarquia tipográfica"
+    ],
+    [
+      "####",
+      "Sora (Heading)"
+    ],
+    [
+      "####",
+      "Inter (Body)"
+    ],
+    [
+      "####",
+      "JetBrains Mono (Mono)"
+    ],
+    [
+      "###",
+      "17.4 Logos — qual usar em qual contexto"
+    ],
+    [
+      "####",
+      "Área de proteção (clear space)"
+    ],
+    [
+      "####",
+      "Tamanho mínimo"
+    ],
+    [
+      "####",
+      "NUNCA faça com o logo"
+    ],
+    [
+      "###",
+      "17.5 Combinações — paletas permitidas por contexto"
+    ],
+    [
+      "####",
+      "Combinação 1: Hero corporativo (default)"
+    ],
+    [
+      "####",
+      "Combinação 2: Quote vibrante"
+    ],
+    [
+      "####",
+      "Combinação 3: Light editorial (Gov/Editais)"
+    ],
+    [
+      "####",
+      "Combinação 4: Dado/KPI"
+    ],
+    [
+      "####",
+      "Combinação 5: Premium/Recomendado"
+    ],
+    [
+      "###",
+      "17.6 Checklist pré-publicação"
+    ],
+    [
+      "##",
+      "18. Identidade para Postagens Sociais"
+    ],
+    [
+      "###",
+      "18.1 O que extraímos das referências"
+    ],
+    [
+      "###",
+      "18.2 O que não extraímos"
+    ],
+    [
+      "###",
+      "18.3 Princípios de composição"
+    ],
+    [
+      "###",
+      "18.4 Como o texto aparece sobre a imagem"
+    ],
+    [
+      "###",
+      "18.5 Tratamento de imagem"
+    ],
+    [
+      "###",
+      "18.6 Paleta visual das postagens"
+    ],
+    [
+      "###",
+      "18.7 Padrões de layout"
+    ],
+    [
+      "###",
+      "18.8 Regras de consistência"
+    ],
+    [
+      "###",
+      "18.9 Templates base de postagem"
+    ],
+    [
+      "####",
+      "Template A: Capa de carrossel"
+    ],
+    [
+      "####",
+      "Template B: Peça manifesto"
+    ],
+    [
+      "####",
+      "Template C: Oportunidade ou anúncio"
+    ],
+    [
+      "####",
+      "Template D: Educacional"
+    ]
+  ]
+}
