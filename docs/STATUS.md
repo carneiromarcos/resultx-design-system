@@ -1,6 +1,6 @@
 # ResultX Design System — Painel de status
 
-> **Última atualização verificada:** 16/11/2026, `main` = `d2c6973` (PR #137).
+> **Última atualização verificada:** 17/11/2026, `main` = `0827c21` (PR #138).
 > **Quem mantém:** Supervisor DS, conforme o [protocolo de status e continuidade](governance/status-protocol.md).
 > **Regra de leitura:** CONCLUÍDO exige critério atendido e evidência (PR mesclada, CI verde, parecer do Revisor). Documento escrito **não** conta como implementação.
 
@@ -79,13 +79,14 @@
 | DS-27 | Hierarquia do botão de perigo no FinanceX | CONCLUÍDO | decisão registrada antes de o FinanceX subir de versão (ex.: Desativar por linha em variante neutra) | decisão do Marcos em 14/11; FinanceX #45 (`71df56a7`): Desativar neutro, confirmação em Excluir regra e Cancelar plano, ponte provisória do `btn-danger`; CI verde; Revisor APROVA | — | tirar a ponte quando o FinanceX subir para a v2.11.0 |
 | DS-28 | Protocolo de status adotado no IMO | CONCLUÍDO | painel versionado no IMO; Revisor; merge do Marcos | IMO #903 mesclada (`c5d2f2bc`) com o merge do Marcos; Revisor APROVA no head `1ba0674a` (revisão conjunta DS #126 / IMO #903) | — | o painel do IMO segue com IMO-06 e IMO-26 antigos, atualizar na próxima PR material do IMO |
 | DS-29 | Contrato de link com aparência de botão (pré-requisito da IMO-30b) | CONCLUÍDO | contrato com anatomia `<a href>`, só Enter aciona, indisponível com `aria-disabled` e sem `href`; casos de teste executados na vitrine do adaptador CSS; teste que falha sem a mudança; Visual Linux; Revisor; antes da tag v2.11.0 | decisão do @architect em 16/11 (`contracts/button.yaml` cobre só botão nativo); GO do Marcos em 16/11; #129 (`e80d611`) mesclada com Revisor APROVA | — | chega ao IMO na IMO-30b, depois da v2.11.0 |
-| DS-30 | Catálogo de todas as marcas (eletia, emprega+ com IMO e EditalHub, Xscore, PdV, ResultX), gerado do código do DS | EM ANDAMENTO | cada marca × componentes × claro/escuro, em documento isolado; toda ligação de marca é `var()` para nome existente; nenhuma cor nova antes de 10/12; nada gravado em `dist`, `brands`, `tokens`, `adapters`, `contracts`, `generated`; publicado no Pages; Visual Linux; Revisor; aceite visual do Marcos | pedido e escolhas do Marcos em 16/11 (site de catálogo; 5 marcas; Catholic Hub e Saúde fora); levantamento `catalog/research/2026-11-16-levantamento-marcas.md` (fora do pacote npm); decisões @architect e @ux em 16/11 (6 PRs; publicação na 2ª), guardadas em `catalog/research/2026-11-16-decisao-arquitetura.md` e `catalog/research/2026-11-16-decisao-ux.md`; PR 1 mesclada (#134, `efa9f9f`; Revisor APROVA; visual Linux 178 aprovados); PR 2 mesclada (#135, `764866b`; Revisor APROVA; `/catalog/` no ar, 120 endereços sem erro); PR 3 mesclada (#136, `997e2a9`; JS só em ConfirmDialog e DataTable, autorizado pelo Marcos em 16/11; 1.890 endereços publicados sem erro); PdV escuro com 2 pares abaixo de 4,5:1 (ver D); PR 4a mesclada (#137, `d2c6973`; 135 de 370 pares do legado abaixo do piso, ver D; 3.250 endereços publicados sem erro); PR 4b (12 páginas: split-pane, disclosure, menu-drawer, header-float, tooltip, toast, progress, icons, cta-dock, cta-panel, composite, sidebar; só os 6 scripts já publicados em `dist`, cada um na página do seu componente, por decisão do Marcos em 16/11) com Revisor APROVA COM RESSALVA em `ec03125`; eletia claro com 2 pares em 1,63:1 (ver D) | — | aceite visual do Marcos; PR 5 (dados, conversa, domínio); PR 6 (URLs antigas e crawler) |
+| DS-30 | Catálogo de todas as marcas (eletia, emprega+ com IMO e EditalHub, Xscore, PdV, ResultX), gerado do código do DS | EM ANDAMENTO | cada marca × componentes × claro/escuro, em documento isolado; toda ligação de marca é `var()` para nome existente; nenhuma cor nova antes de 10/12; nada gravado em `dist`, `brands`, `tokens`, `adapters`, `contracts`, `generated`; publicado no Pages; Visual Linux; Revisor; aceite visual do Marcos | pedido e escolhas do Marcos em 16/11 (site de catálogo; 5 marcas; Catholic Hub e Saúde fora); levantamento `catalog/research/2026-11-16-levantamento-marcas.md` (fora do pacote npm); decisões @architect e @ux em 16/11 (6 PRs; publicação na 2ª), guardadas em `catalog/research/2026-11-16-decisao-arquitetura.md` e `catalog/research/2026-11-16-decisao-ux.md`; PR 1 mesclada (#134, `efa9f9f`; Revisor APROVA; visual Linux 178 aprovados); PR 2 mesclada (#135, `764866b`; Revisor APROVA; `/catalog/` no ar, 120 endereços sem erro); PR 3 mesclada (#136, `997e2a9`; JS só em ConfirmDialog e DataTable, autorizado pelo Marcos em 16/11; 1.890 endereços publicados sem erro); PdV escuro com 2 pares abaixo de 4,5:1 (ver D); PR 4a mesclada (#137, `d2c6973`; 135 de 370 pares do legado abaixo do piso, ver D; 3.250 endereços publicados sem erro); PR 4b mesclada (#138, `0827c21`; só os 6 scripts já publicados em `dist`, cada um na página do seu componente, decisão do Marcos em 16/11; 9.620 endereços publicados sem erro); eletia claro com 2 pares em 1,63:1 (ver D); PR 5a (famílias de dados, 270 páginas) com Revisor APROVA COM RESSALVA em `4480f28`: 23 de 340 pares abaixo de 4,5:1 e 3 amostras decorativas sem papel (ver D) | — | aceite visual do Marcos; PR 5b (conversa e domínio); PR 6 (URLs antigas e crawler); PRs de cores (cor nova liberada pelo Marcos em 17/11) |
 
 ## C. Registro de progresso
 
 | Data | Referência | O que mudou |
 |---|---|---|
-| 16/11 | esta PR | DS-30, PR 4b do catálogo: famílias interativas e compostas; scripts já publicados do DS carregados só na página do seu componente; tabs, dropdown, toast e compostos só visuais |
+| 17/11 | esta PR | DS-30, PR 5a do catálogo: famílias de dados; 8 ligações por var a papéis existentes decididas pelo UX; soft-cyan, soft-magenta e soft-purple pendentes de papel próprio |
+| 16/11 | #138 | DS-30, PR 4b do catálogo: famílias interativas e compostas; scripts já publicados do DS carregados só na página do seu componente; tabs, dropdown, toast e compostos só visuais |
 | 16/11 | #137 | DS-30, PR 4a do catálogo: famílias anteriores recolhidas no fim do sucessor; Navigation, Layout, Segmented e ListItem; contraste do legado medido e publicado como pendência |
 | 16/11 | #136 | DS-30, PR 3 do catálogo: os 8 contratos nas 10 combinações; JS local só nas páginas de ConfirmDialog e DataTable, extraído do piloto; contraste medido por página |
 | 16/11 | #135 | DS-30, PR 2 do catálogo: publicação de `/catalog/` no Pages com faixa "em construção"; fontes locais publicadas; decisões dos especialistas guardadas em `catalog/research/` |
@@ -148,6 +149,7 @@
 | Contraste do PdV escuro no catálogo | DS-30 | texto de perigo sobre superfície 3,77:1 e texto indisponível sobre segunda superfície 3,80:1 (mínimo 4,5:1), em Button, Card, DataTable, StatusBadge e ConfirmDialog; corrigir exige mudar valor; as páginas mostram a pendência e não há declaração de conformidade integral | 10/12 e decisão do Marcos sobre a paleta do PdV; responsável: Supervisor DS |
 | Contraste das famílias anteriores (legado) | DS-30 | 135 de 370 pares em repouso abaixo do piso (30 de texto, menor 2,69:1; 105 de limite/borda, parte intencional como ghost); lista em `catalog/research/2026-11-16-catalogo-legado-4a-contraste.csv`; produtos ainda usam essas famílias | avaliar correções com tokens existentes em tarefa separada; mudança de valor só depois de 10/12 com decisão do Marcos; responsável: Supervisor DS, com UX para exceções |
 | Contraste de HeaderFloat e CTADock na eletia clara | DS-30 | texto do cabeçalho flutuante e do dock em 1,63:1 com os tokens completos da marca (vidro escuro); com núcleo + ponte, como nos protótipos, mede 17,81:1; não comprova defeito em produção; lista em `catalog/research/2026-11-16-catalogo-legado-4b-contraste.csv` | conferir o uso real nos produtos; mudança de valor só depois de 10/12 com decisão do Marcos; responsável: Supervisor DS, com UX |
+| Contraste e papéis das famílias de dados | DS-30 | 23 de 340 pares abaixo de 4,5:1 (variações claras nas cinco marcas, aviso/erro da tabela clara emprega+ e 6 no PdV escuro); soft-cyan, soft-magenta e soft-purple sem papel decorativo nos temas das marcas; lista em `catalog/research/2026-11-17-catalogo-dados-5a-contraste.csv` | PRs de cores (cor nova liberada pelo Marcos em 17/11), com UX; responsável: Supervisor DS |
 | E3 com desvios da matriz | DS-21 | a E5 só começa com a E3 fechada | verificar as linhas 7, 8, 10, 11 e 20 e fechar a DS-10 |
 
 **Decisões aguardando o Marcos**
@@ -158,7 +160,7 @@ D5 só volta a ser pergunta depois da P1 (DS-24).
 
 ## E. Continuidade
 
-- **Próxima ação executável:** DS-30 nesta PR (PR 4b, interativos e compostos): CI no SHA final, Revisor, merge sob a autorização "A" e conferência do site publicado; depois o aceite visual do Marcos e a PR 5.
+- **Próxima ação executável:** DS-30 nesta PR (PR 5a, famílias de dados): CI no SHA final, Revisor, merge sob a autorização "A" e conferência do site publicado; depois o aceite visual do Marcos e a PR 5.
 - **Depois:**
   1. DS-10, verificar as linhas da matriz ainda sem prova; IMO-30b depois da DS-17;
   2. DS-14, a partir de 27/11, com o inventário refeito até o SHA da tag;
@@ -170,5 +172,5 @@ D5 só volta a ser pergunta depois da P1 (DS-24).
   4. as ADRs [0001](adr/0001-role-named-tokens.md), [0003](adr/0003-token-single-source.md), [0004](adr/0004-contracts-adapters-pilot.md) e [0005](adr/0005-governance-propagation-decisions.md);
   5. `CHANGELOG.md` (seção Unreleased).
 - **Estado do repositório no fechamento:**
-  - PRs do DS abertas: esta (DS-30, PR 4b do catálogo) e 4 do Dependabot (#130–#133), ainda não avaliadas;
+  - PRs do DS abertas: esta (DS-30, PR 5a do catálogo) e 4 do Dependabot (#130–#133), ainda não avaliadas;
   - pasta de trabalho do DS: só a desta PR, removida depois do merge.
