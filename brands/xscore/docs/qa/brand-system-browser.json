@@ -1,0 +1,74 @@
+{
+  "method": "Local static documents; native links/details; no browser script in artifacts",
+  "chromium": "158.0.8127.18",
+  "scenarios": [
+    {
+      "width": 390,
+      "theme": "dark",
+      "pageErrors": 0,
+      "cspViolations": 0,
+      "externalRequests": 0,
+      "horizontalOverflow": false,
+      "fonts": [
+        "Plus Jakarta Sans",
+        "Sora",
+        "Sora",
+        "Geist Mono"
+      ],
+      "nativeThemeNavigation": true,
+      "textPairs": 376,
+      "lowContrast": []
+    },
+    {
+      "width": 390,
+      "theme": "light",
+      "pageErrors": 0,
+      "cspViolations": 0,
+      "externalRequests": 0,
+      "horizontalOverflow": false,
+      "fonts": [
+        "Plus Jakarta Sans",
+        "Sora",
+        "Sora",
+        "Geist Mono"
+      ],
+      "nativeThemeNavigation": true,
+      "textPairs": 376,
+      "lowContrast": []
+    },
+    {
+      "width": 1440,
+      "theme": "dark",
+      "pageErrors": 0,
+      "cspViolations": 0,
+      "externalRequests": 0,
+      "horizontalOverflow": false,
+      "fonts": [
+        "Plus Jakarta Sans",
+        "Sora",
+        "Sora",
+        "Geist Mono"
+      ],
+      "nativeThemeNavigation": true,
+      "textPairs": 377,
+      "lowContrast": []
+    },
+    {
+      "width": 1440,
+      "theme": "light",
+      "pageErrors": 0,
+      "cspViolations": 0,
+      "externalRequests": 0,
+      "horizontalOverflow": false,
+      "fonts": [
+        "Plus Jakarta Sans",
+        "Sora",
+        "Sora",
+        "Geist Mono"
+      ],
+      "nativeThemeNavigation": true,
+      "textPairs": 377,
+      "lowContrast": []
+    }
+  ]
+}
