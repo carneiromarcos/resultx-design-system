@@ -44,7 +44,7 @@ ResultX oferece a fundação compartilhada. A marca preserva seu dourado de aç�
 
 ## 11. Origem visual
 
-A documentação pública dos assets registra a derivação do monograma X de ResultX e a construção da palavra score. A fonte original da marca-mãe permanece uma ressalva do arquivo oficial.
+Logo vetorizado a partir do arquivo fonte oficial da marca, com contornos traçados e cores amostradas do original. Sobre surface-1 escura (#161B26), a faixa azul do símbolo mede de 1,75 a 3,19:1 em contraste não textual. É uma limitação conhecida da arte, preservada sem recolorir.
 
 ## 12. Direção de marca
 

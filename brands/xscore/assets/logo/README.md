@@ -1,75 +1,70 @@
-# Xscore — Assets de marca
+# Xscore — assets oficiais da marca
 
-> O Xscore é **produto do ResultX Labs** e herda o monograma **X** da marca-mãe. O `X` é o
-> mesmo símbolo do `resultX`; a wordmark do produto é esse X seguido de **score**.
+Arte raster aprovada em 17/11/2026, vetorizada pelas máscaras dos próprios PNGs.
+As duas partes do X e as cinco letras de `score` foram traçadas; não há fonte
+substituta nem imagem raster embutida nos SVGs. A família anterior permanece no
+histórico Git; a aproximação por Archivo Black deixou de ser a fonte desta marca.
 
-## Arquivos
+## Arquivos e convenção
 
 | Arquivo | Uso |
 |---|---|
-| `xscore-monogram.svg` | símbolo isolado — avatar, selo, marca d'água |
-| `xscore-favicon.svg` | **o favicon** — mesmo X com traço reforçado, para sobreviver a 16 px |
-| `xscore-wordmark-light.svg` | wordmark para **fundo escuro** (score em branco) |
-| `xscore-wordmark-dark.svg` | wordmark para **fundo claro** (score em `#12161f`) |
-| `xscore-icon-{16,32,180,512}.png` | rasters — aba, atalho iOS (180), loja/OG (512) |
+| `xscore-wordmark-dark.svg` | fundo claro, palavra em navy amostrado; vetor aceito SHA-256 `c30a577e5a1aadd474e6b6b1bd45c4e1a3a3e47436a89186304e8303032b2740` |
+| `xscore-wordmark-light.svg` | fundo escuro, palavra branca; vetor aceito SHA-256 `30a5c70b5f21697c50cddc158f71082f018f11b8d6e9b35ad6be6c71f8a0762c` |
+| `xscore-monogram.svg` | símbolo isolado, fundo transparente |
+| `xscore-favicon.svg` | mesmo símbolo sobre fundo branco e contorno navy para abas claras/escuras |
+| `xscore-favicon.ico` | entradas PNG 16, 32 e 48 px, em contêiner ICO |
+| `xscore-icon-{16,32,180,512}.png` | variantes opacas para aba, atalho e aplicações de marca |
+| `source/wordmark-*-background.png` | fontes raster sem metadados auxiliares; pixels preservados |
+| `source/provenance.json` | hashes dos originais, fontes sanitizadas, pixels e vetores aceitos |
+| `source/tracing.json` | amostras RGB, coordenadas, método e ajustes dos gradientes |
+| `asset-manifest.json` | hashes e tamanhos dos arquivos distribuídos |
 
-**Sempre use o X como favicon.** Nunca a wordmark inteira: em 16 px ela vira borrão.
+`light` e `dark` nomeiam a tinta da arte, preservando a convenção anterior: a arte
+light vai em fundo escuro. Os nomes `*-background` nas fontes nomeiam o fundo.
+Não trocar as versões. Cada arquivo usa IDs próprios de gradiente.
 
-## Construção
+## Construção e reprodução
 
-O X é a **silhueta contornada** (12 vértices, `fill:none` + `stroke`), não uma forma cheia —
-foi assim que se mediu no arquivo da marca-mãe: um corte horizontal atravessa 4 bordas nos
-braços e 2 no centro. Proporção `948 × 1123` (≈ 0,844), traço 5,8 % da altura, junções e pontas
-arredondadas.
+A fonte tem 400 × 400; a área da marca usa a janela `26 152 358 96`, sem o espaço
+vazio do quadro original. O contorno alfa é interpolado em 4× e traçado em 128 com
+potrace 1.16. Gradientes lineares por parte usam somente stops RGB encontrados no
+raster. `score` usa paths da máscara; navy `rgb(27 42 74)` e branco `rgb(255 255 255)`
+são cores dos próprios originais. O fundo/contorno do favicon usa essas mesmas cores.
+Nenhum token foi alterado para gerar a arte.
 
-O favicon usa traço **9,0** em vez de 7,4 e menos folga: em 16 px o traço fino desaparece, e um
-traço grosso demais fecha o vão central e mata o X.
+Com as dependências deste repositório e potrace 1.16 disponível:
 
-### Gradiente — dois, não um
-
-| Camada | Direção | Stops |
-|---|---|---|
-| Frio | topo → base | `#26429a` → `#2085d7` → `#00b8f4` |
-| Quente (mascarado à direita) | base-esq → topo-dir | `#8d5579` → `#c9762e` → `#cd8724` → `#b5a34d` |
-
-As cores foram **amostradas do arquivo da marca-mãe**, numa grade 6 × 6 sobre o X. A máscara
-horizontal (`42 % → 55 %`) faz a passagem do frio para o quente, e é ela que produz o tom vinho
-na base — presente no original.
-
-## A palavra "score"
-
-Desenhada em **Archivo Black** (SIL OFL) e **convertida em paths** — o SVG não depende de fonte
-instalada.
-
-⚠️ **Archivo Black é aproximação.** A fonte da marca-mãe não foi identificada: o arquivo recebido
-(`resultX.svg`) não traz vetor nem fonte embutida — é um PNG dentro de um invólucro SVG. Archivo
-Black foi escolhida por comparação visual contra dez candidatas, e é a mais próxima em peso e
-largura. **Ao aparecer o arquivo da fonte original, regerar a wordmark.**
-
-## Regerar
-
-O gerador está em `scripts/gerar-marca.js` (Node + `opentype.js`). Ele precisa do TTF da
-Archivo Black ao lado, como `f2-Archivo-Black.ttf`:
-
-```bash
-npm install opentype.js
-curl -sL "$(curl -s 'https://fonts.googleapis.com/css2?family=Archivo+Black' \
-  -H 'User-Agent: Mozilla/5.0' | grep -o 'https://[^)]*\.ttf')" -o f2-Archivo-Black.ttf
-node scripts/gerar-marca.js
+```sh
+node brands/xscore/assets/logo/scripts/gerar-marca.js
+npm test -- --runInBand --watchman=false brands/xscore/assets/logo/scripts/logo-source.test.js
 ```
 
-Os PNGs saem do SVG por Chrome headless com fundo transparente
-(`--headless=new --default-background-color=00000000 --screenshot`).
+O gerador confere os dois hashes aceitos antes de gravar os wordmarks; divergência
+exige nova aprovação da arte. Não editar os gerados manualmente. Intermediários
+PBM/SVG são temporários, removidos ao terminar. PNGs/ICO usam o Chromium do próprio
+repositório; não há dependência de aplicação consumidora nem download de fonte.
+O teste não depende de histórico Git ou de browser: verifica os bytes aceitos,
+fontes sem metadados, formato SVG, opacidade, dimensões e entradas do ICO.
 
-**Os ids de gradiente levam sufixo por arquivo** (`M` monograma, `F` favicon, `L`/`D`
-wordmarks). Sem isso, dois SVGs embutidos no mesmo documento colidem — e a colisão é
-silenciosa: o segundo herda o gradiente do primeiro.
+A sanitização retirou metadados auxiliares sem mudar nenhum pixel RGBA; os digests
+originais e sanitizados diferem por empacotamento. Os arquivos não guardam caminhos
+locais, nomes de pessoas, dados de produto ou capturas de tela.
 
-## Pendente
+## Evidência local
 
-- **Lockup** (símbolo + wordmark travados, versão vertical) — é a peça que a assinatura em
-  documento vai pedir, inclusive o laudo em PDF do ADR-0009. Ainda não existe.
-- **Versão curta** e variantes de cor do monograma (chapado claro, chapado escuro) para
-  fundos que o gradiente não sobrevive: bordado, gravação, fax, uma cor só.
-- **Brand book** e o design system do brand, prometidos pelo ADR-0011 — esta entrega cobre
-  só `assets/logo`.
+O ensaio antes da troca teve quatro falhas e um passe nos cinco critérios novos.
+Depois da geração: cinco passes, zero falhas/pulos. A suíte completa da marca e do
+DS passou em 842/842, 42 suítes; isso não prova adoção em consumidor.
+A prévia é regenerada pelo gerador existente durante `npm test`. Seu manifesto
+registra tokens e contratos; continua byte a byte igual nesta troca de arte.
+Aprovação independente, CI e publicação continuam separados.
+
+## Contraste do símbolo
+
+A região azul do símbolo conserva a aparência do original sobre superfícies escuras.
+A medição em `source/contrast.json` usa pixels totalmente opacos do SVG renderizado
+a 180 × 52 sobre `--surface-1` escura (`#161B26`): faixa azul **1,7504–3,1861:1**;
+faixa quente **3,0731–7,3945:1**. A região azul fica parcialmente abaixo da referência
+de 3:1. É uma limitação conhecida da arte aprovada, mantida sem recolorir. Os números
+não são aprovação de todas as combinações de uso nem de pixels de antialias.

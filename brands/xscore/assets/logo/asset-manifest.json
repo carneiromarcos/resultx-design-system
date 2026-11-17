@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "method": "Approved vector contour; sampled gradient colors; derived symbol and opaque white/navy icon tile; PNGs rendered with the repository browser",
+  "assets": [
+    {
+      "file": "xscore-wordmark-dark.svg",
+      "bytes": 7707,
+      "sha256": "c30a577e5a1aadd474e6b6b1bd45c4e1a3a3e47436a89186304e8303032b2740"
+    },
+    {
+      "file": "xscore-wordmark-light.svg",
+      "bytes": 7706,
+      "sha256": "30a5c70b5f21697c50cddc158f71082f018f11b8d6e9b35ad6be6c71f8a0762c"
+    },
+    {
+      "file": "xscore-monogram.svg",
+      "bytes": 4245,
+      "sha256": "73a28b8b22f6afaeac15965fc7bf774dc826f81dbc8b9af47c0ccfd0ad61fd4e"
+    },
+    {
+      "file": "xscore-favicon.svg",
+      "bytes": 4468,
+      "sha256": "ccc05cfd860b09622d894fa3dabc5533d9b9495686048becec19a0d53afc432a"
+    },
+    {
+      "file": "xscore-favicon.ico",
+      "bytes": 4302,
+      "sha256": "e1c92f65ce9a489fae96859594e1c67d15b91cb968afb9edde6ead27ec3d958a"
+    },
+    {
+      "file": "xscore-icon-16.png",
+      "bytes": 610,
+      "sha256": "4cb14a2bb615e30ad14b2f3af19c67509c832ad30a4b5c3ac3f940c8ab63d66e"
+    },
+    {
+      "file": "xscore-icon-32.png",
+      "bytes": 1322,
+      "sha256": "aa13ca0252a8d5440f5237836d06dc3f8594c5c98a93f57493ad2f01457dea46"
+    },
+    {
+      "file": "xscore-icon-180.png",
+      "bytes": 11665,
+      "sha256": "63d84dee3c80169bfbe374cad8c4f311c4983a1c096064bd91829522bbc5a109"
+    },
+    {
+      "file": "xscore-icon-512.png",
+      "bytes": 48420,
+      "sha256": "401a9d6a2fc3a70361959e0c8e2df7a70a444a6b7fb92e6fb9ef3b59ae390925"
+    }
+  ]
+}
