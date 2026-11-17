@@ -50,7 +50,9 @@ test('ICO contém PNGs válidos de 16, 32 e 48 sem depender de ferramenta extern
   for (const [i, size] of [16, 32, 48].entries()) {
     const at = 6 + i * 16, length = bytes.readUInt32LE(at + 8), start = bytes.readUInt32LE(at + 12);
     expect([bytes[at], bytes[at + 1], bytes.readUInt16LE(at + 6)]).toEqual([size, size, 32]);
-    const png = PNG.sync.read(bytes.subarray(start, start + length));
+    const entry = bytes.subarray(start, start + length);
+    expect(entry[25]).toBe(6); // Next's ICO decoder requires PNG RGBA, even for opaque artwork.
+    const png = PNG.sync.read(entry);
     expect([png.width, png.height]).toEqual([size, size]);
   }
 });
