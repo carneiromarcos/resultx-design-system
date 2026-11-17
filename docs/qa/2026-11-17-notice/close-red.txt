@@ -1,0 +1,28 @@
+FAIL tests/pilot-compat-lifecycle.test.js
+  ● compatibilidade aguarda stdout tardio até close antes de interpretar JSON
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "Unterminated string in JSON at position 27 (line 1 column 28)",
+    + ]
+
+      34 |     URL,
+      35 |   }, { filename: 'check-pilot-compat.cjs' });
+    > 36 |   expect(errors).toEqual([]);
+         |                  ^
+      37 |   expect(executionProcess.exitCode).toBe(0);
+      38 |   expect(closed).toBe(true);
+      39 |   expect(JSON.parse(output.join(''))).toEqual(expect.objectContaining({ passed: 110, failed: 0, skippedNewObligations: 20, latestConformity: false }));
+
+      at Object.toEqual (tests/pilot-compat-lifecycle.test.js:36:18)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        0.4 s
+Ran all test suites matching tests/pilot-compat-lifecycle.test.js.

@@ -1,6 +1,6 @@
 # Catálogo de marcas
 
-Fundações, oito componentes oficiais e famílias documentadas das cinco marcas, em claro e escuro. JavaScript local somente nos exemplos de confirmação e tabela.
+Fundações, componentes contratados e famílias documentadas das cinco marcas, em claro e escuro. JavaScript local somente nos exemplos de confirmação e tabela.
 O catálogo é publicado pelo workflow Pages após o build e a montagem compartilhada. O site permanece em construção; a API e os valores do DS não mudam.
 
 ```sh

@@ -1,0 +1,77 @@
+
+> resultx-design-system@2.10.0 build
+> npm run build:all
+
+
+> resultx-design-system@2.10.0 build:all
+> node scripts/build-eds-root.mjs --check && npm run build:tokens && npm run build:components && npm run build:icons && npm run build:bridges && node scripts/build-pilot-scoped.mjs && node scripts/check-pilot-contrast.cjs
+
+
+> resultx-design-system@2.10.0 build:tokens
+> node scripts/build-base.mjs && node scripts/build-data-layer.mjs && node scripts/build-themes.mjs && node scripts/build-core.mjs && node scripts/build-aliases.mjs && node scripts/build-tokens.js && postcss tokens/tokens.css -o dist/tokens.min.css
+
+✓ dist/tokens.theme.css (141 shared + 93 dark + 93 light + 74 premium-light + 74 sober-dark + 74 vibrant-dark tokens)
+✓ dist/tokens.ts
+
+> resultx-design-system@2.10.0 build:components
+> postcss components/components.css -o dist/components.min.css
+
+
+> resultx-design-system@2.10.0 build:icons
+> postcss components/icons.css -o dist/icons.min.css
+
+
+> resultx-design-system@2.10.0 build:bridges
+> node scripts/build-eds-root.mjs --check && node scripts/build-core.mjs && node scripts/build-brand-tokens.mjs && node scripts/build-eds-root.mjs && node scripts/build-brand-bridges.js
+
+
+Ponte de marca — contraste medido (WCAG 2.2, AA = 4.5:1)
+
+marca         tema   accent    tinta     razao   accent como texto
+--------------------------------------------------------------------------------
+electia       dark   #6f32b1   #FFFFFF   7.59:1  #c084fc (7.31:1)
+electia       light  #6f32b1   #FFFFFF   7.59:1  #6f32b1 (7.59:1)
+emprega-mais  dark   #4f46e5   #FFFFFF   6.29:1  #b9baf9 (10.54:1)
+emprega-mais  light  #4f46e5   #FFFFFF   6.29:1  #363885 (10.19:1)
+pdv           dark   #c4993b   #0B0E14   7.33:1  #c4993b (7.33:1)
+pdv           light  #c4993b   #0B0E14   7.33:1  #866425 (5.44:1)
+resultx       dark   #c4993b   #0B0E14   7.33:1  #c4993b (7.33:1)
+resultx       light  #c4993b   #0B0E14   7.33:1  #866425 (5.44:1)
+xscore        dark   #c4993b   #0B0E14   7.33:1  #c4993b (7.33:1)
+xscore        light  #c4993b   #0B0E14   7.33:1  #866425 (5.44:1)
+
+OK — 5 pontes escritas em brands/<marca>/tokens/ds-bridge.css
+
+Gerados adapters/css/pilot.scoped.css e brands/emprega-mais/tokens/pilot-aliases.css; 28 aliases.
+light | primário | --text-inverse / --accent-primary | 6.29:1 (mín. 4.5:1)
+light | texto | --text-primary / --bg-surface-1 | 15.49:1 (mín. 4.5:1)
+light | texto hover | --text-primary / --bg-surface-3 | 13.61:1 (mín. 4.5:1)
+light | texto ativo | --text-primary / --bg-surface-2 | 14.97:1 (mín. 4.5:1)
+light | texto indisponível | --text-muted / --bg-surface-2 | 4.67:1 (mín. 4.5:1)
+light | erro | --color-error / --bg-surface-1 | 6.47:1 (mín. 4.5:1)
+light | sucesso | --text-on-success / --color-success | 5.48:1 (mín. 4.5:1)
+light | aviso warning | --color-warning / --bg-surface-1 | 5.56:1 (mín. 3:1)
+light | aviso info | --color-info / --bg-surface-1 | 6.70:1 (mín. 3:1)
+light | link | --accent-primary-text / --bg-surface-1 | 10.18:1 (mín. 4.5:1)
+light | limite botão | --text-secondary / --bg-surface-1 | 4.83:1 (mín. 3:1)
+light | borda sobre superfície 2 | --text-secondary / --bg-surface-2 | 4.67:1 (mín. 3:1)
+light | borda sobre superfície 3 | --text-secondary / --bg-surface-3 | 4.25:1 (mín. 3:1)
+light | foco | --accent-primary-text / --bg-surface-1 | 10.18:1 (mín. 3:1)
+light | foco sobre superfície 2 | --accent-primary-text / --bg-surface-2 | 9.84:1 (mín. 3:1)
+light | foco sobre superfície 3 | --accent-primary-text / --bg-surface-3 | 8.94:1 (mín. 3:1)
+dark | primário | --text-inverse / --accent-primary | 6.29:1 (mín. 4.5:1)
+dark | texto | --text-primary / --bg-surface-1 | 14.24:1 (mín. 4.5:1)
+dark | texto hover | --text-primary / --bg-surface-3 | 11.67:1 (mín. 4.5:1)
+dark | texto ativo | --text-primary / --bg-surface-2 | 12.98:1 (mín. 4.5:1)
+dark | texto indisponível | --text-muted / --bg-surface-2 | 6.81:1 (mín. 4.5:1)
+dark | erro | --color-error / --bg-surface-1 | 6.18:1 (mín. 4.5:1)
+dark | sucesso | --text-on-success / --color-success | 8.89:1 (mín. 4.5:1)
+dark | aviso warning | --color-warning / --bg-surface-1 | 10.24:1 (mín. 3:1)
+dark | aviso info | --color-info / --bg-surface-1 | 6.73:1 (mín. 3:1)
+dark | link | --accent-primary-text / --bg-surface-1 | 9.33:1 (mín. 4.5:1)
+dark | limite botão | --text-secondary / --bg-surface-1 | 7.47:1 (mín. 3:1)
+dark | borda sobre superfície 2 | --text-secondary / --bg-surface-2 | 6.81:1 (mín. 3:1)
+dark | borda sobre superfície 3 | --text-secondary / --bg-surface-3 | 6.13:1 (mín. 3:1)
+dark | foco | --accent-primary-text / --bg-surface-1 | 9.33:1 (mín. 3:1)
+dark | foco sobre superfície 2 | --accent-primary-text / --bg-surface-2 | 8.51:1 (mín. 3:1)
+dark | foco sobre superfície 3 | --accent-primary-text / --bg-surface-3 | 7.65:1 (mín. 3:1)

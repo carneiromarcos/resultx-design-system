@@ -15,7 +15,7 @@ test('CSS isolado usa somente valores de token ou palavras estruturais', () => {
     expect(rule.parent.params).toBe('components');
     for (const selector of rule.selectors) expect(selector.trim()).toMatch(/^\.rx-/);
   });
-  const structural = new Set(['solid', 'dashed', 'progress', 'grid', 'inline-block', 'border-box', 'normal', 'none', 'collapse', 'left', 'not-allowed', 'pointer', 'tabular-nums']);
+  const structural = new Set(['solid', 'dashed', 'progress', 'grid', 'inline-block', 'border-box', 'normal', 'none', 'collapse', 'left', 'not-allowed', 'pointer', 'tabular-nums', 'start']);
   root.walkDecls((decl) => {
     parser(decl.value).walk((node) => {
       if (node.type === 'function') {

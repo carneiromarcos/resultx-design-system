@@ -71,4 +71,13 @@
   .rx-badge--success { color: var(--text-on-success); background: var(--color-success); border-color: var(--text-secondary); }
   .rx-badge--error { color: var(--color-error); border-color: var(--color-error); }
   .rx-state { display: grid; gap: var(--space-2); }
+  .rx-badge--warning { color: var(--text-primary); background: var(--bg-surface-1); border-color: var(--color-warning); }
+  .rx-badge--info { color: var(--text-primary); background: var(--bg-surface-1); border-color: var(--color-info); }
+  .rx-notice { display: grid; gap: var(--space-2); padding: var(--space-4); border: var(--focus-ring-width) solid var(--color-info); border-radius: var(--radius-md); color: var(--text-primary); background: var(--bg-surface-1); font-family: var(--font-body); font-size: var(--text-base); }
+  .rx-notice--warning { border-color: var(--color-warning); }
+  .rx-notice--info { border-color: var(--color-info); }
+  .rx-notice > * { margin: var(--space-2); }
+  .rx-notice .rx-button { justify-self: start; }
+  .rx-notice__title { font-size: var(--text-base); font-weight: var(--font-semibold); }
+  .rx-notice summary:focus-visible { outline: var(--focus-ring-width) solid var(--accent-primary-text); outline-offset: var(--focus-ring-offset); }
 }

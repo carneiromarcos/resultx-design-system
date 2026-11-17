@@ -40,6 +40,8 @@ const pairs = [
   ['texto indisponível', '--text-muted', '--bg-surface-2', 4.5],
   ['erro', '--color-error', '--bg-surface-1', 4.5],
   ['sucesso', '--text-on-success', '--color-success', 4.5],
+  ['aviso warning', '--color-warning', '--bg-surface-1', 3],
+  ['aviso info', '--color-info', '--bg-surface-1', 3],
   ['link', '--accent-primary-text', '--bg-surface-1', 4.5],
   ['limite botão', '--text-secondary', '--bg-surface-1', 3],
   ['borda sobre superfície 2', '--text-secondary', '--bg-surface-2', 3],

@@ -192,7 +192,7 @@ function build(options = {}) {
         for (const token of rendered.contract.tokens) resolve(values, token);
         const parts = {
           ...rendered.replacements,
-          NOTICE: notice
+          NOTICE: definition.id === 'notice' ? '<p>Componente novo do DS; a adoção no produto é uma etapa separada.</p>' + (b.id === 'pdv' ? notice : '') : notice
         };
         const template = fs.readFileSync(path.join(ROOT, entry.recipe), 'utf8');
         const sample = template.replace(/\{\{(\w+)\}\}/g, (_, key) => {

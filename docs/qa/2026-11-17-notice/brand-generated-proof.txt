@@ -1,0 +1,34 @@
+{
+  "base": "64a26656170ae506f3bb4c05647c5f3c63c43177",
+  "html": [
+    {
+      "file": "brands/emprega-mais/previews/brand-system/index.html",
+      "onlyNoticeLinkAndContentId": true,
+      "sha256": "96afdd56e6c2145b409be2d23a3fc569d92086361ee6cf522db1cdeb42e5507f"
+    },
+    {
+      "file": "brands/emprega-mais/previews/brand-system/dark.html",
+      "onlyNoticeLinkAndContentId": true,
+      "sha256": "d4780c603731ef7f47f24ab567d37ddd2d0a9294a6f06f02f3ce30586799f5c1"
+    }
+  ],
+  "noticeRegistrationOnly": true,
+  "addedInputs": [
+    "contracts/notice.yaml",
+    "generated/component-cards/notice.md"
+  ],
+  "changedInputHashes": [
+    "brands/emprega-mais/tokens/pilot-aliases.css",
+    "contracts/status-badge.yaml",
+    "generated/component-cards/status-badge.md"
+  ],
+  "otherProvenanceFieldsIdentical": true,
+  "brandGeneratorTestCssFontLogoUnchanged": true,
+  "brandChanges": [
+    "brands/emprega-mais/previews/brand-system/dark.html",
+    "brands/emprega-mais/previews/brand-system/index.html",
+    "brands/emprega-mais/previews/brand-system/provenance.json",
+    "brands/emprega-mais/tokens/pilot-aliases.css",
+    "brands/emprega-mais/tokens/pilot-aliases.css.sha256"
+  ]
+}

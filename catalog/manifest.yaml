@@ -365,6 +365,18 @@ pages:
       - components/data-cards.css
       - catalog/data-samples.json
       - docs/components/progress.md
+  - id: notice
+    title: Aviso com próximo passo
+    contract: contracts/notice.yaml
+    recipe: catalog/recipes/componente.html
+    sources:
+      - examples/pilot.html
+      - generated/component-cards/notice.md
+    css:
+      - adapters/css/pilot.css
+      - catalog/components.css
+    js: []
+
 excluded:
   - file: components/audio-player.css
     reason: >-

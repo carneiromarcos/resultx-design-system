@@ -1,0 +1,10 @@
+
+> resultx-design-system@2.10.0 test
+> jest --runInBand --watchman=false
+
+
+Test Suites: 43 passed, 43 total
+Tests:       848 passed, 848 total
+Snapshots:   0 total
+Time:        28.977 s
+Ran all test suites.

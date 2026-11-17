@@ -1,0 +1,28 @@
+
+Running 20 tests using 1 worker
+
+(node:14248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Catálogo: fundações, contratos e famílias documentadas nas dez combinações; JavaScript local somente nas páginas autorizadas de cada componente.
+  ✓   1 [chromium] › tests/visual/catalog-components.spec.js:120:93 › eletia light status-badge: estados, estilo, publicação (819ms)
+  ✓   2 [chromium] › tests/visual/catalog-components.spec.js:120:93 › eletia light notice: estados, estilo, publicação (588ms)
+  ✓   3 [chromium] › tests/visual/catalog-components.spec.js:120:93 › eletia dark status-badge: estados, estilo, publicação (449ms)
+  ✓   4 [chromium] › tests/visual/catalog-components.spec.js:120:93 › eletia dark notice: estados, estilo, publicação (772ms)
+  ✓   5 [chromium] › tests/visual/catalog-components.spec.js:120:93 › emprega light status-badge: estados, estilo, publicação (793ms)
+  ✓   6 [chromium] › tests/visual/catalog-components.spec.js:120:93 › emprega light notice: estados, estilo, publicação (633ms)
+  ✓   7 [chromium] › tests/visual/catalog-components.spec.js:120:93 › emprega dark status-badge: estados, estilo, publicação (477ms)
+  ✓   8 [chromium] › tests/visual/catalog-components.spec.js:120:93 › emprega dark notice: estados, estilo, publicação (476ms)
+  ✓   9 [chromium] › tests/visual/catalog-components.spec.js:120:93 › xscore light status-badge: estados, estilo, publicação (428ms)
+  ✓  10 [chromium] › tests/visual/catalog-components.spec.js:120:93 › xscore light notice: estados, estilo, publicação (712ms)
+  ✓  11 [chromium] › tests/visual/catalog-components.spec.js:120:93 › xscore dark status-badge: estados, estilo, publicação (796ms)
+  ✓  12 [chromium] › tests/visual/catalog-components.spec.js:120:93 › xscore dark notice: estados, estilo, publicação (556ms)
+  ✓  13 [chromium] › tests/visual/catalog-components.spec.js:120:93 › pdv light status-badge: estados, estilo, publicação (528ms)
+  ✓  14 [chromium] › tests/visual/catalog-components.spec.js:120:93 › pdv light notice: estados, estilo, publicação (471ms)
+  ✓  15 [chromium] › tests/visual/catalog-components.spec.js:120:93 › pdv dark status-badge: estados, estilo, publicação (457ms)
+  ✓  16 [chromium] › tests/visual/catalog-components.spec.js:120:93 › pdv dark notice: estados, estilo, publicação (465ms)
+  ✓  17 [chromium] › tests/visual/catalog-components.spec.js:120:93 › resultx light status-badge: estados, estilo, publicação (427ms)
+  ✓  18 [chromium] › tests/visual/catalog-components.spec.js:120:93 › resultx light notice: estados, estilo, publicação (469ms)
+  ✓  19 [chromium] › tests/visual/catalog-components.spec.js:120:93 › resultx dark status-badge: estados, estilo, publicação (435ms)
+  ✓  20 [chromium] › tests/visual/catalog-components.spec.js:120:93 › resultx dark notice: estados, estilo, publicação (722ms)
+
+  20 passed (18.4s)

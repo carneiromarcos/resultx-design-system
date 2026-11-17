@@ -447,3 +447,47 @@ O arquivo `social-media-templates.html` e o diretório `templates/social-media/`
 - **Renderer:** `render-templates.mjs` (Playwright → PNG)
 - **Formatos:** feed 1080x1080, banners, stories, thumbnails, WhatsApp cards
 - **Tokens:** próprios (inline no HTML), não consomem `tokens.css`
+
+
+## Aviso e StatusBadge — adoção opt-in prevista para v2.12.0
+
+A fonte de uso é o contrato [Notice/Aviso](contracts/notice.yaml), com
+[ficha gerada](generated/component-cards/notice.md), e o contrato
+[StatusBadge](contracts/status-badge.yaml). O Aviso permanece junto ao conteúdo:
+explica a pendência e o próximo passo; não substitui vazio, erro bloqueante,
+validação de campo ou confirmação modal.
+
+Ação é obrigatória quando a pessoa pode realizar o próximo passo nesta tela; se
+não puder ou não tiver permissão, a ação não aparece e a orientação humana fica
+visível. Título curto em uma linha; consequência opcional em uma frase, sem código,
+identificador ou jargão. Heading é escolhido pelo consumidor; o contêiner não cria
+região nomeada por padrão. Para anúncio dinâmico, a região status vazia deve existir
+antes de receber texto. Não mover foco ao anunciar.
+
+StatusBadge identifica um estado em palavras. `warning` e `info` são passivos;
+“Atenção” ou “Info” sozinhos não identificam estado. Pendência em warning precisa
+ter próximo passo adjacente ou em Aviso. As novas variantes usam os papéis existentes
+para texto, superfície e borda; o catálogo registra as restrições de contraste.
+
+A vitrine declara as obrigações novas explicitamente:
+
+```html
+<html data-rx-contracts="notice status-badge-warning-info">
+```
+
+As declarações são independentes. Sem uma delas, o runner de contratos registra os
+respectivos casos novos como pulados/não verificados, enquanto mantém os casos
+anteriores. Essa compatibilidade não é conformidade com os nove contratos atuais.
+`badge-variants` verifica as cinco variantes quando a vitrine declara o novo suporte.
+O caminho de exceção é fixar o SHA de contrato anterior e registrar a lacuna até a
+adoção; não alegar conformidade atual a partir de um resultado com casos novos pulados.
+Os atributos de cenário da vitrine representam escolhas do consumidor, não calculam
+permissão ou regra de produto.
+
+`node scripts/check-pilot-compat.cjs` ensaia a vitrine pública anterior com o runner
+atual. `node scripts/measure-notice-contrast.cjs` mede as cinco marcas nos dois temas
+no catálogo gerado deste repositório. Não dependem de código de produto.
+
+Não há atualização automática de produto por esta mudança. Cópia por SHA é conferida
+na próxima recópia; importação por tag exige a atualização coordenada da dependência.
+Na próxima cópia do piloto, conferir os usos de `color-warning` e `color-info`.

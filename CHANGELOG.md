@@ -5,6 +5,36 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Planejado para v2.12.0 — Aviso e StatusBadge
+
+Esta alteração só pode ser mesclada depois do corte da v2.11.0 (27/11); não muda versão,
+valor de token, `eds-root.css`, bundle legado ou política de publicação.
+
+- Nono contrato `Notice/Aviso`: título factual em uma linha, consequência opcional em uma
+  frase, próximo passo visível e ação obrigatória quando a pessoa pode executá-lo nesta
+  tela. Ação indevida fica ausente. Contêiner comum e heading no nível do consumidor;
+  região `status` preexiste antes do texto dinâmico, sem capturar foco.
+- Adaptador CSS opt-in `.rx-notice`, com `info` e `warning`, e novas variantes passivas
+  `.rx-badge--warning` / `.rx-badge--info`. Rótulos identificam o estado sem depender de
+  cor; warning de pendência acompanha Aviso ou texto de próximo passo. Sem JavaScript novo.
+- `badge-variants` passa a exigir **cinco variantes**: obrigação nova, não uma aprovação
+  automática dos adaptadores antigos. Caminho de exceção: manter o contrato fixado no
+  SHA anterior e registrar as obrigações novas como **não verificadas**. A vitrine opta
+  com `data-rx-contracts="notice status-badge-warning-info"`; a ausência das declarações
+  pula somente os casos novos e não certifica o contrato ampliado. Conferir novamente
+  ao adotar a v2.12.0 ou sua cópia por SHA.
+- Scoped CSS e aliases regenerados: exatamente duas linhas novas ligam `--color-warning`
+  e `--color-info` a inks EDS existentes; linhas antigas e SHA do `eds-root` preservados.
+  A próxima cópia do adaptador no IMO confere os usos de `color-warning` e `color-info`
+  dentro do piloto. Consumidores por tag/cópia não mudam antes de atualizar.
+- Catálogo e fichas derivados do contrato, exemplos fictícios, sem documento de uso
+  duplicado. Bordas warning claras sobre `surface-2` têm quatro pares abaixo de 3:1,
+  registrados para a PR de cores; nenhum valor é corrigido nesta alteração.
+- Dívida separada `DS-NOTICE-DEBT-01`: a frase de ação desativada do contrato
+  `EmptyState/ErrorState` ainda precisa ser conciliada com a regra de omitir ação
+  indevida. Esse contrato não foi alterado nesta entrega.
+
+
 ### Changed — estados de Button no adaptador piloto
 
 Botões nativos e links indisponíveis passam a usar aparência neutra com borda tracejada;

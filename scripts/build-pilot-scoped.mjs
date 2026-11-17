@@ -18,6 +18,7 @@ const map = {
   '--text-muted': '--eds-ink-medium', '--border-default': '--eds-border',
   '--bg-surface-1': '--eds-surface', '--bg-surface-2': '--eds-surface-tonal',
   '--bg-surface-3': '--eds-surface-tonal-dark', '--color-error': '--eds-danger-ink',
+  '--color-info': '--eds-info-ink', '--color-warning': '--eds-warning-ink',
   '--color-success': '--eds-success-ink', '--text-on-success': '--eds-surface',
   '--accent-primary-text': '--eds-brand-ink', '--font-body': '--eds-font-body',
   '--radius-md': '--eds-radius-btn',

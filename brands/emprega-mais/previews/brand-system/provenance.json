@@ -8,6 +8,7 @@
     "data-table",
     "empty-state",
     "field",
+    "notice",
     "stat-card",
     "status-badge"
   ],
@@ -82,7 +83,7 @@
     },
     {
       "file": "brands/emprega-mais/tokens/pilot-aliases.css",
-      "sha256": "b14a16766119c257a1bec0f6ba37d7d71bad1aaa31042cf0301667056a8f06de"
+      "sha256": "932b0364c590b46e3e06d36b0d50057bcb806865651e1d44a840796fc5a52775"
     },
     {
       "file": "brands/emprega-mais/tokens/tokens.css",
@@ -113,12 +114,16 @@
       "sha256": "40960f8c18ee2201a074155775542eb2438cc0f2e2e4642a0eeedbd0ea180e9c"
     },
     {
+      "file": "contracts/notice.yaml",
+      "sha256": "500d15ffa255edc2db15c0c14c38198547b29306ffcbef85408ff5d1da5bf17f"
+    },
+    {
       "file": "contracts/stat-card.yaml",
       "sha256": "a568337660c35b9411bda4523e26168d0a1632fd4fbc688485231cb6bbe1d3f2"
     },
     {
       "file": "contracts/status-badge.yaml",
-      "sha256": "2b2fb180cd37495fb4ae8e766e7e1e980974f488152859bf758edd9e564454f3"
+      "sha256": "2d7434907a4d5effdc9d22bea6b3a47dd7605f1a9a795e7ad199ef9a115c68bc"
     },
     {
       "file": "generated/component-cards/button.md",
@@ -145,12 +150,16 @@
       "sha256": "d45d8e0e3d5c67c4129b4bb96ab5806d3ce8239ae65816e4f9d3566618a8eab9"
     },
     {
+      "file": "generated/component-cards/notice.md",
+      "sha256": "6c0494be19394dd873eb4072d70a7cb73a8f8040afbdda311afe0bd0d4a5862e"
+    },
+    {
       "file": "generated/component-cards/stat-card.md",
       "sha256": "cd13f16c95e1675241a6f2abb61f85f9beced12b577983cd12f245963c14e9a5"
     },
     {
       "file": "generated/component-cards/status-badge.md",
-      "sha256": "0baf392a1b817c38370284c649dc2ccf363147165cbf8274de03d544c36ea4e2"
+      "sha256": "98121f7f1158098cee319c22f481a9e3d70a91bd3aa15b76721d8f63ff57dcf2"
     },
     {
       "file": "scripts/catalog/lib.cjs",
@@ -189,7 +198,7 @@
       "sha256": "ff417cf849ce54336d2244f48930a41894df7ae2a6d4f9eb424b373111415309"
     }
   ],
-  "contentId": "3472f86692e485b43c6f0635cf08cd05eb543cc55b3724374e6561c6ed34c2d3",
+  "contentId": "0304441424a269b31c468683a5e281ca09ba3c40e1a90e693231a5c784067003",
   "contrasts": {
     "light": [
       {

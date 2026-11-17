@@ -137,8 +137,8 @@ test('build funciona sem executável git e refaz uma saída parcial', () => {
   expect(fs.readFileSync(path.join(out,'xscore/dark/fundacoes/example.html'),'utf8')).toContain('geração local');
 });
 
-const ids = ['button', 'card', 'confirm-dialog', 'data-table', 'empty-state', 'field', 'stat-card', 'status-badge'];
-test('catálogo registra os oito contratos como páginas nas dez combinações', () => {
+const ids = ['button', 'card', 'confirm-dialog', 'data-table', 'empty-state', 'field', 'stat-card', 'status-badge', 'notice'];
+test('catálogo registra os nove contratos como páginas nas dez combinações', () => {
   const manifest = yaml.load(fs.readFileSync(path.join(root, 'catalog/manifest.yaml'), 'utf8'));
   for (const id of ids) {
     const entry = manifest.pages.find(page => page.id === id);
