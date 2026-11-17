@@ -1,0 +1,43 @@
+{
+  "tokensSha256": "32aab337c45e52396d92dd390318fa388f844a39e2a529ceb2685d94d76791fc",
+  "browserScripts": [],
+  "csp": "default-src 'self'",
+  "themes": [
+    "dark",
+    "light"
+  ],
+  "chapters": 18,
+  "sections": [
+    "overview",
+    "ds-surfaces",
+    "ds-accent",
+    "ds-semantic",
+    "ds-gradients",
+    "ds-domain",
+    "ds-type",
+    "ds-space",
+    "ds-shape",
+    "ds-logo",
+    "ds-buttons",
+    "ds-components",
+    "social-moodboard",
+    "formats",
+    "brand-book",
+    "governance"
+  ],
+  "components": [
+    "button",
+    "field",
+    "card",
+    "status-badge",
+    "stat-card",
+    "data-table",
+    "confirm-dialog",
+    "empty-state"
+  ],
+  "unresolved": [
+    "brand spacing scale",
+    "brand campaign direction",
+    "product adoption is verified privately"
+  ]
+}
