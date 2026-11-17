@@ -65,15 +65,15 @@ test.afterAll(async () => {
     force: true
   });
 });
-async function loadedFont(page, family) {
-  const result = await page.evaluate(async family => {
-    const faces = await document.fonts.load(`400 16px "${family}"`);
+async function loadedFont(page, family, weight = 400) {
+  const result = await page.evaluate(async ({family, weight}) => {
+    const faces = await document.fonts.load(`${weight} 16px "${family}"`);
     await document.fonts.ready;
     return {
-      check: document.fonts.check(`16px "${family}"`),
+      check: document.fonts.check(`${weight} 16px "${family}"`),
       loaded: faces.length > 0 && faces.every(face => face.status === 'loaded')
     };
-  }, family);
+  }, {family, weight});
   expect(result).toEqual({
     check: true,
     loaded: true
@@ -158,4 +158,49 @@ test('preview antigo carrega suas fontes locais publicadas', async ({
   await page.goto(base + 'tokens/themes/preview.html');
   for (const family of ['Inter', 'Sora', 'JetBrains Mono']) await loadedFont(page, family);
   expect(failures).toEqual([]);
+});
+
+const publishedBrands = [
+  {id: 'emprega-mais', files: ['index.html', 'dark.html'], fonts: [['Inter', 400], ['Inter', 500], ['Inter', 600], ['Sora', 600], ['JetBrains Mono', 400]]},
+  {id: 'xscore', files: ['index.html', 'light.html'], fonts: [['Plus Jakarta Sans', 400], ['Plus Jakarta Sans', 600], ['Sora', 600], ['Sora', 700], ['Geist Mono', 400]]}
+];
+for (const brand of publishedBrands) for (const file of brand.files) test(`brand system publicado ${brand.id}/${file}: recursos e links internos`, async ({page, request}) => {
+  const failures = [];
+  page.on('response', response => {if (response.status() >= 400) failures.push(response.status() + ' ' + response.url());});
+  page.on('request', req => {if (!req.url().startsWith(base)) failures.push('Externa: ' + req.url());});
+  page.on('requestfailed', req => failures.push('Falha: ' + req.url()));
+  await page.setViewportSize({width: 390, height: 900});
+  const response = await page.goto(base + `brands/${brand.id}/previews/brand-system/${file}`);
+  expect(response.status()).toBe(200);
+  for (const [family, weight] of brand.fonts) await loadedFont(page, family, weight);
+  await expect(page.locator('meta[http-equiv="Content-Security-Policy"]')).toHaveAttribute('content', "default-src 'self'");
+  expect(await page.locator('script').count()).toBe(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  expect(await page.locator('img').evaluateAll(images => images.every(image => image.complete && image.naturalWidth > 0))).toBe(true);
+  const links = await page.locator('a[href], link[href], img[src]').evaluateAll(elements => elements.map(element => element.href || element.src));
+  const published = new URL('https://carneiromarcos.github.io/resultx-design-system/');
+  for (const value of new Set(links)) {
+    let url = new URL(value);
+    // URLs absolutas do catálogo oficial são verificadas na mesma árvore local.
+    if (url.origin === published.origin && url.pathname.startsWith(published.pathname)) url = new URL(url.pathname.slice(published.pathname.length) + url.hash, base);
+    if (url.origin !== new URL(base).origin) continue; // Fonte no GitHub é navegação externa, não renderização.
+    if (url.hash) {
+      const html = await (await request.get(url.href)).text();
+      const id = decodeURIComponent(url.hash.slice(1));
+      expect(html.includes(`id="${id}"`) || html.includes(`id='${id}'`), url.href).toBe(true);
+    }
+    expect((await request.get(url.href)).status(), url.href).toBe(200);
+  }
+  expect(failures).toEqual([]);
+});
+
+test('URLs excluídas das duas marcas respondem 404', async ({request}) => {
+  for (const file of [
+    'brands/emprega-mais/previews/prototypes/emprega-mais-ecossistema-2026-10-06.html',
+    'brands/emprega-mais/previews/_archive/design-system-v1.html',
+    'brands/emprega-mais/mockups/dashboards/dashboard.png',
+    'brands/emprega-mais/brand-guidelines.html',
+    'brands/xscore/previews/brand-system/build.cjs',
+    'brands/xscore/docs/qa/brand-1440-dark.png'
+  ]) expect((await request.get(base + file)).status(), file).toBe(404);
 });
