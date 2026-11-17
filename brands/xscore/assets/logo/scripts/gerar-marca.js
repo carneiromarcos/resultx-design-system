@@ -89,6 +89,8 @@ try {
  }
  fs.writeFileSync(path.join(out,'source/contrast.json'),JSON.stringify({schema:1,method:'SVG rendered at180x52; fully opaque symbol pixels; WCAG relative luminance against existing dark surface role. Measurement, not a conformity verdict.',surfaceRole:'--surface-1',background,viewport:[180,52],referenceMinimum:3,parts,decision:'Preserve the approved artwork; no recoloring or token changes.'},null,2)+'\n');
 }finally{if(browser)await browser.close();}
+// Next's ICO decoder requires PNG RGBA (colorType 6), including opaque entries.
+for(const size of [16,32,48])pngs.set(size,PNG.sync.write(PNG.sync.read(pngs.get(size)),{colorType:6,inputColorType:6}));
 const sizes=[16,32,48],header=Buffer.alloc(6+16*sizes.length);header.writeUInt16LE(1,2);header.writeUInt16LE(sizes.length,4);
 let offset=header.length;
 sizes.forEach((size,i)=>{const at=6+16*i,png=pngs.get(size);header[at]=size;header[at+1]=size;header.writeUInt16LE(1,at+4);header.writeUInt16LE(32,at+6);header.writeUInt32LE(png.length,at+8);header.writeUInt32LE(offset,at+12);offset+=png.length;});
