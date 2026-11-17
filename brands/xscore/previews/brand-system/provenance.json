@@ -1,5 +1,6 @@
 {
   "tokensSha256": "32aab337c45e52396d92dd390318fa388f844a39e2a529ceb2685d94d76791fc",
+  "contractRevision": "48fe3ce1e9f081a1ad01584c9cf60263fcfb5085",
   "browserScripts": [],
   "csp": "default-src 'self'",
   "themes": [

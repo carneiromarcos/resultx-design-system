@@ -8,8 +8,13 @@ const brand = path.resolve(here, '../..');
 const read = name => fs.readFileSync(path.join(here, name), 'utf8');
 const hash = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 const outputs = ['index.html', 'light.html', 'provenance.json'];
+const tokenFile = path.join(brand, 'tokens/tokens.css');
+const tokenBaseline = hash(tokenFile);
 
-beforeAll(() => execFileSync(process.execPath, [path.join(here, 'build.cjs')]));
+beforeAll(() => {
+  execFileSync(process.execPath, [path.join(here, 'build.cjs')]);
+  expect(hash(tokenFile)).toBe(tokenBaseline);
+});
 test('two themes have the shared CSP, no inline styles and no browser scripts', () => {
   for (const [file, theme] of [['index.html', 'dark'], ['light.html', 'light']]) {
     const html = read(file);
@@ -38,16 +43,22 @@ test('all local linked assets exist; official examples stay in the shared catalo
     }
     const links = [...html.matchAll(/https:\/\/carneiromarcos\.github\.io\/resultx-design-system\/catalog\/xscore\/(?:dark|light)\/([\w-]+)\//g)].map(m => m[1]);
     for (const id of JSON.parse(read('provenance.json')).components) expect(links).toContain(id);
+    const revision = JSON.parse(read('provenance.json')).contractRevision;
+    expect(revision).toMatch(/^[a-f0-9]{40}$/);
+    for (const id of JSON.parse(read('provenance.json')).components) {
+      expect(html).toContain(`https://github.com/carneiromarcos/resultx-design-system/blob/${revision}/contracts/${id}.yaml`);
+      expect(html).toContain(`https://github.com/carneiromarcos/resultx-design-system/blob/${revision}/generated/component-cards/${id}.md`);
+    }
+    expect(html).not.toMatch(/href="\.\.\/\.\.\/\.\.\/\.\.\/(?:contracts|generated)\//);
   }
 });
 test('regeneration is deterministic and does not mutate the official token sheet', () => {
-  const token = path.join(brand, 'tokens/tokens.css');
   const before = outputs.map(file => hash(path.join(here, file)));
-  const tokenBefore = hash(token);
+  expect(hash(tokenFile)).toBe(tokenBaseline);
   execFileSync(process.execPath, [path.join(here, 'build.cjs')]);
   expect(outputs.map(file => hash(path.join(here, file)))).toEqual(before);
-  expect(hash(token)).toBe(tokenBefore);
-  expect(JSON.parse(read('provenance.json')).tokensSha256).toBe(tokenBefore);
+  expect(hash(tokenFile)).toBe(tokenBaseline);
+  expect(JSON.parse(read('provenance.json')).tokensSha256).toBe(tokenBaseline);
 });
 test('spacing remains a stated dependency and observed radii and weights come from the brand', () => {
   const html = read('index.html');
