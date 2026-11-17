@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "approvedOn": "2026-11-17",
+  "rasterSources": [
+    {
+      "file": "source/wordmark-light-background.png",
+      "originalPngSha256": "73f24836e3ea7d2d67d401ba5a52d5ccf3d714c4937ebd33759f1305f29e104a",
+      "sanitizedPngSha256": "3bf4960d5bbe03f4d3d3fa905706d0e3958cf217bf83701b55491206b75b3b85",
+      "originalRgbaSha256": "88cdacc7128ab5fb4eb84a0a0116e15970d77e59da94b147e38c07571b432fcf",
+      "metadataRemoved": true,
+      "pixelsIdentical": true
+    },
+    {
+      "file": "source/wordmark-dark-background.png",
+      "originalPngSha256": "11085e6890b30574a5eac3fc6b8c2898ca7b82b9f887a3dcfb6cb1d02931b50f",
+      "sanitizedPngSha256": "35fe59804d591064df7062fee22c10db13fe5967b7cf75bbd0bbc971fbe96ffb",
+      "originalRgbaSha256": "05143f22d91556cc819b277440e690b8a927dbb59c0de8e53e39ae71c50de5f4",
+      "metadataRemoved": true,
+      "pixelsIdentical": true
+    }
+  ],
+  "approvedSvgSha256": {
+    "xscore-wordmark-dark.svg": "c30a577e5a1aadd474e6b6b1bd45c4e1a3a3e47436a89186304e8303032b2740",
+    "xscore-wordmark-light.svg": "30a5c70b5f21697c50cddc158f71082f018f11b8d6e9b35ad6be6c71f8a0762c"
+  },
+  "convention": "light artwork is for dark backgrounds; dark artwork is for light backgrounds"
+}

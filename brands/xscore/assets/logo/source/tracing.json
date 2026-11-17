@@ -1,0 +1,328 @@
+{
+  "method": "Alpha128 connected components, contour from alpha interpolated4x; two symbol ribbons and score traced with potrace; score paths, no font substitution; per-ribbon linear gradients with exact sampled RGB stops",
+  "source": [
+    {
+      "file": "source/wordmark-light-background.png",
+      "sha256": "3bf4960d5bbe03f4d3d3fa905706d0e3958cf217bf83701b55491206b75b3b85"
+    },
+    {
+      "file": "source/wordmark-dark-background.png",
+      "sha256": "35fe59804d591064df7062fee22c10db13fe5967b7cf75bbd0bbc971fbe96ffb"
+    }
+  ],
+  "components": [
+    {
+      "pixels": 924,
+      "bbox": [
+        29,
+        156,
+        83,
+        242
+      ]
+    },
+    {
+      "pixels": 981,
+      "bbox": [
+        48,
+        158,
+        103,
+        244
+      ]
+    },
+    {
+      "pixels": 1063,
+      "bbox": [
+        111,
+        181,
+        152,
+        235
+      ]
+    },
+    {
+      "pixels": 901,
+      "bbox": [
+        169,
+        182,
+        209,
+        234
+      ]
+    },
+    {
+      "pixels": 1078,
+      "bbox": [
+        225,
+        182,
+        266,
+        234
+      ]
+    },
+    {
+      "pixels": 750,
+      "bbox": [
+        285,
+        182,
+        325,
+        234
+      ]
+    },
+    {
+      "pixels": 1142,
+      "bbox": [
+        339,
+        182,
+        379,
+        234
+      ]
+    }
+  ],
+  "scoreColors": [
+    [
+      27,
+      42,
+      74
+    ],
+    [
+      255,
+      255,
+      255
+    ]
+  ],
+  "gradients": [
+    {
+      "degrees": 58,
+      "vx": 0.5299192642332049,
+      "vy": 0.8480480961564261,
+      "min": 151.47893491241106,
+      "max": 220.80708836492803,
+      "stops": [
+        {
+          "offset": 0,
+          "color": [
+            46,
+            61,
+            135
+          ],
+          "sampledAt": [
+            37,
+            157
+          ]
+        },
+        {
+          "offset": 0.125,
+          "color": [
+            46,
+            62,
+            135
+          ],
+          "sampledAt": [
+            53,
+            157
+          ]
+        },
+        {
+          "offset": 0.25,
+          "color": [
+            48,
+            64,
+            134
+          ],
+          "sampledAt": [
+            36,
+            174
+          ]
+        },
+        {
+          "offset": 0.375,
+          "color": [
+            53,
+            69,
+            131
+          ],
+          "sampledAt": [
+            59,
+            172
+          ]
+        },
+        {
+          "offset": 0.5,
+          "color": [
+            60,
+            75,
+            126
+          ],
+          "sampledAt": [
+            68,
+            177
+          ]
+        },
+        {
+          "offset": 0.625,
+          "color": [
+            70,
+            82,
+            118
+          ],
+          "sampledAt": [
+            49,
+            200
+          ]
+        },
+        {
+          "offset": 0.75,
+          "color": [
+            80,
+            93,
+            119
+          ],
+          "sampledAt": [
+            46,
+            212
+          ]
+        },
+        {
+          "offset": 0.875,
+          "color": [
+            86,
+            106,
+            130
+          ],
+          "sampledAt": [
+            36,
+            224
+          ]
+        },
+        {
+          "offset": 1,
+          "color": [
+            87,
+            108,
+            132
+          ],
+          "sampledAt": [
+            31,
+            240
+          ]
+        }
+      ],
+      "error": 6.431600435030819
+    },
+    {
+      "degrees": 2,
+      "vx": 0.9993908270190958,
+      "vy": 0.03489949670250097,
+      "min": 57.415828725940926,
+      "max": 110.2788440678455,
+      "stops": [
+        {
+          "offset": 0,
+          "color": [
+            140,
+            84,
+            130
+          ],
+          "sampledAt": [
+            52,
+            237
+          ]
+        },
+        {
+          "offset": 0.125,
+          "color": [
+            147,
+            90,
+            113
+          ],
+          "sampledAt": [
+            56,
+            236
+          ]
+        },
+        {
+          "offset": 0.25,
+          "color": [
+            173,
+            107,
+            92
+          ],
+          "sampledAt": [
+            63,
+            216
+          ]
+        },
+        {
+          "offset": 0.375,
+          "color": [
+            191,
+            117,
+            70
+          ],
+          "sampledAt": [
+            69,
+            225
+          ]
+        },
+        {
+          "offset": 0.5,
+          "color": [
+            213,
+            131,
+            35
+          ],
+          "sampledAt": [
+            76,
+            237
+          ]
+        },
+        {
+          "offset": 0.625,
+          "color": [
+            207,
+            142,
+            41
+          ],
+          "sampledAt": [
+            83,
+            191
+          ]
+        },
+        {
+          "offset": 0.75,
+          "color": [
+            198,
+            153,
+            62
+          ],
+          "sampledAt": [
+            90,
+            240
+          ]
+        },
+        {
+          "offset": 0.875,
+          "color": [
+            187,
+            163,
+            75
+          ],
+          "sampledAt": [
+            96,
+            223
+          ]
+        },
+        {
+          "offset": 1,
+          "color": [
+            185,
+            171,
+            83
+          ],
+          "sampledAt": [
+            100,
+            241
+          ]
+        }
+      ],
+      "error": 20.553302513084517
+    }
+  ]
+}
