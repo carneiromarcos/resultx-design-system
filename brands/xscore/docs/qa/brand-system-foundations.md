@@ -39,3 +39,9 @@ Os oito PNG adjacentes mostram abertura e logos nos quatro cenários. `brand-sys
 ## Varredura de conteúdo público
 
 O diff novo foi examinado por caminhos locais, arquivos privados, rotas de produto, dados de clientes e endereços de e-mail: zero ocorrência nos padrões dirigidos. Os exemplos e imagens desta entrega são exclusivamente do sistema de design, com dados fictícios.
+
+## Complemento de revisão
+
+O CodeRabbit apontou um achado menor: a captura do hash começava após a primeira geração. A prova agora captura o hash antes de qualquer build e o compara após ambas as gerações.
+
+A ressalva do Revisor sobre recursos fora do Pages foi tratada sem alterar o núcleo: contratos e fichas apontam para a fonte pública no SHA `48fe3ce1e9f081a1ad01584c9cf60263fcfb5085`. Os dezesseis destinos responderam HTTP 200. Reintroduzir os antigos links relativos produz RED de 1 falha/4 aprovações; restaurar a fonte volta a GREEN 5/5. A suíte completa permanece 825/825 e os quatro cenários de navegador foram novamente aprovados. A publicação da pasta de marca continua como gate separado.
