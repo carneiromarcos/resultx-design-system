@@ -182,7 +182,7 @@ D5 só volta a ser pergunta depois da P1 (DS-24).
 | M5 — Componentes | EM ANDAMENTO | EM ANDAMENTO | catálogo DS-30 (#134–#139) mostra os contratos nas duas marcas; o brand system do XScore aponta para os 8 contratos públicos (#144); faltam contratos (seleção, marcação, texto longo, janela de formulário, arquivo, abas, aviso) | contratos novos no DS |
 | M6 — Integração | EM ANDAMENTO | EM ANDAMENTO | IMO: Onda 0 em produção (IMO #932, nenhuma tela mudou; 9 views migradas no manifesto); XScore: O1 mesclada (marcos-workspace #334) e O2 (5 dívidas dos componentes corrigidas) aprovada pelo Revisor, aguarda PR | IMO: DS-10 parcial (linhas 7, 8, 11, 20) antes da Onda 1a |
 | M7 — Qualidade | EM ANDAMENTO | EM ANDAMENTO | IMO: capturas (28 pares, 0 px) e catraca por view migrada no CI (IMO #932); XScore: 12 capturas e auditoria dos 8 contratos (55 casos: 17 parciais, 5 falhas, 33 não verificados) na O1 | — |
-| M8 — Governança | EM ANDAMENTO | EM ANDAMENTO | IMO consome cópia fixada por SHA, conferida por teste; XScore consome a tag v2.9.0 e registrou o mandato na governança (#334); vitrines `/styleguide` fora da produção no código (marcos-workspace #335), ainda não implantado; regra: DS público só recebe síntese, detalhe dos produtos fica nos repos privados | emenda da D7 sem resposta do Marcos |
+| M8 — Governança | EM ANDAMENTO | EM ANDAMENTO | IMO consome cópia fixada por SHA, conferida por teste; XScore consome a tag v2.9.0 e registrou o mandato na governança (#334); vitrines de demonstração do XScore fora da produção no código (marcos-workspace #335), ainda não implantado; regra: DS público só recebe síntese, detalhe dos produtos fica nos repos privados | emenda da D7 sem resposta do Marcos |
 | M9 — Conclusão | PENDENTE | PENDENTE | — | M1–M8 |
 
 Estados permitidos: PENDENTE, EM ANDAMENTO, AGUARDANDO VALIDAÇÃO, CONCLUÍDO, BLOQUEADO, NÃO VERIFICADO. CONCLUÍDO só com PR mesclada, CI verde e parecer do Revisor. Sem percentuais.
@@ -191,7 +191,7 @@ Estados permitidos: PENDENTE, EM ANDAMENTO, AGUARDANDO VALIDAÇÃO, CONCLUÍDO, 
 
 ## E. Continuidade
 
-- **Próxima ação executável:** esta PR (painel, só documentação): CI, Revisor e merge sob a autorização "A". Em paralelo: PR da O2 do XScore (aprovada, rebaseada); O3 do XScore (monitoramento) em execução; M3/M4 do brand system do IMO em execução; DS-10 do IMO parcial antes da Onda 1a; publicação conjunta dos brand systems depois do M3 do IMO. Catálogo PR 5b fica depois.
+- **Próxima ação executável:** esta PR (painel, só documentação): CI, Revisor e merge sob a autorização "A". Em paralelo: PR da O2 do XScore (aprovada, rebaseada); O3 do XScore em execução; M3/M4 do brand system do IMO em execução; DS-10 do IMO parcial antes da Onda 1a; publicação conjunta dos brand systems depois do M3 do IMO. Catálogo PR 5b fica depois.
 - **Depois:**
   1. DS-10, verificar as linhas da matriz ainda sem prova; IMO-30b depois da DS-17;
   2. DS-14, a partir de 27/11, com o inventário refeito até o SHA da tag;
