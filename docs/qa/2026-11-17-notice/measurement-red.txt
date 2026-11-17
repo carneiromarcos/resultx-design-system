@@ -1,0 +1,23 @@
+FAIL tests/notice.test.js
+  ● medidor reprova contraste adicional de borda ou foco com os pares padrão verdes
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      77 |   expect(measurementFailed(clean)).toBe(false);
+      78 |   // One new focus failure is blocking, as are the four known surface failures.
+    > 79 |   expect(measurementFailed({ ...clean, additionalFailures: 1 })).toBe(true);
+         |                                                                  ^
+      80 |   expect(measurementFailed({ ...clean, additionalFailures: 4 })).toBe(true);
+      81 |   expect(measurementFailed({ ...clean, baseFailures: 1 })).toBe(true);
+      82 |   expect(measurementFailed({ ...clean, geometryFailures: 1 })).toBe(true);
+
+      at Object.toBe (tests/notice.test.js:79:66)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 8 passed, 9 total
+Snapshots:   0 total
+Time:        0.654 s, estimated 1 s
+Ran all test suites matching tests/notice.test.js.

@@ -675,3 +675,174 @@ Snapshots:   0 total
 Time:        35.536 s
 Ran all test suites.
 ```
+
+## Correção do veredito de contraste (major da segunda passagem)
+
+A execução anteriormente registrada com retorno 0 ignorava additionalFailures no veredito.
+A aprovação da medição inteira foi retirada: os 40 pares padrão passam, mas há quatro
+pares adicionais não conformes. O veredito atual reprova qualquer falha de base, geometria,
+contraste adicional ou rede. O medidor é diagnóstico manual, não um gate chamado pelo CI.
+
+### Chamadas verificadas
+
+```sh
+rg -n -F 'measure-notice-contrast' package.json .github/workflows
+search_result=$?
+echo "direct_call_search_exit=$search_result"
+rg -n 'build:all|check-pilot-contrast|npm test|npm run build' package.json .github/workflows/ci.yml .github/workflows/visual-baseline-linux.yml
+```
+
+Saída:
+
+```text
+direct_call_search_exit=1
+package.json:100:    "build:all": "node scripts/build-eds-root.mjs --check && npm run build:tokens && npm run build:components && npm run build:icons && npm run build:bridges && node scripts/build-pilot-scoped.mjs && node scripts/check-pilot-contrast.cjs",
+package.json:101:    "build": "npm run build:all",
+.github/workflows/ci.yml:22:      - run: npm run build
+.github/workflows/ci.yml:23:      - run: npm test
+.github/workflows/ci.yml:32:            echo "::error::npm run build produced output that differs from what is committed (or created new untracked files under dist/, brands/, tokens/ or adapters/)."
+.github/workflows/ci.yml:37:            echo "Then: run \`npm run build\`, REVIEW the diff, and only commit if the output is correct (dist/, tokens/ and brands/*/tokens/*.css)."
+```
+
+```sh
+rg -n -F 'measure-notice-contrast' scripts --glob '!measure-notice-contrast.cjs'
+echo "transitive_call_search_exit=$?"
+```
+
+Saída:
+
+```text
+transitive_call_search_exit=1
+```
+
+Retorno 1 da busca significa nenhuma chamada encontrada. O build chama outro medidor,
+check-pilot-contrast.cjs; ele não chama este diagnóstico. O teste unitário importa somente
+o predicado puro. require.main impede build/navegador ao importar. Sem nova exceção de gate.
+
+### RED e GREEN permanentes
+
+```sh
+npx jest tests/notice.test.js --runInBand --watchman=false > /tmp/ds-aviso-measure-red.txt 2>&1
+red_result=$?
+echo "red_exit=$red_result"
+cat /tmp/ds-aviso-measure-red.txt
+```
+
+Retorno do ensaio: 1. Saída:
+
+```text
+red_exit=1
+FAIL tests/notice.test.js
+  ● medidor reprova contraste adicional de borda ou foco com os pares padrão verdes
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      77 |   expect(measurementFailed(clean)).toBe(false);
+      78 |   // One new focus failure is blocking, as are the four known surface failures.
+    > 79 |   expect(measurementFailed({ ...clean, additionalFailures: 1 })).toBe(true);
+         |                                                                  ^
+      80 |   expect(measurementFailed({ ...clean, additionalFailures: 4 })).toBe(true);
+      81 |   expect(measurementFailed({ ...clean, baseFailures: 1 })).toBe(true);
+      82 |   expect(measurementFailed({ ...clean, geometryFailures: 1 })).toBe(true);
+
+      at Object.toBe (tests/notice.test.js:79:66)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 8 passed, 9 total
+Snapshots:   0 total
+Time:        0.654 s, estimated 1 s
+Ran all test suites matching tests/notice.test.js.
+```
+
+```sh
+npx jest tests/notice.test.js --runInBand --watchman=false > /tmp/ds-aviso-measure-green.txt 2>&1
+result=$?
+echo "green_exit=$result"
+cat /tmp/ds-aviso-measure-green.txt
+exit "$result"
+```
+
+Retorno: 0. Saída:
+
+```text
+green_exit=0
+Test Suites: 1 passed, 1 total
+Tests:       9 passed, 9 total
+Snapshots:   0 total
+Time:        0.584 s, estimated 1 s
+Ran all test suites matching tests/notice.test.js.
+```
+
+O mesmo caso exige reprovação com uma falha adicional futura e com as quatro conhecidas,
+além de base, geometria e rede. O cenário totalmente limpo deve aprovar.
+
+### Execução manual atual — quatro reprovações conhecidas
+
+```sh
+node scripts/measure-notice-contrast.cjs > /tmp/ds-aviso-contrast-strict.json 2> /tmp/ds-aviso-contrast-strict-errors.txt
+measure_result=$?
+echo "measure_exit=$measure_result"
+node -e 'const x=require("/tmp/ds-aviso-contrast-strict.json"); console.log(JSON.stringify({basePairs:x.basePairs,baseFailures:x.baseFailures,geometryFailures:x.geometryFailures,additionalFailures:x.additionalFailures,failedRequests:x.failedRequests}));'
+exit "$measure_result"
+```
+
+Retorno: **1**, esperado pelas bordas pendentes. Saída:
+
+```text
+measure_exit=1
+{"basePairs":40,"baseFailures":0,"geometryFailures":0,"additionalFailures":4,"failedRequests":[]}
+```
+
+Não é um gate verde ou conformidade total. As quatro pendências seguem na PR de cores;
+nenhuma falha nova pode passar silenciosamente. Se este diagnóstico vier a integrar
+package/workflow, decidir antes uma lista explícita e temporária de exceções.
+
+## Baselines Linux aprovadas — commit separado
+
+Origem: Visual Linux run 44146500625, artefato da árvore de ensaio
+545935d78fcaf3b8a85b073e634a9a7576155c62, head da PR 6c69edad. O primeiro run
+retornou 1, com 592 pass/2 fail, exclusivamente as duas capturas inteiras do piloto.
+O diagnóstico foi entregue antes da cópia; o Revisor aprovou explicitamente os bytes.
+
+Comando executado:
+
+```sh
+git commit -F /tmp/ds-aviso-review-20261117/baseline-commit-message.txt
+```
+
+Recorte da saída do hook e do commit (retorno 0):
+
+```text
+> resultx-design-system@2.10.0 lint
+> stylelint 'components/**/*.css' 'adapters/**/*.css'
+
+> resultx-design-system@2.10.0 test
+> jest --runInBand
+
+Test Suites: 43 passed, 43 total
+Tests:       848 passed, 848 total
+Snapshots:   0 total
+Time:        29.552 s, estimated 38 s
+Ran all test suites.
+[feat/ds-aviso-status-badge c7f046c] test(visual): adopt reviewed notice pilot Linux baselines
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+```
+
+Hashes da origem Linux e dos arquivos copiados, iguais:
+
+```text
+0e88e60dd47499d39cd1673ea3d89a67e910e5592602c3d9860ed9c2f31f2fd6  tests/visual/pilot-contracts.spec.js-snapshots/pilot-light-chromium-linux.png
+384aaa4b5d87a31f83effc8644f0607eaf7e9cb84c0ec824896162c3a1ef9959  tests/visual/pilot-contracts.spec.js-snapshots/pilot-dark-chromium-linux.png
+```
+
+O corpo do commit contém o parecer integral. Crescimento 4433→5430, inserção de 997 px
+a partir de y=3390. Prefixo pixel-idêntico; alinhado o sufixo, 101 pixels/13 linhas no
+claro e 114/14 no escuro são discrepâncias reais aceitas pelo Revisor. O conteúdo
+seguinte desce no fluxo; não houve corte/perda/sobreposição na inspeção independente.
+Remover só os acréscimos recupera HTML/CSS antigos byte a byte. Diagnóstico local dos
+68 IDs antigos por tema: HTML/estilos/x/dimensões iguais, y=0 ou+997; não substitui Linux.
+
+Não houve alteração de fonte visual, seletor ou tolerância. CI final continua pendente.

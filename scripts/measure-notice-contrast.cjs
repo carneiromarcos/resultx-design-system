@@ -6,13 +6,16 @@ const {bindings,resolve}=require('./catalog/lib.cjs');
 const {parseCssColor}=require('../tests/visual/lib/css-color');
 const {elementById}=require('./catalog/components.cjs');
 const root=path.resolve(__dirname,'..'),site=path.join(root,'_site/catalog');
-require('node:child_process').execFileSync(process.execPath,[path.join(__dirname,'catalog/build.cjs')],{cwd:root,stdio:['ignore','ignore','inherit']});
 const rgb=s=>s.startsWith('#')?[0,2,4].map(i=>parseInt((s.length===4?[...s.slice(1)].map(x=>x+x).join(''):s.slice(1)).slice(i,i+2),16)):parseCssColor(s);
 const opaque=s=>{const c=rgb(s);if(c.length>3&&c[3]!==1)throw Error('A sonda exige par opaco explicitamente resolvido');return c;};
 const luminance=c=>c.slice(0,3).map(n=>n/255).map(n=>n<=.04045?n/12.92:((n+.055)/1.055)**2.4).reduce((s,n,i)=>s+n*[.2126,.7152,.0722][i],0);
 const ratio=(a,b)=>{const x=luminance(opaque(a)),y=luminance(opaque(b));return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);};
 const rows=[],geometry=[],failedRequests=[];
 const server=http.createServer((req,res)=>{const file=path.resolve(site,'.'+new URL(req.url,'http://127.0.0.1').pathname);if(!file.startsWith(site+path.sep)){res.writeHead(403);return res.end();}try{res.setHeader('Content-Type',{'.html':'text/html','.css':'text/css','.js':'text/javascript','.woff2':'font/woff2'}[path.extname(file)]||'application/octet-stream');res.end(fs.readFileSync(file));}catch{res.writeHead(404);res.end();}});
+const measurementFailed = report => Boolean(report.baseFailures || report.geometryFailures || report.additionalFailures || report.failedRequests.length);
+module.exports = { measurementFailed };
+if (require.main === module) {
+require('node:child_process').execFileSync(process.execPath,[path.join(__dirname,'catalog/build.cjs')],{cwd:root,stdio:['ignore','ignore','inherit']});
 (async()=>{let browser;try{
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const base=`http://127.0.0.1:${server.address().port}`;
  browser=await chromium.launch();const page=await browser.newPage({viewport:{width:1440,height:1000}});
@@ -45,5 +48,7 @@ const server=http.createServer((req,res)=>{const file=path.resolve(site,'.'+new 
  }
  const hashes=Object.fromEntries(['adapters/css/pilot.css','contracts/notice.yaml','contracts/status-badge.yaml','catalog/bindings.config.js'].map(file=>[file,crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex')]));
  const report={method:'Computed browser colors from generated catalog; WCAG luminance, unrounded comparisons; no token value changes',sources:hashes,basePairs:rows.filter(r=>r.context==='surface-1').length,baseFailures:rows.filter(r=>r.context==='surface-1'&&!r.pass).length,geometryFailures:geometry.filter(r=>!r.pass).length,geometry,additionalFailures:rows.filter(r=>r.context!=='surface-1'&&!r.pass).length,failedRequests,rows};
- console.log(JSON.stringify(report,null,2));if(report.baseFailures||report.geometryFailures||failedRequests.length)process.exitCode=1;
+ console.log(JSON.stringify(report,null,2));if(measurementFailed(report))process.exitCode=1;
  }finally{if(browser)await browser.close();server.closeAllConnections();if(server.listening)await new Promise(resolve=>server.close(resolve));}})().catch(error=>{console.error(error.message);process.exitCode=1;});
+
+}

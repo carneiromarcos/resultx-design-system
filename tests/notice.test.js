@@ -70,3 +70,15 @@ test('obrigações novas só são habilitadas por declaração explícita e sepa
   expect(enabled('badge-warning-info',tokens('notice'))).toBe(false);
   expect(enabled('badge-warning-info',tokens('status-badge-warning-info'))).toBe(true);
 });
+
+test('medidor reprova contraste adicional de borda ou foco com os pares padrão verdes', () => {
+  const { measurementFailed } = require('../scripts/measure-notice-contrast.cjs');
+  const clean = { baseFailures: 0, geometryFailures: 0, additionalFailures: 0, failedRequests: [] };
+  expect(measurementFailed(clean)).toBe(false);
+  // One new focus failure is blocking, as are the four known surface failures.
+  expect(measurementFailed({ ...clean, additionalFailures: 1 })).toBe(true);
+  expect(measurementFailed({ ...clean, additionalFailures: 4 })).toBe(true);
+  expect(measurementFailed({ ...clean, baseFailures: 1 })).toBe(true);
+  expect(measurementFailed({ ...clean, geometryFailures: 1 })).toBe(true);
+  expect(measurementFailed({ ...clean, failedRequests: ['font.woff2'] })).toBe(true);
+});

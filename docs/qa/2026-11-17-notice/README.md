@@ -31,7 +31,7 @@ sem adoção automática; a próxima cópia por SHA confere usos de color-warnin
 | Prova | Resultado | Falhas / pulos |
 |---|---:|---:|
 | RED inicial dos novos critérios | 1/6 | 5 / 0 |
-| Unitários completos, com o complemento de stdout | 847/847 | 0 / 0 |
+| Unitários completos, com stdout e veredito de contraste | 848/848 | 0 / 0 |
 | Contratos, cobertura e sete negativos de DOM | 138/138 | 0 / 0 |
 | Catálogo na árvore publicada, componentes alterados | 20/20 | 0 / 0 |
 | Vitrine pública anterior com runner atual | 110 pass | 0 / **20 novos não verificados** |
@@ -52,6 +52,10 @@ cinco variantes e o caminho de exceção estão no CHANGELOG.
 
 A medição usa o catálogo renderizado do próprio repositório, sem dependência de produto.
 O medidor aguarda todas as faces locais; a execução final não contém falha de rede.
+**Retorno atual: 1**, pelas quatro bordas adicionais conhecidas. Ele é manual e não é
+chamado pelo package.json, workflows ou outros scripts; a busca e sua saída estão no
+relatório. O veredito agora reprova qualquer falha adicional, inclusive foco e tabela.
+A saída 0 registrada antes da correção do major não aprova a medição inteira.
 Tentativas anteriores com cancelamento de fonte retornaram 1 e não contam como aprovação.
 Há **40 pares padrão** (dois componentes × duas variantes × cinco marcas × dois temas),
 sem falha: texto mínimo 12,013:1 e borda mínima 3,043:1. Os dez focos de ação passam,
@@ -95,9 +99,14 @@ aguarda close para ler stdout completo, com RED de JSON truncado e GREEN executa
 
 ## Pendências e revisão
 
-- Capturas Linux pelo workflow Visual Linux, aprovação independente dos PNGs alterados
-  e cópia dos artefatos aprovados com SHA igual. Nenhuma baseline foi gerada no Mac.
-- CodeRabbit, parecer do Revisor, CI no SHA final e aceite visual humano.
+- Duas baselines Linux aprovadas pelo Revisor e copiadas byte a byte no commit
+  c7f046c; o parecer e os dois SHA-256 estão colados no corpo do commit. O prefixo
+  de 3390 px é idêntico; a inserção desloca o restante em 997 px e restam 101/114
+  pixels após alinhamento, aceitos explicitamente sem declará-los zero ou ruído.
+  Nenhuma baseline foi gerada no Mac. Falta o CI do SHA que contém as cópias.
+- Terceira passagem CodeRabbit após correções, CI no SHA final e aceite visual humano.
+  O Revisor aprovou a fonte 6c69edad no recorte local e as duas candidatas Linux,
+  com aceitação explícita de translação e resíduos; isso não aprova os gates pendentes.
 - Rebase depois do corte da v2.11.0 e nova validação antes de merge para v2.12.0.
 - DS-NOTICE-DEBT-01: frase disabled do EmptyState/ErrorState, registrada sem alterar
   esse contrato nesta entrega.
