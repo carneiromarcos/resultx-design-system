@@ -1,0 +1,341 @@
+marca,tema,pagina,seletor,tipo,texto,fundo,contraste,minimo,resultado,origem_texto,origem_fundo
+eletia,dark,data-cards,[data-family=statcard] .dl-statcard-label,texto,"[138, 147, 157]","[22, 27, 38]",5.53051067,4.5,atende ao par medido,var(--text-muted),transparent
+eletia,dark,data-cards,.dl-statcard--compact .dl-statcard-label,texto,"[139, 148, 158]","[22, 27, 38]",5.60145588,4.5,atende ao par medido,var(--text-secondary),transparent
+eletia,dark,data-cards,.dl-statcard--compact .dl-statcard-value,texto,"[230, 237, 243]","[22, 27, 38]",14.58104640,4.5,atende ao par medido,var(--text-primary),transparent
+eletia,dark,data-cards,[data-family=delta] .dl-delta--positive,texto,"[34, 197, 94]","[23.439999999999998, 47.400000000000006, 44.72]",6.19375737,4.5,atende ao par medido,var(--delta-positive-fg),var(--delta-positive-bg)
+eletia,dark,data-cards,[data-family=delta] .dl-delta--negative,texto,"[245, 158, 11]","[48.76, 42.72, 34.76]",6.54103437,4.5,atende ao par medido,var(--delta-negative-fg),var(--delta-negative-bg)
+eletia,dark,data-cards,[data-family=delta] .dl-delta--neutral,texto,"[139, 148, 158]","[28, 35, 51]",5.10430951,4.5,atende ao par medido,var(--delta-neutral-fg),var(--delta-neutral-bg)
+eletia,dark,data-cards,.dl-chart-title,texto,"[230, 237, 243]","[22, 27, 38]",14.58104640,4.5,atende ao par medido,var(--text-primary),transparent
+eletia,dark,data-cards,.dl-chart-meta,texto,"[139, 148, 158]","[22, 27, 38]",5.60145588,4.5,atende ao par medido,var(--text-secondary),transparent
+eletia,dark,data-cards,.dl-donut-value,texto,"[230, 237, 243]","[22, 27, 38]",14.58104640,4.5,atende ao par medido,var(--text-primary),transparent
+eletia,dark,data-cards,.dl-donut-label,texto,"[138, 147, 157]","[22, 27, 38]",5.53051067,4.5,atende ao par medido,var(--text-muted),transparent
+eletia,dark,data-cards,.dl-table th,texto,"[138, 147, 157]","[28, 35, 51]",5.03966090,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-2)
+eletia,dark,data-cards,.dl-table-primary,texto,"[230, 237, 243]","[22, 27, 38]",14.58104640,4.5,atende ao par medido,var(--text-primary),transparent
+eletia,dark,data-cards,.dl-table-secondary,texto,"[138, 147, 157]","[22, 27, 38]",5.53051067,4.5,atende ao par medido,var(--text-muted),transparent
+eletia,dark,data-cards,.dl-avatar-stack-label,texto,"[138, 147, 157]","[22, 27, 38]",5.53051067,4.5,atende ao par medido,var(--text-muted),transparent
+eletia,dark,data-cards,[data-family=status] .dl-status--in-progress,texto,"[241.61832612398482, 191.64138927213077, 133.101000392765]","[48.76, 42.72, 34.76]",8.43504593,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-amber, var(--color-warning-bg))"
+eletia,dark,data-cards,[data-family=status] .dl-status--done,texto,"[134.14010406545378, 214.63811568660836, 155.93018095624672]","[23.439999999999998, 47.400000000000006, 44.72]",8.18461857,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-green, var(--color-success-bg))"
+eletia,dark,data-cards,[data-family=status] .dl-status--need-review,texto,"[242.17835924853162, 132.44714953050584, 154.48509727953913]","[47.31999999999999, 27.36, 45.31999999999999]",6.49294407,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-magenta, color-mix(in srgb, var(--status-color) 12%, transparent))"
+eletia,dark,data-cards,[data-family=status] .dl-status--pending,texto,"[128.8925949222315, 175.20033942742828, 248.08739446415302]","[26.439999999999998, 39.36, 62.959999999999994]",6.68351888,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-cyan, var(--color-info-bg))"
+eletia,dark,data-cards,[data-family=status] .dl-status--blocked,texto,"[244.25687260599153, 144.90285209283738, 138.85150138620793]","[48.04, 31.92, 41.599999999999994]",6.79522337,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))",var(--color-error-bg)
+eletia,dark,data-cards,.dl-tooltip-value,texto,"[192, 132, 252]","[35, 43, 59]",5.36928792,4.5,atende ao par medido,var(--accent-primary-text),transparent
+eletia,dark,data-cards,.dl-tooltip-label,texto,"[138, 147, 157]","[35, 43, 59]",4.55421361,4.5,atende ao par medido,var(--text-muted),transparent
+eletia,dark,data-patterns,.td-warning,texto,"[139, 148, 158]","[39.08, 31.28, 18.92]",5.27275061,4.5,atende ao par medido,var(--text-secondary),var(--color-warning-bg)
+eletia,dark,data-patterns,.td-error,texto,"[139, 148, 158]","[38.36, 20.48, 25.76]",5.68021615,4.5,atende ao par medido,var(--text-secondary),var(--color-error-bg)
+eletia,dark,data-patterns,.tr-selected .td-name,texto,"[230, 237, 243]","[26, 19.4, 43.55]",15.11910423,4.5,atende ao par medido,var(--text-primary),var(--accent-primary-muted)
+eletia,dark,data-patterns,.bulk-toolbar-count,texto,"[192, 132, 252]","[22, 27, 38]",6.52031431,4.5,atende ao par medido,var(--accent-primary-text),transparent
+eletia,dark,data-patterns,.chart-period-btn:not(.active),texto,"[138, 147, 157]","[28, 35, 51]",5.03966090,4.5,atende ao par medido,var(--text-muted),transparent
+eletia,dark,data-patterns,.chart-period-btn.active,texto,"[192, 132, 252]","[11, 14, 20]",7.31038329,4.5,atende ao par medido,var(--accent-primary-text),var(--bg-base)
+eletia,dark,data-table,[data-family=basic] th,texto,"[138, 147, 157]","[22, 27, 38]",5.53051067,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-1)
+eletia,dark,data-table,[data-family=basic] .td-name,texto,"[230, 237, 243]","[11, 14, 20]",16.34783738,4.5,atende ao par medido,var(--text-primary),transparent
+eletia,dark,data-table,[data-family=basic] .td-score,texto,"[192, 132, 252]","[11, 14, 20]",7.31038329,4.5,atende ao par medido,var(--accent-primary-text),transparent
+eletia,dark,stat-card,[data-family=standard] .stat-label,texto,"[139, 148, 158]","[11, 14, 20]",6.28018643,4.5,atende ao par medido,var(--text-secondary),transparent
+eletia,dark,stat-card,.stat-variation.up,texto,"[34, 197, 94]","[11, 14, 20]",8.47737779,4.5,atende ao par medido,var(--color-success),transparent
+eletia,dark,stat-card,.stat-variation.down,texto,"[239, 68, 68]","[11, 14, 20]",5.13313229,4.5,atende ao par medido,var(--color-error),transparent
+eletia,dark,stat-card,.stat-card-mini-label,texto,"[138, 147, 157]","[11, 14, 20]",6.20064477,4.5,atende ao par medido,var(--text-muted),transparent
+eletia,light,data-cards,[data-family=statcard] .dl-statcard-label,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+eletia,light,data-cards,.dl-statcard--compact .dl-statcard-label,texto,"[75, 85, 99]","[248, 250, 251]",7.21857061,4.5,atende ao par medido,var(--text-secondary),transparent
+eletia,light,data-cards,.dl-statcard--compact .dl-statcard-value,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+eletia,light,data-cards,[data-family=delta] .dl-delta--positive,texto,"[22, 163, 74]","[220.88, 239.56, 229.76]",2.76573060,4.5,pendente,var(--delta-positive-fg),var(--delta-positive-bg)
+eletia,light,data-cards,[data-family=delta] .dl-delta--negative,texto,"[217, 119, 6]","[244.28, 234.28, 221.6]",2.68643562,4.5,pendente,var(--delta-negative-fg),var(--delta-negative-bg)
+eletia,light,data-cards,[data-family=delta] .dl-delta--neutral,texto,"[75, 85, 99]","[240, 243, 245]",6.78141687,4.5,atende ao par medido,var(--delta-neutral-fg),var(--delta-neutral-bg)
+eletia,light,data-cards,.dl-chart-title,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+eletia,light,data-cards,.dl-chart-meta,texto,"[75, 85, 99]","[248, 250, 251]",7.21857061,4.5,atende ao par medido,var(--text-secondary),transparent
+eletia,light,data-cards,.dl-donut-value,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+eletia,light,data-cards,.dl-donut-label,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+eletia,light,data-cards,.dl-table th,texto,"[95, 102, 114]","[240, 243, 245]",5.19097522,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-2)
+eletia,light,data-cards,.dl-table-primary,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+eletia,light,data-cards,.dl-table-secondary,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+eletia,light,data-cards,.dl-avatar-stack-label,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+eletia,light,data-cards,[data-family=status] .dl-status--in-progress,texto,"[129.80917263717936, 80.67838750823206, 47.67680782063647]","[244.28, 234.28, 221.6]",5.61146464,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-amber, var(--color-warning-bg))"
+eletia,light,data-cards,[data-family=status] .dl-status--done,texto,"[26.088484619010334, 103.4599635631421, 65.82532285733357]","[220.88, 239.56, 229.76]",5.72027778,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-green, var(--color-success-bg))"
+eletia,light,data-cards,[data-family=status] .dl-status--need-review,texto,"[140.84989013496758, 42.821740242402434, 76.483752617019]","[246.20000000000002, 223.6, 232.76]",6.48375458,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-magenta, color-mix(in srgb, var(--status-color) 12%, transparent))"
+eletia,light,data-cards,[data-family=status] .dl-status--pending,texto,"[29.450770764957536, 67.55464940232876, 151.2430829778538]","[222.68, 231.88, 249.07999999999998]",7.34491869,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-cyan, var(--color-info-bg))"
+eletia,light,data-cards,[data-family=status] .dl-status--blocked,texto,"[133.53609239346952, 44.75167623245376, 48.79099759896958]","[244.64000000000001, 224.56, 225.44]",6.88960649,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))",var(--color-error-bg)
+eletia,light,data-cards,.dl-tooltip-value,texto,"[111, 50, 177]","[233, 237, 241]",6.45049876,4.5,atende ao par medido,var(--accent-primary-text),transparent
+eletia,light,data-cards,.dl-tooltip-label,texto,"[95, 102, 114]","[233, 237, 241]",4.91681615,4.5,atende ao par medido,var(--text-muted),transparent
+eletia,light,data-patterns,.td-warning,texto,"[75, 85, 99]","[250.44, 238.68, 225.12]",6.65005839,4.5,atende ao par medido,var(--text-secondary),var(--color-warning-bg)
+eletia,light,data-patterns,.td-error,texto,"[75, 85, 99]","[250.8, 228.96, 228.96]",6.27215611,4.5,atende ao par medido,var(--text-secondary),var(--color-error-bg)
+eletia,light,data-patterns,.tr-selected .td-name,texto,"[15, 23, 41]","[237.72, 230.4, 245.64000000000001]",14.73789593,4.5,atende ao par medido,var(--text-primary),var(--accent-primary-muted)
+eletia,light,data-patterns,.bulk-toolbar-count,texto,"[111, 50, 177]","[253.25, 253.75, 254]",7.50344271,4.5,atende ao par medido,var(--accent-primary-text),transparent
+eletia,light,data-patterns,.chart-period-btn:not(.active),texto,"[95, 102, 114]","[240, 243, 245]",5.19097522,4.5,atende ao par medido,var(--text-muted),transparent
+eletia,light,data-patterns,.chart-period-btn.active,texto,"[111, 50, 177]","[255, 255, 255]",7.58942707,4.5,atende ao par medido,var(--accent-primary-text),var(--bg-base)
+eletia,light,data-table,[data-family=basic] th,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-1)
+eletia,light,data-table,[data-family=basic] .td-name,texto,"[15, 23, 41]","[255, 255, 255]",17.87402645,4.5,atende ao par medido,var(--text-primary),transparent
+eletia,light,data-table,[data-family=basic] .td-score,texto,"[111, 50, 177]","[255, 255, 255]",7.58942707,4.5,atende ao par medido,var(--accent-primary-text),transparent
+eletia,light,stat-card,[data-family=standard] .stat-label,texto,"[75, 85, 99]","[255, 255, 255]",7.55737813,4.5,atende ao par medido,var(--text-secondary),transparent
+eletia,light,stat-card,.stat-variation.up,texto,"[22, 163, 74]","[255, 255, 255]",3.29573361,4.5,pendente,var(--color-success),transparent
+eletia,light,stat-card,.stat-variation.down,texto,"[220, 38, 38]","[255, 255, 255]",4.82940452,4.5,atende ao par medido,var(--color-error),transparent
+eletia,light,stat-card,.stat-card-mini-label,texto,"[95, 102, 114]","[255, 255, 255]",5.78495075,4.5,atende ao par medido,var(--text-muted),transparent
+emprega,dark,data-cards,[data-family=statcard] .dl-statcard-label,texto,"[138, 147, 157]","[23, 27, 43]",5.48902337,4.5,atende ao par medido,var(--text-muted),transparent
+emprega,dark,data-cards,.dl-statcard--compact .dl-statcard-label,texto,"[163, 171, 196]","[23, 27, 43]",7.47468498,4.5,atende ao par medido,var(--text-secondary),transparent
+emprega,dark,data-cards,.dl-statcard--compact .dl-statcard-value,texto,"[232, 234, 242]","[23, 27, 43]",14.23549667,4.5,atende ao par medido,var(--text-primary),transparent
+emprega,dark,data-cards,[data-family=delta] .dl-delta--positive,texto,"[34, 197, 94]","[24.32, 47.400000000000006, 49.120000000000005]",6.15553917,4.5,atende ao par medido,var(--delta-positive-fg),var(--delta-positive-bg)
+emprega,dark,data-cards,[data-family=delta] .dl-delta--negative,texto,"[245, 158, 11]","[49.64, 42.72, 39.160000000000004]",6.49791716,4.5,atende ao par medido,var(--delta-negative-fg),var(--delta-negative-bg)
+emprega,dark,data-cards,[data-family=delta] .dl-delta--neutral,texto,"[163, 171, 196]","[30, 35, 53]",6.81470313,4.5,atende ao par medido,var(--delta-neutral-fg),var(--delta-neutral-bg)
+emprega,dark,data-cards,.dl-chart-title,texto,"[232, 234, 242]","[23, 27, 43]",14.23549667,4.5,atende ao par medido,var(--text-primary),transparent
+emprega,dark,data-cards,.dl-chart-meta,texto,"[163, 171, 196]","[23, 27, 43]",7.47468498,4.5,atende ao par medido,var(--text-secondary),transparent
+emprega,dark,data-cards,.dl-donut-value,texto,"[232, 234, 242]","[23, 27, 43]",14.23549667,4.5,atende ao par medido,var(--text-primary),transparent
+emprega,dark,data-cards,.dl-donut-label,texto,"[138, 147, 157]","[23, 27, 43]",5.48902337,4.5,atende ao par medido,var(--text-muted),transparent
+emprega,dark,data-cards,.dl-table th,texto,"[138, 147, 157]","[30, 35, 53]",5.00436671,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-2)
+emprega,dark,data-cards,.dl-table-primary,texto,"[232, 234, 242]","[23, 27, 43]",14.23549667,4.5,atende ao par medido,var(--text-primary),transparent
+emprega,dark,data-cards,.dl-table-secondary,texto,"[138, 147, 157]","[23, 27, 43]",5.48902337,4.5,atende ao par medido,var(--text-muted),transparent
+emprega,dark,data-cards,.dl-avatar-stack-label,texto,"[138, 147, 157]","[23, 27, 43]",5.48902337,4.5,atende ao par medido,var(--text-muted),transparent
+emprega,dark,data-cards,[data-family=status] .dl-status--in-progress,texto,"[242.10887575474482, 190.4189217746467, 132.81582344291905]","[49.64, 42.72, 39.160000000000004]",8.31903790,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-amber, var(--color-warning-bg))"
+emprega,dark,data-cards,[data-family=status] .dl-status--done,texto,"[135.55187236470047, 213.5564159874061, 155.60636717997383]","[24.32, 47.400000000000006, 49.120000000000005]",8.07508698,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-green, var(--color-success-bg))"
+emprega,dark,data-cards,[data-family=status] .dl-status--need-review,texto,"[242.4514999628868, 131.04138697934582, 154.13473104191286]","[48.199999999999996, 27.36, 49.72]",6.38558071,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-magenta, color-mix(in srgb, var(--status-color) 12%, transparent))"
+emprega,dark,data-cards,[data-family=status] .dl-status--pending,texto,"[130.1313794228976, 174.06599804613433, 247.63066895765854]","[27.32, 39.36, 67.36]",6.57218154,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-cyan, var(--color-info-bg))"
+emprega,dark,data-cards,[data-family=status] .dl-status--blocked,texto,"[244.56048530604474, 143.55615408138385, 138.5318929418499]","[48.92, 31.92, 46]",6.68841345,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))",var(--color-error-bg)
+emprega,dark,data-cards,.dl-tooltip-value,texto,"[185, 186, 249]","[28, 35, 51]",8.56340111,4.5,atende ao par medido,var(--accent-primary-text),transparent
+emprega,dark,data-cards,.dl-tooltip-label,texto,"[138, 147, 157]","[28, 35, 51]",5.03966090,4.5,atende ao par medido,var(--text-muted),transparent
+emprega,dark,data-patterns,.td-warning,texto,"[163, 171, 196]","[49.64, 42.72, 39.160000000000004]",6.10019193,4.5,atende ao par medido,var(--text-secondary),var(--color-warning-bg)
+emprega,dark,data-patterns,.td-error,texto,"[163, 171, 196]","[48.92, 31.92, 46]",6.67415460,4.5,atende ao par medido,var(--text-secondary),var(--color-error-bg)
+emprega,dark,data-patterns,.tr-selected .td-name,texto,"[232, 234, 242]","[31.4, 33.45, 70.9]",12.73476063,4.5,atende ao par medido,var(--text-primary),var(--accent-primary-muted)
+emprega,dark,data-patterns,.bulk-toolbar-count,texto,"[185, 186, 249]","[22.4, 27, 40]",9.37002297,4.5,atende ao par medido,var(--accent-primary-text),transparent
+emprega,dark,data-patterns,.chart-period-btn:not(.active),texto,"[138, 147, 157]","[30, 35, 53]",5.00436671,4.5,atende ao par medido,var(--text-muted),transparent
+emprega,dark,data-patterns,.chart-period-btn.active,texto,"[185, 186, 249]","[23, 27, 43]",9.32695864,4.5,atende ao par medido,var(--accent-primary-text),var(--bg-base)
+emprega,dark,data-table,[data-family=basic] th,texto,"[138, 147, 157]","[23, 27, 43]",5.48902337,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-1)
+emprega,dark,data-table,[data-family=basic] .td-name,texto,"[232, 234, 242]","[23, 27, 43]",14.23549667,4.5,atende ao par medido,var(--text-primary),transparent
+emprega,dark,data-table,[data-family=basic] .td-score,texto,"[185, 186, 249]","[23, 27, 43]",9.32695864,4.5,atende ao par medido,var(--accent-primary-text),transparent
+emprega,dark,stat-card,[data-family=standard] .stat-label,texto,"[163, 171, 196]","[23, 27, 43]",7.47468498,4.5,atende ao par medido,var(--text-secondary),transparent
+emprega,dark,stat-card,.stat-variation.up,texto,"[34, 197, 94]","[23, 27, 43]",7.50446550,4.5,atende ao par medido,var(--color-success),transparent
+emprega,dark,stat-card,.stat-variation.down,texto,"[239, 68, 68]","[23, 27, 43]",4.54402471,4.5,atende ao par medido,var(--color-error),transparent
+emprega,dark,stat-card,.stat-card-mini-label,texto,"[138, 147, 157]","[23, 27, 43]",5.48902337,4.5,atende ao par medido,var(--text-muted),transparent
+emprega,light,data-cards,[data-family=statcard] .dl-statcard-label,texto,"[95, 102, 114]","[255, 255, 255]",5.78495075,4.5,atende ao par medido,var(--text-muted),transparent
+emprega,light,data-cards,.dl-statcard--compact .dl-statcard-label,texto,"[107, 114, 128]","[255, 255, 255]",4.83449008,4.5,atende ao par medido,var(--text-secondary),transparent
+emprega,light,data-cards,.dl-statcard--compact .dl-statcard-value,texto,"[30, 36, 51]","[255, 255, 255]",15.49406531,4.5,atende ao par medido,var(--text-primary),transparent
+emprega,light,data-cards,[data-family=delta] .dl-delta--positive,texto,"[22, 163, 74]","[227.04, 243.96, 233.28]",2.88498806,4.5,pendente,var(--delta-positive-fg),var(--delta-positive-bg)
+emprega,light,data-cards,[data-family=delta] .dl-delta--negative,texto,"[217, 119, 6]","[250.44, 238.68, 225.12]",2.80334134,4.5,pendente,var(--delta-negative-fg),var(--delta-negative-bg)
+emprega,light,data-cards,[data-family=delta] .dl-delta--neutral,texto,"[107, 114, 128]","[250, 251, 254]",4.67214841,4.5,atende ao par medido,var(--delta-neutral-fg),var(--delta-neutral-bg)
+emprega,light,data-cards,.dl-chart-title,texto,"[30, 36, 51]","[255, 255, 255]",15.49406531,4.5,atende ao par medido,var(--text-primary),transparent
+emprega,light,data-cards,.dl-chart-meta,texto,"[107, 114, 128]","[255, 255, 255]",4.83449008,4.5,atende ao par medido,var(--text-secondary),transparent
+emprega,light,data-cards,.dl-donut-value,texto,"[30, 36, 51]","[255, 255, 255]",15.49406531,4.5,atende ao par medido,var(--text-primary),transparent
+emprega,light,data-cards,.dl-donut-label,texto,"[95, 102, 114]","[255, 255, 255]",5.78495075,4.5,atende ao par medido,var(--text-muted),transparent
+emprega,light,data-cards,.dl-table th,texto,"[95, 102, 114]","[250, 251, 254]",5.59069271,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-2)
+emprega,light,data-cards,.dl-table-primary,texto,"[30, 36, 51]","[255, 255, 255]",15.49406531,4.5,atende ao par medido,var(--text-primary),transparent
+emprega,light,data-cards,.dl-table-secondary,texto,"[95, 102, 114]","[255, 255, 255]",5.78495075,4.5,atende ao par medido,var(--text-muted),transparent
+emprega,light,data-cards,.dl-avatar-stack-label,texto,"[95, 102, 114]","[255, 255, 255]",5.78495075,4.5,atende ao par medido,var(--text-muted),transparent
+emprega,light,data-cards,[data-family=status] .dl-status--in-progress,texto,"[137.48445891286326, 86.43761600732104, 50.90673066276072]","[250.44, 238.68, 225.12]",5.33355383,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-amber, var(--color-warning-bg))"
+emprega,light,data-cards,[data-family=status] .dl-status--done,texto,"[37.49336928162663, 109.65770021378532, 69.40994270377091]","[227.04, 243.96, 233.28]",5.43390096,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-green, var(--color-success-bg))"
+emprega,light,data-cards,[data-family=status] .dl-status--need-review,texto,"[148.81505950593933, 49.03987123884504, 80.39739794218934]","[252.36, 228, 236.28]",6.16799968,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-magenta, color-mix(in srgb, var(--status-color) 12%, transparent))"
+emprega,light,data-cards,[data-family=status] .dl-status--pending,texto,"[36.852430022010395, 74.36139968299652, 156.52795042657067]","[228.84, 236.28, 252.6]",6.96648561,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-cyan, var(--color-info-bg))"
+emprega,light,data-cards,[data-family=status] .dl-status--blocked,texto,"[141.43493503960076, 50.64896069646583, 52.1325985417815]","[250.8, 228.96, 228.96]",6.55842934,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))",var(--color-error-bg)
+emprega,light,data-cards,.dl-tooltip-value,texto,"[54, 56, 133]","[232, 236, 240]",8.58115330,4.5,atende ao par medido,var(--accent-primary-text),transparent
+emprega,light,data-cards,.dl-tooltip-label,texto,"[95, 102, 114]","[232, 236, 240]",4.87247013,4.5,atende ao par medido,var(--text-muted),transparent
+emprega,light,data-patterns,.td-warning,texto,"[107, 114, 128]","[250.44, 238.68, 225.12]",4.25407341,4.5,pendente,var(--text-secondary),var(--color-warning-bg)
+emprega,light,data-patterns,.td-error,texto,"[107, 114, 128]","[250.8, 228.96, 228.96]",4.01232755,4.5,pendente,var(--text-secondary),var(--color-error-bg)
+emprega,light,data-patterns,.tr-selected .td-name,texto,"[30, 36, 51]","[233.88, 232.8, 251.88]",12.93495317,4.5,atende ao par medido,var(--text-primary),var(--accent-primary-muted)
+emprega,light,data-patterns,.bulk-toolbar-count,texto,"[54, 56, 133]","[255, 255, 255]",10.18816901,4.5,atende ao par medido,var(--accent-primary-text),transparent
+emprega,light,data-patterns,.chart-period-btn:not(.active),texto,"[95, 102, 114]","[250, 251, 254]",5.59069271,4.5,atende ao par medido,var(--text-muted),transparent
+emprega,light,data-patterns,.chart-period-btn.active,texto,"[54, 56, 133]","[255, 255, 255]",10.18816901,4.5,atende ao par medido,var(--accent-primary-text),var(--bg-base)
+emprega,light,data-table,[data-family=basic] th,texto,"[95, 102, 114]","[255, 255, 255]",5.78495075,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-1)
+emprega,light,data-table,[data-family=basic] .td-name,texto,"[30, 36, 51]","[255, 255, 255]",15.49406531,4.5,atende ao par medido,var(--text-primary),transparent
+emprega,light,data-table,[data-family=basic] .td-score,texto,"[54, 56, 133]","[255, 255, 255]",10.18816901,4.5,atende ao par medido,var(--accent-primary-text),transparent
+emprega,light,stat-card,[data-family=standard] .stat-label,texto,"[107, 114, 128]","[255, 255, 255]",4.83449008,4.5,atende ao par medido,var(--text-secondary),transparent
+emprega,light,stat-card,.stat-variation.up,texto,"[22, 163, 74]","[255, 255, 255]",3.29573361,4.5,pendente,var(--color-success),transparent
+emprega,light,stat-card,.stat-variation.down,texto,"[220, 38, 38]","[255, 255, 255]",4.82940452,4.5,atende ao par medido,var(--color-error),transparent
+emprega,light,stat-card,.stat-card-mini-label,texto,"[95, 102, 114]","[255, 255, 255]",5.78495075,4.5,atende ao par medido,var(--text-muted),transparent
+pdv,dark,data-cards,[data-family=statcard] .dl-statcard-label,texto,"[138, 147, 157]","[28, 42, 74]",4.55644732,4.5,atende ao par medido,var(--text-muted),transparent
+pdv,dark,data-cards,.dl-statcard--compact .dl-statcard-label,texto,"[139, 148, 158]","[28, 42, 74]",4.61489727,4.5,atende ao par medido,var(--text-secondary),transparent
+pdv,dark,data-cards,.dl-statcard--compact .dl-statcard-value,texto,"[230, 237, 243]","[28, 42, 74]",12.01295390,4.5,atende ao par medido,var(--text-primary),transparent
+pdv,dark,data-cards,[data-family=delta] .dl-delta--positive,texto,"[34, 197, 94]","[28.72, 60.6, 76.4]",5.07526483,4.5,atende ao par medido,var(--delta-positive-fg),var(--delta-positive-bg)
+pdv,dark,data-cards,[data-family=delta] .dl-delta--negative,texto,"[245, 158, 11]","[54.04, 55.92, 66.44]",5.42952738,4.5,atende ao par medido,var(--delta-negative-fg),var(--delta-negative-bg)
+pdv,dark,data-cards,[data-family=delta] .dl-delta--neutral,texto,"[139, 148, 158]","[36, 54, 97]",3.84583094,4.5,pendente,var(--delta-neutral-fg),var(--delta-neutral-bg)
+pdv,dark,data-cards,.dl-chart-title,texto,"[230, 237, 243]","[28, 42, 74]",12.01295390,4.5,atende ao par medido,var(--text-primary),transparent
+pdv,dark,data-cards,.dl-chart-meta,texto,"[139, 148, 158]","[28, 42, 74]",4.61489727,4.5,atende ao par medido,var(--text-secondary),transparent
+pdv,dark,data-cards,.dl-donut-value,texto,"[230, 237, 243]","[28, 42, 74]",12.01295390,4.5,atende ao par medido,var(--text-primary),transparent
+pdv,dark,data-cards,.dl-donut-label,texto,"[138, 147, 157]","[28, 42, 74]",4.55644732,4.5,atende ao par medido,var(--text-muted),transparent
+pdv,dark,data-cards,.dl-table th,texto,"[138, 147, 157]","[36, 54, 97]",3.79712159,4.5,pendente,var(--text-muted),var(--bg-surface-2)
+pdv,dark,data-cards,.dl-table-primary,texto,"[230, 237, 243]","[28, 42, 74]",12.01295390,4.5,atende ao par medido,var(--text-primary),transparent
+pdv,dark,data-cards,.dl-table-secondary,texto,"[138, 147, 157]","[28, 42, 74]",4.55644732,4.5,atende ao par medido,var(--text-muted),transparent
+pdv,dark,data-cards,.dl-avatar-stack-label,texto,"[138, 147, 157]","[28, 42, 74]",4.55644732,4.5,atende ao par medido,var(--text-muted),transparent
+pdv,dark,data-cards,[data-family=status] .dl-status--in-progress,texto,"[241.61832612398482, 191.64138927213077, 133.101000392765]","[54.04, 55.92, 66.44]",7.00169274,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-amber, var(--color-warning-bg))"
+pdv,dark,data-cards,[data-family=status] .dl-status--done,texto,"[134.14010406545378, 214.63811568660836, 155.93018095624672]","[28.72, 60.6, 76.4]",6.70660865,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-green, var(--color-success-bg))"
+pdv,dark,data-cards,[data-family=status] .dl-status--need-review,texto,"[242.17835924853162, 132.44714953050584, 154.48509727953913]","[52.599999999999994, 40.56, 77]",5.47135848,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-magenta, color-mix(in srgb, var(--status-color) 12%, transparent))"
+pdv,dark,data-cards,[data-family=status] .dl-status--pending,texto,"[128.8925949222315, 175.20033942742828, 248.08739446415302]","[31.72, 52.56, 94.64]",5.46750849,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-cyan, var(--color-info-bg))"
+pdv,dark,data-cards,[data-family=status] .dl-status--blocked,texto,"[244.25687260599153, 144.90285209283738, 138.85150138620793]","[53.32, 45.120000000000005, 73.28]",5.69788543,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))",var(--color-error-bg)
+pdv,dark,data-cards,.dl-tooltip-value,texto,"[196, 153, 59]","[28, 35, 51]",5.95607886,4.5,atende ao par medido,var(--accent-primary-text),transparent
+pdv,dark,data-cards,.dl-tooltip-label,texto,"[138, 147, 157]","[28, 35, 51]",5.03966090,4.5,atende ao par medido,var(--text-muted),transparent
+pdv,dark,data-patterns,.td-warning,texto,"[139, 148, 158]","[53.16, 55.92, 66.44]",3.80132965,4.5,pendente,var(--text-secondary),var(--color-warning-bg)
+pdv,dark,data-patterns,.td-error,texto,"[139, 148, 158]","[52.44, 45.120000000000005, 73.28]",4.20799977,4.5,pendente,var(--text-secondary),var(--color-error-bg)
+pdv,dark,data-patterns,.tr-selected .td-name,texto,"[230, 237, 243]","[52.349999999999994, 58.64999999999999, 71.75]",9.55912998,4.5,atende ao par medido,var(--text-primary),var(--accent-primary-muted)
+pdv,dark,data-patterns,.bulk-toolbar-count,texto,"[196, 153, 59]","[24.4, 33, 52.400000000000006]",6.09231961,4.5,atende ao par medido,var(--accent-primary-text),transparent
+pdv,dark,data-patterns,.chart-period-btn:not(.active),texto,"[138, 147, 157]","[36, 54, 97]",3.79712159,4.5,pendente,var(--text-muted),transparent
+pdv,dark,data-patterns,.chart-period-btn.active,texto,"[196, 153, 59]","[27, 42, 74]",5.39510928,4.5,atende ao par medido,var(--accent-primary-text),var(--bg-base)
+pdv,dark,data-table,[data-family=basic] th,texto,"[138, 147, 157]","[28, 42, 74]",4.55644732,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-1)
+pdv,dark,data-table,[data-family=basic] .td-name,texto,"[230, 237, 243]","[27, 42, 74]",12.03551228,4.5,atende ao par medido,var(--text-primary),transparent
+pdv,dark,data-table,[data-family=basic] .td-score,texto,"[196, 153, 59]","[27, 42, 74]",5.39510928,4.5,atende ao par medido,var(--accent-primary-text),transparent
+pdv,dark,stat-card,[data-family=standard] .stat-label,texto,"[139, 148, 158]","[27, 42, 74]",4.62356330,4.5,atende ao par medido,var(--text-secondary),transparent
+pdv,dark,stat-card,.stat-variation.up,texto,"[34, 197, 94]","[27, 42, 74]",6.24116708,4.5,atende ao par medido,var(--color-success),transparent
+pdv,dark,stat-card,.stat-variation.down,texto,"[239, 68, 68]","[27, 42, 74]",3.77908559,4.5,pendente,var(--color-error),transparent
+pdv,dark,stat-card,.stat-card-mini-label,texto,"[138, 147, 157]","[27, 42, 74]",4.56500359,4.5,atende ao par medido,var(--text-muted),transparent
+pdv,light,data-cards,[data-family=statcard] .dl-statcard-label,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+pdv,light,data-cards,.dl-statcard--compact .dl-statcard-label,texto,"[75, 85, 99]","[248, 250, 251]",7.21857061,4.5,atende ao par medido,var(--text-secondary),transparent
+pdv,light,data-cards,.dl-statcard--compact .dl-statcard-value,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+pdv,light,data-cards,[data-family=delta] .dl-delta--positive,texto,"[22, 163, 74]","[220.88, 239.56, 229.76]",2.76573060,4.5,pendente,var(--delta-positive-fg),var(--delta-positive-bg)
+pdv,light,data-cards,[data-family=delta] .dl-delta--negative,texto,"[217, 119, 6]","[244.28, 234.28, 221.6]",2.68643562,4.5,pendente,var(--delta-negative-fg),var(--delta-negative-bg)
+pdv,light,data-cards,[data-family=delta] .dl-delta--neutral,texto,"[75, 85, 99]","[240, 243, 245]",6.78141687,4.5,atende ao par medido,var(--delta-neutral-fg),var(--delta-neutral-bg)
+pdv,light,data-cards,.dl-chart-title,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+pdv,light,data-cards,.dl-chart-meta,texto,"[75, 85, 99]","[248, 250, 251]",7.21857061,4.5,atende ao par medido,var(--text-secondary),transparent
+pdv,light,data-cards,.dl-donut-value,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+pdv,light,data-cards,.dl-donut-label,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+pdv,light,data-cards,.dl-table th,texto,"[95, 102, 114]","[240, 243, 245]",5.19097522,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-2)
+pdv,light,data-cards,.dl-table-primary,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+pdv,light,data-cards,.dl-table-secondary,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+pdv,light,data-cards,.dl-avatar-stack-label,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+pdv,light,data-cards,[data-family=status] .dl-status--in-progress,texto,"[129.80917263717936, 80.67838750823206, 47.67680782063647]","[244.28, 234.28, 221.6]",5.61146464,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-amber, var(--color-warning-bg))"
+pdv,light,data-cards,[data-family=status] .dl-status--done,texto,"[26.088484619010334, 103.4599635631421, 65.82532285733357]","[220.88, 239.56, 229.76]",5.72027778,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-green, var(--color-success-bg))"
+pdv,light,data-cards,[data-family=status] .dl-status--need-review,texto,"[140.84989013496758, 42.821740242402434, 76.483752617019]","[246.20000000000002, 223.6, 232.76]",6.48375458,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-magenta, color-mix(in srgb, var(--status-color) 12%, transparent))"
+pdv,light,data-cards,[data-family=status] .dl-status--pending,texto,"[29.450770764957536, 67.55464940232876, 151.2430829778538]","[222.68, 231.88, 249.07999999999998]",7.34491869,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-cyan, var(--color-info-bg))"
+pdv,light,data-cards,[data-family=status] .dl-status--blocked,texto,"[133.53609239346952, 44.75167623245376, 48.79099759896958]","[244.64000000000001, 224.56, 225.44]",6.88960649,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))",var(--color-error-bg)
+pdv,light,data-cards,.dl-tooltip-value,texto,"[134, 100, 37]","[232, 236, 240]",4.57842465,4.5,atende ao par medido,var(--accent-primary-text),transparent
+pdv,light,data-cards,.dl-tooltip-label,texto,"[95, 102, 114]","[232, 236, 240]",4.87247013,4.5,atende ao par medido,var(--text-muted),transparent
+pdv,light,data-patterns,.td-warning,texto,"[75, 85, 99]","[250.44, 238.68, 225.12]",6.65005839,4.5,atende ao par medido,var(--text-secondary),var(--color-warning-bg)
+pdv,light,data-patterns,.td-error,texto,"[75, 85, 99]","[250.8, 228.96, 228.96]",6.27215611,4.5,atende ao par medido,var(--text-secondary),var(--color-error-bg)
+pdv,light,data-patterns,.tr-selected .td-name,texto,"[15, 23, 41]","[247.92000000000002, 242.76, 231.48000000000002]",16.12001398,4.5,atende ao par medido,var(--text-primary),var(--accent-primary-muted)
+pdv,light,data-patterns,.bulk-toolbar-count,texto,"[134, 100, 37]","[253.25, 253.75, 254]",5.37425327,4.5,atende ao par medido,var(--accent-primary-text),transparent
+pdv,light,data-patterns,.chart-period-btn:not(.active),texto,"[95, 102, 114]","[240, 243, 245]",5.19097522,4.5,atende ao par medido,var(--text-muted),transparent
+pdv,light,data-patterns,.chart-period-btn.active,texto,"[134, 100, 37]","[255, 255, 255]",5.43583857,4.5,atende ao par medido,var(--accent-primary-text),var(--bg-base)
+pdv,light,data-table,[data-family=basic] th,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-1)
+pdv,light,data-table,[data-family=basic] .td-name,texto,"[15, 23, 41]","[255, 255, 255]",17.87402645,4.5,atende ao par medido,var(--text-primary),transparent
+pdv,light,data-table,[data-family=basic] .td-score,texto,"[134, 100, 37]","[255, 255, 255]",5.43583857,4.5,atende ao par medido,var(--accent-primary-text),transparent
+pdv,light,stat-card,[data-family=standard] .stat-label,texto,"[75, 85, 99]","[255, 255, 255]",7.55737813,4.5,atende ao par medido,var(--text-secondary),transparent
+pdv,light,stat-card,.stat-variation.up,texto,"[22, 163, 74]","[255, 255, 255]",3.29573361,4.5,pendente,var(--color-success),transparent
+pdv,light,stat-card,.stat-variation.down,texto,"[220, 38, 38]","[255, 255, 255]",4.82940452,4.5,atende ao par medido,var(--color-error),transparent
+pdv,light,stat-card,.stat-card-mini-label,texto,"[95, 102, 114]","[255, 255, 255]",5.78495075,4.5,atende ao par medido,var(--text-muted),transparent
+resultx,dark,data-cards,[data-family=statcard] .dl-statcard-label,texto,"[138, 147, 157]","[17, 22, 32]",5.81394498,4.5,atende ao par medido,var(--text-muted),transparent
+resultx,dark,data-cards,.dl-statcard--compact .dl-statcard-label,texto,"[139, 148, 158]","[17, 22, 32]",5.88852607,4.5,atende ao par medido,var(--text-secondary),transparent
+resultx,dark,data-cards,.dl-statcard--compact .dl-statcard-value,texto,"[230, 237, 243]","[17, 22, 32]",15.32831351,4.5,atende ao par medido,var(--text-primary),transparent
+resultx,dark,data-cards,[data-family=delta] .dl-delta--positive,texto,"[34, 197, 94]","[19.04, 43, 39.44]",6.56793014,4.5,atende ao par medido,var(--delta-positive-fg),var(--delta-positive-bg)
+resultx,dark,data-cards,[data-family=delta] .dl-delta--negative,texto,"[245, 158, 11]","[44.36, 38.32, 29.48]",6.94331091,4.5,atende ao par medido,var(--delta-negative-fg),var(--delta-negative-bg)
+resultx,dark,data-cards,[data-family=delta] .dl-delta--neutral,texto,"[139, 148, 158]","[22, 27, 38]",5.60145588,4.5,atende ao par medido,var(--delta-neutral-fg),var(--delta-neutral-bg)
+resultx,dark,data-cards,.dl-chart-title,texto,"[230, 237, 243]","[17, 22, 32]",15.32831351,4.5,atende ao par medido,var(--text-primary),transparent
+resultx,dark,data-cards,.dl-chart-meta,texto,"[139, 148, 158]","[17, 22, 32]",5.88852607,4.5,atende ao par medido,var(--text-secondary),transparent
+resultx,dark,data-cards,.dl-donut-value,texto,"[230, 237, 243]","[17, 22, 32]",15.32831351,4.5,atende ao par medido,var(--text-primary),transparent
+resultx,dark,data-cards,.dl-donut-label,texto,"[138, 147, 157]","[17, 22, 32]",5.81394498,4.5,atende ao par medido,var(--text-muted),transparent
+resultx,dark,data-cards,.dl-table th,texto,"[138, 147, 157]","[22, 27, 38]",5.53051067,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-2)
+resultx,dark,data-cards,.dl-table-primary,texto,"[230, 237, 243]","[17, 22, 32]",15.32831351,4.5,atende ao par medido,var(--text-primary),transparent
+resultx,dark,data-cards,.dl-table-secondary,texto,"[138, 147, 157]","[17, 22, 32]",5.81394498,4.5,atende ao par medido,var(--text-muted),transparent
+resultx,dark,data-cards,.dl-avatar-stack-label,texto,"[138, 147, 157]","[17, 22, 32]",5.81394498,4.5,atende ao par medido,var(--text-muted),transparent
+resultx,dark,data-cards,[data-family=status] .dl-status--in-progress,texto,"[241.61832612398482, 191.64138927213077, 133.101000392765]","[44.36, 38.32, 29.48]",8.95380503,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-amber, var(--color-warning-bg))"
+resultx,dark,data-cards,[data-family=status] .dl-status--done,texto,"[134.14010406545378, 214.63811568660836, 155.93018095624672]","[19.04, 43, 39.44]",8.67906180,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-green, var(--color-success-bg))"
+resultx,dark,data-cards,[data-family=status] .dl-status--need-review,texto,"[242.17835924853162, 132.44714953050584, 154.48509727953913]","[42.92, 22.96, 40.04]",6.83208849,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-magenta, color-mix(in srgb, var(--status-color) 12%, transparent))"
+resultx,dark,data-cards,[data-family=status] .dl-status--pending,texto,"[128.8925949222315, 175.20033942742828, 248.08739446415302]","[22.04, 34.96, 57.68]",7.06982706,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-cyan, var(--color-info-bg))"
+resultx,dark,data-cards,[data-family=status] .dl-status--blocked,texto,"[244.25687260599153, 144.90285209283738, 138.85150138620793]","[43.64, 27.52, 36.32]",7.17109190,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))",var(--color-error-bg)
+resultx,dark,data-cards,.dl-tooltip-value,texto,"[196, 153, 59]","[28, 35, 51]",5.95607886,4.5,atende ao par medido,var(--accent-primary-text),transparent
+resultx,dark,data-cards,.dl-tooltip-label,texto,"[138, 147, 157]","[28, 35, 51]",5.03966090,4.5,atende ao par medido,var(--text-muted),transparent
+resultx,dark,data-patterns,.td-warning,texto,"[139, 148, 158]","[39.08, 31.28, 18.92]",5.27275061,4.5,atende ao par medido,var(--text-secondary),var(--color-warning-bg)
+resultx,dark,data-patterns,.td-error,texto,"[139, 148, 158]","[38.36, 20.48, 25.76]",5.68021615,4.5,atende ao par medido,var(--text-secondary),var(--color-error-bg)
+resultx,dark,data-patterns,.tr-selected .td-name,texto,"[230, 237, 243]","[38.75, 34.85, 25.85]",13.27565573,4.5,atende ao par medido,var(--text-primary),var(--accent-primary-muted)
+resultx,dark,data-patterns,.bulk-toolbar-count,texto,"[196, 153, 59]","[20, 25, 35.6]",6.67355919,4.5,atende ao par medido,var(--accent-primary-text),transparent
+resultx,dark,data-patterns,.chart-period-btn:not(.active),texto,"[138, 147, 157]","[22, 27, 38]",5.53051067,4.5,atende ao par medido,var(--text-muted),transparent
+resultx,dark,data-patterns,.chart-period-btn.active,texto,"[196, 153, 59]","[11, 14, 20]",7.32817741,4.5,atende ao par medido,var(--accent-primary-text),var(--bg-base)
+resultx,dark,data-table,[data-family=basic] th,texto,"[138, 147, 157]","[17, 22, 32]",5.81394498,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-1)
+resultx,dark,data-table,[data-family=basic] .td-name,texto,"[230, 237, 243]","[11, 14, 20]",16.34783738,4.5,atende ao par medido,var(--text-primary),transparent
+resultx,dark,data-table,[data-family=basic] .td-score,texto,"[196, 153, 59]","[11, 14, 20]",7.32817741,4.5,atende ao par medido,var(--accent-primary-text),transparent
+resultx,dark,stat-card,[data-family=standard] .stat-label,texto,"[139, 148, 158]","[11, 14, 20]",6.28018643,4.5,atende ao par medido,var(--text-secondary),transparent
+resultx,dark,stat-card,.stat-variation.up,texto,"[34, 197, 94]","[11, 14, 20]",8.47737779,4.5,atende ao par medido,var(--color-success),transparent
+resultx,dark,stat-card,.stat-variation.down,texto,"[239, 68, 68]","[11, 14, 20]",5.13313229,4.5,atende ao par medido,var(--color-error),transparent
+resultx,dark,stat-card,.stat-card-mini-label,texto,"[138, 147, 157]","[11, 14, 20]",6.20064477,4.5,atende ao par medido,var(--text-muted),transparent
+resultx,light,data-cards,[data-family=statcard] .dl-statcard-label,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+resultx,light,data-cards,.dl-statcard--compact .dl-statcard-label,texto,"[75, 85, 99]","[248, 250, 251]",7.21857061,4.5,atende ao par medido,var(--text-secondary),transparent
+resultx,light,data-cards,.dl-statcard--compact .dl-statcard-value,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+resultx,light,data-cards,[data-family=delta] .dl-delta--positive,texto,"[22, 163, 74]","[220.88, 239.56, 229.76]",2.76573060,4.5,pendente,var(--delta-positive-fg),var(--delta-positive-bg)
+resultx,light,data-cards,[data-family=delta] .dl-delta--negative,texto,"[217, 119, 6]","[244.28, 234.28, 221.6]",2.68643562,4.5,pendente,var(--delta-negative-fg),var(--delta-negative-bg)
+resultx,light,data-cards,[data-family=delta] .dl-delta--neutral,texto,"[75, 85, 99]","[240, 243, 245]",6.78141687,4.5,atende ao par medido,var(--delta-neutral-fg),var(--delta-neutral-bg)
+resultx,light,data-cards,.dl-chart-title,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+resultx,light,data-cards,.dl-chart-meta,texto,"[75, 85, 99]","[248, 250, 251]",7.21857061,4.5,atende ao par medido,var(--text-secondary),transparent
+resultx,light,data-cards,.dl-donut-value,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+resultx,light,data-cards,.dl-donut-label,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+resultx,light,data-cards,.dl-table th,texto,"[95, 102, 114]","[240, 243, 245]",5.19097522,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-2)
+resultx,light,data-cards,.dl-table-primary,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+resultx,light,data-cards,.dl-table-secondary,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+resultx,light,data-cards,.dl-avatar-stack-label,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+resultx,light,data-cards,[data-family=status] .dl-status--in-progress,texto,"[129.80917263717936, 80.67838750823206, 47.67680782063647]","[244.28, 234.28, 221.6]",5.61146464,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-amber, var(--color-warning-bg))"
+resultx,light,data-cards,[data-family=status] .dl-status--done,texto,"[26.088484619010334, 103.4599635631421, 65.82532285733357]","[220.88, 239.56, 229.76]",5.72027778,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-green, var(--color-success-bg))"
+resultx,light,data-cards,[data-family=status] .dl-status--need-review,texto,"[140.84989013496758, 42.821740242402434, 76.483752617019]","[246.20000000000002, 223.6, 232.76]",6.48375458,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-magenta, color-mix(in srgb, var(--status-color) 12%, transparent))"
+resultx,light,data-cards,[data-family=status] .dl-status--pending,texto,"[29.450770764957536, 67.55464940232876, 151.2430829778538]","[222.68, 231.88, 249.07999999999998]",7.34491869,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-cyan, var(--color-info-bg))"
+resultx,light,data-cards,[data-family=status] .dl-status--blocked,texto,"[133.53609239346952, 44.75167623245376, 48.79099759896958]","[244.64000000000001, 224.56, 225.44]",6.88960649,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))",var(--color-error-bg)
+resultx,light,data-cards,.dl-tooltip-value,texto,"[134, 100, 37]","[232, 236, 240]",4.57842465,4.5,atende ao par medido,var(--accent-primary-text),transparent
+resultx,light,data-cards,.dl-tooltip-label,texto,"[95, 102, 114]","[232, 236, 240]",4.87247013,4.5,atende ao par medido,var(--text-muted),transparent
+resultx,light,data-patterns,.td-warning,texto,"[75, 85, 99]","[250.44, 238.68, 225.12]",6.65005839,4.5,atende ao par medido,var(--text-secondary),var(--color-warning-bg)
+resultx,light,data-patterns,.td-error,texto,"[75, 85, 99]","[250.8, 228.96, 228.96]",6.27215611,4.5,atende ao par medido,var(--text-secondary),var(--color-error-bg)
+resultx,light,data-patterns,.tr-selected .td-name,texto,"[15, 23, 41]","[247.92000000000002, 242.76, 231.48000000000002]",16.12001398,4.5,atende ao par medido,var(--text-primary),var(--accent-primary-muted)
+resultx,light,data-patterns,.bulk-toolbar-count,texto,"[134, 100, 37]","[253.25, 253.75, 254]",5.37425327,4.5,atende ao par medido,var(--accent-primary-text),transparent
+resultx,light,data-patterns,.chart-period-btn:not(.active),texto,"[95, 102, 114]","[240, 243, 245]",5.19097522,4.5,atende ao par medido,var(--text-muted),transparent
+resultx,light,data-patterns,.chart-period-btn.active,texto,"[134, 100, 37]","[255, 255, 255]",5.43583857,4.5,atende ao par medido,var(--accent-primary-text),var(--bg-base)
+resultx,light,data-table,[data-family=basic] th,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-1)
+resultx,light,data-table,[data-family=basic] .td-name,texto,"[15, 23, 41]","[255, 255, 255]",17.87402645,4.5,atende ao par medido,var(--text-primary),transparent
+resultx,light,data-table,[data-family=basic] .td-score,texto,"[134, 100, 37]","[255, 255, 255]",5.43583857,4.5,atende ao par medido,var(--accent-primary-text),transparent
+resultx,light,stat-card,[data-family=standard] .stat-label,texto,"[75, 85, 99]","[255, 255, 255]",7.55737813,4.5,atende ao par medido,var(--text-secondary),transparent
+resultx,light,stat-card,.stat-variation.up,texto,"[22, 163, 74]","[255, 255, 255]",3.29573361,4.5,pendente,var(--color-success),transparent
+resultx,light,stat-card,.stat-variation.down,texto,"[220, 38, 38]","[255, 255, 255]",4.82940452,4.5,atende ao par medido,var(--color-error),transparent
+resultx,light,stat-card,.stat-card-mini-label,texto,"[95, 102, 114]","[255, 255, 255]",5.78495075,4.5,atende ao par medido,var(--text-muted),transparent
+xscore,dark,data-cards,[data-family=statcard] .dl-statcard-label,texto,"[138, 147, 157]","[22, 27, 38]",5.53051067,4.5,atende ao par medido,var(--text-muted),transparent
+xscore,dark,data-cards,.dl-statcard--compact .dl-statcard-label,texto,"[139, 148, 158]","[22, 27, 38]",5.60145588,4.5,atende ao par medido,var(--text-secondary),transparent
+xscore,dark,data-cards,.dl-statcard--compact .dl-statcard-value,texto,"[230, 237, 243]","[22, 27, 38]",14.58104640,4.5,atende ao par medido,var(--text-primary),transparent
+xscore,dark,data-cards,[data-family=delta] .dl-delta--positive,texto,"[34, 197, 94]","[23.439999999999998, 47.400000000000006, 44.72]",6.19375737,4.5,atende ao par medido,var(--delta-positive-fg),var(--delta-positive-bg)
+xscore,dark,data-cards,[data-family=delta] .dl-delta--negative,texto,"[245, 158, 11]","[48.76, 42.72, 34.76]",6.54103437,4.5,atende ao par medido,var(--delta-negative-fg),var(--delta-negative-bg)
+xscore,dark,data-cards,[data-family=delta] .dl-delta--neutral,texto,"[139, 148, 158]","[28, 35, 51]",5.10430951,4.5,atende ao par medido,var(--delta-neutral-fg),var(--delta-neutral-bg)
+xscore,dark,data-cards,.dl-chart-title,texto,"[230, 237, 243]","[22, 27, 38]",14.58104640,4.5,atende ao par medido,var(--text-primary),transparent
+xscore,dark,data-cards,.dl-chart-meta,texto,"[139, 148, 158]","[22, 27, 38]",5.60145588,4.5,atende ao par medido,var(--text-secondary),transparent
+xscore,dark,data-cards,.dl-donut-value,texto,"[230, 237, 243]","[22, 27, 38]",14.58104640,4.5,atende ao par medido,var(--text-primary),transparent
+xscore,dark,data-cards,.dl-donut-label,texto,"[138, 147, 157]","[22, 27, 38]",5.53051067,4.5,atende ao par medido,var(--text-muted),transparent
+xscore,dark,data-cards,.dl-table th,texto,"[138, 147, 157]","[28, 35, 51]",5.03966090,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-2)
+xscore,dark,data-cards,.dl-table-primary,texto,"[230, 237, 243]","[22, 27, 38]",14.58104640,4.5,atende ao par medido,var(--text-primary),transparent
+xscore,dark,data-cards,.dl-table-secondary,texto,"[138, 147, 157]","[22, 27, 38]",5.53051067,4.5,atende ao par medido,var(--text-muted),transparent
+xscore,dark,data-cards,.dl-avatar-stack-label,texto,"[138, 147, 157]","[22, 27, 38]",5.53051067,4.5,atende ao par medido,var(--text-muted),transparent
+xscore,dark,data-cards,[data-family=status] .dl-status--in-progress,texto,"[241.61832612398482, 191.64138927213077, 133.101000392765]","[48.76, 42.72, 34.76]",8.43504593,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-amber, var(--color-warning-bg))"
+xscore,dark,data-cards,[data-family=status] .dl-status--done,texto,"[134.14010406545378, 214.63811568660836, 155.93018095624672]","[23.439999999999998, 47.400000000000006, 44.72]",8.18461857,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-green, var(--color-success-bg))"
+xscore,dark,data-cards,[data-family=status] .dl-status--need-review,texto,"[242.17835924853162, 132.44714953050584, 154.48509727953913]","[47.31999999999999, 27.36, 45.31999999999999]",6.49294407,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-magenta, color-mix(in srgb, var(--status-color) 12%, transparent))"
+xscore,dark,data-cards,[data-family=status] .dl-status--pending,texto,"[128.8925949222315, 175.20033942742828, 248.08739446415302]","[26.439999999999998, 39.36, 62.959999999999994]",6.68351888,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-cyan, var(--color-info-bg))"
+xscore,dark,data-cards,[data-family=status] .dl-status--blocked,texto,"[244.25687260599153, 144.90285209283738, 138.85150138620793]","[48.04, 31.92, 41.599999999999994]",6.79522337,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))",var(--color-error-bg)
+xscore,dark,data-cards,.dl-tooltip-value,texto,"[196, 153, 59]","[35, 43, 59]",5.38235724,4.5,atende ao par medido,var(--accent-primary-text),transparent
+xscore,dark,data-cards,.dl-tooltip-label,texto,"[138, 147, 157]","[35, 43, 59]",4.55421361,4.5,atende ao par medido,var(--text-muted),transparent
+xscore,dark,data-patterns,.td-warning,texto,"[139, 148, 158]","[39.08, 31.28, 18.92]",5.27275061,4.5,atende ao par medido,var(--text-secondary),var(--color-warning-bg)
+xscore,dark,data-patterns,.td-error,texto,"[139, 148, 158]","[38.36, 20.48, 25.76]",5.68021615,4.5,atende ao par medido,var(--text-secondary),var(--color-error-bg)
+xscore,dark,data-patterns,.tr-selected .td-name,texto,"[230, 237, 243]","[38.75, 34.85, 25.85]",13.27565573,4.5,atende ao par medido,var(--text-primary),var(--accent-primary-muted)
+xscore,dark,data-patterns,.bulk-toolbar-count,texto,"[196, 153, 59]","[22, 27, 38]",6.53618533,4.5,atende ao par medido,var(--accent-primary-text),transparent
+xscore,dark,data-patterns,.chart-period-btn:not(.active),texto,"[138, 147, 157]","[28, 35, 51]",5.03966090,4.5,atende ao par medido,var(--text-muted),transparent
+xscore,dark,data-patterns,.chart-period-btn.active,texto,"[196, 153, 59]","[11, 14, 20]",7.32817741,4.5,atende ao par medido,var(--accent-primary-text),var(--bg-base)
+xscore,dark,data-table,[data-family=basic] th,texto,"[138, 147, 157]","[22, 27, 38]",5.53051067,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-1)
+xscore,dark,data-table,[data-family=basic] .td-name,texto,"[230, 237, 243]","[11, 14, 20]",16.34783738,4.5,atende ao par medido,var(--text-primary),transparent
+xscore,dark,data-table,[data-family=basic] .td-score,texto,"[196, 153, 59]","[11, 14, 20]",7.32817741,4.5,atende ao par medido,var(--accent-primary-text),transparent
+xscore,dark,stat-card,[data-family=standard] .stat-label,texto,"[139, 148, 158]","[11, 14, 20]",6.28018643,4.5,atende ao par medido,var(--text-secondary),transparent
+xscore,dark,stat-card,.stat-variation.up,texto,"[34, 197, 94]","[11, 14, 20]",8.47737779,4.5,atende ao par medido,var(--color-success),transparent
+xscore,dark,stat-card,.stat-variation.down,texto,"[239, 68, 68]","[11, 14, 20]",5.13313229,4.5,atende ao par medido,var(--color-error),transparent
+xscore,dark,stat-card,.stat-card-mini-label,texto,"[138, 147, 157]","[11, 14, 20]",6.20064477,4.5,atende ao par medido,var(--text-muted),transparent
+xscore,light,data-cards,[data-family=statcard] .dl-statcard-label,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+xscore,light,data-cards,.dl-statcard--compact .dl-statcard-label,texto,"[75, 85, 99]","[248, 250, 251]",7.21857061,4.5,atende ao par medido,var(--text-secondary),transparent
+xscore,light,data-cards,.dl-statcard--compact .dl-statcard-value,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+xscore,light,data-cards,[data-family=delta] .dl-delta--positive,texto,"[22, 163, 74]","[220.88, 239.56, 229.76]",2.76573060,4.5,pendente,var(--delta-positive-fg),var(--delta-positive-bg)
+xscore,light,data-cards,[data-family=delta] .dl-delta--negative,texto,"[217, 119, 6]","[244.28, 234.28, 221.6]",2.68643562,4.5,pendente,var(--delta-negative-fg),var(--delta-negative-bg)
+xscore,light,data-cards,[data-family=delta] .dl-delta--neutral,texto,"[75, 85, 99]","[240, 243, 245]",6.78141687,4.5,atende ao par medido,var(--delta-neutral-fg),var(--delta-neutral-bg)
+xscore,light,data-cards,.dl-chart-title,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+xscore,light,data-cards,.dl-chart-meta,texto,"[75, 85, 99]","[248, 250, 251]",7.21857061,4.5,atende ao par medido,var(--text-secondary),transparent
+xscore,light,data-cards,.dl-donut-value,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+xscore,light,data-cards,.dl-donut-label,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+xscore,light,data-cards,.dl-table th,texto,"[95, 102, 114]","[240, 243, 245]",5.19097522,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-2)
+xscore,light,data-cards,.dl-table-primary,texto,"[15, 23, 41]","[248, 250, 251]",17.07270959,4.5,atende ao par medido,var(--text-primary),transparent
+xscore,light,data-cards,.dl-table-secondary,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+xscore,light,data-cards,.dl-avatar-stack-label,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),transparent
+xscore,light,data-cards,[data-family=status] .dl-status--in-progress,texto,"[129.80917263717936, 80.67838750823206, 47.67680782063647]","[244.28, 234.28, 221.6]",5.61146464,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-amber, var(--color-warning-bg))"
+xscore,light,data-cards,[data-family=status] .dl-status--done,texto,"[26.088484619010334, 103.4599635631421, 65.82532285733357]","[220.88, 239.56, 229.76]",5.72027778,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-green, var(--color-success-bg))"
+xscore,light,data-cards,[data-family=status] .dl-status--need-review,texto,"[140.84989013496758, 42.821740242402434, 76.483752617019]","[246.20000000000002, 223.6, 232.76]",6.48375458,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-magenta, color-mix(in srgb, var(--status-color) 12%, transparent))"
+xscore,light,data-cards,[data-family=status] .dl-status--pending,texto,"[29.450770764957536, 67.55464940232876, 151.2430829778538]","[222.68, 231.88, 249.07999999999998]",7.34491869,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))","var(--surface-accent-cyan, var(--color-info-bg))"
+xscore,light,data-cards,[data-family=status] .dl-status--blocked,texto,"[133.53609239346952, 44.75167623245376, 48.79099759896958]","[244.64000000000001, 224.56, 225.44]",6.88960649,4.5,atende ao par medido,"color-mix(in oklab, var(--status-color) 60%, var(--text-primary))",var(--color-error-bg)
+xscore,light,data-cards,.dl-tooltip-value,texto,"[134, 100, 37]","[233, 237, 241]",4.62009446,4.5,atende ao par medido,var(--accent-primary-text),transparent
+xscore,light,data-cards,.dl-tooltip-label,texto,"[95, 102, 114]","[233, 237, 241]",4.91681615,4.5,atende ao par medido,var(--text-muted),transparent
+xscore,light,data-patterns,.td-warning,texto,"[75, 85, 99]","[250.44, 238.68, 225.12]",6.65005839,4.5,atende ao par medido,var(--text-secondary),var(--color-warning-bg)
+xscore,light,data-patterns,.td-error,texto,"[75, 85, 99]","[250.8, 228.96, 228.96]",6.27215611,4.5,atende ao par medido,var(--text-secondary),var(--color-error-bg)
+xscore,light,data-patterns,.tr-selected .td-name,texto,"[15, 23, 41]","[247.92000000000002, 242.76, 231.48000000000002]",16.12001398,4.5,atende ao par medido,var(--text-primary),var(--accent-primary-muted)
+xscore,light,data-patterns,.bulk-toolbar-count,texto,"[134, 100, 37]","[253.25, 253.75, 254]",5.37425327,4.5,atende ao par medido,var(--accent-primary-text),transparent
+xscore,light,data-patterns,.chart-period-btn:not(.active),texto,"[95, 102, 114]","[240, 243, 245]",5.19097522,4.5,atende ao par medido,var(--text-muted),transparent
+xscore,light,data-patterns,.chart-period-btn.active,texto,"[134, 100, 37]","[255, 255, 255]",5.43583857,4.5,atende ao par medido,var(--accent-primary-text),var(--bg-base)
+xscore,light,data-table,[data-family=basic] th,texto,"[95, 102, 114]","[248, 250, 251]",5.52560355,4.5,atende ao par medido,var(--text-muted),var(--bg-surface-1)
+xscore,light,data-table,[data-family=basic] .td-name,texto,"[15, 23, 41]","[255, 255, 255]",17.87402645,4.5,atende ao par medido,var(--text-primary),transparent
+xscore,light,data-table,[data-family=basic] .td-score,texto,"[134, 100, 37]","[255, 255, 255]",5.43583857,4.5,atende ao par medido,var(--accent-primary-text),transparent
+xscore,light,stat-card,[data-family=standard] .stat-label,texto,"[75, 85, 99]","[255, 255, 255]",7.55737813,4.5,atende ao par medido,var(--text-secondary),transparent
+xscore,light,stat-card,.stat-variation.up,texto,"[22, 163, 74]","[255, 255, 255]",3.29573361,4.5,pendente,var(--color-success),transparent
+xscore,light,stat-card,.stat-variation.down,texto,"[220, 38, 38]","[255, 255, 255]",4.82940452,4.5,atende ao par medido,var(--color-error),transparent
+xscore,light,stat-card,.stat-card-mini-label,texto,"[95, 102, 114]","[255, 255, 255]",5.78495075,4.5,atende ao par medido,var(--text-muted),transparent
