@@ -19,7 +19,7 @@ referência visual, integração e aprovação; não declara AA integral nem imp
 
 - Antes da implementação: **7 testes, 7 falhas**, porque entrada/gerador/arquivos
   ainda não existiam. O teste não se autopulou.
-- Depois: **7 testes dirigidos aprovados**, zero falhas/pulos. Incluem CSP,
+- Depois: **8 testes dirigidos aprovados**, zero falhas/pulos. Incluem CSP,
   ausência de código de navegador, âncoras, recursos locais, ligações existentes,
   fontes, hashes, determinismo e mutação em fixture.
 - A mutação remove um papel de raio na cópia temporária e o build falha. Uma
@@ -30,8 +30,15 @@ referência visual, integração e aprovação; não declara AA integral nem imp
   O limite agora combina 100% do contêiner e a medida existente. Não se ocultou
   o transbordamento da página por CSS.
 
+A revisão automática apontou duas lacunas de rastreabilidade, ambas corrigidas:
+a biblioteca de resolução/contraste passou a integrar os hashes de origem, e uma
+execução de QA invalida o manifesto anterior antes de gerar as páginas. O ensaio
+com navegador ausente comprovou a segunda falha; ambos os casos ficaram vermelhos
+antes da correção (**2 falhas, 6 aprovados**) e verdes depois (**8 aprovados**).
+A revisão automática não substitui o parecer independente.
+
 Build principal do DS aprovado, sem diff de áreas protegidas. Stylelint dos
-três CSS desta entrada passou. Jest completo: **41 suítes, 832 testes aprovados**,
+três CSS desta entrada passou. Jest completo: **41 suítes, 833 testes aprovados**,
 zero falhas/pulos. São provas locais; CI oficial no SHA final ainda é necessário.
 
 ## Navegador
@@ -79,9 +86,15 @@ borda/foco ou leitor de tela. VoiceOver: NÃO TESTADO nesta entrega.
 Somente arquivos novos de `brands/emprega-mais`. Os três documentos de M1/M2
 permanecem idênticos. Nenhuma alteração em tokens, eds-root/SHA, aliases/SHA,
 contratos, adaptadores, componentes, dist, scripts centrais, workflows, package,
-lock, STATUS geral, eletia ou Xscore. O build local não modifica essas entradas.
+lock, STATUS geral, eletia ou Xscore. O build local não modifica essas entradas. `npm pack --dry-run --ignore-scripts`
+listou 290 arquivos; nenhum arquivo desta entrada ou relatório novo entrou no pacote.
 
 A fonte dos valores é a DTCG/CSS gerado; esta documentação não publica um conjunto
 de tokens. Novos componentes ou papéis compartilhados vão à coordenação do núcleo.
 O publicador ainda não incorpora esta entrada: o Supervisor integrará as marcas
 na entrega compartilhada própria. M5–M9 continuam com seus gates e dependências.
+
+A varredura dirigida do diff público não encontrou caminhos locais, stack, rotas ou
+símbolos privados, e-mail ou termo de tipologia proibido. Só os 11 arquivos novos
+da marca entram no diff; nenhuma captura é versionada. O manifesto de navegador
+identifica as quatro combinações e os hashes das oito imagens externas.

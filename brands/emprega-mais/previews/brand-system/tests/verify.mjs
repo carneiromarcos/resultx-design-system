@@ -14,9 +14,11 @@ const root = path.resolve(here, '../../../..');
 const {build} = require('../build.cjs');
 const {ratio} = require('../../../../../scripts/catalog/lib.cjs');
 const {parseCssColor} = require('../../../../../tests/visual/lib/css-color.js');
-const provenance = build();
 const out = process.env.QA_OUT || path.join(os.tmpdir(),'resultx-emprega-brand-system');
 fs.mkdirSync(out,{recursive:true});
+// Uma falha não pode conservar uma prova verde de uma execução anterior.
+fs.rmSync(path.join(out,'manifest.json'),{force:true});
+const provenance = build();
 const prefix = '/ds';
 const mime = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.woff2':'font/woff2','.png':'image/png','.json':'application/json'};
 const server = http.createServer((request,response)=>{

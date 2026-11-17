@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const os = require('node:os');
 const crypto = require('node:crypto');
+const {spawnSync} = require('node:child_process');
 const here = path.resolve(__dirname, '..');
 const root = path.resolve(here, '../../../..');
 const outputs = ['index.html', 'dark.html', 'fonts.css', 'samples.css', 'provenance.json'];
@@ -71,6 +72,7 @@ test('fontes usam as faces oficiais existentes e o manifesto só registra caminh
   expect(css).toContain("font-family: 'JetBrains Mono'");
   for (const m of css.matchAll(/url\(['"]?([^)'"\s]+)['"]?\)/g)) expect(fs.existsSync(path.resolve(here, m[1]))).toBe(true);
   const provenance = JSON.parse(read('provenance.json'));
+  expect(provenance.inputs.map(input => input.file)).toContain('scripts/catalog/lib.cjs');
   for (const input of provenance.inputs) {
     expect(path.isAbsolute(input.file)).toBe(false);
     expect(hash(path.join(root, input.file))).toBe(input.sha256);
@@ -88,7 +90,7 @@ test('geração é determinística e preserva os arquivos de entrada', () => {
 
 test('token removido em fixture falha e mudança da fonte existente chega à documentação', () => {
   const fixture = fs.mkdtempSync(path.join(os.tmpdir(), 'emprega-preview-'));
-  const sources = ['tokens', 'contracts', 'generated/component-cards', 'brands/emprega-mais', 'assets/fonts/inter', 'assets/fonts/sora', 'assets/fonts/jetbrains-mono'];
+  const sources = ['scripts/catalog/lib.cjs', 'tokens', 'contracts', 'generated/component-cards', 'brands/emprega-mais', 'assets/fonts/inter', 'assets/fonts/sora', 'assets/fonts/jetbrains-mono'];
   try {
     for (const file of sources) fs.cpSync(path.join(root, file), path.join(fixture, file), {recursive: true});
     const token = path.join(fixture, 'brands/emprega-mais/tokens/tokens.css');
@@ -102,4 +104,20 @@ test('token removido em fixture falha e mudança da fonte existente chega à doc
     const html = fs.readFileSync(path.join(fixture, 'brands/emprega-mais/previews/brand-system/index.html'), 'utf8');
     expect(html).toContain(`data-token="--emp-radius-md">${replacement}`);
   } finally { fs.rmSync(fixture, {recursive: true, force: true}); }
+});
+
+test('execução de QA que falha invalida o manifesto de sucesso anterior', () => {
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'emprega-qa-failure-'));
+  const manifest = path.join(out, 'manifest.json');
+  try {
+    fs.writeFileSync(manifest, JSON.stringify({passed: 4, failed: 0}));
+    const result = spawnSync(process.execPath, [path.join(__dirname, 'verify.mjs')], {
+      env: {...process.env, QA_OUT: out, PLAYWRIGHT_CHROMIUM_EXECUTABLE: path.join(out, 'missing-browser')},
+      encoding: 'utf8'
+    });
+    expect(result.error).toBeUndefined();
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toMatch(/executable doesn't exist|does not exist/);
+    expect(fs.existsSync(manifest)).toBe(false);
+  } finally { fs.rmSync(out, {recursive: true, force: true}); }
 });

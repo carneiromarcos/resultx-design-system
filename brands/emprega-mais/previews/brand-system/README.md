@@ -16,6 +16,8 @@ node brands/emprega-mais/previews/brand-system/tests/verify.mjs
 O último comando usa Playwright, serve a árvore temporariamente em loopback com
 prefixo de URL e encerra servidor/navegador ao terminar. `QA_OUT` escolhe uma pasta
 externa para as evidências; o padrão é o diretório temporário do sistema.
+Cada execução invalida o manifesto anterior; só escreve sucesso ao concluir todos
+os cenários, evitando associar capturas parciais a uma execução antiga aprovada.
 `PLAYWRIGHT_CHROMIUM_EXECUTABLE` pode selecionar um navegador local instalado.
 Nenhuma captura é baseline e nenhuma PNG entra no repositório.
 

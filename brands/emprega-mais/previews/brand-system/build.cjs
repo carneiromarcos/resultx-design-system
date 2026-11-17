@@ -92,7 +92,7 @@ function build({root=defaultRoot}={}) {
   const book = read(root,`${brandDir}/docs/BRAND-BOOK.md`);
   const components = fs.readdirSync(path.join(root,'contracts')).filter(f=>f.endsWith('.yaml')).map(f=>f.slice(0,-5)).sort();
   for (const id of components) yaml.load(read(root,`contracts/${id}.yaml`));
-  const files = new Set([...models.light.files,...models.dark.files,'tokens/tokens.json',`${siteDir}/build.cjs`,`${siteDir}/style.css`,`${brandDir}/docs/BRAND-BOOK.md`,`${brandDir}/tokens/eds-root.css`,`${brandDir}/tokens/pilot-aliases.css`]);
+  const files = new Set([...models.light.files,...models.dark.files,'scripts/catalog/lib.cjs','tokens/tokens.json',`${siteDir}/build.cjs`,`${siteDir}/style.css`,`${brandDir}/docs/BRAND-BOOK.md`,`${brandDir}/tokens/eds-root.css`,`${brandDir}/tokens/pilot-aliases.css`]);
   for (const file of chapters.map(c=>c[1]).filter(Boolean)) files.add(`${brandDir}/docs/${file}`);
   for (const id of components) {files.add(`contracts/${id}.yaml`);files.add(`generated/component-cards/${id}.md`);}
   for (const name of ['emprega-plus-navy.png','emprega-plus-white.png']) files.add(`${brandDir}/assets/logo/${name}`);
