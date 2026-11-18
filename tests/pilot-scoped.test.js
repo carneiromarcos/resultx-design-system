@@ -11,8 +11,15 @@ function declarations(root, scoped) {
   root.walkRules((rule) => {
     const selectors = rule.selectors.map((s) => {
       if (!scoped || inKeyframes(rule)) return s.trim();
-      expect(s.trim().startsWith(`${prefix} `)).toBe(true);
-      return s.trim().slice(prefix.length + 1);
+      const selector = s.trim();
+      if (selector.startsWith(`${prefix} `)) return selector.slice(prefix.length + 1);
+      const themed = /^(:root\[data-theme='sober-dark'\])\s+/.exec(selector);
+      if (themed) {
+        expect(selector.startsWith(`${themed[0]}${prefix} `)).toBe(true);
+        return `${themed[1]} ${selector.slice(themed[0].length + prefix.length + 1)}`;
+      }
+      expect(false).toBe(true);
+      return selector;
     });
     const contexts = [];
     for (let p = rule.parent; p && p.type !== 'root'; p = p.parent) {
@@ -43,7 +50,7 @@ test('aliases cobrem exatamente os tokens consumidos, referenciam EDS existente 
   const css = fs.readFileSync(path, 'utf8');
   const aliases = postcss.parse(css);
   const declared = new Set();
-  const dynamic = { '--accent-primary': ['--eds-pintura', '--eds-indigo-dark'], '--accent-primary-hover': ['--eds-pintura-hover', '--eds-indigo-dark'], '--text-inverse': ['--eds-on-pintura', '--eds-on-brand'] };
+  const dynamic = { '--accent-primary': ['--eds-pintura', '--eds-indigo-dark'], '--accent-primary-hover': ['--eds-pintura-hover', '--eds-indigo-dark'], '--text-inverse': ['--eds-on-pintura', '--eds-on-brand'], '--text-on-accent': ['--eds-on-pintura', '--eds-on-brand'] };
   aliases.walkRules((r) => {
     expect(r.selector).toBe(prefix);
     r.walkDecls((d) => {

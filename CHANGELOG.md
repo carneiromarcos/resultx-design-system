@@ -5,6 +5,19 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Fixed — vitrine Choice: estados e mensagem de erro
+
+A seleção parcial do exemplo é definida na inicialização da vitrine. O checkbox marcado
+desabilitado conserva o visto sem preenchimento do glyph; marcas desabilitadas usam tinta
+muted e superfície indisponível, inclusive no estado parcial. A mensagem de erro fica mais
+próxima sem reduzir o alvo clicável nem remover `aria-describedby`.
+
+### Fixed — contraste do foco em campos com erro
+
+O foco de campos com erro mantém o anel normal de foco do tema, enquanto borda e mensagem
+continuam identificando o erro. Isso corrige o Field e a Escolha no adaptador piloto e o Field
+compartilhado, incluindo Select2 fechado e a classe legada `.form-input-error`, sem alterar tokens.
+
 ### Changed — Field: campos nativos e borda acessível
 
 O exemplo do contrato agora apresenta select nativo, textarea, campos com `inputmode` numérico

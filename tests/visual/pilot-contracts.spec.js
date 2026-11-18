@@ -22,6 +22,8 @@ const files = fs.readdirSync('contracts').filter((f) => f.endsWith('.yaml')).sor
 const cases = files.flatMap((f) => yaml.load(fs.readFileSync(path.join('contracts', f), 'utf8')).casos_teste.map((c) => c.id));
 
 const { checks } = require('./lib/pilot-cases');
+const { brands } = require('../../catalog/bindings.config');
+const { paintedEdge } = require('./lib/contract-probes');
 
 test('cada caso dos contratos tem implementação executável', () => {
   expect([...cases].sort()).toEqual(Object.keys(checks).sort());
@@ -31,6 +33,18 @@ for (const theme of ['light', 'dark']) {
   for (const id of cases) {
     test(`${theme}: ${id}`, async ({ page }) => { await page.goto(themedUrl(theme)); await checks[id](page); });
   }
+}
+for (const brand of brands) for (const theme of ['light', 'dark']) {
+  test(`${brand.id}/${theme}: foco de erro Field e Escolha ≥ 3:1 com tokens da marca`, async ({ page }) => {
+    await page.goto(themedUrl(theme));
+    await page.addStyleTag({ content: fs.readFileSync(path.resolve(`brands/${brand.dir}/tokens/ds-bridge.css`), 'utf8') });
+    const field = page.locator('#invalid');
+    await field.focus();
+    await paintedEdge(page, '#invalid', 'outline');
+    const choice = page.locator('#choice-checkbox-error-control');
+    await choice.focus();
+    await paintedEdge(page, '#choice-checkbox-error-mark', 'outline');
+  });
 }
 
 // A vitrine de referência usa Inter 400, 600 e 700 no adaptador e nos títulos.

@@ -44,6 +44,17 @@ pages:
       js: []
       sources:
         - docs/components/forms.md
+  - id: choice
+    title: Escolha
+    contract: contracts/choice.yaml
+    recipe: catalog/recipes/componente.html
+    sources:
+      - examples/pilot.html
+      - generated/component-cards/choice.md
+    css:
+      - adapters/css/pilot.css
+      - catalog/components.css
+    js: []
   - id: card
     title: Cartões
     contract: contracts/card.yaml

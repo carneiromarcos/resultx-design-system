@@ -1,6 +1,8 @@
 /* Adaptador opt-in do lote piloto; depende dos tokens semânticos do ResultX DS. */
 :is(.rx-pilot, #rx-pilot-floor) .rx-button,
   :is(.rx-pilot, #rx-pilot-floor) .rx-field__control,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-choice,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-choice__label,
   :is(.rx-pilot, #rx-pilot-floor) .rx-card,
   :is(.rx-pilot, #rx-pilot-floor) .rx-stat-card,
   :is(.rx-pilot, #rx-pilot-floor) .rx-table,
@@ -50,9 +52,7 @@
 :is(.rx-pilot, #rx-pilot-floor) .rx-field__label { font-weight: var(--font-semibold); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-field__message { color: var(--text-primary); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-field__control[aria-invalid='true'] { border-color: var(--color-error); }
-:is(.rx-pilot, #rx-pilot-floor) .rx-field__control[aria-invalid='true']:focus-visible {
-    outline-color: color-mix(in srgb, var(--color-error) 45%, transparent);
-  }
+:is(.rx-pilot, #rx-pilot-floor) .rx-field__control[aria-invalid='true']:focus-visible { outline-color: var(--accent-primary-text); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-field__control--textarea {
     min-height: calc(3 * var(--text-sm) * var(--leading-relaxed) + 2 * var(--space-3) + 2px);
     padding-block: var(--space-3);
@@ -105,13 +105,121 @@
     outline: var(--focus-ring-width) solid var(--accent-primary-text);
     outline-offset: var(--focus-ring-offset);
   }
+/* stylelint-disable no-descending-specificity -- Estados marcados e interativos sobrescrevem a base visual. */
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice { display: grid; gap: var(--space-2); margin: 0; padding: 0; border: 0; color: var(--text-primary); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice legend { padding: 0; font-weight: var(--font-semibold); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__option {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+    min-block-size: 44px;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    cursor: pointer;
+  }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__mark {
+    position: relative;
+    display: grid;
+    flex: none;
+    place-items: center;
+    box-sizing: border-box;
+    inline-size: 20px;
+    block-size: 20px;
+    margin-block-start: calc((1lh - 20px) / 2);
+    border: var(--focus-ring-width) solid var(--text-muted);
+    border-radius: var(--radius-md);
+    background: var(--bg-surface-1);
+  }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__mark::after { content: ""; display: block; }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='radio'] + .rx-choice__mark { border-radius: 50%; }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:checked + .rx-choice__mark { background: var(--accent-primary); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):checked + .rx-choice__mark::after {
+    inline-size: 6px;
+    block-size: 10px;
+    border-inline-end: 2px solid var(--text-inverse);
+    border-block-end: 2px solid var(--text-inverse);
+    transform: rotate(45deg) translate(-1px, -1px);
+  }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='radio']:checked + .rx-choice__mark::after {
+    inline-size: 8px;
+    block-size: 8px;
+    border-radius: 50%;
+    background: var(--text-inverse);
+  }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):indeterminate + .rx-choice__mark { background: var(--accent-primary); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):indeterminate + .rx-choice__mark::after {
+    inline-size: 10px;
+    block-size: 2px;
+    background: var(--text-inverse);
+  }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:checked + .rx-choice__mark--switch { background: var(--accent-primary); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__mark--switch {
+    inline-size: 44px;
+    block-size: 24px;
+    margin-block-start: calc((1lh - 24px) / 2);
+    border-radius: 999px;
+    background: var(--bg-surface-2);
+  }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__mark--switch::after {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    inline-size: 20px;
+    block-size: 20px;
+    border-radius: 50%;
+    background: var(--text-primary);
+    transform: translateX(0);
+  }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:checked + .rx-choice__mark--switch::after { background: var(--text-inverse); transform: translateX(18px); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__option:dir(rtl) .rx-choice__control:checked + .rx-choice__mark--switch::after { transform: translateX(-18px); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:focus-visible + .rx-choice__mark {
+    outline: var(--focus-ring-width) solid var(--accent-primary-text);
+    outline-offset: var(--focus-ring-offset);
+  }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[aria-invalid='true'] + .rx-choice__mark { border-color: var(--color-error); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[aria-invalid='true']:focus-visible + .rx-choice__mark { outline-color: var(--accent-primary-text); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:disabled + .rx-choice__mark { background: var(--bg-surface-2); cursor: not-allowed; }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:checked + .rx-choice__mark,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:indeterminate + .rx-choice__mark,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='radio']:disabled:checked + .rx-choice__mark,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[role='switch']:disabled:checked + .rx-choice__mark--switch { background: var(--bg-surface-2); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:checked + .rx-choice__mark::after {
+    background: transparent;
+    border-color: var(--text-muted);
+  }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='radio']:disabled:checked + .rx-choice__mark::after,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[role='switch']:disabled:checked + .rx-choice__mark--switch::after { background: var(--text-muted); border-color: var(--text-muted); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:indeterminate + .rx-choice__mark::after { background: var(--text-muted); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__option:has(.rx-choice__control:disabled) { color: var(--text-muted); cursor: not-allowed; }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__message { margin: 0; color: var(--text-primary); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__message[role='alert'] { margin-block-start: calc(-1 * var(--space-2)); color: var(--color-error); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__mark--indeterminate-sample { background: var(--accent-primary); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__mark--indeterminate-sample::after { inline-size: 10px; block-size: 2px; background: var(--text-inverse); }
+:root[data-theme='sober-dark'] :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:checked + .rx-choice__mark::after,
+  :root[data-theme='sober-dark'] :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):indeterminate + .rx-choice__mark::after { border-color: var(--text-on-accent); background: var(--text-on-accent); }
+@media (forced-colors: active) {
+    :is(.rx-pilot, #rx-pilot-floor) .rx-choice__mark { forced-color-adjust: none; border-color: CanvasText; background: Canvas; }
+    :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:checked + .rx-choice__mark,
+    :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):indeterminate + .rx-choice__mark { background: Highlight; border-color: CanvasText; }
+    :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:checked + .rx-choice__mark::after,
+    :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):indeterminate + .rx-choice__mark::after { border-color: HighlightText; background: HighlightText; }
+    :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:disabled:checked + .rx-choice__mark { background: Canvas; border-color: GrayText; }
+    :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:disabled:checked + .rx-choice__mark::after { border-color: CanvasText; background: CanvasText; }
+    :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:indeterminate + .rx-choice__mark { background: Canvas; border-color: GrayText; }
+    :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:indeterminate + .rx-choice__mark::after { background: CanvasText; }
+    :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:focus-visible + .rx-choice__mark { outline-color: Highlight; }
+  }
+/* stylelint-enable no-descending-specificity */
 :is(.rx-pilot, #rx-pilot-floor) .rx-field select[aria-invalid='true'] + .select2-container .select2-selection {
     border-color: var(--color-error);
   }
 :is(.rx-pilot, #rx-pilot-floor) .rx-field select[aria-invalid='true'] + .select2-container--focus .select2-selection,
   :is(.rx-pilot, #rx-pilot-floor) .rx-field select[aria-invalid='true'] + .select2-container--open .select2-selection {
     border-color: var(--color-error);
-    outline-color: color-mix(in srgb, var(--color-error) 45%, transparent);
+    outline-color: var(--accent-primary-text);
   }
 :is(.rx-pilot, #rx-pilot-floor) .rx-card,
   :is(.rx-pilot, #rx-pilot-floor) .rx-stat-card,
