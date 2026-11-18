@@ -110,7 +110,7 @@
     },
     {
       "file": "contracts/field.yaml",
-      "sha256": "b317268555d58a34c78f45dfbf98ef0fef9385e04c9474db8d773481a8047bb6"
+      "sha256": "a4961f5ca489cc2e883bfc2bc998c35493bbbbdb55b8d96f945ec4cee185f98f"
     },
     {
       "file": "contracts/stat-card.yaml",
@@ -142,7 +142,7 @@
     },
     {
       "file": "generated/component-cards/field.md",
-      "sha256": "530f705e6f05b65b6d30a7e7589e8f25705556556103a46f6bd6667864c3d4f5"
+      "sha256": "c19e3f574aaf2b02f7c3a0a07b6d2d71d4e8e5982dc363a42a27588778ca3563"
     },
     {
       "file": "generated/component-cards/stat-card.md",
@@ -189,7 +189,7 @@
       "sha256": "cfb9ff9622fc0c9a05599f4adda92b0ca5d7a9fae5982191819f32833a41d211"
     }
   ],
-  "contentId": "86f1fecdc08beebde4162ce3475210c6350cb6b29cfd07504a5106ca58dd5863",
+  "contentId": "6651a4e7a2b8101e8867608d41318555de4be9c64d230f4e204e3c1f5d78e8ea",
   "contrasts": {
     "light": [
       {
