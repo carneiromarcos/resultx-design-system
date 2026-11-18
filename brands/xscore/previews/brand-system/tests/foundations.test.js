@@ -45,12 +45,23 @@ test('all local linked assets exist; official examples stay in the shared catalo
     for (const id of JSON.parse(read('provenance.json')).components) expect(links).toContain(id);
     const revision = JSON.parse(read('provenance.json')).contractRevision;
     expect(revision).toMatch(/^[a-f0-9]{40}$/);
+    expect(revision).toBe('9da663fff3641f4021e94e1ef5f1deba85441c69');
+    expect(JSON.parse(read('provenance.json')).components).toHaveLength(9);
+    expect(JSON.parse(read('provenance.json')).components).toContain('choice');
     for (const id of JSON.parse(read('provenance.json')).components) {
       expect(html).toContain(`https://github.com/carneiromarcos/resultx-design-system/blob/${revision}/contracts/${id}.yaml`);
       expect(html).toContain(`https://github.com/carneiromarcos/resultx-design-system/blob/${revision}/generated/component-cards/${id}.md`);
     }
     expect(html).not.toMatch(/href="\.\.\/\.\.\/\.\.\/\.\.\/(?:contracts|generated)\//);
   }
+});
+test('the credit-pattern summary distinguishes existing contracts from planned compositions', () => {
+  const html = read('index.html');
+  for (const pattern of ['Tabela financeira', 'Indicadores', 'Filtros avançados', 'Status', 'Fluxo de aprovação', 'Estado vazio', 'Estado de erro', 'Carregamento']) {
+    expect(html).toContain(pattern);
+  }
+  expect(html).toContain('Planejado · Field e Choice existentes');
+  expect(html).toContain('Planejado · Button e ConfirmDialog existentes');
 });
 test('regeneration is deterministic and does not mutate the official token sheet', () => {
   const before = outputs.map(file => hash(path.join(here, file)));

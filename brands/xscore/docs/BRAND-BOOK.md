@@ -28,7 +28,7 @@ Diretriz editorial da interface: rótulos diretos, frases curtas e instruções 
 
 ## 7. Iconografia e elementos
 
-Ícones complementam o nome acessível da ação ou do estado. Elementos decorativos não substituem texto. O catálogo compartilhado reúne os componentes de referência.
+O DS fornece utilitários CSS para SVG inline compatíveis com desenhos Lucide, Phosphor e Heroicons; não fornece uma coleção própria de desenhos. Tamanhos: 12, 16, 20, 24, 32 e 40 px; contêineres: 28, 36, 44 e 56 px. O traço usa currentColor e pode receber papéis semânticos existentes. Ícones junto a rótulos são complementares; ícone isolado requer nome acessível, e decoração é ocultada da árvore acessível. Não usar cor como único sinal.
 
 ## 8. Aplicações
 
