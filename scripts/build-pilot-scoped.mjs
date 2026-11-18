@@ -30,6 +30,8 @@ const dynamic = {
 const fallback = {
   '--space-2': 'semantic.foundation.space-2', '--space-3': 'semantic.foundation.space-3',
   '--space-4': 'semantic.foundation.space-4', '--space-6': 'semantic.foundation.space-6',
+  '--space-10': 'semantic.foundation.space-10',
+  '--text-sm': 'semantic.foundation.text-sm', '--leading-relaxed': 'semantic.foundation.leading-relaxed',
   '--focus-ring-width': 'semantic.core.shared.focus-ring-width', '--focus-ring-offset': 'semantic.core.shared.focus-ring-offset',
   '--font-regular': 'semantic.core.shared.font-regular', '--font-semibold': 'semantic.core.shared.font-semibold',
   '--font-bold': 'semantic.core.shared.font-bold', '--text-base': 'semantic.core.shared.text-base',

@@ -152,7 +152,11 @@ function renderComponent(root, definition, values, revision) {
     if (sourceId === 'field' && state === 'desabilitado') html = html.replace('<input', '<input disabled');
     const target = options.target || ((sourceId === 'table' || sourceId === 'confirm') && state === 'normal' ? sourceId : key + '-' + sourceId);
     if (options.demo) html = html.replace(/(<(?:button|a|input)\b)/, `$1 data-catalog-state="${options.demo}"`);
-    const control = definition.id === 'field' ? (html.match(/<input[^>]*\sid="([^"]+)"/) || [])[1] : target;
+    const control = definition.id === 'field'
+      ? (html.match(/<(?:input|select|textarea)[^>]*\sid="([^"]+)"/) || [])[1]
+        || (html.match(/<[^>]*class="[^"]*select2-selection[^"]*"[^>]*\sid="([^"]+)"/) || [])[1]
+        || target
+      : target;
     const descriptor = {
       id: control,
       label,
@@ -206,10 +210,10 @@ function renderComponent(root, definition, values, revision) {
       foco: ['card']
     },
     field: {
-      normal: ['field'],
+      normal: ['field', 'field-select', 'field-select2-skin', 'field-textarea', 'field-inputmode-numeric', 'field-inputmode-money'],
       carregando: ['field-loading'],
       vazio: ['field'],
-      erro: ['field-error'],
+      erro: ['field-error', 'field-select-error', 'field-textarea-error'],
       desabilitado: ['field'],
       foco: ['field']
     },
@@ -261,11 +265,22 @@ function renderComponent(root, definition, values, revision) {
         });
       }
     } else if (applicable) {
-      for (const sourceId of byState[definition.id]?.[state] || []) content += sample(sourceId, state, labels[state] + (sourceId === 'stat-link' ? ' · Com link' : ''), {
+      for (const sourceId of byState[definition.id]?.[state] || []) {
+        const fieldLabel = {
+          'field-select': 'Select nativo',
+          'field-select2-skin': 'Select2 fechado — single e multiple',
+          'field-textarea': 'Texto longo',
+          'field-inputmode-numeric': 'Teclado numérico',
+          'field-inputmode-money': 'Teclado decimal',
+          'field-select-error': 'Select com erro',
+          'field-textarea-error': 'Textarea com erro'
+        }[sourceId];
+        content += sample(sourceId, state, fieldLabel || labels[state] + (sourceId === 'stat-link' ? ' · Com link' : ''), {
         variant: sourceId === 'badge-success' ? 'success' : sourceId === 'badge-error' ? 'error' : 'neutral',
         link: sourceId === 'stat-link',
         demo: state === 'foco' ? 'foco' : null
-      });
+        });
+      }
     }
     if (applicable && !content && state !== 'foco') throw Error('Estado sem receita de apresentação: ' + definition.id + '/' + state);
     samples.push(`<section data-contract-state="${state}"><h2>${labels[state] || escape(state)}</h2><p>${escape(applicable ? descriptions[state] || labels[state] : 'Este estado não se aplica a este componente.')}</p>${content ? `<div class="catalog-grid">${content}</div>` : applicable && state === 'foco' ? '<p>Experimente o controle do exemplo padrão usando Tab.</p>' : '<p>Este estado não acrescenta uma interação ao componente.</p>'}</section>`);

@@ -5,6 +5,18 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Changed — Field: campos nativos e borda acessível
+
+O exemplo do contrato agora apresenta select nativo, textarea, campos com `inputmode` numérico
+e decimal, estados de erro e a aparência fechada do Select2 single/multiple. Selects nativos
+ocupam a largura do wrapper; a seta permanece dentro do campo e o padding à direita reserva
+espaço para ela. Input, select e textarea usam `--text-muted` na borda para atingir 3:1 sem
+alterar valores de tokens; isso muda visualmente inputs existentes. O textarea tem altura mínima
+de três linhas e redimensionamento somente vertical. Erros continuam associados por
+`aria-describedby`, têm foco visível e a mensagem de exemplo inclui “!” como sinal independente
+de cor. A aparência fechada do Select2 acompanha o campo; a lista aberta permanece fora do
+contrato.
+
 ### Added — papéis aditivos de cor C-cor-1
 
 Tokens novos: `--surface-decorative-cyan`, `--surface-decorative-magenta`,

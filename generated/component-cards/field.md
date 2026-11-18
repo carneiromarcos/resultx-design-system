@@ -3,13 +3,15 @@
 ## Anatomia
 
 - label associado
-- input
+- input, select nativo ou textarea
 - mensagem de ajuda ou erro associada
 
 ## Variantes
 
 - text
 - search
+- select
+- textarea
 
 ## Estados
 
@@ -23,7 +25,11 @@
 ## Tokens
 
 - --bg-surface-1
+- --bg-base
 - --text-primary
+- --text-muted
+- --text-sm
+- --leading-relaxed
 - --font-body
 - --text-base
 - --focus-ring-width
@@ -32,6 +38,7 @@
 - --text-secondary
 - --space-2
 - --space-4
+- --space-10
 - --radius-md
 - --font-semibold
 - --color-error
@@ -44,7 +51,8 @@
 ## ARIA
 
 - label programático obrigatório.
-- Erro associado por aria-describedby e aria-invalid.
+- Erro de input, select e textarea associado por aria-describedby e aria-invalid.
+- Select2 mantém o select nativo de origem com aria-invalid e aria-describedby.
 
 ## Critérios de aceite
 
@@ -54,7 +62,12 @@
 ## Casos de teste
 
 - field-label: O controle tem rótulo associado.
-- field-error: Erro usa aria-invalid e descrição associada.
+- field-error: Input, select e textarea com erro usam aria-invalid e descrição associada.
+- field-select: Select nativo tem label, ocupa o wrapper e mantém chevron e texto dentro do campo.
+- field-select2-skin: Select2 fechado single e multiple preserva a borda, o fundo e a geometria do campo nos dois temas.
+- field-textarea: Textarea preserva o foco e pode ser redimensionado apenas verticalmente.
+- field-inputmode-numeric: Campo numérico sugere teclado numeric sem impor validação.
+- field-inputmode-money: Campo monetário sugere teclado decimal sem impor formatação.
 - field-disabled: Campo desabilitado não aceita interação.
 - field-keyboard: Tab foca e digitação altera o valor.
 - field-contrast: Texto e bordas do campo mantêm contraste.

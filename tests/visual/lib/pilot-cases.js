@@ -156,12 +156,124 @@ const checks = {
     await textContrast(p, '#primary');
   },
   'field-label': async (p) => expect(p.getByLabel('Buscar candidato')).toBeVisible(),
-  'field-error': async (p) => { await expect(p.locator('#invalid')).toHaveAttribute('aria-invalid', 'true'); await expect(p.locator('#invalid')).toHaveAttribute('aria-describedby', 'invalid-message'); await expect(p.locator('#invalid-message')).toBeVisible(); await expect(p.locator('#invalid-message')).toContainText('válido'); },
+  'field-error': async (p) => {
+    for (const [control, message] of [['#invalid', '#invalid-message'], ['#invalid-select', '#invalid-select-message'], ['#invalid-textarea', '#invalid-textarea-message']]) {
+      await expect(p.locator(control)).toHaveAttribute('aria-invalid', 'true');
+      await expect(p.locator(control)).toHaveAttribute('aria-describedby', message.slice(1));
+      await expect(p.locator(message)).toBeVisible();
+      await expect(p.locator(message).locator('[aria-hidden="true"]')).toBeVisible();
+    }
+    await expect(p.locator('#invalid-message')).toContainText('válido');
+    await expect(p.locator('#invalid-select-message')).toContainText('Selecione');
+    await expect(p.locator('#invalid-textarea-message')).toContainText('Informe');
+    await p.locator('#search').focus();
+    const normalRing = await p.locator('#search').evaluate((el) => getComputedStyle(el).outlineColor);
+    for (const control of ['#invalid', '#invalid-select', '#invalid-textarea']) {
+      await p.locator(control).focus();
+      await expect(p.locator(control)).toBeFocused();
+      const errorRing = await p.locator(control).evaluate((el) => getComputedStyle(el).outlineColor);
+      expect(errorRing).not.toBe(normalRing);
+    }
+  },
+  'field-select': async (p) => {
+    const select = p.getByLabel('Status do perfil');
+    await expect(select).toBeVisible();
+    expect(await select.evaluate((el) => el.tagName)).toBe('SELECT');
+    for (const selector of ['#profile-status', '#invalid-select']) {
+      const geometry = await p.locator(selector).evaluate((el) => {
+        const wrapper = el.closest('.rx-field__select-wrap');
+        const selectBox = el.getBoundingClientRect();
+        const wrapperBox = wrapper.getBoundingClientRect();
+        const arrow = getComputedStyle(wrapper, '::after');
+        const arrowWidth = parseFloat(arrow.width);
+        const arrowRightInset = parseFloat(arrow.right);
+        const arrowRight = wrapperBox.right - arrowRightInset;
+        return {
+          selectLeft: selectBox.left,
+          selectRight: selectBox.right,
+          selectWidth: selectBox.width,
+          wrapperLeft: wrapperBox.left,
+          wrapperRight: wrapperBox.right,
+          wrapperWidth: wrapperBox.width,
+          arrowLeft: arrowRight - arrowWidth,
+          arrowRight,
+          arrowRightInset,
+          arrowWidth,
+          paddingRight: parseFloat(getComputedStyle(el).paddingRight),
+        };
+      });
+      expect(Math.abs(geometry.selectWidth - geometry.wrapperWidth), `${selector}: select ocupa a largura do wrapper`).toBeLessThan(1);
+      expect(Math.abs(geometry.selectLeft - geometry.wrapperLeft), `${selector}: select começa no wrapper`).toBeLessThan(1);
+      expect(geometry.arrowLeft, `${selector}: chevron dentro do select à esquerda`).toBeGreaterThanOrEqual(geometry.selectLeft);
+      expect(geometry.arrowRight, `${selector}: chevron dentro do select à direita`).toBeLessThanOrEqual(geometry.selectRight);
+      expect(geometry.paddingRight, `${selector}: padding reserva espaço para o chevron`).toBeGreaterThanOrEqual(geometry.arrowWidth + geometry.arrowRightInset);
+    }
+    await select.focus();
+    await contrast(p, '#profile-status', 'outlineColor');
+    await select.selectOption('active');
+    await expect(select).toHaveValue('active');
+    await expect(select).toHaveAttribute('aria-describedby', 'profile-status-help');
+  },
+  'field-select2-skin': async (p) => {
+    const native = await p.locator('#profile-status').evaluate((el) => {
+      const style = getComputedStyle(el);
+      return {
+        borderTopColor: style.borderTopColor,
+        borderTopStyle: style.borderTopStyle,
+        borderTopWidth: style.borderTopWidth,
+        borderRadius: style.borderRadius,
+        backgroundColor: style.backgroundColor,
+        padding: style.padding,
+      };
+    });
+    for (const selector of ['#select2-selection-single', '#select2-selection-multiple']) {
+      const selection = p.locator(selector);
+      await selection.evaluate((el) => el.scrollIntoView({ block: 'center', inline: 'center' }));
+      await expect(selection).toBeVisible();
+      const computed = await selection.evaluate((el) => {
+        const style = getComputedStyle(el);
+        return {
+          borderTopColor: style.borderTopColor,
+          borderTopStyle: style.borderTopStyle,
+          borderTopWidth: style.borderTopWidth,
+          borderRadius: style.borderRadius,
+          backgroundColor: style.backgroundColor,
+          padding: style.padding,
+        };
+      });
+      expect(computed).toEqual(native);
+      await controlBoundary(p, selector);
+    }
+  },
+  'field-textarea': async (p) => {
+    const textarea = p.getByLabel('Observações');
+    await expect(textarea).toBeVisible();
+    expect(await textarea.evaluate((el) => getComputedStyle(el).resize)).toBe('vertical');
+    expect(await textarea.evaluate((el) => parseFloat(getComputedStyle(el).minHeight))).toBeGreaterThan(80);
+    await textarea.focus();
+    await contrast(p, '#profile-notes', 'outlineColor');
+    await textarea.fill('Observação de exemplo.');
+    await expect(textarea).toHaveValue('Observação de exemplo.');
+  },
+  'field-inputmode-numeric': async (p) => {
+    const input = p.locator('#numeric-code');
+    await expect(input).toHaveAttribute('inputmode', 'numeric');
+    await expect(input).toHaveAttribute('type', 'text');
+    await input.fill('12345');
+    await expect(input).toHaveValue('12345');
+  },
+  'field-inputmode-money': async (p) => {
+    const input = p.locator('#amount');
+    await expect(input).toHaveAttribute('inputmode', 'decimal');
+    await expect(input).toHaveAttribute('type', 'text');
+    await input.fill('125,50');
+    await expect(input).toHaveValue('125,50');
+  },
   'field-empty': async (p) => { await expect(p.locator('#search')).toHaveValue(''); expect(await p.locator('#search').evaluate((e) => e.validity.valid)).toBe(true); },
   'field-loading': async (p) => { await expect(p.locator('#field-loading')).toHaveAttribute('aria-busy', 'true'); await expect(p.locator('#loading-field')).toBeDisabled(); },
   'field-disabled': async (p) => expect(p.locator('#disabled-field')).toBeDisabled(),
   'field-keyboard': async (p) => { await p.locator('#primary').focus(); await p.keyboard.press('Tab'); await p.keyboard.press('Tab'); await expect(p.locator('#search')).toBeFocused(); await p.keyboard.type('Ana'); await expect(p.locator('#search')).toHaveValue('Ana'); await contrast(p, '#search', 'outlineColor', 3); },
-  'field-contrast': async (p) => { for (const s of ['#search', '#invalid', '#disabled-field']) { await contrast(p, s); await contrast(p, s, 'borderTopColor', 3); } },
+  'field-contrast': async (p) => { for (const s of ['#search', '#invalid', '#disabled-field', '#profile-status', '#profile-notes', '#numeric-code', '#amount', '#invalid-select', '#invalid-textarea']) { await contrast(p, s); await contrast(p, s, 'borderTopColor', 3); } },
   'card-heading': async (p) => expect(p.locator('#card').getByRole('heading', { name: 'Vagas recentes', level: 2 })).toBeVisible(),
   'card-sizes': async (p) => { const sizes = []; for (const id of ['sm', 'md', 'lg']) sizes.push(await p.locator(`#card-${id}`).evaluate((e) => parseFloat(getComputedStyle(e).paddingTop))); expect(sizes[0]).toBeLessThan(sizes[1]); expect(sizes[1]).toBeLessThan(sizes[2]); },
   'card-empty-error': async (p) => { await expect(p.locator('#card-empty button')).toBeVisible(); await expect(p.locator('#card-error [role=alert]')).toContainText('Tente novamente'); },

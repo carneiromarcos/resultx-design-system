@@ -10,7 +10,8 @@ const yaml = require('js-yaml');
 // #link-primary, #link-secondary, #link-danger, #link-unavailable-{primary,secondary,danger},
 // #link-loading, #link-loading-{secondary,danger}, #state-available-danger,
 // #button-{unavailable,loading}-{primary,secondary,danger},
-// #field-loading, #loading-field, #disabled-field, #card{,-sm,-md,-lg,-empty,-error,-disabled,-loading},
+// #field-loading, #loading-field, #disabled-field, #profile-status, #profile-notes,
+// #numeric-code, #amount, #invalid-select, #invalid-textarea, #card{,-sm,-md,-lg,-empty,-error,-disabled,-loading},
 // #stat{,-empty,-loading,-error,-link}, #table{,-loading,-empty,-error,-disabled}, #sort,
 // #confirm, #open-dialog, #confirm-action, #dialog-loading, #dialog-error,
 // #badge-{neutral,success,error,loading,empty}, #empty, #empty-loading e #error.

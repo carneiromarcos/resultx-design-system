@@ -796,7 +796,7 @@ body {
 .form-input {
   width: 100%; padding: var(--space-2) var(--space-4);
   background: var(--bg-base);
-  border: 1px solid var(--border-default);
+  border: 1px solid var(--text-muted);
   border-radius: var(--radius-md);
   color: var(--text-primary);
   font-family: var(--font-body);
@@ -817,13 +817,13 @@ body {
 .form-textarea {
   width: 100%; padding: var(--space-3) var(--space-4);
   background: var(--bg-base);
-  border: 1px solid var(--border-default);
+  border: 1px solid var(--text-muted);
   border-radius: var(--radius-md);
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
-  min-height: 88px;
+  min-height: calc(3 * var(--text-sm) * var(--leading-relaxed) + 2 * var(--space-3) + 2px);
   resize: vertical;
   transition-property: var(--transition-interactive);
   transition-duration: 150ms;
@@ -843,11 +843,11 @@ body {
    mesmo motivo pelo qual o .segmented usa rádio nativo em vez de imitar um.
    Reimplementar isso em div custa tudo e não devolve nada. */
 .form-select {
-  width: 100%; padding: var(--space-2) var(--space-4);
+  width: 100%; box-sizing: border-box; padding: var(--space-2) var(--space-4);
   /* Espaço à direita para o chevron do invólucro não encostar no texto. */
   padding-right: var(--space-10);
   background: var(--bg-base);
-  border: 1px solid var(--border-default);
+  border: 1px solid var(--text-muted);
   border-radius: var(--radius-md);
   color: var(--text-primary);
   font-family: var(--font-body);
@@ -883,6 +883,48 @@ body {
   pointer-events: none;
 }
 .form-select-wrap:has(.form-select:disabled)::after { opacity: 0.5; }
+
+/* O adaptador fechado do Select2 acompanha o controle nativo; a lista aberta
+   continua sob responsabilidade da integração que o fornece. */
+.form-select-wrap .select2-container .select2-selection {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--space-2) var(--space-10) var(--space-2) var(--space-4);
+  background: var(--bg-base);
+  border: 1px solid var(--text-muted);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  min-height: calc(var(--text-sm) * var(--leading-relaxed) + 2 * var(--space-2) + 2px);
+}
+.form-select-wrap .select2-container--default .select2-selection--single .select2-selection__arrow b {
+  border-color: var(--text-muted) transparent transparent;
+}
+.form-select-wrap .select2-container--focus .select2-selection,
+.form-select-wrap .select2-container--open .select2-selection {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+}
+.form-select-wrap select.form-select[aria-invalid='true'] + .select2-container .select2-selection {
+  border-color: var(--color-error);
+}
+.form-select-wrap select.form-select[aria-invalid='true'] + .select2-container--focus .select2-selection,
+.form-select-wrap select.form-select[aria-invalid='true'] + .select2-container--open .select2-selection {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--color-error) 45%, transparent);
+}
+
+.form-input[aria-invalid='true'],
+.form-select[aria-invalid='true'],
+.form-textarea[aria-invalid='true'] { border-color: var(--color-error); }
+.form-input[aria-invalid='true']:focus-visible,
+.form-select[aria-invalid='true']:focus-visible,
+.form-textarea[aria-invalid='true']:focus-visible {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--color-error) 45%, transparent);
+}
 
 /* Tecla de atalho — para <kbd>. Sem isto, "⌘K" e "Enter" viram texto solto e
    cada produto inventa o proprio estilo. */
@@ -2543,7 +2585,7 @@ tr:hover td { background: var(--bg-surface-1); }
 }
 .form-input-error:focus-visible {
   border-color: var(--color-error);
-  box-shadow: 0 0 0 var(--focus-ring-width) rgba(239, 68, 68, 0.3);
+  box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--color-error) 45%, transparent);
 }
 .form-error-message {
   font-size: var(--text-xs);

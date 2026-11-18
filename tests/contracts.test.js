@@ -39,6 +39,19 @@ test.each(expected)('%s declara anatomia, estados, acessibilidade, aceite e test
   }
 });
 
+test('Field estende o contrato existente com controles nativos e teclados de entrada', () => {
+  const field = read('field');
+  expect(field.variantes).toEqual(expect.arrayContaining(['select', 'textarea']));
+  const cases = new Set(field.casos_teste.map(({ id }) => id));
+  for (const id of ['field-select', 'field-textarea', 'field-inputmode-numeric', 'field-inputmode-money']) {
+    expect(cases.has(id)).toBe(true);
+  }
+  expect(field.aria).toEqual(expect.arrayContaining([
+    expect.stringMatching(/aria-describedby/i),
+    expect.stringMatching(/select2/i),
+  ]));
+});
+
 test('fichas versionadas são geradas a partir dos contratos', () => {
   const os = require('os');
   const { execFileSync } = require('child_process');
