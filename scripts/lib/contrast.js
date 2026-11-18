@@ -72,9 +72,10 @@ function pickInk(background, candidates) {
     throw new Error('pickInk exige ao menos um candidato de tinta');
   }
   const best = candidates
-    .map((value) => ({ value, ratio: ratio(value, background) }))
-    .reduce((a, b) => (b.ratio > a.ratio ? b : a));
-  return { ...best, passesAA: best.ratio >= AA_NORMAL };
+    .map((value) => ({ value, exactRatio: contrastRatio(value, background) }))
+    .reduce((a, b) => (b.exactRatio > a.exactRatio ? b : a));
+  const measured = ratio(best.value, background);
+  return { value: best.value, ratio: measured, passesAA: best.exactRatio >= AA_NORMAL };
 }
 
 /**

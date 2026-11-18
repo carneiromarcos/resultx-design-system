@@ -74,4 +74,12 @@
   --surface-accent-green: rgba(40, 199, 111, 0.10);
   --surface-accent-amber: rgba(255, 159, 67, 0.10);
   --surface-accent-purple: rgba(165, 94, 234, 0.08);
+  --surface-decorative-cyan: #E5F7FC;
+  --ink-decorative-cyan: #0B4A63;
+  --surface-decorative-magenta: #FCE8EF;
+  --ink-decorative-magenta: #7A123E;
+  --surface-decorative-purple: #F1EAFB;
+  --ink-decorative-purple: #4B2B81;
+  --danger-strong: #B91C1C;
+  --on-danger-strong: #FFF;
 }

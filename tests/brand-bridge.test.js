@@ -67,6 +67,27 @@ describe('Brand bridge — contraste WCAG AA', () => {
     }
   });
 
+  test('a tinta da marca é a que tem maior contraste exato entre as candidatas', () => {
+    const { INK_CANDIDATES } = require('../scripts/brand-bridges.config');
+    const { report } = build({ write: false });
+    for (const { brand, theme, r } of report) {
+      const expected = INK_CANDIDATES.reduce((best, candidate) =>
+        contrastRatio(candidate, r.accent) > contrastRatio(best, r.accent) ? candidate : best
+      );
+      expect(`${brand}/${theme}: ${r.ink.value}`).toBe(`${brand}/${theme}: ${expected}`);
+      expect(contrastRatio(r.ink.value, r.hover)).toBeGreaterThanOrEqual(AA_NORMAL);
+    }
+  });
+
+  test.each(['#E85D04', '#EF4444'])('tinta clara nunca fica em contraste intermediário com %s', (accent) => {
+    const { pickInk } = require('../scripts/lib/contrast');
+    const whiteContrast = contrastRatio('#FFFFFF', accent);
+    expect(whiteContrast).toBeGreaterThanOrEqual(3);
+    expect(whiteContrast).toBeLessThan(AA_NORMAL);
+    expect(pickInk(accent, ['#000000', '#FFFFFF']).value).toBe('#000000');
+    expect(contrastRatio(pickInk(accent, ['#000000', '#FFFFFF']).value, accent)).toBeGreaterThanOrEqual(AA_NORMAL);
+  });
+
   test('nenhuma marca cai no texto neutro — todas tem tinta propria', () => {
     // Ate 07/08, Emprega+, PdV e ResultX nao tinham variante do dourado
     // aprovada em AA como texto no light, e --accent-primary-text caia em

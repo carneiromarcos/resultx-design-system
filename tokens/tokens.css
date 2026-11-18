@@ -195,6 +195,18 @@
   --color-warning-bg: rgba(245, 158, 11, 0.12);
   --color-error: #EF4444;
   --color-error-bg: rgba(239, 68, 68, 0.12);
+  /* Decorative backgrounds: labeled illustration, card heading or category
+     separation only. Never status, risk, chart-only distinction, focus,
+     selection or button fill. Pair any text or number with its ink token. */
+  --surface-decorative-cyan: #123A4A;
+  --ink-decorative-cyan: #D5F4FF;
+  --surface-decorative-magenta: #4C2035;
+  --ink-decorative-magenta: #FFE3EE;
+  --surface-decorative-purple: #36264F;
+  --ink-decorative-purple: #EEE4FF;
+  /* Future destructive-action pair; current --danger and button styles stay. */
+  --danger-strong: #F87171;
+  --on-danger-strong: #0B0E14;
   --color-info: #3B82F6;
   --color-info-bg: rgba(59, 130, 246, 0.12);
 
@@ -334,6 +346,15 @@
   --color-warning-bg: rgba(217, 119, 6, 0.12);
   --color-error: #DC2626;
   --color-error-bg: rgba(220, 38, 38, 0.12);
+  /* Same allowed and forbidden uses as the dark decorative roles above. */
+  --surface-decorative-cyan: #E5F7FC;
+  --ink-decorative-cyan: #0B4A63;
+  --surface-decorative-magenta: #FCE8EF;
+  --ink-decorative-magenta: #7A123E;
+  --surface-decorative-purple: #F1EAFB;
+  --ink-decorative-purple: #4B2B81;
+  --danger-strong: #B91C1C;
+  --on-danger-strong: #FFF;
   --color-info: #2563EB;
   --color-info-bg: rgba(37, 99, 235, 0.12);
 
@@ -443,7 +464,7 @@
     --accent-primary-text: #2DD4BF;
     --color-success: #22C55E; --color-success-bg: rgba(34, 197, 94, 0.12);
     --color-warning: #F59E0B; --color-warning-bg: rgba(245, 158, 11, 0.12);
-    --color-error: #EF4444; --color-error-bg: rgba(239, 68, 68, 0.12);
+    --color-error: #EF4444; --color-error-bg: rgba(239, 68, 68, 0.12); /* Decorative only: labeled illustration/category use; never state, risk, chart-only, focus, selection or button. */ --surface-decorative-cyan: #123A4A; --ink-decorative-cyan: #D5F4FF; --surface-decorative-magenta: #4C2035; --ink-decorative-magenta: #FFE3EE; --surface-decorative-purple: #36264F; --ink-decorative-purple: #EEE4FF; --danger-strong: #F87171; --on-danger-strong: #0B0E14;
     --color-info: #3B82F6; --color-info-bg: rgba(59, 130, 246, 0.12);
     --theory-mbti: #22D3EE; --theory-mbti-bg: rgba(34, 211, 238, 0.15);
     --theory-enneagram: #A78BFA; --theory-enneagram-bg: rgba(167, 139, 250, 0.15);
@@ -500,7 +521,7 @@
     --accent-primary-text: #1D4ED8;
     --color-success: #16A34A; --color-success-bg: rgba(22, 163, 74, 0.12);
     --color-warning: #D97706; --color-warning-bg: rgba(217, 119, 6, 0.12);
-    --color-error: #DC2626; --color-error-bg: rgba(220, 38, 38, 0.12);
+    --color-error: #DC2626; --color-error-bg: rgba(220, 38, 38, 0.12); /* Decorative only: labeled illustration/category use; never state, risk, chart-only, focus, selection or button. */ --surface-decorative-cyan: #E5F7FC; --ink-decorative-cyan: #0B4A63; --surface-decorative-magenta: #FCE8EF; --ink-decorative-magenta: #7A123E; --surface-decorative-purple: #F1EAFB; --ink-decorative-purple: #4B2B81; --danger-strong: #B91C1C; --on-danger-strong: #FFF;
     --color-info: #2563EB; --color-info-bg: rgba(37, 99, 235, 0.12);
     --theory-mbti: #0891B2; --theory-mbti-bg: rgba(8, 145, 178, 0.15);
     --theory-enneagram: #7C3AED; --theory-enneagram-bg: rgba(124, 58, 237, 0.15);

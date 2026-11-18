@@ -51,6 +51,10 @@ async function doc(page, brand, theme) {
   const response = await page.goto(`${base}/catalog/${brand}/${theme}/fundacoes/example.html`);
   expect(response.status()).toBe(200);
 }
+async function dataDoc(page, brand, theme) {
+  const response = await page.goto(`${base}/catalog/${brand}/${theme}/data-cards/example.html`);
+  expect(response.status()).toBe(200);
+}
 test('a — ligação resolve dimensões, fonte e superfície da marca', async ({
   page
 }) => {
@@ -107,6 +111,26 @@ test('c — tema explícito isolado da preferência do navegador', async ({
     });
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--bg-base').trim())).toBe(first);
   }
+});
+for (const b of brands) for (const theme of ['light', 'dark']) test(`${b.id} ${theme}: amostras decorativas têm tinta, contraste e rótulo`, async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await dataDoc(page, b.id, theme);
+  for (const color of ['cyan', 'magenta', 'purple']) {
+    const sample = page.locator(`.dl-coin--soft-${color}`).first();
+    await expect(sample).toHaveAttribute('aria-hidden', 'true');
+    const result = await sample.evaluate(el => {
+      const css = getComputedStyle(el);
+      const parentText = el.parentElement.innerText;
+      const rgb = value => value.match(/[\d.]+/g).slice(0, 3).map(Number);
+      const luminance = value => rgb(value).map(c => c / 255).map(c => c <= .04045 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4).reduce((a, c, i) => a + c * [.2126, .7152, .0722][i], 0);
+      const a = luminance(css.color), b = luminance(css.backgroundColor);
+      return { fg: css.color, bg: css.backgroundColor, label: parentText.trim(), ratio: (Math.max(a, b) + .05) / (Math.min(a, b) + .05) };
+    });
+    expect(result.label).toMatch(new RegExp({ cyan: 'Ciano', magenta: 'Magenta', purple: 'Roxo' }[color]));
+    expect(result.ratio).toBeGreaterThanOrEqual(4.5);
+    expect(result.fg).not.toBe(result.bg);
+  }
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 for (const b of brands) for (const theme of ['light', 'dark']) for (const width of [390, 1440]) test(`${b.id} ${theme} ${width}: fundações, rede, contraste e evidência`, async ({
   page

@@ -76,6 +76,28 @@ Dark is the default theme. When no `data-theme` is set, the system falls back to
 
 > **Design note:** Dark theme uses teal (`#2DD4BF`) as primary accent. Light theme uses blue (`#1D4ED8`). The secondary accent (gold) is the same in both themes.
 
+### Texto sobre a marca
+
+As pontes escolhem, para cada marca e tema, a tinta de maior contraste entre `--text-on-accent` e `--text-inverse`. O build fixa a escolha por marca, mede a mesma tinta em hover/active e reprova qualquer par abaixo de 4,5:1. Se o hover falhar, ajuste o token de hover; não troque a tinta da marca. Marcas claras usam tinta escura. Para texto ou borda da cor da marca sobre uma superfície clara, use `--accent-primary-text`, que é medido separadamente. Não use branco em laranja ou vermelho médio se a razão ficar entre 3:1 e 4,5:1.
+
+## Cores decorativas
+
+Os matizes são iguais em todas as marcas; só os valores de superfície e tinta mudam entre os temas claro e escuro.
+
+| Tokens | Escuro | Claro | Contraste do par escuro / claro |
+|---|---|---|---:|
+| `--surface-decorative-cyan` / `--ink-decorative-cyan` | `#123A4A` / `#D5F4FF` | `#E5F7FC` / `#0B4A63` | 10,53 / 8,76:1 |
+| `--surface-decorative-magenta` / `--ink-decorative-magenta` | `#4C2035` / `#FFE3EE` | `#FCE8EF` / `#7A123E` | 11,16 / 9,04:1 |
+| `--surface-decorative-purple` / `--ink-decorative-purple` | `#36264F` / `#EEE4FF` | `#F1EAFB` / `#4B2B81` | 11,10 / 9,13:1 |
+
+Use esses papéis somente em fundos de ícone ilustrativo, cabeçalhos de cartão ou separação de categorias. Mantenha sempre um rótulo em texto; qualquer texto ou número sobre a superfície usa o par `--ink-decorative-*`, medido pelo build para no mínimo 4,5:1. Não use os tokens para estado (erro, aviso, sucesso ou informação), selo de risco, distinção única de série em gráfico, foco, seleção ou fundo de botão. A terminação dos gradientes existentes não substitui a tinta do par.
+
+## Ação destrutiva e PdV
+
+`--danger-strong` com `--on-danger-strong` é um par novo para a futura ação de confirmar exclusão. Mede 6,98:1 no escuro e 6,47:1 no claro. `--danger` e os botões existentes não mudam nesta entrega; qualquer adoção no botão terá mudança visual declarada em uma versão posterior.
+
+No PdV, `--color-error-text` é a tinta nova de erro para as superfícies navy e `--text-unavailable` é a tinta de controle indisponível. Os valores anteriores de `--error`, `--text-muted` e `--gray-100` permanecem intactos. O build mede `--color-error-text` em `--surface-1` e `--surface-2` e `--text-unavailable` em `--surface-2` e `--surface-3`; o texto indisponível continua visualmente distinto do texto normal.
+
 ---
 
 ## Semantic

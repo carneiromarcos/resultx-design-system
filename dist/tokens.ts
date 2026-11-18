@@ -187,6 +187,14 @@ export const darkTokens = {
   "color-warning-bg": "rgba(245, 158, 11, 0.12)",
   "color-error": "#EF4444",
   "color-error-bg": "rgba(239, 68, 68, 0.12)",
+  "surface-decorative-cyan": "#123A4A",
+  "ink-decorative-cyan": "#D5F4FF",
+  "surface-decorative-magenta": "#4C2035",
+  "ink-decorative-magenta": "#FFE3EE",
+  "surface-decorative-purple": "#36264F",
+  "ink-decorative-purple": "#EEE4FF",
+  "danger-strong": "#F87171",
+  "on-danger-strong": "#0B0E14",
   "color-info": "#3B82F6",
   "color-info-bg": "rgba(59, 130, 246, 0.12)",
   "theory-mbti": "#22D3EE",
@@ -283,6 +291,14 @@ export const lightTokens = {
   "color-warning-bg": "rgba(217, 119, 6, 0.12)",
   "color-error": "#DC2626",
   "color-error-bg": "rgba(220, 38, 38, 0.12)",
+  "surface-decorative-cyan": "#E5F7FC",
+  "ink-decorative-cyan": "#0B4A63",
+  "surface-decorative-magenta": "#FCE8EF",
+  "ink-decorative-magenta": "#7A123E",
+  "surface-decorative-purple": "#F1EAFB",
+  "ink-decorative-purple": "#4B2B81",
+  "danger-strong": "#B91C1C",
+  "on-danger-strong": "#FFF",
   "color-info": "#2563EB",
   "color-info-bg": "rgba(37, 99, 235, 0.12)",
   "theory-mbti": "#0891B2",
@@ -417,7 +433,15 @@ export const premiumLightTokens = {
   "surface-accent-magenta": "rgba(255, 71, 137, 0.08)",
   "surface-accent-green": "rgba(40, 199, 111, 0.10)",
   "surface-accent-amber": "rgba(255, 159, 67, 0.10)",
-  "surface-accent-purple": "rgba(165, 94, 234, 0.08)"
+  "surface-accent-purple": "rgba(165, 94, 234, 0.08)",
+  "surface-decorative-cyan": "#E5F7FC",
+  "ink-decorative-cyan": "#0B4A63",
+  "surface-decorative-magenta": "#FCE8EF",
+  "ink-decorative-magenta": "#7A123E",
+  "surface-decorative-purple": "#F1EAFB",
+  "ink-decorative-purple": "#4B2B81",
+  "danger-strong": "#B91C1C",
+  "on-danger-strong": "#FFF"
 } as const;
 
 export const soberDarkTokens = {
@@ -494,7 +518,15 @@ export const soberDarkTokens = {
   "surface-accent-magenta": "rgba(255, 71, 137, 0.10)",
   "surface-accent-green": "rgba(40, 199, 111, 0.12)",
   "surface-accent-amber": "rgba(255, 159, 67, 0.12)",
-  "surface-accent-purple": "rgba(165, 94, 234, 0.14)"
+  "surface-accent-purple": "rgba(165, 94, 234, 0.14)",
+  "surface-decorative-cyan": "#123A4A",
+  "ink-decorative-cyan": "#D5F4FF",
+  "surface-decorative-magenta": "#4C2035",
+  "ink-decorative-magenta": "#FFE3EE",
+  "surface-decorative-purple": "#36264F",
+  "ink-decorative-purple": "#EEE4FF",
+  "danger-strong": "#F87171",
+  "on-danger-strong": "#0B0E14"
 } as const;
 
 export const vibrantDarkTokens = {
@@ -571,7 +603,15 @@ export const vibrantDarkTokens = {
   "surface-accent-magenta": "rgba(255, 71, 137, 0.16)",
   "surface-accent-green": "rgba(40, 199, 111, 0.18)",
   "surface-accent-amber": "rgba(255, 159, 67, 0.18)",
-  "surface-accent-purple": "rgba(165, 94, 234, 0.18)"
+  "surface-accent-purple": "rgba(165, 94, 234, 0.18)",
+  "surface-decorative-cyan": "#123A4A",
+  "ink-decorative-cyan": "#D5F4FF",
+  "surface-decorative-magenta": "#4C2035",
+  "ink-decorative-magenta": "#FFE3EE",
+  "surface-decorative-purple": "#36264F",
+  "ink-decorative-purple": "#EEE4FF",
+  "danger-strong": "#F87171",
+  "on-danger-strong": "#0B0E14"
 } as const;
 
 export type SharedTokenName = keyof typeof sharedTokens;

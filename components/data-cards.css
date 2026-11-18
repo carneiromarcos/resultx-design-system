@@ -142,11 +142,11 @@
   box-shadow: none;
 }
 
-.dl-coin--soft-cyan    { background: var(--surface-accent-cyan);    color: var(--grad-cyan-end);    box-shadow: none; }
-.dl-coin--soft-magenta { background: var(--surface-accent-magenta); color: var(--grad-magenta-end); box-shadow: none; }
+.dl-coin--soft-cyan    { background: var(--surface-decorative-cyan);    color: var(--ink-decorative-cyan);    box-shadow: none; }
+.dl-coin--soft-magenta { background: var(--surface-decorative-magenta); color: var(--ink-decorative-magenta); box-shadow: none; }
 .dl-coin--soft-green   { background: var(--surface-accent-green);   color: var(--grad-green-end);   box-shadow: none; }
 .dl-coin--soft-amber   { background: var(--surface-accent-amber);   color: var(--grad-amber-end);   box-shadow: none; }
-.dl-coin--soft-purple  { background: var(--surface-accent-purple);  color: var(--grad-purple-end);  box-shadow: none; }
+.dl-coin--soft-purple  { background: var(--surface-decorative-purple);  color: var(--ink-decorative-purple);  box-shadow: none; }
 
 /* ══════════════════════════════════════════════════════════════════════════
    3. DELTA pill

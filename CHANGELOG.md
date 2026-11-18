@@ -5,6 +5,19 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Added — papéis aditivos de cor C-cor-1
+
+Tokens novos: `--surface-decorative-cyan`, `--surface-decorative-magenta`,
+`--surface-decorative-purple`, `--ink-decorative-cyan`, `--ink-decorative-magenta`,
+`--ink-decorative-purple`, `--danger-strong`, `--on-danger-strong`,
+`--color-error-text` e `--text-unavailable` (os dois últimos, específicos do PdV).
+As três amostras decorativas antes pendentes agora usam fundo e tinta próprios e
+rótulo textual no catálogo. O build mede contraste nos temas do DS, nos cinco
+temas de marca e nas pontes; a E1 continua comparando os nomes e valores antigos
+contra a referência v2.10.0. Os tokens de perigo forte não substituem `--danger`
+nem alteram botão nesta versão; a aplicação futura no botão de exclusão terá
+mudança visual declarada.
+
 ### Changed — estados de Button no adaptador piloto
 
 Botões nativos e links indisponíveis passam a usar aparência neutra com borda tracejada;

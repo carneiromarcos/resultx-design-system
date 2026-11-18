@@ -1,14 +1,14 @@
 /** Contrato de saída da E1 contra v2.10.0, com ordem e escopo de cascata. */
 const fs = require('fs');
 const reference = require('./fixtures/tokens-v2.10.0.json');
-const { CSS_FILES, normalizeCss } = require('./lib/token-equivalence');
+const { CSS_FILES, normalizeCss, C_COR1_ADDITIVE_TOKENS, withoutCcor1Additions, withoutCcor1TypeScriptAdditions } = require('./lib/token-equivalence');
 
 test.each(CSS_FILES)('%s preserva declarações e cascata da v2.10.0', (file) => {
-  expect(normalizeCss(fs.readFileSync(file, 'utf8'), file)).toEqual(reference.css[file]);
+  expect(withoutCcor1Additions(normalizeCss(fs.readFileSync(file, 'utf8'), file))).toEqual(reference.css[file]);
 });
 
 test('dist/tokens.ts preserva a API e os valores da v2.10.0', () => {
-  expect(fs.readFileSync('dist/tokens.ts', 'utf8')).toBe(reference.ts);
+  expect(withoutCcor1TypeScriptAdditions(fs.readFileSync('dist/tokens.ts', 'utf8'))).toBe(reference.ts);
 });
 
 
@@ -58,7 +58,7 @@ test('fontes DTCG geram os três temas opt-in equivalentes em diretório isolado
     });
     for (const theme of ['premium-light', 'sober-dark', 'vibrant-dark']) {
       const file = `tokens/themes/${theme}.css`;
-      expect(normalizeCss(fs.readFileSync(path.join(output, `${theme}.css`), 'utf8'), file)).toEqual(reference.css[file]);
+      expect(withoutCcor1Additions(normalizeCss(fs.readFileSync(path.join(output, `${theme}.css`), 'utf8'), file))).toEqual(reference.css[file]);
     }
   } finally {
     fs.rmSync(output, { recursive: true, force: true });
@@ -93,7 +93,7 @@ test('fonte DTCG gera o núcleo equivalente com escopos e cascata em diretório 
       env: { ...process.env, RESULTX_CORE_OUTPUT: output }, stdio: 'pipe',
     });
     const file = 'tokens/tokens.css';
-    expect(normalizeCss(fs.readFileSync(path.join(output, 'tokens.css'), 'utf8'), file)).toEqual(reference.css[file]);
+    expect(withoutCcor1Additions(normalizeCss(fs.readFileSync(path.join(output, 'tokens.css'), 'utf8'), file))).toEqual(reference.css[file]);
   } finally {
     fs.rmSync(output, { recursive: true, force: true });
   }
@@ -111,11 +111,21 @@ test('fonte DTCG gera os CSS das marcas com escopos equivalentes', () => {
     });
     for (const brand of ['electia', 'emprega-mais', 'pdv', 'resultx', 'xscore']) {
       const file = `brands/${brand}/tokens/tokens.css`;
-      expect(normalizeCss(fs.readFileSync(path.join(output, brand, 'tokens/tokens.css'), 'utf8'), file)).toEqual(reference.css[file]);
+      expect(withoutCcor1Additions(normalizeCss(fs.readFileSync(path.join(output, brand, 'tokens/tokens.css'), 'utf8'), file))).toEqual(reference.css[file]);
     }
   } finally {
     fs.rmSync(output, { recursive: true, force: true });
   }
+});
+
+test('E1 exige cada papel C-cor-1 aditivo no CSS gerado', () => {
+  const postcss = require('postcss');
+  const files = ['tokens/tokens.css', 'tokens/themes/premium-light.css', 'tokens/themes/sober-dark.css', 'tokens/themes/vibrant-dark.css', 'brands/pdv/tokens/tokens.css'];
+  const present = new Set();
+  for (const file of files) postcss.parse(fs.readFileSync(file, 'utf8'), { from: file }).walkDecls(d => {
+    if (C_COR1_ADDITIVE_TOKENS.has(d.prop)) present.add(d.prop);
+  });
+  expect([...C_COR1_ADDITIVE_TOKENS].filter(token => !present.has(token))).toEqual([]);
 });
 
 

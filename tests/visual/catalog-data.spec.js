@@ -160,10 +160,17 @@ for (const b of brands) for (const theme of ['light', 'dark']) for (const d of d
   await expect(page.locator('[data-data-contrast]')).toContainText(pairs.some(p => p.ratio < p.minimum) ? 'abaixo do mínimo' : 'textos medidos');
   for (const table of await page.locator('table').all()) expect(await table.evaluate(t => [...t.tBodies].flatMap(body => [...body.rows]).every(row => [...row.cells].every(c => t.tHead?.rows[0]?.cells[c.cellIndex]?.getAttribute('scope') === 'col')))).toBe(true);
   if (d.id === 'data-cards') {
-    await expect(page.locator('[data-pending-role]')).toHaveCount(3);
-    for (const role of ['--surface-accent-cyan', '--surface-accent-magenta', '--surface-accent-purple']) {
-      await expect(page.locator(`[data-pending-role="${role}"]`)).toContainText('amostra incompleta');
-      expect(await page.locator('html').evaluate((e, key) => getComputedStyle(e).getPropertyValue(key).trim(), role)).toBe('');
+    await expect(page.locator('[data-pending-role]')).toHaveCount(0);
+    for (const [color, label] of [['cyan', 'Ciano'], ['magenta', 'Magenta'], ['purple', 'Roxo']]) {
+      const sample = page.locator(`.dl-coin--soft-${color}`).first();
+      await expect(sample).toHaveAttribute('aria-hidden', 'true');
+      const actual = await sample.evaluate(e => ({
+        fg: getComputedStyle(e).color,
+        bg: getComputedStyle(e).backgroundColor,
+        label: e.parentElement.innerText
+      }));
+      expect(actual.label).toContain(label);
+      expect(contrast(cssColor(actual.fg), cssColor(actual.bg))).toBeGreaterThanOrEqual(4.5);
     }
     await expect(page.locator('[data-family=status] .dl-status')).toHaveCount(5);
     for (const donut of await page.locator('.dl-donut').all()) expect(await donut.evaluate(e => {
