@@ -8,7 +8,7 @@ module.exports = [{
   applies: ['eletia', 'emprega', 'xscore', 'pdv', 'resultx'],
   families: ['statcard', 'coin', 'delta', 'chart', 'donut', 'table', 'sparkline', 'avatar-stack', 'status', 'callout'],
   recipe: 'catalog/recipes/data/data-cards.html',
-  pending: 'Os dados são fictícios. Três fundos decorativos suaves ainda não foram definidos. Eles aparecem como incompletos; o próximo passo é criar esses papéis na PR de cores com UX. Os gráficos não respondem a mouse ou toque.'
+  pending: 'Os dados são fictícios. Os fundos decorativos suaves usam tokens próprios e sempre aparecem com rótulos textuais. Os gráficos não respondem a mouse ou toque.'
 }, {
   id: 'data-patterns',
   doc: 'composite',

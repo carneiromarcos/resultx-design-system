@@ -16,7 +16,7 @@
   /* Auto-classified tokens exposed as Tailwind v4 utilities. */
   /* Uses var() references so runtime theme switching keeps working. */
 
-  /* color (113) */
+  /* color (121) */
   --color-accent-primary: var(--accent-primary);
   --color-accent-primary-hover: var(--accent-primary-hover);
   --color-accent-primary-muted: var(--accent-primary-muted);
@@ -60,6 +60,7 @@
   --color-color-success-bg: var(--color-success-bg);
   --color-color-warning: var(--color-warning);
   --color-color-warning-bg: var(--color-warning-bg);
+  --color-danger-strong: var(--danger-strong);
   --color-disc-c: var(--disc-c);
   --color-disc-c-light: var(--disc-c-light);
   --color-disc-d: var(--disc-d);
@@ -93,10 +94,14 @@
   --color-grad-magenta-start: var(--grad-magenta-start);
   --color-grad-purple-end: var(--grad-purple-end);
   --color-grad-purple-start: var(--grad-purple-start);
+  --color-ink-decorative-cyan: var(--ink-decorative-cyan);
+  --color-ink-decorative-magenta: var(--ink-decorative-magenta);
+  --color-ink-decorative-purple: var(--ink-decorative-purple);
   --color-mbti-ei: var(--mbti-ei);
   --color-mbti-jp: var(--mbti-jp);
   --color-mbti-sn: var(--mbti-sn);
   --color-mbti-tf: var(--mbti-tf);
+  --color-on-danger-strong: var(--on-danger-strong);
   --color-sidebar-active-bg: var(--sidebar-active-bg);
   --color-sidebar-badge-active-bg: var(--sidebar-badge-active-bg);
   --color-sidebar-badge-bg: var(--sidebar-badge-bg);
@@ -108,6 +113,9 @@
   --color-sidebar-text-active: var(--sidebar-text-active);
   --color-sidebar-text-bright: var(--sidebar-text-bright);
   --color-sidebar-text-label: var(--sidebar-text-label);
+  --color-surface-decorative-cyan: var(--surface-decorative-cyan);
+  --color-surface-decorative-magenta: var(--surface-decorative-magenta);
+  --color-surface-decorative-purple: var(--surface-decorative-purple);
   --color-text-inverse: var(--text-inverse);
   --color-text-muted: var(--text-muted);
   --color-text-on-accent: var(--text-on-accent);
@@ -386,6 +394,14 @@
   --color-warning-bg: rgba(245, 158, 11, 0.12);
   --color-error: #EF4444;
   --color-error-bg: rgba(239, 68, 68, 0.12);
+  --surface-decorative-cyan: #123A4A;
+  --ink-decorative-cyan: #D5F4FF;
+  --surface-decorative-magenta: #4C2035;
+  --ink-decorative-magenta: #FFE3EE;
+  --surface-decorative-purple: #36264F;
+  --ink-decorative-purple: #EEE4FF;
+  --danger-strong: #F87171;
+  --on-danger-strong: #0B0E14;
   --color-info: #3B82F6;
   --color-info-bg: rgba(59, 130, 246, 0.12);
   --theory-mbti: #22D3EE;
@@ -482,6 +498,14 @@
   --color-warning-bg: rgba(217, 119, 6, 0.12);
   --color-error: #DC2626;
   --color-error-bg: rgba(220, 38, 38, 0.12);
+  --surface-decorative-cyan: #E5F7FC;
+  --ink-decorative-cyan: #0B4A63;
+  --surface-decorative-magenta: #FCE8EF;
+  --ink-decorative-magenta: #7A123E;
+  --surface-decorative-purple: #F1EAFB;
+  --ink-decorative-purple: #4B2B81;
+  --danger-strong: #B91C1C;
+  --on-danger-strong: #FFF;
   --color-info: #2563EB;
   --color-info-bg: rgba(37, 99, 235, 0.12);
   --theory-mbti: #0891B2;
@@ -617,6 +641,14 @@
   --surface-accent-green: rgba(40, 199, 111, 0.10);
   --surface-accent-amber: rgba(255, 159, 67, 0.10);
   --surface-accent-purple: rgba(165, 94, 234, 0.08);
+  --surface-decorative-cyan: #E5F7FC;
+  --ink-decorative-cyan: #0B4A63;
+  --surface-decorative-magenta: #FCE8EF;
+  --ink-decorative-magenta: #7A123E;
+  --surface-decorative-purple: #F1EAFB;
+  --ink-decorative-purple: #4B2B81;
+  --danger-strong: #B91C1C;
+  --on-danger-strong: #FFF;
 }
 
 [data-theme="sober-dark"] {
@@ -694,6 +726,14 @@
   --surface-accent-green: rgba(40, 199, 111, 0.12);
   --surface-accent-amber: rgba(255, 159, 67, 0.12);
   --surface-accent-purple: rgba(165, 94, 234, 0.14);
+  --surface-decorative-cyan: #123A4A;
+  --ink-decorative-cyan: #D5F4FF;
+  --surface-decorative-magenta: #4C2035;
+  --ink-decorative-magenta: #FFE3EE;
+  --surface-decorative-purple: #36264F;
+  --ink-decorative-purple: #EEE4FF;
+  --danger-strong: #F87171;
+  --on-danger-strong: #0B0E14;
 }
 
 [data-theme="vibrant-dark"] {
@@ -771,6 +811,14 @@
   --surface-accent-green: rgba(40, 199, 111, 0.18);
   --surface-accent-amber: rgba(255, 159, 67, 0.18);
   --surface-accent-purple: rgba(165, 94, 234, 0.18);
+  --surface-decorative-cyan: #123A4A;
+  --ink-decorative-cyan: #D5F4FF;
+  --surface-decorative-magenta: #4C2035;
+  --ink-decorative-magenta: #FFE3EE;
+  --surface-decorative-purple: #36264F;
+  --ink-decorative-purple: #EEE4FF;
+  --danger-strong: #F87171;
+  --on-danger-strong: #0B0E14;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -810,6 +858,14 @@
     --color-warning-bg: rgba(245, 158, 11, 0.12);
     --color-error: #EF4444;
     --color-error-bg: rgba(239, 68, 68, 0.12);
+    --surface-decorative-cyan: #123A4A;
+    --ink-decorative-cyan: #D5F4FF;
+    --surface-decorative-magenta: #4C2035;
+    --ink-decorative-magenta: #FFE3EE;
+    --surface-decorative-purple: #36264F;
+    --ink-decorative-purple: #EEE4FF;
+    --danger-strong: #F87171;
+    --on-danger-strong: #0B0E14;
     --color-info: #3B82F6;
     --color-info-bg: rgba(59, 130, 246, 0.12);
     --theory-mbti: #22D3EE;
@@ -908,6 +964,14 @@
     --color-warning-bg: rgba(217, 119, 6, 0.12);
     --color-error: #DC2626;
     --color-error-bg: rgba(220, 38, 38, 0.12);
+    --surface-decorative-cyan: #E5F7FC;
+    --ink-decorative-cyan: #0B4A63;
+    --surface-decorative-magenta: #FCE8EF;
+    --ink-decorative-magenta: #7A123E;
+    --surface-decorative-purple: #F1EAFB;
+    --ink-decorative-purple: #4B2B81;
+    --danger-strong: #B91C1C;
+    --on-danger-strong: #FFF;
     --color-info: #2563EB;
     --color-info-bg: rgba(37, 99, 235, 0.12);
     --theory-mbti: #0891B2;

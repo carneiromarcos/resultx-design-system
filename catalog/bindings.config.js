@@ -140,9 +140,4 @@ const dataRoles = Object.freeze({
   '--surface-accent-green': '--color-success-bg',
   '--surface-accent-amber': '--color-warning-bg'
 });
-const pendingDataRoles = Object.freeze({
-  '--surface-accent-cyan': 'Ciano suave',
-  '--surface-accent-magenta': 'Magenta suave',
-  '--surface-accent-purple': 'Roxo suave'
-});
-module.exports = { brands, dataRoles, pendingDataRoles };
+module.exports = { brands, dataRoles };

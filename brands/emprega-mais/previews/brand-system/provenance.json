@@ -166,7 +166,7 @@
     },
     {
       "file": "tokens/themes/premium-light.css",
-      "sha256": "850da62e37813ce3c7c55962caca2fcf526dcd246d4c32d1adc89d5094572e7d"
+      "sha256": "1c8fb32f2375ff169a91a761f2948e71418f3eec7ac82f954d72bd5ac9ae6a9e"
     },
     {
       "file": "tokens/themes/preview.html",
@@ -174,22 +174,22 @@
     },
     {
       "file": "tokens/themes/sober-dark.css",
-      "sha256": "a8e249d8b03febbbb47bec2425193ba74a61901a278816cc1630e9d80d492a8f"
+      "sha256": "30cbbc33cef18ecec707e4480c5737d9e9ffc3303b03b8cde8b9ab7b44f41986"
     },
     {
       "file": "tokens/themes/vibrant-dark.css",
-      "sha256": "5eebbd0734ceeeae5e245da93554fdfad05dcc2e8054765fba121b9bc5343416"
+      "sha256": "8aaf594d1885307781a58254966415aab53ca25d3311398fd8882c2008deb243"
     },
     {
       "file": "tokens/tokens.css",
-      "sha256": "297500aca30c3f49a43c6900da3b2c7b5e1f9c621b66f342d1d1fe17d8aeabfc"
+      "sha256": "813f0fa81c5fc18397f7958a0d101e0bcaf1a70e3ec5c2e616368f28e0ac42ca"
     },
     {
       "file": "tokens/tokens.json",
-      "sha256": "ff417cf849ce54336d2244f48930a41894df7ae2a6d4f9eb424b373111415309"
+      "sha256": "cfb9ff9622fc0c9a05599f4adda92b0ca5d7a9fae5982191819f32833a41d211"
     }
   ],
-  "contentId": "3472f86692e485b43c6f0635cf08cd05eb543cc55b3724374e6561c6ed34c2d3",
+  "contentId": "17410035835929c27b30a4cef9accba6727b589d02f55ad4e4fcda7a1e4b7ff8",
   "contrasts": {
     "light": [
       {

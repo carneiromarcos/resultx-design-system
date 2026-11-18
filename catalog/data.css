@@ -14,7 +14,6 @@ body { display: block; }
 .catalog-callout-scene { position: relative; min-height: var(--space-20); }
 .catalog-callout-scene .dl-tooltip-callout { left: 50%; top: 50%; }
 .catalog-static-toolbar { position: relative; flex-wrap: wrap; }
-.catalog-soft-pending { padding: var(--space-4); }
 .catalog-data :is(.table-wrap,.dl-table-wrap) { max-width: 100%; }
 .catalog-data :is(.table-wrap,.dl-table-wrap):focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring-color); outline-offset: calc(var(--focus-ring-offset) * -1); }
 .catalog-legend-cyan { background: var(--grad-cyan-end); }

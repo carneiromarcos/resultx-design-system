@@ -5,9 +5,6 @@ const fs = require('fs'),
   postcss = require('postcss');
 const definitions = require('../../catalog/data.config.cjs');
 const {
-  pendingDataRoles
-} = require('../../catalog/bindings.config');
-const {
   sourceRules,
   decl,
   rgba,
@@ -138,14 +135,9 @@ function renderData(root, d, values, revision) {
     amber: 'Âmbar',
     purple: 'Roxo'
   };
-  const good = ['green', 'amber'];
   const substitutions = {
-    COINS: coins.map(c => `<span><span class="dl-coin dl-coin--${c}" aria-hidden="true">+</span> ${labels[c]}</span>`).join('') + good.map(c => `<span><span class="dl-coin dl-coin--soft-${c}" aria-hidden="true">+</span> ${labels[c]} suave</span>`).join('') + '<span><span class="dl-coin dl-coin--neutral" aria-hidden="true">+</span> Neutro</span>',
+    COINS: coins.map(c => `<span><span class="dl-coin dl-coin--${c}" aria-hidden="true">+</span> ${labels[c]}</span>`).join('') + coins.filter(c => ['cyan', 'magenta', 'green', 'amber', 'purple'].includes(c)).map(c => `<span><span class="dl-coin dl-coin--soft-${c}" aria-hidden="true">+</span> ${labels[c]} suave</span>`).join('') + '<span><span class="dl-coin dl-coin--neutral" aria-hidden="true">+</span> Neutro</span>',
     COIN_SIZES: ['sm', '', 'lg'].map((s, i) => `<span><span class="dl-coin dl-coin--neutral ${s ? 'dl-coin--' + s : ''}" aria-hidden="true">+</span> ${['Pequeno', 'Padrão', 'Grande'][i]}</span>`).join(''),
-    SOFT_PENDING: Object.entries(pendingDataRoles).map(([role, label]) => {
-      const c = role.split('-').at(-1);
-      return `<article class="catalog-soft-pending" data-pending-role="${role}"><h3>${label}: amostra incompleta</h3><span class="dl-coin dl-coin--soft-${c}" aria-hidden="true">+</span><p>Falta um fundo decorativo próprio para esta amostra. Próximo passo: criar esse papel na PR de cores com UX. Esta apresentação sem fundo não está aprovada.</p></article>`;
-    }).join(''),
     CHART_SVG: `<svg class="dl-chart-svg" viewBox="0 0 320 140" role="img" aria-label="Cinco valores fictícios; alternativa em texto abaixo"><g class="dl-chart-grid"><line x1="0" x2="320" y1="70" y2="70"/></g>${line}<circle class="dl-chart-point" cx="320" cy="${140 - numbers.at(-1) * 1.4}" r="6"/></svg>`,
     SERIES_TEXT: seriesText,
     DONUTS: ['sm', '', 'lg'].map(s => `<div class="dl-donut ${s ? 'dl-donut--' + s : ''}" role="img" aria-label="100 itens fictícios: ${data.shares.join(', ')} por categoria"><div class="dl-donut-track"></div><div class="dl-donut-inner"><strong class="dl-donut-value">100</strong><span class="dl-donut-label">itens</span></div></div>`).join(''),

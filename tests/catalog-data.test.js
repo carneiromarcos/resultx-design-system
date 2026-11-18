@@ -18,8 +18,7 @@ const path = require('path'),
   postcss = require('postcss');
 const {
   brands,
-  dataRoles,
-  pendingDataRoles
+  dataRoles
 } = require('../catalog/bindings.config');
 const {
   bindings,
@@ -50,15 +49,16 @@ test('nome inexistente no destino obrigatório faz o gerador barrar a ligação'
   brand.common['--delta-neutral-fg'] = '--papel-inexistente';
   expect(() => bindings(process.cwd(), brand, 'light')).toThrow('Ligação inválida: --delta-neutral-fg');
 });
-test('três fundos decorativos ficam sem alias e com aviso próprio, sem preencher por semântica falsa', () => {
-  expect(Object.keys(pendingDataRoles)).toHaveLength(3);
-  for (const key of Object.keys(pendingDataRoles)) expect(Object.hasOwn(dataRoles, key)).toBe(false);
+test('amostras decorativas pendentes agora têm fundo e tinta próprios, sempre com rótulo', () => {
   const html = renderData(process.cwd(), definitions[0], bindings(process.cwd(), brands[0], 'light').values, {
     label: 'teste'
   }).replacements.SAMPLES;
-  for (const role of Object.keys(pendingDataRoles)) expect(html).toContain('data-pending-role="' + role + '"');
-  expect(html.match(/amostra incompleta/g)).toHaveLength(3);
-  expect(html).toContain('PR de cores com UX');
+  for (const color of ['cyan', 'magenta', 'purple']) {
+    expect(html).toContain('class="dl-coin dl-coin--soft-' + color + '"');
+    expect(html).toContain({ cyan: 'Ciano suave', magenta: 'Magenta suave', purple: 'Roxo suave' }[color]);
+  }
+  expect(html).not.toContain('amostra incompleta');
+  expect(html).not.toContain('data-pending-role=');
 });
 test('dez famílias de dados aparecem separadas, sem código inline ou classe de componente inventada', () => {
   const names = new Set();

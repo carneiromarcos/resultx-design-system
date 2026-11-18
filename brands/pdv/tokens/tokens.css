@@ -45,6 +45,9 @@
   --success: #2D8B5C;
   --error: #B83A3A;
   --warning: #B8862A;
+  /* Contrast-specific text roles; fill and normal text values remain intact. */
+  --color-error-text: #FF8A80;
+  --text-unavailable: #A9B3C6;
 
   /* ---- Typography ---- */
   --font-heading: 'Sora', sans-serif;
@@ -149,6 +152,9 @@
      fundo de tag) — as duas medidas precisam passar. O dourado da marca segue
      intacto como PREENCHIMENTO de botão, com tinta escura por cima. */
   --gold-ink: #866425;
+  /* Explicit in both scopes because the brand keeps its navy surfaces. */
+  --color-error-text: #FF8A80;
+  --text-unavailable: #A9B3C6;
 }
 
 /* ---- Utility classes ---- */
