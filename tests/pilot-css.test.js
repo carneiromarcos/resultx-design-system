@@ -15,16 +15,19 @@ test('CSS isolado usa somente valores de token ou palavras estruturais', () => {
     expect(rule.parent.params).toBe('components');
     for (const selector of rule.selectors) expect(selector.trim()).toMatch(/^\.rx-/);
   });
-  const structural = new Set(['solid', 'dashed', 'progress', 'grid', 'inline-block', 'border-box', 'normal', 'none', 'collapse', 'left', 'not-allowed', 'pointer', 'tabular-nums']);
+  const structural = new Set(['solid', 'dashed', 'progress', 'grid', 'inline-block', 'border-box', 'normal', 'none', 'collapse', 'left', 'not-allowed', 'pointer', 'tabular-nums', 'relative', 'block', 'absolute', 'in', 'srgb', '45%', 'transparent', '50%', '-70%', '45deg', '2px', '3', '2', '0', '*', '+', 'vertical']);
   root.walkDecls((decl) => {
     parser(decl.value).walk((node) => {
       if (node.type === 'function') {
-        expect(node.value).toBe('var');
-        expect(node.nodes).toHaveLength(1);
-        const token = node.nodes[0].value;
-        expect(names.has(token)).toBe(true);
-        consumed.add(token);
-        return false;
+        if (node.value === 'var') {
+          expect(node.nodes).toHaveLength(1);
+          const token = node.nodes[0].value;
+          expect(names.has(token)).toBe(true);
+          consumed.add(token);
+          return false;
+        }
+        expect(['calc', 'color-mix', 'translateY', 'rotate']).toContain(node.value);
+        return undefined;
       }
       if (node.type === 'word') expect(structural.has(node.value)).toBe(true);
       return undefined;
@@ -32,4 +35,45 @@ test('CSS isolado usa somente valores de token ou palavras estruturais', () => {
   });
   const declared = new Set(fs.readdirSync('contracts').filter((f) => f.endsWith('.yaml')).flatMap((f) => yaml.load(fs.readFileSync(`contracts/${f}`, 'utf8')).tokens));
   expect([...consumed].filter((token) => !declared.has(token))).toEqual([]);
+});
+
+test('Select2 acompanha o controle fechado, foco e erro com papéis existentes', () => {
+  const root = postcss.parse(fs.readFileSync('adapters/css/pilot.css', 'utf8'));
+  const selectors = [];
+  root.walkRules((rule) => selectors.push(...rule.selectors));
+  expect(selectors.some((selector) => selector.includes('.select2-container--focus .select2-selection'))).toBe(true);
+  expect(selectors.some((selector) => selector.includes('.select2-container--open .select2-selection'))).toBe(true);
+  expect(selectors.some((selector) => selector.includes("select[aria-invalid='true'] + .select2-container .select2-selection"))).toBe(true);
+  expect(selectors.some((selector) => selector.includes('.select2-selection__arrow b'))).toBe(true);
+  expect(selectors.some((selector) => selector.includes('.select2-results'))).toBe(false);
+  const css = fs.readFileSync('adapters/css/pilot.css', 'utf8');
+  expect(css).toContain('min-height: calc(var(--text-sm) * var(--leading-relaxed) + 2 * var(--space-2) + 2px)');
+  expect(css).toContain('border-color: var(--text-muted) transparent transparent');
+  expect(css).toContain('color-mix(in srgb, var(--color-error) 45%, transparent)');
+});
+
+test('campos compartilhados mantêm borda acessível e foco de erro sem alterar tokens', () => {
+  const shared = postcss.parse(fs.readFileSync('components/components.css', 'utf8'));
+  const selectors = new Set();
+  const declarations = new Map();
+  shared.walkRules((rule) => {
+    for (const selector of rule.selectors) {
+      selectors.add(selector);
+      const current = declarations.get(selector) || {};
+      rule.walkDecls((decl) => { current[decl.prop] = decl.value; });
+      declarations.set(selector, current);
+    }
+  });
+  for (const selector of ['.form-input', '.form-select']) {
+    expect(declarations.get(selector).border).toBe('1px solid var(--text-muted)');
+  }
+  expect(declarations.get('.form-textarea').border).toBe('1px solid var(--text-muted)');
+  for (const selector of [
+    ".form-input[aria-invalid='true']:focus-visible",
+    ".form-select[aria-invalid='true']:focus-visible",
+    ".form-textarea[aria-invalid='true']:focus-visible"
+  ]) expect(selectors.has(selector)).toBe(true);
+  expect(shared.toString()).toContain('color-mix(in srgb, var(--color-error) 45%, transparent)');
+  expect(shared.toString()).not.toContain('rgba(239, 68, 68, 0.3)');
+  expect(shared.toString()).toContain('calc(3 * var(--text-sm) * var(--leading-relaxed) + 2 * var(--space-3) + 2px)');
 });

@@ -5,6 +5,16 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Changed — Field: campos nativos e borda acessível
+
+O contrato Field amplia a cobertura de select nativo, textarea e `inputmode` numérico/decimal.
+Input, select e textarea passam a usar a tinta semântica `--text-muted` na borda, atingindo
+o mínimo de 3:1 sem alterar valores de tokens. É uma mudança visual também para inputs já
+existentes. O textarea mantém redimensionamento somente vertical e altura mínima de três
+linhas. Erros ficam associados por `aria-describedby`; foco de erro usa uma mistura do papel
+de erro existente. A compatibilidade Select2 cobre apenas o controle fechado; a lista aberta
+permanece fora deste contrato.
+
 ### Added — papéis aditivos de cor C-cor-1
 
 Tokens novos: `--surface-decorative-cyan`, `--surface-decorative-magenta`,

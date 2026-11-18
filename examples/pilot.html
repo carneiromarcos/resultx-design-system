@@ -30,7 +30,41 @@
   <div class="rx-field" id="field-error">
     <label class="rx-field__label" for="invalid">E-mail</label>
     <input class="rx-field__control" id="invalid" type="email" aria-invalid="true" aria-describedby="invalid-message">
-    <span class="rx-field__message" id="invalid-message">Informe um e-mail válido.</span>
+    <span class="rx-field__message" id="invalid-message" role="alert"><span aria-hidden="true">!</span> Informe um e-mail válido.</span>
+  </div>
+  <div class="rx-field" id="field-select">
+    <label class="rx-field__label" for="profile-status">Status do perfil</label>
+    <span class="rx-field__select-wrap"><select class="rx-field__control rx-field__control--select" id="profile-status" aria-describedby="profile-status-help">
+      <option value="">Selecione um status</option><option value="active">Ativo</option><option value="paused">Pausado</option>
+    </select></span>
+    <span class="rx-field__message" id="profile-status-help">Escolha o status atual.</span>
+  </div>
+  <div class="rx-field" id="field-textarea">
+    <label class="rx-field__label" for="profile-notes">Observações</label>
+    <textarea class="rx-field__control rx-field__control--textarea" id="profile-notes" aria-describedby="profile-notes-help" placeholder="Escreva uma observação"></textarea>
+    <span class="rx-field__message" id="profile-notes-help">Campo opcional.</span>
+  </div>
+  <div class="rx-field" id="field-inputmode-numeric">
+    <label class="rx-field__label" for="numeric-code">Código numérico</label>
+    <input class="rx-field__control" id="numeric-code" type="text" inputmode="numeric" aria-describedby="numeric-code-help">
+    <span class="rx-field__message" id="numeric-code-help">O teclado numérico é uma sugestão.</span>
+  </div>
+  <div class="rx-field" id="field-inputmode-money">
+    <label class="rx-field__label" for="amount">Valor</label>
+    <input class="rx-field__control" id="amount" type="text" inputmode="decimal" aria-describedby="amount-help">
+    <span class="rx-field__message" id="amount-help">O teclado decimal é uma sugestão.</span>
+  </div>
+  <div class="rx-field" id="field-select-error">
+    <label class="rx-field__label" for="invalid-select">Categoria</label>
+    <span class="rx-field__select-wrap"><select class="rx-field__control rx-field__control--select" id="invalid-select" aria-invalid="true" aria-describedby="invalid-select-message">
+      <option value="">Selecione uma categoria</option><option value="one">Categoria A</option>
+    </select></span>
+    <span class="rx-field__message" id="invalid-select-message" role="alert"><span aria-hidden="true">!</span> Selecione uma categoria.</span>
+  </div>
+  <div class="rx-field" id="field-textarea-error">
+    <label class="rx-field__label" for="invalid-textarea">Descrição</label>
+    <textarea class="rx-field__control rx-field__control--textarea" id="invalid-textarea" aria-invalid="true" aria-describedby="invalid-textarea-message"></textarea>
+    <span class="rx-field__message" id="invalid-textarea-message" role="alert"><span aria-hidden="true">!</span> Informe uma descrição.</span>
   </div>
   <div class="rx-field" id="field-loading" aria-busy="true"><label for="loading-field">Verificando</label><input class="rx-field__control" id="loading-field" disabled><span>Verificando campo</span></div>
   <label class="rx-field">Campo indisponível <input class="rx-field__control" id="disabled-field" disabled></label>

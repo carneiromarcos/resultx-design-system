@@ -15,7 +15,9 @@
   --font-bold: 700;
   --font-regular: 400;
   --font-semibold: 600;
+  --leading-relaxed: 1.6;
   --radius-md: var(--eds-radius-btn);
+  --space-10: 2.5rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
@@ -26,4 +28,5 @@
   --text-on-success: var(--eds-surface);
   --text-primary: var(--eds-ink-strong);
   --text-secondary: var(--eds-ink-medium);
+  --text-sm: 0.8125rem;
 }

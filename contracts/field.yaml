@@ -2,11 +2,26 @@ versao: 1
 componente: Field
 anatomia:
   - label associado
-  - input
+  - input, select nativo ou textarea
   - mensagem de ajuda ou erro associada
 variantes:
   - text
   - search
+  - select
+  - textarea
+formatos_entrada:
+  numerico:
+    elemento: input type="text"
+    inputmode: numeric
+    semantica: Sugere teclado numérico; não valida nem transforma o valor.
+  dinheiro:
+    elemento: input type="text"
+    inputmode: decimal
+    semantica: Sugere teclado decimal; não formata nem calcula valores.
+integracoes:
+  select2:
+    regra: O controle fechado herda borda, altura mínima, foco e erro do select nativo.
+    lista_aberta: Fora do escopo deste contrato.
 estados:
   normal: Controle editável.
   carregando: aria-busy no grupo enquanto processa.
@@ -16,7 +31,11 @@ estados:
   foco: Anel visível.
 tokens:
   - '--bg-surface-1'
+  - '--bg-base'
   - '--text-primary'
+  - '--text-muted'
+  - '--text-sm'
+  - '--leading-relaxed'
   - '--font-body'
   - '--text-base'
   - '--focus-ring-width'
@@ -25,6 +44,7 @@ tokens:
   - '--text-secondary'
   - '--space-2'
   - '--space-4'
+  - '--space-10'
   - '--radius-md'
   - '--font-semibold'
   - '--color-error'
@@ -33,7 +53,8 @@ teclado:
   - Digitação altera o valor.
 aria:
   - label programático obrigatório.
-  - Erro associado por aria-describedby e aria-invalid.
+  - Erro de input, select e textarea associado por aria-describedby e aria-invalid.
+  - Select2 mantém o select nativo de origem com aria-invalid e aria-describedby.
 criterios_aceite:
   - Texto ≥ 4,5:1; borda e foco ≥ 3:1.
   - Erro é identificável sem depender de cor.
@@ -41,7 +62,15 @@ casos_teste:
   - id: field-label
     descricao: O controle tem rótulo associado.
   - id: field-error
-    descricao: Erro usa aria-invalid e descrição associada.
+    descricao: Input, select e textarea com erro usam aria-invalid e descrição associada.
+  - id: field-select
+    descricao: Select nativo tem label, opções e foco visível.
+  - id: field-textarea
+    descricao: Textarea preserva o foco e pode ser redimensionado apenas verticalmente.
+  - id: field-inputmode-numeric
+    descricao: Campo numérico sugere teclado numeric sem impor validação.
+  - id: field-inputmode-money
+    descricao: Campo monetário sugere teclado decimal sem impor formatação.
   - id: field-disabled
     descricao: Campo desabilitado não aceita interação.
   - id: field-keyboard

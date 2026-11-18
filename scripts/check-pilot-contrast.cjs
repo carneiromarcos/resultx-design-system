@@ -38,6 +38,7 @@ const pairs = [
   ['texto hover', '--text-primary', '--bg-surface-3', 4.5],
   ['texto ativo', '--text-primary', '--bg-surface-2', 4.5],
   ['texto indisponível', '--text-muted', '--bg-surface-2', 4.5],
+  ['borda Field', '--text-muted', '--bg-surface-1', 3],
   ['erro', '--color-error', '--bg-surface-1', 4.5],
   ['sucesso', '--text-on-success', '--color-success', 4.5],
   ['link', '--accent-primary-text', '--bg-surface-1', 4.5],
