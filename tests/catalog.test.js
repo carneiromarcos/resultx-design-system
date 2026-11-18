@@ -164,9 +164,13 @@ test('vitrine de Field apresenta o contrato ampliado sem uma segunda página', (
   const entries = manifest.pages.filter(page => page.contract === 'contracts/field.yaml');
   expect(entries).toHaveLength(1);
   const html = fs.readFileSync(path.join(root, '_site/catalog/emprega/light/field/example.html'), 'utf8');
-  for (const sample of ['Select nativo', 'Texto longo', 'Teclado numérico', 'Teclado decimal', 'Select com erro', 'Textarea com erro']) {
+  for (const sample of ['Select nativo', 'Select2 fechado — single e multiple', 'Texto longo', 'Teclado numérico', 'Teclado decimal', 'Select com erro', 'Textarea com erro']) {
     expect(html).toContain(sample);
   }
+  const targets = [...html.matchAll(/<li data-contrast-pair data-target="([^"]+)"/g)].map(([, target]) => target);
+  expect(targets.length).toBeGreaterThan(0);
+  expect(targets).not.toContain('undefined');
+  for (const target of targets) expect(html).toContain(`id="${target}"`);
   expect(html).toContain('<select');
   expect(html).toContain('<textarea');
   expect(html).toContain('inputmode="numeric"');

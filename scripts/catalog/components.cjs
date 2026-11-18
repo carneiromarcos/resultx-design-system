@@ -152,7 +152,11 @@ function renderComponent(root, definition, values, revision) {
     if (sourceId === 'field' && state === 'desabilitado') html = html.replace('<input', '<input disabled');
     const target = options.target || ((sourceId === 'table' || sourceId === 'confirm') && state === 'normal' ? sourceId : key + '-' + sourceId);
     if (options.demo) html = html.replace(/(<(?:button|a|input)\b)/, `$1 data-catalog-state="${options.demo}"`);
-    const control = definition.id === 'field' ? (html.match(/<(?:input|select|textarea)[^>]*\sid="([^"]+)"/) || [])[1] : target;
+    const control = definition.id === 'field'
+      ? (html.match(/<(?:input|select|textarea)[^>]*\sid="([^"]+)"/) || [])[1]
+        || (html.match(/<[^>]*class="[^"]*select2-selection[^"]*"[^>]*\sid="([^"]+)"/) || [])[1]
+        || target
+      : target;
     const descriptor = {
       id: control,
       label,
