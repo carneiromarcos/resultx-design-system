@@ -63,7 +63,7 @@
 
 - field-label: O controle tem rótulo associado.
 - field-error: Input, select e textarea com erro usam aria-invalid e descrição associada.
-- field-select: Select nativo tem label, opções e foco visível.
+- field-select: Select nativo tem label, ocupa o wrapper e mantém chevron e texto dentro do campo.
 - field-select2-skin: Select2 fechado single e multiple preserva a borda, o fundo e a geometria do campo nos dois temas.
 - field-textarea: Textarea preserva o foco e pode ser redimensionado apenas verticalmente.
 - field-inputmode-numeric: Campo numérico sugere teclado numeric sem impor validação.

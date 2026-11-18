@@ -70,6 +70,8 @@
   }
   .rx-field__select-wrap { position: relative; display: block; }
   .rx-field__control--select {
+    width: 100%;
+    box-sizing: border-box;
     appearance: none;
     padding-right: var(--space-10);
   }

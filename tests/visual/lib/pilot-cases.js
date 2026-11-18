@@ -179,6 +179,35 @@ const checks = {
     const select = p.getByLabel('Status do perfil');
     await expect(select).toBeVisible();
     expect(await select.evaluate((el) => el.tagName)).toBe('SELECT');
+    for (const selector of ['#profile-status', '#invalid-select']) {
+      const geometry = await p.locator(selector).evaluate((el) => {
+        const wrapper = el.closest('.rx-field__select-wrap');
+        const selectBox = el.getBoundingClientRect();
+        const wrapperBox = wrapper.getBoundingClientRect();
+        const arrow = getComputedStyle(wrapper, '::after');
+        const arrowWidth = parseFloat(arrow.width);
+        const arrowRightInset = parseFloat(arrow.right);
+        const arrowRight = wrapperBox.right - arrowRightInset;
+        return {
+          selectLeft: selectBox.left,
+          selectRight: selectBox.right,
+          selectWidth: selectBox.width,
+          wrapperLeft: wrapperBox.left,
+          wrapperRight: wrapperBox.right,
+          wrapperWidth: wrapperBox.width,
+          arrowLeft: arrowRight - arrowWidth,
+          arrowRight,
+          arrowRightInset,
+          arrowWidth,
+          paddingRight: parseFloat(getComputedStyle(el).paddingRight),
+        };
+      });
+      expect(Math.abs(geometry.selectWidth - geometry.wrapperWidth), `${selector}: select ocupa a largura do wrapper`).toBeLessThan(1);
+      expect(Math.abs(geometry.selectLeft - geometry.wrapperLeft), `${selector}: select começa no wrapper`).toBeLessThan(1);
+      expect(geometry.arrowLeft, `${selector}: chevron dentro do select à esquerda`).toBeGreaterThanOrEqual(geometry.selectLeft);
+      expect(geometry.arrowRight, `${selector}: chevron dentro do select à direita`).toBeLessThanOrEqual(geometry.selectRight);
+      expect(geometry.paddingRight, `${selector}: padding reserva espaço para o chevron`).toBeGreaterThanOrEqual(geometry.arrowWidth + geometry.arrowRightInset);
+    }
     await select.focus();
     await contrast(p, '#profile-status', 'outlineColor');
     await select.selectOption('active');

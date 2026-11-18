@@ -64,7 +64,7 @@ casos_teste:
   - id: field-error
     descricao: Input, select e textarea com erro usam aria-invalid e descrição associada.
   - id: field-select
-    descricao: Select nativo tem label, opções e foco visível.
+    descricao: Select nativo tem label, ocupa o wrapper e mantém chevron e texto dentro do campo.
   - id: field-select2-skin
     descricao: Select2 fechado single e multiple preserva a borda, o fundo e a geometria do campo nos dois temas.
   - id: field-textarea

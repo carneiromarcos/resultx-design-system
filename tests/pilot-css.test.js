@@ -98,3 +98,12 @@ test('campos compartilhados mantêm borda acessível e foco de erro sem alterar 
   expect(shared.toString()).not.toContain('rgba(239, 68, 68, 0.3)');
   expect(shared.toString()).toContain('calc(3 * var(--text-sm) * var(--leading-relaxed) + 2 * var(--space-3) + 2px)');
 });
+
+test('select compartilhado preenche o wrapper com box sizing de controle', () => {
+  const shared = postcss.parse(fs.readFileSync('components/components.css', 'utf8'));
+  let select;
+  shared.walkRules((rule) => { if (rule.selectors.includes('.form-select')) select = rule; });
+  expect(select).toBeDefined();
+  const declarations = Object.fromEntries(select.nodes.filter((node) => node.type === 'decl').map(({ prop, value }) => [prop, value]));
+  expect(declarations).toMatchObject({ width: '100%', 'box-sizing': 'border-box', 'padding-right': 'var(--space-10)' });
+});

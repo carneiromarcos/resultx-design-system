@@ -843,7 +843,7 @@ body {
    mesmo motivo pelo qual o .segmented usa rádio nativo em vez de imitar um.
    Reimplementar isso em div custa tudo e não devolve nada. */
 .form-select {
-  width: 100%; padding: var(--space-2) var(--space-4);
+  width: 100%; box-sizing: border-box; padding: var(--space-2) var(--space-4);
   /* Espaço à direita para o chevron do invólucro não encostar no texto. */
   padding-right: var(--space-10);
   background: var(--bg-base);
