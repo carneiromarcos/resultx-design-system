@@ -5,6 +5,12 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 
 ## [Unreleased]
 
+### Fixed — contraste do foco em campos com erro
+
+O foco de campos com erro mantém o anel normal de foco do tema, enquanto borda e mensagem
+continuam identificando o erro. Isso corrige o Field e a Escolha no adaptador piloto e o Field
+compartilhado, incluindo Select2 fechado e a classe legada `.form-input-error`, sem alterar tokens.
+
 ### Changed — Field: campos nativos e borda acessível
 
 O exemplo do contrato agora apresenta select nativo, textarea, campos com `inputmode` numérico

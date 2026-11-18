@@ -1,5 +1,6 @@
 const { expect } = require('@playwright/test');
 const { paintedEdge, paintedFill, controlBoundary, textContrast, descendantTextContrast } = require('./contract-probes');
+const { parseCssColor } = require('./css-color');
 async function contrast(page, selector, property = 'color') {
   if (property === 'outlineColor') return paintedEdge(page, selector, 'outline');
   if (property === 'borderTopColor') return paintedEdge(page, selector, 'border');
@@ -7,6 +8,11 @@ async function contrast(page, selector, property = 'color') {
 }
 const { modalSemantics, tableHeaders, dialogKeyboard, tableSorting } = require('./behavior-probes');
 const visualProperties = ['backgroundColor', 'color', 'borderTopColor', 'borderTopStyle', 'fontWeight'];
+const contrastRatio = (a, b) => {
+  const luminance = (css) => parseCssColor(css).slice(0, 3).map((v) => v / 255).map((v) => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4).reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
+  const x = luminance(a), y = luminance(b);
+  return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
+};
 async function compareVisualStates(page, state) {
   const styles = (el, props) => Object.fromEntries(props.map((prop) => [prop, getComputedStyle(el)[prop]]));
   const reference = await page.locator('#button-unavailable-primary').evaluate(styles, visualProperties);
@@ -172,7 +178,8 @@ const checks = {
       await p.locator(control).focus();
       await expect(p.locator(control)).toBeFocused();
       const errorRing = await p.locator(control).evaluate((el) => getComputedStyle(el).outlineColor);
-      expect(errorRing).not.toBe(normalRing);
+      expect(errorRing).toBe(normalRing);
+      await paintedEdge(p, control, 'outline');
     }
   },
   'field-select': async (p) => {
@@ -311,6 +318,158 @@ const checks = {
   'empty-keyboard': async (p) => { await p.locator('#empty button').focus(); await p.keyboard.press('Tab'); await expect(p.locator('#error button')).toBeFocused(); await contrast(p, '#error button', 'outlineColor', 3); const b = p.locator('#error button'); await b.evaluate((e) => e.addEventListener('click', () => { e.dataset.clicks = String(Number(e.dataset.clicks || 0) + 1); })); await p.keyboard.press('Enter'); await p.keyboard.press('Space'); await expect.poll(() => b.evaluate((e) => Number(e.dataset.clicks))).toBe(2); },
   'empty-loading': async (p) => { await expect(p.locator('#empty-loading')).toHaveAttribute('aria-busy', 'true'); await expect(p.locator('#empty-loading button')).toBeDisabled(); },
   'empty-contrast': async (p) => { await contrast(p, '#empty'); await contrast(p, '#error'); },
+  'choice-group': async (p) => {
+    const checkboxGroup = p.getByRole('group', { name: 'Canais de contato' });
+    const radioGroup = p.getByRole('group', { name: 'Frequência dos avisos' });
+    await expect(checkboxGroup.getByLabel('Receber novidades por e-mail')).toBeVisible();
+    await expect(radioGroup.getByLabel('Semanal')).toBeVisible();
+    await expect(radioGroup.getByLabel('Mensal')).toBeVisible();
+    for (const selector of ['#choice-checkbox-control', '#choice-radio-weekly', '#choice-radio-monthly', '#choice-switch-control']) {
+      const input = p.locator(selector);
+      expect(await input.evaluate((el) => el.labels?.length)).toBeGreaterThan(0);
+      const label = p.locator(`label[for="${selector.slice(1)}"]`);
+      expect(await label.evaluate((el) => el.getBoundingClientRect().height)).toBeGreaterThanOrEqual(44);
+    }
+  },
+  'choice-checked': async (p) => {
+    for (const [input, mark] of [['#choice-checkbox-selected-control', '#choice-checkbox-selected-mark'], ['#choice-radio-selected-control', '#choice-radio-selected-mark'], ['#choice-switch-selected-control', '#choice-switch-selected-mark']]) {
+      await expect(p.locator(input)).toBeChecked();
+      const expectedBorder = await p.locator(mark).evaluate((el) => { const probe = document.createElement('span'); probe.style.color = 'var(--text-muted)'; document.body.append(probe); const color = getComputedStyle(probe).color; probe.remove(); return color; });
+      await expect(p.locator(mark)).toHaveCSS('border-top-color', expectedBorder);
+      await controlBoundary(p, mark);
+      const colors = await p.locator(mark).evaluate((el) => {
+        const s = getComputedStyle(el), after = getComputedStyle(el, '::after');
+        return { fill: s.backgroundColor, ink: parseFloat(after.borderRightWidth) > 0 ? after.borderRightColor : after.backgroundColor };
+      });
+      expect(contrastRatio(colors.ink, colors.fill), `${mark}: marca legível no preenchimento`).toBeGreaterThanOrEqual(4.5);
+    }
+  },
+  'choice-switch': async (p) => {
+    const sw = p.locator('#choice-switch-control');
+    await expect(sw).toHaveAccessibleName('Receber avisos por e-mail');
+    await expect(sw).toHaveAttribute('type', 'checkbox');
+    await expect(sw).not.toHaveAttribute('aria-label');
+    await expect(p.locator('#choice-switch-label')).not.toContainText(/ligado|desligado/i);
+    await expect(sw).not.toBeChecked();
+    await p.locator('label[for="choice-switch-control"]').click();
+    await expect(sw).toBeChecked();
+  },
+  'choice-indeterminate': async (p) => {
+    const checkbox = p.locator('#choice-checkbox-indeterminate-control');
+    await checkbox.evaluate((el) => { el.indeterminate = true; });
+    await expect(checkbox).toHaveJSProperty('indeterminate', true);
+    const mark = p.locator('#choice-checkbox-indeterminate-mark');
+    const bar = await mark.evaluate((el) => { const s = getComputedStyle(el, '::after'); return { width: parseFloat(s.width), height: parseFloat(s.height), color: s.backgroundColor, fill: getComputedStyle(el).backgroundColor }; });
+    expect(bar.width).toBeGreaterThan(0);
+    expect(bar.height).toBeGreaterThan(0);
+    expect(contrastRatio(bar.color, bar.fill)).toBeGreaterThanOrEqual(4.5);
+    await expect(p.locator('#choice-radio-weekly')).not.toHaveJSProperty('indeterminate', true);
+    await expect(p.locator('#choice-switch-control')).not.toHaveJSProperty('indeterminate', true);
+  },
+  'choice-disabled': async (p) => {
+    const checkbox = p.locator('#choice-checkbox-disabled-control');
+    const mark = p.locator('#choice-checkbox-disabled-mark');
+    await expect(checkbox).toBeDisabled();
+    await expect(checkbox).toBeChecked();
+    const initial = await checkbox.isChecked();
+    await checkbox.evaluate((el) => el.click());
+    expect(await checkbox.isChecked()).toBe(initial);
+    const style = await mark.evaluate((el) => ({ background: getComputedStyle(el).backgroundColor, opacity: getComputedStyle(el).opacity, ink: getComputedStyle(el, '::after').borderRightColor }));
+    expect(style.opacity).toBe('1');
+    expect(style.background).not.toBe('rgba(0, 0, 0, 0)');
+    expect(style.ink).not.toBe('rgba(0, 0, 0, 0)');
+    await controlBoundary(p, '#choice-checkbox-disabled-mark');
+  },
+  'choice-error': async (p) => {
+    const input = p.locator('#choice-checkbox-error-control');
+    await expect(input).toHaveAttribute('aria-invalid', 'true');
+    await expect(input).toHaveAttribute('aria-describedby', 'choice-checkbox-error-message');
+    await expect(p.locator('#choice-checkbox-error-message')).toContainText('Confirme sua preferência');
+    await textContrast(p, '#choice-checkbox-error-message');
+    await input.focus();
+    const fieldErrorRing = await p.locator('#invalid').evaluate((el) => { el.focus(); return getComputedStyle(el).outlineColor; });
+    await input.focus();
+    const errorMark = p.locator('#choice-checkbox-error-mark');
+    await expect(errorMark).toHaveCSS('outline-color', fieldErrorRing);
+    await expect(errorMark).toHaveCSS('outline-style', 'solid');
+    expect(parseFloat(await errorMark.evaluate((el) => getComputedStyle(el).outlineWidth))).toBeGreaterThanOrEqual(1);
+    await paintedEdge(p, '#choice-checkbox-error-mark', 'outline');
+  },
+  'choice-keyboard': async (p) => {
+    const checkbox = p.locator('#choice-checkbox-control');
+    await checkbox.focus();
+    await p.keyboard.press('Space');
+    await expect(checkbox).toBeChecked();
+    const sw = p.locator('#choice-switch-control');
+    await sw.focus();
+    await p.keyboard.press('Space');
+    await expect(sw).toBeChecked();
+    const radio = p.locator('#choice-radio-weekly');
+    await radio.focus();
+    await p.keyboard.press('ArrowDown');
+    await expect(p.locator('#choice-radio-monthly')).toBeChecked();
+  },
+  'choice-focus': async (p) => {
+    await p.locator('#choice-checkbox-control').focus();
+    const mark = p.locator('#choice-checkbox-mark');
+    await expect(mark).toHaveCSS('outline-style', 'solid');
+    expect(parseFloat(await mark.evaluate((el) => getComputedStyle(el).outlineWidth))).toBeGreaterThanOrEqual(1);
+    await paintedEdge(p, '#choice-checkbox-mark', 'outline');
+  },
+  'choice-contrast': async (p) => {
+    for (const selector of ['#choice-checkbox-label', '#choice-radio-weekly-label', '#choice-switch-label']) await textContrast(p, selector);
+    for (const selector of ['#choice-checkbox-mark', '#choice-radio-weekly-mark', '#choice-switch-mark']) await controlBoundary(p, selector);
+    const colors = await p.locator('#choice-checkbox-selected-mark').evaluate((el) => ({ accent: getComputedStyle(el).backgroundColor, inverse: getComputedStyle(el).getPropertyValue('--text-inverse').trim(), ink: getComputedStyle(el, '::after').borderRightColor }));
+    const { accent, inverse, ink } = colors;
+    const expectedInverse = await p.locator('#choice-checkbox-selected-mark').evaluate((el) => { const probe = document.createElement('span'); probe.style.color = 'var(--text-inverse)'; document.body.append(probe); const color = getComputedStyle(probe).color; probe.remove(); return color; });
+    expect(ink).toBe(expectedInverse);
+    expect(contrastRatio(ink, accent)).toBeGreaterThanOrEqual(4.5);
+    expect(inverse).toBeTruthy();
+    await p.locator('html').evaluate((root) => {
+      root.dataset.theme = 'sober-dark';
+    });
+    for (const [selector, property] of [['#choice-checkbox-selected-mark', 'borderRightColor'], ['#choice-switch-selected-mark', 'backgroundColor']]) {
+      const sober = await p.locator(selector).evaluate((el, inkProperty) => {
+        const style = getComputedStyle(el), pseudo = getComputedStyle(el, '::after'), probe = document.createElement('span');
+        probe.style.color = 'var(--text-on-accent)'; document.body.append(probe);
+        const expected = getComputedStyle(probe).color; probe.remove();
+        return { expected, actual: pseudo[inkProperty], background: style.backgroundColor };
+      }, property);
+      expect(sober.actual).toBe(sober.expected);
+      expect(contrastRatio(sober.actual, sober.background)).toBeGreaterThanOrEqual(4.5);
+    }
+  },
+  'choice-multiline-rtl': async (p) => {
+    const label = p.locator('#choice-switch-label');
+    const mark = p.locator('#choice-switch-mark');
+    await label.evaluate((el) => { el.style.maxWidth = '8rem'; });
+    const metrics = await label.evaluate((el) => {
+      const mark = el.previousElementSibling;
+      const cs = getComputedStyle(mark), lineHeight = parseFloat(getComputedStyle(el).lineHeight);
+      return { height: el.getBoundingClientRect().height, top: parseFloat(cs.marginBlockStart), expected: (lineHeight - 24) / 2 };
+    });
+    expect(metrics.height).toBeGreaterThan(24);
+    expect(Math.abs(metrics.top - metrics.expected)).toBeLessThan(1);
+    const sw = p.locator('#choice-switch-selected-control'), knob = p.locator('#choice-switch-selected-mark');
+    const ltr = await knob.evaluate((el) => new DOMMatrixReadOnly(getComputedStyle(el, '::after').transform).m41);
+    await p.locator('#choice-switch-selected').evaluate((el) => { el.dir = 'rtl'; });
+    const rtl = await knob.evaluate((el) => new DOMMatrixReadOnly(getComputedStyle(el, '::after').transform).m41);
+    expect(ltr).toBeGreaterThan(0);
+    expect(rtl).toBeLessThan(0);
+    expect(await sw.evaluate((el) => getComputedStyle(el.nextElementSibling).insetInlineStart)).toBe('0px');
+  },
+  'choice-forced-colors': async (p) => {
+    await p.emulateMedia({ forcedColors: 'active' });
+    const checkbox = p.locator('#choice-checkbox-selected-control');
+    const mark = p.locator('#choice-checkbox-selected-mark');
+    const colors = await mark.evaluate((el) => ({ adjustment: getComputedStyle(el).forcedColorAdjust, border: getComputedStyle(el).borderTopColor, bg: getComputedStyle(el).backgroundColor, ink: getComputedStyle(el, '::after').borderRightColor }));
+    expect(colors.adjustment).toBe('none');
+    expect(colors.border).not.toBe('rgba(0, 0, 0, 0)');
+    expect(colors.bg).not.toBe('rgba(0, 0, 0, 0)');
+    expect(colors.ink).not.toBe('rgba(0, 0, 0, 0)');
+    await expect(checkbox).toBeChecked();
+    await controlBoundary(p, '#choice-checkbox-selected-mark');
+  },
 };
 
 

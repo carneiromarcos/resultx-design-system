@@ -913,7 +913,7 @@ body {
 .form-select-wrap select.form-select[aria-invalid='true'] + .select2-container--focus .select2-selection,
 .form-select-wrap select.form-select[aria-invalid='true'] + .select2-container--open .select2-selection {
   border-color: var(--color-error);
-  box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--color-error) 45%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
 }
 
 .form-input[aria-invalid='true'],
@@ -923,7 +923,7 @@ body {
 .form-select[aria-invalid='true']:focus-visible,
 .form-textarea[aria-invalid='true']:focus-visible {
   border-color: var(--color-error);
-  box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--color-error) 45%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
 }
 
 /* Tecla de atalho — para <kbd>. Sem isto, "⌘K" e "Enter" viram texto solto e
@@ -2585,7 +2585,7 @@ tr:hover td { background: var(--bg-surface-1); }
 }
 .form-input-error:focus-visible {
   border-color: var(--color-error);
-  box-shadow: 0 0 0 var(--focus-ring-width) color-mix(in srgb, var(--color-error) 45%, transparent);
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
 }
 .form-error-message {
   font-size: var(--text-xs);

@@ -34,7 +34,9 @@ const labels = {
   desabilitado: 'Desativado',
   carregando: 'Carregando',
   erro: 'Erro',
-  vazio: 'Vazio'
+  vazio: 'Vazio',
+  selecionado: 'Selecionado',
+  indeterminado: 'Indeterminado'
 };
 
 // Seleciona um elemento completo do HTML canônico, sem dependência de um DOM no build.
@@ -66,6 +68,7 @@ function demoStyles(css) {
     params: 'components'
   });
   original.walkRules(rule => {
+    for (let parent = rule.parent; parent; parent = parent.parent) if (parent.type === 'atrule' && parent.name === 'media') return;
     const selectors = postcss.list.comma(rule.selector).filter(s => /:(hover|active|focus-visible)\b/.test(s));
     if (!selectors.length) return;
     const clone = rule.clone();
@@ -78,11 +81,33 @@ function demoStyles(css) {
 function style(css, selectors) {
   const result = {};
   for (const selector of selectors) postcss.parse(css).walkRules(rule => {
-    if (postcss.list.comma(rule.selector).includes(selector)) rule.walkDecls(d => {
+    let media = false;
+    for (let parent = rule.parent; parent; parent = parent.parent) if (parent.type === 'atrule' && parent.name === 'media') media = true;
+    if (!media && postcss.list.comma(rule.selector).includes(selector)) rule.walkDecls(d => {
       result[d.prop] = d.value;
     });
   });
   return result;
+}
+function effectiveChoiceInkRole(css, theme, state) {
+  let role;
+  const stateSelector = state === 'indeterminado' ? ':indeterminate' : ':checked';
+  postcss.parse(css).walkRules(rule => {
+    for (let parent = rule.parent; parent; parent = parent.parent) if (parent.type === 'atrule' && parent.name === 'media') return;
+    const appliesInCascade = postcss.list.comma(rule.selector).some(selector => {
+      const normalized = selector.replace(/["']/g, '');
+      if (!normalized.includes('.rx-choice__mark::after') || !normalized.includes(stateSelector) || normalized.includes(':disabled')) return false;
+      const themeSelector = /:root\[data-theme=([\w-]+)\]/.exec(normalized);
+      return !themeSelector || themeSelector[1] === theme;
+    });
+    if (!appliesInCascade) return;
+    rule.walkDecls(/^(background|border-color)$/, declaration => {
+      const match = [...declaration.value.matchAll(/var\((--[\w-]+)\)/g)].at(-1);
+      if (match) role = match[1];
+    });
+  });
+  if (!role) throw Error(`Tinta efetiva da marca não declarada para ${state}/${theme || 'tema padrão'}`);
+  return role;
 }
 function rolesForStyle(css, kind, variant, state) {
   const control = kind === 'field' ? '.rx-field__control' : kind === 'badge' ? '.rx-badge' : kind === 'stat' ? '.rx-stat-card' : kind === 'card' ? '.rx-card' : kind === 'table' ? '.rx-table' : kind === 'empty' ? '.rx-state' : kind === 'dialog' ? '.rx-dialog' : '.rx-button';
@@ -101,6 +126,36 @@ function rolesForStyle(css, kind, variant, state) {
   return style(css, selectors);
 }
 function pairFromStyle(css, values, descriptor) {
+  if (descriptor.kind === 'choice') {
+    const variable = expression => {
+      const m = [...(expression || '').matchAll(/var\((--[\w-]+)\)/g)].at(-1);
+      if (!m) throw Error('Declaração sem origem semântica: ' + expression);
+      return m[1];
+    };
+    const pairs = [];
+    function add(kind, role, background, minimum, id) {
+      const foreground = resolve(values, role), bg = resolve(values, background);
+      pairs.push({ ...descriptor, id, kind, foregroundRole: role, backgroundRole: background, foreground, background: bg, minimum, ratio: ratio(foreground, bg) });
+    }
+    const label = style(css, ['.rx-choice__label']);
+    const markSelector = descriptor.state === 'erro'
+      ? ".rx-choice__control[aria-invalid='true'] + .rx-choice__mark"
+      : descriptor.state === 'desabilitado'
+        ? '.rx-choice__control:disabled + .rx-choice__mark'
+        : descriptor.state === 'foco'
+          ? '.rx-choice__control:focus-visible + .rx-choice__mark'
+        : '.rx-choice__mark';
+    const mark = style(css, ['.rx-choice__mark', markSelector]);
+    add('texto', variable(label.color), '--bg-surface-1', 4.5, descriptor.textTarget);
+    add('borda', variable(mark['border-color'] || mark.border), '--bg-surface-1', 3, descriptor.markTarget);
+    if (descriptor.state === 'foco') add('foco', variable(mark.outline), '--bg-surface-1', 3, descriptor.markTarget);
+    if (['selecionado', 'indeterminado'].includes(descriptor.state)) {
+      const inkRole = effectiveChoiceInkRole(css, descriptor.theme, descriptor.state);
+      add('marca', inkRole, '--accent-primary', 4.5, descriptor.markTarget);
+    }
+    if (descriptor.state === 'desabilitado') add('marca', '--text-primary', '--bg-surface-2', 4.5, descriptor.markTarget);
+    return pairs;
+  }
   const s = rolesForStyle(css, descriptor.kind, descriptor.variant, descriptor.state);
   const variable = expression => {
     const m = [...(expression || '').matchAll(/var\((--[\w-]+)\)/g)].at(-1);
@@ -130,7 +185,7 @@ function pairFromStyle(css, values, descriptor) {
   if (descriptor.link) add('texto do link', variable(style(css, ['.rx-stat-card a']).color), bgRole, 4.5);
   return pairs;
 }
-function renderComponent(root, definition, values, revision) {
+function renderComponent(root, definition, values, revision, theme) {
   const contract = yaml.load(fs.readFileSync(path.join(root, 'contracts', definition.id + '.yaml'), 'utf8'));
   const source = fs.readFileSync(path.join(root, 'examples/pilot.html'), 'utf8');
   const css = fs.readFileSync(path.join(root, 'adapters/css/pilot.css'), 'utf8');
@@ -163,13 +218,24 @@ function renderComponent(root, definition, values, revision) {
       state,
       kind: options.kind || definition.id,
       variant: options.variant,
-      link: options.link
+      link: options.link,
+      theme
     };
     if (definition.id === 'confirm-dialog') descriptor.kind = sourceId === 'button-unavailable-danger' ? 'button' : 'dialog';
     if (definition.id === 'stat-card') descriptor.kind = 'stat';
     if (definition.id === 'status-badge') descriptor.kind = 'badge';
     if (definition.id === 'data-table') descriptor.kind = 'table';
     if (definition.id === 'empty-state') descriptor.kind = 'empty';
+    if (definition.id === 'choice') {
+      const controlId = /<input\b[^>]*\bid="([^"]+)"/.exec(html)?.[1];
+      const markId = /<span\b[^>]*class="[^"]*rx-choice__mark[^\"]*"[^>]*\bid="([^"]+)"/.exec(html)?.[1];
+      const textId = /<span\b[^>]*class="[^"]*rx-choice__label[^\"]*"[^>]*\bid="([^"]+)"/.exec(html)?.[1];
+      if (!controlId || !markId || !textId) throw Error('Amostra de escolha sem controle, marca ou rótulo: ' + sourceId);
+      descriptor.id = controlId;
+      descriptor.markTarget = markId;
+      descriptor.textTarget = textId;
+      if (state === 'indeterminado') html = html.replace(/(<span\b[^>]*class="[^"]*rx-choice__mark)(")/, '$1 rx-choice__mark--indeterminate-sample$2');
+    }
     if (definition.id === 'data-table' && sourceId !== 'table' && sourceId !== 'table-loading') descriptor.kind = sourceId === 'table-disabled' ? 'button' : 'empty';
     let child = 0;
     html = html.replace(/<(button|a|span)\b[^>]*class="[^"]*rx-(?:button|badge)[^"]*"[^>]*>/g, (tag, name) => {
@@ -216,6 +282,14 @@ function renderComponent(root, definition, values, revision) {
       erro: ['field-error', 'field-select-error', 'field-textarea-error'],
       desabilitado: ['field'],
       foco: ['field']
+    },
+    choice: {
+      normal: ['choice-checkbox', 'choice-radio', 'choice-switch'],
+      selecionado: ['choice-checkbox-selected', 'choice-radio-selected', 'choice-switch-selected'],
+      indeterminado: ['choice-checkbox-indeterminate'],
+      erro: ['choice-checkbox-error'],
+      desabilitado: ['choice-checkbox-disabled'],
+      foco: ['choice-checkbox']
     },
     'stat-card': {
       normal: ['stat', 'stat-link'],
@@ -308,5 +382,7 @@ module.exports = {
   renderComponent,
   demoStyles,
   elementById,
-  rolesForStyle
+  rolesForStyle,
+  pairFromStyle,
+  effectiveChoiceInkRole
 };

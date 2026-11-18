@@ -25,6 +25,7 @@
   --text-base: 0.9375rem;
   --text-inverse: var(--eds-on-pintura, var(--eds-on-brand));
   --text-muted: var(--eds-ink-medium);
+  --text-on-accent: var(--eds-on-pintura, var(--eds-on-brand));
   --text-on-success: var(--eds-surface);
   --text-primary: var(--eds-ink-strong);
   --text-secondary: var(--eds-ink-medium);

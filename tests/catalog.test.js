@@ -7,12 +7,15 @@ const cp = require('child_process');
 const {
   coverage,
   bindings,
-  resolve
+  resolve,
+  declarations,
+  ratio
 } = require('../scripts/catalog/lib.cjs');
 const {
   brands
 } = require('../catalog/bindings.config');
 const root = path.resolve(__dirname, '..');
+const { pairFromStyle } = require('../scripts/catalog/components.cjs');
 test('d — trava rejeita contrato sem entrada em uma raiz de fixture', () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'catalog-coverage-'));
   try {
@@ -39,6 +42,33 @@ test('ligações somente var de origem existente e sem ciclos', () => {
       expect(v).toMatch(/^--[\w-]+$/);
       expect(resolve(r.values, k)).toBeTruthy();
     }
+  }
+});
+test('catálogo mede a tinta que vence na cascata com tokens reais', () => {
+  const css = fs.readFileSync(path.join(root, 'adapters/css/pilot.css'), 'utf8');
+  for (const brand of brands) for (const theme of ['light', 'dark']) {
+    for (const state of ['selecionado', 'indeterminado']) {
+      const pairs = pairFromStyle(css, bindings(root, brand, theme).values, {
+        kind: 'choice', state, theme, textTarget: 'sample-label', markTarget: 'sample-mark'
+      });
+      const ink = pairs.find(pair => pair.kind === 'marca');
+      expect(ink.foregroundRole).toBe('--text-inverse');
+      expect(ink.ratio).toBeGreaterThanOrEqual(4.5);
+    }
+  }
+  const soberValues = declarations(root, 'tokens/tokens.css', 'sober-dark');
+  const soberPairs = pairFromStyle(css, soberValues, {
+    kind: 'choice', state: 'selecionado', theme: 'sober-dark', textTarget: 'sample-label', markTarget: 'sample-mark'
+  });
+  const soberInk = soberPairs.find(pair => pair.kind === 'marca');
+  expect(soberInk.foregroundRole).toBe('--text-on-accent');
+  expect(soberInk.foreground).toBe(resolve(soberValues, '--text-on-accent'));
+  expect(soberInk.ratio).toBeGreaterThanOrEqual(4.5);
+});
+test('Field compartilhado mantém foco de erro com 3:1 nos tokens reais das cinco marcas', () => {
+  for (const brand of brands) for (const theme of ['light', 'dark']) {
+    const values = bindings(root, brand, theme).values;
+    expect(ratio(resolve(values, '--focus-ring-color'), resolve(values, '--bg-base'))).toBeGreaterThanOrEqual(3);
   }
 });
 test('build duplo determinístico', () => {

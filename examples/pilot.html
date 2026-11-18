@@ -131,6 +131,44 @@
     <span class="select2-container select2-container--default" aria-hidden="true"><span class="selection"><span class="select2-selection select2-selection--multiple" id="select2-selection-multiple"><span class="select2-selection__rendered">Ativo, Em análise</span></span></span></span>
     <span class="rx-field__message">Amostra estática das classes de aparência; comportamento e lista aberta pertencem à integração.</span>
   </div>
+  <fieldset class="rx-choice" id="choice-checkbox">
+    <legend>Canais de contato</legend>
+    <label class="rx-choice__option" for="choice-checkbox-control"><input class="rx-choice__control" id="choice-checkbox-control" type="checkbox"><span class="rx-choice__mark" id="choice-checkbox-mark" aria-hidden="true"></span><span class="rx-choice__label" id="choice-checkbox-label">Receber novidades por e-mail</span></label>
+  </fieldset>
+  <fieldset class="rx-choice" id="choice-radio">
+    <legend>Frequência dos avisos</legend>
+    <label class="rx-choice__option" for="choice-radio-weekly"><input class="rx-choice__control" id="choice-radio-weekly" type="radio" name="notice-frequency"><span class="rx-choice__mark" id="choice-radio-weekly-mark" aria-hidden="true"></span><span class="rx-choice__label" id="choice-radio-weekly-label">Semanal</span></label>
+    <label class="rx-choice__option" for="choice-radio-monthly"><input class="rx-choice__control" id="choice-radio-monthly" type="radio" name="notice-frequency"><span class="rx-choice__mark" id="choice-radio-monthly-mark" aria-hidden="true"></span><span class="rx-choice__label" id="choice-radio-monthly-label">Mensal</span></label>
+  </fieldset>
+  <fieldset class="rx-choice" id="choice-switch">
+    <legend>Preferências de conta</legend>
+    <label class="rx-choice__option" for="choice-switch-control"><input class="rx-choice__control" id="choice-switch-control" type="checkbox" role="switch"><span class="rx-choice__mark rx-choice__mark--switch" id="choice-switch-mark" aria-hidden="true"></span><span class="rx-choice__label" id="choice-switch-label">Receber avisos por e-mail</span></label>
+  </fieldset>
+  <fieldset class="rx-choice" id="choice-checkbox-selected">
+    <legend>Canal selecionado</legend>
+    <label class="rx-choice__option" for="choice-checkbox-selected-control"><input class="rx-choice__control" id="choice-checkbox-selected-control" type="checkbox" checked><span class="rx-choice__mark" id="choice-checkbox-selected-mark" aria-hidden="true"></span><span class="rx-choice__label" id="choice-checkbox-selected-label">Receber novidades por e-mail</span></label>
+  </fieldset>
+  <fieldset class="rx-choice" id="choice-radio-selected">
+    <legend>Frequência selecionada</legend>
+    <label class="rx-choice__option" for="choice-radio-selected-control"><input class="rx-choice__control" id="choice-radio-selected-control" type="radio" name="selected-frequency" checked><span class="rx-choice__mark" id="choice-radio-selected-mark" aria-hidden="true"></span><span class="rx-choice__label" id="choice-radio-selected-label">Mensal</span></label>
+  </fieldset>
+  <fieldset class="rx-choice" id="choice-switch-selected">
+    <legend>Preferências de conta</legend>
+    <label class="rx-choice__option" for="choice-switch-selected-control"><input class="rx-choice__control" id="choice-switch-selected-control" type="checkbox" role="switch" checked><span class="rx-choice__mark rx-choice__mark--switch" id="choice-switch-selected-mark" aria-hidden="true"></span><span class="rx-choice__label" id="choice-switch-selected-label">Receber avisos por e-mail</span></label>
+  </fieldset>
+  <fieldset class="rx-choice" id="choice-checkbox-indeterminate">
+    <legend>Seleção parcial</legend>
+    <label class="rx-choice__option" for="choice-checkbox-indeterminate-control"><input class="rx-choice__control" id="choice-checkbox-indeterminate-control" type="checkbox"><span class="rx-choice__mark" id="choice-checkbox-indeterminate-mark" aria-hidden="true"></span><span class="rx-choice__label" id="choice-checkbox-indeterminate-label">Selecionar todos os avisos</span></label>
+  </fieldset>
+  <fieldset class="rx-choice" id="choice-checkbox-disabled">
+    <legend>Opção indisponível</legend>
+    <label class="rx-choice__option" for="choice-checkbox-disabled-control"><input class="rx-choice__control" id="choice-checkbox-disabled-control" type="checkbox" checked disabled><span class="rx-choice__mark" id="choice-checkbox-disabled-mark" aria-hidden="true"></span><span class="rx-choice__label" id="choice-checkbox-disabled-label">Avisos semanais selecionados</span></label>
+  </fieldset>
+  <fieldset class="rx-choice" id="choice-checkbox-error">
+    <legend>Preferência de contato</legend>
+    <label class="rx-choice__option" for="choice-checkbox-error-control"><input class="rx-choice__control" id="choice-checkbox-error-control" type="checkbox" aria-invalid="true" aria-describedby="choice-checkbox-error-message"><span class="rx-choice__mark" id="choice-checkbox-error-mark" aria-hidden="true"></span><span class="rx-choice__label" id="choice-checkbox-error-label">Confirmo que desejo receber avisos</span></label>
+    <p class="rx-choice__message" id="choice-checkbox-error-message" role="alert">Confirme sua preferência para continuar.</p>
+  </fieldset>
   <script src="pilot-theme.js"></script>
   <script src="../catalog/behaviors/confirm-dialog.js"></script>
   <script src="../catalog/behaviors/data-table.js"></script>

@@ -174,7 +174,7 @@ function build(options = {}) {
       for (const definition of allDefinitions.filter(d => !d.applies || d.applies.includes(b.id))) {
         const entry = manifest.pages.find(p => p.id === definition.id);
         if (!entry || definitions.includes(definition) && entry.contract !== `contracts/${definition.id}.yaml`) throw Error('Página de contrato sem entrada: ' + definition.id);
-        const rendered = entry.contract ? renderComponent(ROOT, definition, values, revision) : dataDefinitions.includes(definition) ? renderData(ROOT, definition, values, revision) : extendedDefinitions.includes(definition) ? renderExtended(ROOT, definition, values, revision, b, theme) : renderLegacy(ROOT, definition, values, revision);
+        const rendered = entry.contract ? renderComponent(ROOT, definition, values, revision, theme) : dataDefinitions.includes(definition) ? renderData(ROOT, definition, values, revision) : extendedDefinitions.includes(definition) ? renderExtended(ROOT, definition, values, revision, b, theme) : renderLegacy(ROOT, definition, values, revision);
         let legacyDetails = '';
         if (entry.legacy) {
           const legacy = legacyDefinitions.find(d => d.id === definition.id);

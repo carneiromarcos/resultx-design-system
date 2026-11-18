@@ -10,6 +10,11 @@ module.exports = [{
   "group": "Formulários",
   "intro": "Peça uma informação com rótulo e uma ajuda ou mensagem de erro associada."
 }, {
+  "id": "choice",
+  "title": "Escolha",
+  "group": "Formulários",
+  "intro": "Agrupe opções relacionadas com uma legenda e rótulos claros."
+}, {
   "id": "card",
   "title": "Cartões",
   "group": "Conteúdo e dados",

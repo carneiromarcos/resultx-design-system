@@ -106,10 +106,12 @@ async function measurements(page) {
     };
     const kind = item.dataset.kind;
     const target = kind === 'texto do link' ? el.querySelector('a') : el;
+    const marker = kind === 'marca' ? getComputedStyle(el, '::after') : null;
+    const markerInk = marker && parseFloat(marker.borderRightWidth) > 0 ? marker.borderRightColor : marker?.backgroundColor;
     return {
       ...item.dataset,
-      actualForeground: getComputedStyle(target)[kind === 'borda' ? 'borderTopColor' : kind === 'foco' ? 'outlineColor' : 'color'],
-      actualBackground: background(['borda', 'foco'].includes(kind) ? el.parentElement : el),
+      actualForeground: kind === 'marca' ? markerInk : getComputedStyle(target)[kind === 'borda' ? 'borderTopColor' : kind === 'foco' ? 'outlineColor' : 'color'],
+      actualBackground: kind === 'marca' ? getComputedStyle(el).backgroundColor : background(['borda', 'foco'].includes(kind) ? el.parentElement : el),
       borderStyle: s.borderTopStyle,
       borderWidth: parseFloat(s.borderTopWidth),
       outlineStyle: s.outlineStyle,
@@ -170,7 +172,7 @@ for (const b of brands) for (const theme of ['light', 'dark']) for (const d of d
       expect(pair.outlineStyle).toBe('solid');
     }
     expect(Number(pair.ratio)).toBeCloseTo(contrast(pair.actualForeground, pair.actualBackground), 6);
-    expect(Number(pair.minimum)).toBe(pair.kind.startsWith('texto') ? 4.5 : 3);
+    expect(Number(pair.minimum)).toBe(pair.kind.startsWith('texto') || pair.kind === 'marca' ? 4.5 : 3);
     expect(pair.pending === 'true').toBe(Number(pair.ratio) < Number(pair.minimum));
   }
   const below = pairResults.filter(p => p.pending === 'true');

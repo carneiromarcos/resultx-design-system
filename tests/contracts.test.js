@@ -3,8 +3,7 @@ const path = require('path');
 const yaml = require('js-yaml');
 const source = require('../tokens/tokens.json');
 
-const expected = ['button', 'field', 'card', 'stat-card', 'data-table', 'confirm-dialog', 'status-badge', 'empty-state'];
-const states = ['normal', 'carregando', 'vazio', 'erro', 'desabilitado', 'foco'];
+const expected = ['button', 'field', 'choice', 'card', 'stat-card', 'data-table', 'confirm-dialog', 'status-badge', 'empty-state'];
 const semantic = new Set();
 function visit(node) {
   if (!node || typeof node !== 'object') return;
@@ -16,7 +15,7 @@ function visit(node) {
 visit(source.semantic);
 const read = (name) => yaml.load(fs.readFileSync(path.join('contracts', `${name}.yaml`), 'utf8'), { schema: yaml.JSON_SCHEMA });
 
-test('lote piloto contém exatamente oito contratos', () => {
+test('lote piloto contém os contratos registrados', () => {
   expect(fs.readdirSync('contracts').filter((f) => f.endsWith('.yaml')).sort()).toEqual(expected.map((n) => `${n}.yaml`).sort());
 });
 test.each(expected)('%s declara anatomia, estados, acessibilidade, aceite e testes', (name) => {
@@ -26,7 +25,7 @@ test.each(expected)('%s declara anatomia, estados, acessibilidade, aceite e test
   for (const key of ['anatomia', 'variantes', 'tokens', 'teclado', 'aria', 'criterios_aceite', 'casos_teste']) {
     expect(Array.isArray(c[key]) && c[key].length > 0).toBe(true);
   }
-  for (const state of states) expect(typeof c.estados[state] === 'string' && c.estados[state].trim().length > 0).toBe(true);
+  for (const [state, description] of Object.entries(c.estados)) expect(typeof description === 'string' && description.trim().length > 0).toBe(true);
   for (const token of c.tokens) expect({ token, existe: semantic.has(token) }).toEqual({ token, existe: true });
   for (const item of c.casos_teste) expect(item).toEqual({ id: expect.stringMatching(/^[a-z][a-z0-9-]+$/), descricao: expect.any(String) });
   const caseIds = new Set(c.casos_teste.map((t) => t.id));

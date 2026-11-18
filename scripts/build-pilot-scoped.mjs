@@ -26,6 +26,7 @@ const dynamic = {
   '--accent-primary': ['--eds-pintura', '--eds-indigo-dark'],
   '--accent-primary-hover': ['--eds-pintura-hover', '--eds-indigo-dark'],
   '--text-inverse': ['--eds-on-pintura', '--eds-on-brand'],
+  '--text-on-accent': ['--eds-on-pintura', '--eds-on-brand'],
 };
 const fallback = {
   '--space-2': 'semantic.foundation.space-2', '--space-3': 'semantic.foundation.space-3',
@@ -57,7 +58,12 @@ root.walkDecls((decl) => valueParser(decl.value).walk((n) => {
   if (n.type === 'function' && n.value === 'var') consumed.add(n.nodes[0].value);
 }));
 root.walkRules((rule) => {
-  if (!inKeyframes(rule)) rule.selectors = rule.selectors.map((selector) => `${prefix} ${selector.trim()}`);
+  if (!inKeyframes(rule)) rule.selectors = rule.selectors.map((selector) => {
+    const trimmed = selector.trim();
+    const rootTheme = /^(:root(?:\[[^\]]+\])?)\s+(.+)$/.exec(trimmed);
+    // Regras de tinta por tema precisam continuar no root e ainda ficar no escopo do piloto.
+    return rootTheme ? `${rootTheme[1]} ${prefix} ${rootTheme[2]}` : `${prefix} ${trimmed}`;
+  });
 });
 root.walkAtRules('layer', (layer) => {
   if (!layer.nodes) throw new Error('Declaração de ordem @layer não pode ser removida com segurança.');

@@ -4,6 +4,7 @@
   "components": [
     "button",
     "card",
+    "choice",
     "confirm-dialog",
     "data-table",
     "empty-state",
@@ -82,7 +83,7 @@
     },
     {
       "file": "brands/emprega-mais/tokens/pilot-aliases.css",
-      "sha256": "afccb7c9f4ba3bb8d0892b11970d0af611b9351fe07c569d4fd9e294f6514b92"
+      "sha256": "476ea9bb9d0758c94724552c403315bc4e7a0fda794969b51bc46173a8a7bde9"
     },
     {
       "file": "brands/emprega-mais/tokens/tokens.css",
@@ -95,6 +96,10 @@
     {
       "file": "contracts/card.yaml",
       "sha256": "703592f094c8a54a04c028cd8fadab6dbbadb6294985998c659b335ca8c05063"
+    },
+    {
+      "file": "contracts/choice.yaml",
+      "sha256": "ab06e52ec5fcc3cf142030813b4f6619aafe7842df9bbb637e25da105bc707d4"
     },
     {
       "file": "contracts/confirm-dialog.yaml",
@@ -127,6 +132,10 @@
     {
       "file": "generated/component-cards/card.md",
       "sha256": "9f277bffa39875934f0dee0776a6010aa83e6c24cd38b62e7eafb51f017e9118"
+    },
+    {
+      "file": "generated/component-cards/choice.md",
+      "sha256": "221e05a39c539e801305a54d95a59f5d6e3f2ed0b85de68c09a9541567c48f6a"
     },
     {
       "file": "generated/component-cards/confirm-dialog.md",
@@ -189,7 +198,7 @@
       "sha256": "cfb9ff9622fc0c9a05599f4adda92b0ca5d7a9fae5982191819f32833a41d211"
     }
   ],
-  "contentId": "6651a4e7a2b8101e8867608d41318555de4be9c64d230f4e204e3c1f5d78e8ea",
+  "contentId": "837ef36419c6350dbaf6cdf889b3b311c63c5f09b79fd6e1ffc5f79694183fba",
   "contrasts": {
     "light": [
       {

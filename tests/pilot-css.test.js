@@ -10,12 +10,14 @@ test('CSS isolado usa somente valores de token ou palavras estruturais', () => {
   const root = postcss.parse(fs.readFileSync('adapters/css/pilot.css', 'utf8'));
   const consumed = new Set();
   root.walkRules((rule) => {
-    expect(rule.parent.type).toBe('atrule');
-    expect(rule.parent.name).toBe('layer');
-    expect(rule.parent.params).toBe('components');
-    for (const selector of rule.selectors) expect(selector.trim()).toMatch(/^\.rx-/);
+    let layer = rule.parent;
+    while (layer && !(layer.type === 'atrule' && layer.name === 'layer')) layer = layer.parent;
+    expect(layer?.params).toBe('components');
+    for (const selector of rule.selectors) {
+      expect(selector.trim()).toMatch(/^(?:\.rx-|:root\[data-theme='sober-dark'\] \.rx-choice__control)/);
+    }
   });
-  const structural = new Set(['solid', 'dashed', 'progress', 'grid', 'inline-block', 'border-box', 'normal', 'none', 'collapse', 'left', 'not-allowed', 'pointer', 'tabular-nums', 'relative', 'block', 'absolute', 'in', 'srgb', '45%', 'transparent', '50%', '100%', '-70%', '45deg', '2px', '3', '2', '0', '*', '+', 'vertical']);
+  const structural = new Set(['solid', 'dashed', 'progress', 'grid', 'flex', 'flex-start', 'inline-block', 'border-box', 'normal', 'none', 'collapse', 'left', 'right', 'not-allowed', 'pointer', 'tabular-nums', 'relative', 'block', 'absolute', 'in', 'srgb', '45%', 'transparent', '50%', '100%', '-70%', '45deg', '2px', '3', '2', '0', '*', '+', '-', '/', 'vertical', '1px', '18px', '20px', '24px', '44px', '6px', '8px', '10px', '999px', '1lh', 'center', 'Canvas', 'CanvasText', 'Highlight', 'HighlightText', 'GrayText', '-1px', '-18px', '-20px']);
   root.walkDecls((decl) => {
     parser(decl.value).walk((node) => {
       if (node.type === 'function') {
@@ -26,7 +28,7 @@ test('CSS isolado usa somente valores de token ou palavras estruturais', () => {
           consumed.add(token);
           return false;
         }
-        expect(['calc', 'color-mix', 'translateY', 'rotate']).toContain(node.value);
+        expect(['', 'calc', 'color-mix', 'translate', 'translateY', 'translateX', 'rotate']).toContain(node.value);
         return undefined;
       }
       if (node.type === 'word') expect(structural.has(node.value)).toBe(true);
@@ -49,7 +51,8 @@ test('Select2 acompanha o controle fechado, foco e erro com papéis existentes',
   const css = fs.readFileSync('adapters/css/pilot.css', 'utf8');
   expect(css).toContain('min-height: calc(var(--text-sm) * var(--leading-relaxed) + 2 * var(--space-2) + 2px)');
   expect(css).toContain('border-color: var(--text-muted) transparent transparent');
-  expect(css).toContain('color-mix(in srgb, var(--color-error) 45%, transparent)');
+  expect(css).toContain(".rx-field__control[aria-invalid='true']:focus-visible { outline-color: var(--accent-primary-text); }");
+  expect(css).toContain(".rx-choice__control[aria-invalid='true']:focus-visible + .rx-choice__mark { outline-color: var(--accent-primary-text); }");
   let normal;
   root.walkRules((rule) => { if (rule.selectors.includes('.rx-field .select2-container .select2-selection')) normal = rule; });
   expect(normal).toBeDefined();
@@ -94,7 +97,13 @@ test('campos compartilhados mantêm borda acessível e foco de erro sem alterar 
     ".form-select[aria-invalid='true']:focus-visible",
     ".form-textarea[aria-invalid='true']:focus-visible"
   ]) expect(selectors.has(selector)).toBe(true);
-  expect(shared.toString()).toContain('color-mix(in srgb, var(--color-error) 45%, transparent)');
+  expect(shared.toString()).toContain('box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color)');
+  for (const selector of [
+    ".form-input[aria-invalid='true']:focus-visible",
+    ".form-select[aria-invalid='true']:focus-visible",
+    ".form-textarea[aria-invalid='true']:focus-visible",
+    '.form-input-error:focus-visible'
+  ]) expect(declarations.get(selector)['box-shadow']).toBe('0 0 0 var(--focus-ring-width) var(--focus-ring-color)');
   expect(shared.toString()).not.toContain('rgba(239, 68, 68, 0.3)');
   expect(shared.toString()).toContain('calc(3 * var(--text-sm) * var(--leading-relaxed) + 2 * var(--space-3) + 2px)');
 });
