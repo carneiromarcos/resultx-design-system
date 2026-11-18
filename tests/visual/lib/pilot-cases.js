@@ -185,6 +185,37 @@ const checks = {
     await expect(select).toHaveValue('active');
     await expect(select).toHaveAttribute('aria-describedby', 'profile-status-help');
   },
+  'field-select2-skin': async (p) => {
+    const native = await p.locator('#profile-status').evaluate((el) => {
+      const style = getComputedStyle(el);
+      return {
+        borderTopColor: style.borderTopColor,
+        borderTopStyle: style.borderTopStyle,
+        borderTopWidth: style.borderTopWidth,
+        borderRadius: style.borderRadius,
+        backgroundColor: style.backgroundColor,
+        padding: style.padding,
+      };
+    });
+    for (const selector of ['#select2-selection-single', '#select2-selection-multiple']) {
+      const selection = p.locator(selector);
+      await selection.evaluate((el) => el.scrollIntoView({ block: 'center', inline: 'center' }));
+      await expect(selection).toBeVisible();
+      const computed = await selection.evaluate((el) => {
+        const style = getComputedStyle(el);
+        return {
+          borderTopColor: style.borderTopColor,
+          borderTopStyle: style.borderTopStyle,
+          borderTopWidth: style.borderTopWidth,
+          borderRadius: style.borderRadius,
+          backgroundColor: style.backgroundColor,
+          padding: style.padding,
+        };
+      });
+      expect(computed).toEqual(native);
+      await controlBoundary(p, selector);
+    }
+  },
   'field-textarea': async (p) => {
     const textarea = p.getByLabel('Observações');
     await expect(textarea).toBeVisible();

@@ -15,7 +15,7 @@ test('CSS isolado usa somente valores de token ou palavras estruturais', () => {
     expect(rule.parent.params).toBe('components');
     for (const selector of rule.selectors) expect(selector.trim()).toMatch(/^\.rx-/);
   });
-  const structural = new Set(['solid', 'dashed', 'progress', 'grid', 'inline-block', 'border-box', 'normal', 'none', 'collapse', 'left', 'not-allowed', 'pointer', 'tabular-nums', 'relative', 'block', 'absolute', 'in', 'srgb', '45%', 'transparent', '50%', '-70%', '45deg', '2px', '3', '2', '0', '*', '+', 'vertical']);
+  const structural = new Set(['solid', 'dashed', 'progress', 'grid', 'inline-block', 'border-box', 'normal', 'none', 'collapse', 'left', 'not-allowed', 'pointer', 'tabular-nums', 'relative', 'block', 'absolute', 'in', 'srgb', '45%', 'transparent', '50%', '100%', '-70%', '45deg', '2px', '3', '2', '0', '*', '+', 'vertical']);
   root.walkDecls((decl) => {
     parser(decl.value).walk((node) => {
       if (node.type === 'function') {
@@ -50,6 +50,27 @@ test('Select2 acompanha o controle fechado, foco e erro com papéis existentes',
   expect(css).toContain('min-height: calc(var(--text-sm) * var(--leading-relaxed) + 2 * var(--space-2) + 2px)');
   expect(css).toContain('border-color: var(--text-muted) transparent transparent');
   expect(css).toContain('color-mix(in srgb, var(--color-error) 45%, transparent)');
+  let normal;
+  root.walkRules((rule) => { if (rule.selectors.includes('.rx-field .select2-container .select2-selection')) normal = rule; });
+  expect(normal).toBeDefined();
+  const declarations = Object.fromEntries(normal.nodes.filter((node) => node.type === 'decl').map(({ prop, value }) => [prop, value]));
+  expect(declarations).toMatchObject({
+    background: 'var(--bg-surface-1)',
+    border: 'var(--focus-ring-width) solid var(--text-muted)',
+    'border-radius': 'var(--radius-md)',
+    padding: 'var(--space-2) var(--space-10) var(--space-2) var(--space-4)',
+  });
+  const shared = postcss.parse(fs.readFileSync('components/components.css', 'utf8'));
+  let sharedNormal;
+  shared.walkRules((rule) => { if (rule.selectors.includes('.form-select-wrap .select2-container .select2-selection')) sharedNormal = rule; });
+  expect(sharedNormal).toBeDefined();
+  const sharedDeclarations = Object.fromEntries(sharedNormal.nodes.filter((node) => node.type === 'decl').map(({ prop, value }) => [prop, value]));
+  expect(sharedDeclarations).toMatchObject({
+    background: 'var(--bg-base)',
+    border: '1px solid var(--text-muted)',
+    'border-radius': 'var(--radius-md)',
+    padding: 'var(--space-2) var(--space-10) var(--space-2) var(--space-4)',
+  });
 });
 
 test('campos compartilhados mantêm borda acessível e foco de erro sem alterar tokens', () => {

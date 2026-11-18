@@ -206,7 +206,7 @@ function renderComponent(root, definition, values, revision) {
       foco: ['card']
     },
     field: {
-      normal: ['field', 'field-select', 'field-textarea', 'field-inputmode-numeric', 'field-inputmode-money'],
+      normal: ['field', 'field-select', 'field-select2-skin', 'field-textarea', 'field-inputmode-numeric', 'field-inputmode-money'],
       carregando: ['field-loading'],
       vazio: ['field'],
       erro: ['field-error', 'field-select-error', 'field-textarea-error'],
@@ -264,6 +264,7 @@ function renderComponent(root, definition, values, revision) {
       for (const sourceId of byState[definition.id]?.[state] || []) {
         const fieldLabel = {
           'field-select': 'Select nativo',
+          'field-select2-skin': 'Select2 fechado — single e multiple',
           'field-textarea': 'Texto longo',
           'field-inputmode-numeric': 'Teclado numérico',
           'field-inputmode-money': 'Teclado decimal',

@@ -20,7 +20,7 @@ formatos_entrada:
     semantica: Sugere teclado decimal; não formata nem calcula valores.
 integracoes:
   select2:
-    regra: O controle fechado herda borda, altura mínima, foco e erro do select nativo.
+    regra: Os controles fechados single e multiple preservam borda, fundo, raio e padding do campo; também mantêm altura mínima, foco e erro do select nativo.
     lista_aberta: Fora do escopo deste contrato.
 estados:
   normal: Controle editável.
@@ -65,6 +65,8 @@ casos_teste:
     descricao: Input, select e textarea com erro usam aria-invalid e descrição associada.
   - id: field-select
     descricao: Select nativo tem label, opções e foco visível.
+  - id: field-select2-skin
+    descricao: Select2 fechado single e multiple preserva a borda, o fundo e a geometria do campo nos dois temas.
   - id: field-textarea
     descricao: Textarea preserva o foco e pode ser redimensionado apenas verticalmente.
   - id: field-inputmode-numeric

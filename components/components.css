@@ -887,6 +887,16 @@ body {
 /* O adaptador fechado do Select2 acompanha o controle nativo; a lista aberta
    continua sob responsabilidade da integração que o fornece. */
 .form-select-wrap .select2-container .select2-selection {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--space-2) var(--space-10) var(--space-2) var(--space-4);
+  background: var(--bg-base);
+  border: 1px solid var(--text-muted);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
   min-height: calc(var(--text-sm) * var(--leading-relaxed) + 2 * var(--space-2) + 2px);
 }
 .form-select-wrap .select2-container--default .select2-selection--single .select2-selection__arrow b {
