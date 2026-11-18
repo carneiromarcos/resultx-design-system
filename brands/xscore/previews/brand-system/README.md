@@ -17,6 +17,6 @@ Para inspecionar manualmente, sirva a raiz do repositório em loopback e abra `b
 
 O gerador lê a folha oficial da marca; não escreve nela. Gera `index.html`, `light.html`, `provenance.json` e `docs/BRAND-BOOK.md`. `style.css` contém apenas a moldura editorial e referências `var()` aos papéis existentes. Medidas da moldura não são publicadas como tokens de marca.
 
-As páginas compartilham a CSP do catálogo: `default-src 'self'`. Oito referências externas de navegação apontam ao catálogo público oficial; a renderização da página não busca esses destinos. A publicação no Pages é uma entrega compartilhada separada, coordenada pelo Supervisor.
+As páginas compartilham a CSP do catálogo: `default-src 'self'`. Cada uma das nove entradas liga ao contrato e à ficha pública fixados na revisão `9da663fff3641f4021e94e1ef5f1deba85441c69`; há também um atalho para o catálogo visual. A renderização não busca esses destinos. A publicação no Pages é uma entrega compartilhada separada, coordenada pelo Supervisor.
 
 Contratos e fichas usam URLs públicas fixadas no SHA registrado em `provenance.json`; não dependem de diretórios ausentes da publicação Pages. O teste rejeita a reintrodução de links relativos para esses recursos.
