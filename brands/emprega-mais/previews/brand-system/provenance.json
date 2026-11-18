@@ -99,7 +99,7 @@
     },
     {
       "file": "contracts/choice.yaml",
-      "sha256": "ab06e52ec5fcc3cf142030813b4f6619aafe7842df9bbb637e25da105bc707d4"
+      "sha256": "b7a3e1a4964e77481000800e5992ea24c7efedb7c6beaffea263ce0ae3119434"
     },
     {
       "file": "contracts/confirm-dialog.yaml",
@@ -135,7 +135,7 @@
     },
     {
       "file": "generated/component-cards/choice.md",
-      "sha256": "221e05a39c539e801305a54d95a59f5d6e3f2ed0b85de68c09a9541567c48f6a"
+      "sha256": "bd627fc66db5d034e8ee59e0408dcc0161da7345d63ece3c423b611f1297c1df"
     },
     {
       "file": "generated/component-cards/confirm-dialog.md",
@@ -198,7 +198,7 @@
       "sha256": "cfb9ff9622fc0c9a05599f4adda92b0ca5d7a9fae5982191819f32833a41d211"
     }
   ],
-  "contentId": "837ef36419c6350dbaf6cdf889b3b311c63c5f09b79fd6e1ffc5f79694183fba",
+  "contentId": "d3d425f0592eab0db3ae0bd5615c2fd5715ded166540bad54142cec54e7315f7",
   "contrasts": {
     "light": [
       {

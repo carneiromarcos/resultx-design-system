@@ -17,7 +17,7 @@ test('CSS isolado usa somente valores de token ou palavras estruturais', () => {
       expect(selector.trim()).toMatch(/^(?:\.rx-|:root\[data-theme='sober-dark'\] \.rx-choice__control)/);
     }
   });
-  const structural = new Set(['solid', 'dashed', 'progress', 'grid', 'flex', 'flex-start', 'inline-block', 'border-box', 'normal', 'none', 'collapse', 'left', 'right', 'not-allowed', 'pointer', 'tabular-nums', 'relative', 'block', 'absolute', 'in', 'srgb', '45%', 'transparent', '50%', '100%', '-70%', '45deg', '2px', '3', '2', '0', '*', '+', '-', '/', 'vertical', '1px', '18px', '20px', '24px', '44px', '6px', '8px', '10px', '999px', '1lh', 'center', 'Canvas', 'CanvasText', 'Highlight', 'HighlightText', 'GrayText', '-1px', '-18px', '-20px']);
+  const structural = new Set(['solid', 'dashed', 'progress', 'grid', 'flex', 'flex-start', 'inline-block', 'border-box', 'normal', 'none', 'collapse', 'left', 'right', 'not-allowed', 'pointer', 'tabular-nums', 'relative', 'block', 'absolute', 'in', 'srgb', '45%', 'transparent', '50%', '100%', '-70%', '45deg', '2px', '3', '2', '0', '-1', '*', '+', '-', '/', 'vertical', '1px', '18px', '20px', '24px', '44px', '6px', '8px', '10px', '999px', '1lh', 'center', 'Canvas', 'CanvasText', 'Highlight', 'HighlightText', 'GrayText', '-1px', '-18px', '-20px']);
   root.walkDecls((decl) => {
     parser(decl.value).walk((node) => {
       if (node.type === 'function') {

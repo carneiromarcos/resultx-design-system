@@ -52,6 +52,8 @@ criterios_aceite:
   - Switch nomeia a preferência (por exemplo, “Receber avisos por e-mail”), sem texto Ligado/Desligado redundante.
   - Estado indeterminado é nativo e exclusivo de checkbox; radio e switch nunca o recebem.
   - Estado desabilitado usa disabled nativo e não reduz a visibilidade da marca somente por opacidade.
+  - Checkbox marcado desabilitado conserva o visto sem preenchimento do glyph; o visto e a barra indeterminada desabilitados usam --text-muted sobre --bg-surface-2.
+  - Mensagem de erro permanece ligada por aria-describedby e próxima do controle sem reduzir o alvo clicável de 44 px.
   - Rótulo multilinha mantém o controle alinhado ao topo e centralizado na primeira linha; RTL usa propriedades lógicas e inverte o deslocamento do knob.
   - Foco tem anel visível igual ao Field; cores forçadas mantêm borda e marca perceptíveis.
   - Erro informa o problema em texto, não somente por cor.

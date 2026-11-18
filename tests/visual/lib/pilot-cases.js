@@ -1,4 +1,5 @@
 const { expect } = require('@playwright/test');
+const { PNG } = require('pngjs');
 const { paintedEdge, paintedFill, controlBoundary, textContrast, descendantTextContrast } = require('./contract-probes');
 const { parseCssColor } = require('./css-color');
 async function contrast(page, selector, property = 'color') {
@@ -356,13 +357,20 @@ const checks = {
   },
   'choice-indeterminate': async (p) => {
     const checkbox = p.locator('#choice-checkbox-indeterminate-control');
-    await checkbox.evaluate((el) => { el.indeterminate = true; });
     await expect(checkbox).toHaveJSProperty('indeterminate', true);
     const mark = p.locator('#choice-checkbox-indeterminate-mark');
     const bar = await mark.evaluate((el) => { const s = getComputedStyle(el, '::after'); return { width: parseFloat(s.width), height: parseFloat(s.height), color: s.backgroundColor, fill: getComputedStyle(el).backgroundColor }; });
-    expect(bar.width).toBeGreaterThan(0);
-    expect(bar.height).toBeGreaterThan(0);
+    expect(bar.width).toBe(10);
+    expect(bar.height).toBe(2);
     expect(contrastRatio(bar.color, bar.fill)).toBeGreaterThanOrEqual(4.5);
+    await mark.scrollIntoViewIfNeeded();
+    const box = await mark.boundingBox();
+    const png = PNG.sync.read(await p.screenshot({ animations: 'disabled' }));
+    const sample = (x, y) => [...png.data.subarray((png.width * Math.floor(y) + Math.floor(x)) * 4, (png.width * Math.floor(y) + Math.floor(x)) * 4 + 3)];
+    const center = sample(box.x + box.width / 2, box.y + box.height / 2);
+    const adjacent = sample(box.x + box.width / 2 + 6, box.y + box.height / 2);
+    expect(center).not.toEqual(adjacent);
+    expect(contrastRatio(`rgb(${center.join(',')})`, `rgb(${adjacent.join(',')})`)).toBeGreaterThanOrEqual(4.5);
     await expect(p.locator('#choice-radio-weekly')).not.toHaveJSProperty('indeterminate', true);
     await expect(p.locator('#choice-switch-control')).not.toHaveJSProperty('indeterminate', true);
   },
@@ -374,11 +382,29 @@ const checks = {
     const initial = await checkbox.isChecked();
     await checkbox.evaluate((el) => el.click());
     expect(await checkbox.isChecked()).toBe(initial);
-    const style = await mark.evaluate((el) => ({ background: getComputedStyle(el).backgroundColor, opacity: getComputedStyle(el).opacity, ink: getComputedStyle(el, '::after').borderRightColor }));
+    const style = await mark.evaluate((el) => {
+      const pseudo = getComputedStyle(el, '::after');
+      return { background: getComputedStyle(el).backgroundColor, opacity: getComputedStyle(el).opacity,
+        ink: pseudo.borderInlineEndColor, lowerInk: pseudo.borderBlockEndColor, glyphFill: pseudo.backgroundColor };
+    });
+    const muted = await mark.evaluate((el) => { const probe = document.createElement('span'); probe.style.color = 'var(--text-muted)'; document.body.append(probe); const color = getComputedStyle(probe).color; probe.remove(); return color; });
+    const surface = await mark.evaluate((el) => { const probe = document.createElement('span'); probe.style.backgroundColor = 'var(--bg-surface-2)'; document.body.append(probe); const color = getComputedStyle(probe).backgroundColor; probe.remove(); return color; });
     expect(style.opacity).toBe('1');
-    expect(style.background).not.toBe('rgba(0, 0, 0, 0)');
-    expect(style.ink).not.toBe('rgba(0, 0, 0, 0)');
+    expect(style.background).toBe(surface);
+    expect(style.ink).toBe(muted);
+    expect(style.lowerInk).toBe(style.ink);
+    expect(style.glyphFill).toBe('rgba(0, 0, 0, 0)');
     await controlBoundary(p, '#choice-checkbox-disabled-mark');
+
+    await checkbox.evaluate((el) => { el.checked = false; el.indeterminate = true; });
+    const partial = await mark.evaluate((el) => ({ background: getComputedStyle(el).backgroundColor,
+      glyph: getComputedStyle(el, '::after').backgroundColor, width: getComputedStyle(el, '::after').width,
+      height: getComputedStyle(el, '::after').height, opacity: getComputedStyle(el).opacity }));
+    expect(partial.background).toBe(surface);
+    expect(partial.glyph).toBe(muted);
+    expect(partial.width).toBe('10px');
+    expect(partial.height).toBe('2px');
+    expect(partial.opacity).toBe('1');
 
     const sw = p.locator('#choice-switch-control');
     const knob = p.locator('#choice-switch-mark');
@@ -402,6 +428,14 @@ const checks = {
     await expect(input).toHaveAttribute('aria-describedby', 'choice-checkbox-error-message');
     await expect(p.locator('#choice-checkbox-error-message')).toContainText('Confirme sua preferência');
     await textContrast(p, '#choice-checkbox-error-message');
+    const errorSpacing = await p.locator('#choice-checkbox-error-message').evaluate((el) => {
+      const mark = document.querySelector('#choice-checkbox-error-mark'),
+        label = document.querySelector('label[for="choice-checkbox-error-control"]');
+      return { gap: el.getBoundingClientRect().top - mark.getBoundingClientRect().bottom,
+        targetHeight: label.getBoundingClientRect().height };
+    });
+    expect(errorSpacing.targetHeight).toBeGreaterThanOrEqual(44);
+    expect(errorSpacing.gap).toBeLessThanOrEqual(22);
     await input.focus();
     const fieldErrorRing = await p.locator('#invalid').evaluate((el) => { el.focus(); return getComputedStyle(el).outlineColor; });
     await input.focus();

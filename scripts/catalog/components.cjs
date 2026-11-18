@@ -96,7 +96,7 @@ function effectiveChoiceInkRole(css, theme, state) {
     for (let parent = rule.parent; parent; parent = parent.parent) if (parent.type === 'atrule' && parent.name === 'media') return;
     const appliesInCascade = postcss.list.comma(rule.selector).some(selector => {
       const normalized = selector.replace(/["']/g, '');
-      if (!normalized.includes('.rx-choice__mark::after') || !normalized.includes(stateSelector) || normalized.includes(':disabled')) return false;
+      if (!normalized.includes('.rx-choice__mark::after') || !normalized.includes(stateSelector) || /:disabled(?!\))/.test(normalized)) return false;
       const themeSelector = /:root\[data-theme=([\w-]+)\]/.exec(normalized);
       return !themeSelector || themeSelector[1] === theme;
     });
@@ -153,7 +153,7 @@ function pairFromStyle(css, values, descriptor) {
       const inkRole = effectiveChoiceInkRole(css, descriptor.theme, descriptor.state);
       add('marca', inkRole, '--accent-primary', 4.5, descriptor.markTarget);
     }
-    if (descriptor.state === 'desabilitado') add('marca', '--text-primary', '--bg-surface-2', 4.5, descriptor.markTarget);
+    if (descriptor.state === 'desabilitado') add('marca', '--text-muted', '--bg-surface-2', 4.5, descriptor.markTarget);
     return pairs;
   }
   const s = rolesForStyle(css, descriptor.kind, descriptor.variant, descriptor.state);

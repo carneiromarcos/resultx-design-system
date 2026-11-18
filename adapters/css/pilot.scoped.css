@@ -182,13 +182,20 @@
 :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[aria-invalid='true'] + .rx-choice__mark { border-color: var(--color-error); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[aria-invalid='true']:focus-visible + .rx-choice__mark { outline-color: var(--accent-primary-text); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:disabled + .rx-choice__mark { background: var(--bg-surface-2); cursor: not-allowed; }
-:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:checked + .rx-choice__mark::after,
-  :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='radio']:disabled:checked + .rx-choice__mark::after,
-  :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[role='switch']:disabled:checked + .rx-choice__mark::after { background: var(--text-primary); border-color: var(--text-primary); }
-:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:indeterminate + .rx-choice__mark::after { background: var(--text-primary); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:checked + .rx-choice__mark,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:indeterminate + .rx-choice__mark,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='radio']:disabled:checked + .rx-choice__mark,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[role='switch']:disabled:checked + .rx-choice__mark--switch { background: var(--bg-surface-2); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:checked + .rx-choice__mark::after {
+    background: transparent;
+    border-color: var(--text-muted);
+  }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='radio']:disabled:checked + .rx-choice__mark::after,
+  :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[role='switch']:disabled:checked + .rx-choice__mark--switch::after { background: var(--text-muted); border-color: var(--text-muted); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:indeterminate + .rx-choice__mark::after { background: var(--text-muted); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-choice__option:has(.rx-choice__control:disabled) { color: var(--text-muted); cursor: not-allowed; }
 :is(.rx-pilot, #rx-pilot-floor) .rx-choice__message { margin: 0; color: var(--text-primary); }
-:is(.rx-pilot, #rx-pilot-floor) .rx-choice__message[role='alert'] { color: var(--color-error); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__message[role='alert'] { margin-block-start: calc(-1 * var(--space-2)); color: var(--color-error); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-choice__mark--indeterminate-sample { background: var(--accent-primary); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-choice__mark--indeterminate-sample::after { inline-size: 10px; block-size: 2px; background: var(--text-inverse); }
 :root[data-theme='sober-dark'] :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:checked + .rx-choice__mark::after,
@@ -201,6 +208,8 @@
     :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):indeterminate + .rx-choice__mark::after { border-color: HighlightText; background: HighlightText; }
     :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:disabled:checked + .rx-choice__mark { background: Canvas; border-color: GrayText; }
     :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:disabled:checked + .rx-choice__mark::after { border-color: CanvasText; background: CanvasText; }
+    :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:indeterminate + .rx-choice__mark { background: Canvas; border-color: GrayText; }
+    :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:indeterminate + .rx-choice__mark::after { background: CanvasText; }
     :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:focus-visible + .rx-choice__mark { outline-color: Highlight; }
   }
 /* stylelint-enable no-descending-specificity */
