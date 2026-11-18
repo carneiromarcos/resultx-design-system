@@ -82,7 +82,7 @@
     },
     {
       "file": "brands/emprega-mais/tokens/pilot-aliases.css",
-      "sha256": "b14a16766119c257a1bec0f6ba37d7d71bad1aaa31042cf0301667056a8f06de"
+      "sha256": "afccb7c9f4ba3bb8d0892b11970d0af611b9351fe07c569d4fd9e294f6514b92"
     },
     {
       "file": "brands/emprega-mais/tokens/tokens.css",
@@ -110,7 +110,7 @@
     },
     {
       "file": "contracts/field.yaml",
-      "sha256": "40960f8c18ee2201a074155775542eb2438cc0f2e2e4642a0eeedbd0ea180e9c"
+      "sha256": "b317268555d58a34c78f45dfbf98ef0fef9385e04c9474db8d773481a8047bb6"
     },
     {
       "file": "contracts/stat-card.yaml",
@@ -142,7 +142,7 @@
     },
     {
       "file": "generated/component-cards/field.md",
-      "sha256": "d45d8e0e3d5c67c4129b4bb96ab5806d3ce8239ae65816e4f9d3566618a8eab9"
+      "sha256": "530f705e6f05b65b6d30a7e7589e8f25705556556103a46f6bd6667864c3d4f5"
     },
     {
       "file": "generated/component-cards/stat-card.md",
@@ -189,7 +189,7 @@
       "sha256": "cfb9ff9622fc0c9a05599f4adda92b0ca5d7a9fae5982191819f32833a41d211"
     }
   ],
-  "contentId": "17410035835929c27b30a4cef9accba6727b589d02f55ad4e4fcda7a1e4b7ff8",
+  "contentId": "86f1fecdc08beebde4162ce3475210c6350cb6b29cfd07504a5106ca58dd5863",
   "contrasts": {
     "light": [
       {
