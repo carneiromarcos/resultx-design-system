@@ -193,7 +193,7 @@
   .rx-choice__control[type='checkbox']:not([role='switch']):disabled:checked + .rx-choice__mark::after,
   .rx-choice__control[type='radio']:disabled:checked + .rx-choice__mark::after,
   .rx-choice__control[role='switch']:disabled:checked + .rx-choice__mark::after { background: var(--text-primary); border-color: var(--text-primary); }
-  .rx-choice__control:disabled:indeterminate + .rx-choice__mark::after { background: var(--text-primary); }
+  .rx-choice__control[type='checkbox']:not([role='switch']):disabled:indeterminate + .rx-choice__mark::after { background: var(--text-primary); }
   .rx-choice__option:has(.rx-choice__control:disabled) { color: var(--text-muted); cursor: not-allowed; }
   .rx-choice__message { margin: 0; color: var(--text-primary); }
   .rx-choice__message[role='alert'] { color: var(--color-error); }

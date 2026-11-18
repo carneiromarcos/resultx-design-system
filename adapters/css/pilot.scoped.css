@@ -185,7 +185,7 @@
 :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:checked + .rx-choice__mark::after,
   :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='radio']:disabled:checked + .rx-choice__mark::after,
   :is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[role='switch']:disabled:checked + .rx-choice__mark::after { background: var(--text-primary); border-color: var(--text-primary); }
-:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control:disabled:indeterminate + .rx-choice__mark::after { background: var(--text-primary); }
+:is(.rx-pilot, #rx-pilot-floor) .rx-choice__control[type='checkbox']:not([role='switch']):disabled:indeterminate + .rx-choice__mark::after { background: var(--text-primary); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-choice__option:has(.rx-choice__control:disabled) { color: var(--text-muted); cursor: not-allowed; }
 :is(.rx-pilot, #rx-pilot-floor) .rx-choice__message { margin: 0; color: var(--text-primary); }
 :is(.rx-pilot, #rx-pilot-floor) .rx-choice__message[role='alert'] { color: var(--color-error); }

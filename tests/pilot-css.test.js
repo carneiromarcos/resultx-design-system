@@ -39,6 +39,17 @@ test('CSS isolado usa somente valores de token ou palavras estruturais', () => {
   expect([...consumed].filter((token) => !declared.has(token))).toEqual([]);
 });
 
+test('indeterminado é restrito à checkbox comum, nunca ao switch', () => {
+  const root = postcss.parse(fs.readFileSync('adapters/css/pilot.css', 'utf8'));
+  const selectors = [];
+  root.walkRules((rule) => selectors.push(...rule.selectors.filter((selector) => selector.includes(':indeterminate'))));
+  expect(selectors.length).toBeGreaterThan(0);
+  for (const selector of selectors) {
+    expect(selector).toContain("[type='checkbox']");
+    expect(selector).toContain(":not([role='switch'])");
+  }
+});
+
 test('Select2 acompanha o controle fechado, foco e erro com papéis existentes', () => {
   const root = postcss.parse(fs.readFileSync('adapters/css/pilot.css', 'utf8'));
   const selectors = [];

@@ -379,6 +379,22 @@ const checks = {
     expect(style.background).not.toBe('rgba(0, 0, 0, 0)');
     expect(style.ink).not.toBe('rgba(0, 0, 0, 0)');
     await controlBoundary(p, '#choice-checkbox-disabled-mark');
+
+    const sw = p.locator('#choice-switch-control');
+    const knob = p.locator('#choice-switch-mark');
+    await sw.evaluate((el) => { el.disabled = true; el.indeterminate = false; });
+    await p.addStyleTag({ content: '@layer components { .rx-choice__control:disabled + .rx-choice__mark--switch::after { background: var(--text-inverse); } }' });
+    const before = await knob.evaluate((el) => getComputedStyle(el, '::after').backgroundColor);
+    await sw.evaluate((el) => { el.indeterminate = true; });
+    await expect(sw).toHaveJSProperty('indeterminate', true);
+    const after = await knob.evaluate((el) => {
+      const s = getComputedStyle(el, '::after');
+      return { color: s.backgroundColor, width: s.width, height: s.height, radius: s.borderRadius };
+    });
+    expect(after.color).toBe(before);
+    expect(after.width).toBe('20px');
+    expect(after.height).toBe('20px');
+    expect(after.radius).toBe('50%');
   },
   'choice-error': async (p) => {
     const input = p.locator('#choice-checkbox-error-control');
