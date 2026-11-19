@@ -8,10 +8,11 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e
 ## [2.11.0] - 2026-11-19
 Versão MINOR. Antecipada em 19/11 por decisão do dono do produto (exceção à regra D7, que previa
 o corte a partir de 27/11) para destravar a atualização do Xscore. Os tokens só ganham papéis novos:
-nenhum valor existente muda em `dist/tokens.min.css` (40 declarações novas, 0 alteradas,
-0 removidas em relação à v2.10.0) e `tokens/eds-root.css` continua idêntico byte a byte.
-Mudança visual declarada só nos campos de formulário de `components.css` (borda e foco, ver
-impacto abaixo). Inventário `v2.10.0 → v2.11.0` abaixo; o que não é distribuído no pacote está
+nenhum valor existente muda em `dist/tokens.min.css` (48 declarações novas, 0 alteradas,
+0 removidas em relação à v2.10.0, contadas por seletor e `@media`, incluindo os dois fallbacks
+de `prefers-color-scheme`) e `brands/emprega-mais/tokens/eds-root.css` continua idêntico byte a
+byte. Mudanças visuais declaradas em `components.css`: botões (#115) e campos de formulário
+(#153, #154); ver impacto abaixo. Inventário `v2.10.0 → v2.11.0` abaixo; o que não é distribuído no pacote está
 marcado como interno.
 
 ### Fixed — vitrine Choice: estados e mensagem de erro
@@ -62,32 +63,29 @@ atinge consumidores do adaptador, incluindo o IMO ao atualizar sua cópia na DS-
 
 O adaptador piloto admite links de navegação com as variantes de botão, foco e estados acessíveis.
 
-> **Rascunho da v2.11.0** (D7: corte não antes de 27/11). O inventário abaixo vale para
-> `v2.10.0..5b18b15`; antes da tag ele é refeito até o SHA da tag.
-
 ### Impacto por consumidor
 
 "Nenhum" é inferência por leitura estática, não prova renderizada. Quem hoje está em `#v2.9.0`
-recebe também as mudanças da v2.10.0 ao subir (botões, #115).
+recebe também a mudança da v2.10.0 ao subir (texto do `.btn-success` no tema dark).
 
 | Consumidor | Versão hoje | Importa | Efeito visual esperado ao subir para a v2.11.0 |
 |---|---|---|---|
-| FinanceX | `#v2.9.0` | tokens, `components`, `components/data-cards`; tema `premium-light` | **sim, se usar os campos do DS**: borda de `.form-input`, `.form-select` e `.form-textarea` passa de `--border-default` para `--text-muted` (limite visível, ≥3:1); `.form-textarea` ganha altura mínima calculada pela tipografia; `.form-select` passa a respeitar a largura do contêiner; foco em campo com erro usa `--focus-ring-color` (#153, #154). Da v2.10.0: `.btn-danger` cheio; a hierarquia é decidida no FinanceX antes de ele subir de versão (DS-15). Não renderizado nesta data |
-| ResultX Site | `#v2.9.0` | tokens, `brands/resultx/tokens` e `bridge`, `components`, `icons`; tema `dark` | **sim, se usar os campos do DS**: as mesmas mudanças de borda e foco dos campos. Botões: nenhum (v2.10.0). Não renderizado nesta data |
+| FinanceX | `#v2.9.0` | tokens, `components`, `components/data-cards`; tema `premium-light` | **sim, se usar os campos do DS**: borda de `.form-input`, `.form-select` e `.form-textarea` passa de `--border-default` para `--text-muted` (limite visível, ≥3:1); `.form-textarea` ganha altura mínima calculada pela tipografia; `.form-select` passa a respeitar a largura do contêiner; foco em campo com erro usa `--focus-ring-color` (#153, #154). **Botões (#115)**: `.btn-danger` deixa de ser contornado e vira botão cheio (branco sobre vermelho) em todos os temas; no FinanceX são 5 usos e o contraste sobe de 3,10–4,14:1 para 4,83:1 em repouso, hover e foco. No `premium-light`, `.btn-success` passa a texto `--text-inverse` com hover próprio, e o hover do `.btn-secondary` ganha regra nova sem mudar as cores medidas no Editar (13,60:1 antes e depois). Ressalva de produto: o vermelho repetido por linha compete com a ação principal; a hierarquia é decidida no FinanceX antes de ele subir de versão (DS-15). Não renderizado nesta data |
+| ResultX Site | `#v2.9.0` | tokens, `brands/resultx/tokens` e `bridge`, `components`, `icons`; tema `dark` | **sim, se usar os campos do DS**: as mesmas mudanças de borda e foco dos campos. Botões: nenhum esperado, porque usa só `.btn-primary` e `.btn-secondary`, e as regras novas desses dois (#115) valem só em `sober-dark`, `vibrant-dark` e `premium-light`. Não renderizado nesta data |
 | Electia | `#v2.9.0` | tokens, bridge, `components/data-cards` | nenhum: não importa `components`; os papéis novos de cor só têm efeito quando usados |
 | Xscore | `#v2.9.0` | só `brands/xscore/tokens` | nenhum: o arquivo da marca só ganhou o comentário de arquivo gerado (#116). Contratos distribuídos mudaram (`button` com links de ação, `field`, `choice` novo): a fixação de contratos do produto precisa ser atualizada junto |
-| IMO (Laravel) | não instala o pacote; copia por SHA `adapters/css/pilot.scoped.css` e `brands/emprega-mais/tokens/pilot-aliases.css` | cópias vendorizadas, presas pelo `RxPilotVendoredCopyTest` | nenhum até recopiar; a recópia traz o botão primário com preenchimento (#121), os links de ação (#129), o Field com controles nativos (#153) e a Escolha (#154), e exige atualizar o teste da cópia — DS-17 |
+| IMO (Laravel) | não instala o pacote; copia por SHA `adapters/css/pilot.scoped.css` e `brands/emprega-mais/tokens/pilot-aliases.css` | cópias vendorizadas, presas por teste de cópia no próprio produto | nenhum até recopiar; a recópia traz o botão primário com preenchimento (#121), os links de ação (#129), o Field com controles nativos (#153) e a Escolha (#154), e exige atualizar o teste da cópia — DS-17 |
 | IMO front React | `#v2.1.1` | só tokens | nenhum: `dist/tokens.min.css` só ganha papéis novos |
-| EditalHub | não instala o pacote | ponte `eds-root.css` própria | nenhum; `eds-root.css` idêntico byte a byte |
+| EditalHub | não instala o pacote | ponte `eds-root.css` própria | nenhum; `brands/emprega-mais/tokens/eds-root.css` idêntico byte a byte |
 
 **Superfície distribuída — mudança de valor ou de export desde a v2.10.0:**
-- `components/components.css` e `dist/components.min.css`: campos de formulário (borda, altura do texto longo, largura do select, adaptador fechado do Select2) e foco do campo com erro (#153, #154);
+- `components/components.css` e `dist/components.min.css`: botões (`.btn-danger` cheio; `.btn-success` com `--text-on-success` na base e `--text-inverse` no `premium-light`; regras de contraste nos temas opt-in; #115) e campos de formulário (borda, altura do texto longo, largura do select, adaptador fechado do Select2) e foco do campo com erro (#153, #154);
 - `adapters/css/pilot.css` e `adapters/css/pilot.scoped.css` (arquivos novos desde a v2.10.0): #117, #119, #120, #121, #129, #153, #154;
 - tokens e temas: papéis aditivos C-cor-1 (#152) em `tokens/tokens.css`, `tokens/themes/*`, `dist/tokens.min.css`, `dist/tokens.theme.css`, `dist/tokens.ts` e `brands/pdv/tokens/tokens.css` (`--color-error-text` e `--text-unavailable` nos dois escopos da marca); nenhum valor existente muda;
 - `contracts/`: 9 contratos (`choice` novo em #154; `button` com links de ação em #129; `field` com controles nativos em #153);
 - exports novos `./tokens/legacy`, `./adapters/css/pilot` e `./adapters/css/pilot/scoped`; arquivos novos no pacote: `tokens/legacy-aliases.css`, `brands/emprega-mais/tokens/pilot-aliases.css` e os dois `.sha256`.
 
-**Mudança só física (conteúdo gerado, valores equivalentes após normalização, E1):** `tokens/base/tokens-base.css` e `brands/*/tokens/tokens.css` (exceto o PdV acima). `tokens/eds-root.css` não muda.
+**Mudança só física (conteúdo gerado, valores equivalentes após normalização, E1):** `tokens/base/tokens-base.css` e `brands/*/tokens/tokens.css` (exceto o PdV acima). `brands/emprega-mais/tokens/eds-root.css` não muda.
 
 ### Changed — marca electia passa a se chamar eletia (15/11/2026, ADR-133 do produto)
 
