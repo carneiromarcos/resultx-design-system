@@ -228,9 +228,11 @@ variantes primary, success e danger, normal e hover) passam a ≥ 4,5:1, e
 
 **Mudança visual:** `.btn-danger` nos temas claros deixa de ser "tinta" (texto vermelho sobre
 fundo rosado) e vira botão cheio (branco sobre vermelho); success e danger nos temas escuros
-sober-dark e vibrant-dark passam a texto escuro. **Antes de cortar a versão** que leva esta
-mudança, capturar e revisar na tela real os três usos de `btn-danger` do FinanceX
-(`premium-light`, normal e hover, no contexto) — parecer do Revisor na #115.
+sober-dark e vibrant-dark passam a texto escuro. **Antes de o FinanceX atualizar** para a versão
+que leva esta mudança, capturar e revisar na tela real os três usos de `btn-danger` do FinanceX
+(`premium-light`, normal e hover, no contexto), junto da decisão de hierarquia DS-15 — parecer do
+Revisor na #115; gate movido do corte para a PR de atualização do FinanceX, que consome por tag
+fixa, no corte da v2.11.0 (Revisor, #156).
 
 **Cobertura e limites:** o teste do CI (`tests/visual/button-contrast.spec.js`) compara o
 cálculo com os estilos computados no navegador para normal e hover, nos 5 temas e no
