@@ -1,37 +1,116 @@
 {
-  "schema": 1,
-  "method": "SVG rendered at180x52; fully opaque symbol pixels; WCAG relative luminance against existing dark surface role. Measurement, not a conformity verdict.",
-  "surfaceRole": "--surface-1",
-  "background": "#161B26",
-  "viewport": [
-    180,
-    52
-  ],
-  "referenceMinimum": 3,
-  "parts": [
+  "schema": 2,
+  "method": "Symbol: SVG rendered at 180 px wide, fully opaque pixels against the dark --surface-1. Score: flat sampled colour against every surface role of the theme in which that artwork is used. WCAG relative luminance; measurement, not a conformity verdict.",
+  "referenceMinimum": {
+    "symbol": 3,
+    "score": 4.5
+  },
+  "symbol": {
+    "surfaceRole": "--surface-1",
+    "background": "#161B26",
+    "viewport": [
+      180,
+      42
+    ],
+    "parts": [
+      {
+        "part": "cool-ribbon",
+        "fullyOpaquePixels": 81,
+        "minimumRatio": 1.7503994571779877,
+        "maximumRatio": 3.2333792310910443,
+        "minimumColor": [
+          46,
+          61,
+          135
+        ],
+        "belowReference3to1": true
+      },
+      {
+        "part": "warm-ribbon",
+        "fullyOpaquePixels": 85,
+        "minimumRatio": 3.219497068786379,
+        "maximumRatio": 7.226075586728604,
+        "minimumColor": [
+          146,
+          87,
+          133
+        ],
+        "belowReference3to1": false
+      }
+    ]
+  },
+  "score": [
     {
-      "part": "blue-ribbon",
-      "fullyOpaquePixels": 151,
-      "minimumRatio": 1.7503994571779877,
-      "maximumRatio": 3.186100171947022,
-      "minimumColor": [
-        46,
-        61,
-        135
+      "asset": "xscore-wordmark-dark.svg",
+      "color": [
+        27,
+        42,
+        74
       ],
-      "belowReference3to1": true
+      "theme": "light",
+      "surfaces": [
+        {
+          "token": "--bg",
+          "hex": "#FFFFFF",
+          "ratio": 14.221181593792421
+        },
+        {
+          "token": "--surface-1",
+          "hex": "#F8FAFB",
+          "ratio": 13.583626725639236
+        },
+        {
+          "token": "--surface-2",
+          "hex": "#F0F3F5",
+          "ratio": 12.761007738486994
+        },
+        {
+          "token": "--surface-3",
+          "hex": "#E9EDF1",
+          "ratio": 12.087040747562027
+        },
+        {
+          "token": "--surface-4",
+          "hex": "#D1D9E0",
+          "ratio": 9.963337653328079
+        }
+      ]
     },
     {
-      "part": "warm-ribbon",
-      "fullyOpaquePixels": 161,
-      "minimumRatio": 3.073069248381381,
-      "maximumRatio": 7.394459089783692,
-      "minimumColor": [
-        142,
-        85,
-        125
+      "asset": "xscore-wordmark-light.svg",
+      "color": [
+        255,
+        255,
+        255
       ],
-      "belowReference3to1": false
+      "theme": "dark",
+      "surfaces": [
+        {
+          "token": "--bg",
+          "hex": "#0B0E14",
+          "ratio": 19.316632204301516
+        },
+        {
+          "token": "--surface-1",
+          "hex": "#161B26",
+          "ratio": 17.22898900136413
+        },
+        {
+          "token": "--surface-2",
+          "hex": "#1C2333",
+          "ratio": 15.69986344141381
+        },
+        {
+          "token": "--surface-3",
+          "hex": "#232B3B",
+          "ratio": 14.187567986419198
+        },
+        {
+          "token": "--surface-4",
+          "hex": "#2A3444",
+          "ratio": 12.551432852301074
+        }
+      ]
     }
   ],
   "decision": "Preserve the approved artwork; no recoloring or token changes."

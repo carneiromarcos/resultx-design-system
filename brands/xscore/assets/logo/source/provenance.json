@@ -1,27 +1,40 @@
 {
   "schema": 1,
-  "approvedOn": "2026-11-17",
+  "approvedOn": "2026-11-24",
+  "replaces": "Artwork approved on 2026-11-17 (outlined X with sampled gradients and lighter score lettering); kept in Git history",
+  "sanitization": "Ancillary chunks removed (eXIf, pHYs, iTXt with XMP); IHDR/IDAT/IEND bytes copied unchanged, so RGBA pixels are identical by construction",
   "rasterSources": [
     {
       "file": "source/wordmark-light-background.png",
-      "originalPngSha256": "73f24836e3ea7d2d67d401ba5a52d5ccf3d714c4937ebd33759f1305f29e104a",
-      "sanitizedPngSha256": "3bf4960d5bbe03f4d3d3fa905706d0e3958cf217bf83701b55491206b75b3b85",
-      "originalRgbaSha256": "88cdacc7128ab5fb4eb84a0a0116e15970d77e59da94b147e38c07571b432fcf",
+      "role": "wordmark for light backgrounds: gradient X plus navy score",
+      "originalPngSha256": "672d1a9fbd8cd151f5f5c12f954f956c80a2b2e13a97a2e40fd6949ca3da124e",
+      "sanitizedPngSha256": "9a011621a106c1ba8cf1339bcfb2c40aabc77959e1487f1764a69a09419f15c8",
+      "originalRgbaSha256": "695bd870ab6411856a3a60e99079d7ce38dea722be6f5709a8f1612267ec47ac",
       "metadataRemoved": true,
       "pixelsIdentical": true
     },
     {
       "file": "source/wordmark-dark-background.png",
-      "originalPngSha256": "11085e6890b30574a5eac3fc6b8c2898ca7b82b9f887a3dcfb6cb1d02931b50f",
-      "sanitizedPngSha256": "35fe59804d591064df7062fee22c10db13fe5967b7cf75bbd0bbc971fbe96ffb",
-      "originalRgbaSha256": "05143f22d91556cc819b277440e690b8a927dbb59c0de8e53e39ae71c50de5f4",
+      "role": "wordmark for dark backgrounds: same gradient X plus white score",
+      "originalPngSha256": "1709dbab853ab113529f8ad3fde9c4f280eec06667807a08aade53f1aac6a80d",
+      "sanitizedPngSha256": "2ba80bf5a29b8dd3f8fcbe77c019b7f3d365ae7d02e16d74861fb384c207b2fb",
+      "originalRgbaSha256": "f64d229266c1dd1ddcfcebdab7bb872ad6e3c05579d9297fee51d4896194841e",
+      "metadataRemoved": true,
+      "pixelsIdentical": true
+    },
+    {
+      "file": "source/symbol-transparent-background.png",
+      "role": "isolated gradient X at 400 px: source of monogram, favicon and icons",
+      "originalPngSha256": "ff49b0963ad5788c0b92e6e29d3bf92abf67bae643b69f86fa0b0e632a3c082d",
+      "sanitizedPngSha256": "b252eeed518c1f351ae771a2fd02ddd3327f2a08716675ea03535f04a8510e95",
+      "originalRgbaSha256": "4e4038794375fb0fc2fb60734c83302a1abaf19543a31575663da9271c3abacb",
       "metadataRemoved": true,
       "pixelsIdentical": true
     }
   ],
   "approvedSvgSha256": {
-    "xscore-wordmark-dark.svg": "c30a577e5a1aadd474e6b6b1bd45c4e1a3a3e47436a89186304e8303032b2740",
-    "xscore-wordmark-light.svg": "30a5c70b5f21697c50cddc158f71082f018f11b8d6e9b35ad6be6c71f8a0762c"
+    "xscore-wordmark-dark.svg": "eb89bbd1944626e82b9ef60a450a40bb02b77bc89dfa93dc940e1421594fbe5e",
+    "xscore-wordmark-light.svg": "149b4efb6d5a8bd6986d46eb943699a0c2faefe9288abd95883b9c8730897071"
   },
   "convention": "light artwork is for dark backgrounds; dark artwork is for light backgrounds"
 }
