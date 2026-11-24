@@ -50,6 +50,10 @@ try {
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.screenshot({ path: path.join(evidence, `brand-${width}-${theme}.png`) });
     await page.locator('#ds-logo').screenshot({ path: path.join(evidence, `logo-${width}-${theme}.png`) });
+    // Full-page clip: the sticky header and the skip link stay out of the pattern capture.
+    await page.evaluate(() => document.activeElement?.blur());
+    const summaryBox = await page.locator('#ds-credit-summary').evaluate(el => { const r = el.getBoundingClientRect(); return { x: r.left + scrollX, y: r.top + scrollY, width: r.width, height: r.height }; });
+    await page.screenshot({ path: path.join(evidence, `resumo-analise-${width}-${theme}.png`), fullPage: true, clip: summaryBox });
     // Text-only contrast sampling. Gradients and images remain outside this measurement.
     const pairs = await page.evaluate(() => {
       const canvas = document.createElement('canvas'); canvas.width = canvas.height = 1;

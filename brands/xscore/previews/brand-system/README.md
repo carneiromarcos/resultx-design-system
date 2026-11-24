@@ -11,7 +11,7 @@ npx stylelint brands/xscore/previews/brand-system/style.css
 node brands/xscore/previews/brand-system/tests/verify.mjs
 ```
 
-O último comando serve a árvore temporariamente em loopback, valida os documentos em 390/1440 e grava somente evidências fictícias em `brands/xscore/docs/qa/`. Requer o Chromium da instalação Playwright do DS (`npx playwright install chromium`). O servidor temporário é encerrado no fim.
+O último comando serve a árvore temporariamente em loopback, valida os documentos em 390/1440 e grava somente evidências fictícias em `brands/xscore/docs/qa/`, incluindo a captura da seção "Resumo da análise" (`resumo-analise-*.png`). Requer o Chromium da instalação Playwright do DS (`npx playwright install chromium`). O servidor temporário é encerrado no fim.
 
 Para inspecionar manualmente, sirva a raiz do repositório em loopback e abra `brands/xscore/previews/brand-system/index.html` ou `light.html`. O caminho relativo das fontes e assets depende dessa raiz.
 
@@ -20,3 +20,5 @@ O gerador lê a folha oficial da marca; não escreve nela. Gera `index.html`, `l
 As páginas compartilham a CSP do catálogo: `default-src 'self'`. Cada uma das nove entradas liga ao contrato e à ficha pública fixados na revisão `9da663fff3641f4021e94e1ef5f1deba85441c69`; há também um atalho para o catálogo visual. A renderização não busca esses destinos. A publicação no Pages é uma entrega compartilhada separada, coordenada pelo Supervisor.
 
 Contratos e fichas usam URLs públicas fixadas no SHA registrado em `provenance.json`; não dependem de diretórios ausentes da publicação Pages. O teste rejeita a reintrodução de links relativos para esses recursos.
+
+O modelo original do Resumo da análise fica em `brands/xscore/reference/`, marcado "não usar". Ele não é gerado, não é linkado pelas páginas e não entra na publicação; o teste da vitrine confere isso.
