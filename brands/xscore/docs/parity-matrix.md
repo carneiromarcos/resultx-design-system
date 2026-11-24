@@ -35,6 +35,7 @@ Os estados descrevem composições suportadas pelos contratos atuais, não compo
 | Vazio | EXISTE | EmptyState | Conteúdo contextual e próximo passo. |
 | Erro | EXISTE | ErrorState | Mensagem e ação conforme aplicabilidade do contrato. |
 | Carregamento | EXISTE | DataTable, StatCard, EmptyState | Região em atualização comunica estado ocupado. |
+| Resumo da análise | ADOTADO NO XSCORE | Card, StatusBadge, Button (link) | Composição em uso no produto (#360), sem contrato próprio no DS; conformidade do produto não verificada aqui. |
 
 ## Referência e critérios
 

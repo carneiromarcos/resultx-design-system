@@ -46,8 +46,46 @@ A seção de dados apresenta valores fictícios, alinhamento tabular, unidade ex
 | Estado vazio | EXISTE | EmptyState | Mensagem contextual e próximo passo |
 | Estado de erro | EXISTE | ErrorState | Mensagem e ação conforme aplicabilidade |
 | Carregamento | EXISTE | DataTable, StatCard, EmptyState | Estado ocupado pertence à região em atualização |
+| Resumo da análise | ADOTADO NO XSCORE (#360, 24/11) · sem contrato próprio no DS | Card, StatusBadge, Button (link); aviso de falha é composição própria, não ErrorState | Registra a composição como está no produto; conformidade dos componentes do produto aos contratos não verificada aqui |
 
 As composições e rótulos de demonstração usam conteúdo fictício. A presença de um contrato não cria uma variante de domínio nem comprova uso em produto.
+
+EXISTE e PLANEJADO falam de contratos do DS. ADOTADO NO XSCORE fala de uso no produto: o padrão está em uso, mas o DS não tem contrato para ele.
+
+### Resumo da análise
+
+Decisão do Marcos em 24/11/2026: registrar o padrão **como está no ar** no Xscore (#360). Exemplo fictício nos dois temas na seção 06 do Brand System ([escuro](../previews/brand-system/index.html#ds-credit-summary), [claro](../previews/brand-system/light.html#ds-credit-summary)).
+
+**Propósito.** Mostrar, no topo da ficha, o que o laudo do birô informou, antes da leitura completa. O cartão só lê o laudo gravado; não recalcula nem julga crédito.
+
+**Estrutura.**
+
+1. Cabeçalho: "Resumo da análise · laudo {fonte} de {data}" e o nome da empresa. O selo de decisão aparece só depois de uma decisão humana fechada (Aprovada, Aprovada com outro valor ou Reprovada), com quem decidiu e quando. Antes disso, não há selo.
+2. "O que o laudo mostra", nesta ordem: score do birô, protestos, pendências financeiras, tempo de empresa, situação cadastral, e falência, ações e cheques num item só.
+3. Rodapé: "Limite sugerido pelo birô" (só quando o laudo traz), "É uma recomendação. Quem decide é a alçada." e o link "Ver laudo completo".
+
+**Estados de item.** Quatro estados, cada um com ícone de forma própria e texto para leitor de tela:
+
+| Estado | Ícone | Quando |
+|---|---|---|
+| Sem apontamento | círculo com visto | O birô consultou e não trouxe ocorrência; situação cadastral ativa |
+| Atenção | triângulo | Ocorrência constatada; situação cadastral inativa, suspensa ou baixada |
+| Sem dado | círculo tracejado | O birô não informou, o dado veio ilegível ou a data é inválida |
+| Informação | "i" | Score e tempo de empresa: mostrados, nunca julgados |
+
+**Estados do cartão.** Pronto (cartão completo). Oculto, para quem não pode ler o laudo ou quando não há laudo estruturado. Falha de leitura: aviso "Não foi possível montar o resumo do laudo agora." com o caminho para o laudo completo, nunca um cartão vazio ou com zeros.
+
+**Regras de exibição.**
+
+- "Nenhum registro" só quando o birô declarou ter consultado a categoria e não trouxe ocorrência. Sem essa declaração, ou com lista ilegível, o item diz "o birô não informou". Desconhecido nunca vira limpo.
+- No item agrupado, as ocorrências e as categorias que o birô não cobriu aparecem juntas, e uma não esconde a outra. Exemplo: "ação judicial 1 · o birô não informou: falência, cheque sem fundo".
+- A quantidade vem do campo estruturado da fonte, nunca da contagem de linhas. Sem esse campo, o item diz "com registro", sem número.
+- Dinheiro chega como string decimal e soma em centavos inteiros. Valor que faltou não entra como zero: o total diz "valor parcial" ou "valor não informado".
+- O score aparece por fonte, cada um na sua escala, lado a lado, sem comparação entre fontes e sem mínimo. Escala não confirmada é dita em texto. O tempo de empresa é informativo, com mês e ano de fundação. Nenhum mínimo está configurado; inventar um seria regra de crédito na tela.
+
+**Acessibilidade.** Cartão rotulado pelo nome da empresa. Ícones decorativos (`aria-hidden`), com o estado em texto para leitor de tela ("Atenção:", "Sem dado:"…). A cor reforça e não informa sozinha. No celular, título e detalhe se empilham. O aviso de falha usa `role="status"`. O que foi medido na vitrine está em [evidências](qa/brand-system-foundations.md); leitor de tela real não foi ensaiado.
+
+**Não usar.** O modelo original de 23/11 trazia nota de 0 a 1000, régua Negar/Revisão/Restrição/Aprovar, selo "Dentro da política", mínimos por critério e "limite sugerido pela política". **O Xscore não tem nota única nem fundida (decisão D-0001)**, e a política vigente não tem faixas nem mínimos. Também ficam fora, por falta de fonte: nome e versão da política, atraso na carteira, legenda dos selos e versão curta para listas. O modelo está guardado só como [referência histórica, marcada "não usar"](../reference/do-not-use-policy-summary-model-2026-11-23/README.md), fora da vitrine publicada.
 
 ### Iconografia
 

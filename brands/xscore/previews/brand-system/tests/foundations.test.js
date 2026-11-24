@@ -63,6 +63,48 @@ test('the credit-pattern summary distinguishes existing contracts from planned c
   expect(html).toContain('Planejado · Field e Choice existentes');
   expect(html).toContain('Planejado · Button e ConfirmDialog existentes');
 });
+test('the analysis summary documents the adopted pattern in both themes and marks the abolished model', () => {
+  for (const file of ['index.html', 'light.html']) {
+    const html = read(file);
+    expect(html).toContain('<section id="ds-credit-summary"');
+    expect(html).toContain('href="#ds-credit-summary"');
+    expect(html).toContain('Adotado no Xscore · sem contrato próprio');
+    for (const label of ['Sem apontamento:', 'Atenção:', 'Sem dado:', 'Informação:']) expect(html).toContain(`<span class="sr-only">${label} </span>`);
+    for (const state of ['ok', 'attention', 'missing', 'info']) expect(html).toContain(`class="state-icon state-${state}" aria-hidden="true"`);
+    expect(html).toContain('nenhum registro');
+    expect(html).toContain('o birô não informou');
+    expect(html).toContain('Não foi possível montar o resumo do laudo agora.');
+    expect(html).toContain('Não usar');
+    expect(html).toContain('D-0001');
+    // The live pattern carries no fused score, band ruler or policy seal; only the "Não usar" block names them.
+    const live = html.slice(html.indexOf('<section id="ds-credit-summary"'), html.indexOf('<div class="dont">'));
+    expect(live).not.toMatch(/Dentro da política|Score Xscore|de 1000|Negar|mín\./);
+  }
+  expect(JSON.parse(read('provenance.json')).sections).toContain('ds-credit-summary');
+});
+test('the original model stays a non-published reference marked do-not-use', () => {
+  const { PUBLIC_PATHS, BRAND_SYSTEM_FILES } = require('../../../../../scripts/prepare-pages.cjs');
+  const reference = 'brands/xscore/reference/do-not-use-policy-summary-model-2026-11-23';
+  const dir = path.resolve(brand, '../..', reference);
+  for (const file of ['README.md', 'Main.dc.html', 'Claro.dc.html']) expect(fs.existsSync(path.join(dir, file))).toBe(true);
+  expect(fs.readFileSync(path.join(dir, 'README.md'), 'utf8')).toMatch(/NÃO USAR — nota única abolida \(D-0001\)/);
+  const notice = 'Dados fictícios — exemplo de layout. Notas de birô, nomes e CNPJs não são reais; citar birôs não indica parceria. Não usar (nota única abolida, D-0001)';
+  const escaped = notice.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const htmlFiles = fs.readdirSync(dir).filter(file => file.endsWith('.html'));
+  expect(htmlFiles).toEqual(expect.arrayContaining(['Claro.dc.html', 'Main.dc.html']));
+  expect(fs.readFileSync(path.join(dir, 'README.md'), 'utf8')).toContain('Dados fictícios — exemplo de layout.');
+  for (const file of htmlFiles) {
+    const html = fs.readFileSync(path.join(dir, file), 'utf8');
+    // Comment before any content, and a visible notice as the first element of the body.
+    expect(html.indexOf(`<!-- ${notice} -->`)).toBeGreaterThanOrEqual(0);
+    expect(html.indexOf(`<!-- ${notice} -->`)).toBeLessThan(html.indexOf('<html'));
+    expect(html).toMatch(new RegExp(`<body>\\s*<p role="note"><strong>${escaped}</strong></p>`));
+    // Names that could match real companies or people stay replaced by clearly fictitious ones.
+    expect(html).not.toMatch(/Andrade|Sol Nascente|Ana Lima/);
+  }
+  for (const entry of [...PUBLIC_PATHS, ...BRAND_SYSTEM_FILES]) expect(reference.startsWith(entry) || entry.startsWith(reference)).toBe(false);
+  for (const file of ['index.html', 'light.html']) expect(read(file)).not.toContain('reference/do-not-use');
+});
 test('regeneration is deterministic and does not mutate the official token sheet', () => {
   const before = outputs.map(file => hash(path.join(here, file)));
   expect(hash(tokenFile)).toBe(tokenBaseline);

@@ -45,3 +45,17 @@ O diff novo foi examinado por caminhos locais, arquivos privados, rotas de produ
 O CodeRabbit apontou um achado menor: a captura do hash começava após a primeira geração. A prova agora captura o hash antes de qualquer build e o compara após ambas as gerações.
 
 A ressalva do Revisor sobre recursos fora do Pages foi tratada sem alterar o núcleo: contratos e fichas apontam para a fonte pública no SHA `48fe3ce1e9f081a1ad01584c9cf60263fcfb5085`. Os dezesseis destinos responderam HTTP 200. Reintroduzir os antigos links relativos produz RED de 1 falha/4 aprovações; restaurar a fonte volta a GREEN 5/5. A suíte completa permanece 825/825 e os quatro cenários de navegador foram novamente aprovados. A publicação da pasta de marca continua como gate separado.
+
+## Complemento de 24/11/2026 — Resumo da análise
+
+Seção 06 nova nas duas aparências: exemplo fictício nos quatro estados de item, aviso de falha, regras e o bloco "Não usar". As seções seguintes foram renumeradas; agora são dezessete entradas de navegação.
+
+| Verificação | Resultado |
+|---|---|
+| Jest do DS | 43 suítes, 861 testes aprovados; zero falha e zero pulado |
+| Testes da vitrine Xscore | 8 aprovados (2 novos: padrão nos dois temas, e referência fora da publicação) |
+| RED | Texto "Dentro da política" no cartão vivo: 1 falha / 7 aprovações. Sem a pasta de referência: 1 falha / 7 aprovações. Fonte restaurada e conferida com `cmp`; GREEN 8/8 |
+| Browser | 4 cenários (390/1440 × claro/escuro): zero erro JS, 404, requisição externa, violação CSP ou overflow; contraste de texto sem amostra abaixo do piso (462–463 amostras por cenário) |
+| Publicação | Os testes de publicação do Xscore passaram (5/5) localmente; a pasta `reference/` não está na lista do Pages |
+
+`resumo-analise-*.png` mostra a seção nos quatro cenários, capturada da página inteira para que o cabeçalho fixo não a cubra. As capturas de abertura e logo foram regeneradas no mesmo ensaio. Leitor de tela real e aceite visual humano seguem separados.
