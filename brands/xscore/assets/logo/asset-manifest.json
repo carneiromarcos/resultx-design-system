@@ -1,51 +1,51 @@
 {
   "schema": 1,
-  "method": "Approved vector contour; sampled gradient colors; derived symbol and opaque white/navy icon tile; PNGs rendered with the repository browser",
+  "method": "Approved vector contour; sampled gradient colors; symbol from the 400 px X source; opaque white/navy icon tile; PNGs rendered with the repository browser",
   "assets": [
     {
       "file": "xscore-wordmark-dark.svg",
-      "bytes": 7707,
-      "sha256": "c30a577e5a1aadd474e6b6b1bd45c4e1a3a3e47436a89186304e8303032b2740"
+      "bytes": 8136,
+      "sha256": "eb89bbd1944626e82b9ef60a450a40bb02b77bc89dfa93dc940e1421594fbe5e"
     },
     {
       "file": "xscore-wordmark-light.svg",
-      "bytes": 7706,
-      "sha256": "30a5c70b5f21697c50cddc158f71082f018f11b8d6e9b35ad6be6c71f8a0762c"
+      "bytes": 8135,
+      "sha256": "149b4efb6d5a8bd6986d46eb943699a0c2faefe9288abd95883b9c8730897071"
     },
     {
       "file": "xscore-monogram.svg",
-      "bytes": 4245,
-      "sha256": "73a28b8b22f6afaeac15965fc7bf774dc826f81dbc8b9af47c0ccfd0ad61fd4e"
+      "bytes": 6653,
+      "sha256": "1b63b742e9468f6ff18a8e69f446cc101ece1d3d2f69875453f8c887c552fa41"
     },
     {
       "file": "xscore-favicon.svg",
-      "bytes": 4468,
-      "sha256": "ccc05cfd860b09622d894fa3dabc5533d9b9495686048becec19a0d53afc432a"
+      "bytes": 6879,
+      "sha256": "92b455cd60640e00176b76b93c8a32aaa6ec7222cd1d04c6fa9657c59094327f"
     },
     {
       "file": "xscore-favicon.ico",
-      "bytes": 4664,
-      "sha256": "7a8f55acd1639c79a883a501a22afcf4922adf8304a7987023009b64c2947f86"
+      "bytes": 4620,
+      "sha256": "bd41eb3a1c259d0b4d4c69a61e56762d004c39808babf7713db5e7177cbfd5c7"
     },
     {
       "file": "xscore-icon-16.png",
-      "bytes": 610,
-      "sha256": "4cb14a2bb615e30ad14b2f3af19c67509c832ad30a4b5c3ac3f940c8ab63d66e"
+      "bytes": 600,
+      "sha256": "cc87dc3a5863aca663b04d23fb052a06f2faa7dd257c2be88711b08ecb8703c9"
     },
     {
       "file": "xscore-icon-32.png",
-      "bytes": 1322,
-      "sha256": "aa13ca0252a8d5440f5237836d06dc3f8594c5c98a93f57493ad2f01457dea46"
+      "bytes": 1340,
+      "sha256": "8e0b61630e8111bb18249d8f0713e062fba7bf2d3db846642e30e34897005ad1"
     },
     {
       "file": "xscore-icon-180.png",
-      "bytes": 11665,
-      "sha256": "63d84dee3c80169bfbe374cad8c4f311c4983a1c096064bd91829522bbc5a109"
+      "bytes": 11265,
+      "sha256": "d736d83e7e627af1cc815a10e09ffe19f8e5747d75054c4fd660c9eb440dcad5"
     },
     {
       "file": "xscore-icon-512.png",
-      "bytes": 48420,
-      "sha256": "401a9d6a2fc3a70361959e0c8e2df7a70a444a6b7fb92e6fb9ef3b59ae390925"
+      "bytes": 41281,
+      "sha256": "73de9e68f23baecbc68d8ee5262a5dde22778b86013de97e30d3cb2219cdbd1a"
     }
   ]
 }

@@ -1,328 +1,644 @@
 {
-  "method": "Alpha128 connected components, contour from alpha interpolated4x; two symbol ribbons and score traced with potrace; score paths, no font substitution; per-ribbon linear gradients with exact sampled RGB stops",
+  "method": "Alpha128 connected components; contour from alpha interpolated (4x wordmark, 2x symbol) and traced with potrace; score paths, no font substitution; per-ribbon linear gradients with exact sampled RGB stops",
   "source": [
     {
       "file": "source/wordmark-light-background.png",
-      "sha256": "3bf4960d5bbe03f4d3d3fa905706d0e3958cf217bf83701b55491206b75b3b85"
+      "sha256": "9a011621a106c1ba8cf1339bcfb2c40aabc77959e1487f1764a69a09419f15c8"
     },
     {
       "file": "source/wordmark-dark-background.png",
-      "sha256": "35fe59804d591064df7062fee22c10db13fe5967b7cf75bbd0bbc971fbe96ffb"
+      "sha256": "2ba80bf5a29b8dd3f8fcbe77c019b7f3d365ae7d02e16d74861fb384c207b2fb"
+    },
+    {
+      "file": "source/symbol-transparent-background.png",
+      "sha256": "b252eeed518c1f351ae771a2fd02ddd3327f2a08716675ea03535f04a8510e95"
     }
   ],
-  "components": [
-    {
-      "pixels": 924,
-      "bbox": [
-        29,
-        156,
-        83,
-        242
-      ]
-    },
-    {
-      "pixels": 981,
-      "bbox": [
-        48,
-        158,
-        103,
-        244
-      ]
-    },
-    {
-      "pixels": 1063,
-      "bbox": [
-        111,
-        181,
-        152,
-        235
-      ]
-    },
-    {
-      "pixels": 901,
-      "bbox": [
-        169,
-        182,
-        209,
-        234
-      ]
-    },
-    {
-      "pixels": 1078,
-      "bbox": [
-        225,
-        182,
-        266,
-        234
-      ]
-    },
-    {
-      "pixels": 750,
-      "bbox": [
-        285,
-        182,
-        325,
-        234
-      ]
-    },
-    {
-      "pixels": 1142,
-      "bbox": [
-        339,
-        182,
-        379,
-        234
-      ]
-    }
-  ],
-  "scoreColors": [
-    [
-      27,
-      42,
-      74
+  "wordmark": {
+    "viewBox": [
+      22,
+      172,
+      354,
+      82
     ],
-    [
-      255,
-      255,
-      255
-    ]
-  ],
-  "gradients": [
-    {
-      "degrees": 58,
-      "vx": 0.5299192642332049,
-      "vy": 0.8480480961564261,
-      "min": 151.47893491241106,
-      "max": 220.80708836492803,
-      "stops": [
-        {
-          "offset": 0,
-          "color": [
-            46,
-            61,
-            135
-          ],
-          "sampledAt": [
-            37,
-            157
-          ]
-        },
-        {
-          "offset": 0.125,
-          "color": [
-            46,
-            62,
-            135
-          ],
-          "sampledAt": [
-            53,
-            157
-          ]
-        },
-        {
-          "offset": 0.25,
-          "color": [
-            48,
-            64,
-            134
-          ],
-          "sampledAt": [
-            36,
-            174
-          ]
-        },
-        {
-          "offset": 0.375,
-          "color": [
-            53,
-            69,
-            131
-          ],
-          "sampledAt": [
-            59,
-            172
-          ]
-        },
-        {
-          "offset": 0.5,
-          "color": [
-            60,
-            75,
-            126
-          ],
-          "sampledAt": [
-            68,
-            177
-          ]
-        },
-        {
-          "offset": 0.625,
-          "color": [
-            70,
-            82,
-            118
-          ],
-          "sampledAt": [
-            49,
-            200
-          ]
-        },
-        {
-          "offset": 0.75,
-          "color": [
-            80,
-            93,
-            119
-          ],
-          "sampledAt": [
-            46,
-            212
-          ]
-        },
-        {
-          "offset": 0.875,
-          "color": [
-            86,
-            106,
-            130
-          ],
-          "sampledAt": [
-            36,
-            224
-          ]
-        },
-        {
-          "offset": 1,
-          "color": [
-            87,
-            108,
-            132
-          ],
-          "sampledAt": [
-            31,
-            240
-          ]
-        }
+    "components": [
+      {
+        "pixels": 624,
+        "bbox": [
+          27,
+          177,
+          71,
+          247
+        ]
+      },
+      {
+        "pixels": 666,
+        "bbox": [
+          42,
+          178,
+          87,
+          249
+        ]
+      },
+      {
+        "pixels": 1623,
+        "bbox": [
+          96,
+          178,
+          146,
+          244
+        ]
+      },
+      {
+        "pixels": 1423,
+        "bbox": [
+          153,
+          178,
+          203,
+          244
+        ]
+      },
+      {
+        "pixels": 1649,
+        "bbox": [
+          208,
+          178,
+          258,
+          244
+        ]
+      },
+      {
+        "pixels": 1137,
+        "bbox": [
+          268,
+          178,
+          317,
+          243
+        ]
+      },
+      {
+        "pixels": 1747,
+        "bbox": [
+          320,
+          178,
+          370,
+          244
+        ]
+      }
+    ],
+    "scoreColors": [
+      [
+        27,
+        42,
+        74
       ],
-      "error": 6.431600435030819
+      [
+        255,
+        255,
+        255
+      ]
+    ],
+    "gradients": [
+      {
+        "degrees": 64,
+        "vx": 0.43837114678907746,
+        "vy": 0.898794046299167,
+        "min": 174.24342838825726,
+        "max": 234.04631009623338,
+        "stops": [
+          {
+            "offset": 0,
+            "color": [
+              46,
+              61,
+              135
+            ],
+            "sampledAt": [
+              35,
+              177
+            ]
+          },
+          {
+            "offset": 0.125,
+            "color": [
+              46,
+              62,
+              136
+            ],
+            "sampledAt": [
+              29,
+              186
+            ]
+          },
+          {
+            "offset": 0.25,
+            "color": [
+              50,
+              67,
+              134
+            ],
+            "sampledAt": [
+              50,
+              187
+            ]
+          },
+          {
+            "offset": 0.375,
+            "color": [
+              56,
+              72,
+              131
+            ],
+            "sampledAt": [
+              63,
+              186
+            ]
+          },
+          {
+            "offset": 0.5,
+            "color": [
+              62,
+              77,
+              123
+            ],
+            "sampledAt": [
+              56,
+              198
+            ]
+          },
+          {
+            "offset": 0.625,
+            "color": [
+              72,
+              84,
+              118
+            ],
+            "sampledAt": [
+              46,
+              212
+            ]
+          },
+          {
+            "offset": 0.75,
+            "color": [
+              82,
+              95,
+              122
+            ],
+            "sampledAt": [
+              41,
+              222
+            ]
+          },
+          {
+            "offset": 0.875,
+            "color": [
+              87,
+              108,
+              131
+            ],
+            "sampledAt": [
+              30,
+              236
+            ]
+          },
+          {
+            "offset": 1,
+            "color": [
+              88,
+              109,
+              133
+            ],
+            "sampledAt": [
+              31,
+              240
+            ]
+          }
+        ],
+        "error": 6.818830106106576
+      },
+      {
+        "degrees": 0,
+        "vx": 1,
+        "vy": 0,
+        "min": 43.5,
+        "max": 87.5,
+        "stops": [
+          {
+            "offset": 0,
+            "color": [
+              143,
+              85,
+              137
+            ],
+            "sampledAt": [
+              45,
+              244
+            ]
+          },
+          {
+            "offset": 0.125,
+            "color": [
+              154,
+              94,
+              118
+            ],
+            "sampledAt": [
+              49,
+              236
+            ]
+          },
+          {
+            "offset": 0.25,
+            "color": [
+              173,
+              106,
+              90
+            ],
+            "sampledAt": [
+              55,
+              230
+            ]
+          },
+          {
+            "offset": 0.375,
+            "color": [
+              191,
+              117,
+              74
+            ],
+            "sampledAt": [
+              59,
+              225
+            ]
+          },
+          {
+            "offset": 0.5,
+            "color": [
+              212,
+              130,
+              37
+            ],
+            "sampledAt": [
+              65,
+              238
+            ]
+          },
+          {
+            "offset": 0.625,
+            "color": [
+              210,
+              143,
+              41
+            ],
+            "sampledAt": [
+              71,
+              206
+            ]
+          },
+          {
+            "offset": 0.75,
+            "color": [
+              199,
+              152,
+              59
+            ],
+            "sampledAt": [
+              76,
+              246
+            ]
+          },
+          {
+            "offset": 0.875,
+            "color": [
+              192,
+              163,
+              74
+            ],
+            "sampledAt": [
+              81,
+              235
+            ]
+          },
+          {
+            "offset": 1,
+            "color": [
+              184,
+              170,
+              83
+            ],
+            "sampledAt": [
+              85,
+              238
+            ]
+          }
+        ],
+        "error": 21.243466328246704
+      }
+    ]
+  },
+  "symbol": {
+    "viewBox": [
+      9,
+      5,
+      390,
+      390
+    ],
+    "components": [
+      {
+        "pixels": 16026,
+        "bbox": [
+          49,
+          16,
+          276,
+          376
+        ]
+      },
+      {
+        "pixels": 16893,
+        "bbox": [
+          125,
+          22,
+          359,
+          383
+        ]
+      }
+    ],
+    "gradients": [
+      {
+        "degrees": 58,
+        "vx": 0.5299192642332049,
+        "vy": 0.8480480961564261,
+        "min": 56.01680942734057,
+        "max": 348.91241780014724,
+        "stops": [
+          {
+            "offset": 0,
+            "color": [
+              45,
+              60,
+              132
+            ],
+            "sampledAt": [
+              71,
+              23
+            ]
+          },
+          {
+            "offset": 0.125,
+            "color": [
+              45,
+              61,
+              132
+            ],
+            "sampledAt": [
+              71,
+              64
+            ]
+          },
+          {
+            "offset": 0.25,
+            "color": [
+              47,
+              63,
+              131
+            ],
+            "sampledAt": [
+              169,
+              46
+            ]
+          },
+          {
+            "offset": 0.375,
+            "color": [
+              52,
+              68,
+              128
+            ],
+            "sampledAt": [
+              102,
+              131
+            ]
+          },
+          {
+            "offset": 0.5,
+            "color": [
+              58,
+              73,
+              124
+            ],
+            "sampledAt": [
+              231,
+              93
+            ]
+          },
+          {
+            "offset": 0.625,
+            "color": [
+              68,
+              80,
+              116
+            ],
+            "sampledAt": [
+              149,
+              188
+            ]
+          },
+          {
+            "offset": 0.75,
+            "color": [
+              78,
+              91,
+              117
+            ],
+            "sampledAt": [
+              128,
+              245
+            ]
+          },
+          {
+            "offset": 0.875,
+            "color": [
+              84,
+              104,
+              127
+            ],
+            "sampledAt": [
+              84,
+              315
+            ]
+          },
+          {
+            "offset": 1,
+            "color": [
+              84,
+              104,
+              127
+            ],
+            "sampledAt": [
+              57,
+              372
+            ]
+          }
+        ],
+        "error": 2.1551308568504517
+      },
+      {
+        "degrees": 0,
+        "vx": 1,
+        "vy": 0,
+        "min": 126.5,
+        "max": 358.5,
+        "stops": [
+          {
+            "offset": 0,
+            "color": [
+              132,
+              78,
+              131
+            ],
+            "sampledAt": [
+              140,
+              359
+            ]
+          },
+          {
+            "offset": 0.125,
+            "color": [
+              143,
+              87,
+              117
+            ],
+            "sampledAt": [
+              157,
+              365
+            ]
+          },
+          {
+            "offset": 0.25,
+            "color": [
+              163,
+              100,
+              96
+            ],
+            "sampledAt": [
+              184,
+              318
+            ]
+          },
+          {
+            "offset": 0.375,
+            "color": [
+              185,
+              114,
+              72
+            ],
+            "sampledAt": [
+              213,
+              260
+            ]
+          },
+          {
+            "offset": 0.5,
+            "color": [
+              206,
+              127,
+              42
+            ],
+            "sampledAt": [
+              240,
+              312
+            ]
+          },
+          {
+            "offset": 0.625,
+            "color": [
+              203,
+              139,
+              40
+            ],
+            "sampledAt": [
+              274,
+              362
+            ]
+          },
+          {
+            "offset": 0.75,
+            "color": [
+              194,
+              148,
+              58
+            ],
+            "sampledAt": [
+              300,
+              381
+            ]
+          },
+          {
+            "offset": 0.875,
+            "color": [
+              184,
+              159,
+              73
+            ],
+            "sampledAt": [
+              328,
+              362
+            ]
+          },
+          {
+            "offset": 1,
+            "color": [
+              179,
+              166,
+              81
+            ],
+            "sampledAt": [
+              347,
+              325
+            ]
+          }
+        ],
+        "error": 9.391144122150246
+      }
+    ]
+  },
+  "fidelity": [
+    {
+      "asset": "xscore-wordmark-dark.svg",
+      "renderedAt": [
+        400,
+        400
+      ],
+      "alphaIoU128": 0.9778642936596218,
+      "symbolAlphaIoU128": 0.9754977029096478,
+      "meanAbsAlpha": 0.0015342401960784363,
+      "opaqueColorRmse": 1.688698137961279,
+      "pixelsOnlyInSource": 199
     },
     {
-      "degrees": 2,
-      "vx": 0.9993908270190958,
-      "vy": 0.03489949670250097,
-      "min": 57.415828725940926,
-      "max": 110.2788440678455,
-      "stops": [
-        {
-          "offset": 0,
-          "color": [
-            140,
-            84,
-            130
-          ],
-          "sampledAt": [
-            52,
-            237
-          ]
-        },
-        {
-          "offset": 0.125,
-          "color": [
-            147,
-            90,
-            113
-          ],
-          "sampledAt": [
-            56,
-            236
-          ]
-        },
-        {
-          "offset": 0.25,
-          "color": [
-            173,
-            107,
-            92
-          ],
-          "sampledAt": [
-            63,
-            216
-          ]
-        },
-        {
-          "offset": 0.375,
-          "color": [
-            191,
-            117,
-            70
-          ],
-          "sampledAt": [
-            69,
-            225
-          ]
-        },
-        {
-          "offset": 0.5,
-          "color": [
-            213,
-            131,
-            35
-          ],
-          "sampledAt": [
-            76,
-            237
-          ]
-        },
-        {
-          "offset": 0.625,
-          "color": [
-            207,
-            142,
-            41
-          ],
-          "sampledAt": [
-            83,
-            191
-          ]
-        },
-        {
-          "offset": 0.75,
-          "color": [
-            198,
-            153,
-            62
-          ],
-          "sampledAt": [
-            90,
-            240
-          ]
-        },
-        {
-          "offset": 0.875,
-          "color": [
-            187,
-            163,
-            75
-          ],
-          "sampledAt": [
-            96,
-            223
-          ]
-        },
-        {
-          "offset": 1,
-          "color": [
-            185,
-            171,
-            83
-          ],
-          "sampledAt": [
-            100,
-            241
-          ]
-        }
+      "asset": "xscore-wordmark-light.svg",
+      "renderedAt": [
+        400,
+        400
       ],
-      "error": 20.553302513084517
+      "alphaIoU128": 0.9778642936596218,
+      "symbolAlphaIoU128": 0.9754977029096478,
+      "meanAbsAlpha": 0.0015342401960784363,
+      "opaqueColorRmse": 1.1550318911149264,
+      "pixelsOnlyInSource": 199
+    },
+    {
+      "asset": "xscore-monogram.svg",
+      "renderedAt": [
+        400,
+        400
+      ],
+      "alphaIoU128": 0.9952681388012619,
+      "symbolAlphaIoU128": 0.9952681388012619,
+      "meanAbsAlpha": 0.002046568627450904,
+      "opaqueColorRmse": 2.4499729950513096,
+      "pixelsOnlyInSource": 156
     }
   ]
 }
