@@ -7,7 +7,7 @@
 - Padrão "Resumo da análise" registrado como está no ar no Xscore (#360), por decisão do Marcos em 24/11: linha em "Padrões para produtos de crédito" e na matriz de paridade, com a situação ADOTADO NO XSCORE, sem contrato próprio no DS.
 - Seção com propósito, estrutura, estados de item e de cartão, regras de exibição, acessibilidade e o bloco "Não usar".
 - Seção 06 do Brand System, nos temas escuro e claro: exemplo fictício nos quatro estados de item, aviso de falha, regras e "Não usar". As seções seguintes foram renumeradas de 07 a 16.
-- Modelo original de 23/11 guardado byte a byte em `reference/do-not-use-policy-summary-model-2026-11-23/`, marcado "NÃO USAR — nota única abolida (D-0001)", fora da publicação do Pages.
+- Modelo original de 23/11 guardado em `reference/do-not-use-policy-summary-model-2026-11-23/`, marcado "NÃO USAR — nota única abolida (D-0001)", fora da publicação do Pages. Os HTML de referência ganharam o aviso visível "Dados fictícios — exemplo de layout" e nomes claramente fictícios (ressalva do Revisor, decisão do Marcos); o README guarda o hash do original e o atual.
 - Testes da vitrine para o padrão e para manter a referência fora da publicação; captura da seção em 390/1440 × escuro/claro.
 
 ### Não usar

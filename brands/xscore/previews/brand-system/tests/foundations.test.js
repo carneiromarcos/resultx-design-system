@@ -88,6 +88,20 @@ test('the original model stays a non-published reference marked do-not-use', () 
   const dir = path.resolve(brand, '../..', reference);
   for (const file of ['README.md', 'Main.dc.html', 'Claro.dc.html']) expect(fs.existsSync(path.join(dir, file))).toBe(true);
   expect(fs.readFileSync(path.join(dir, 'README.md'), 'utf8')).toMatch(/NÃO USAR — nota única abolida \(D-0001\)/);
+  const notice = 'Dados fictícios — exemplo de layout. Notas de birô, nomes e CNPJs não são reais; citar birôs não indica parceria. Não usar (nota única abolida, D-0001)';
+  const escaped = notice.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const htmlFiles = fs.readdirSync(dir).filter(file => file.endsWith('.html'));
+  expect(htmlFiles).toEqual(expect.arrayContaining(['Claro.dc.html', 'Main.dc.html']));
+  expect(fs.readFileSync(path.join(dir, 'README.md'), 'utf8')).toContain('Dados fictícios — exemplo de layout.');
+  for (const file of htmlFiles) {
+    const html = fs.readFileSync(path.join(dir, file), 'utf8');
+    // Comment before any content, and a visible notice as the first element of the body.
+    expect(html.indexOf(`<!-- ${notice} -->`)).toBeGreaterThanOrEqual(0);
+    expect(html.indexOf(`<!-- ${notice} -->`)).toBeLessThan(html.indexOf('<html'));
+    expect(html).toMatch(new RegExp(`<body>\\s*<p role="note"><strong>${escaped}</strong></p>`));
+    // Names that could match real companies or people stay replaced by clearly fictitious ones.
+    expect(html).not.toMatch(/Andrade|Sol Nascente|Ana Lima/);
+  }
   for (const entry of [...PUBLIC_PATHS, ...BRAND_SYSTEM_FILES]) expect(reference.startsWith(entry) || entry.startsWith(reference)).toBe(false);
   for (const file of ['index.html', 'light.html']) expect(read(file)).not.toContain('reference/do-not-use');
 });
